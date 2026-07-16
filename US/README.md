@@ -28,7 +28,7 @@ The second includes more structural information than the first. This distinction
 | `AA11393US-priority-support-map_DRAFT.md` | Claim-feature mapping to both provisional 63/557,868 and the PCT application as filed | Counsel to confirm entitlement and continuity data |
 | `AA11393US-prior-art-comparison-matrix_DRAFT.md` | Element-by-element comparison of D1, D2, and supplemental candidate art | Patentability analysis and IDS materiality review |
 | `AA11393US-US_IDS-reference-list_DRAFT.md` | Disclosure inventory, document-handling status, relevance notes, and open items | Source data for counsel's IDS; not represented as complete |
-| `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md` | Deferred work plan for prior-art retrieval, Italian-report monitoring, US formalities, ownership/recordation, and the EP Rule 161 workstream | Assign owners and complete at the stated filing/prosecution gates; deferral from this drafting pass is not authorization to miss a deadline |
+| `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md` | Deferred work plan for prior-art retrieval, Italian-report monitoring, US formalities, ownership/recordation, European-phase entry, and the later Rule 161/162 workstream | Assign owners and complete at the stated filing/prosecution gates; deferral from this drafting pass is not authorization to miss a deadline |
 | `AA11393US-PCT_informal-comments-IB_DRAFT.md` | Corrected public response to the ISA Written Opinion | PRAXI and US/EP counsel to align, verify quotations, and approve before ePCT filing |
 | `prior-art/` | Local store of cited and candidate prior-art documents, keyed to the IDS inventory IDs (D1/D2 official copies extracted from the ISR transmittal; verified EP 2 811 416 A1; retrieval status for the rest) | Working copies — counsel obtains/verifies official copies for filing |
 
@@ -71,7 +71,8 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 | **26 June 2026** | WIPO's recommended 28-month date for informal comments passed. This is a recommendation, not a formal bar. |
 | **26 August 2026** | Thirty months from priority: practical last date for informal comments to be transmitted to designated Offices; US §371 entry or timely bypass filing must also be completed. Comments received after 30 months may remain in the IB file but are not transmitted in the normal course. |
 | With US filing | File the counsel-approved IDS/disclosure package conservatively, subject to the different treatment of ISR references in a §371 national stage and a §111(a) bypass. |
-| EP regional phase | Prepare the separate Rule 161 response; reuse only arguments and amendments approved for consistency with the public PCT record. |
+| **26 September 2026 (nominal); apparently 28 September 2026 under EPC Rule 134(1)** | Thirty-one months from the 26 February 2024 priority date for European-phase entry under Rule 159(1). Because 26 September 2026 is a Saturday, the period appears to extend to Monday, 28 September 2026 under Rule 134(1). EP counsel must independently confirm the operative date and entry acts and docket an earlier internal deadline rather than rely on the apparent weekend extension. |
+| Six months from the EPO Rule 161/162 communication | Because the EPO acted as ISA, docket the actual communication and prepare the Rule 161(1) response to the Written Opinion, any appropriate amendments, and the Rule 162 claims-fee reconciliation. Reuse only positions approved for consistency with the public PCT and US records. |
 
 ## 6. Decisions requested from US counsel
 
@@ -103,7 +104,8 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 - [ ] Verify CN 100583750 C against an official register and inspect the EP 2 811 416 A1 file history.
 - [ ] Obtain the missing A2, A3, A5, B7, and Tardos 2003 copies selected for review or submission.
 - [ ] Obtain the Italian search report and route every newly cited reference into the IDS review.
-- [ ] Prepare the separate EP Rule 161 workstream consistently with the approved public PCT position.
+- [ ] Confirm and docket the nominal and apparently weekend-adjusted European-phase entry dates, set an earlier internal deadline, and complete the applicable Rule 159 entry acts and Rule 162 entry-stage claims-fee plan.
+- [ ] On receipt of the EPO communication, docket and prepare the separate six-month Rule 161/162 response workstream consistently with the approved public PCT and US positions.
 
 The document-retrieval, disclosure, formalities, ownership, and EP tasks above are controlled in more detail by `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`.
 
