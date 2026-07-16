@@ -61,7 +61,7 @@ Known starting materials for DW-03 include `../PPA2/63557868 assignement signed.
 
 1. Record the §371/bypass and Track One decision.
 2. Approve the final claim set and confirm that any Track One set stays within 30 total claims, four independent claims, and no multiple-dependent claim.
-3. Complete the claim-by-claim provisional/PCT support review, including the Example 2 issue; claim 7's retained ordered transition and changed time code; claims 9, 13, 15, and 29's manifest/chunk preservation of a selected transition position; claim 16's detection and matching at the same candidate-distinguishing region; claim 21's attribution scores; and claim 22's complete closed loop.
+3. Complete the claim-by-claim provisional/PCT support review, including the Example 2 issue; claim 7's retained ordered transition and changed time code; claims 9, 15, and 29's manifest/chunk preservation of a selected transition position; claim 13's different manifests selecting equal-duration reference and mate chunks for the same playback interval, with each chunk containing the transition at its respective timing; claim 16's detection and matching at the same candidate-distinguishing region; claim 21's attribution scores; and claim 22's complete closed loop.
 4. Finalize ADS, continuity/benefit information, oath/declaration handling, applicant identity, assignment chain, entity status, and priority-document handling.
 5. Complete the initial IDS materiality decision and obtain every copy, translation, abstract, or explanation counsel determines is required at filing.
 6. Confirm that the specification and drawings are the intended as-filed documents and contain no unacknowledged new matter.

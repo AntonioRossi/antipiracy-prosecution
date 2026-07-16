@@ -26,12 +26,12 @@ Languages: `eng`, except B5 and B6 (`chi_sim+eng`). B1 has a native Chinese text
 ## Fidelity — what is and is not established
 
 - **Corroborated:** the fresh A1 OCR was compared against the repository's independently produced transcription at `../../PCT/AA11393US-PCT_office_action_markdown/cited_US2021-0352381A1.md`. Substantive paragraphs agree at **99.3–99.4%** ([0016], [0045]). Two independent OCR passes concurring is meaningful evidence of accuracy — it is not proof of correctness for any specific character.
-- **Page counts** match the source PDFs exactly for all 19 documents.
+- **Page counts** match the source PDFs exactly for all 20 documents.
 - **Not established:** that any individual numeral, date, or quotation is correct. Known residual issues: patent line numbers (5, 10, 15 …) can land mid-sentence; paragraphs spanning a page break are split by the `### Page N` markers; Chinese OCR shows occasional character substitutions (e.g. 嵌入 rendered as 藤入/甬入).
 
 ## Source integrity
 
-The source PDFs were **not modified**. SHA-256 of all 19 was recorded before any processing (`.pipeline/pdf-source-checksums.sha256`) and re-verified after: 19/19 identical. This preserves the provenance chain documented in `../README.md`.
+The source PDFs were **not modified**. SHA-256 of all 20 was recorded before any processing (`../.pipeline/pdf-source-checksums.sha256`) and re-verified after: 20/20 identical. This preserves the provenance chain documented in `../README.md`.
 
 Verify at any time:
 
@@ -42,4 +42,4 @@ cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256
 ## Related
 
 - `../searchable/` — the same nine image-only documents with an OCR text layer added (via `ocrmypdf --skip-text`), for searching inside a PDF viewer. Copies, not originals; same not-for-filing caveat.
-- `.pipeline/convert.py`, `.pipeline/columns.py` — the generators, kept so the work is reproducible. Rerun: `python3 .pipeline/convert.py [ID ...]` (needs `pymupdf`; `tesseract` with `chi_sim` for the Chinese documents).
+- `../.pipeline/convert.py`, `../.pipeline/columns.py` — the generators, kept so the work is reproducible. From `US/prior-art`, rerun `python3 .pipeline/convert.py [ID ...]` (needs `pymupdf`; `tesseract` with `chi_sim` for the Chinese documents).

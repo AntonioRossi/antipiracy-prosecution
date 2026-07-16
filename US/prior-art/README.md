@@ -6,7 +6,7 @@ Working copies of the prior-art and prosecution documents referenced in `../AA11
 
 | Path | Contents |
 |---|---|
-| `*.pdf` | The retrieval-verified source documents. Provenance per row below. **Never modified** — SHA-256 recorded in `.pipeline/pdf-source-checksums.sha256` and re-verified 16.07.2026 (19/19 identical). |
+| `*.pdf` | The retrieval-verified source documents. Provenance per row below. **Never modified** — SHA-256 recorded in `.pipeline/pdf-source-checksums.sha256` and re-verified 16.07.2026 (20/20 identical). |
 | `AA11393US-claim-document-mapping-matrix_DRAFT.md` | Claim × document mapping grid. |
 | `markdown/` | Working transcription of every PDF (added 16.07.2026), so the matrix can be scored against full text. Text-layer extraction where available, OCR otherwise. **Not for filing; verify quotes against the PDFs.** See its README. |
 | `searchable/` | The nine image-only PDFs with an OCR text layer added, for viewer search. Derived copies, not originals. |

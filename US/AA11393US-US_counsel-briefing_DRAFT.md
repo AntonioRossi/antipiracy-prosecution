@@ -26,11 +26,13 @@ The latter includes the former's timing information but adds the detected transi
 | Commercial function | Likely actor | Candidate independent claim | Evidence likely available |
 |---|---|---|---|
 | Creates reference edit and mates | host broadcaster, outside-broadcast facility, production-software vendor | Claim 1 | production configuration, EDLs, output comparisons, software documentation |
-| Builds manifests, distributes streams, records recipient mapping | rights-holding licensee, streaming platform, origin/CDN operator | Claim 9 | manifests, network traffic, account records, platform documentation |
+| Builds manifests, distributes streams, records recipient mapping | rights-holding licensee, streaming platform, origin/CDN operator | Claim 9 | captured delivered streams, synchronized content comparisons, manifests, source-version/chunk mappings, network traffic, account records, platform documentation |
 | Detects pirate stream and resolves source | rights owner, anti-piracy monitoring provider, platform trust/safety system | Claim 16 | monitoring output, comparison logs, ledger queries, software behavior |
 | Operates entire lifecycle | vertically integrated broadcaster/platform | Claim 22 | combined operational evidence |
 
 The subsystem claims are not merely drafting convenience. They reduce dependence on proving that one entity controls or performs production, distribution, and later detection. They do not eliminate the need for a fact-specific direct-infringement or attribution analysis. The end-to-end claim remains valuable for the full-combination patentability position and integrated deployments.
+
+The structural strengthening of claim 9 trades evidentiary simplicity for a stronger patentability and validity position. The former timing-pattern formulation could be investigated principally from manifest and account mechanics; the revised claim will ordinarily require synchronized comparison of delivered streams, or discovery into source-version and chunk mappings, to prove the same ordered camera-source transition at noncoincident timings and different-camera frames in the intervening interval. Those content facts may be observable from controlled captures and may be confirmed through discovery, but counsel should evaluate practical access, preservation, reverse-engineering, and proof before treating the rewrite as a pure enforcement gain.
 
 ## 4. Recommended claim portfolio
 
@@ -51,7 +53,7 @@ Maintain the following fallback order:
 2. actual local substitution of frames from one camera for frames selected from another;
 3. the same ordered source transition retained on both sides of the moved boundary at noncoincident switch timings (claim 7);
 4. later cut retains the reference timing or restores synchronization;
-5. manifest-selected chunks preserve one claimed transition position and bracket the switch timing (claims 9 and 13), with claim 29 carrying the same relationship into the end-to-end method;
+5. different manifests select corresponding equal-duration reference and mate chunks spanning the same playback interval, each chunk itself containing the same ordered physical-camera transition at its respective noncoincident timing (claim 13), with claims 9 and 29 carrying manifest preservation of the selected transition position in the distribution and end-to-end families;
 6. recipient ledger;
 7. detection and matching, at the same candidate-distinguishing region, of both the ordered camera-source transition and its switch timing;
 8. detected time code and reconstructed manifest;
@@ -149,7 +151,7 @@ For §112:
 - confirm corresponding algorithm disclosure if §112(f) is invoked;
 - ensure that “camera-selection boundary,” local substitution, and resynchronization remain within the language and teaching of the filed documents;
 - confirm claim 7's retained camera identifiers and noncoincident time codes as a supported expression of Example 2 rather than an unsupported general rule;
-- confirm that claims 9, 13, 15, and 29 support-safely connect Example 2's moved source boundary to Example 4's chunks and manifests, including chunks bracketing and an assembled stream preserving the selected switch timing;
+- confirm that claims 9, 13, 15, and 29 support-safely connect PCT Example 2's moved source boundary to PCT Examples 3–4's manifest and mixing disclosures and that the corresponding provisional passages support the same relationship, including claim 13's different manifests, corresponding equal-duration reference/mate chunks spanning the same playback interval, and placement of the ordered transition within each chunk at the respective switch timing;
 - preserve claim 16's functional relationship between the stored candidate distinction, detection, and matching at the same region, including identification of the sources on both sides and agreement in both source order and timing;
 - preserve claim 22's closed loop from the moved ordered transition through recipient association to structural transition-and-timing recovery;
 - draft collusion claims 21 and 28 as affirmative limitations requiring mixed-version suspected content and performance of probabilistic attribution, rather than optional “when” clauses; claim 21 additionally requires candidate contributions, respective attribution scores, and identification based on those scores, whose support counsel must confirm;

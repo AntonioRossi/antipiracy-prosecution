@@ -88,7 +88,7 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 6. Preserve an operational camera-source-transition limitation in the detection independent rather than relying only on the informational origin of stored timing data.
 7. Confirm that claim 16 support-safely ties the candidate inter-version difference, detection, and matching to the same candidate-distinguishing region and requires agreement in both the ordered camera-source transition and its switch timing.
 8. Confirm that “camera-cut timing pattern” and “camera-source-transition pattern” retain the deliberate hierarchy stated above and that claims 17–18 are support-safe as harmonized.
-9. Confirm written-description and priority support for the structural replacements in claims 7, 13, and 29: retained source identifiers around a moved ordered transition; manifest-selected chunks bracketing the preserved switch timing; and manifest assembly preserving either the reference or varied position of that transition.
+9. Confirm written-description and priority support for the structural replacements in claims 7, 13, and 29: retained source identifiers around a moved ordered transition; different manifests selecting equal-duration reference and mate chunks spanning the same playback interval, with each chunk containing the transition at its respective timing; and manifest assembly preserving either the reference or varied position of that transition.
 10. Confirm §112(f), §112(a)/(b), and §101 posture and revise nonce terms such as “component” and “apparatus” where appropriate.
 11. Confirm benefit to provisional 63/557,868 feature by feature and ensure ADS/continuity language is correct for the selected route.
 12. Establish a monitoring rule for potentially material information having an effective prior-art date in the provisional-to-PCT interval and for any Office priority challenge.
@@ -96,13 +96,15 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 14. Verify entity status from current ownership, employees, licenses, and obligations to assign. The provisional claimed small-entity status, but that does not replace a current determination; separately assess micro-entity eligibility.
 15. Confirm the inventor oath/declaration, applicant identity, assignment chain, and any necessary USPTO recordation for the selected filing route.
 16. Align the WIPO informal comments with the intended US and EP positions and avoid unintended disclaimer.
+17. Evaluate claim 9's increased infringement-proof burden and adopt an evidence plan, including controlled captures from multiple recipient sessions and anticipated discovery into manifest/source-chunk mappings and recipient-association records.
 
 ## 7. Filing-readiness checklist
 
 - [ ] Obtain counsel's claim-specific priority view on the provisional Example 2 inconsistency.
 - [ ] Reassess that priority view if potentially material information has an effective prior-art date between 26 February 2024 and 19 February 2025 or an Office challenges priority.
 - [ ] Confirm support for claim 16's same-region operational relationship: stored noncoincident positions of the same ordered camera-source transition, detection at that candidate-distinguishing region, and matching of both source order and timing.
-- [ ] Confirm support for the structural fallbacks in claims 7, 13, and 29 and the combined Example 2/Example 4 relationship in claims 9, 13, 15, and 29.
+- [ ] Confirm support for the structural fallbacks in claims 7, 13, and 29 and the relationship between PCT Examples 2–4 and the corresponding provisional passages in claims 9, 13, 15, and 29.
+- [ ] Approve a claim-9 infringement-evidence plan addressing controlled multi-recipient captures, content comparison, and discovery into manifest/source-chunk mappings and recipient associations.
 - [ ] Confirm the deliberate hierarchy between camera-cut timing patterns and camera-source-transition patterns and approve the harmonized claims 17–18.
 - [ ] Confirm that claims 21 and 28 affirmatively require mixed-version suspected content and performance of probabilistic attribution, and confirm written-description support for claim 21's candidate contributions and respective attribution scores.
 - [ ] Manage the 30/4 Track One set with no net claim-count headroom.

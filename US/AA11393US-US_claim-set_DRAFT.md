@@ -81,7 +81,17 @@ store, in a record of associations, associations between the respective recipien
 
 **12.** The content-distribution system of claim 9, wherein the record of associations is a ledger identifying an end user or group of end users that received each manifest file.
 
-**13.** The content-distribution system of claim 9, wherein each manifest file points to chunks that collectively include frames immediately before and immediately after the camera-switch timing preserved by the corresponding assembled audio-video stream within the defined temporal region.
+**13.** The content-distribution system of claim 9, wherein, for the defined temporal region:
+
+a first manifest file of the plurality of manifest files points to a first chunk selected from the reference version;
+
+a second manifest file of the plurality of manifest files, different from the first manifest file, points to a second chunk selected from the at least one mate version;
+
+the first chunk and the second chunk each span a common playback interval and have the same playback duration;
+
+the first chunk contains frames from the first camera source before the first camera-switch timing and frames from the second camera source after the first camera-switch timing; and
+
+the second chunk contains frames from the first camera source before the second camera-switch timing and frames from the second camera source after the second camera-switch timing.
 
 **14.** The content-distribution system of claim 9, wherein delivery of the audio-video streams comprises unicasting respective streams to the respective recipients.
 
@@ -167,7 +177,8 @@ recording which recipient or group of recipients received each manifest file.
 | Same ordered camera-source transition at noncoincident positions | 7, 9, 15, 16, 22, 29 | Preserve the structural distinction over A4's fragment-perspective choices and B9's variable switching among transformed copies |
 | Actual alternate-camera frame substitution between the noncoincident positions | 1, 9, 16, 22 | Distinguish completed-copy transformations, arbitrary variant sequences, and generic timing shifts |
 | Later cut retains reference timing / resynchronization | 2, 3, 23 | Distinguish uniform delay and global frame-rate retiming; track Example 2 subject to its provisional drafting inconsistency |
-| Manifest/chunk selection preserves a claimed transition position | 9, 13, 15, 24, 29 | Tie known manifest/segment technology to the noncoincident ordered camera-source transition rather than to a generic version sequence |
+| Manifest/chunk selection preserves a claimed transition position | 9, 15, 24, 29 | Tie known manifest/segment technology to the noncoincident ordered camera-source transition rather than to a generic version sequence |
+| Corresponding reference/mate chunks span the same playback interval and each contains the ordered transition at its respective timing | 13 | Bind the distinguishing physical-camera boundary to the chunks actually selected by different manifests; same-duration correspondence alone is known from A4 and does not carry patentability |
 | Recipient record / ledger | 9, 12, 16, 20, 22, 25 | Preserve the forensic association step |
 | Operational matching of both ordered source transition and timing at the same candidate-distinguishing region | 16, 22 | Avoid relying on informational labels, generic shot detection, or matching performed at a region unrelated to the stored difference |
 | Camera-source-transition detection plus perceptual hash and sliding fuzzy match | 17, 18 | Concrete detection fallback tied to the richer claim 16 structure; not expected to be independently novel |
@@ -186,7 +197,7 @@ This table is a drafting guide, not counsel's final written-description opinion.
 | 6 | Preferred embodiment applying a single time-code variation at each director-commanded camera cut; PCT claim 17 context |
 | 7, 9, 15, 16, 22, 29 | Example 2 and its EDL tables show a camera selection extended and the next selection correspondingly delayed, so the source-camera order is retained while the boundary time changes and the intervening frames come from a different camera. Counsel must confirm support and priority for generalizing that example to the claimed “same ordered transition” and noncoincident-position formulations. |
 | 8, 30 | PCT claim 4 and description of pipeline overlays/additional elements |
-| 9–15, 24, 29 | PCT claims 11–14 and 17; transcoding 120, chunks 113, mixing component 123, manifest files 121, ledger 122; Example 4. Claims 9, 13, 15, and 29 now require the assembled stream or manifest-selected chunks to preserve a claimed transition position; counsel must confirm that the combined Examples 2 and 4 provide written-description support for that exact operational relationship and that it is entitled to priority. |
+| 9–15, 24, 29 | PCT claims 11–12, 14, and 17; transcoding 120, chunks 113, mixing component 123, manifest files 121, ledger 122; manifest Example 3 and mixing Example 4. Claims 9, 13, 15, and 29 require an assembled stream or manifest-selected chunk to preserve a claimed transition position; claim 13 further requires different manifests to select equal-duration reference and mate chunks spanning the same playback interval, each chunk containing the ordered transition at its respective timing. Counsel must confirm that PCT Examples 2–4 and the corresponding provisional passages, read together, provide written-description support for each exact operational relationship and entitlement to priority. |
 | 14, 27 | PCT claim 6 and method distribution embodiment using unicasting |
 | 16, 22 | PCT claim 1; detection apparatus; camera-cuts detection algorithm 131; record of associations. Counsel must confirm support for identifying camera sources on both sides of a detected transition and for matching both the ordered transition and its timing at the same candidate-distinguishing temporal region; these limitations are deliberately not treated as settled merely because generic cut-time detection is disclosed. |
 | 17–18 | PCT claims 2–3; Example 5 perceptual hashing and sliding-window fuzzy matching. Counsel should confirm support for using those comparisons to detect both camera-source transitions and their corresponding timings. |
@@ -210,3 +221,4 @@ This table is a drafting guide, not counsel's final written-description opinion.
 12. **Positive collusion output.** Claims 21 and 28 affirmatively require suspected content assembled from different delivered versions and identification of one or more contributing recipients. Claim 21 additionally recites attribution scores. Counsel should preserve positive performance of the attribution operation, confirm support for the scoring formulation, and avoid optional “when” language in a method claim.
 13. **Detection-dependent terminology.** Claims 17 and 18 expressly address detection of the ordered camera-source transition and corresponding camera-switch timing to remain aligned with claim 16. Claim 19 intentionally remains timing-specific because it derives a time code and reconstructs manifest information from that time code; do not broaden it merely for terminological symmetry.
 14. **A4/B9 construction discipline.** Claims 9 and 16 recite the same ordered transition at noncoincident positions and the alternate-camera interval between them because generic camera-perspective fragments, per-user manifest sequences, and variable stream-switch positions are known. Counsel should resist deleting those structural limitations unless a materially broader position is supported by a completed search and a reasoned validity analysis.
+15. **Claim 9 proof trade.** The structural limitations improve the patentability and validity position but increase the infringement-proof burden. Before finalizing claim 9, counsel should plan controlled captures from multiple recipient sessions and assess discovery access to manifest/source-chunk mappings and recipient-association records; actor splitting should not be treated as a pure enforcement gain.
