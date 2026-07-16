@@ -87,7 +87,7 @@ a first manifest file of the plurality of manifest files points to a first chunk
 
 a second manifest file of the plurality of manifest files, different from the first manifest file, points to a second chunk selected from the at least one mate version;
 
-the first chunk and the second chunk each span a common playback interval and have the same playback duration;
+the first chunk and the second chunk each span a common playback interval and have equal playback durations;
 
 the first chunk contains frames from the first camera source before the first camera-switch timing and frames from the second camera source after the first camera-switch timing; and
 

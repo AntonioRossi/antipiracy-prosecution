@@ -2,7 +2,9 @@
 
 This directory is the working prosecution package for the United States phase of PCT/IB2025/051755 (filed 19 February 2025; benefit claimed to US provisional 63/557,868 filed 26 February 2024). It is designed to let appointed US counsel evaluate and implement the filing strategy without having to reconstruct the technical, priority, prior-art, and enforcement analysis from the underlying record.
 
-Except for a document expressly approved and signed for filing, everything here is **draft counsel work product**. Recommendations are deliberately candid. Filing-facing language, particularly the WIPO informal comments, is separately restrained because it will become public.
+Except for a document expressly approved and signed for filing, everything here is an **internal counsel-review draft**. Recommendations are deliberately candid. Filing-facing language, particularly the WIPO informal comments, is separately restrained because it will become public.
+
+**Circulation and record control.** The labels used in this repository do not establish attorney-client privilege, work-product protection, or any other protected status. At the applicant's initial secure transmission to retained US counsel, and before any wider circulation, US counsel should determine the package's appropriate treatment under applicable law, approve the intended recipients and purpose, and control further circulation. Preserve originals, versions, comments, transmission records, and final filed copies under counsel-approved retention and any applicable legal-hold instructions.
 
 ## 1. Controlling inventive-core statement
 
@@ -97,6 +99,7 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 15. Confirm the inventor oath/declaration, applicant identity, assignment chain, and any necessary USPTO recordation for the selected filing route.
 16. Align the WIPO informal comments with the intended US and EP positions and avoid unintended disclaimer.
 17. Evaluate claim 9's increased infringement-proof burden and adopt an evidence plan, including controlled captures from multiple recipient sessions and anticipated discovery into manifest/source-chunk mappings and recipient-association records.
+18. Determine and document the package's confidentiality, privilege/work-product, circulation, access, version-control, retention, and legal-hold treatment without relying on repository labels as establishing protection.
 
 ## 7. Filing-readiness checklist
 
@@ -105,6 +108,7 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 - [ ] Confirm support for claim 16's same-region operational relationship: stored noncoincident positions of the same ordered camera-source transition, detection at that candidate-distinguishing region, and matching of both source order and timing.
 - [ ] Confirm support for the structural fallbacks in claims 7, 13, and 29 and the relationship between PCT Examples 2–4 and the corresponding provisional passages in claims 9, 13, 15, and 29.
 - [ ] Approve a claim-9 infringement-evidence plan addressing controlled multi-recipient captures, content comparison, and discovery into manifest/source-chunk mappings and recipient associations.
+- [ ] Obtain US counsel's written package-handling determination and implement approved recipient, access, circulation, version, retention, and legal-hold controls.
 - [ ] Confirm the deliberate hierarchy between camera-cut timing patterns and camera-source-transition patterns and approve the harmonized claims 17–18.
 - [ ] Confirm that claims 21 and 28 affirmatively require mixed-version suspected content and performance of probabilistic attribution, and confirm written-description support for claim 21's candidate contributions and respective attribution scores.
 - [ ] Manage the 30/4 Track One set with no net claim-count headroom.

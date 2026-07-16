@@ -12,7 +12,8 @@ This memo is the control document for outstanding:
 2. continuing IDS and counterpart-search monitoring;
 3. US filing formalities, applicant identity, ownership, and recordation;
 4. provisional/PCT continuity and priority-document checks; and
-5. European-phase entry and the separate later Rule 161/162 response workstream.
+5. European-phase entry and the separate later Rule 161/162 response workstream; and
+6. counsel-approved circulation, access, retention, legal-hold, and prosecution-record controls.
 
 The current substantive strategy remains in:
 
@@ -23,6 +24,8 @@ The current substantive strategy remains in:
 - `AA11393US-US_IDS-reference-list_DRAFT.md`.
 
 The dates summarized in `README.md` are internal reminders only and do not substitute for an attorney-controlled docket. Counsel must independently confirm all US, PCT, Italian, and EP deadlines.
+
+Repository labels are handling instructions only; DW-12 requires US counsel to determine the package's legal/confidentiality treatment, circulation, access, version control, retention, and preservation.
 
 ## 2. Deferred-work register
 
@@ -41,7 +44,7 @@ The dates summarized in `README.md` are internal reminders only and do not subst
 | DW-10 | Prepare, file, and monitor the US IDS package | Draft inventory exists; no filing decision or Patent Center receipt | US counsel | Initial US filing and every later 37 CFR 1.97/1.98 window | Counsel-approved IDS, submitted references, filing receipt, examiner-consideration record, and supplemental-IDS docket |
 | DW-11A | Complete European-phase entry under Rule 159 and select the application documents and claims for the European grant procedure | No EP entry filing or receipt identified in `US/`; the 31-month date is nominally Saturday, 26 September 2026, and appears extended under Rule 134(1) to Monday, 28 September 2026, subject to EP counsel confirmation | EP counsel with PRAXI and applicant coordination | Counsel-confirmed Rule 159 period, with an earlier internal deadline docketed rather than reliance on the apparent weekend extension | Entry papers, specified basis documents, translation if applicable, applicable act-and-fee checklist, Rule 162 entry-stage claims-fee plan, filing receipt, and independent record check |
 | DW-11B | Prepare and file the Rule 161(1)/162 response and align it with the PCT and US positions | The EPO acted as ISA and issued a negative Written Opinion; no Rule 161/162 communication, response draft, or deadline docket is identified in `US/` | EP counsel with PRAXI and US counsel coordination | Six months from the actual Rule 161/162 communication, independently confirmed and docketed from that communication | Communication and docket record, response and amendments, Rule 162 claims-fee reconciliation, cross-jurisdiction consistency review, filing receipt, and final filed copy |
-| DW-12 | Preserve the final prosecution record | Working drafts and source documents exist | US counsel docketing/records | At every filing and material decision | Final filed papers, receipts, cited copies, decision log, correspondence, and a read-only archive/index |
+| DW-12 | Establish and apply counsel-approved circulation and record-retention controls; preserve the prosecution record | Internal/not-for-filing labels exist, but this memo records no privilege determination, approved-recipient protocol, or retention instruction | US counsel with applicant records/docketing | At the applicant's initial secure transmission to retained US counsel and before wider circulation; at every filing or material decision; and immediately upon any legal hold or transfer of responsibility | Written counsel determination of treatment without reliance on repository labels; approved recipient/access instructions; distribution and version log; retention/hold instructions; and preserved final papers, receipts, correspondence, and archive/index |
 
 Known starting materials for DW-03 include `../PPA2/63557868 assignement signed.pdf` and `../PPA2/7524-0091_NOR assignment EDO.pdf`. Their presence does not establish that every transfer is effective, that the current applicant is correct, or that USPTO recordation is complete.
 
@@ -49,13 +52,14 @@ Known starting materials for DW-03 include `../PPA2/63557868 assignement signed.
 
 ### A. Assign and initiate now
 
-1. Name the US attorney responsible for DW-01 through DW-10.
+1. Name the US attorney responsible for DW-01 through DW-10 and DW-12.
 2. Name the EP attorney responsible for DW-07, DW-11A, and DW-11B.
-3. Ask PRAXI/Italian counsel for the status and expected delivery of the Italian search report.
-4. Complete B6 English-family/foreign-language handling, the B8 file-history review, official-register confirmation of stored working copies, and retrieval of Tardos 2003 and Lin 2008.
-5. Commission DW-08A's focused vision-mixer/EDL/multi-camera boundary-personalization search and preserve claim-specific results.
-6. Collect the applicant's corporate, assignment, employment, licensing, and entity-status facts.
-7. Docket the US, PCT informal-comment, Italian-monitoring, and EP deadlines with a second-person verification, including the nominal and apparently weekend-adjusted European-phase entry dates and an earlier internal deadline.
+3. At the applicant's initial secure transmission to retained US counsel, and before wider circulation, have US counsel determine the appropriate legal/confidentiality treatment, identify approved recipients and permitted purposes, and implement access, version, distribution, retention, and any legal-hold controls under DW-12.
+4. Ask PRAXI/Italian counsel for the status and expected delivery of the Italian search report.
+5. Complete B6 English-family/foreign-language handling, the B8 file-history review, official-register confirmation of stored working copies, and retrieval of Tardos 2003 and Lin 2008.
+6. Commission DW-08A's focused vision-mixer/EDL/multi-camera boundary-personalization search and preserve claim-specific results.
+7. Collect the applicant's corporate, assignment, employment, licensing, and entity-status facts.
+8. Docket the US, PCT informal-comment, Italian-monitoring, and EP deadlines with a second-person verification, including the nominal and apparently weekend-adjusted European-phase entry dates and an earlier internal deadline.
 
 ### B. Complete before the US filing package is approved
 
@@ -176,6 +180,7 @@ This deferred-work program is complete only when:
 2. all required documents and official records are stored or linked in the repository or counsel's controlled file;
 3. counsel's route, priority, disclosure, formalities, ownership, entity-status, and EP decisions are recorded in writing;
 4. every required filing has a receipt and independent record check; and
-5. continuing monitoring remains assigned through issuance, abandonment, or formal transfer of responsibility.
+5. continuing monitoring remains assigned through issuance, abandonment, or formal transfer of responsibility; and
+6. counsel's package-handling determination is recorded and the approved access, version, distribution, preservation, retention, and legal-hold controls have been implemented.
 
 An unchecked reminder, an email request without follow-up, or the mere presence of a citation in this repository does not satisfy the completion standard.
