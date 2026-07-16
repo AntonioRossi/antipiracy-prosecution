@@ -2,6 +2,16 @@
 
 Working copies of the prior-art and prosecution documents referenced in `../AA11393US-US_IDS-reference-list_DRAFT.md` (IDs below match that inventory) and analyzed in `../AA11393US-prior-art-comparison-matrix_DRAFT.md`. The retrieval sequence, suggested owners, filing gates, and completion evidence are controlled in `../AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`. Counsel obtains/verifies official copies for filing; nothing in this folder is annotated — the PDFs stay clean. The one analysis file stored here is `AA11393US-claim-document-mapping-matrix_DRAFT.md` (added 16.07.2026): the claim-by-claim × document degree-of-mapping grid, which projects the feature matrix's findings onto the 30 drafted claims and records each document's review depth. All other analysis stays in the feature matrix.
 
+## Layout
+
+| Path | Contents |
+|---|---|
+| `*.pdf` | The retrieval-verified source documents. Provenance per row below. **Never modified** — SHA-256 recorded in `.pipeline/pdf-source-checksums.sha256` and re-verified 16.07.2026 (19/19 identical). |
+| `AA11393US-claim-document-mapping-matrix_DRAFT.md` | Claim × document mapping grid. |
+| `markdown/` | Working transcription of every PDF (added 16.07.2026), so the matrix can be scored against full text. Text-layer extraction where available, OCR otherwise. **Not for filing; verify quotes against the PDFs.** See its README. |
+| `searchable/` | The nine image-only PDFs with an OCR text layer added, for viewer search. Derived copies, not originals. |
+| `.pipeline/` | The conversion scripts and the source-PDF checksum manifest, kept for reproducibility. |
+
 Provenance varies by document and is stated per row below. A1 and B1 are ISA-transmitted copies; B8 came from the EPO publication server; C8 came from the ETSI publication server; A9 came from the USPTO Patent Public Search print endpoint; the other 16.07.2026 additions came from Google's `patentimages` document store and carry the caveat noted after the table. **No file in this folder is a filing copy until counsel has confirmed it against an official register.**
 
 ## In this folder
@@ -27,12 +37,13 @@ Provenance varies by document and is stated per row below. A1 and B1 are ISA-tra
 | A9 | `A9_US12412229B2.pdf` (16 pp.) | Downloaded 16.07.2026 from the **USPTO Patent Public Search print endpoint** (register-grade source). Identified as a forward citation of D1. Face confirmed: Aronshtam et al., Synamedia Limited, "Anti-Collusion System Using Multiple Watermark Images", filed 17.05.2022, granted 09.09.2025; the face records prior publication **US 2023/0377085 A1 of 23.11.2023** — before the 26.02.2024 provisional — and cites A1 and D1's grant. Image-only pages, no text layer. | Yes — official USPTO copy read on its face; publication/grant-pair decision open (the publication is not separately stored) |
 | B9 | `B9_WO2009156973A1.pdf` (27 pp.) | Downloaded 16.07.2026 from Google `patentimages`. Identified on the face of D1's US grant (US 11,540,029 B2). Face confirmed: France Telecom SA, inventors Liu/Lian/Wang/Ren, "Fingerprinting Method and System", pub. 30.12.2009, priority PCT/CN2008/071467 of 27.06.2008 — per-user version assembled by sequentially selecting consecutive segments across space-desynchronized streams, with watermarks embedded in the selected segments. Scanned document, no text layer. | Face matched to IDS row; counsel to confirm against an official register before filing |
 | C8 | `C8_ETSI-TS-104-002_DASH-IF-AB-Watermarking.pdf` | Downloaded 16.07.2026 from the **ETSI publication server**. Face confirmed: ETSI TS 104 002 V1.1.1 (2023-08), "Publicly Available Specification (PAS); DASH-IF Forensic A/B Watermarking — An interoperable watermarking integration schema"; published August 2023, before the 26.02.2024 provisional. Native-text PDF. | Yes — official ETSI copy; title page read and matched to IDS row |
+| A10 | `A10_US20100100971A1.pdf` (24 pp.) | Downloaded 16.07.2026 from Google `patentimages` (native text layer). Identified on the face of D1's US grant and initially set aside; **promoted the same day after B2's ISR — transcribed in `markdown/` — rated it category X against D1's own PCT claims**. Face confirmed: Geyzel et al. (inventors as applicants), "System for Embedding Data", pub. 22.04.2010 — rendering-device embedding of device-identifying marks via time-varying full-frame colour modulation; network-side capture and extraction. | Face matched to IDS row; counsel to confirm against an official register before filing |
 
 **Provenance caveat for the 16.07.2026 `patentimages` additions (A2–A5, B2–B4, B7, A6–A8, B9).** These came from Google's `patentimages` store, which serves the genuine office-issued document PDF — unlike a scrape of a Google Patents HTML page, which would be a transcription. Each was verified on its face against its IDS row before storage. They are nonetheless *not* office-transmitted copies in the sense A1/B1 are (ISA transmittal) or B8 is (EPO publication server). Counsel should confirm each against an official register — USPTO Patent Public Search or WIPO Patentscope — before relying on one as the filed copy. A9 and C8 do not carry this caveat: A9 is from USPTO Patent Public Search and C8 from the ETSI publication server, both office/SDO-operated sources.
 
 ## Still to obtain (retrieval links in IDS §9)
 
-Every patent document in the IDS (A1–A9, B1–B9) is now stored. What remains is non-patent literature, one prosecution document, and per-document handling work.
+Every patent document in the IDS (A1–A10, B1–B9) is now stored. What remains is non-patent literature, one prosecution document, and per-document handling work.
 
 | IDS ID | Document | Note |
 |---|---|---|
