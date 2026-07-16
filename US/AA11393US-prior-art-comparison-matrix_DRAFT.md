@@ -12,8 +12,10 @@ The proposed inventive combination is:
 2. a structured edit list recording source-camera selections and cut time codes;
 3. local movement of a camera-selection boundary so that a mate uses frames from a different camera during an adjacent interval;
 4. optionally, preservation or restoration of a later boundary;
-5. association of the resulting timing pattern or manifest representation with a recipient; and
-6. recovery of that pattern from suspected content to resolve the recipient.
+5. association of the resulting camera-cut timing pattern or manifest representation with a recipient; and
+6. derivation and matching, from suspected content, of a camera-source-transition pattern that includes corresponding switch timings to resolve the recipient.
+
+Terminology in this matrix follows the claim strategy: **camera-cut timing pattern** denotes the timing representation used by the production, distribution, and end-to-end families, while **camera-source-transition pattern** denotes the richer detection-side representation of source transitions and their corresponding switch timings. The latter is not merely a label applied to generic timing data.
 
 ## 2. Element matrix
 

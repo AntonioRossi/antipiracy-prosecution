@@ -65,9 +65,11 @@ The list is intentionally broader than the ISA results. It is not a patentabilit
 
 ## 7. Completion checklist
 
+The deferred retrieval, ownership/formalities, and EP-coordination tasks are organized in `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`. This checklist remains the disclosure inventory's operative reminder.
+
 - [ ] Select §371 or bypass route and apply the correct IDS treatment.
 - [ ] Verify all publication numbers, kind codes, dates, titles, inventors/applicants, and family relationships against official records.
-- [ ] Obtain official copies of B3–B8 and complete foreign-document handling.
+- [ ] Obtain official copies of B3–B7 and complete foreign-document handling; the B8 A1 copy is already stored, but its EPO file-history review remains open.
 - [ ] Obtain a complete copy of Tardos 2003.
 - [ ] Request the Italian search report and add every new citation.
 - [ ] Verify B6's exact CN publication number against an official register and obtain the appropriate copy and English handling.
@@ -77,6 +79,7 @@ The list is intentionally broader than the ISA results. It is not a patentabilit
 - [ ] Check whether other members of the A4 manifest-art citation family warrant review, particularly real-time anti-piracy, adaptive watermarking, and content-segment-variant references cited on its face.
 - [ ] Record counsel's decision for every candidate: submit, duplicate/family not needed, nonmaterial, or await further review.
 - [ ] Preserve copies of the filed IDS, references, and Patent Center receipt.
+- [ ] If potentially material information is identified with an effective prior-art date after 26 February 2024 but before 19 February 2025, or any Office questions priority, notify US counsel and reassess provisional entitlement, materiality, disclosure timing, and effective-filing-date representations before taking a substantive position.
 
 ## 8. Related-application note
 

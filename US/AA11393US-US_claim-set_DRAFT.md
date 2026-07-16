@@ -27,6 +27,7 @@ No independent computer-readable-medium claim is included. If software-vendor co
 4. **Concrete detection.** Generic “AI” has been removed from the independent claims. Perceptual hashing, sliding-window fuzzy matching, reconstructed manifests, and probabilistic fingerprinting remain supported fallbacks.
 5. **Processor language.** Candidate claims use processors and memory rather than relying on “component” or “apparatus” as possible nonce terms. Counsel should still review §112(f) risk.
 6. **Priority review.** Support citations below are to the PCT application. The separate priority map identifies corresponding provisional support; counsel must confirm that every claim receiving the provisional date is fully supported there.
+7. **Pattern terminology.** The two pattern terms are deliberately related but not interchangeable. A **camera-cut timing pattern** is the sequence or arrangement of camera-switch times produced in a version and, where applicable, represented by chunks or manifests for distribution. A **camera-source-transition pattern** is the richer detection-side structure that identifies camera-source transitions together with their corresponding camera-switch timings. Counsel should preserve this hierarchy unless a final support or claim-construction review supports unification.
 
 ## 3. Candidate claims
 
@@ -100,9 +101,9 @@ identify a candidate camera-source-transition pattern matching the detected came
 
 search the record for a recipient associated with the matching candidate camera-source-transition pattern or its respective delivered version.
 
-**17.** The system of claim 16, wherein detecting the camera-switch timings comprises comparing reference audio-video content with the suspected unauthorized distribution using perceptual hashes of frames.
+**17.** The system of claim 16, wherein detecting the camera-source transitions and corresponding camera-switch timings comprises comparing reference audio-video content with the suspected unauthorized distribution using perceptual hashes of frames.
 
-**18.** The system of claim 17, wherein detecting the camera-switch timings further comprises fuzzy matching in which perceptual hashes of groups of frames are compared using sliding windows.
+**18.** The system of claim 17, wherein detecting the camera-source transitions and corresponding camera-switch timings further comprises fuzzy matching in which perceptual hashes of groups of frames are compared using sliding windows.
 
 **19.** The system of claim 16, wherein the instructions cause the system to derive time codes from the detected camera-switch timings and build one or more reconstructed manifest files from the derived time codes.
 
@@ -160,7 +161,8 @@ recording which recipient or group of recipients received each manifest file.
 | Camera-cut timing pattern represented through interleaved manifests | 9, 11, 15, 24 | Tie known manifest/segment technology to the multi-camera structural variable |
 | Recipient record / ledger | 9, 12, 16, 20, 22, 25 | Preserve the forensic association step |
 | Operational camera-source-transition matching | 16 | Tie stored and detected patterns to regions where delivered versions select between temporally corresponding camera views, rather than to generic timing data alone |
-| Cut detection plus perceptual hash and sliding fuzzy match | 17, 18, 26 | Concrete detection fallback; not expected to be independently novel |
+| Camera-source-transition detection plus perceptual hash and sliding fuzzy match | 17, 18 | Concrete detection fallback tied to the richer claim 16 structure; not expected to be independently novel |
+| Camera-switch-timing detection using perceptual hash and sliding fuzzy match | 26 | Timing-specific end-to-end fallback under claim 22; not expected to be independently novel |
 | Reconstructed manifest | 19, 20, 25 | Narrow end-to-end distribution/detection implementation |
 | Probabilistic/collusion processing | 21, 28 | Avoid overclaiming single-version matching as a complete collusion solution |
 
@@ -179,7 +181,8 @@ This table is a drafting guide, not counsel's final written-description opinion.
 | 13 | PCT claim 13 and blockchain registration component 150 |
 | 14, 27 | PCT claim 6 and method distribution embodiment using unicasting |
 | 16, 22 | PCT claim 1; detection apparatus; camera-cuts detection algorithm 131; record of associations. Counsel must confirm support for the proposed claim 16 expression of candidate and detected “camera-source-transition patterns.” |
-| 17–18, 26 | PCT claims 2–3; Example 5 perceptual hashing and sliding-window fuzzy matching |
+| 17–18 | PCT claims 2–3; Example 5 perceptual hashing and sliding-window fuzzy matching. Counsel should confirm support for using those comparisons to detect both camera-source transitions and their corresponding timings. |
+| 26 | PCT claims 2–3; Example 5 perceptual hashing and sliding-window fuzzy matching applied to camera-switch timings in the end-to-end method. |
 | 19–20, 25 | PCT claim 15; detection component 130, retrieval component 140, reconstructed manifest 121′ and ledger search |
 | 21, 28 | PCT claim 5; Tardos/probabilistic-fingerprinting passages; collusion discussion |
 
@@ -197,3 +200,4 @@ This table is a drafting guide, not counsel's final written-description opinion.
 10. **Official format.** If used as a §371 preliminary amendment, convert to compliant claim-status identifiers and amendment markings under 37 CFR 1.121. If used in a bypass filing, prepare it as original claim text with the correct continuity statement and specification package.
 11. **Detection-claim functional relationship.** Claim 16 deliberately requires pattern derivation and matching at temporal regions where versions differ in selected camera views. Counsel should preserve that operational relationship, confirm written-description support, and avoid relying only on an intended-use or data-label statement that stored timings were “produced by” the mate process.
 12. **Conditional collusion limitations.** Claims 21 and 28 affirmatively require suspected content assembled from different delivered versions before reciting probabilistic attribution. Counsel should preserve positive performance of the attribution operation and avoid optional “when” language in a method claim.
+13. **Detection-dependent terminology.** Claims 17 and 18 expressly address detection of camera-source transitions and corresponding camera-switch timings to remain aligned with claim 16. Claim 19 intentionally remains timing-specific because it derives time codes and reconstructs manifest information from those time codes; do not broaden it merely for terminological symmetry.

@@ -54,6 +54,19 @@ The correct resynchronization rule therefore appears expressly in both the provi
 
 This issue belongs in the confidential counsel analysis. Do not insert it into the public WIPO informal comments unless counsel concludes that doing so is strategically necessary.
 
+### Trigger for renewed priority and disclosure analysis
+
+The present limited review has not identified potentially material art or another prior-art event having an effective date after the provisional filing on 26 February 2024 but before the PCT filing on 19 February 2025. This is not a clearance conclusion.
+
+If a reference, activity, or other information potentially material to patentability is identified with an effective prior-art date in that interval, or if any Office questions priority entitlement, counsel must reassess:
+
+1. the claim-by-claim Example 2 and provisional-support position;
+2. whether the effective filing date becomes outcome-determinative for any pending claim;
+3. applicable disclosure obligations, including whether an IDS or other action is required; and
+4. every representation concerning entitlement to the provisional date.
+
+The direction to keep the present internal analysis out of the WIPO informal comments is subject to that reassessment. The trigger does not itself dictate public disclosure of attorney analysis; counsel must decide the correct disclosure and prosecution response based on the material information then known.
+
 ## 4. Candidate-claim mapping
 
 | Candidate claims | Provisional basis | PCT basis | Priority confidence before counsel review |
@@ -78,3 +91,4 @@ This issue belongs in the confidential counsel analysis. Do not insert it into t
 6. If commercially important improvements were developed after the PCT filing, identify them separately for possible continuation-in-part strategy rather than mixing them into this support map.
 7. Address expressly the provisional Example 2 inconsistency identified in section 3 before relying on the provisional date for claims 2, 3, or 23 or moving resynchronization into an independent claim.
 8. Confirm whether the candidate claim 16 formulation—candidate and detected camera-source-transition patterns at regions where delivered versions select between camera views—is fully supported as an operational relationship, not merely as a description of stored data.
+9. Establish responsibility for monitoring potentially material information with an effective prior-art date in the provisional-to-PCT interval and activate the reassessment above if such information appears or any Office questions priority.

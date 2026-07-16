@@ -8,9 +8,16 @@ Except for a document expressly approved and signed for filing, everything here 
 
 The proposed US strategy should consistently center on:
 
-> version-specific, local movement of camera-selection boundaries using synchronized multi-camera source footage, recorded in a structured list of edit instructions, associated with recipients, and later recovered from the camera-cut timing pattern of suspected content.
+> version-specific, local movement of camera-selection boundaries using synchronized multi-camera source footage, recorded in a structured list of edit instructions, represented and associated with recipients as camera-cut timing patterns, and later recovered from suspected content through camera-source transitions and their corresponding switch timings.
 
 The shorthand “many differently edited versions, not merely many marked copies of one completed edit” is useful to explain the architecture. It is not, by itself, the legal distinction. The claimable distinction is the complete data flow from multi-camera source material, through local edit-boundary variation and recipient association, to recovery of the same structural timing quantity.
+
+### Pattern terminology used in this package
+
+- **Camera-cut timing pattern** means the sequence or arrangement of camera-switch times produced in a version and, where applicable, represented by chunks or manifests for distribution.
+- **Camera-source-transition pattern** means the richer detection-side structure that identifies camera-source transitions together with their corresponding camera-switch timings.
+
+The second includes more structural information than the first. This distinction is deliberate: claims 1/9/15/22 preserve useful production, distribution, and end-to-end scope around timing representations, while claim 16 requires operational detection of source-transition structure. Counsel should not treat the terms as accidental synonyms or unify them without reviewing support, prior art, and scope.
 
 ## 2. Package map
 
@@ -21,6 +28,7 @@ The shorthand “many differently edited versions, not merely many marked copies
 | `AA11393US-priority-support-map_DRAFT.md` | Claim-feature mapping to both provisional 63/557,868 and the PCT application as filed | Counsel to confirm entitlement and continuity data |
 | `AA11393US-prior-art-comparison-matrix_DRAFT.md` | Element-by-element comparison of D1, D2, and supplemental candidate art | Patentability analysis and IDS materiality review |
 | `AA11393US-US_IDS-reference-list_DRAFT.md` | Disclosure inventory, document-handling status, relevance notes, and open items | Source data for counsel's IDS; not represented as complete |
+| `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md` | Deferred work plan for prior-art retrieval, Italian-report monitoring, US formalities, ownership/recordation, and the EP Rule 161 workstream | Assign owners and complete at the stated filing/prosecution gates; deferral from this drafting pass is not authorization to miss a deadline |
 | `AA11393US-PCT_informal-comments-IB_DRAFT.md` | Corrected public response to the ISA Written Opinion | PRAXI and US/EP counsel to align, verify quotations, and approve before ePCT filing |
 | `prior-art/` | Local store of cited and candidate prior-art documents, keyed to the IDS inventory IDs (D1/D2 official copies extracted from the ISR transmittal; verified EP 2 811 416 A1; retrieval status for the rest) | Working copies — counsel obtains/verifies official copies for filing |
 
@@ -49,6 +57,7 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 | High | PCT support is not the same as entitlement to the provisional date | Confirm every material claim limitation against both the provisional and PCT disclosures |
 | High | Provisional Example 2 contains an internally inconsistent Cut 4 time, although its table and corrective text expressly state the reference-aligned time | Require a written counsel view on priority for resynchronization claims 2, 3, and 23; keep the issue in internal analysis unless counsel directs otherwise |
 | High | Detection claim 16 can otherwise be characterized as generic matching of informational timing data | Require operational derivation and matching of camera-source-transition structure at regions where delivered versions select different synchronized camera views |
+| High | Later-discovered information may make entitlement to the provisional date outcome-determinative | If potentially material art or another prior-art event has an effective date after 26 February 2024 but before 19 February 2025, or an Office challenges priority, require counsel to reassess priority, disclosure obligations, and every effective-filing-date representation |
 | Medium | D1's frame-rate transformation can change inter-cut intervals | Maintain a fallback requiring a local boundary shift and a later cut that retains reference timing or restores synchronization |
 | Medium | Public comments can affect later claim interpretation | Avoid absolute statements about watermark exclusion, unmodified pixels, imperceptibility, attack resistance, or inherent scene integrity |
 | Medium | §112(f), functional claiming, and algorithm disclosure | Prefer processor/configured-operation formulations and have counsel confirm corresponding structure and algorithmic support |
@@ -72,17 +81,21 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 4. Confirm the strongest support-safe wording for local camera-boundary movement, alternate-camera frame substitution, and later resynchronization.
 5. Address expressly the provisional Example 2 inconsistency and its effect, if any, on the provisional date for resynchronization claims.
 6. Preserve an operational camera-source-transition limitation in the detection independent rather than relying only on the informational origin of stored timing data.
-7. Confirm §112(f), §112(a)/(b), and §101 posture and revise nonce terms such as “component” and “apparatus” where appropriate.
-8. Confirm benefit to provisional 63/557,868 feature by feature and ensure ADS/continuity language is correct for the selected route.
-9. Review every supplemental reference for materiality and complete the IDS, copies, translations, and concise explanations as required.
-10. Verify entity status from current ownership, employees, licenses, and obligations to assign. The provisional claimed small-entity status, but that does not replace a current determination; separately assess micro-entity eligibility.
-11. Confirm the inventor oath/declaration, applicant identity, assignment chain, and any necessary USPTO recordation for the selected filing route.
-12. Align the WIPO informal comments with the intended US and EP positions and avoid unintended disclaimer.
+7. Confirm that “camera-cut timing pattern” and “camera-source-transition pattern” retain the deliberate hierarchy stated above and that claims 17–18 are support-safe as harmonized.
+8. Confirm §112(f), §112(a)/(b), and §101 posture and revise nonce terms such as “component” and “apparatus” where appropriate.
+9. Confirm benefit to provisional 63/557,868 feature by feature and ensure ADS/continuity language is correct for the selected route.
+10. Establish a monitoring rule for potentially material information having an effective prior-art date in the provisional-to-PCT interval and for any Office priority challenge.
+11. Review every supplemental reference for materiality and complete the IDS, copies, translations, and concise explanations as required.
+12. Verify entity status from current ownership, employees, licenses, and obligations to assign. The provisional claimed small-entity status, but that does not replace a current determination; separately assess micro-entity eligibility.
+13. Confirm the inventor oath/declaration, applicant identity, assignment chain, and any necessary USPTO recordation for the selected filing route.
+14. Align the WIPO informal comments with the intended US and EP positions and avoid unintended disclaimer.
 
 ## 7. Filing-readiness checklist
 
 - [ ] Obtain counsel's claim-specific priority view on the provisional Example 2 inconsistency.
+- [ ] Reassess that priority view if potentially material information has an effective prior-art date between 26 February 2024 and 19 February 2025 or an Office challenges priority.
 - [ ] Finalize claim 16 with a supported operational camera-source-transition relationship.
+- [ ] Confirm the deliberate hierarchy between camera-cut timing patterns and camera-source-transition patterns and approve the harmonized claims 17–18.
 - [ ] Confirm that claims 21 and 28 affirmatively require mixed-version suspected content and performance of probabilistic attribution.
 - [ ] Manage the 30/4 Track One set with no net claim-count headroom.
 - [ ] Confirm a compliant inventor oath/declaration or authorized delayed/substitute handling.
@@ -92,10 +105,12 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 - [ ] Obtain the Italian search report and route every newly cited reference into the IDS review.
 - [ ] Prepare the separate EP Rule 161 workstream consistently with the approved public PCT position.
 
+The document-retrieval, disclosure, formalities, ownership, and EP tasks above are controlled in more detail by `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`.
+
 ## 8. Filing hygiene
 
 - Do not file any Markdown document without attorney conversion to the required filing format and final record verification.
 - Do not add unsupported matter to a bypass specification. If counsel proposes new technical matter, identify it as a possible continuation-in-part issue rather than silently treating it as PCT-supported.
 - Do not characterize an IDS citation as an admission of prior-art status or materiality.
 - Do not add an unnecessary US-specification admission that D1 is prior art; let counsel determine any required background treatment. Disclosure through an IDS is separate from an applicant admission.
-- Maintain one consistent vocabulary: **reference content**, **mate**, **camera-selection boundary/camera cut**, **structured list of edit instructions**, **timing pattern**, **record of associations/ledger**, and **suspected unauthorized distribution**.
+- Maintain one consistent vocabulary: **reference content**, **mate**, **camera-selection boundary/camera cut**, **structured list of edit instructions**, **camera-cut timing pattern**, **camera-source-transition pattern**, **record of associations/ledger**, and **suspected unauthorized distribution**. Preserve the defined relationship between the two pattern terms rather than flattening them into synonyms.

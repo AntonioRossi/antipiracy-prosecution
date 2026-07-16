@@ -1,6 +1,6 @@
 # US/prior-art — Local Prior-Art Document Store
 
-Working copies of the prior-art and prosecution documents referenced in `../AA11393US-US_IDS-reference-list_DRAFT.md` (IDs below match that inventory) and analyzed in `../AA11393US-prior-art-comparison-matrix_DRAFT.md`. Counsel obtains/verifies official copies for filing; nothing in this folder is annotated — keep analysis in the matrix, not in the PDFs.
+Working copies of the prior-art and prosecution documents referenced in `../AA11393US-US_IDS-reference-list_DRAFT.md` (IDs below match that inventory) and analyzed in `../AA11393US-prior-art-comparison-matrix_DRAFT.md`. The retrieval sequence, suggested owners, filing gates, and completion evidence are controlled in `../AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`. Counsel obtains/verifies official copies for filing; nothing in this folder is annotated — keep analysis in the matrix, not in the PDFs.
 
 ## In this folder
 

@@ -10,9 +10,16 @@ The international Written Opinion found claims 1–18 novel and industrially app
 
 ## 2. Invention statement to use throughout prosecution
 
-> A multi-camera production system records camera selections as edit time codes, locally moves selected camera-selection boundaries using temporally corresponding frames from another camera to create distinguishable timing patterns, associates delivered patterns with recipients, and later recovers the same structural timing information from suspected content.
+> A multi-camera production system records camera selections as edit time codes, locally moves selected camera-selection boundaries using temporally corresponding frames from another camera, associates the resulting camera-cut timing patterns with recipients, and later derives and matches camera-source transitions and their corresponding switch timings from suspected content.
 
 The strongest concrete example extends one camera shot by ten frames, correspondingly delays the next camera shot, and restores the reference timing at a later cut. This is more defensible than a generic statement that a time code changes “relative to another cut,” because D1 also discloses frame-rate transformation.
+
+Use the pattern terminology deliberately:
+
+- a **camera-cut timing pattern** is the sequence or arrangement of camera-switch times produced in a version and, where applicable, represented by chunks or manifests for distribution; and
+- a **camera-source-transition pattern** is the richer detection-side structure identifying camera-source transitions together with their corresponding camera-switch timings.
+
+The latter includes the former's timing information but adds source-transition structure. This hierarchy preserves broader timing-based language in claims 1/9/15/22 while requiring an operationally stronger detection limitation in claim 16. Do not collapse the terms into synonyms without reviewing written-description support, prior art, and claim scope.
 
 ## 3. Commercial actor and enforcement map
 
@@ -99,6 +106,19 @@ Use the attached provisional/PCT map to confirm:
 
 Keep the Example 2 inconsistency in the internal priority analysis. Do not add it to the public WIPO informal comments unless counsel concludes that a public statement is strategically necessary.
 
+### Intervening-information trigger
+
+The limited review recorded in this package has not identified potentially material art or another prior-art event having an effective date after 26 February 2024 but before 19 February 2025. That statement is not a clearance opinion and must not be treated as proof that no such information exists.
+
+Reopen the priority and disclosure analysis promptly if:
+
+- a patent document, publication, public-use or sale allegation, or other potentially material information is identified with an effective prior-art date in that interval;
+- a US, PCT, EP, Italian, or other Office questions entitlement to the provisional date;
+- a search report or counterpart proceeding takes a position that makes the effective filing date material; or
+- the applicant proposes relying on the provisional date to overcome a reference or other patentability position.
+
+At that point counsel should reassess, claim by claim, provisional support, the Example 2 inconsistency, applicable disclosure obligations including 37 CFR 1.56, and every representation concerning the effective filing date. This is an internal monitoring instruction, not a conclusion that the priority issue or an internal legal assessment must presently be volunteered in the WIPO informal comments.
+
 ## 8. §101 and §112 directions
 
 For eligibility, characterize the invention as concrete processing of multi-camera source frames, edit instructions, adaptive-stream manifests, and detected shot boundaries to improve how streaming variants are generated and forensically resolved. Do not rely on the business objective of identifying a recipient and do not describe the claims as “§101-safe.”
@@ -111,8 +131,10 @@ For §112:
 - confirm corresponding algorithm disclosure if §112(f) is invoked;
 - treat the ML claims as expendable because their disclosure is result-oriented;
 - ensure that “camera-selection boundary,” local substitution, and resynchronization remain within the language and teaching of the filed documents;
-- preserve the functional relationship in claim 16 between detected transitions, camera-view selection regions, candidate patterns, and recipient resolution; and
-- draft collusion claims 21 and 28 as affirmative limitations requiring mixed-version suspected content and performance of probabilistic attribution, rather than optional “when” clauses.
+- preserve the functional relationship in claim 16 between detected transitions, camera-view selection regions, candidate patterns, and recipient resolution;
+- draft collusion claims 21 and 28 as affirmative limitations requiring mixed-version suspected content and performance of probabilistic attribution, rather than optional “when” clauses;
+- preserve the stated hierarchy between camera-cut timing patterns and camera-source-transition patterns; and
+- confirm that claims 17 and 18 may recite detection of both camera-source transitions and their corresponding timings, while keeping claim 19 timing-specific because reconstructed manifests are built from derived time codes.
 
 ## 9. Procedural choice
 
@@ -165,9 +187,11 @@ The revised WIPO comments preserve the synergy and architecture argument while c
 
 The comments are explanatory only and do not amend the application.
 
+If the intervening-information trigger in section 7 is activated, counsel should reconsider the disclosure and argument strategy before filing or supplementing the comments. Activation of the trigger does not by itself require insertion of the internal Example 2 analysis into the public comments.
+
 ## 11. IDS instructions
 
-Review the supplemental candidates, complete official bibliographic/copy/translation handling, obtain the Italian search report, and file the counsel-approved disclosure package under the procedure applicable to the selected route. In particular:
+Review the supplemental candidates, complete official bibliographic/copy/translation handling, obtain the Italian search report, and file the counsel-approved disclosure package under the procedure applicable to the selected route. The deferred tasks, suggested owners, triggers, and completion evidence are collected in `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`. In particular:
 
 - verify CN 100583750 C against an official register and obtain the appropriate copy and English handling;
 - inspect the EP 2 811 416 A1 family and EPO file history, without treating current legal status as controlling its prior-art disclosure;
@@ -192,6 +216,8 @@ Treat the list as an inventory, not as a statement that every item is prior art 
 12. Are the WIPO informal comments approved for filing and aligned with the intended EP response?
 13. Does candidate claim 16 establish a patentable operational relationship to camera-source-transition structure with adequate provisional and PCT support, or should it be restructured further?
 14. Are the inventor declaration, applicant identity, assignment chain, and recordation record complete for the selected route?
+15. Who will monitor the provisional-to-PCT interval for potentially material intervening information, and what event will trigger a renewed priority, IDS, and representation review?
+16. Is the deliberate relationship between “camera-cut timing pattern” and “camera-source-transition pattern” support-safe and appropriately reflected in claims 1/9/15/16/22 and harmonized claims 17–18?
 
 ## 13. Current procedural authorities to confirm
 
@@ -205,5 +231,6 @@ These links identify the current official materials used to prepare the internal
 - [USPTO Track One program](https://www.uspto.gov/patents/initiatives/patent-application-initiatives/prioritized-patent-examination-program)
 - [USPTO MPEP §708.02(b) — Track One claim limits and termination](https://www.uspto.gov/web/offices/pac/mpep/s708.html)
 - [USPTO MPEP §609 — information disclosure statements](https://www.uspto.gov/web/offices/pac/mpep/s609.html)
+- [USPTO MPEP §2001 — duty of disclosure, candor, and good faith](https://www.uspto.gov/web/offices/pac/mpep/s2001.html)
 - [USPTO subject-matter eligibility resources](https://www.uspto.gov/patents/laws/examination-policy/subject-matter-eligibility)
 - [Federal Circuit: CloudofChange v. NCR (distributed-system use)](https://www.cafc.uscourts.gov/opinions-orders/23-1111.OPINION.12-18-2024_2438003.pdf)
