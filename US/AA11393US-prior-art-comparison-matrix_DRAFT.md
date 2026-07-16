@@ -76,6 +76,8 @@ All search results should be routed into the IDS inventory and this matrix, with
 
 **Status 16.07.2026.** A claim-informed supplemental review executed the first, third, fourth, and fifth bullets in part, via citation mining (A4 grant face; D1 US-grant face, US 11,540,029 B2) and keyword sweeps; results were routed to the IDS as A6–A9, B9, C7, and C8 and added to the element matrix above. The camera-selection/vision-mixer/EDL and screener-versioning sweeps (second and sixth bullets) returned no on-point art; that observation is limited to the searches run and is not a clearance. A professional search covering all bullets remains advisable before substantive reliance.
 
+A claim-level projection of this matrix — one Y/P/— cell per drafted claim per stored document, with per-document review depth — lives at `prior-art/AA11393US-claim-document-mapping-matrix_DRAFT.md`. This feature matrix remains the analytic source; on any conflict, correct the projection, and keep the two synchronized per that file's §8 re-score triggers.
+
 ## 6. Verification and document-completion priorities
 
 1. Confirm CN 100583750 C against an official register and obtain an official copy plus appropriate English translation, abstract, or concise explanation. **Register check and copy completed 16.07.2026 (Espacenet cross-check; CNIPA-issued copy stored); English handling remains open.**
