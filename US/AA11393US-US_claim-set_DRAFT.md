@@ -1,215 +1,199 @@
-# AA11393US — US National Entry: Restructured Claim Set (DRAFT)
+# AA11393US — US Claim Strategy and Candidate Claim Set (DRAFT)
 
-> **DRAFT — for review by US counsel. Not for filing as-is.**
-> Prepared 15 July 2026 from PCT/IB2025/051755 as filed (19.02.2025; priority US 63/557,868 of 26.02.2024) and the ISA/EP Written Opinion mailed 13.05.2025 (examiner Folea).
+> **COUNSEL-REVIEW DRAFT — NOT FOR FILING AS-IS.**
 >
-> **Use:** as the claim text of a **preliminary amendment** if entering under 35 U.S.C. § 371, or as the **claims as filed** if filing a § 111(a) bypass continuation (bypass enables Track One prioritized examination).
->
-> **Structure:** 20 claims, 3 independent (system / method / CRM), all single dependencies — no multiple-dependent-claim fees, no excess-claim fees.
-> **No new matter:** every limitation is traced to the PCT application as filed in the Support Map (§ 3 below).
+> Prepared for the US phase of PCT/IB2025/051755. This document proposes an actor-focused claim architecture and support-safe fallback ladder. US counsel must confirm wording, §101, §112(a)/(b)/(f), antecedent basis, restriction, fees, priority entitlement, and conformity with the selected §371 or §111(a) route.
 
----
+## 1. Recommended architecture
 
-## 1. Design rationale (summary for the reviewing attorney)
+The earlier draft placed production, distribution, recipient recording, and detection in every independent claim. That expressed the full inventive combination but risked requiring proof across different commercial actors. This draft uses four independent claims, each directed to a likely operator:
 
-1. **Merged PCT claims 1 + 10 + (15, generalized) into independent claim 1.** The inventive core defensible over D1 (US 2021/0352381 A1, Synamedia) is the *cut-timing-as-fingerprint* mechanism: identity is written into the timing of directorial camera cuts recorded in a structured edit list, and read back from a pirate stream by detecting shot-boundary timings. As filed, claim 1 claimed this only at result level.
-2. **"Artificial intelligence" removed from all claim language.** The WO (Items V §1.1, VIII §§4.2–4.3) gave the term zero patentable weight, correctly: the disclosed detection is scene-change detection + perceptual hashing + sliding-window fuzzy matching (Example 5). The claims now recite the disclosed algorithms by name ("camera-cuts detection algorithm", perceptual hash, fuzzy matching). AI/ML remains only in dependent claims 6 and 18 where the specification actually describes an ML component (analytics component 104).
-3. **Global-delay guard.** D1 ¶[0048]–[0049] and ¶[0072] (not relied on by the ISA, but sitting in the cited document) disclose a per-copy uniform *time-delay* transformation. Claim 1 therefore requires that the timing of at least one camera cut change **relative to at least one other camera cut** — a uniform stream delay preserves all relative cut timings and cannot meet the limitation. Support: Example 2, Tables 1–3 (cut 2 extended 10 frames, cut 3 shifted, re-sync at cut 4 → inter-cut intervals change).
-4. **"Distinguishable" defined.** WO Item VIII §4.2 held "distinguishable" vacuous (any single bit differs). Now defined as *distinguishable by the pattern of camera-cut timings* (support: "Each mate 111 is characterized by subtle differences in the sequence and timing of camera cuts, rendering each version uniquely distinguishable from others").
-5. **§ 101.** PCT claim 18 ("Computer program…") is non-statutory in the US; replaced by Beauregard claim 19 ("non-transitory computer-readable medium"). Alice posture of the set: the claims recite a specific technical mechanism (modulating edit points recorded in an EDL-type list; segment/manifest interleaving; shot-boundary detection; reconstruction and ledger matching), i.e., a McRO/Enfish-style improvement to streaming content-protection technology, not a bare abstract idea of "identifying copies". Independent claims are kept mechanism-level, not result-level, for this reason.
-6. **§ 112(f) anchors.** "…apparatus/component" are nonce-ish terms. Claim 1 anchors the distribution apparatus to "one or more servers" and the detection apparatus to "at least one processor and a memory" (support: computing-environment and server-cluster passages, PCT claims 8–9, which are otherwise dropped). The mate creation component is anchored "in the audio-video production pipeline" with the Example 1 algorithm as corresponding structure. **Reviewer to confirm** whether to recast fully as "one or more processors configured to…" style.
-7. **"One or more cameras" → "a plurality of cameras."** Camera *cuts* logically require ≥ 2 cameras; the original wording was internally inconsistent and gratuitously invited the single-source reading that helped the ISA map D1's single storage 101. Deliberate, harmless narrowing.
-8. **Fee structure:** 20 claims / 3 independent — within basic filing fees. All "according to any of the previous claims" multiple dependencies flattened to single dependencies (chains chosen to preserve the most valuable fallback positions).
+| Independent claim | Primary actor / infringement target | Core limitation |
+|---|---|---|
+| 1 — production system | broadcaster, production facility, mate-generation vendor | local movement of a camera-selection boundary using temporally corresponding frames from another camera |
+| 9 — distribution system | streaming platform, licensee, CDN/origin operator | manifests/chunk selections representing camera-cut timing patterns and associated with recipients |
+| 16 — detection system | monitoring provider, platform, rights owner | operational recovery of camera-source transitions and recipient resolution |
+| 22 — end-to-end method | vertically integrated operator; full-combination patentability position | production variation + association + recovery in one claim |
 
----
+The set contains **30 total claims / 4 independent claims / no multiple-dependent claims**, exactly at the current Track One numerical ceiling and therefore with **no net claim-count headroom**. During prioritized examination, an amendment may add a claim only if the application still contains no more than 30 total claims and four independent claims and contains no multiple-dependent claim—for example, through a coordinated cancellation. An amendment that results in exceeding those limits terminates prioritized examination. Excess-claim fees may nevertheless apply above the basic 20/3 fee allocation. Counsel should select claims for commercial value, not preserve 20/3 solely to avoid modest claim fees.
 
-## 2. Claim set
+No independent computer-readable-medium claim is included. If software-vendor coverage justifies one, counsel should consider replacing the end-to-end method with a subsystem-specific medium claim—preferably production or detection software—rather than restoring an end-to-end medium claim that requires one software product to perform the entire commercial lifecycle.
 
-### Independent system claim
+## 2. Drafting principles
 
-**1.** A system for identifying a source of an unauthorized distribution of streaming audio-video content, the system comprising:
+1. **Precise inventive core.** “Different videos” is not enough. The claims focus on local reassignment of a temporal interval from one camera source to another around a recorded camera cut.
+2. **D1 delay/frame-rate response.** D1 alone does not disclose actual alternate-camera frame selection, which distinguishes its global retiming of a completed base copy. Counsel should nevertheless assess §103 combinations with conventional multi-camera production art. Later resynchronization is preserved as an express fallback, subject to the provisional-disclosure caveat identified in the separate priority map.
+3. **No mandatory watermark disclaimer.** The edit-boundary mechanism may operate without pixel-domain embedding, but the claims remain open to complementary watermarking unless counsel deliberately chooses a narrower dependent claim.
+4. **Concrete detection.** Generic “AI” has been removed from the independent claims. Perceptual hashing, sliding-window fuzzy matching, reconstructed manifests, and probabilistic fingerprinting remain supported fallbacks.
+5. **Processor language.** Candidate claims use processors and memory rather than relying on “component” or “apparatus” as possible nonce terms. Counsel should still review §112(f) risk.
+6. **Priority review.** Support citations below are to the PCT application. The separate priority map identifies corresponding provisional support; counsel must confirm that every claim receiving the provisional date is fully supported there.
 
-an audio-video production pipeline configured to receive video captured, live or pre-recorded, from a plurality of cameras and to produce a reference audio-video content, wherein switches between cameras of the plurality of cameras are camera cuts, and wherein the audio-video production pipeline is configured to record camera-cut timings by inserting corresponding time codes into a structured list of instructions describing edits;
+## 3. Candidate claims
 
-a mate creation component in the audio-video production pipeline, the mate creation component configured to generate at least one mate of the reference audio-video content by automatically applying a variation to the time code of at least one camera cut recorded in the structured list of instructions, such that a timing of the at least one camera cut relative to at least one other camera cut differs between the at least one mate and the reference audio-video content, each mate being a version of the same underlying audio-video content, the reference audio-video content and the at least one mate together forming a plurality of distinguishable versions, each of the distinguishable versions being distinguishable by a pattern of its camera-cut timings;
+### Production / mate-generation system
 
-a distribution apparatus comprising one or more servers, the distribution apparatus configured to deliver respective ones of the distinguishable versions to respective recipients and to make a record of associations between the distinguishable versions and the respective recipients; and
+**1.** A system for generating distinguishable versions of audio-video content, the system comprising one or more processors and memory storing instructions that, when executed by the one or more processors, cause the system to:
 
-a detection apparatus comprising at least one processor and a memory, the detection apparatus configured to:
+receive video captured from a plurality of cameras and a structured list of instructions describing edits that produce reference audio-video content from the captured video, the structured list identifying source cameras and time codes for camera cuts at which selection changes from one camera of the plurality of cameras to another;
 
-&nbsp;&nbsp;&nbsp;&nbsp;receive a suspected unauthorized distribution of audio-video content and detect camera-switch timings therein by applying a camera-cuts detection algorithm;
+generate a mate of the reference audio-video content by automatically varying a time code of at least one camera cut in the structured list; and
 
-&nbsp;&nbsp;&nbsp;&nbsp;identify which of the distinguishable versions matches the suspected unauthorized distribution by comparing the detected camera-switch timings with the patterns of camera-cut timings of the distinguishable versions; and
+produce the mate according to the varied structured list such that, during a temporal interval adjacent to the varied camera cut, the mate contains temporally corresponding frames from a first camera where the reference audio-video content contains frames from a second camera, a camera-cut timing pattern of the mate thereby differing from a camera-cut timing pattern of the reference audio-video content.
 
-&nbsp;&nbsp;&nbsp;&nbsp;search the record of associations for a recipient associated with the identified distinguishable version, thereby identifying a source of the suspected unauthorized distribution.
+**2.** The system of claim 1, wherein the instructions cause the system to preserve in the mate a timing of a later camera cut from the reference audio-video content, thereby restoring synchronization between the mate and the reference audio-video content from the later camera cut onward.
 
-### System dependent claims
+**3.** The system of claim 2, wherein varying the time code extends a camera selection in the mate by ten frames, delays a following camera selection by ten frames, and restores synchronization at the later camera cut.
 
-**2.** The system of claim 1, wherein the camera-cuts detection algorithm compares the reference audio-video content with the suspected unauthorized distribution using a perceptual hash method.
+**4.** The system of claim 1, wherein the structured list of instructions is an edit decision list identifying, for each of a plurality of cuts, a source camera, an in-point time code, and an out-point time code.
 
-**3.** The system of claim 2, wherein the camera-cuts detection algorithm further compares the reference audio-video content with the suspected unauthorized distribution using a fuzzy matching method in which perceptual hashes of groups of frames are compared using sliding windows.
+**5.** The system of claim 1, wherein the video is captured live from diverse viewpoints and the structured list records director-commanded real-time camera selections.
 
-**4.** The system of claim 1, further comprising a set of pipeline components in the audio-video production pipeline configured to overlay one or more additional audio or video elements onto the reference audio-video content and the at least one mate, the one or more additional audio or video elements being nonexistent in the reference audio-video content as captured.
+**6.** The system of claim 1, wherein the instructions cause the system to apply a time-code variation at each of a plurality of director-commanded camera cuts.
 
-**5.** The system of claim 1, wherein the detection apparatus is further configured to apply a probabilistic fingerprinting algorithm in identifying the source of the suspected unauthorized distribution.
+**7.** The system of claim 1, further comprising a machine-learning analytics process configured to determine time-code variations or mate configurations based on historical data patterns and piracy-attempt profiles, wherein the determined time-code variations or mate configurations are supplied for generation of one or more further mates.
 
-**6.** The system of claim 1, further comprising an analytics component comprising a machine learning algorithm configured to determine, based on historical data patterns and piracy attempt profiles, time-code variations and mate configurations, and to send the determined time-code variations and mate configurations to the mate creation component.
+**8.** The system of claim 1, wherein the instructions further cause one or more audio or video elements not present in the video received from the plurality of cameras to be overlaid onto at least one of the reference audio-video content or the mate.
 
-**7.** The system of claim 1, wherein the distribution apparatus comprises a set of transcoding components configured to:
+### Distribution / recipient-association system
 
-segment the distinguishable versions into chunks for distribution to end users through a content delivery network (CDN) enabling adaptive streaming; and
+**9.** A content-distribution system comprising one or more servers, the one or more servers comprising one or more processors and memory storing instructions that, when executed by the one or more processors, cause the content-distribution system to:
 
-generate a set of different manifest files tailored to end-user devices and network conditions, the manifest files pointing to unique interleaved combinations of the chunks.
+receive a plurality of versions of audio-video content including a reference version and at least one mate version, the reference version and the at least one mate version differing by a pattern of timings of camera cuts between views captured by different cameras;
 
-**8.** The system of claim 7, wherein the transcoding components further comprise a mixing component configured to integrate chunks of the reference audio-video content with chunks of the at least one mate, to generate the manifest files, and to associate end users with the manifest files as different camera cuts are progressively provided.
+segment the plurality of versions into chunks;
 
-**9.** The system of claim 7, wherein the record of associations is a ledger containing records of the set of different manifest files and of the end users receiving each manifest file, the ledger identifying which end user or group of end users received a given manifest file.
+generate a plurality of manifest files pointing to respective interleaved combinations of chunks selected from the plurality of versions, each respective interleaved combination representing a camera-cut timing pattern;
 
-**10.** The system of claim 9, further comprising a blockchain registration component configured to read the manifest files and the associated end users from the ledger and to register associations of the manifest files and the end users in a blockchain.
+cause delivery, to respective recipients, of audio-video streams assembled according to respective manifest files; and
 
-**11.** The system of claim 9, wherein the detection apparatus comprises:
+store, in a record of associations, associations between the respective recipients and the manifest files or camera-cut timing patterns delivered to the respective recipients.
 
-a detection component configured to run the camera-cuts detection algorithm, the camera-cuts detection algorithm analyzing timings of camera cuts in the suspected unauthorized distribution, devising time codes therefrom, and building one or more reconstructed manifest files from the devised time codes; and
+**10.** The content-distribution system of claim 9, wherein the chunks are distributed through a content delivery network using adaptive streaming and the manifest files are tailored to recipient devices or network conditions.
 
-a retrieval component configured to search the ledger for one or more manifest files equal to the one or more reconstructed manifest files and to identify thereby an end-user account, or a set of end-user accounts, used for accessing the audio-video content.
+**11.** The content-distribution system of claim 9, wherein a mixing process integrates chunks of the reference version with chunks of one or more mate versions and progressively assigns distinguishable manifest files to recipients as additional camera-cut variations become available.
 
-### Independent method claim
+**12.** The content-distribution system of claim 9, wherein the record of associations is a ledger identifying an end user or group of end users that received each manifest file.
 
-**12.** A method of identifying a source of an unauthorized distribution of streaming audio-video content, the method comprising:
+**13.** The content-distribution system of claim 12, further comprising a blockchain registration process configured to register associations between manifest files and end users from the ledger.
 
-capturing video of an event from diverse viewpoints using a plurality of cameras;
+**14.** The content-distribution system of claim 9, wherein delivery of the audio-video streams comprises unicasting respective streams to the respective recipients.
 
-processing the captured video through an audio-video production pipeline to produce a reference audio-video content, including switching between cameras of the plurality of cameras in real time, switches between the cameras being camera cuts;
+**15.** The content-distribution system of claim 9, wherein the respective interleaved combinations encode recipient-associated sequences of choices between chunks of the reference version and chunks of the at least one mate version at temporal regions corresponding to camera cuts.
 
-recording camera-cut timings by inserting corresponding time codes into a structured list of instructions describing edits;
+### Detection / recipient-resolution system
 
-generating at least one mate of the reference audio-video content by automatically applying a variation to the time code of at least one camera cut recorded in the structured list of instructions, such that a timing of the at least one camera cut relative to at least one other camera cut differs between the at least one mate and the reference audio-video content, the reference audio-video content and the at least one mate together forming a plurality of distinguishable versions, each of the distinguishable versions being distinguishable by a pattern of its camera-cut timings;
+**16.** A system for identifying a source of a suspected unauthorized distribution of audio-video content, the system comprising one or more processors and memory storing:
 
-distributing respective ones of the distinguishable versions to respective recipients;
+a plurality of candidate camera-source-transition patterns associated with respective delivered versions of audio-video content, each candidate camera-source-transition pattern identifying camera-source transitions and corresponding camera-switch timings at temporal regions adjacent to camera cuts defined by a structured list of edit instructions, at least two of the respective delivered versions differing at one or more of the temporal regions by selection between temporally corresponding frames captured by different cameras;
 
-recording, in a record of associations, which of the distinguishable versions was distributed to which recipient;
+a record associating the respective delivered versions or candidate camera-source-transition patterns with respective recipients; and
 
-monitoring for a suspected unauthorized webcast of the event and detecting camera-switch timings in the suspected unauthorized webcast by applying a camera-cuts detection algorithm;
+instructions that, when executed by the one or more processors, cause the system to:
 
-identifying which of the distinguishable versions matches the suspected unauthorized webcast by comparing the detected camera-switch timings with the patterns of camera-cut timings of the distinguishable versions; and
+receive the suspected unauthorized distribution;
 
-searching the record of associations for a recipient associated with the identified distinguishable version, thereby identifying a source of the suspected unauthorized webcast.
+detect camera-source transitions and corresponding camera-switch timings in the suspected unauthorized distribution at one or more of the temporal regions;
 
-### Method dependent claims
+derive from the detected camera-source transitions and corresponding camera-switch timings a detected camera-source-transition pattern;
 
-**13.** The method of claim 12, wherein generating the at least one mate comprises applying a single time-code variation at each director-commanded camera cut.
+identify a candidate camera-source-transition pattern matching the detected camera-source-transition pattern; and
 
-**14.** The method of claim 12, further comprising:
+search the record for a recipient associated with the matching candidate camera-source-transition pattern or its respective delivered version.
 
-segmenting the distinguishable versions into chunks;
+**17.** The system of claim 16, wherein detecting the camera-switch timings comprises comparing reference audio-video content with the suspected unauthorized distribution using perceptual hashes of frames.
 
-generating a set of different manifest files tailored to end-user devices and network conditions, the manifest files pointing to unique interleaved combinations of the chunks;
+**18.** The system of claim 17, wherein detecting the camera-switch timings further comprises fuzzy matching in which perceptual hashes of groups of frames are compared using sliding windows.
 
-distributing the chunks to end users through a content delivery network (CDN) enabling adaptive streaming; and
+**19.** The system of claim 16, wherein the instructions cause the system to derive time codes from the detected camera-switch timings and build one or more reconstructed manifest files from the derived time codes.
 
-recording, in a ledger constituting the record of associations, which end user or group of end users received each manifest file.
+**20.** The system of claim 19, wherein the record is a ledger of manifest files delivered to end-user accounts and the instructions cause the system to search the ledger for an end-user account associated with a manifest file matching the one or more reconstructed manifest files.
 
-**15.** The method of claim 14, wherein identifying which of the distinguishable versions matches the suspected unauthorized webcast comprises:
+**21.** The system of claim 16, wherein the suspected unauthorized distribution comprises portions obtained from different delivered versions, and wherein the instructions further cause the system to apply a probabilistic fingerprinting algorithm to candidate contributions from a plurality of recipients.
 
-devising time codes from the detected camera-switch timings;
+### End-to-end method
 
-building one or more reconstructed manifest files from the devised time codes; and
+**22.** A method of identifying a source of an unauthorized distribution of streaming audio-video content, the method comprising:
 
-searching the ledger for an end-user account associated with a manifest file equal to the one or more reconstructed manifest files.
+receiving video captured from a plurality of cameras and producing reference audio-video content according to a structured list of instructions that identifies source cameras and time codes for camera cuts;
 
-**16.** The method of claim 12, wherein detecting the camera-switch timings comprises comparing the reference audio-video content with the suspected unauthorized webcast using a perceptual hash method and a fuzzy matching method.
+generating a mate by varying a time code of at least one camera cut in the structured list such that, during a temporal interval adjacent to the varied camera cut, the mate contains temporally corresponding frames from a first camera where the reference audio-video content contains frames from a second camera;
 
-**17.** The method of claim 12, wherein distributing comprises delivering the distinguishable versions by unicasting.
+delivering respective versions selected from the reference audio-video content and at least the mate to respective recipients;
 
-**18.** The method of claim 12, further comprising adjusting, by a machine learning algorithm and based on historical data patterns and piracy attempt profiles, time-code variations applied in generating one or more further mates.
+recording associations between the respective versions or their camera-cut timing patterns and the respective recipients;
 
-### Independent computer-readable-medium claim
+detecting camera-switch timings in suspected unauthorized audio-video content;
 
-**19.** A non-transitory computer-readable medium storing instructions that, when executed by one or more processors of a content production and distribution system, cause the content production and distribution system to perform operations comprising:
+identifying a version or camera-cut timing pattern matching the detected camera-switch timings; and
 
-receiving video captured, live or pre-recorded, from a plurality of cameras and producing therefrom a reference audio-video content, switches between cameras of the plurality of cameras being camera cuts;
+searching the recorded associations for a recipient associated with the identified version or camera-cut timing pattern.
 
-recording camera-cut timings by inserting corresponding time codes into a structured list of instructions describing edits;
+**23.** The method of claim 22, wherein generating the mate comprises preserving a timing of a later camera cut from the reference audio-video content, thereby restoring synchronization between the mate and the reference audio-video content from the later camera cut onward.
 
-generating at least one mate of the reference audio-video content by automatically applying a variation to the time code of at least one camera cut recorded in the structured list of instructions, such that a timing of the at least one camera cut relative to at least one other camera cut differs between the at least one mate and the reference audio-video content, the reference audio-video content and the at least one mate together forming a plurality of distinguishable versions, each of the distinguishable versions being distinguishable by a pattern of its camera-cut timings;
+**24.** The method of claim 22, further comprising:
 
-causing delivery of respective ones of the distinguishable versions to respective recipients;
+segmenting the respective versions into chunks;
 
-recording, in a record of associations, which of the distinguishable versions was delivered to which recipient;
+generating manifest files pointing to interleaved combinations of the chunks; and
 
-detecting camera-switch timings in a suspected unauthorized distribution of audio-video content by applying a camera-cuts detection algorithm;
+recording which recipient or group of recipients received each manifest file.
 
-identifying which of the distinguishable versions matches the suspected unauthorized distribution by comparing the detected camera-switch timings with the patterns of camera-cut timings of the distinguishable versions; and
+**25.** The method of claim 24, wherein identifying the version or camera-cut timing pattern comprises deriving time codes from the detected camera-switch timings, building a reconstructed manifest file, and searching a ledger for an end-user account associated with a manifest file matching the reconstructed manifest file.
 
-searching the record of associations for a recipient associated with the identified distinguishable version, thereby identifying a source of the suspected unauthorized distribution.
+**26.** The method of claim 22, wherein detecting the camera-switch timings comprises comparing perceptual hashes of frames from the reference audio-video content and the suspected unauthorized audio-video content using sliding-window fuzzy matching.
 
-**20.** The non-transitory computer-readable medium of claim 19, wherein the operations further comprise:
+**27.** The method of claim 22, wherein delivering the respective versions comprises unicasting the respective versions to the respective recipients.
 
-segmenting the distinguishable versions into chunks;
+**28.** The method of claim 22, wherein the suspected unauthorized audio-video content comprises portions obtained from different respective versions, the method further comprising applying a probabilistic fingerprinting algorithm to identify one or more contributing recipients.
 
-generating a set of different manifest files pointing to unique interleaved combinations of the chunks;
+**29.** The method of claim 22, further comprising determining, using a machine-learning process and based on historical data patterns and piracy-attempt profiles, time-code variations or mate configurations for generating further mates.
 
-recording, in a ledger constituting the record of associations, which end user or group of end users received each manifest file;
+**30.** The method of claim 22, further comprising overlaying one or more additional audio or video elements not present in the video received from the plurality of cameras onto at least one of the reference audio-video content or the mate.
 
-and wherein identifying which of the distinguishable versions matches the suspected unauthorized distribution comprises building one or more reconstructed manifest files from the detected camera-switch timings and searching the ledger for an end-user account associated with a manifest file equal to the one or more reconstructed manifest files.
+## 4. Fallback ladder and prior-art purpose
 
----
+| Fallback | Draft claims | Principal purpose |
+|---|---|---|
+| Structured edit list with source-camera IDs and cut time codes | 1, 4, 22 | Avoid mapping a generic stored finished video onto the production pipeline |
+| Actual alternate-camera frame substitution around a cut | 1, 22 | Distinguish D1's completed-copy signal transformations and generic timing shifts |
+| Later cut retains reference timing / resynchronization | 2, 3, 23 | Distinguish uniform delay and global frame-rate retiming; track Example 2 subject to its provisional drafting inconsistency |
+| Camera-cut timing pattern represented through interleaved manifests | 9, 11, 15, 24 | Tie known manifest/segment technology to the multi-camera structural variable |
+| Recipient record / ledger | 9, 12, 16, 20, 22, 25 | Preserve the forensic association step |
+| Operational camera-source-transition matching | 16 | Tie stored and detected patterns to regions where delivered versions select between temporally corresponding camera views, rather than to generic timing data alone |
+| Cut detection plus perceptual hash and sliding fuzzy match | 17, 18, 26 | Concrete detection fallback; not expected to be independently novel |
+| Reconstructed manifest | 19, 20, 25 | Narrow end-to-end distribution/detection implementation |
+| Probabilistic/collusion processing | 21, 28 | Avoid overclaiming single-version matching as a complete collusion solution |
 
-## 3. Support map (35 U.S.C. § 112(a) — all support in the PCT application as filed)
+## 5. Support map to PCT application as filed
 
-| US claim | Source in PCT/IB2025/051755 as filed |
+This table is a drafting guide, not counsel's final written-description opinion.
+
+| Claims | PCT support |
 |---|---|
-| 1 — pipeline / cameras / camera cuts / time codes in structured list | Claims 1, 10 as filed; Detailed description, system 100 bullet list ("pipeline 102 records all camera cut timings and transitions by inserting corresponding time codes in a list 103 of instructions describing edits"); "diverse viewpoints" (set of cameras 101) |
-| 1 — mate creation, **relative-timing clause** | Claim 1 as filed; mate creation component 110 passages; **Example 2, Tables 1–3** (cut 2 extended 10 frames; cut 3 in-point delayed; re-sync at cut 4 → inter-cut intervals differ from reference) |
-| 1 — "distinguishable by a pattern of its camera-cut timings" | "Each mate 111 is characterized by subtle differences in the sequence and timing of camera cuts, rendering each version uniquely distinguishable from others"; Summary: "identifying illicit copies by comparing detectable edit patterns" |
-| 1 — servers / processor / memory anchors | Claims 8–9 as filed; "computing environment that encompasses at least a processor, at least a memory, at least a storage hardware"; "deployed across one or more server clusters" |
-| 1 — record of associations; ledger generalization | Claim 1 as filed ("a record of associations, made by said distribution apparatus"); ledger 122 passages |
-| 1 — detection by camera-cuts detection algorithm; comparison to versions | Claim 1 as filed (detection of camera-switch timings); camera cuts detection algorithm 131; Summary ("comparing detectable edit patterns"); Example 5 |
-| 2, 3 | Claims 2, 3 as filed; Example 5 (perceptual hash; "comparison of perceptual hashes of groups of frames using sliding windows") |
-| 4 | Claim 4 as filed; "said additional elements are nonexistent in the reference audio-video content" |
-| 5 | Claim 5 as filed; Tardos passages (probabilistic fingerprinting) |
-| 6 | Claim 7 as filed; advanced analytics component 104 passages |
-| 7 | Claim 11 as filed; transcoding components 120 / manifest files 121 passages |
-| 8 | Claim 12 as filed; mixing component 123 passages; Example 4 |
-| 9 | Claim 14 as filed; ledger 122 passages |
-| 10 | Claim 13 as filed; blockchain registration component 150 passages |
-| 11 | Claim 15 as filed; detection component 130 / retrieval component 140 / reconstructed manifest files 121′ passages |
-| 12 | Claim 16 as filed, augmented with claim 10 features (real-time switching; time codes in list 103) and claim-1 merged features; method steps 201–290 |
-| 13 | "In a preferred embodiment … a single time code variation is applied at each director-commanded camera cut" |
-| 14, 15 | Claim 17 as filed (segmenting 240, generation 250, ledger recording 270, monitoring 280, searching 290) |
-| 16 | Claims 2–3 as filed; monitoring step 280 embodiments (perceptual hash; fuzzy matching) |
-| 17 | Claim 6 as filed; distribution step 260 unicasting embodiment |
-| 18 | Claim 7 as filed; programming step 230 embodiment (ML dynamically adjusts content variations) |
-| 19, 20 | Claim 18 as filed (computer program executing method steps except capturing), recast as non-transitory CRM; claim 17 as filed for claim 20 operations |
+| 1, 4, 5, 22 | PCT claims 1 and 10; system 100 description of cameras 101, pipeline 102, list 103, camera cuts, mate creation 110; EDL description; Example 1 |
+| 1–3, 22–23 | Example 2, Tables 1–3: cut 2 extended ten frames, cut 3 delayed, cut 4 starts at reference time; Example 2 explanation of restoring alignment. The provisional contains an internally inconsistent sentence concerning Cut 4; see the separate priority map and obtain counsel's priority opinion. |
+| 6 | Preferred embodiment applying a single time-code variation at each director-commanded camera cut; PCT claim 17 context |
+| 7, 29 | Analytics component 104 and PCT claim 7; acknowledged as thin support and a cancellation candidate |
+| 8, 30 | PCT claim 4 and description of pipeline overlays/additional elements |
+| 9–15, 24 | PCT claims 11–14 and 17; transcoding 120, chunks 113, mixing component 123, manifest files 121, ledger 122; Example 4 |
+| 13 | PCT claim 13 and blockchain registration component 150 |
+| 14, 27 | PCT claim 6 and method distribution embodiment using unicasting |
+| 16, 22 | PCT claim 1; detection apparatus; camera-cuts detection algorithm 131; record of associations. Counsel must confirm support for the proposed claim 16 expression of candidate and detected “camera-source-transition patterns.” |
+| 17–18, 26 | PCT claims 2–3; Example 5 perceptual hashing and sliding-window fuzzy matching |
+| 19–20, 25 | PCT claim 15; detection component 130, retrieval component 140, reconstructed manifest 121′ and ledger search |
+| 21, 28 | PCT claim 5; Tardos/probabilistic-fingerprinting passages; collusion discussion |
 
-### Disposition of PCT claims
+## 6. Counsel decisions and cautions
 
-| PCT claim | Disposition |
-|---|---|
-| 1 | → US 1 (merged with 10, generalized 15; "AI" removed; relative-timing clause added) |
-| 2, 3 | → US 2, 3 (chained; sliding-window detail added from Example 5) |
-| 4 | → US 4 |
-| 5 | → US 5 |
-| 6 | → US 17 (method side only) |
-| 7 | → US 6 and US 18 (recast as concrete data flow) |
-| 8, 9 | Folded into US 1 as structural anchors (processor/memory; servers) — not separate claims |
-| 10 | Merged into US 1 and US 12 |
-| 11 | → US 7 |
-| 12 | → US 8 |
-| 13 | → US 10 |
-| 14 | → US 9 |
-| 15 | → US 11 (and generalized into US 1 detection limb) |
-| 16 | → US 12 (merged with 1+10 features) |
-| 17 | → US 14 + US 15 |
-| 18 | → US 19 (+ US 20) as non-transitory CRM (§ 101 fix) |
-
----
-
-## 4. Open points for the US associate
-
-1. **§ 112(f) review** — "mate creation component", "detection apparatus", "distribution apparatus", "analytics component": confirm the structural anchors suffice or recast as "one or more processors configured to…". Corresponding structure/algorithms if § 112(f) is invoked: Example 1 (mate creation), Example 5 + detection component 130/retrieval 140 (detection), transcoding 120/mixing 123 (distribution).
-2. **Claims 6 / 18 (ML analytics)** are the thinnest-supported claims in the set (the EPO attacked them under clarity as result-language; US analogue is § 112(a)/(b)). They are kept as dependents because they cost nothing; be ready to cancel rather than argue if rejected.
-3. **Preamble weight** — "for identifying a source of an unauthorized distribution" is intended as non-limiting field language; confirm house style.
-4. **"equal to" in claims 11/15/20** is specification-verbatim (reconstructed manifest matching). Consider whether "matching" is safely supported if broader scope is wanted; recommendation: keep "equal to" (narrow fallbacks should be genuinely narrow).
-5. **Do NOT import the EPO's Rule 5.1(a)(ii) fix into the US specification** (no acknowledgment of D1 in the US spec — avoids Applicant Admitted Prior Art). That amendment belongs to the EP regional phase only.
-6. **371 vs. bypass decision** determines whether this text is filed as a preliminary amendment or as the original claims; Track One is available only via bypass (§ 111(a)).
+1. **Local substitution wording.** Confirm that “temporally corresponding frames” and the first-camera/second-camera formulation are the best US expressions of Example 2 and do not introduce an unintended synchronization requirement.
+2. **Breadth versus D1.** Consider a broader production independent claim without actual frame-substitution language only if a narrower claim like claim 1 remains available. A generic relative-timing clause alone may be vulnerable to D1's frame-rate transformation.
+3. **Restriction.** The production, distribution, and detection claims may invite a restriction requirement in a bypass case. Assess whether §371 unity practice or bypass restriction practice better serves the portfolio and whether divisional filings are budgeted.
+4. **Divided infringement.** Claim 22 preserves the full combination but is not the primary enforcement claim where different parties perform the steps. Claims 1, 9, and 16 are intended to reduce that exposure.
+5. **§112(f).** The processor/instruction format reduces reliance on nonce nouns, but counsel should still confirm whether any functional limitation invokes §112(f) and whether the disclosed algorithms are sufficient.
+6. **Machine learning.** Claims 7 and 29 remain the thinnest-supported claims. Retain only as expendable dependents unless counsel identifies better support.
+7. **No-watermark limitation.** Do not add a negative limitation to an independent claim merely to contrast D1. The specification expressly allows watermarking as a complementary layer.
+8. **Eligibility.** Emphasize concrete processing of synchronized camera-source frames, edit instructions, adaptive-stream manifests, and detected shot boundaries. Do not describe the set as categorically §101-safe.
+9. **CRM alternative.** If a medium claim is desired, draft it for the software operations of claim 1 or claim 16 rather than the entire production/distribution/detection chain.
+10. **Official format.** If used as a §371 preliminary amendment, convert to compliant claim-status identifiers and amendment markings under 37 CFR 1.121. If used in a bypass filing, prepare it as original claim text with the correct continuity statement and specification package.
+11. **Detection-claim functional relationship.** Claim 16 deliberately requires pattern derivation and matching at temporal regions where versions differ in selected camera views. Counsel should preserve that operational relationship, confirm written-description support, and avoid relying only on an intended-use or data-label statement that stored timings were “produced by” the mate process.
+12. **Conditional collusion limitations.** Claims 21 and 28 affirmatively require suspected content assembled from different delivered versions before reciting probabilistic attribution. Counsel should preserve positive performance of the attribution operation and avoid optional “when” language in a method claim.
