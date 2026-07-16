@@ -31,7 +31,7 @@ The list is intentionally broader than the ISA results. It is not a patentabilit
 | B3 | WO 2017/017603 A1 | 2017-02-02 | Vikramjeet S. Puri | *System to Detect Unauthorized Distribution of Media Content*; cited in the application's background | Bibliographic data completed; obtain official copy |
 | B4 | WO 2010/044102 A2 | 2010-04-22 | Valuable Innovations Private Limited | *Visibly Non-Intrusive Digital Watermark Based Proficient, Unique & Robust Manual System for Forensic Detection of the Point of Piracy (POP) of a Copyrighted, Digital Video Content*; background citation | Bibliographic data completed; obtain official copy |
 | B5 | CN 202455480 U | 2012-09-26 | Chengdu Doyen Information Technology Co., Ltd. | *Digital Watermark System for Verifying Digital Television Copyright*; background citation | Obtain official copy and English abstract/translation or explanation |
-| B6 | CN 100583750 C | 2010-01-20 | Microsoft Corporation | *Desynchronized Fingerprinting Method and System for Digital Multimedia Data*; background citation; potentially relevant to desynchronization/fingerprinting | Microsoft family identified, but exact CN number remains to be verified against an official register; obtain official copy and English abstract/translation or explanation |
+| B6 | CN 100583750 C | 2010-01-20 | Microsoft Corporation | *Desynchronized Fingerprinting Method and System for Digital Multimedia Data*; background citation; potentially relevant to desynchronization/fingerprinting | CN number **verified against Espacenet** 16.07.2026 (INPADOC family 034750448; US 7,382,905 B2 / AU 2004240154 / KR 101143233 confirmed in-family); copy stored; English abstract/translation or explanation still required. Family also contains `CN 1655500 A` (pre-grant publication) — counsel to select the member to submit |
 | B7 | WO 2021/141686 A1 | 2021-07-15 | Microsoft Technology Licensing, LLC | *Method of Identifying an Abridged Version of a Video*; shots separated by cuts, automatic comparison of target and reference video, piracy use | Supplemental candidate; obtain official WIPO copy; counsel materiality review required |
 | B8 | EP 2 811 416 A1 | 2014-12-10 | Vestel Elektronik Sanayi ve Ticaret A.Ş. | *An Identification Method*; identifies video using subtitle timing patterns and explains temporal identification in view of removable visual watermarks | Official EPO A1 copy stored; inspect family/file history for examination reasoning and cited art; current legal status does not alter the A1 disclosure; counsel materiality review required |
 
@@ -69,10 +69,12 @@ The deferred retrieval, ownership/formalities, and EP-coordination tasks are org
 
 - [ ] Select §371 or bypass route and apply the correct IDS treatment.
 - [ ] Verify all publication numbers, kind codes, dates, titles, inventors/applicants, and family relationships against official records.
-- [ ] Obtain official copies of B3–B7 and complete foreign-document handling; the B8 A1 copy is already stored, but its EPO file-history review remains open.
-- [ ] Obtain a complete copy of Tardos 2003.
+- [x] Obtain copies of B3–B7 — stored 16.07.2026 in `prior-art/` (see that folder's README for per-document provenance and the register-confirmation caveat). Foreign-document handling for B1/B5/B6 and the B8 EPO file-history review remain open.
+- [ ] Complete foreign-language handling (English abstract, translation, or concise explanation) for B1, B5, and B6.
+- [ ] Obtain a complete copy of Tardos 2003 (ACM Digital Library; paywalled — needs institutional or counsel library access).
 - [ ] Request the Italian search report and add every new citation.
-- [ ] Verify B6's exact CN publication number against an official register and obtain the appropriate copy and English handling.
+- [x] Verify B6's exact CN publication number against an official register — confirmed against Espacenet 16.07.2026 (CN 100583750 C, Microsoft Corp, pub. 20.01.2010, INPADOC family 034750448, matching the previously recorded US/AU/KR family members); copy stored. English handling still required.
+- [ ] Decide which member to submit where the IDS names a publication/grant pair and only one is stored: A2, A3, A5, and B6 (`CN 1655500 A` is the B6 pre-grant publication).
 - [ ] Inspect the B8 family and EPO file history; record status for completeness and review examination reasoning and newly identified citations.
 - [ ] Obtain and preserve official copies of A2, A3, A5, B7, and Tardos 2003 if selected for submission or continuing materiality review.
 - [ ] Review A2–A5 and B7–B8 for materiality in light of the final claims.
@@ -96,3 +98,6 @@ These links are for review convenience only; counsel should verify bibliographic
 - [US 2012/0087583 A1](https://patents.google.com/patent/US20120087583A1/en)
 - [WO 2021/141686 A1](https://patents.google.com/patent/WO2021141686A1/en)
 - [EP 2 811 416 A1 official PDF](https://data.epo.org/publication-server/rest/v1.2/publication-dates/20141210/patents/EP2811416NWA1/document.pdf)
+- [CN 202455480 U — Espacenet](https://worldwide.espacenet.com/patent/search?q=pn%3DCN202455480U) (English abstract and Patent Translate available)
+- [CN 100583750 C — Espacenet](https://worldwide.espacenet.com/patent/search?q=pn%3DCN100583750C) (English abstract, Patent Translate, and INPADOC family 034750448)
+- [CN 1655500 A — Espacenet](https://worldwide.espacenet.com/patent/search?q=pn%3DCN1655500A) (B6 pre-grant publication; retrieve if counsel selects this member)
