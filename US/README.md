@@ -17,9 +17,9 @@ The shorthand “many differently edited versions, not merely many marked copies
 ### Pattern terminology used in this package
 
 - **Camera-cut timing pattern** means the sequence or arrangement of camera-switch times produced in a version and, where applicable, represented by chunks or manifests for distribution. In claims 9 and 22 it is structurally constrained by identified camera sources and by the switch timing actually preserved in the corresponding delivered version; it is not an arbitrary fragment-version sequence relabeled as camera timing.
-- **Camera-source-transition pattern** means the richer detection-side structure that identifies camera-source transitions together with their corresponding camera-switch timings.
+- **Camera-source-transition pattern** means the detection-side structure that identifies ordered camera-source transitions together with their corresponding camera-switch timings for operational comparison.
 
-The second includes the detected transition structure used for forensic matching. This distinction is deliberate, but it does not make claims 9 or 22 generic timing claims: those claims constrain each recorded camera-cut timing pattern by identified camera sources and the switch timing preserved in the delivered version. Claim 16 additionally requires operational derivation and matching of the richer transition structure. Counsel should not treat the terms as accidental synonyms or unify them without reviewing support, prior art, and scope.
+The terms serve different claim functions rather than defining a strict information-content hierarchy. In claims 9 and 22, a camera-cut timing pattern records the identified source pair and the switch timing contained in a delivered version. In claim 16, candidate and detected camera-source-transition patterns organize ordered source transitions and corresponding timings at candidate-distinguishing regions for operational derivation and matching. Claims 9 and 22 therefore do not rely on timing alone, and claim 16 does not rely merely on a label applied to generic timing data. Counsel should not treat the terms as accidental synonyms or unify them without reviewing support, prior art, and scope.
 
 ## 2. Package map
 
@@ -89,7 +89,7 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 5. Address expressly the provisional Example 2 inconsistency and its effect, if any, on the provisional date for resynchronization claims.
 6. Preserve an operational camera-source-transition limitation in the detection independent rather than relying only on the informational origin of stored timing data.
 7. Confirm that claim 16 support-safely ties the candidate inter-version difference, detection, and matching to the same candidate-distinguishing region and requires agreement in both the ordered camera-source transition and its switch timing.
-8. Confirm that “camera-cut timing pattern” and “camera-source-transition pattern” retain the deliberate hierarchy stated above and that claims 17–18 are support-safe as harmonized.
+8. Confirm that “camera-cut timing pattern” and “camera-source-transition pattern” retain the distinct claim functions stated above and that claims 17–18 are support-safe as harmonized.
 9. Confirm written-description and priority support for the structural replacements in claims 7, 13, and 29: retained source identifiers around a moved ordered transition; different manifests selecting equal-duration reference and mate chunks spanning the same playback interval, with each chunk containing the transition at its respective timing; and manifest assembly preserving either the reference or varied position of that transition.
 10. Confirm §112(f), §112(a)/(b), and §101 posture and revise nonce terms such as “component” and “apparatus” where appropriate.
 11. Confirm benefit to provisional 63/557,868 feature by feature and ensure ADS/continuity language is correct for the selected route.
@@ -109,7 +109,7 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 - [ ] Confirm support for the structural fallbacks in claims 7, 13, and 29 and the relationship between PCT Examples 2–4 and the corresponding provisional passages in claims 9, 13, 15, and 29.
 - [ ] Approve a claim-9 infringement-evidence plan addressing controlled multi-recipient captures, content comparison, and discovery into manifest/source-chunk mappings and recipient associations.
 - [ ] Obtain US counsel's written package-handling determination and implement approved recipient, access, circulation, version, retention, and legal-hold controls.
-- [ ] Confirm the deliberate hierarchy between camera-cut timing patterns and camera-source-transition patterns and approve the harmonized claims 17–18.
+- [ ] Confirm the distinct claim functions of camera-cut timing patterns and camera-source-transition patterns and approve the harmonized claims 17–18.
 - [ ] Confirm that claims 21 and 28 affirmatively require mixed-version suspected content and performance of probabilistic attribution, and confirm written-description support for claim 21's candidate contributions and respective attribution scores.
 - [ ] Manage the 30/4 Track One set with no net claim-count headroom.
 - [ ] Confirm a compliant inventor oath/declaration or authorized delayed/substitute handling.
@@ -129,4 +129,4 @@ The document-retrieval, disclosure, formalities, ownership, and EP tasks above a
 - Do not add unsupported matter to a bypass specification. If counsel proposes new technical matter, identify it as a possible continuation-in-part issue rather than silently treating it as PCT-supported.
 - Do not characterize an IDS citation as an admission of prior-art status or materiality.
 - Do not add an unnecessary US-specification admission that D1 is prior art; let counsel determine any required background treatment. Disclosure through an IDS is separate from an applicant admission.
-- Maintain one consistent vocabulary: **reference content**, **mate**, **camera-selection boundary/camera cut**, **structured list of edit instructions**, **camera-cut timing pattern**, **camera-source-transition pattern**, **record of associations/ledger**, and **suspected unauthorized distribution**. Preserve the defined relationship between the two pattern terms rather than flattening them into synonyms.
+- Maintain one consistent vocabulary: **reference content**, **mate**, **camera-selection boundary/camera cut**, **structured list of edit instructions**, **camera-cut timing pattern**, **camera-source-transition pattern**, **record of associations/ledger**, and **suspected unauthorized distribution**. Preserve the distinct claim functions of the two pattern terms rather than flattening them into synonyms or treating one as categorically richer than the other.
