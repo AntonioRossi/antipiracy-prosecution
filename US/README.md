@@ -6,6 +6,8 @@
 
 This directory separates two alternative US claiming strategies for PCT/IB2025/051755 while preserving one canonical evidence and disclosure record. The alternatives are not cumulative filing instructions. Counsel should select, revise, or deliberately hybridize them and record which claim set controls.
 
+**Initial-contact status.** The strategy branches and shared controls contain the applicant's present claims, support maps, art analysis, fallback directions, and execution register and are ready for applicant-controlled initial transmission to prospective or retained US counsel under DW-12. Open counsel opinions, route choices, and professional-search tasks are pending pre-filing decisions; their absence does not make the initial decision package incomplete, but no branch is counsel-approved or filing-ready.
+
 ## Strategy routing
 
 | Strategy ID | Directory | Objective | Current status |
@@ -40,7 +42,7 @@ Shared materials must not be copied into a strategy directory. Strategy document
 1. The IDS inventory in `common/` is the only disclosure inventory. Art relevance may be analyzed differently by strategy, but disclosure decisions must be coordinated across every related US application.
 2. The PCT informal-comments draft in `common/` is the only public-comments draft. Do not create strategy-specific public versions; counsel must approve one consistent filing-facing text.
 3. The prior-art PDFs remain clean and unchanged. Quotations from Markdown/OCR aids must be checked against the source PDF or an official copy.
-4. The AF strategy is viable only with a controlled continuation plan. A continuation preserving omitted actor-specific coverage must be filed while a benefit-chain application remains pending and verified before the first patent issues.
+4. The AF strategy is viable only with a controlled continuation plan. For each generation in which supported, commercially valuable scope remains deliberately deferred, an approved successor must be filed and verified while a qualifying benefit-chain application remains pending, or counsel and the applicant must record `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`. The AF memo applies this control recursively without requiring an endless chain or mislabeling closure as preservation.
 5. Arguments, priority positions, and IDS decisions must be coordinated across NA and AF to avoid contradictory records.
 
 ## Reorganization and provenance record
@@ -48,6 +50,8 @@ Shared materials must not be copied into a strategy directory. Strategy document
 The 17 July 2026 discoverability refactor replaced the former flat `US/` drafting layout with this master router, canonical shared controls in [`common/`](common/), the preserved NA package in [`normal-allowance/`](normal-allowance/), and the separate AF proposal in [`allowance-first/`](allowance-first/). The canonical prior-art evidence store remained in [`prior-art/`](prior-art/).
 
 Commit `e6e7e54f80a67be200ca98e2e659738225d40988` is titled “Add draft documents for AA11393US normal allowance strategy,” but its recorded contents are broader: it implements the directory reorganization and adds or updates the AF and canonical shared material as well as the NA routing. That commit message should therefore not be read as a complete description of the analytic or structural work in the commit. Because the commit is already shared on `origin/main`, this entry corrects the provenance record prospectively; repository history should not be rewritten for labeling alone. Later material edits must be identified by the applicable strategy version/status and recorded in the relevant document or matrix change log.
+
+The 17 July 2026 initial-contact defensibility pass did not alter AF claim text. It recorded package readiness for controlled counsel transmission, prepared support-safer contingency paths, made the AF claim 20 no-dependent trade-off and recursive continuation rule express, added a focused structured-list rescore record, and qualified Track One/PTA economics.
 
 ## Recommended counsel reading order
 

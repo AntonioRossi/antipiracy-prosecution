@@ -46,6 +46,8 @@ This architecture trades enforcement breadth for a concentrated patentability po
 
 **Count:** 20 total claims; 2 independent claims; 18 singly dependent claims; no multiple-dependent claims. AF claim 20 is included in the complete counsel-review proposal. Counsel may omit AF claim 20 at filing if the marginal simplicity of a one-independent posture is judged more important than the complementary method coverage; no separate AF claim-set document should be created for that filing choice.
 
+No claim as drafted depends from AF claim 20. This keeps omission of the method independent surgical, but the current AF parent proposal contains no pre-drafted intermediate method-narrowing tier if AF claim 20 is retained and rejected. Counsel may narrow or amend AF claim 20 or add supported method dependents in the parent, subject to claim-count, fee, Track One, dependency, support, and art controls. The continuation reservation separately carries broader and intermediate method candidates—including commercially useful and supportable NA claims 23–30—subject to copendency, support, art, and business-value controls.
+
 ## 3. Candidate claims
 
 ### Integrated allowance-first system
@@ -208,6 +210,8 @@ Known implementations such as perceptual hashing, fuzzy matching, manifests, ada
 
 The separate AF priority/support map records the limitation-level basis and grades direct, contextual, combined-example, and gated support. It should be reviewed together with the as-filed source documents, not used as a substitute for them.
 
+That map also supplies prepared support-safer contingency paths based on direct time-code/version or reconstructed-manifest recovery, the NA actor-focused families, omission of AF claim 14, and sequence-neutral treatment of AF claim 19. Those paths are counsel decision inputs, not preapproved claim text. Removing the same ordered source pair, noncoincident timings, intervening different-camera frames, or linked recipient recovery creates a new strategy version requiring fresh support and art review.
+
 ## 6. Enforcement and portfolio cautions
 
 1. **Actor and proof analysis.** AF claims 1 and 20 each span production, delivery/association, detection, and lookup. A validity-oriented allowance anchor is not necessarily the best infringement claim. Counsel should separately analyze direction/control or joint-enterprise attribution for the method steps, whole-system use for the system claim, divided infringement, and available evidence. AF claim 20 adds a complementary claim format; it does not cure the actor-split risk or improve the prior-art position.
@@ -222,9 +226,11 @@ The separate AF priority/support map records the limitation-level basis and grad
 - **Numerical check:** 20 total / 2 independent / no multiple-dependent claim. The set is within the 30-total/4-independent/no-multiple-dependent numerical limits applicable to Track One and exactly uses the basic 20-total allocation while remaining below the basic 3-independent allocation.
 - **No-headroom rule still matters:** if this set is used in prioritized examination, every amendment must remain within the then-applicable Track One limits. Counsel should verify the current rule and filing mechanics at filing and coordinate any additions with cancellations if required.
 - **Route check:** Track One is a § 111(a) prioritized-examination procedure and is not available merely by making a direct § 371 national-stage entry. Counsel must confirm whether a bypass continuation is selected and satisfy all route-specific requirements.
+- **PTA economics:** Track One targets accelerated final disposition, not necessarily patent issuance. It may produce little or no Office-delay patent term adjustment that might otherwise accrue, but it neither fixes PTA at zero nor determines the final adjustment. Counsel must use case-specific Office-delay, applicant-delay, remaining-term, cost, and continuation-timing assumptions.
 - **Claim-form check:** AF claims 1 and 20 are independent; all 18 dependents refer to one earlier claim; no multiple-dependent claims appear. AF claim 20 affirmatively mirrors AF claim 1's complete operational chain. Convert the draft to the filing route's required original-claim or amendment format and recheck antecedent basis, claim status, and fees.
 - **Substantive caveat:** satisfying a numerical or formal check says nothing about patentability, support, priority, eligibility, enforceability, or allowance. This document recommends no legal conclusion without counsel review.
 
 ## 8. Revision record
 
 - **AF-2026-07-17-v2 (17 July 2026):** repaired first recitation of the ordered transition in AF claim 1; added independent method AF claim 20 as an affirmative twin of the complete AF claim 1 chain; updated the 20-total/2-independent topology, support gates, enforcement cautions, filing-choice direction, and narrative exact-language alignment. No separate system-only AF package is created; counsel may omit AF claim 20 from the single AF proposal if a one-independent filing posture is selected.
+- **Initial-contact defensibility controls (17 July 2026):** made AF claim 20's no-dependent fallback trade-off express; routed prepared support-safer contingency paths without changing the candidate claims; and added qualified Track One/PTA economics. The text of AF claims 1–20 is unchanged by this control pass.

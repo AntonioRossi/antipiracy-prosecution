@@ -4,7 +4,7 @@
 >
 > **INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION.** The responsible US attorney must confirm current law, the actual benefit chain, copendency, filing route, inventorship, support, deadlines, and filing evidence. “Allowance-first” does not guarantee allowance, and “continuation planned” is not a completed filing.
 >
-> **CONTINUATION STATUS: NOT YET PRESERVED.** Close this status only under the completion standard in § 10.
+> **CONTINUATION STATUS: NOT YET PRESERVED.** No successor filing or approved chain-closure outcome is recorded. Section 10 defines the distinct terminal labels `CONTINUATION PRESERVED` and `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`; do not conflate them.
 
 ## 1. Control objective
 
@@ -18,28 +18,30 @@ The continuation is a portfolio-preservation instrument, not a remedy for missin
 
 The later application must satisfy the applicable statutory and regulatory requirements for benefit, including copendency with a qualifying prior application in the chain. The internal execution rule is:
 
-> **File the continuation while a qualifying parent is pending and verify the filing and benefit claim before the first parent patent issues.**
+> **For each generation in which supported, commercially valuable scope remains deliberately deferred, file and verify an approved successor while a qualifying application remains pending, or record an applicant-approved chain-closure decision before that application issues or otherwise loses pendency.**
 
 The legal outer boundary is not the operational target. USPTO guidance encourages earlier filing to avoid accidental loss of copendency. For this package, a notice of allowance triggers execution, and the continuation should be filed and verified before or contemporaneously with issue-fee payment. Do not rely on an expected issue date, the interval after issue-fee payment, a post-issue petition, or an unchecked docket reminder.
 
 If the parent is headed toward abandonment, termination, express abandonment, or another loss of pendency before allowance, the responsible attorney must accelerate the continuation decision and filing. An RCE, divisional, or other filing is not interchangeable with the planned continuation; counsel must choose the correct vehicle.
+
+This control is recursive. After a continuation or divisional is filed, if additional supported and commercially valuable scope remains deliberately deferred, the responsible attorney must designate a then-pending qualifying application as the controlled parent for the next generation and reapply AF-CONT-02 through AF-CONT-11, including ownership and backup, docketing, benefit-chain review, support and art review, IDS coordination, filing, receipt review, and benefit verification. Before that application issues or otherwise loses pendency, counsel must either file and verify an approved successor or record the applicant-approved chain-closure decision, the deliberately relinquished scope, and the business and legal basis. This conditional rule does not require an endless continuation chain.
 
 ## 3. Ownership, gates, and completion evidence
 
 | Control ID | Task | Owner | Trigger / latest internal gate | Required completion evidence |
 |---|---|---|---|---|
 | AF-CONT-01 | Approve whether AF is used, whether AF claim 20 is retained in the filed set, and which coverage is deferred | Lead US counsel with applicant | Before filing the AF parent | Written strategy approval naming the selected parent claim set, AF claim 20 disposition, and reserved families |
-| AF-CONT-02 | Identify the qualifying parent and complete benefit-chain analysis | Lead US counsel | Before parent filing; recheck on parent filing receipt | Chain diagram with application numbers/dates, relationship wording, support sources, and attorney sign-off |
-| AF-CONT-03 | Assign continuation owner and backup | Applicant and lead US counsel | At AF parent filing | Named primary attorney, named backup, docket responsibility acknowledgment, and escalation contact |
-| AF-CONT-04 | Docket execution events | Docketing team under attorney supervision | At AF parent filing | Docket entries for first substantive action review, notice of allowance, issue-fee target, projected issue monitoring, and any abandonment/termination event |
+| AF-CONT-02 | Identify the qualifying application that is the controlled parent for the generation and complete benefit-chain analysis | Lead US counsel | Before the first AF parent filing and immediately when a later pending application is designated as the controlled parent; recheck before successor filing and on its filing receipt | Generation-specific chain diagram with application numbers/dates, relationship wording, support sources, and attorney sign-off |
+| AF-CONT-03 | Assign continuation owner and backup for the controlled generation | Applicant and lead US counsel | At the first AF parent filing and immediately upon designation of each later controlled parent | Named primary attorney, named backup, generation/application identification, docket responsibility acknowledgment, and escalation contact |
+| AF-CONT-04 | Docket execution events for the controlled generation | Docketing team under attorney supervision | At the first AF parent filing and immediately upon designation of each later controlled parent | Generation-specific docket entries for substantive-action review, notice of allowance, issue-fee target, projected issue monitoring, and any abandonment/termination event |
 | AF-CONT-05 | Maintain parent and reservation claims and support chart | Prosecuting attorney | Update after every material amendment, election, new reference, or support determination | Current parent/continuation outline, including AF claim 20 status, mapped to PCT/provisional support and the AF/NA crosswalk |
 | AF-CONT-06 | Select continuation claim family and filing route | Lead US counsel with applicant | No later than response to notice of allowance; earlier if parent pendency is threatened | Written family/route/budget decision, § 7 consequences assessment, and applicant authorization |
 | AF-CONT-06A | Evaluate double-patenting, disclaimer, ownership, and transaction consequences | Lead US counsel with applicant's corporate/transaction contact | Before filing overlapping continuation claims; before any terminal disclaimer; and before a sale, spin-out, financing, license, or ownership separation that may affect the family | Written claim-relationship analysis; affected applications/patents; term and disclaimer assessment; common-ownership/enforcement plan; transaction constraints; and applicant authorization |
 | AF-CONT-07 | Prepare filing package | Filing attorney and paralegal | Begin upon allowance trigger or earlier instruction | Final specification/drawings, claims, ADS/continuity data, inventorship review, declarations/assignments plan, fees, and IDS plan |
-| AF-CONT-08 | File and verify continuation | Filing attorney | Before or contemporaneously with issue-fee payment; in every event while qualifying pendency remains and before first parent issue | USPTO electronic acknowledgment, application number, filing date, submitted documents, fee receipt, and contemporaneous parent-status record |
+| AF-CONT-08 | File and verify the counsel-selected successor application | Filing attorney | Before or contemporaneously with issue-fee payment; in every event before issue or loss of pendency of the qualifying application on which copendency will rely | USPTO electronic acknowledgment, application number, filing date, submitted documents, fee receipt, and contemporaneous parent-status record |
 | AF-CONT-09 | Verify recognized benefit and bibliographic data | Filing attorney/docketing | Immediately on filing receipt | Reviewed filing receipt, recognized benefit chain, corrected ADS/petition plan if needed, and closed discrepancy record |
 | AF-CONT-10 | Coordinate IDS and prosecution positions | Lead US counsel | At filing and throughout both cases | Filed/considered IDS record or documented counsel decision, cross-case position log, and monitoring owner |
-| AF-CONT-11 | Confirm preservation outcome | Lead US counsel with applicant | After receipt verification | Signed completion note identifying the live continuation, preserved families, deliberately omitted families, and next prosecution gate |
+| AF-CONT-11 | Confirm the generation outcome and next-generation disposition | Lead US counsel with applicant | After receipt verification and whenever the controlled parent approaches issue or loss of pendency | Signed outcome note stating either `CONTINUATION PRESERVED`, with the live successor and preserved/omitted families, or `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`, with the relinquished scope and approved basis; identify any next controlled generation and prosecution gate |
 
 An email request, a draft ADS, an unpaid transaction, an unchecked filing receipt, or the existence of a docket entry does not satisfy AF-CONT-08 or AF-CONT-09.
 
@@ -110,6 +112,8 @@ Do not treat 35 U.S.C. § 121 as automatic protection. Counsel must confirm an a
 
 A continuation ordinarily shares the family term measured under 35 U.S.C. § 154 from the earliest application specified by § 154(a)(2), generally the earliest applicable nonprovisional filing in the benefit chain, subject to counsel's analysis of statutory exclusions, patent-term adjustment, patent-term extension, and any disclaimer. Waiting to prosecute deferred claims can consume practical enforceable life, and ordinary patent remedies do not attach to an unissued continuation claim. Counsel and the applicant should compare the expected delay, prosecution cost, remaining term, evidence horizon, and commercial timing when choosing what to defer.
 
+If Track One is selected for a parent or continuation, do not assume that PTA is automatically zero. The USPTO describes Track One as targeting final disposition—not necessarily patent issuance—in about twelve months. That acceleration may produce little or no Office-delay PTA that otherwise might accrue under § 154(b), but the actual adjustment remains a case-specific calculation affected by statutory Office-delay categories, applicant delay, and other facts. The deferral analysis must use an explicit speed/PTA assumption rather than assigning unqualified term value to prioritized examination.
+
 Do not state that 35 U.S.C. § 154(d) provisional rights are automatically available or automatically defeated. They require, among other things, qualifying publication, actual notice, and an issued claim substantially identical to the published claim. Whether the PCT publication, a US publication, AF claim 20, or a later continuation claim can support such rights is claim- and fact-specific. Materially rewritten continuation claims may fail the substantial-identity requirement; counsel must record the publication-to-issued-claim comparison and notice evidence before assigning any provisional-rights value.
 
 ## 8. Event-driven workflow
@@ -132,15 +136,16 @@ Do not state that 35 U.S.C. § 154(d) provisional rights are automatically avail
 ### On notice of allowance
 
 1. Treat the event as an execution trigger.
-2. Obtain applicant authorization and select the first continuation family.
-3. Complete claims, support chart, benefit chain, IDS, ADS, inventorship, and filing papers.
-4. File and verify before or contemporaneously with issue-fee payment under the internal target; do not use the post-payment interval as the ordinary filing plan.
+2. Obtain applicant authorization and record either the approved successor family/vehicle for that generation or the deliberate chain-closure path.
+3. If a successor is approved, complete claims, support chart, benefit chain, IDS, ADS, inventorship, and filing papers.
+4. File and verify the approved successor before or contemporaneously with issue-fee payment under the internal target; do not use the post-payment interval as the ordinary filing plan.
+5. If closure is approved instead, complete § 10.B before the controlled parent issues or otherwise loses pendency and label the result `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`, never `CONTINUATION PRESERVED`.
 
 ### After filing
 
 1. Review the filing receipt and recognized benefit chain immediately.
 2. Preserve the electronic acknowledgment and parent-status evidence.
-3. Close only the filed reservation; keep any additional desired continuation/divisional chain expressly docketed.
+3. Close only the filed reservation. For each additional supported, commercially valuable reservation, designate the next controlled parent and reapply §§ 2–8 and AF-CONT-02 through AF-CONT-11; otherwise preserve the written chain-closure decision.
 4. Coordinate prosecution and disclosure monitoring across all pending cases.
 
 ## 9. Escalation conditions
@@ -159,22 +164,40 @@ Immediate attorney escalation is required if:
 - reissue is proposed as the reason not to preserve copendency;
 - a restriction, divisional, or § 121 position may lose consonance;
 - a terminal disclaimer is proposed without the AF-CONT-06A term, ownership, enforcement, and transaction analysis;
-- a sale, spin-out, financing, license, or ownership separation may conflict with an existing or potential disclaimer; or
+- a sale, spin-out, financing, license, or ownership separation may conflict with an existing or potential disclaimer;
+- supported, commercially valuable scope remains deferred but no next-generation parent, docket, owner, or chain-closure decision is recorded; or
 - no named owner or backup is available to execute the filing.
 
-## 10. Completion standard
+## 10. Generation outcome and completion standard
 
-The continuation-preservation objective is complete only when:
+Before the qualifying controlled parent issues or otherwise loses pendency, each controlled generation must reach and record one of two distinct outcomes.
+
+### A. `CONTINUATION PRESERVED`
+
+Use this label only when:
 
 1. a later application has actually been filed while qualifying pendency exists;
 2. the filing acknowledgment, application number, filing date, submitted papers, and fee status are preserved;
 3. the benefit relationship has been reviewed on the filing receipt and any defect is docketed for correction;
-4. the continuation's claims have a claim-as-a-whole support record and an updated art review;
+4. the successor's claims have a claim-as-a-whole support record and an updated art review;
 5. shared IDS and cross-case consistency responsibilities are assigned;
 6. the applicant and lead US counsel have recorded which coverage is preserved, omitted, or deferred again, including AF claim 20's filed disposition; and
 7. the § 7 reissue, double-patenting/disclaimer, § 121, term, timing, and provisional-rights consequences have been addressed to the extent implicated by the selected plan.
 
-Until those conditions are met, the package must state **continuation not yet preserved**.
+If supported, commercially valuable scope is deferred again, the preservation outcome closes only the completed generation. The program remains active for the next controlled generation, and AF-CONT-02 through AF-CONT-11 reattach immediately.
+
+### B. `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`
+
+Use this label only when, before the controlled parent issues or otherwise loses pendency:
+
+1. the applicant and lead US counsel sign a deliberate decision not to file another successor for the identified generation;
+2. the record identifies the controlled parent, its pendency status, every reservation being relinquished, and AF claim 20's resulting method-coverage status;
+3. the record states the business and legal basis, including the support, art, cost, term, enforcement, transaction, and § 7 consequences considered; and
+4. the docket, reservation register, crosswalk, and package status are updated so no reminder implies that the relinquished scope remains preserved or pending.
+
+An approved chain closure completes the decision-control process for that generation; it does **not** preserve the deferred scope and must never be labeled `CONTINUATION PRESERVED`.
+
+Until one of these outcomes is fully evidenced, the package must state **CONTINUATION STATUS: NOT YET PRESERVED**.
 
 ## 11. Authorities for counsel to confirm
 
@@ -189,7 +212,10 @@ Until those conditions are met, the package must state **continuation not yet pr
 - [35 U.S.C. § 121 — divisional applications](https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title35-section121&num=0&edition=prelim)
 - [USPTO MPEP § 821 — treatment of nonelected claims and consonance cross-reference](https://www.uspto.gov/web/offices/pac/mpep/s821.html)
 - [35 U.S.C. § 154 — patent term and provisional rights](https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title35-section154&num=0&edition=prelim)
+- [USPTO Track One prioritized examination program](https://www.uspto.gov/patents/initiatives/usptos-prioritized-patent-examination-program)
+- [USPTO MPEP § 2731 — statutory patent-term-adjustment periods](https://www.uspto.gov/web/offices/pac/mpep/s2731.html)
 
 ## 12. Revision record
 
 - **AF-2026-07-17-v2 (17 July 2026):** incorporated AF claim 20 into the single AF proposal and reservation register; added the recorded deletion option, separate method-support and search gates, qualified reissue non-reliance, conditional double-patenting/terminal-disclaimer and transaction controls (including the *In re Goodman* sequencing caution), § 121 divisional/consonance controls, and term/provisional-rights consequences. No continuation has been filed or preserved by this revision.
+- **Recursive-control and PTA pass (17 July 2026):** made the repeat-or-close rule apply to every generation in which supported, commercially valuable scope remains deferred; generalized AF-CONT-02–04 for later controlled parents; separated `CONTINUATION PRESERVED` from `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`; attached evidence and escalation controls to the next generation; and added a qualified, case-specific Track One/PTA economic assumption. No continuation has been filed or preserved by this revision.

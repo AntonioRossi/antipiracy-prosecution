@@ -38,7 +38,7 @@ Deltas: **AF claim 2** later-boundary resynchronization · **AF claim 3** ten-fr
 | **A1 / D1** (full) | **P** — completed-copy transforms, device-driven sequences, and recoverable identifiers; no integrated recovery of the claimed identified-camera boundary | — | — | — | — | P |
 | **A2** (full) | **P** — assignment/traitor tracing; no production boundary mechanism | — | — | — | — | — |
 | **A3** (full) | **P** — segment assignment/scoring loop; no production boundary mechanism | — | — | — | — | — |
-| **A4** (full) | **P** — perspective variants, manifests, recovery, and user resolution; no structured-list time-code variation moving the claimed identified-camera boundary | — | — | — | — | P |
+| **A4** (full) | **P** — perspective variants, manifests, recovery, and user resolution; no identified variation of a recorded time code in source-camera edit instructions that causes the retained ordered transition to occur at different reference and mate timings | — | — | — | — | P |
 | **A5** (full) | — — detection technique only | — | — | — | — | — |
 | **A6** (full) | **P** — non-camera temporal-event delivery/recovery loop | — | — | — | — | P |
 | **A7** (full) | **P** — device-driven variant delivery and tracing | — | — | — | — | — |
@@ -50,7 +50,7 @@ Deltas: **AF claim 2** later-boundary resynchronization · **AF claim 3** ten-fr
 | **B3** (full/OCR) | — — watermark monitoring only | — | — | — | — | — |
 | **B4** (full/OCR) | **P** — per-playback marking and point-of-piracy identification | — | — | — | — | — |
 | **B5** (full/OCR) | — — broadcast watermark monitoring | — | — | — | — | — |
-| **B6** (full/OCR) | **P** — per-buyer local timing transform and contributor search; no claimed structured-list camera-boundary operation | — | — | — | — | P |
+| **B6** (full/OCR) | **P** — per-buyer local timing transform and contributor search; no source-camera edit instructions varying a recorded cut time so that the retained ordered transition occurs at different reference and mate timings | — | — | — | — | P |
 | **B7** (full) | — — comparison technique only | — | — | — | — | — |
 | **B8** (full) | — — content-identification technique only | — | — | — | — | — |
 | **B9** (full/OCR) | **P** — variable actual stream switches and recipient keys; no claimed different-camera frame provenance or recovery loop | — | — | — | — | P |
@@ -64,12 +64,12 @@ AF claim 20 was separately read as an affirmative method against each canonical 
 
 | Document (depth) | AF claim 20 whole method | Independent basis |
 |---|:---:|---|
-| **A1 / D1** (full) | **P** | Completed-copy transforms, device-driven sequences, and recoverable identifiers map parts of generation, assignment, and recovery; no structured-list time-code variation producing the claimed different-camera interval or source-pair/time recovery was identified. |
+| **A1 / D1** (full) | **P** | Completed-copy transforms, device-driven sequences, and recoverable identifiers map parts of generation, assignment, and recovery; no source-camera edit instructions varying a recorded cut time so that the retained ordered transition occurs at different reference and mate timings, or source-pair/time recovery, was identified. |
 | **A2** (full) | **P** | Segment-version assignment and traitor tracing map delivery association and attribution, but not the claimed identified-camera production and same-region detection steps. |
 | **A3** (full) | **P** | Segment assignment and recovered-file scoring map generic association and attribution; the camera-boundary generation and detection chain was not identified. |
-| **A4** (full) | **P** | Camera-perspective alternatives, customized manifests, recovered-pattern alignment, and user resolution map several steps; movement and later joint recovery of the same ordered transition between identified cameras at noncoincident recorded times in a structured list were not identified. |
+| **A4** (full) | **P** | Camera-perspective alternatives, customized manifests, recovered-pattern alignment, and user resolution map several steps; no identified teaching varies a recorded time code in a structured list of edit instructions so that the same ordered transition between identified cameras occurs at different reference and mate timings and is later jointly recovered by source pair and timing. |
 | **A5** (full) | **—** | Perceptual-hash and suspect/reference shot comparison map a detection technique only, not a concrete portion of the complete production-to-recipient method. |
-| **A6** (full) | **P** | Recipient-specific temporal events, tailored manifests, stored-pattern comparison, and device/colluder identification map much of the non-camera loop; structured-list variation producing the claimed temporally corresponding different-camera interval was not identified. |
+| **A6** (full) | **P** | Recipient-specific temporal events, tailored manifests, stored-pattern comparison, and device/colluder identification map much of the non-camera loop; no identified teaching varies a recorded time code in source-camera edit instructions so that the retained ordered transition occurs at different reference and mate timings and produces the claimed different-camera interval. |
 | **A7** (full) | **P** | Device-driven segment-version delivery and later tracing map portions of delivery and attribution, but not the claimed production and source-transition detection chain. |
 | **A8** (full) | **P** | Identifying variant sequences and timing obfuscation map portions of individualized delivery; no claimed identified-camera boundary generation and recovery chain was identified. |
 | **A9** (full) | **P** | Client watermark variants, per-client records, and collusion detection map generic individualized marking and attribution, not the ordered identified-camera transition method. |
@@ -77,15 +77,17 @@ AF claim 20 was separately read as an affirmative method against each canonical 
 | **B1 / D2** (full) | **—** | Codec-chain provenance does not concretely map the claimed recipient-specific generation, delivery-association, and suspect-copy recovery method. |
 | **B2 / D1 family** (full) | **P** | Substantively the A1/D1 disclosure: meaningful completed-copy transformation and identification steps, without the claimed multicamera operational chain. |
 | **B3** (full/OCR) | **—** | Source-watermark capture, extraction, and comparison do not concretely map the claimed production-to-recipient camera-transition method. |
-| **B4** (full/OCR) | **P** | Per-playback marking and point-of-piracy identification map a different marking-and-recovery route; no structured-list camera-boundary operation was identified. |
+| **B4** (full/OCR) | **P** | Per-playback marking and point-of-piracy identification map a different marking-and-recovery route; no variation of a recorded time code in source-camera edit instructions to place the retained ordered transition at different reference and mate timings was identified. |
 | **B5** (full/OCR) | **—** | Receiver-inserted broadcast watermark monitoring does not concretely map the complete claimed method. |
-| **B6** (full/OCR) | **P** | Buyer-linked local timing variation, hash reacquisition, and contributor search map timing and attribution operations; no structured-list boundary producing temporally corresponding frames from different cameras or joint source-pair/time match was identified. |
+| **B6** (full/OCR) | **P** | Buyer-linked local timing variation, hash reacquisition, and contributor search map timing and attribution operations; no identified source-camera edit instructions vary a recorded cut time to place the retained ordered transition at different reference and mate timings, produce the different-camera interval, and support the joint source-pair/time match. |
 | **B7** (full) | **—** | Shot-sequence piracy comparison maps a detection technique only, without a concrete mapping to the complete generation, association, and attribution method. |
 | **B8** (full) | **—** | Relative subtitle-time identification maps distortion-tolerant timing comparison only, without recipient-specific camera production and association. |
 | **B9** (full/OCR) | **P** | Key-derived switches at user-different points map individualized switch structure; the streams are transformed versions of the same content and the claimed different-camera frame provenance and detection/recovery operations were not identified. |
 | **C8** (full) | **P** | Standardized aligned A/B delivery and device/account/session patterns map delivery mechanics; the claimed identified-camera production and recovery chain was not identified. |
 
 **AF claim 20 reading.** No reviewed document scored `Y` against the whole method. That result follows from an independent step-and-relationship review, not from the system score. AF claim 20 preserves a method enforcement route, while inheriting every claim-as-a-whole search, support, priority, and combination issue applicable to the parallel AF claim 1 chain.
+
+The focused counterfactual rescore in § 4 of the [`AF prior-art comparison matrix`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) controls the structured-list correction for A4, A6, B6, and B9. It treats their potentially structured records generously, does not rely on absence of an EDL label or EDL fields, identifies the exact causal and recovery relationships still missing, and leaves every AF claim 1 and AF claim 20 `P` score unchanged.
 
 ## 5. Detection, recovery, and collusion fallbacks (AF claims 7–12)
 
@@ -147,7 +149,7 @@ Deltas: **AF claim 13** distribution branch preserving one of the generated tran
 
 ## 7. Document-specific cautions and combinations
 
-1. **A4:** do not say it “derives no timing.” It aligns suspect content, recovers ordered/differential version patterns, identifies camera-perspective occupancy, and resolves users/groups. A4 does not necessarily create the claimed structured-list boundary between identified cameras; inherency should not be assumed merely because perspectives may differ. It also expressly describes Tardos codes across frames of a content fragment, so AF claim 12 cannot rely on the word “Tardos” alone.
+1. **A4:** do not say it “derives no timing.” It aligns suspect content, recovers ordered/differential version patterns, identifies camera-perspective occupancy, and resolves users/groups. A4 does not necessarily vary a recorded time code in source-camera edit instructions so that the retained ordered transition occurs at different reference and mate timings; inherency should not be assumed merely because perspectives may differ. It also expressly describes Tardos codes across frames of a content fragment, so AF claim 12 cannot rely on the word “Tardos” alone.
 2. **A6:** it contains recipient-specific temporal-event generation, tailored manifests, stored-list comparison, and device/colluder identification, and expressly lists a Tardos code as a viewer-associated forensic mark. “Temporal pattern plus recipient lookup” and “Tardos code” are not safe AF distinctions; the claimed operational relationships must do the work.
 3. **B9:** actual switch times may vary by user/key. Its reviewed streams are transformed copies rather than temporally corresponding frames captured by different cameras, and detection is not elaborated. Do not revive the former fixed-grid characterization.
 4. **B6/B8:** broad timing resilience, relative timing, frame-rate tolerance, advertisement handling, and hash reacquisition are crowded.
@@ -177,3 +179,4 @@ Re-score on any AF amendment or renumbering; any new or corrected canonical docu
 | 17.07.2026 | **Reconciled to final AF text** | Reflected AF claim 1's reference-and-mate delivery and three-way delivered-version/pattern/recipient association; conformed AF claims 9 and 11 to their exact operational inputs/outputs; replaced the superseded AF claim 12 delta with segmented-Tardos scoring; changed every AF claim 11 / AF claim 12 `Y` to `P` or `—` because no stored document was identified supplying the complete final delta |
 | 17.07.2026 | **AF-2026-07-17-v2 method-twin score** | Repaired the AF claim 1 transition antecedent without substantive score change; added a separate whole-claim block independently scoring AF claim 20 against all 20 stored documents, with no `Y` result; propagated the shared support and combination cautions and the counsel-controlled deletion option without creating a second AF branch |
 | 17.07.2026 | **Exact-claim-language correction** | Replaced EDL and synchronized-camera shorthand in the AF independent scoring with the actual structured-list and temporally-corresponding-different-camera-frame limitations; expressly reserved EDL fields to AF claim 4/search context; no score changed |
+| 17.07.2026 | **Focused structured-list counterfactual rescore** | Cross-referenced the feature matrix's express A4/A6/B6/B9 review, confirmed that no score depends on absence of an EDL label or fields, and retained every AF claim 1 and AF claim 20 `P` score after applying the exact causal structured-list relationship |

@@ -6,11 +6,13 @@
 >
 > **TERMINOLOGY / FAMILY-RECORD NON-CONCESSION.** AF's use of `camera-source-transition pattern` is a deliberate claim-drafting label for the ordered source identities and switch timing positively recited in the AF claims. It does not declare that term synonymous with, narrower than, or exhaustive of `camera-cut timing pattern`; redefine either term in the specification or NA branch; disclaim timing-only, manifest-based, or other disclosed embodiments; or state a claim-construction position. Counsel must preserve this distinction in any filed amendment or argument and assess family-wide disclaimer and construction effects before characterizing either expression.
 
+> **INITIAL-CONTACT STATUS.** This briefing and its linked documents contain the applicant's present claims, support analysis, art analysis, fallback directions, and execution controls and are ready for applicant-controlled initial transmission to prospective or retained US counsel consistent with DW-12. The § 112/priority opinion and direct-art search are tracked as DW-05A and DW-08A. No requested opinion or filing choice is represented as already answered. Those post-engagement determinations control filing and reliance; they are not prerequisites to counsel receiving this decision package.
+
 ## 1. Decision requested
 
 Determine whether the initial US case should pursue AF claim 1 as a concentrated allowance-oriented system anchor and AF claim 20 as its independent method counterpart, while preserving the actor-focused NA families through a timely continuation or other counsel-approved portfolio structure. Counsel may omit or cancel AF claim 20 at filing if the documented strategy choice is to retain one-independent-claim simplicity; AF claim 20 is an evaluated option, not an instruction to sacrifice that objective automatically.
 
-The requested first decisions are:
+The requested post-engagement decisions are:
 
 1. whether AF claim 1 and AF claim 20 are each supported as a complete operational chain under § 112(a) and entitled, limitation by limitation, to the claimed filing dates;
 2. whether the structural concentration of the AF independents materially improves the patentability position after a focused direct-art search;
@@ -22,7 +24,7 @@ The requested first decisions are:
 
 AF claim 1 requires a system to:
 
-1. receive multi-camera video and a structured edit list identifying camera sources and cut time codes;
+1. receive multi-camera video and a structured list of edit instructions identifying camera sources and cut time codes;
 2. create a reference and a mate in which the **same ordered transition** from a first identified camera to a second identified camera occurs at noncoincident timings and the interval between those timings contains temporally corresponding frames from different cameras;
 3. deliver generated versions and associate each recipient with a candidate pattern actually present in the delivered version;
 4. examine suspected content at the corresponding distinguishing region and derive the detected source order and timing;
@@ -52,6 +54,8 @@ The controlling candidate text is [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393
 
 Known mechanisms remain dependent because their presence alone is not the present novelty center. Do not promote manifests, hashing, timing fingerprints, CDN delivery, ledgers, or Tardos terminology as independent distinctions without claim-specific analysis.
 
+No claim as drafted depends from AF claim 20. That topology makes omission of the method independent surgical, but the current AF parent proposal contains no pre-drafted intermediate method-narrowing tier if AF claim 20 is retained and rejected. Counsel may narrow or amend AF claim 20 or add supported method dependents in the parent under the applicable count, fee, Track One, dependency, support, and art controls. The continuation reservation also carries broader and intermediate method formulations, including commercially useful and supportable NA claims 23–30; none is automatically approved for later filing.
+
 ## 4. Art pressure and examiner-facing position
 
 The focused [`prior-art comparison matrix`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) and [`claim-document mapping matrix`](AA11393US-AF-claim-document-mapping-matrix_DRAFT.md) identify the following principal pressure:
@@ -73,9 +77,9 @@ The most plausible § 103 route is conventional multicamera/vision-mixer/EDL pra
 
 Do not argue that the number of combined references alone defeats obviousness. Require the rejection to identify every operation and an articulated reason and workable path to combine them. Conversely, do not characterize D1 or the supplemental art categorically; use the exact disclosures and qualifications recorded in the matrices.
 
-A professional search directed to vision mixers, EDLs, personalized alternate-angle edits, screener differentiation, camera-boundary fingerprints, and recovery of source-camera identity remains a condition to any recommendation to broaden either AF independent.
+A professional search directed to vision mixers, EDLs, personalized alternate-angle edits, screener differentiation, camera-boundary fingerprints, and recovery of source-camera identity remains a condition to any recommendation to broaden either AF independent and to the final filing recommendation. It is a tracked post-engagement task, not a prerequisite to applicant-controlled initial transmission of this package.
 
-## 5. Mandatory § 112 and priority gates
+## 5. Pending § 112 and priority determinations before filing
 
 AF's principal strength against the reviewed art is also its principal support risk. Counsel should use the [`AF priority/support map`](AA11393US-AF-priority-support-map_DRAFT.md) and record a written claim-as-a-whole analysis before filing.
 
@@ -100,6 +104,18 @@ At provisional PDF pp. 26–27, the mate table places Cut 4 at `00:00:30:01` and
 - AF claim 14's equal-duration paired chunks are disclosed, but each chunk's claimed internal transition geometry at its respective timing is a combined-example formulation.
 - AF claim 19's overlay is express; counsel must confirm the claimed before-segmentation sequence in the PCT disclosure and preserve a sequence-neutral alternative if needed.
 
+### Prepared support-safer contingency paths
+
+The priority/support map gives counsel concrete paths rather than leaving an open-ended redraft request:
+
+1. if source-identity recovery or the same-region joint source/time object is not adequately conveyed, retain the multi-camera production structure and use the directly disclosed cut-time/version or reconstructed-manifest recovery and recipient-ledger route;
+2. if the Examples 2→3→4 integration is not adequately conveyed, use the applicable NA actor-focused production, distribution, and detection families rather than deleting AF's connective limitations while retaining the integrated-AF label;
+3. if the Examples 2→5 route does not support recovery of both source identities, retain the ordered-camera/noncoincident-timing/alternate-frame production structure and substitute direct timing/version or reconstructed-manifest recovery on the suspect side;
+4. omit AF claim 14 if its paired-chunk geometry is not supported, because equal duration and a common playback interval alone add little distinction; and
+5. remove the before-segmentation ordering or retain a sequence-neutral AF claim 19 fallback if that sequence is not supported.
+
+Each path sacrifices part of the present art-facing structure and must be rescored. Any deletion of the same ordered source pair, noncoincident reference/mate timings, intervening different-camera frames, or operationally linked recipient recovery creates a new strategy version, not an equivalent AF cleanup.
+
 Patentability value does not establish written description. A continuation cannot cure a § 112 deficiency in the common disclosure, and a continuation claim receives an earlier date only to the extent the required subject matter is adequately supported in the benefit chain.
 
 Reopen priority and disclosure analysis if potentially material information appears with an effective date between 26 February 2024 and 19 February 2025 or an Office questions priority. Coordinate any resulting IDS or representation decision through the shared control documents.
@@ -120,7 +136,7 @@ Do not transpose the two analyses: `Akamai` method-step attribution does not by 
 
 Proof may require:
 
-- the structured edit list or equivalent source/cut records;
+- the structured list of edit instructions and evidence that it identifies the claimed source-camera identifiers and recorded cut time codes;
 - synchronized captures of different recipient versions;
 - proof that the same ordered camera pair switches at different timings;
 - the alternate-camera frame interval;
@@ -133,6 +149,8 @@ AF claim 20 additionally requires proof of who performed each affirmative step, 
 ## 7. Procedure and claim-count controls
 
 AF-2026-07-17-v2 contains 20 total claims, two independent claims, 18 singly dependent claims, and no multiple-dependent claim. It is numerically within the current 30-total/four-independent/no-multiple-dependent Track One limits and exactly uses the basic 20-total allocation while remaining below the basic three-independent allocation. That formal fact does not establish eligibility, patentability, allowance, or that two independent categories best serve the allowance-first objective.
+
+The USPTO describes Track One as targeting final disposition—not necessarily patent issuance—in about twelve months. Accelerated disposition may produce little or no Office-delay PTA that otherwise might accrue under 35 U.S.C. § 154(b), but Track One neither fixes PTA at zero nor determines the final adjustment. Counsel should compare expected time to issuance, actual Office and applicant delay, remaining family term, cost, and continuation timing using a case-specific PTA assumption.
 
 Counsel is expressly authorized to omit AF claim 20 from the original filing or cancel it in the filing amendment if a documented decision favors one-independent-claim simplicity. Conversely, AF claim 20 should not be retained merely because numerical room exists. The filed claim listing, count, matrices, support map, crosswalk, and strategy record must identify which topology was actually submitted.
 
@@ -153,7 +171,7 @@ This briefing and the associated AF analyses are valid only for `AF-2026-07-17-v
 
 If AF is selected because actor-specific breadth is being deferred, continuation preservation is not an optional reminder. The applicant and US counsel should approve an owner, docket, trigger, proposed claim families, and completion evidence when the parent is filed.
 
-The continuing application must satisfy the applicable copendency and benefit requirements. The internal safety rule is to file and verify the continuation **before the first parent patent issues**, with an earlier target no later than issue-fee handling unless counsel directs a safer event. A notice of allowance must trigger execution, not begin strategy discussion.
+The continuing application must satisfy the applicable copendency and benefit requirements. For the first and each later generation in which supported, commercially valuable scope remains deliberately deferred, the internal safety rule is to file and verify an approved successor while a qualifying application remains pending, with an earlier target no later than issue-fee handling unless counsel directs a safer event. Otherwise, counsel and the applicant must record `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`, identifying the deliberately relinquished scope and basis. A notice of allowance must trigger execution, not begin strategy discussion. This conditional recursive control does not require an endless continuation chain or treat closure as preservation.
 
 The controlling workflow is [`AA11393US-AF-continuation-preservation_MEMO.md`](AA11393US-AF-continuation-preservation_MEMO.md). It preserves, subject to support and business value:
 
@@ -171,7 +189,9 @@ Use only the canonical [`../common/AA11393US-US_IDS-reference-list_DRAFT.md`](..
 
 The IDS inventory is not a concession that every listed item is prior art or material. Counsel must make and coordinate disclosure decisions for the parent and every continuation. Do not create an AF-specific public-comments draft. Any filed argument must remain consistent with the exact disclosure of D1 and the supplemental art and with positions taken in US, PCT, EP, and Italian proceedings.
 
-## 10. Written recommendations requested from counsel
+## 10. Pending written recommendations requested after initial transmission
+
+The following are counsel work products requested from this prepared decision package. None is represented as already answered, and their pending status does not prevent the initial controlled transmission.
 
 1. Is AF claim 1 adequately supported as a whole, including source identities, same-region detection, and joint source/time matching?
 2. Which support-safer AF claim 1 alternative should be kept ready?
@@ -196,6 +216,7 @@ The IDS inventory is not a concession that every listed item is prior art or mat
 - [USPTO MPEP § 1895 — bypass applications](https://www.uspto.gov/web/offices/pac/mpep/s1895.html)
 - [USPTO Track One program](https://www.uspto.gov/patents/initiatives/patent-application-initiatives/prioritized-patent-examination-program)
 - [USPTO MPEP § 708.02(b) — Track One controls](https://www.uspto.gov/web/offices/pac/mpep/s708.html)
+- [USPTO MPEP § 2731 — statutory patent-term-adjustment periods](https://www.uspto.gov/web/offices/pac/mpep/s2731.html)
 - [USPTO MPEP § 609 — IDS practice](https://www.uspto.gov/web/offices/pac/mpep/s609.html)
 - [USPTO MPEP § 2001 — duty of disclosure, candor, and good faith](https://www.uspto.gov/web/offices/pac/mpep/s2001.html)
 - [USPTO MPEP § 2106 — patent-subject-matter eligibility](https://www.uspto.gov/web/offices/pac/mpep/s2106.html)
@@ -208,3 +229,4 @@ The IDS inventory is not a concession that every listed item is prior art or mat
 ## 12. Revision record
 
 - **AF-2026-07-17-v2 (17 July 2026):** added independent method AF claim 20 to the single AF proposal; stated the recorded deletion-at-filing option; separated method-step attribution from whole-system use; propagated the claim-as-a-whole, direct-art, priority, eligibility, restriction, proof, and continuation gates; and aligned the allowance thesis with the independents' exact structured-list and temporally-corresponding-different-camera-frame language.
+- **Initial-contact defensibility pass (17 July 2026):** recorded readiness for controlled initial counsel transmission; converted support, priority, search, and filing questions into pending post-engagement decisions; added concrete support-safer contingency paths and their costs; made AF claim 20's no-dependent trade-off express; and added recursive continuation and qualified Track One/PTA controls. No claim text or art score changed.
