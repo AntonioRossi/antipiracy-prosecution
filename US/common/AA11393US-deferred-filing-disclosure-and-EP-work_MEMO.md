@@ -1,6 +1,8 @@
 # AA11393US — Deferred Filing, Disclosure, and EP Work Memo
 
-> **INTERNAL COUNSEL WORK PLAN — NOT FOR FILING.**
+> **CANONICAL SHARED CONTROL MEMO · STATUS 17 JULY 2026**
+>
+> **INTERNAL COUNSEL WORK PLAN — NOT FOR FILING.** This memo controls for both `NA` and `AF`; strategy-specific documents may add stricter gates but may not silently relax this register.
 >
 > This memo controls work intentionally deferred from the present US drafting pass. “Deferred” does not mean optional or safe to postpone beyond an applicable deadline. US and EP counsel must confirm the operative requirements and dates, assign responsible persons, and record completion evidence.
 
@@ -15,17 +17,21 @@ This memo is the control document for outstanding:
 5. European-phase entry and the separate later Rule 161/162 response workstream; and
 6. counsel-approved circulation, access, retention, legal-hold, and prosecution-record controls.
 
-The current substantive strategy remains in:
+The alternative substantive strategies are routed through [`../README.md`](../README.md) and maintained separately under [`../normal-allowance/`](../normal-allowance/) and [`../allowance-first/`](../allowance-first/). The canonical disclosure inventory is [`AA11393US-US_IDS-reference-list_DRAFT.md`](AA11393US-US_IDS-reference-list_DRAFT.md).
 
-- `AA11393US-US_counsel-briefing_DRAFT.md`;
-- `AA11393US-US_claim-set_DRAFT.md`;
-- `AA11393US-priority-support-map_DRAFT.md`;
-- `AA11393US-prior-art-comparison-matrix_DRAFT.md`; and
-- `AA11393US-US_IDS-reference-list_DRAFT.md`.
-
-The dates summarized in `README.md` are internal reminders only and do not substitute for an attorney-controlled docket. Counsel must independently confirm all US, PCT, Italian, and EP deadlines.
+The strategy-neutral docket-date snapshot below is an internal reminder only and does not substitute for an attorney-controlled docket. Counsel must independently confirm all US, PCT, Italian, and EP deadlines and use an earlier internal filing target where appropriate.
 
 Repository labels are handling instructions only; DW-12 requires US counsel to determine the package's legal/confidentiality treatment, circulation, access, version control, retention, and preservation.
+
+### Shared docket-date snapshot
+
+| Date or trigger | Matter and control |
+|---|---|
+| **26 June 2026** | WIPO's recommended 28-month date for informal comments has passed. It is a recommendation, not a formal bar. |
+| **26 August 2026** | Thirty months from priority: practical last date for informal comments to be transmitted to designated Offices in the normal course; US § 371 entry or a timely counsel-selected bypass filing must also be completed. Docket an earlier internal filing target and have counsel confirm every required act. |
+| With the US filing | Submit the counsel-approved IDS/disclosure package subject to route-specific treatment, or record counsel's controlled timing decision and every later IDS window. |
+| **26 September 2026 (nominal); apparently 28 September 2026 under EPC Rule 134(1)** | Thirty-one months from the 26 February 2024 priority date for European-phase entry under Rule 159(1). Because 26 September 2026 is a Saturday, the period appears to extend to Monday, 28 September 2026. EP counsel must independently confirm the operative date and entry acts and docket an earlier internal deadline rather than rely on the apparent weekend extension. |
+| Six months from the actual EPO Rule 161/162 communication | Docket from the received communication with independent verification; prepare the Rule 161(1) response, approved amendments, and Rule 162 claims-fee reconciliation. |
 
 ## 2. Deferred-work register
 
@@ -33,20 +39,20 @@ Repository labels are handling instructions only; DW-12 requires US counsel to d
 |---|---|---|---|---|---|
 | DW-01 | Select §371 national stage or §111(a) bypass and decide whether to request Track One | Strategy and questions prepared; no counsel decision recorded | US counsel with applicant | Before preparing route-specific filing papers | Written route recommendation, applicant approval, and docketed filing deadline |
 | DW-02 | Confirm inventor oath/declaration handling | No final US oath/declaration package identified in `US/` | US counsel | Before filing or under an expressly approved delayed/substitute procedure | Executed declaration, approved substitute statement, or written delayed-filing plan and docket entry |
-| DW-03 | Confirm applicant identity, ownership, assignment chain, obligations to assign, and recordation | Signed provisional-era assignment materials exist under `../PPA2/`; continuity to the current applicant/owner has not been signed off in this package | US counsel with applicant/corporate records contact | Before finalizing ADS/applicant data and before relying on assignee status | Chain-of-title schedule, copies of operative assignments, identified gaps, and USPTO recordation receipt or written decision not to record |
+| DW-03 | Confirm applicant identity, ownership, assignment chain, obligations to assign, and recordation | Signed provisional-era assignment materials exist under `../../PPA2/`; continuity to the current applicant/owner has not been signed off in this package | US counsel with applicant/corporate records contact | Before finalizing ADS/applicant data and before relying on assignee status | Chain-of-title schedule, copies of operative assignments, identified gaps, and USPTO recordation receipt or written decision not to record |
 | DW-04 | Reconfirm entity status | Provisional-era small-entity indication is not a current determination | US counsel with applicant finance/corporate contact | Before paying US fees and whenever ownership/licensing facts change | Signed or written entity-status determination and supporting factual questionnaire |
 | DW-05 | Verify continuity, benefit claim, priority documents, ADS data, and specification/drawing identity | Repository sources mapped; official Patent Center record still requires counsel verification | US counsel | Before filing; recheck on filing receipt | Final ADS/continuity statement, priority-document plan, source-file checksum or comparison record, and accepted filing receipt |
 | DW-06 | Complete B6 English-family/foreign-language handling and final materiality analysis | CN 100583750 C and its family were checked against Espacenet and a CNIPA-issued copy was stored 16.07.2026; an authoritative English-family review and the IDS decision remain open | US counsel search/IDS support | Before final IDS decision; before relying on fine claim-construction points from the Chinese text | Preserved official-register record and CN copy, reviewed English-family text, English abstract/translation or concise explanation as required, claim-specific materiality analysis, and counsel disposition |
 | DW-07 | Inspect EP 2 811 416 A1 family and EPO file history | Official A1 PDF stored; file-history/status review remains open | EP counsel or search professional, copied to US counsel | Before final IDS and EP response decisions | EPO register/file-history record, search report and cited-art list, materiality notes, and any added IDS entries |
 | DW-08 | Complete source verification, nonpatent retrieval, pair selection, and materiality decisions | Every identified patent document A1–A10/B1–B9 is stored; several 16.07.2026 patent PDFs are verified working copies from `patentimages`, not office-transmitted copies. Tardos 2003 (C3) and Lin 2008 (C7) remain outstanding; publication/grant-pair and supplemental-reference decisions remain open | US counsel IDS support | Before relying on a working copy in prosecution and before each applicable IDS decision | Official-register comparison for each working copy, C3/C7 copies, verified bibliographic data, pair-selection decisions, translations/explanations where applicable, and written submit/skip/further-review dispositions |
-| DW-08A | Commission focused direct-art search and reassess the strengthened claims | Limited review found no direct reference containing the complete multi-camera boundary mechanism. A4, A6, B6, and B9 nevertheless create material construction/combination pressure; no professional clearance or direct vision-mixer/EDL search is recorded | US counsel with search professional | Before deleting the ordered-source/noncoincident-timing limitations or approving the final claims; refresh if new art appears | Search instructions and results covering vision mixers, live-production EDLs, multi-camera/alternate-angle personalization, individualized screener editing, and camera-boundary shifting; claim charts for claims 1, 7, 9, 13, 15, 16, 22, and 29; written breadth and IDS decisions |
+| DW-08A | Commission focused direct-art search and reassess the strengthened claims | Limited review found no direct reference containing the complete multi-camera boundary mechanism. A4, A6, B6, and B9 nevertheless create material construction/combination pressure; no professional clearance or direct vision-mixer/EDL search is recorded | US counsel with search professional | Before deleting the ordered-source/noncoincident-timing limitations or approving either final strategy; refresh if new art appears | Search instructions and results covering vision mixers, live-production EDLs, multi-camera/alternate-angle personalization, individualized screener editing, and camera-boundary shifting; claim charts for AF claim 1 and NA claims 1, 7, 9, 13, 15, 16, 22, and 29; written breadth and IDS decisions |
 | DW-09 | Obtain and monitor the Italian search report/written opinion for IT 102025000003210 | Not present in the repository | PRAXI/Italian counsel, forwarded immediately to US and EP counsel | Request now; review immediately upon receipt and through pendency | Dated request, received report, translation/explanation as needed, citation comparison, and US/EP disclosure decisions |
 | DW-10 | Prepare, file, and monitor the US IDS package | Draft inventory exists; no filing decision or Patent Center receipt | US counsel | Initial US filing and every later 37 CFR 1.97/1.98 window | Counsel-approved IDS, submitted references, filing receipt, examiner-consideration record, and supplemental-IDS docket |
 | DW-11A | Complete European-phase entry under Rule 159 and select the application documents and claims for the European grant procedure | No EP entry filing or receipt identified in `US/`; the 31-month date is nominally Saturday, 26 September 2026, and appears extended under Rule 134(1) to Monday, 28 September 2026, subject to EP counsel confirmation | EP counsel with PRAXI and applicant coordination | Counsel-confirmed Rule 159 period, with an earlier internal deadline docketed rather than reliance on the apparent weekend extension | Entry papers, specified basis documents, translation if applicable, applicable act-and-fee checklist, Rule 162 entry-stage claims-fee plan, filing receipt, and independent record check |
 | DW-11B | Prepare and file the Rule 161(1)/162 response and align it with the PCT and US positions | The EPO acted as ISA and issued a negative Written Opinion; no Rule 161/162 communication, response draft, or deadline docket is identified in `US/` | EP counsel with PRAXI and US counsel coordination | Six months from the actual Rule 161/162 communication, independently confirmed and docketed from that communication | Communication and docket record, response and amendments, Rule 162 claims-fee reconciliation, cross-jurisdiction consistency review, filing receipt, and final filed copy |
 | DW-12 | Establish and apply counsel-approved circulation and record-retention controls; preserve the prosecution record | Internal/not-for-filing labels exist, but this memo records no privilege determination, approved-recipient protocol, or retention instruction | US counsel with applicant records/docketing | At the applicant's initial secure transmission to retained US counsel and before wider circulation; at every filing or material decision; and immediately upon any legal hold or transfer of responsibility | Written counsel determination of treatment without reliance on repository labels; approved recipient/access instructions; distribution and version log; retention/hold instructions; and preserved final papers, receipts, correspondence, and archive/index |
 
-Known starting materials for DW-03 include `../PPA2/63557868 assignement signed.pdf` and `../PPA2/7524-0091_NOR assignment EDO.pdf`. Their presence does not establish that every transfer is effective, that the current applicant is correct, or that USPTO recordation is complete.
+Known starting materials for DW-03 include `../../PPA2/63557868 assignement signed.pdf` and `../../PPA2/7524-0091_NOR assignment EDO.pdf`. Their presence does not establish that every transfer is effective, that the current applicant is correct, or that USPTO recordation is complete.
 
 ## 3. Required sequence
 
@@ -64,12 +70,12 @@ Known starting materials for DW-03 include `../PPA2/63557868 assignement signed.
 ### B. Complete before the US filing package is approved
 
 1. Record the §371/bypass and Track One decision.
-2. Approve the final claim set and confirm that any Track One set stays within 30 total claims, four independent claims, and no multiple-dependent claim.
-3. Complete the claim-by-claim provisional/PCT support review, including the Example 2 issue; claim 7's retained ordered transition and changed time code; claims 9, 15, and 29's manifest/chunk preservation of a selected transition position; claim 13's different manifests selecting equal-duration reference and mate chunks for the same playback interval, with each chunk containing the transition at its respective timing; claim 16's detection and matching at the same candidate-distinguishing region; claim 21's attribution scores; and claim 22's complete closed loop.
+2. Approve one controlling final claim set—or a deliberately documented hybrid—and confirm that any Track One set stays within 30 total claims, four independent claims, and no multiple-dependent claim.
+3. Complete the claim-by-claim provisional/PCT support review for the selected strategy. For NA, address the Example 2 issue; NA claim 7's retained ordered transition and changed time code; NA claims 9, 15, and 29's manifest/chunk preservation of a selected transition position; NA claim 13's different manifests selecting equal-duration reference and mate chunks for the same playback interval, with each chunk containing the transition at its respective timing; NA claim 16's detection and matching at the same candidate-distinguishing region; NA claim 21's attribution scores; and NA claim 22's complete closed loop. For AF, address AF claim 1 as a whole; AF claims 2–3's Example 2 issue; AF claims 1 and 7–10's source-identity/same-region relationship; AF claim 11's recipient-associated candidate camera-source-transition patterns as the probabilistic-analysis input; AF claim 12's segmented-Tardos/portion-to-contributor relationship; AF claims 13–18's combined-example manifest relationship; AF claim 14's chunk geometry; and AF claim 19's overlay sequence.
 4. Finalize ADS, continuity/benefit information, oath/declaration handling, applicant identity, assignment chain, entity status, and priority-document handling.
 5. Complete the initial IDS materiality decision and obtain every copy, translation, abstract, or explanation counsel determines is required at filing.
 6. Confirm that the specification and drawings are the intended as-filed documents and contain no unacknowledged new matter.
-7. Reconcile the final claims with A4's perspective-manifest/recovery loop, A6's temporal-event/recipient-resolution loop, B6's local timing and robust reacquisition, B9's user-different actual switch positions, and the DW-08A search results. Preserve the same ordered physical-camera transition at noncoincident timings, the intervening alternate-camera interval, manifest preservation of one transition position, and same-region transition-plus-timing recovery unless counsel records a reasoned basis for broader language.
+7. Reconcile the selected final claims with A4's perspective-manifest/recovery loop, A6's temporal-event/recipient-resolution loop, B6's local timing and robust reacquisition, B9's user-different actual switch positions, and the DW-08A search results. Preserve the same ordered physical-camera transition at noncoincident timings, the intervening alternate-camera interval, manifest preservation of one transition position, and same-region transition-plus-timing recovery unless counsel records a reasoned basis for broader language.
 
 ### C. Continue after filing
 
@@ -144,9 +150,9 @@ The EP handoff should include:
 1. the actual Rule 161/162 communication and independently verified six-month deadline;
 2. the PCT application and Written Opinion;
 3. the final or proposed WIPO informal comments;
-4. the actor-focused US claim set, clearly marked as a US strategy rather than an EP amendment instruction;
-5. the D1 issue-by-issue correction and supplemental prior-art matrix;
-6. the provisional/PCT support map and confidential Example 2 analysis;
+4. the selected US claim set and, if AF is selected, the continuation-reservation outline, each clearly marked as a US strategy rather than an EP amendment instruction;
+5. the applicable strategy's D1 issue-by-issue correction and supplemental prior-art matrix;
+6. the applicable strategy's provisional/PCT support map and confidential Example 2 analysis;
 7. all Italian search results and newly identified references;
 8. a cross-jurisdiction terminology table;
 9. a written reconciliation of any US and EP claim or argument differences; and
@@ -166,7 +172,7 @@ Escalate immediately to the responsible attorney if:
 - entity status is uncertain;
 - a retrieved reference maps the alternate-camera boundary mechanism more closely than the present matrix;
 - A4, A6, B6, B9, or newly found art can be mapped to an ordered physical-camera transition at noncoincident timings, to manifest preservation of that transition position, or to recovery of both source order and timing at the same distinguishing region;
-- anyone proposes deleting the structural limitations in claims 7, 9, 13, 15, 16, 22, or 29 before DW-08A and the combined-example support review are complete;
+- anyone proposes deleting the structural limitations in AF claim 1 or NA claims 7, 9, 13, 15, 16, 22, or 29 before DW-08A and the applicable combined-example support review are complete;
 - the Italian or EPO search identifies new material art;
 - any proposed amendment exceeds the Track One numerical limits;
 - any claim wording lacks clear provisional or PCT support; or

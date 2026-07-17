@@ -1,13 +1,12 @@
 # US/prior-art — Local Prior-Art Document Store
 
-Working copies of the prior-art and prosecution documents referenced in `../AA11393US-US_IDS-reference-list_DRAFT.md` (IDs below match that inventory) and analyzed in `../AA11393US-prior-art-comparison-matrix_DRAFT.md`. The retrieval sequence, suggested owners, filing gates, and completion evidence are controlled in `../AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`. Counsel obtains/verifies official copies for filing; nothing in this folder is annotated — the PDFs stay clean. The one analysis file stored here is `AA11393US-claim-document-mapping-matrix_DRAFT.md` (added 16.07.2026): the claim-by-claim × document degree-of-mapping grid, which projects the feature matrix's findings onto the 30 drafted claims and records each document's review depth. All other analysis stays in the feature matrix.
+Working copies of the prior-art and prosecution documents referenced in the canonical [`../common/AA11393US-US_IDS-reference-list_DRAFT.md`](../common/AA11393US-US_IDS-reference-list_DRAFT.md) (IDs below match that inventory) and analyzed separately in the `NA` and `AF` strategy matrices. The retrieval sequence, suggested owners, filing gates, and completion evidence are controlled in [`../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md). Counsel obtains or verifies official copies for filing; nothing in this folder is annotated and the PDFs stay clean. All claim and patentability analysis lives in the strategy directories so the evidence store remains canonical and strategy-neutral.
 
 ## Layout
 
 | Path | Contents |
 |---|---|
 | `*.pdf` | The retrieval-verified source documents. Provenance per row below. **Never modified** — SHA-256 recorded in `.pipeline/pdf-source-checksums.sha256` and re-verified 16.07.2026 (20/20 identical). |
-| `AA11393US-claim-document-mapping-matrix_DRAFT.md` | Claim × document mapping grid. |
 | `markdown/` | Working transcription of every PDF (added 16.07.2026), so the matrix can be scored against full text. Text-layer extraction where available, OCR otherwise. **Not for filing; verify quotes against the PDFs.** See its README. |
 | `searchable/` | The nine image-only PDFs with an OCR text layer added, for viewer search. Derived copies, not originals. |
 | `.pipeline/` | The conversion scripts and the source-PDF checksum manifest, kept for reproducibility. |
@@ -58,6 +57,6 @@ Every patent document in the IDS (A1–A10, B1–B9) is now stored. What remains
 - **No text layer** (image-only scans, so not searchable): B2, B3, B4, B7, B9, A9, and the two CN documents.
 - **B2 family-duplicate decision**, the **B8 EPO file-history/status review**, and the **decision whether D1's grant US 11,540,029 B2 is listed in addition to A1** all remain open.
 
-Remaining order of work: (1) request and monitor C6; (2) obtain Tardos 2003 (C3) and Lin 2008 (C7); (3) complete foreign-language handling for B1, B5, B6; (4) resolve the publication/grant-pair, B2-duplicate, and D1-grant-listing decisions against the final claims, together with the materiality review of the 16.07.2026 supplemental references (A6–A9, B9, C7, C8); and (5) inspect the B8 EPO file history and record any additional relevant citations. Matrix rows for the supplemental references were added 16.07.2026 to `../AA11393US-prior-art-comparison-matrix_DRAFT.md`.
+Remaining order of work: (1) request and monitor C6; (2) obtain Tardos 2003 (C3) and Lin 2008 (C7); (3) complete foreign-language handling for B1, B5, B6; (4) resolve the publication/grant-pair, B2-duplicate, and D1-grant-listing decisions against the final claims, together with the materiality review of the 16.07.2026 supplemental references (A6–A9, B9, C7, C8); and (5) inspect the B8 EPO file history and record any additional relevant citations. Claim effect is recorded separately in [`../normal-allowance/`](../normal-allowance/) and [`../allowance-first/`](../allowance-first/); disclosure handling remains controlled by the shared IDS.
 
 Filing receipt evidence for the Italian application (filed 19.02.2025, same day as the PCT) is at `../../ITA/ITA depositi ufficiali/AA11393US-IT_Domanda di brevetto n. 102025000003210.pdf`.

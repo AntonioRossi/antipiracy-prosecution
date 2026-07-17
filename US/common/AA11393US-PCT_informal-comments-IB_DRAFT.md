@@ -1,6 +1,8 @@
 # PCT/IB2025/051755 — Informal Comments on the Written Opinion of the ISA (DRAFT)
 
-> **PUBLIC-FILING DRAFT — for review, quotation verification, and filing by the appointed agent through ePCT.**
+> **CANONICAL SHARED PUBLIC-FILING DRAFT · STATUS 17 JULY 2026**
+>
+> **For review, quotation verification, and filing only by the appointed agent through ePCT.** This is the single public-comments draft for both strategy packages; neither strategy directory may maintain a competing version.
 >
 > These comments do not amend the application. They are intended to give the designated Offices an accurate explanation of the functional relationship among the claimed features. Any internal notes after the signature block must be removed before filing.
 

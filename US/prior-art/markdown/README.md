@@ -2,7 +2,7 @@
 
 > **WORKING TRANSCRIPTIONS — NOT OFFICIAL COPIES AND NOT FOR FILING.**
 >
-> One markdown transcription per stored prior-art PDF, generated 16.07.2026 so that `../AA11393US-claim-document-mapping-matrix_DRAFT.md` can be scored against the documents' actual full text rather than their faces and abstracts. IDs match `../README.md` and the IDS inventory.
+> One Markdown transcription per stored prior-art PDF, generated 16.07.2026 so that the strategy-specific claim-document matrices in [`../../normal-allowance/`](../../normal-allowance/) and [`../../allowance-first/`](../../allowance-first/) can be scored against the documents' actual full text rather than their faces and abstracts. IDs match [`../README.md`](../README.md) and the canonical IDS inventory in [`../../common/`](../../common/).
 >
 > **Never quote from these files into a filing, an Office response, or the matrix without checking the passage against the source PDF.** That applies to all of them, and with particular force to the OCR set: OCR infers characters, and reference numerals, dates, and publication numbers are exactly where it fails most quietly.
 
@@ -25,7 +25,7 @@ Languages: `eng`, except B5 and B6 (`chi_sim+eng`). B1 has a native Chinese text
 
 ## Fidelity — what is and is not established
 
-- **Corroborated:** the fresh A1 OCR was compared against the repository's independently produced transcription at `../../PCT/AA11393US-PCT_office_action_markdown/cited_US2021-0352381A1.md`. Substantive paragraphs agree at **99.3–99.4%** ([0016], [0045]). Two independent OCR passes concurring is meaningful evidence of accuracy — it is not proof of correctness for any specific character.
+- **Corroborated:** the fresh A1 OCR was compared against the repository's independently produced transcription at `../../../PCT/AA11393US-PCT_office_action_markdown/cited_US2021-0352381A1.md`. Substantive paragraphs agree at **99.3–99.4%** ([0016], [0045]). Two independent OCR passes concurring is meaningful evidence of accuracy — it is not proof of correctness for any specific character.
 - **Page counts** match the source PDFs exactly for all 20 documents.
 - **Not established:** that any individual numeral, date, or quotation is correct. Known residual issues: patent line numbers (5, 10, 15 …) can land mid-sentence; paragraphs spanning a page break are split by the `### Page N` markers; Chinese OCR shows occasional character substitutions (e.g. 嵌入 rendered as 藤入/甬入).
 
