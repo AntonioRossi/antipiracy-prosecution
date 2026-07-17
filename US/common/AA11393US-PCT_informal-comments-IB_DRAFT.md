@@ -1,10 +1,12 @@
 # PCT/IB2025/051755 — Informal Comments on the Written Opinion of the ISA (DRAFT)
 
+> **INTERNAL ROUTING BANNER — REMOVE THIS ENTIRE QUOTED BLOCK AND `(DRAFT)` FROM THE TITLE BEFORE FILING.** The filed copy must not include the canonical-status label, repository handling instructions, or this removal instruction.
+>
 > **CANONICAL SHARED PUBLIC-FILING DRAFT · STATUS 17 JULY 2026**
 >
 > **For review, quotation verification, and filing only by the appointed agent through ePCT.** This is the single public-comments draft for both strategy packages; neither strategy directory may maintain a competing version.
 >
-> These comments do not amend the application. They are intended to give the designated Offices an accurate explanation of the functional relationship among the claimed features. Any internal notes after the signature block must be removed before filing.
+> These comments do not amend the application. They are intended to give the designated Offices an accurate explanation of the functional relationship among the claimed features. The top internal routing banner and all internal notes after the signature block must be removed before filing.
 
 **To:** International Bureau of WIPO, via ePCT\
 **International application:** PCT/IB2025/051755\
@@ -77,7 +79,7 @@ Respectfully submitted,
 
 ---
 
-> **INTERNAL COUNSEL NOTES — REMOVE BEFORE FILING**
+> **INTERNAL COUNSEL NOTES — REMOVE BEFORE FILING.** Remove the preceding separator, this entire notes block, the complete quoted routing banner at the top of the document, and `(DRAFT)` from the title. Verify that, immediately below the filing-facing title, the filing copy begins with the address information and contains no repository-status or internal-control text.
 >
 > 1. Check every D1 paragraph reference and any retained quotation against the official PDF; the repository transcription of D1 is OCR-derived.
 > 2. Confirm that the comments are consistent with the final US claim strategy and the planned EP Rule 161 response. In particular, do not turn “no pixel-domain data required” into a negative watermark limitation unless deliberately chosen.
