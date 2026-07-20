@@ -219,7 +219,7 @@ Review the supplemental candidates, complete official bibliographic/copy/transla
 
 - preserve the completed Espacenet/CNIPA record check for CN 100583750 C and complete the authoritative English-family and foreign-language handling before relying on fine-grained B6 wording;
 - inspect the EP 2 811 416 A1 family and EPO file history, without treating current legal status as controlling its prior-art disclosure;
-- confirm the stored patent working copies against official registers, complete B6's authoritative English-family/foreign-language handling, obtain Tardos 2003 and Lin 2008, and decide publication/grant-pair and supplemental-reference treatment; and
+- confirm the stored patent working copies against official registers, complete B6's authoritative English-family/foreign-language handling, obtain Lin 2008 (C7) — Tardos 2003 (C3) was stored 20.07.2026 in its author-hosted extended form — and decide publication/grant-pair and supplemental-reference treatment; and
 - route every citation from the Italian search report into the IDS review promptly upon receipt.
 
 Treat the list as an inventory, not as a statement that every item is prior art or material.

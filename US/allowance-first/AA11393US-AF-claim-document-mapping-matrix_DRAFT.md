@@ -7,7 +7,7 @@
 ## 1. Scope and canonical sources
 
 - **Claims:** [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md), version `AF-2026-07-17-v2`: AF claim 1 is the integrated system independent; AF claims 2–19 depend from it; and AF claim 20 independently recites as an affirmative method the complete operational chain of AF claim 1.
-- **Documents:** all 20 source documents stored in [`../prior-art/`](../prior-art/README.md): A1–A10, B1–B9, and C8. The searchable review corpus is in [`../prior-art/markdown/`](../prior-art/markdown/README.md); quotations and OCR-sensitive points must be checked against the canonical PDF or [`../prior-art/searchable/`](../prior-art/searchable/README.md).
+- **Documents:** all 32 PDF source documents (A20's official copy stored 21.07.2026) in [`../prior-art/`](../prior-art/README.md): A1–A20, B1–B10, C8, and C3. The searchable review corpus is in [`../prior-art/markdown/`](../prior-art/markdown/README.md); quotations and OCR-sensitive points must be checked against the canonical PDF or [`../prior-art/searchable/`](../prior-art/searchable/README.md) — A20 additionally requires an official-copy check once its PDF is obtained.
 - **Division of labor:** [`AA11393US-AF-prior-art-comparison-matrix_DRAFT.md`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) gives the feature and combination analysis. This file is its claim-level projection. It does not duplicate the IDS inventory or make disclosure-submission decisions.
 
 This is one AF proposal. Counsel may omit AF claim 20 at filing to preserve a one-independent posture, but the deletion must be reflected throughout this maintained package rather than implemented as a second AF document set.
@@ -45,6 +45,16 @@ Deltas: **AF claim 2** later-boundary resynchronization · **AF claim 3** ten-fr
 | **A8** (full) | **P** — identifying variant sequences and timing obfuscation | — | — | — | — | P |
 | **A9** (full) | **P** — client watermark variants, records, and collusion detection | — | — | — | — | — |
 | **A10** (targeted full) | **P** — device mark and network-capture recovery loop | — | — | — | — | — |
+| **A11** (full/OCR) | — author-attribution overlay watermarking; no integrated chain | — | — | — | — | — |
+| **A12** (full) | — ML classification only; no production boundary or recipient loop | — | — | — | — | — |
+| **A13** (full/OCR) | — shared-timing manifest architecture; no production boundary or attribution loop | — | — | — | — | — |
+| **A14** (full) | P — per-user A/B chunk selection + recipient record maps delivery/association; no production boundary or structural recovery | — | — | — | — | — |
+| **A15** (full/OCR) | P — session-bound manifest delivery + identifier↔address records maps delivery/association; no production mechanism or suspect-content detection | — | — | — | — | — |
+| **A16** (full/OCR) | P — per-request unique manifests + user-bearing recording-ID association maps delivery/association; shared content timeline, no production mechanism, no detection | — | — | — | — | — |
+| **A17** (full/OCR) | P — per-account content selection + account-keyed records maps delivery/association; no versions, no detection | — | — | — | — | — |
+| **A18** (full/OCR) | P — per-user dynamic-segment resolution + user-keyed records; no versions, no detection | — | — | — | — | — |
+| **A19** (full/OCR) | P — watermark-bit embedding + suspect acquisition + confidence scoring + identification maps parts of generation/association/recovery; no camera-boundary mechanism, no structural detection | — | — | — | — | — |
+| **A20** (full text, FPO working copy — validated against the official PDF stored 21.07.2026) | **P** — per-recipient unique versions from a structured edit list + recipient registry + cross-reference recovery maps delivery/association and part of recovery; no camera-boundary mechanism, no structural detection | — | — | — | — | — |
 | **B1 / D2** (full) | — — codec-chain provenance only | — | — | — | — | — |
 | **B2 / D1 family** (full) | **P** — substantively scored as A1 | — | — | — | — | P |
 | **B3** (full/OCR) | — — watermark monitoring only | — | — | — | — | — |
@@ -54,9 +64,10 @@ Deltas: **AF claim 2** later-boundary resynchronization · **AF claim 3** ten-fr
 | **B7** (full) | — — comparison technique only | — | — | — | — | — |
 | **B8** (full) | — — content-identification technique only | — | — | — | — | — |
 | **B9** (full/OCR) | **P** — variable actual stream switches and recipient keys; no claimed different-camera frame provenance or recovery loop | — | — | — | — | P |
+| **B10** (full) | P — per-user object-attribute modification + leak inference maps generation/recovery of a different kind; no structural mechanism | — | — | — | — | — |
 | **C8** (full) | **P** — standardized A/B session delivery; no claimed identified-camera production/recovery | — | — | — | — | — |
 
-**AF claim 1 / production reading.** No reviewed document scored `Y` against AF claim 1. The whole-claim score includes the final delivery mechanics: delivered versions must include a version of the reference and a version of the mate, and each delivered version must be stored together with its candidate pattern and recipient; generic assignment records map only part of that relationship. AF claims 2–5 remain unmapped in this stored corpus, but direct multicamera and structured-edit-list art—including EDL implementations—is the principal uncompleted search and `—` is not a clearance. EDL fields first become express in AF claim 4; they are not silently read into AF claim 1. AF claim 6 is analogously pressured by D1 scene-positioned transforms, A4 multi-position variant patterns, A6 forced event sequences, A8 timing manipulation, B6 local regions, and B9 plural exchange points. AF claims 2–3 additionally carry the provisional Example 2 priority caveat.
+**AF claim 1 / production reading.** No reviewed document scored `Y` against AF claim 1. The whole-claim score includes the final delivery mechanics: delivered versions must include a version of the reference and a version of the mate, and each delivered version must be stored together with its candidate pattern and recipient; generic assignment records map only part of that relationship. AF claims 2–5 remain unmapped in this stored corpus, but direct multicamera and structured-edit-list art—including EDL implementations—is the principal uncompleted search and `—` is not a clearance. EDL fields first become express in AF claim 4; they are not silently read into AF claim 1. AF claim 6 is analogously pressured by D1 scene-positioned transforms, A4 multi-position variant patterns, A6 forced event sequences, A8 timing manipulation, B6 local regions, and B9 plural exchange points. AF claims 2–3 additionally carry the provisional Example 2 priority caveat. None of the 20.07.2026 batch scores above `P` on delivery/association mapping; none touches the production side. A20 maps delivery/association and part of recovery via forensic EDL individualization; `P` unchanged for AF claims 1 and 20.
 
 ## 4. AF claim 20 integrated method — whole-claim score
 
@@ -74,6 +85,16 @@ AF claim 20 was separately read as an affirmative method against each canonical 
 | **A8** (full) | **P** | Identifying variant sequences and timing obfuscation map portions of individualized delivery; no claimed identified-camera boundary generation and recovery chain was identified. |
 | **A9** (full) | **P** | Client watermark variants, per-client records, and collusion detection map generic individualized marking and attribution, not the ordered identified-camera transition method. |
 | **A10** (targeted full) | **P** | Per-device time-domain marking, network capture, and mark extraction form a different generation-to-recovery method; the structured-list and camera-source-transition operations were not identified. |
+| **A11** (full/OCR) | **—** | Overlay watermarking does not concretely map the claimed generation-to-recovery method. |
+| **A12** (full) | **—** | ML classification is a detection technique only, without version generation, association, or recipient resolution. |
+| **A13** (full/OCR) | **—** | Shared-timing manifest architecture maps no production or attribution step of the claimed method. |
+| **A14** (full) | **P** | Per-user chunk-symbol selection and recipient database map delivery association; the claimed production boundary and same-region source-pair/timing detection are absent. |
+| **A15** (full/OCR) | **P** | Session-bound manifest delivery and address records map delivery association; production and suspect-content detection absent. |
+| **A16** (full/OCR) | **P** | Per-request unique manifests and recording-ID association map delivery association over a shared content timeline; production and detection absent. |
+| **A17** (full/OCR) | **P** | Per-account item substitution and account-keyed records map delivery association; production and detection absent. |
+| **A18** (full/OCR) | **P** | Per-user dynamic-segment resolution and user-keyed records map delivery association; production and detection absent. |
+| **A19** (full/OCR) | **P** | Pirate-service acquisition, watermark-bit extraction, per-client confidence scoring, and pirate-list identification map recovery; the claimed production boundary and structural same-region detection are absent. |
+| **A20** (full text, FPO working copy — validated against the official PDF stored 21.07.2026) | **P** | Unique-EDL-per-consumer generation, recipient registry, and cross-reference lookup map generation/association/recovery; the claimed production boundary and same-region source-pair/timing detection are absent. |
 | **B1 / D2** (full) | **—** | Codec-chain provenance does not concretely map the claimed recipient-specific generation, delivery-association, and suspect-copy recovery method. |
 | **B2 / D1 family** (full) | **P** | Substantively the A1/D1 disclosure: meaningful completed-copy transformation and identification steps, without the claimed multicamera operational chain. |
 | **B3** (full/OCR) | **—** | Source-watermark capture, extraction, and comparison do not concretely map the claimed production-to-recipient camera-transition method. |
@@ -83,9 +104,10 @@ AF claim 20 was separately read as an affirmative method against each canonical 
 | **B7** (full) | **—** | Shot-sequence piracy comparison maps a detection technique only, without a concrete mapping to the complete generation, association, and attribution method. |
 | **B8** (full) | **—** | Relative subtitle-time identification maps distortion-tolerant timing comparison only, without recipient-specific camera production and association. |
 | **B9** (full/OCR) | **P** | Key-derived switches at user-different points map individualized switch structure; the streams are transformed versions of the same content and the claimed different-camera frame provenance and detection/recovery operations were not identified. |
+| **B10** (full) | **P** | Per-user object-attribute modification and leaked-video inference map generation/recovery of a different kind; the structured-list and camera-source-transition operations are absent. |
 | **C8** (full) | **P** | Standardized aligned A/B delivery and device/account/session patterns map delivery mechanics; the claimed identified-camera production and recovery chain was not identified. |
 
-**AF claim 20 reading.** No reviewed document scored `Y` against the whole method. That result follows from an independent step-and-relationship review, not from the system score. AF claim 20 preserves a method enforcement route, while inheriting every claim-as-a-whole search, support, priority, and combination issue applicable to the parallel AF claim 1 chain.
+**AF claim 20 reading.** No reviewed document scored `Y` against the whole method. That result follows from an independent step-and-relationship review, not from the system score. AF claim 20 preserves a method enforcement route, while inheriting every claim-as-a-whole search, support, priority, and combination issue applicable to the parallel AF claim 1 chain. The 20.07.2026 batch adds no `Y`; the A14–A19 and B10 `P` scores reflect delivery/association or recovery mappings of the same generic kind already scored for A2–A4 and A6–A10. A20's `P` reflects a different-kind generation/association/lookup loop; the production boundary remains absent.
 
 The focused counterfactual rescore in § 4 of the [`AF prior-art comparison matrix`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) controls the structured-list correction for A4, A6, B6, and B9. It treats their potentially structured records generously, does not rely on absence of an EDL label or EDL fields, identifies the exact causal and recovery relationships still missing, and leaves every AF claim 1 and AF claim 20 `P` score unchanged.
 
@@ -105,6 +127,16 @@ Deltas: **AF claim 7** perceptual-hash comparison · **AF claim 8** sliding-wind
 | **A8** (full) | — | — | — | — | — | — |
 | **A9** (full) | — | — | — | P | P | P |
 | **A10** (targeted full) | — | — | — | — | — | — |
+| **A11** (full/OCR) | — | — | — | — | — | — |
+| **A12** (full) | P — trained-model feature comparison, not perceptual hashes | — | — | — | — | — |
+| **A13** (full/OCR) | — | — | P — manifest regeneration from segment-embedded identifiers; not built from a detected switch timing | — | — | — |
+| **A14** (full) | — | — | — | — | — | — |
+| **A15** (full/OCR) | — | — | — | — | — | — |
+| **A16** (full/OCR) | — | — | — | — | — | — |
+| **A17** (full/OCR) | — | — | — | — | — | — |
+| **A18** (full/OCR) | — | — | — | — | — | — |
+| **A19** (full/OCR) | — | — | — | — | P — probabilistic confidence scoring with per-client scores and FPR-controlled thresholds; input is watermark bits, not candidate camera-transition patterns | P — Tardos arc-sine codes express; applied at bit level, not segmented per content segment with portion-specific contributor output |
+| **A20** (full text, FPO working copy — validated against the official PDF stored 21.07.2026) | — | — | — | — | — | — |
 | **B1 / D2** (full) | — | — | — | — | — | — |
 | **B2 / D1 family** (full) | — | — | — | — | — | — |
 | **B3** (full/OCR) | — | — | — | — | — | — |
@@ -114,9 +146,11 @@ Deltas: **AF claim 7** perceptual-hash comparison · **AF claim 8** sliding-wind
 | **B7** (full) | — | — | — | — | — | — |
 | **B8** (full) | — | P | — | — | — | — |
 | **B9** (full/OCR) | — | — | — | — | — | P |
+| **B10** (full) | — | — | — | — | — | — |
 | **C8** (full) | — | — | — | P | — | — |
+| **C3** (author-hosted extended version, full text 20.07.2026) | — | — | — | — | P — probabilistic accusation with per-user scores and a thresholded guilty-set output are express (§2.1 of the stored copy); the input is a code matrix, not recipient-associated candidate camera-source-transition patterns | P — the Tardos construction itself is express; no per-segment fingerprint/portion-to-contributor relationship disclosed |
 
-**Detection reading.** A5 expressly teaches perceptual frame hashes and supplies the closest AF claim 7 mapping; its key-frame distance series provides partial AF claim 8 pressure. B6 is analogous on hash-based reacquisition after temporal edits, and B8 on distortion-tolerant timing comparison. A4 is closest to AF claims 9–10 through customized-manifest delivery, recovered version-pattern estimation, and customized-manifest database comparison, but the reviewed text does not build a reconstructed manifest from a time code derived from the claimed detected switch timing. No stored document scored `Y` for AF claim 11 because none was identified applying probabilistic attribution to recipient-associated candidate patterns carrying the claimed ordered identified-camera transition and switch timing. A2/A3/A4/A6/B6 nevertheless create substantial generic attribution pressure, while A9 identifies source watermark IDs in colluded portions. No stored document scored `Y` for AF claim 12: A4 and A6 expressly mention Tardos codes but do not disclose the complete segmented, portion-specific relationship; A2/A3/B6 are close non-Tardos segmented or probabilistic analogues; A9 supplies non-Tardos time/portion-specific colluder identification; and B9 supplies segmented fingerprint embedding without an elaborated recovery operation. C3/Tardos remains unscored because its full copy is outstanding. AF claims 7–12 remain dependent on AF claim 1's ordered identified-camera transition and same-region joint source-pair/time match.
+**Detection reading.** A5 expressly teaches perceptual frame hashes and supplies the closest AF claim 7 mapping; its key-frame distance series provides partial AF claim 8 pressure. B6 is analogous on hash-based reacquisition after temporal edits, and B8 on distortion-tolerant timing comparison. A4 is closest to AF claims 9–10 through customized-manifest delivery, recovered version-pattern estimation, and customized-manifest database comparison, but the reviewed text does not build a reconstructed manifest from a time code derived from the claimed detected switch timing. No stored document scored `Y` for AF claim 11 because none was identified applying probabilistic attribution to recipient-associated candidate patterns carrying the claimed ordered identified-camera transition and switch timing. A2/A3/A4/A6/B6 nevertheless create substantial generic attribution pressure, while A9 identifies source watermark IDs in colluded portions. No stored document scored `Y` for AF claim 12: A4 and A6 expressly mention Tardos codes but do not disclose the complete segmented, portion-specific relationship; A2/A3/B6 are close non-Tardos segmented or probabilistic analogues; A9 supplies non-Tardos time/portion-specific colluder identification; and B9 supplies segmented fingerprint embedding without an elaborated recovery operation. C3/Tardos, received 20.07.2026 in its author-hosted extended (JACM) form, confirms the generic accusation mechanics — per-user scores summed from per-position terms and compared against a threshold, with a guilty-set output — and leaves every score unchanged: it supplies the algorithm class behind AF claims 11–12 without the camera-transition input and without AF claim 12's segmented portion-specific relationship (no segmentation is discussed in the paper). AF claims 7–12 remain dependent on AF claim 1's ordered identified-camera transition and same-region joint source-pair/time match. The 20.07.2026 batch adds A19 as a second express-scoring reference (alongside A3) for AF claims 11–12, with per-client confidence scores and FPR-controlled thresholds over watermark bits; A13 is the closest stored art on manifest reconstruction, though it builds from segment-embedded identifiers rather than a detected switch timing. Neither changes any score.
 
 ## 6. Manifest/chunk distribution branch (AF claims 13–19)
 
@@ -134,6 +168,16 @@ Deltas: **AF claim 13** distribution branch preserving one of the generated tran
 | **A8** (full) | P | — | P | — | Y | P | — |
 | **A9** (full) | — | — | — | — | — | — | P |
 | **A10** (targeted full) | — | — | — | — | — | P | P |
+| **A11** (full/OCR) | — | — | — | — | — | — | P — visible author-facing overlay watermarks |
+| **A12** (full) | — | — | — | — | — | — | — |
+| **A13** (full/OCR) | P — segment+manifest generation | — | P — DASH/HLS/CMAF | — | — | — | — |
+| **A14** (full) | P — per-user chunk-symbol selection | — | — | — | — | P — per-user chunk-symbol sequence across plural chunks | — |
+| **A15** (full/OCR) | P — session-annotated manifests + identifier↔address association | — | P — CDN/ABR | — | — | — | — |
+| **A16** (full/OCR) | P — per-request unique manifests + recording-ID association | — | P — DASH/HLS MPD | P — manifest merging/caching reuse | — | — | — |
+| **A17** (full/OCR) | P — per-account metadata delivery + account records | — | — | — | — | — | — |
+| **A18** (full/OCR) | P — per-user dynamic-segment resolution + user records | — | P — device-capability format selection | — | — | — | — |
+| **A19** (full/OCR) | — | — | — | — | — | — | — |
+| **A20** (full text, FPO working copy — validated against the official PDF stored 21.07.2026) | P — per-recipient unique versions + recipient registry; no manifest/chunk preservation | — | — | — | — | — | — |
 | **B1 / D2** (full) | — | — | — | — | — | — | P |
 | **B2 / D1 family** (full) | P | — | — | P | — | P | P |
 | **B3** (full/OCR) | — | — | — | — | — | — | — |
@@ -143,9 +187,10 @@ Deltas: **AF claim 13** distribution branch preserving one of the generated tran
 | **B7** (full) | — | — | — | — | — | — | — |
 | **B8** (full) | — | — | — | — | — | — | — |
 | **B9** (full/OCR) | P | P | — | P | P | P | P |
+| **B10** (full) | — | — | — | — | — | — | — |
 | **C8** (full) | P | P | Y | P | — | P | P |
 
-**Distribution reading.** AF claim 13 is `P`, not `Y`, against A4/A6/B9/C8 because none was identified disclosing the inherited same ordered transition between identified cameras at noncoincident times and the intervening temporally corresponding frames from different cameras. AF claim 14's packaging mechanics are substantially taught by A4 and C8 and analogously by B9; its residual value is the inherited identified-camera structure inside each paired chunk. AF claims 15–17 are conventional or densely populated. AF claim 18 must preserve the same ordered transition between identified cameras at every distinguishing region. AF claim 19 is scored only `P` against overlay/marking art where the required pre-segmentation sequence was not identified; it is implementation coverage, not an expected novelty center.
+**Distribution reading.** AF claim 13 is `P`, not `Y`, against A4/A6/B9/C8 because none was identified disclosing the inherited same ordered transition between identified cameras at noncoincident times and the intervening temporally corresponding frames from different cameras. AF claim 14's packaging mechanics are substantially taught by A4 and C8 and analogously by B9; its residual value is the inherited identified-camera structure inside each paired chunk. AF claims 15–17 are conventional or densely populated. AF claim 18 must preserve the same ordered transition between identified cameras at every distinguishing region. AF claim 19 is scored only `P` against overlay/marking art where the required pre-segmentation sequence was not identified; it is implementation coverage, not an expected novelty center. The 20.07.2026 batch corroborates that per-request manifest construction (A13, A16), session-bound delivery (A15), and per-account selection records (A14, A17, A18) are conventional; none differentiates content timing between recipients, so AF claim 13 stays `P` across the batch on the inherited ordered-transition limitation alone. A20's unique-EDL registry is the closest stored enforcement-registry architecture; AF claim 13 stays `P` on the inherited ordered-transition limitation.
 
 ## 7. Document-specific cautions and combinations
 
@@ -180,3 +225,7 @@ Re-score on any AF amendment or renumbering; any new or corrected canonical docu
 | 17.07.2026 | **AF-2026-07-17-v2 method-twin score** | Repaired the AF claim 1 transition antecedent without substantive score change; added a separate whole-claim block independently scoring AF claim 20 against all 20 stored documents, with no `Y` result; propagated the shared support and combination cautions and the counsel-controlled deletion option without creating a second AF branch |
 | 17.07.2026 | **Exact-claim-language correction** | Replaced EDL and synchronized-camera shorthand in the AF independent scoring with the actual structured-list and temporally-corresponding-different-camera-frame limitations; expressly reserved EDL fields to AF claim 4/search context; no score changed |
 | 17.07.2026 | **Focused structured-list counterfactual rescore** | Cross-referenced the feature matrix's express A4/A6/B6/B9 review, confirmed that no score depends on absence of an EDL label or fields, and retained every AF claim 1 and AF claim 20 `P` score after applying the exact causal structured-list relationship |
+| 20.07.2026 | **C3 received and scored** | Author-hosted extended (JACM) version of Tardos 2003 stored in `../prior-art/` (checksum manifest updated; transcription generated); C3 row added to §5 scoring `P` for AF claims 11–12 (generic per-user-score accusation mechanics; no camera-pattern input; no segmented-portion relationship); no other cell changed; C7 remains outstanding with bibliographic data verified against IEEE Xplore (DOI 10.1109/ICIP.2008.4712458) |
+| 20.07.2026 | **Completeness-audit re-score (A11–A19, B10)** | Ten new candidates stored, transcribed, and scored across §§3–6: no `Y` on AF claims 1 or 20; delivery/association `P` mappings for A14–A18 and B10; A19 scored `P` on AF claims 11–12 (express Tardos per-client confidence scores; no camera-pattern input, no segmented-portion relationship); A13 `P` on AF claim 9 (reconstruction from segment-embedded identifiers, not from a detected switch timing); A15–A18 and B10 carry §102(a)(2) posture pending register verification |
+| 20.07.2026 | **A20 (Gill) promoted and scored** | Belt-and-braces full-text review promoted US 2012/0114309 A1 from set-aside to candidate; A20 rows added across §§3–6 with `P` on AF claims 1 and 20 (different-kind generation/association/recovery loop; no production boundary, no structural detection); FPO text working copy pending official PDF |
+| 21.07.2026 | **A20 official copy stored** | USPTO Patent Public Search print copy stored (50 pp.); checksum manifest 32/32; Espacenet re-verified; FPO working copy validated against the official OCR (claim 17, Example 1B, Abecassis passage 97.7% verbatim); related-application numbering discrepancy recorded for counsel; no score changed |

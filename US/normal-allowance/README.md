@@ -112,7 +112,7 @@ The controlling strategy-neutral deadline snapshot and the separate US-filing, E
 - [ ] Confirm a compliant inventor oath/declaration or authorized delayed/substitute handling.
 - [ ] Confirm applicant identity, continuity/benefit data, assignment chain, obligations to assign, and any appropriate USPTO recordation.
 - [ ] Complete authoritative English-family and foreign-language handling for B6 and inspect the EP 2 811 416 A1 file history.
-- [ ] Confirm the stored patent working copies against official registers; obtain Tardos 2003 (C3) and Lin 2008 (C7); and decide publication/grant-pair and supplemental-reference treatment.
+- [ ] Confirm the stored patent working copies against official registers; obtain Lin 2008 (C7) — Tardos 2003 (C3) was stored 20.07.2026 in its author-hosted extended form, with the STOC version reserved for counsel's filing-copy decision; and decide publication/grant-pair and supplemental-reference treatment.
 - [ ] Commission and document the focused search for direct vision-mixer/EDL/multi-camera boundary-personalization art and reassess NA claims 1, 7, 9, 13, 15, 16, 22, and 29 against its results.
 - [ ] Obtain the Italian search report and route every newly cited reference into the IDS review.
 - [ ] Confirm and docket the nominal and apparently weekend-adjusted European-phase entry dates, set an earlier internal deadline, and complete the applicable Rule 159 entry acts and Rule 162 entry-stage claims-fee plan.

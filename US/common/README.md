@@ -2,7 +2,7 @@
 
 > **SHARED RECORD — INTERNAL COUNSEL REVIEW EXCEPT WHERE EXPRESSLY IDENTIFIED AS FILING-FACING.**
 >
-> Status date: **17 July 2026**. These files serve both the `NA` and `AF` strategy packages and must not be forked without an express counsel decision.
+> Status date: **20 July 2026**. These files serve both the `NA` and `AF` strategy packages and must not be forked without an express counsel decision.
 
 | File | Canonical function |
 |---|---|

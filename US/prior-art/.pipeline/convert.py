@@ -36,6 +36,17 @@ DOCS = {
     "B8": ("B8_EP2811416A1", "text", None, "EP 2 811 416 A1 — An Identification Method"),
     "B9": ("B9_WO2009156973A1", "ocr", "eng", "WO 2009/156973 A1 — Fingerprinting Method and System"),
     "C8": ("C8_ETSI-TS-104-002_DASH-IF-AB-Watermarking", "text", None, "ETSI TS 104 002 V1.1.1 (2023-08) — DASH-IF Forensic A/B Watermarking"),
+    "C3": ("C3_Tardos_Optimal-probabilistic-fingerprint-codes", "text", None, "Tardos, “Optimal Probabilistic Fingerprint Codes” — author-hosted extended version of the STOC 2003 paper", "20.07.2026"),
+    "A11": ("A11_US20230230193A1", "ocr", "eng", "US 2023/0230193 A1 — Video watermark processing method and apparatus (ByteDance)", "20.07.2026"),
+    "A12": ("A12_US20220358762A1", "text", None, "US 2022/0358762 A1 — Systems and methods for piracy detection and prevention (Nagrastar)", "20.07.2026"),
+    "A13": ("A13_US20230103449A1", "ocr", "eng", "US 2023/0103449 A1 — Content information for manifest determination (Comcast)", "20.07.2026"),
+    "A14": ("A14_US20220207120A1", "text", None, "US 2022/0207120 A1 — Apparatus and method for embedding a plurality of forensic marks (Inka Entworks)", "20.07.2026"),
+    "A15": ("A15_US20240114066A1", "ocr", "eng", "US 2024/0114066 A1 — Identifier-based video streaming and sessionization (Mux)", "20.07.2026"),
+    "A16": ("A16_US20240185891A1", "ocr", "eng", "US 2024/0185891 A1 — Common timeline processing for unique manifests (Synamedia)", "20.07.2026"),
+    "A17": ("A17_US12046260B2", "ocr", "eng", "US 12,046,260 B2 — Architecture for personalized media segmentation (Spotify)", "20.07.2026"),
+    "A18": ("A18_US12328488B2", "ocr", "eng", "US 12,328,488 B2 — Dynamic segment resolution and metadata transfer (Spotify)", "20.07.2026"),
+    "B10": ("B10_KR20240168593A", "text", None, "KR 2024-0168593 A — Object-attribute watermarking for preventing digital-content leakage (KETI)", "20.07.2026"),
+    "A19": ("A19_US20230353582A1", "ocr", "eng", "US 2023/0353582 A1 — Anti-Piracy Methods, Devices, and Systems (Synamedia)", "20.07.2026"),
 }
 
 def run(cmd):
@@ -84,6 +95,7 @@ def looks_like_figure(txt):
 
 def clean(txt):
     txt = txt.replace("\x0c", "\n")
+    txt = "".join(ch for ch in txt if ch >= " " or ch in "\n\t")  # drop C0 control bytes (glyph artifacts)
     txt = unicodedata.normalize("NFC", txt)
     txt = re.sub(r"[ \t]+\n", "\n", txt)
     txt = re.sub(r"\n{3,}", "\n\n", txt)
@@ -118,7 +130,8 @@ def main():
     OUT.mkdir(exist_ok=True)
     ids = sys.argv[1:] or list(DOCS)
     for did in ids:
-        stem, method, lang, title = DOCS[did]
+        stem, method, lang, title, *rest = DOCS[did]
+        gendate = rest[0] if rest else "16.07.2026"
         pdf = SRC / f"{stem}.pdf"
         if method == "text":
             body, figs = extract_text(pdf)
@@ -143,7 +156,7 @@ def main():
 > **WORKING TRANSCRIPTION — NOT AN OFFICIAL COPY AND NOT FOR FILING.**
 >
 > Source: `../{stem}.pdf` (see `../README.md` for that copy's provenance and verification status).
-> Generated 16.07.2026. {prov}
+> Generated {gendate}. {prov}
 >
 > {fidelity}
 {figline}
