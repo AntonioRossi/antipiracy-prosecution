@@ -1,6 +1,6 @@
 # AA11393US — AF Allowance-First US Counsel Briefing (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
 >
 > **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** “Allowance-first” is a proposed claim-selection strategy, not a prediction, promise, or legal conclusion. Use `AF claim N`, `NA claim N`, and `PCT claim N` outside the claim text.
 >
@@ -64,16 +64,31 @@ The focused [`prior-art comparison matrix`](AA11393US-AF-prior-art-comparison-ma
 - **A6, US 2014/0325550 A1**: recipient-specific temporal events, tailored manifests, forced distinguishable events, detected-pattern comparison, and device/colluder identification;
 - **B9, WO 2009/156973 A1**: key-derived actual switch points among desynchronized transformed streams;
 - **B6, CN 100583750 C / Microsoft family**: individualized local frame-count/timing variation and robust hash reacquisition;
+- **A20, US 2012/0114309 A1**: a unique EDL for each consumer, expressly motivated by identification and control of each version and by license-enforcement tracing, together with consumer/version association and later cross-reference lookup;
 - **A5 and B7**: shot/cut and perceptual comparison; and
 - **B8, EP 2 811 416 A1**: distortion-tolerant relative-time-pattern matching.
 
-The most plausible § 103 route is conventional multicamera/vision-mixer/EDL practice combined with B9, A4, A6, or B6 for variation/delivery and A5, B7, B6, or B8 for recovery. The response should remain structural and operational:
+A20 is examiner-favorable on the motivation limb and should not be characterized as different-solution or teaching-away evidence. Its background describes generic EDL events using source identifiers, time-code-defined content elements, transitions including cuts, and transition durations. Its individualized-EDL embodiment lists “random sizes” for content elements as a way to create a “product signature.” “Sizes” is undefined; because A20 also describes time-code-defined content elements, a temporal interpretation is plausible, but A20 does not expressly say to vary element duration, camera-cut timing, or a boundary between identified synchronized cameras. The selected/front-page `F/C/A/C` bracketed time-range exemplar reproduces **Figure 2** on drawing Sheet 2 of 33. `330` is a final-product reference numeral, not a figure number. **Figure 3** is a separate multiple-source `A/B/C` drawing that also uses reference numeral `330`. The bracketed exemplar must be cited to the selected/front-page drawing or Figure 2 on Sheet 2, not as “Fig. 330” or as transcribed specification prose. “Product signature” supports motivation to make copies distinguishable, but it does not disclose a structural detector that recovers an ordered camera-source pair jointly with timing at the same region. Example 1B's express recovery path analyzes and cross-references a unique watermark.
+
+The most plausible § 103 route is A20 combined with conventional multicamera/vision-mixer/EDL practice and B9, A4, A6, or B6 for variation/delivery, with A5, B7, B6, or B8 where a recovery teaching is needed. A20 makes forensic EDL individualization documentary rather than hypothetical. The response should therefore concede that general motivation and remain structural and operational:
 
 - the same ordered transition between identified camera sources;
 - two noncoincident boundary timings and actual alternate-camera frames in the intervening interval;
 - a candidate pattern generated from the delivered version;
 - detection at the corresponding distinguishing region; and
 - joint matching of both source order and timing before recipient lookup.
+
+### Claim-specific KSR pre-mortem
+
+Counsel should prepare for MPEP § 2143 rationales A, D, and F. An examiner may characterize the proposal as a combination of familiar elements yielding predictable results; application of the known per-recipient EDL-individualization technique to a multicamera editing system ready for improved traceability; or a predictable EDL variation prompted by A20's express design incentive. Those routes are plausible, not established. They still require an evidence-backed account of why a skilled person would select and implement the claimed relationship, not merely generic timing variation or an unspecified EDL parameter, and why the combination would have had a reasonable expectation of producing the complete claimed chain.
+
+Rationale E is conditional rather than automatic. “Obvious to try” requires a finite number of **identified, predictable** solutions and a reasonable expectation of success. Counsel should not concede that the existence of a finite number of generic EDL field types by itself identifies movement of a recorded transition between synchronized camera sources as a known forensic option.
+
+A separate patent reference is not invariably required for every implementation detail: common knowledge or a predictable consequence may contribute to an articulated obviousness rationale when properly supported. Under current [MPEP § 2144.03](https://www.uspto.gov/web/offices/pac/mpep/s2144.html), however, unsupported official notice or common knowledge must be used judiciously, may fill only an insubstantial gap, and cannot be the principal evidence for a central missing claim relationship. If counsel contests such a factual assertion, the traverse should be specific—explaining why the asserted fact is not well known or indisputable, rather than merely requesting a citation—and an adequate traverse requires the examiner to provide documentary support if the rejection is maintained. This control does not require documentary evidence for every inference in an otherwise evidence-backed KSR analysis.
+
+Under current [MPEP § 2143.03](https://www.uspto.gov/web/offices/pac/mpep/s2143.html), every limiting word and claimed relationship must be considered. AF claims 1 and 20 may rely on their positively recited same-region detection and joint source-pair-plus-timing match: a rejection must account for those operations as well as generation and delivery. Do not overstate that point by asserting that all reviewed detection art is embedded-mark based. A4 includes camera-perspective/version-pattern recovery, A6 includes forced or natural event-pattern recovery, and B7 supplies shot/cut comparison; the narrower question is whether the articulated combination supplies the AF claims' joint source identities, timing, and same-region relationship. This detector rebuttal is claim-specific and must not be exported to NA claims 1, 7, or 9, which do not recite those detection operations.
+
+US counsel should own evidence development with the inventor or technical lead and, as appropriate, a search or test professional. They should promptly preserve genuinely dated materials and identify witnesses concerning: (1) which EDL parameters were actually recognized as per-recipient forensic variables; (2) whether moving the claimed synchronized-camera boundary would predictably preserve program continuity and create the claimed alternate-camera interval; (3) whether the art taught a workable route to recover both source identities and timing at the same region; and (4) any unexpected technical result tied to the claimed relationship. Counsel should complete the historical-evidence review before approving final claims. Later testing may show technical behavior, but a memorandum created in 2026 is not itself contemporaneous evidence of what a person of ordinary skill knew at the relevant time; formal testing or a declaration should be prepared only if counsel decides it is warranted. Do not characterize silence, use of another technique, or a portfolio's failure to select this technique as teaching away or failure of others. Any objective-indicia position should be supported by evidence of a recognized persistent need, documented unsuccessful attempts or skepticism, satisfaction of that need, and a nexus to the claimed relationship.
 
 Do not argue that the number of combined references alone defeats obviousness. Require the rejection to identify every operation and an articulated reason and workable path to combine them. Conversely, do not characterize D1 or the supplemental art categorically; use the exact disclosures and qualifications recorded in the matrices.
 
@@ -195,7 +210,7 @@ The following are counsel work products requested from this prepared decision pa
 
 1. Is AF claim 1 adequately supported as a whole, including source identities, same-region detection, and joint source/time matching?
 2. Which support-safer AF claim 1 alternative should be kept ready?
-3. Does focused direct-art searching support the allowance thesis, and what combination is the examiner most likely to make?
+3. Does focused direct-art searching support the allowance thesis; how should counsel answer the A20-led rationales A/D/F and any properly supported rationale E; and what evidence addresses the exact claimed relationships and reasonable expectation of success?
 4. Are AF claims 2–3 entitled to the provisional date despite the Example 2 inconsistency?
 5. Are the Examples 2→3→4 relationships in AF claims 13–18 and the Examples 2→5 relationships in AF claims 1 and 7–10 adequately disclosed?
 6. Are AF claim 11's recipient-associated candidate-pattern input and AF claim 12's segmented-fingerprint/portion-to-contributor relationship adequately conveyed, and is AF claim 14's exact chunk geometry supportable?
@@ -221,6 +236,9 @@ The following are counsel work products requested from this prepared decision pa
 - [USPTO MPEP § 2001 — duty of disclosure, candor, and good faith](https://www.uspto.gov/web/offices/pac/mpep/s2001.html)
 - [USPTO MPEP § 2106 — patent-subject-matter eligibility](https://www.uspto.gov/web/offices/pac/mpep/s2106.html)
 - [USPTO MPEP § 2143 — obviousness rationales](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
+- [USPTO MPEP § 2143.03 — all claim limitations must be considered](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
+- [USPTO MPEP § 2144.03 — common knowledge and official notice](https://www.uspto.gov/web/offices/pac/mpep/s2144.html)
+- [USPTO MPEP § 2145 — rebuttal arguments must remain commensurate with the claims; unclaimed limitations are not imported](https://www.uspto.gov/web/offices/pac/mpep/s2145.html)
 - [USPTO MPEP § 802 — restriction practice](https://www.uspto.gov/web/offices/pac/mpep/s802.html)
 - [Akamai Technologies, Inc. v. Limelight Networks, Inc. — method-step attribution (Fed. Cir. en banc 2015)](https://www.cafc.uscourts.gov/opinions-orders/9-1372.opinion.8-11-2015.1.pdf)
 - [Centillion Data Systems, LLC v. Qwest Communications International, Inc. — use of a distributed claimed system (Fed. Cir. 2011)](https://www.cafc.uscourts.gov/opinions-orders/10-1110-1131.pdf)
@@ -228,5 +246,6 @@ The following are counsel work products requested from this prepared decision pa
 
 ## 12. Revision record
 
+- **21 July 2026 — A20/KSR defense calibration:** added A20's examiner-favorable forensic-EDL motivation, generic EDL-field disclosure, qualified element-size/product-signature treatment, and selected/front-page exemplar/Figure 2/Sheet 2 and Figure 3/`330` citation controls; added a claim-specific KSR A/D/F/E pre-mortem, current MPEP §§ 2143.03/2144.03/2145 controls, detector-art qualification, and counsel-owned historical-evidence preservation and review directions. No claim text, art score, or claim-set version changed.
 - **AF-2026-07-17-v2 (17 July 2026):** added independent method AF claim 20 to the single AF proposal; stated the recorded deletion-at-filing option; separated method-step attribution from whole-system use; propagated the claim-as-a-whole, direct-art, priority, eligibility, restriction, proof, and continuation gates; and aligned the allowance thesis with the independents' exact structured-list and temporally-corresponding-different-camera-frame language.
 - **Initial-contact defensibility pass (17 July 2026):** recorded readiness for controlled initial counsel transmission; converted support, priority, search, and filing questions into pending post-engagement decisions; added concrete support-safer contingency paths and their costs; made AF claim 20's no-dependent trade-off express; and added recursive continuation and qualified Track One/PTA controls. No claim text or art score changed.
