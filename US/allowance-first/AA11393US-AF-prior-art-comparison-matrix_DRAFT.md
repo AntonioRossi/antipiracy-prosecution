@@ -1,6 +1,6 @@
 # AA11393US — Allowance-First Prior-Art Comparison Matrix (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
 >
 > **INTERNAL COUNSEL ANALYSIS — NOT FOR FILING AS-IS AND NOT AN ADMISSION.** This is a limited, claim-directed review. `Y`, `P`, `—`, “not identified,” and statements about combinations are issue-spotting tools, not conclusions that a document is prior art, anticipates a claim, supplies inherency, or establishes obviousness. Counsel must verify the source documents and the proposed combinations.
 
@@ -58,7 +58,7 @@ Legend: **Y** = the identified sub-operation is expressly or substantially taugh
 | **A17 — US 12,046,260 B2** | P — per-account item substitution | P — personalized-segments DB | — | DAI-class personalization; no versions, no detection; §102(a)(2) posture. |
 | **A18 — US 12,328,488 B2** | P — per-user dynamic-segment substitution | P — user-keyed metadata DB | — | DAI-class resolution; same-timing format variants; §102(a)(2) posture. |
 | **A19 — US 2023/0353582 A1** | — | P — assigned-bit ↔ client-ID records | Y — suspect acquisition + per-client confidence scoring + pirate-list identification | Express Tardos per-client scoring with FPR-controlled thresholds; pressures AF claims 11–12 as a combination reference, not the claimed camera-pattern input. |
-| **A20 — US 2012/0114309 A1** | P — per-recipient unique versions from a unique EDL per consumer; random element sizing | Y — recipient identity↔unique-version registry | P — cross-reference analysis of distributed copies (watermark feature) | Forensic EDL individualization expressly for license enforcement; supplies the registry/lookup architecture but no camera-cut mechanism and no structural transition+timing detection. |
+| **A20 — US 2012/0114309 A1** | P — per-recipient unique versions from a unique EDL per consumer; random element sizing | Y — recipient identity↔unique-version registry | P — cross-reference analysis of distributed copies (watermark feature) | Forensic EDL individualization expressly for license enforcement; supplies the registry/lookup architecture but no identified camera sources, no camera-selection-boundary timing mechanism, and no structural transition+timing detection. |
 | **B1 — D2, CN 117278762 A** | — | P — codec-chain provenance | P — authorized decoder/display metadata analysis | Does not clearly disclose independent suspect-copy acquisition or recipient-specific camera variation. |
 | **B2 — WO 2021/224688 A1** | P — same disclosure family as A1 | P/Y | P | Scored with A1 for substance. Its ISR X ratings address D1-family claims, not the AF claims. |
 | **B3 — WO 2017/017603 A1** | — | P — source watermark | P — capture/extract/compare | Background watermark route only. |
@@ -172,7 +172,7 @@ The most important unresolved search is direct multicamera vision-mixer/EDL art 
 
 ## 9. Maintenance
 
-Revisit this matrix on any AF claim amendment or renumbering, new prior-art document, Italian search-report citation, receipt of C3/Tardos or C7/Lin, authoritative English-family review of B6, or correction to the canonical normal-allowance matrix.
+Revisit this matrix on any AF claim amendment or renumbering, new prior-art document, Italian search-report citation, receipt of C3/Tardos or C7/Lin, authoritative English-family review of B6, or correction to the canonical normal-allowance matrix. The dated maintenance entries below are append-only; preserve each historical entry verbatim and record any later correction or refinement in a newly dated entry.
 
 | Date | Event | Scope |
 |---|---|---|
@@ -184,3 +184,4 @@ Revisit this matrix on any AF claim amendment or renumbering, new prior-art docu
 | 20.07.2026 | **Completeness-audit re-score (A11–A19, B10)** | Ten forward-citation candidates stored, transcribed, and added to §3; no score changes and no change to the bottom line; A19 joined A3 as lead express-scoring art for AF claims 11–12; A13 noted on reconstruction for AF claim 9; A15/A16 noted as conventional manifest art; A15–A18 carry §102(a)(2) posture pending register verification; B10's label corrected 21.07.2026 to §102(a)(1) window art (02.12.2024 laid-open publication; not (a)(2)-eligible as a Korean domestic publication) |
 | 20.07.2026 | **A20 (Gill) promoted and scored** | Belt-and-braces full-text review promoted US 2012/0114309 A1 from set-aside to candidate; §3 and §4 rows added (`P` on AF claims 1 and 20; registry architecture without camera-cut mechanism); §5 route 1 updated to record the documentary EDL limb; FPO text working copy pending official PDF |
 | 21.07.2026 | **A20 official copy stored** | USPTO Patent Public Search print copy stored (50 pp.); checksum manifest 32/32; Espacenet re-verified; FPO working copy validated against the official OCR (claim 17, Example 1B, Abecassis passage 97.7% verbatim); related-application numbering discrepancy recorded for counsel; no score changed |
+| 21.07.2026 | **A20 terminology precision** | Refined the current analytical characterization from “no camera-cut mechanism” to the more precise statement that A20 contains generic EDL cuts but lacks identified camera sources and a camera-selection-boundary timing mechanism; the 20.07.2026 entry remains verbatim as historical record, and no AF claim text, score, or substantive combination analysis changed |

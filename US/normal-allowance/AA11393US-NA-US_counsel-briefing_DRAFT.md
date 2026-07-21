@@ -1,6 +1,6 @@
 # AA11393US — NA Balanced Actor-Split Counsel Briefing (DRAFT)
 
-> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-17-v1 · STATUS 17 JULY 2026**
+> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-21-v2 · STATUS 21 JULY 2026**
 >
 > **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** Use `NA claim N` outside the claim text.
 
@@ -21,7 +21,7 @@ Use the pattern terminology deliberately:
 - a **camera-cut timing pattern** is the sequence or arrangement of camera-switch times produced in a version and, where applicable, represented by chunks or manifests for distribution; under NA claims 9 and 22 it identifies the relevant first and second camera sources and the switch timing preserved in the delivered version, rather than an arbitrary fragment-version sequence; and
 - a **camera-source-transition pattern** is the detection-side structure identifying ordered camera-source transitions together with their corresponding camera-switch timings for operational comparison.
 
-The terms perform different claim functions rather than defining a strict information-content hierarchy. In NA claims 9 and 22, a camera-cut timing pattern records the identified source pair and the switch timing contained in a delivered version. In NA claim 16, candidate and detected camera-source-transition patterns organize ordered source transitions and corresponding timings at candidate-distinguishing regions for operational derivation and matching. NA claims 9 and 22 therefore do not rely on timing alone, and NA claim 16 does not rely merely on a label applied to generic timing data. Do not collapse the terms into synonyms without reviewing written-description support, prior art, and claim scope.
+The terms perform different claim functions rather than defining a strict information-content hierarchy. In NA claims 9 and 22, a camera-cut timing pattern records the identified source pair and the switch timing contained in a delivered version. In NA claim 16, candidate and detected camera-source-transition patterns organize ordered source transitions and corresponding timings at candidate-distinguishing regions for operational derivation and matching. NA claim 1 recites its ordered-transition and noncoincident-timing output relationship directly rather than through either pattern term. NA claims 9 and 22 therefore do not rely on timing alone, and NA claim 16 does not rely merely on a label applied to generic timing data. Do not collapse the terms into synonyms without reviewing written-description support, prior art, and claim scope.
 
 ## 3. Commercial actor and enforcement map
 
@@ -52,15 +52,17 @@ If fees or restriction risk require fewer claims, preserve the three subsystem i
 Maintain the following fallback order:
 
 1. structured edit list with source-camera/time-code entries;
-2. actual local substitution of frames from one camera for frames selected from another;
-3. the same ordered source transition retained on both sides of the moved boundary at noncoincident switch timings (NA claim 7);
-4. later cut retains the reference timing or restores synchronization;
+2. the observable same ordered first-camera-to-second-camera transition at noncoincident reference/mate switch timings, with temporally corresponding different-camera frames in the intervening interval (NA claim 1);
+3. retention, in the varied structured list, of the first/second camera identifiers on the respective sides while the recorded transition time code changes (NA claim 7);
+4. later cut retains the reference timing or restores synchronization (NA claims 2–3);
 5. different manifests select corresponding equal-duration reference and mate chunks spanning the same playback interval, each chunk itself containing the same ordered physical-camera transition at its respective noncoincident timing (NA claim 13), with NA claims 9 and 29 carrying manifest preservation of the selected transition position in the distribution and end-to-end families;
 6. recipient ledger;
 7. detection and matching, at the same candidate-distinguishing region, of both the ordered camera-source transition and its switch timing;
 8. detected time code and reconstructed manifest;
 9. perceptual hash/sliding-window matching; and
 10. positive probabilistic collusion attribution, including attribution scores in NA claim 21.
+
+The former broader production theory—local alternate-camera substitution without requiring the same ordered camera pair at two timings—should be reserved for a coordinated continuation or other counsel-approved claim strategy. It should not be used to characterize or argue the scope of present NA claim 1.
 
 ## 5. D1 position
 
@@ -94,14 +96,14 @@ Accordingly, avoid treating any of those concepts in isolation as the invention.
 
 The full-text review materially sharpened four references:
 
-- **A4, US 10,834,158 B1**, is a principal distribution/detection reference. It discloses camera-perspective fragment alternatives, customized manifests encoding ordered or differential version patterns, temporal alignment of an unauthorized copy, recovery of its version sequence, comparison with stored manifests, and probabilistic user/group identification. A4 does not expressly disclose an EDL or movement of a recorded director cut, and a perspective change does not necessarily create a camera cut. It nevertheless creates serious broad-construction and §103 pressure on NA claims 9, 16, and 22.
+- **A4, US 10,834,158 B1**, is a principal camera-perspective/distribution/detection reference. It discloses camera-perspective fragment alternatives, customized manifests encoding ordered or differential version patterns, temporal alignment of an unauthorized copy, recovery of its version sequence, comparison with stored manifests, and probabilistic user/group identification. A4 does not expressly disclose an EDL or movement of a recorded director cut, and a perspective change does not necessarily create a camera cut. It nevertheless creates serious broad-construction and §103 pressure on NA claims 1, 9, 16, and 22.
 - **A6, US 2014/0325550 A1**, discloses recipient-specific temporal events, device/transaction-derived timing, unique manifest/segment sequences, variable-duration segments, detection of variations in a pirate stream, comparison with stored device-associated lists, and user identification. The present limited review identified in A6 many of the non-camera distribution, association, detection, and resolution elements; counsel should confirm their precise scope and role in any claim-specific combination.
 - **B6, CN 100583750 C and its Microsoft family**, teaches recipient-specific local frame-count/timing changes and hash-based reacquisition from an illegal copy despite insertion, deletion, rearrangement, advertising, and timing attacks. Subject to authoritative English-family review and counsel's determinations of applicable prior-art status and analogous-art scope, B6 presents substantial pressure against positions relying only on timing variation, relative timing, or hash reacquisition; no synchronized alternate-camera/EDL boundary mechanism was identified in the present review.
 - **B9, WO 2009/156973 A1**, does not use only a fixed time grid. It analyzes shot cuts and motion to identify probable switch points, combines them with a key-derived/random sequence to select practical exchange points, switches streams at those points, and states that users' copies differ through different exchangeable switch times. Its streams are desynchronized transformations of the same content rather than temporally corresponding physical-camera views; no EDL, moved recorded director cut, or claimed recovery loop was identified in the reviewed disclosure.
 
 The most plausible combination pressure is therefore claim-specific:
 
-- for NA claims 1 and 7, conventional multi-camera/vision-mixer/EDL practice combined with B9 or B6, and potentially A4's camera-perspective alternatives;
+- for NA claim 1 as a whole, conventional multi-camera/vision-mixer/EDL practice combined with B9 or B6, and potentially A4's camera-perspective alternatives; for NA claim 7's added internal-record delta, A20 supplies the closest analogous individualized-EDL teaching but not retention of an identified camera pair around a changed camera-transition time;
 - for NA claims 9, 13, and 15, A4 or A6 combined with B9 and ordinary multi-camera editing;
 - for NA claim 16, A4 or A6 combined with the shot/hash-detection teachings identified in A5 or B7 and, where useful, B6 or B8; and
 - for NA claim 22, A4/A6/B9 combined with conventional multi-camera EDL production.
@@ -116,7 +118,7 @@ The attached prior-art matrix and IDS inventory identify the candidate documents
 
 ## 7. Priority and written-description position
 
-The provisional contains the core multi-camera, EDL, local ten-frame variation, manifest, ledger, detection, perceptual-hash/fuzzy-match, Tardos, overlay, and analytics passages. The revised structural language nevertheless combines relationships drawn from different examples: NA claims 7, 9, 13, 15, 16, 22, and 29 require claim-as-a-whole review rather than a conclusion based on isolated nouns or operations. It also contains support for later-cut alignment, but that support has an internal drafting inconsistency requiring express analysis. At provisional PDF p. 27 (printed p. 16), the mate EDL table places Cut 4 at `00:00:30:01` and labels it adjusted to the reference. The accompanying paragraph contains the `00:00:30:11` value, immediately characterizes that value in the provisional text as “a mistake in the alignment attempt,” and expressly states that the correct approach is `00:00:30:01`, matching the reference with no delay. The PCT Example 2 uses the corrected alignment. This is favorable evidence of the intended teaching, but it does not replace a claim-as-a-whole priority opinion or justify an unqualified support rating.
+The provisional contains the core multi-camera, EDL, local ten-frame variation, manifest, ledger, detection, perceptual-hash/fuzzy-match, Tardos, overlay, and analytics passages. The revised structural language nevertheless combines relationships drawn from different examples: NA claims 1, 7, 9, 13, 15, 16, 22, and 29 require claim-as-a-whole review rather than a conclusion based on isolated nouns or operations. NA claim 1's generalized output relationship and NA claim 7's added structured-list identifier-retention delta should be reviewed separately. The provisional also contains support for later-cut alignment, but that support has an internal drafting inconsistency requiring express analysis. At provisional PDF p. 27 (printed p. 16), the mate EDL table places Cut 4 at `00:00:30:01` and labels it adjusted to the reference. The accompanying paragraph contains the `00:00:30:11` value, immediately characterizes that value in the provisional text as “a mistake in the alignment attempt,” and expressly states that the correct approach is `00:00:30:01`, matching the reference with no delay. The PCT Example 2 uses the corrected alignment. This is favorable evidence of the intended teaching, but it does not replace a claim-as-a-whole priority opinion or justify an unqualified support rating.
 
 Use the attached provisional/PCT map to confirm:
 
@@ -130,7 +132,7 @@ Keep the Example 2 inconsistency in the internal priority analysis. Do not add i
 
 ### Intervening-information trigger
 
-The limited review recorded in this package has not identified potentially material art or another prior-art event having an effective date after 26 February 2024 but before 19 February 2025. That statement is not a clearance opinion and must not be treated as proof that no such information exists.
+The limited review recorded in this package has identified one recorded intervening-window exception: B10 (KR 2024-0168593 A), whose only identified prior-art route is §102(a)(1) as of its 2 December 2024 laid-open publication. B10 is prior art only against claims whose provisional entitlement fails and is assessed LOW-materiality on the present full-text review because it does not disclose cameras, an edit list, or the claimed timing or structural relationships. The intervening-information trigger was activated and recorded on 21 July 2026; no claim-position change is presently indicated. This is not a clearance opinion and must not be treated as proof that no other potentially material information exists.
 
 Reopen the priority and disclosure analysis promptly if:
 
@@ -152,7 +154,8 @@ For §112:
 - retain concrete algorithms where helpful, while recognizing that the reviewed A5, B6, and B7 materials contain perceptual-hashing and/or shot-detection teachings; do not assume those techniques independently distinguish the claims;
 - confirm corresponding algorithm disclosure if §112(f) is invoked;
 - ensure that “camera-selection boundary,” local substitution, and resynchronization remain within the language and teaching of the filed documents;
-- confirm NA claim 7's retained camera identifiers and noncoincident time codes as a supported expression of Example 2 rather than an unsupported general rule;
+- confirm NA claim 1's output-level same ordered first-camera-to-second-camera transition at noncoincident timings and intervening temporally corresponding different-camera frames as a supported expression of Example 2 rather than an unsupported general rule;
+- separately confirm NA claim 7's retention of the first/second camera identifiers in the varied structured list while the recorded transition time code changes;
 - confirm that NA claims 9, 13, 15, and 29 support-safely connect PCT Example 2's moved source boundary to PCT Examples 3–4's manifest and mixing disclosures and that the corresponding provisional passages support the same relationship, including NA claim 13's different manifests, corresponding equal-duration reference/mate chunks spanning the same playback interval, and placement of the ordered transition within each chunk at the respective switch timing;
 - preserve NA claim 16's functional relationship between the stored candidate distinction, detection, and matching at the same region, including identification of the sources on both sides and agreement in both source order and timing;
 - preserve NA claim 22's closed loop from the moved ordered transition through recipient association to structural transition-and-timing recovery;
@@ -211,7 +214,7 @@ The revised WIPO comments preserve the synergy and architecture argument while c
 
 The comments are explanatory only and do not amend the application.
 
-If the intervening-information trigger in section 7 is activated, counsel should reconsider the disclosure and argument strategy before filing or supplementing the comments. Activation of the trigger does not by itself require insertion of the internal Example 2 analysis into the public comments.
+Because the intervening-information trigger in section 7 has been activated for B10, counsel should reconsider the disclosure and argument strategy before filing or supplementing the comments, and should repeat that review if additional information activates the trigger. Activation of the trigger does not by itself require insertion of the internal Example 2 analysis into the public comments.
 
 ## 11. IDS instructions
 
@@ -229,20 +232,20 @@ Treat the list as an inventory, not as a statement that every item is prior art 
 1. §371 or bypass, and why?
 2. Track One requested or not?
 3. Which four independent claims best match the applicant's expected licensing and enforcement targets?
-4. Is the local alternate-camera substitution wording support-safe and sufficiently definite?
+4. Is NA claim 1's same ordered first-camera-to-second-camera transition at noncoincident reference/mate timings, including the intervening temporally corresponding different-camera frames, support-safe and sufficiently definite?
 5. In view of the provisional Example 2 inconsistency, is later resynchronization entitled to the provisional date, and should it remain dependent or also appear in parallel independent scope?
 6. Does the 30/4 set create unacceptable restriction risk, how should its zero net claim-count headroom be managed, and what divisional strategy is recommended?
 7. Which supplemental references should be submitted, and is a further search required before filing?
 8. Does every selected claim receive the provisional date?
 9. Which terms risk §112(f), and what restructuring is recommended?
-10. Should overlay, probabilistic/Tardos, reconstructed-manifest, and CRM claims be retained or reserved for a continuation, and do structural NA claims 7, 13, and 29 provide the preferred use of the replaced dependent-claim slots?
+10. Should overlay, probabilistic/Tardos, reconstructed-manifest, and CRM claims be retained or reserved for a continuation; should the former broader production theory also be reserved there; and do structural NA claims 7, 13, and 29 provide the preferred use of the replaced dependent-claim slots?
 11. Is any “without pixel-domain embedding” dependent claim worth the scope cost, or should that remain only an explanatory advantage?
 12. Are the WIPO informal comments approved for filing and aligned with the intended EP response?
 13. Does candidate NA claim 16 support-safely tie the stored candidate difference, detection, and matching to the same candidate-distinguishing region and require agreement in both ordered camera-source transition and switch timing, or should it be restructured further?
 14. Are the inventor declaration, applicant identity, assignment chain, and recordation record complete for the selected route?
 15. Who will monitor the provisional-to-PCT interval for potentially material intervening information, and what event will trigger a renewed priority, IDS, and representation review?
-16. Is the deliberate functional distinction between “camera-cut timing pattern” and “camera-source-transition pattern” support-safe and appropriately reflected in NA claims 1/9/15/16/22 and harmonized NA claims 17–18?
-17. Are NA claims 7, 9, 13, 15, 22, and 29 supported as integrated operations, particularly the same ordered transition at noncoincident positions and the manifest/chunk preservation of one such position?
+16. Is the deliberate functional distinction between “camera-cut timing pattern” and “camera-source-transition pattern” support-safe and appropriately reflected in NA claims 9/15/16/22 and harmonized NA claims 17–18, with NA claim 1 reciting its corresponding output relationship directly?
+17. Are NA claims 1, 7, 9, 13, 15, 22, and 29 supported as integrated operations, with a separate analysis of claim 1's same ordered transition at noncoincident positions, claim 7's structured-list identifier/time-code delta, and the manifest/chunk preservation limitations?
 18. What focused direct-art search has been completed for vision-mixer/EDL/multi-camera boundary personalization, and do its results permit any deletion of the structural limitations adopted over A4, A6, B6, and B9?
 
 ## 13. Current procedural authorities to confirm
@@ -264,3 +267,8 @@ These links identify the current official materials used to prepare the internal
 - [USPTO MPEP §2143 — reasoned obviousness rationales and predictable combinations](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
 - [USPTO subject-matter eligibility resources](https://www.uspto.gov/patents/laws/examination-policy/subject-matter-eligibility)
 - [Federal Circuit: CloudofChange v. NCR (distributed-system use)](https://www.cafc.uscourts.gov/opinions-orders/23-1111.OPINION.12-18-2024_2438003.pdf)
+
+## 14. Revision record
+
+- **21 July 2026 — B10 intervening-window reconciliation:** corrected the section 7 current-state statement to record B10 as the one identified intervening-window exception and conformed the section 10 handling instruction to the activation already recorded in the priority map, shared deferred-work memo, and IDS inventory; no claim text, prior-art score, or claim-position conclusion changed.
+- **NA-2026-07-21-v2 (21 July 2026):** moved the observable same ordered first-camera-to-second-camera transition at noncoincident timings into NA claim 1; recast NA claim 7 as the narrower internal structured-list identifier/time-code fallback; preserved claims 2–3 as dependent resynchronization fallbacks; and reserved the former broader production theory for coordinated continuation review.

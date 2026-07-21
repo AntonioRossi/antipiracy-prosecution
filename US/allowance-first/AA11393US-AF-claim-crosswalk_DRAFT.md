@@ -1,6 +1,6 @@
 # AA11393US — AF/NA Claim and Coverage Crosswalk (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
 >
 > **INTERNAL COUNSEL ANALYSIS — NOT FOR FILING AND NOT A CLAIM-CONSTRUCTION POSITION.** This crosswalk compares functional coverage; it does not state that any AF and NA claim has identical scope. Every external reference is strategy-qualified.
 >
@@ -67,7 +67,7 @@ This deferral is the central cost of AF. A continuation plan must identify which
 
 If counsel selects AF for the parent, the initial continuation reservation should at minimum evaluate:
 
-1. an NA claim 1-style production system with NA claims 2–8 fallbacks;
+1. an `NA-2026-07-21-v2` claim 1-style production system with NA claims 2–8 fallbacks, plus separate evaluation of the former broader local-substitution theory without the same-pair requirement;
 2. an NA claim 9-style distribution system with NA claims 10–15 fallbacks;
 3. an NA claim 16-style detection system with NA claims 17–21 fallbacks;
 4. a broader or actor-specific method beginning from NA claim 22, together with each commercially useful and supportable NA claims 23–30 fallback not retained by AF claim 20; and
@@ -77,7 +77,7 @@ Which family is filed first should follow commercial actors, restriction/electio
 
 ## 6. Change control
 
-This crosswalk is valid only for `AF-2026-07-17-v2` and `NA-2026-07-17-v1`. AF claim 20 may be omitted or canceled at filing for a documented one-independent-claim strategy. That authorized selection must be annotated as the actual filed topology throughout the single AF-v2 package; it does not create or require a separate system-only AF package. Any other amendment, renumbering, omission, cancellation, restriction election, terminology characterization, or support-driven rewrite requires:
+This crosswalk is valid only for `AF-2026-07-17-v2` and `NA-2026-07-21-v2`. AF claim 20 may be omitted or canceled at filing for a documented one-independent-claim strategy. That authorized selection must be annotated as the actual filed topology throughout the single AF-v2 package; it does not create or require a separate system-only AF package. Any other amendment, renumbering, omission, cancellation, restriction election, terminology characterization, or support-driven rewrite requires:
 
 1. a new strategy version;
 2. line-by-line crosswalk review;
@@ -88,4 +88,5 @@ No amendment or argument may treat the AF terminology hierarchy as a family-wide
 
 ## 7. Revision record
 
+- **21 July 2026 — NA-v2 synchronization:** reviewed the crosswalk against `NA-2026-07-21-v2`, updated its validity control, and recorded the former broader production theory as a separate continuation candidate rather than present NA claim 1 scope. AF claim text and version are unchanged.
 - **AF-2026-07-17-v2 (17 July 2026):** added an exact AF claim 20 to NA claim 22 comparison; recorded the one-package deletion option and continuation reservations for broader or actor-specific methods and NA claims 23–30; propagated the independent support and art gates; preserved the AF/NA terminology non-concession; and aligned AF claim 1's production description with its actual structured-list limitation rather than an unstated EDL requirement.

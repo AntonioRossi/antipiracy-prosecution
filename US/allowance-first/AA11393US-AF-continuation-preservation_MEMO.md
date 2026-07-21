@@ -1,6 +1,6 @@
 # AA11393US — AF Continuation and Coverage Preservation Memo
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
 >
 > **INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION.** The responsible US attorney must confirm current law, the actual benefit chain, copendency, filing route, inventorship, support, deadlines, and filing evidence. “Allowance-first” does not guarantee allowance, and “continuation planned” is not a completed filing.
 >
@@ -51,7 +51,7 @@ Counsel should turn this table into actual claim outlines before the AF parent r
 
 | Reservation | Starting reference | Target actor / reason | Support and art controls |
 |---|---|---|---|
-| Production system | NA claims 1–8 | Broadcaster, production facility, mate-generation software/vendor | Preserve alternate-camera frame structure; separately gate NA claims 2–3; update direct EDL search |
+| Production system | `NA-2026-07-21-v2` claims 1–8 and the former broader production theory | Broadcaster, production facility, mate-generation software/vendor | Preserve current NA claim 1's same ordered transition at noncoincident timings; separately evaluate local alternate-camera substitution without the same-pair requirement; gate NA claim 7's internal-list delta and NA claims 2–3's resynchronization; update direct EDL search |
 | Distribution system | NA claims 9–15 | Streaming platform, licensee, origin/CDN operator | Preserve ordered source pair/noncoincident timing and manifest-selected structure; gate NA claim 13 geometry |
 | Detection system | NA claims 16–21 | Monitoring provider, rights owner, trust/safety operator | Gate source-identity and same-region joint match; support-check NA claim 21 scores |
 | Broader and actor-specific method family | AF claim 20 and NA claims 22–30 | Preserve method scope beyond AF claim 20's narrow integrated chain, including vertically integrated performance and supported attribution theories | Preserve positive performance; compare AF claim 20 with NA claim 22 and dependent method coverage; review divided infringement, § 101, restriction, proof, and support |
@@ -71,7 +71,7 @@ Before placing any reserved limitation in a continuation, record:
 5. whether intervening information makes the effective date outcome-determinative; and
 6. whether the application is a continuation, divisional, or continuation-in-part and why.
 
-The specific gates remain active in the AF parent and in a continuation: AF claims 1 and 20 as claims as a whole; affirmative method support for every step of AF claim 20 rather than an assumption based only on AF claim 1's system format; the provisional Example 2 inconsistency; Examples 2→3→4 manifest integration; the weaker Examples 2→5 source-identity detection route; same-region joint matching; AF claim 11's recipient-associated candidate-pattern input; AF claim 12's segmented-fingerprint/portion-to-contributor relationship; NA claim 21's attribution scores if that NA formulation is reserved; AF claim 14/NA claim 13 chunk geometry; and any claimed overlay/segmentation sequence.
+The specific gates remain active in the AF parent and in a continuation: AF claims 1 and 20 as claims as a whole; affirmative method support for every step of AF claim 20 rather than an assumption based only on AF claim 1's system format; NA claim 1's generalized same-ordered-transition output relationship; NA claim 7's internal structured-list identifier/time-code delta; any broader production theory omitting the same-pair requirement; the provisional Example 2 inconsistency; Examples 2→3→4 manifest integration; the weaker Examples 2→5 source-identity detection route; same-region joint matching; AF claim 11's recipient-associated candidate-pattern input; AF claim 12's segmented-fingerprint/portion-to-contributor relationship; NA claim 21's attribution scores if that NA formulation is reserved; AF claim 14/NA claim 13 chunk geometry; and any claimed overlay/segmentation sequence.
 
 Continuation filing preserves pendency; it does not create disclosure that was absent, broaden the content of the provisional, or guarantee the earlier date.
 
@@ -217,5 +217,6 @@ Until one of these outcomes is fully evidenced, the package must state **CONTINU
 
 ## 12. Revision record
 
+- **21 July 2026 — NA-v2 continuation synchronization:** updated the production reservation to distinguish current `NA-2026-07-21-v2` claim 1 from the former broader no-same-pair production theory and added separate support/art gates for that broader theory and NA claim 7's internal-list delta. AF claim text/version and continuation status are unchanged; no continuation has been filed or preserved by this revision.
 - **AF-2026-07-17-v2 (17 July 2026):** incorporated AF claim 20 into the single AF proposal and reservation register; added the recorded deletion option, separate method-support and search gates, qualified reissue non-reliance, conditional double-patenting/terminal-disclaimer and transaction controls (including the *In re Goodman* sequencing caution), § 121 divisional/consonance controls, and term/provisional-rights consequences. No continuation has been filed or preserved by this revision.
 - **Recursive-control and PTA pass (17 July 2026):** made the repeat-or-close rule apply to every generation in which supported, commercially valuable scope remains deferred; generalized AF-CONT-02–04 for later controlled parents; separated `CONTINUATION PRESERVED` from `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`; attached evidence and escalation controls to the next generation; and added a qualified, case-specific Track One/PTA economic assumption. No continuation has been filed or preserved by this revision.

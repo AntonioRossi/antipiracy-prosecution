@@ -1,13 +1,13 @@
 # AA11393US — Allowance-First Claim–Document Mapping Matrix (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
 >
 > **INTERNAL COUNSEL ANALYSIS — NOT FOR FILING AS-IS AND NOT AN ADMISSION.** This grid records a limited review at the stated depth. It does not concede prior-art status, anticipation, inherency, obviousness, materiality, or claim validity. `—` means only that the scored claim or dependent delta was not identified at the recorded review depth; it is not a clearance.
 
 ## 1. Scope and canonical sources
 
 - **Claims:** [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md), version `AF-2026-07-17-v2`: AF claim 1 is the integrated system independent; AF claims 2–19 depend from it; and AF claim 20 independently recites as an affirmative method the complete operational chain of AF claim 1.
-- **Documents:** all 32 PDF source documents (A20's official copy stored 21.07.2026) in [`../prior-art/`](../prior-art/README.md): A1–A20, B1–B10, C8, and C3. The searchable review corpus is in [`../prior-art/markdown/`](../prior-art/markdown/README.md); quotations and OCR-sensitive points must be checked against the canonical PDF or [`../prior-art/searchable/`](../prior-art/searchable/README.md) — A20 additionally requires an official-copy check once its PDF is obtained.
+- **Documents:** all 32 PDF source documents (A20's official copy stored 21.07.2026) in [`../prior-art/`](../prior-art/README.md): A1–A20, B1–B10, C8, and C3. The searchable review corpus is in [`../prior-art/markdown/`](../prior-art/markdown/README.md); quotations and OCR-sensitive points must be checked against the canonical PDF or [`../prior-art/searchable/`](../prior-art/searchable/README.md). A20's FPO working text was validated against the official PDF stored on 21.07.2026.
 - **Division of labor:** [`AA11393US-AF-prior-art-comparison-matrix_DRAFT.md`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) gives the feature and combination analysis. This file is its claim-level projection. It does not duplicate the IDS inventory or make disclosure-submission decisions.
 
 This is one AF proposal. Counsel may omit AF claim 20 at filing to preserve a one-independent posture, but the deletion must be reflected throughout this maintained package rather than implemented as a second AF document set.
@@ -25,7 +25,7 @@ AF's use of `camera-source-transition pattern` in both independents is strategy-
 1. **AF claims 1 and 20 are each scored as a whole in separate whole-claim blocks covering every stored document.** A `P` means meaningful portions were identified, not that the complete system or method was found in the document. Claim 20 was independently reviewed; a parallel score is not presumed merely because its operations mirror claim 1.
 2. **AF claims 2–19 cells score only the added dependent limitation.** A dependent claim's whole-document mapping cannot exceed the weaker of its parent and delta scores.
 3. Combination pressure that does not itself provide a concrete mapping is described in the feature matrix and footers, not automatically scored `P` here.
-4. B2 is separately scored because it is one of the 20 stored documents, but it is the PCT-family publication of A1; no substantively divergent disclosure was identified in the prior full-text comparison.
+4. B2 is separately scored because it is the PCT-family publication of A1; no substantively divergent disclosure was identified in the prior full-text comparison.
 
 Review-depth labels follow the canonical review: `full` = complete text/transcription reviewed; `full/OCR` = complete OCR transcription reviewed, with source-PDF verification required for quotations; `targeted full` = claim-relevant and cited passages reviewed, with sequential read still open.
 
@@ -233,3 +233,4 @@ Re-score on any AF amendment or renumbering; any new or corrected canonical docu
 | 20.07.2026 | **A20 (Gill) promoted and scored** | Belt-and-braces full-text review promoted US 2012/0114309 A1 from set-aside to candidate; A20 rows added across §§3–6 with `P` on AF claims 1 and 20 (different-kind generation/association/recovery loop; no production boundary, no structural detection); FPO text working copy pending official PDF |
 | 21.07.2026 | **A20 official copy stored** | USPTO Patent Public Search print copy stored (50 pp.); checksum manifest 32/32; Espacenet re-verified; FPO working copy validated against the official OCR (claim 17, Example 1B, Abecassis passage 97.7% verbatim); related-application numbering discrepancy recorded for counsel; no score changed |
 | 21.07.2026 | **C3 propagated to §§3, 4, and 6** | Completeness correction: C3 rows added to the AF claim 1, AF claim 20, and distribution blocks (all `—`; C3's scored content lives in §5 for AF claims 11–12); the grid now scores every stored document in every block |
+| 21.07.2026 | **Current-scope metadata reconciliation** | Updated the matrix status date to reflect the 21.07.2026 maintenance state and removed the stale present-tense 20-document count from scoring rule 4; claim-set version `AF-2026-07-17-v2`, historical corpus descriptions, claim text, and scores remain unchanged |
