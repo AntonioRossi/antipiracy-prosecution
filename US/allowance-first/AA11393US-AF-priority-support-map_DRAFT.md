@@ -199,7 +199,7 @@ These requested determinations are intentionally pending. Their absence does not
 
 ## 9. Intervening-information trigger
 
-This limited support review is not a clearance search and does not establish that no potentially material information exists between the provisional and PCT filing dates.
+This limited support review is not a clearance search and does not establish that no potentially material information exists between the provisional and PCT filing dates. **One window reference is on record: B10 (KR 2024-0168593 A), §102(a)(1) art as of its 02.12.2024 laid-open publication — LOW-materiality on full-text review; label corrected from an erroneous §102(a)(2) posture on 21.07.2026; escalation recorded in the shared deferred-work memo §4.**
 
 If information is identified with a potentially relevant effective prior-art date after 26 February 2024 and before 19 February 2025—including a later-published patent document with an earlier effective filing date—or if any Office questions priority, counsel must promptly reassess:
 

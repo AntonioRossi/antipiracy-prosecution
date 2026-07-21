@@ -58,7 +58,7 @@ This issue belongs in the confidential counsel analysis. Do not insert it into t
 
 ### Trigger for renewed priority and disclosure analysis
 
-The present limited review has not identified potentially material art or another prior-art event having an effective date after the provisional filing on 26 February 2024 but before the PCT filing on 19 February 2025. This is not a clearance conclusion.
+The present limited review has not identified potentially material art or another prior-art event having an effective date after the provisional filing on 26 February 2024 but before the PCT filing on 19 February 2025, **with one recorded exception: B10 (KR 2024-0168593 A), whose only prior-art route is §102(a)(1) as of its 02.12.2024 laid-open publication — inside the interval. B10 is LOW-materiality on full-text review (attribute-domain marking; no cameras, no edit list, no timing/structure), and its label was corrected from an initial erroneous §102(a)(2) posture on 21.07.2026. The escalation is recorded in the shared deferred-work memo §4 (recorded activations).** This is not a clearance conclusion.
 
 If a reference, activity, or other information potentially material to patentability is identified with an effective prior-art date in that interval, or if any Office questions priority entitlement, counsel must reassess:
 

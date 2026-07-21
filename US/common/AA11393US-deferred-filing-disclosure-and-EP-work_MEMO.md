@@ -115,6 +115,10 @@ Before making a substantive response, counsel should reassess:
 - consistency with PCT, EP, Italian, and other counterpart positions; and
 - every statement asserting or implying entitlement to the earlier date.
 
+### Recorded activations
+
+- **21.07.2026 — B10 (KR 2024-0168593 A).** The only prior-art route for B10 is §102(a)(1) as of its 02.12.2024 laid-open publication (a Korean domestic laid-open publication is not §102(a)(2)-eligible), which falls inside the 26.02.2024–19.02.2025 window. B10 is therefore prior art only against claims whose provisional entitlement fails. B10 is LOW-materiality on the present full-text review (attribute-domain marking; no cameras, no edit list, no timing/structure, no collusion teaching), so no claim-position change is indicated, but the provisional-entitlement, materiality, disclosure-timing, and effective-filing-date assessments above are referred to counsel together with the A11–A20 materiality review, and the §102(a)(2) label initially recorded in the IDS, README, matrices, and DW-08 has been corrected to §102(a)(1)-window everywhere.
+
 This escalation is not limited to documents carrying a publication date in the interval. It includes later-published patent documents with a potentially relevant effective prior-art date and non-documentary information such as alleged public use, sale, or offer-for-sale activity.
 
 ## 5. IDS decision log
