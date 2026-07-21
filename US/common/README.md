@@ -2,7 +2,7 @@
 
 > **SHARED RECORD — INTERNAL COUNSEL REVIEW EXCEPT WHERE EXPRESSLY IDENTIFIED AS FILING-FACING.**
 >
-> Status date: **20 July 2026**. These files serve both the `NA` and `AF` strategy packages and must not be forked without an express counsel decision.
+> Status date: **21 July 2026**. These files serve both the `NA` and `AF` strategy packages and must not be forked without an express counsel decision.
 
 | File | Canonical function |
 |---|---|
@@ -12,4 +12,3 @@
 | [`../prior-art/`](../prior-art/) | Canonical prior-art source and provenance store |
 
 Strategy-specific patentability, claim mapping, support, and enforcement analysis belongs only in [`../normal-allowance/`](../normal-allowance/) or [`../allowance-first/`](../allowance-first/). The two strategies may reach different claim-scope conclusions, but they must use the same source identifiers, document copies, IDS record, deadline controls, and public-comments draft.
-
