@@ -13,7 +13,7 @@ This directory separates two alternative US claiming strategies for PCT/IB2025/0
 | Strategy ID | Directory | Objective | Current status |
 |---|---|---|---|
 | **NA** | [`normal-allowance/`](normal-allowance/) | Balanced actor-split coverage: standalone production, distribution, and detection claims plus an end-to-end patentability anchor | **Current substantive baseline**; internal draft only |
-| **AF** | [`allowance-first/`](allowance-first/) | One narrow operational chain in system and method independent formats, aimed at increasing early-allowance probability, with broader actor-specific coverage reserved for a copending continuation | **Alternative for counsel evaluation**; internal draft only |
+| **AF** | [`allowance-first/`](allowance-first/) | One plural physical-camera boundary/manifest/reconstructed-manifest chain in system and method independent formats, with broader actor-specific coverage reserved for a copending continuation | **Alternative for counsel evaluation**; internal draft only |
 
 Use `NA claim N` and `AF claim N` in every analysis or communication outside the claim text itself. An unqualified claim number is ambiguous and must not be used to transfer a conclusion between strategies.
 
@@ -31,8 +31,8 @@ Shared materials must not be copied into a strategy directory. Strategy document
 
 ## Version and status controls
 
-- **NA claim-set version:** `NA-2026-07-21-v2`; four independent / 30 total / no multiple-dependent claims.
-- **AF claim-set version:** `AF-2026-07-17-v2`; two independent / 20 total / no multiple-dependent claims. AF claim 20 is the method twin in the single AF proposal; counsel may omit it at filing by recorded decision without creating a second AF package.
+- **NA claim-set version:** `NA-2026-07-22-v4`; four independent / 30 total / no multiple-dependent claims. NA claim 16 requires delivered reference/mate chunk-combination manifests with a mate cut-timing difference; NA claims 19–20 provide matched-manifest physical-camera and plural-timing fallbacks.
+- **AF claim-set version:** `AF-2026-07-22-v4`; two independent / 19 total / no multiple-dependent claims. AF claim 19 is the method counterpart to the integrated system independent.
 - Every strategy document must state its strategy ID, version, status, and review date.
 - Every claim matrix is valid only for the claim-set version named in its header and must be rescored after claim amendment or renumbering.
 - Package documents are live-state artifacts. State only the current version, status, conclusion, supporting evidence, open action, owner, deadline, or re-evaluation trigger. Git is the sole drafting/change history; do not add revision records, dated maintenance histories, recorded activations, commit narratives, or descriptions of how current wording or scores evolved. Retain legally operative filing, publication, priority, and prosecution facts and source provenance where they support the current analysis; those facts are evidence, not package-maintenance history.

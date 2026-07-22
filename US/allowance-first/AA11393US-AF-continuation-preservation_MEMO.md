@@ -1,6 +1,6 @@
 # AA11393US — AF Continuation and Coverage Preservation Memo
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 22 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v4 · STATUS 22 JULY 2026**
 >
 > **INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION.** The responsible US attorney must confirm current law, the actual benefit chain, copendency, filing route, inventorship, support, deadlines, and filing evidence. “Allowance-first” does not guarantee allowance, and “continuation planned” is not a completed filing.
 >
@@ -8,11 +8,11 @@
 
 ## 1. Control objective
 
-If AF claim 1 is used in the first US case, preserve commercially valuable actor-specific scope that the integrated AF tree does not independently cover. AF claim 20 adds an independent method reciting AF claim 1's complete operational chain, but it does not replace the broader and actor-specific method reservations. The principal reservations are production, distribution, detection, broader method, and support-safe software claims identified in [`AA11393US-AF-claim-crosswalk_DRAFT.md`](AA11393US-AF-claim-crosswalk_DRAFT.md).
+If AF claim 1 is used in the first US case, preserve commercially valuable actor-specific scope that the integrated AF tree does not independently cover. AF claim 19 adds an independent method reciting AF claim 1's complete operational chain, but it does not replace the broader and actor-specific method reservations. The principal reservations are production, distribution, detection, broader method, and support-safe software claims identified in [`AA11393US-AF-claim-crosswalk_DRAFT.md`](AA11393US-AF-claim-crosswalk_DRAFT.md).
 
-There is one AF proposal. AF claim 20 is included in AF-2026-07-17-v2 and may be omitted from the filed parent only by a recorded counsel/applicant decision that the marginal simplicity of a one-independent posture outweighs the additional method format. That deletion is a filing selection within this package, not a reason to maintain a competing system-only AF set. The continuation reservation must record whether AF claim 20 was retained, cancelled, or deferred and what method scope remains unclaimed.
+There is one AF proposal. AF claim 19 is included in `AF-2026-07-22-v4` and may be omitted from the filed parent only by a recorded counsel/applicant decision that the marginal simplicity of a one-independent posture outweighs the additional method format. The continuation reservation must record whether AF claim 19 was retained, cancelled, or deferred and what method scope remains unclaimed.
 
-The continuation is a portfolio-preservation instrument, not a remedy for missing written description. A continuation may claim only subject matter supported by the applicable benefit chain for the date asserted. New subject matter requires separate counsel analysis, potentially including continuation-in-part treatment and later effective dates; it cannot retroactively cure AF claim 1, AF claim 20, or another parent claim.
+The continuation is a portfolio-preservation instrument, not a remedy for missing written description. A continuation may claim only subject matter supported by the applicable benefit chain for the date asserted. New subject matter requires separate counsel analysis, potentially including continuation-in-part treatment and later effective dates; it cannot retroactively cure AF claim 1, AF claim 19, or another parent claim.
 
 ## 2. Non-negotiable pendency gate
 
@@ -30,11 +30,11 @@ This control is recursive. After a continuation or divisional is filed, if addit
 
 | Control ID | Task | Owner | Trigger / latest internal gate | Required completion evidence |
 |---|---|---|---|---|
-| AF-CONT-01 | Approve whether AF is used, whether AF claim 20 is retained in the filed set, and which coverage is deferred | Lead US counsel with applicant | Before filing the AF parent | Written strategy approval naming the selected parent claim set, AF claim 20 disposition, and reserved families |
+| AF-CONT-01 | Approve whether AF is used, whether AF claim 19 is retained in the filed set, and which coverage is deferred | Lead US counsel with applicant | Before filing the AF parent | Written strategy approval naming the selected parent claim set, AF claim 19 disposition, and reserved families |
 | AF-CONT-02 | Identify the qualifying application that is the controlled parent for the generation and complete benefit-chain analysis | Lead US counsel | Before the first AF parent filing and immediately when a later pending application is designated as the controlled parent; recheck before successor filing and on its filing receipt | Generation-specific chain diagram with application numbers/dates, relationship wording, support sources, and attorney sign-off |
 | AF-CONT-03 | Assign continuation owner and backup for the controlled generation | Applicant and lead US counsel | At the first AF parent filing and immediately upon designation of each later controlled parent | Named primary attorney, named backup, generation/application identification, docket responsibility acknowledgment, and escalation contact |
 | AF-CONT-04 | Docket execution events for the controlled generation | Docketing team under attorney supervision | At the first AF parent filing and immediately upon designation of each later controlled parent | Generation-specific docket entries for substantive-action review, notice of allowance, issue-fee target, projected issue monitoring, and any abandonment/termination event |
-| AF-CONT-05 | Maintain parent and reservation claims and support chart | Prosecuting attorney | Update after every material amendment, election, new reference, or support determination | Current parent/continuation outline, including AF claim 20 status and both the structural source-identity tier and reconstructed-manifest system/method tier; separate PCT written-description and enablement conclusions, provisional written-description and enablement conclusions for benefit, and DW-05A mode for each gated formulation; proposed parent/continuation placement, counts, dependencies, and AF/NA crosswalk mapping |
+| AF-CONT-05 | Maintain parent and reservation claims and support chart | Prosecuting attorney | Update after every material amendment, election, new reference, or support determination | Current parent/continuation outline, including AF claim 19 status, the AF plural-cut reconstructed-manifest parent architecture, the Mode A NA detector/method families, and any detector-only method reservation; separate PCT written-description and enablement conclusions, provisional written-description and enablement conclusions for benefit, and DW-05A mode for each gated formulation; proposed parent/continuation placement, counts, dependencies, and AF/NA crosswalk mapping |
 | AF-CONT-06 | Select continuation claim family and filing route | Lead US counsel with applicant | Before the parent is filed for any support contingency implicated by the pre-filing opinion; otherwise no later than response to notice of allowance, and earlier if parent pendency is threatened | Written parent-versus-continuation family/route/budget decision, § 7 consequences assessment, and applicant authorization; an adverse pre-filing support opinion may not be addressed merely by postponing the corrective claim selection to a continuation |
 | AF-CONT-06A | Evaluate double-patenting, disclaimer, ownership, and transaction consequences | Lead US counsel with applicant's corporate/transaction contact | Before filing overlapping continuation claims; before any terminal disclaimer; and before a sale, spin-out, financing, license, or ownership separation that may affect the family | Written claim-relationship analysis; affected applications/patents; term and disclaimer assessment; common-ownership/enforcement plan; transaction constraints; and applicant authorization |
 | AF-CONT-07 | Prepare filing package | Filing attorney and paralegal | Begin upon allowance trigger or earlier instruction | Final specification/drawings, claims, ADS/continuity data, inventorship review, declarations/assignments plan, fees, and IDS plan |
@@ -51,12 +51,11 @@ Counsel should turn this table into actual claim outlines before the AF parent r
 
 | Reservation | Starting reference | Target actor / reason | Support and art controls |
 |---|---|---|---|
-| Production system | `NA-2026-07-21-v2` claims 1–8 and the broader local-substitution production theory | Broadcaster, production facility, mate-generation software/vendor | Preserve current NA claim 1's same ordered transition at noncoincident timings; separately evaluate local alternate-camera substitution without the same-pair requirement; gate NA claim 7's internal-list delta and NA claims 2–3's resynchronization; update direct EDL search |
+| Production system | `NA-2026-07-22-v4` claims 1–8 and the broader local-substitution production theory | Broadcaster, production facility, mate-generation software/vendor | Preserve NA claim 1's same ordered transition at noncoincident timings; separately evaluate local alternate-camera substitution without the same-pair requirement; gate NA claim 7's internal-list delta and NA claims 2–3's resynchronization; update direct EDL search |
 | Distribution system | NA claims 9–15 | Streaming platform, licensee, origin/CDN operator | Preserve ordered source pair/noncoincident timing and manifest-selected structure; gate NA claim 13 geometry |
-| Detection system | NA claims 16–21 | Monitoring provider, rights owner, trust/safety operator | Gate source-identity and same-region joint match; support-check NA claim 21 scores |
-| Support-safer reconstructed-manifest detection system | Noncanonical drafting specification using AF claims 9–10 and NA claims 19–20 only as operation sources, not as presently dependent fallbacks | Monitoring provider, rights owner, trust/safety operator | No independent claim text presently exists. Base future wording on provisional claims 1(m)–(n), PCT claim 15, detection/retrieval components 130/140, and reconstructed manifest 121′; omit suspect-side source-identity and joint source/time matching; re-score A4, A6, B6, B8, B9, A13, and A20 |
-| Support-safer reconstructed-manifest method | Noncanonical drafting specification using NA claim 25 and the disclosed method only as operation sources, not as a presently dependent fallback | Actor performing suspect acquisition, cut-time derivation, reconstruction, ledger search, and recipient identification | No independent claim text presently exists. Base future wording on provisional claim 10(j)–(k), PCT Method 200, and PCT claims 16–17; state affirmative operations and actor; decide parent versus continuation placement, claim count, §101, proof, support mode, and art before adoption |
-| Broader and actor-specific method family | AF claim 20 and NA claims 22–30 | Preserve method scope beyond AF claim 20's narrow integrated chain, including vertically integrated performance and supported attribution theories | Preserve positive performance; compare AF claim 20 with NA claim 22 and dependent method coverage; review divided infringement, § 101, restriction, proof, and support |
+| Detection system | Mode A NA claim 16 with claims 17–21 | Monitoring provider, rights owner, trust/safety operator | Preserve the delivered reference/mate chunk-combination ledger with a mate cut-timing difference → plural-cut-time → reconstructed-manifest → equal-delivered-manifest → ledger-recipient chain; retain NA claim 19 only with its matched-manifest physical-camera gate and NA claim 20 only with that inherited gate plus its plural-timing gate; re-score A4, A6, A13, A20, B6, B8, and B9 and direct multicamera/EDL art |
+| Detector-only reconstructed-manifest method | AF claim 19's recovery steps, NA claim 16's system operations, provisional method claim 10(j)–(k), PCT Method 200, and PCT claims 16–17 | Actor performing suspect acquisition, plural cut-time derivation, reconstruction, ledger search, and recipient identification | State affirmative operations and actor; decide parent versus continuation placement, count, § 101, proof, and art before adoption |
+| Broader and actor-specific method family | AF claim 19 and Mode A NA claim 22 with claims 23–30 | Preserve method scope beyond AF claim 19's integrated plural-cut chain, including vertically integrated performance and supported attribution theories | Preserve positive performance; compare AF claim 19 with NA claim 22 and dependent method coverage; review divided infringement, § 101, restriction, proof, and support |
 | CRM/software | New counsel draft, not present in AF or NA | Production or detection software distribution | Draft only from supported algorithms/operations; avoid an unsupported whole-lifecycle CRM |
 | Restricted/elected subject matter | Actual parent record | Preserve subject matter removed by restriction or election | Counsel must determine continuation versus divisional treatment and any § 121 consequences |
 
@@ -74,7 +73,7 @@ Before placing any reserved limitation in a continuation, record:
 6. whether intervening information makes the effective date outcome-determinative; and
 7. whether the application is a continuation, divisional, or continuation-in-part and why.
 
-The specific gates remain active in the AF parent and in a continuation: AF claims 1 and 20 as claims as a whole; affirmative method support for every step of AF claim 20 rather than an assumption based only on AF claim 1's system format; NA claim 1's generalized same-ordered-transition output relationship; NA claim 7's internal structured-list identifier/time-code delta; any broader production theory omitting the same-pair requirement; the provisional Example 2 inconsistency; Examples 2→3→4 manifest integration; the weaker Examples 2→5 source-identity detection route; same-region joint matching; AF claim 11's recipient-associated candidate-pattern input; AF claim 12's segmented-fingerprint/portion-to-contributor relationship; NA claim 21's attribution scores if that NA formulation is reserved; AF claim 14/NA claim 13 chunk geometry; and any claimed overlay/segmentation sequence.
+The specific gates remain active in the AF parent and in a continuation: AF claims 1 and 19 as complete plural retained-camera-boundary/manifest/reconstruction chains; affirmative method support for every AF claim 19 step; AF's generalized physical-camera entry relationship across plural selected cuts; NA claim 1's generalized same-ordered-transition output relationship; NA claim 7's internal structured-list identifier/time-code delta; the provisional Example 2 inconsistency; Examples 2→3→4 manifest integration; NA claim 19's equal matched manifest, mate chunk, and physical-camera transition geometry; NA claim 20's inherited claim 19 gate and plural recipient timing reconstruction; AF claim 6's respective single-cut mate relationship; AF claim 11's recipient-associated manifest-sequence input; AF claim 12's segmented-fingerprint/portion-to-contributor relationship; NA claim 21's manifest-sequence contributor relationship if reserved; AF claim 14/NA claims 13 and 25 chunk geometry; AF claim 17's plural manifest choices; and AF claim 18/NA claim 30's overlay/segmentation sequence. NA claims 16 and 22 are Mode A.
 
 Continuation filing preserves pendency; it does not create disclosure that was absent, broaden the content of the provisional, or guarantee the earlier date. A continuation can preserve a supportable contingency but cannot cure an unsupported parent claim. If the pre-filing opinion is adverse, the filed parent must then use an approved supported formulation or other counsel-selected lawful strategy; the issue cannot simply be deferred to a continuation while the unsupported parent formulation is filed unchanged.
 
@@ -117,17 +116,17 @@ A continuation ordinarily shares the family term measured under 35 U.S.C. § 154
 
 If Track One is selected for a parent or continuation, do not assume that PTA is automatically zero. The USPTO describes Track One as targeting final disposition—not necessarily patent issuance—in about twelve months. That acceleration may produce little or no Office-delay PTA that otherwise might accrue under § 154(b), but the actual adjustment remains a case-specific calculation affected by statutory Office-delay categories, applicant delay, and other facts. The deferral analysis must use an explicit speed/PTA assumption rather than assigning unqualified term value to prioritized examination.
 
-Do not state that 35 U.S.C. § 154(d) provisional rights are automatically available or automatically defeated. They require, among other things, qualifying publication, actual notice, and an issued claim substantially identical to the published claim. Whether the PCT publication, a US publication, AF claim 20, or a later continuation claim can support such rights is claim- and fact-specific. Materially rewritten continuation claims may fail the substantial-identity requirement; counsel must record the publication-to-issued-claim comparison and notice evidence before assigning any provisional-rights value.
+Do not state that 35 U.S.C. § 154(d) provisional rights are automatically available or automatically defeated. They require, among other things, qualifying publication, actual notice, and an issued claim substantially identical to the published claim. Whether the PCT publication, a US publication, AF claim 19, or a later continuation claim can support such rights is claim- and fact-specific. Materially rewritten continuation claims may fail the substantial-identity requirement; counsel must record the publication-to-issued-claim comparison and notice evidence before assigning any provisional-rights value.
 
 ## 8. Event-driven workflow
 
 ### At parent filing
 
 1. Record AF/NA strategy and version.
-2. Record whether AF claim 20 is retained or omitted and the resulting method reservation.
-3. Record the DW-05A mode for every gated parent independent and for each structural or reconstructed-manifest contingency, and make the express parent-versus-continuation placement decision required by AF-CONT-06.
+2. Record whether AF claim 19 is retained or omitted and the resulting method reservation.
+3. Record the DW-05A mode for every gated parent independent and material reserved formulation, and make the express parent-versus-continuation placement decision required by AF-CONT-06.
 4. Assign AF-CONT-03 ownership and create AF-CONT-04 docket entries.
-5. Preserve a support-charted outline for each approved reserved family, including independent reconstructed-manifest system and method outlines if reserved.
+5. Preserve a support-charted outline for each approved reserved family, including detector-only reconstructed-manifest system and method outlines if reserved.
 6. Verify the parent benefit chain and the shared IDS plan.
 
 ### During prosecution
@@ -164,7 +163,7 @@ Immediate attorney escalation is required if:
 - inventorship or ownership differs between the planned continuation and parent;
 - a desired claim appears to require new matter or lacks priority support;
 - a new reference changes the parent/continuation differentiation;
-- AF claim 20 is omitted or cancelled without a written method-coverage decision;
+- AF claim 19 is omitted or cancelled without a written method-coverage decision;
 - reissue is proposed as the reason not to preserve copendency;
 - a restriction, divisional, or § 121 position may lose consonance;
 - a terminal disclaimer is proposed without the AF-CONT-06A term, ownership, enforcement, and transaction analysis;
@@ -185,7 +184,7 @@ Use this label only when:
 3. the benefit relationship has been reviewed on the filing receipt and any defect is docketed for correction;
 4. the successor's claims have a claim-as-a-whole support record and an updated art review;
 5. shared IDS and cross-case consistency responsibilities are assigned;
-6. the applicant and lead US counsel have recorded which coverage is preserved, omitted, or deferred again, including AF claim 20's filed disposition; and
+6. the applicant and lead US counsel have recorded which coverage is preserved, omitted, or deferred again, including AF claim 19's filed disposition; and
 7. the § 7 reissue, double-patenting/disclaimer, § 121, term, timing, and provisional-rights consequences have been addressed to the extent implicated by the selected plan.
 
 If supported, commercially valuable scope is deferred again, the preservation outcome closes only the completed generation. The program remains active for the next controlled generation, and AF-CONT-02 through AF-CONT-11 reattach immediately.
@@ -195,7 +194,7 @@ If supported, commercially valuable scope is deferred again, the preservation ou
 Use this label only when, before the controlled parent issues or otherwise loses pendency:
 
 1. the applicant and lead US counsel sign a deliberate decision not to file another successor for the identified generation;
-2. the record identifies the controlled parent, its pendency status, every reservation being relinquished, and AF claim 20's resulting method-coverage status;
+2. the record identifies the controlled parent, its pendency status, every reservation being relinquished, and AF claim 19's resulting method-coverage status;
 3. the record states the business and legal basis, including the support, art, cost, term, enforcement, transaction, and § 7 consequences considered; and
 4. the docket, reservation register, crosswalk, and package status are updated so no reminder implies that the relinquished scope remains preserved or pending.
 
