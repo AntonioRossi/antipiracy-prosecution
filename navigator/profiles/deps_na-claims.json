@@ -1,0 +1,12 @@
+{
+ "depsVersion": "1",
+ "corpusId": "na-claims",
+ "comment": "Authored NA dependency map (independently authored from the claim text; NA publishes no dependency table, so validation is the two-way check against parsed 'of claim N' references — TDD §8.1). null = independent claim.",
+ "claims": {
+  "1": null, "2": 1, "3": 2, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1,
+  "9": null, "10": 9, "11": 9, "12": 9, "13": 9, "14": 9, "15": 9,
+  "16": null, "17": 16, "18": 17, "19": 16, "20": 19, "21": 16,
+  "22": null, "23": 22, "24": 22, "25": 24, "26": 22, "27": 22, "28": 22,
+  "29": 24, "30": 22
+ }
+}

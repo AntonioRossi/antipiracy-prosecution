@@ -1,0 +1,65 @@
+{
+ "planesVersion": "1",
+ "comment": "Command x kind privilege matrix (TDD §10). Normative data: every kind has a declared plane membership, cells enumerate exact kind sets, and an omitted privilege is a denied privilege. 'content' denotes the content plane read through the gateway read log; contentScope narrows it. The §13 update procedure's write-statements are validated against this file by the procedure-vs-matrix test.",
+ "kinds": {
+  "preview": "artifact",
+  "candidate": "artifact",
+  "sealed": "artifact",
+  "bundle": "artifact",
+  "bundle-manifest": "artifact",
+  "artifact-checksum": "artifact",
+  "bundle-checksum": "artifact",
+  "qa-record": "verification",
+  "attestation": "verification",
+  "release-record": "verification",
+  "bundle-record": "verification"
+ },
+ "commands": {
+  "preview": {
+   "reads": ["content"], "writes": ["preview"],
+   "contentScope": "edition-allowlist", "actionClasses": ["read"]
+  },
+  "candidate": {
+   "reads": ["content"], "writes": ["candidate"],
+   "contentScope": "edition-allowlist", "actionClasses": ["read"]
+  },
+  "migrate": {
+   "reads": ["content"],
+   "writes": ["source:relation-set", "source:gate-inventory-locators"],
+   "contentScope": "edition-allowlist",
+   "actionClasses": ["read", "mechanical-re-anchoring", "proposal-writing"]
+  },
+  "propose-reuse": {
+   "deferred": true,
+   "reads": ["content"], "writes": ["source:relation-set-destination"],
+   "contentScope": "pair-scoped-grant",
+   "actionClasses": ["read", "proposal-writing"]
+  },
+  "attest": {
+   "reads": ["content", "attestation"], "writes": ["attestation"],
+   "actionClasses": ["read"]
+  },
+  "record-qa": {
+   "reads": ["content", "candidate", "attestation", "qa-record"],
+   "writes": ["qa-record"],
+   "actionClasses": ["read"]
+  },
+  "release": {
+   "reads": ["content", "candidate", "qa-record", "attestation"],
+   "writes": ["sealed", "artifact-checksum", "release-record"],
+   "actionClasses": ["read"]
+  },
+  "bundle": {
+   "reads": ["content", "sealed", "artifact-checksum", "release-record"],
+   "writes": ["bundle-manifest", "bundle", "bundle-checksum", "bundle-record"],
+   "actionClasses": ["read"]
+  },
+  "status": {
+   "reads": ["content", "candidate", "sealed", "artifact-checksum", "bundle",
+             "bundle-checksum", "qa-record", "attestation", "release-record",
+             "bundle-record"],
+   "writes": [],
+   "actionClasses": ["read"]
+  }
+ }
+}

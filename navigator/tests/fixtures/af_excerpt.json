@@ -1,0 +1,286 @@
+{
+ "binding": {
+  "fragmentCorpus": "af-claims",
+  "targetCorpus": "pct-disclosure",
+  "schemaVersion": "1",
+  "canonVersion": "c1"
+ },
+ "claimGates": {
+  "c1": [
+   {
+    "gateId": "af-gate-claim-as-a-whole",
+    "type": "source-gate",
+    "code": "claim-as-a-whole",
+    "claimHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:5792c81b7b93b5333fb04c8e2ef671e2ac19cd792ba5ebeb5eb4a6cf88f42fbd"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S018",
+     "textHash": "sha256/c1:b1efc67560e0c239ed4e784ecba7adba39c004fabb0c577fcadd02123add516b"
+    }
+   },
+   {
+    "gateId": "af-gate-examples-integration",
+    "type": "source-gate",
+    "code": "examples-integration",
+    "claimHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:2a6bb8c3465545725659f81c047ce9eb241e5f6f58a79abf8e1cb68e2178d409"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
+    }
+   }
+  ],
+  "c2": [
+   {
+    "gateId": "af-gate-example2-priority",
+    "type": "source-gate",
+    "code": "example2-priority-gate",
+    "claimHash": "sha256/c1:76ebfcf764d69d566ddb3129230b33dc94d5a428c5c45ac961e1bb45f8459826",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:23c1cdb13e8096f8c8e79f94e2a6db75e1258d68e08342b292cd33e05f057ecf"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S013",
+     "textHash": "sha256/c1:11e3bd8079f41262f448ec6a944df2afcf9a6da4cf0b825358c1f9332608dd4c"
+    }
+   }
+  ]
+ },
+ "fragments": {
+  "c1u8": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:c6507f8dc50e37f742db3da33d92e93edf1ee6bd4915f0f21bac20a8cdca089b"
+   },
+   "fragmentTextHash": "sha256/c1:80d5c2bb3e31dc880a968a11431b80c07beb47f976e6ec0740bb2734516545cb",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "EDL rows hold the source-camera identifiers and time codes a candidate record draws on",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "combination",
+     "note": "Delivered-version associations recorded per recipient"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c1u8p1",
+     "text": "camera-source-transition pattern",
+     "occurrence": 1,
+     "status": "counsel-review-required",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:f99d0a9dad66701264f736eff195421483c9297cb6e898ffa21e3e175268b7e6"
+     }
+    }
+   ]
+  },
+  "c1u11": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:819e298eac60fd80a126acdef64b1a5178190b7a49ef1203a4ba50e4729b2269"
+   },
+   "fragmentTextHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Algorithm analyzes camera-cut timings in the suspect and devises time codes"
+    },
+    {
+     "block": "S071",
+     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+     "role": "context",
+     "note": "Detecting camera-switch timings in the suspected distribution"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Scene-change comparison against the reference"
+    }
+   ],
+   "caution": {
+    "gateId": "af-gate-source-identity",
+    "type": "source-gate",
+    "code": "source-identity-detection",
+    "source": {
+     "corpus": "af-claims",
+     "block": "S019",
+     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
+    }
+   },
+   "phrases": [
+    {
+     "id": "c1u11p1",
+     "text": "camera-switch timing",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:9d6122717464c07f6b6664630564e622dc08d149eaa39508bdd08335e7739e07"
+     },
+     "targets": [
+      {
+       "block": "S071",
+       "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+       "role": "specific",
+       "note": "Camera-switch timings detected in the suspect"
+      }
+     ]
+    }
+   ]
+  },
+  "c1u12": {
+   "status": "counsel-review-required",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:366f113c6e83791f53c8d22d5dc951d79ca5783a85074bf99ccdbff8aaa4bf0b"
+   },
+   "fragmentTextHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "caution": {
+    "gateId": "af-gate-source-identity",
+    "type": "source-gate",
+    "code": "source-identity-detection",
+    "source": {
+     "corpus": "af-claims",
+     "block": "S019",
+     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
+    }
+   }
+  }
+ },
+ "dispositions": [
+  {
+   "gateId": "af-gate-claim-as-a-whole",
+   "subject": {
+    "kind": "claim",
+    "id": "c1"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:27f8c121ecc8ada9794bdab01954fb096be9c92c60c800c62db7532dc35fb213",
+   "subjectHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:f27e9c9571baaef65edd27d7aaa61290d08bd59b7ef93b0c42fa064bdcb0284e"
+   }
+  },
+  {
+   "gateId": "af-gate-examples-integration",
+   "subject": {
+    "kind": "claim",
+    "id": "c1"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
+   "subjectHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:ac71bc237a51ba3faf5ad7e3420a3f53d86dc9c222498e0ff5931cc61c10f2b6"
+   }
+  },
+  {
+   "gateId": "af-gate-example2-priority",
+   "subject": {
+    "kind": "claim",
+    "id": "c2"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:375e680abbbbca8184cdb33828c3442d2c249b392fc119015739e563d0be042e",
+   "subjectHash": "sha256/c1:76ebfcf764d69d566ddb3129230b33dc94d5a428c5c45ac961e1bb45f8459826",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:1a3a636433cfe47bb63f2d87934b3b647fbe24d3d241d802183039b7c602ecdd"
+   }
+  },
+  {
+   "gateId": "af-gate-source-identity",
+   "subject": {
+    "kind": "fragment",
+    "id": "c1u11"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
+   "subjectHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:890ddcb78354bdb96abcf56ada906ec00a68ea7af3b3a8ab24b63495a32fe0bb"
+   }
+  },
+  {
+   "gateId": "af-gate-source-identity",
+   "subject": {
+    "kind": "fragment",
+    "id": "c1u12"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
+   "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:256e9a7d808afb606c6d80a787b8b520a0ea165f3f6cdd664629036a6309b9ac"
+   }
+  }
+ ]
+}

@@ -1,0 +1,143 @@
+{
+ "inventoryVersion": "1",
+ "corpusId": "na-claims",
+ "profileDigest": "sha256/c1:9f9b80d2b666e063f5d8bb165ba25b0d60c2c72f848bd0abd98b458e9e84c38a",
+ "comment": "Gate inventory for NA-2026-07-21-v2 (TDD §8.1): reviewed interpretation of the claim-set document's prose gates, hash-pinned to its quotable source blocks. Endpoint hashes (source textHash, claim/fragment hashes, profileDigest) are stamped mechanically from the pinned corpora by tools/stamp.py; null means not yet stamped and fails validation. Inventory completeness is a digest-bound human attestation (§9).",
+ "gates": [
+  {
+   "gateId": "na-gate-example2-priority",
+   "code": "example2-priority",
+   "requiredScope": "target",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S007",
+    "textHash": "sha256/c1:3880ad8f845fb1f44b35fb6bca7953cb057a5c065646a36cf40a0e69a8c29c1d"
+   },
+   "appliesTo": {
+    "fragments": [
+     {
+      "id": "c2u0",
+      "hash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c"
+     },
+     {
+      "id": "c3u0",
+      "hash": "sha256/c1:da8771640f0d15b763af9d6f3360a5adb581179f67268cc89fb0f686b433d46b"
+     },
+     {
+      "id": "c23u0",
+      "hash": "sha256/c1:fde1b1647c3aa0916bc4fe544011c46c530c9eba4704451d433b56559919d00c"
+     }
+    ],
+    "cardinality": {
+     "minTargetsPerFragment": 1
+    }
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "code": "combined-example",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S020",
+    "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 1,
+      "claimHash": "sha256/c1:506f16237a6aff35e0defe60b68a6e205e314ba0080381b22bee28129ceaea64"
+     },
+     {
+      "claim": 7,
+      "claimHash": "sha256/c1:552246ff341adbaf9c58b3acd6fe83b010df0ac1d007634776c470fe7d393d97"
+     },
+     {
+      "claim": 9,
+      "claimHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4"
+     },
+     {
+      "claim": 13,
+      "claimHash": "sha256/c1:588d999f1f42451f08968b569c7cc3d8a92fd2e2997c79b86368ebd644996282"
+     },
+     {
+      "claim": 15,
+      "claimHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e"
+     },
+     {
+      "claim": 16,
+      "claimHash": "sha256/c1:048667b5256e52201f22d8617807bbe739448e319d3f6b6a23ef2735b4d333c0"
+     },
+     {
+      "claim": 22,
+      "claimHash": "sha256/c1:78b36fa95710fe4775fe9a189f125e65e0ef433881f571bedd5d85d1d2c939bc"
+     },
+     {
+      "claim": 29,
+      "claimHash": "sha256/c1:93b55459fa1065c8d4a840848767b8e0a5a8418acbd9669e74596619b2a2dfc1"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "code": "detection-support",
+   "requiredScope": "fragment",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S025",
+    "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+   },
+   "appliesTo": {
+    "fragments": [
+     {
+      "id": "c16u5",
+      "hash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb"
+     },
+     {
+      "id": "c16u6",
+      "hash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c"
+     },
+     {
+      "id": "c16u7",
+      "hash": "sha256/c1:08fc431aebb952cd67d7649195da78e5ed45d107fed03f921da55f9722847f2c"
+     },
+     {
+      "id": "c22u5",
+      "hash": "sha256/c1:5c58b37ddf207d31992fbe80998a4e7799489c0d0627a35a95b93004b7b17ef1"
+     },
+     {
+      "id": "c22u6",
+      "hash": "sha256/c1:b1c8f33dc7370bbe87212ea519926c84fb968158a2a4f49c5b6d20c77238bc20"
+     },
+     {
+      "id": "c22u7",
+      "hash": "sha256/c1:f7437d32ff00d57d1430e564095f98afcb96bee703b3c6a0792e0a36f92d7f47"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-collusion-output",
+   "code": "collusion-output",
+   "requiredScope": "fragment",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S026",
+    "textHash": "sha256/c1:5c5715f84b978d586639d2256b25b15dd6af07da6bce4cb096541e47d6343cde"
+   },
+   "appliesTo": {
+    "fragments": [
+     {
+      "id": "c21u0",
+      "hash": "sha256/c1:90221ff2fa0caa47cb76fda0b86041eb92e3fdb537f0da2512542b9d67b9bb41"
+     },
+     {
+      "id": "c28u0",
+      "hash": "sha256/c1:ced9d3c48b21fe77467a099520688c7aa090b7723acd87321885d1a0e6fe89fa"
+     }
+    ]
+   }
+  }
+ ]
+}

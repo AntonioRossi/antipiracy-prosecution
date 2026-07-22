@@ -1,0 +1,7 @@
+{
+ "bundleVersion": "1",
+ "name": "AA11393US-claims-navigators_NA-2026-07-21-v2_AF-2026-07-17-v2.zip",
+ "comment": "Bundle config (TDD §10.9, §11): enumerates exactly the bundle members — both sealed artifacts with their detached checksums plus the neutral bundle-manifest. Either artifact remains releasable alone; the bundle requires both editions sealed.",
+ "editions": ["na", "af"],
+ "declaredTimestamp": "2026-07-21T00:00:00Z"
+}

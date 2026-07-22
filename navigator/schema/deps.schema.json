@@ -1,0 +1,22 @@
+{
+ "schemaVersion": "1",
+ "comment": "Closed schema for authored dependency maps (TDD §8.1). Values are the parent claim number or null for an independent claim. documentTable, when present, is the transcription of the claim-set document's own dependency table for the three-way check.",
+ "type": "object",
+ "required": ["depsVersion", "corpusId", "claims"],
+ "additionalProperties": false,
+ "properties": {
+  "depsVersion": {"type": "string", "enum": ["1"]},
+  "corpusId": {"type": "string"},
+  "comment": {"type": "string"},
+  "claims": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {"^[0-9]+$": {"type": ["integer", "null"]}}
+  },
+  "documentTable": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {"^[0-9]+$": {"type": ["integer", "null"]}}
+  }
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "profileVersion": "1",
+ "corpusId": "na-claims",
+ "claimsHeading": "Candidate claims",
+ "comment": "Policy for the NA claim-set document (NA-2026-07-21-v2). §3 claims are the fragment corpus (class 'claims', parsed by lib.claims into limitation units). Guidance blocks designated 'quotable' serve as caution/gate sources and may be quoted in the UI; they never form a pane. Everything else is excluded. Quotability is profile-designated, never hardcoded (TDD §2).",
+ "rules": [
+  {"match": {"path": ["*", "Candidate claims"]}, "class": "claims"},
+  {"match": {"path": ["*", "Drafting principles"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Fallback ladder and prior-art purpose"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Support map to PCT application as filed"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Counsel decisions and cautions"]}, "class": "quotable"}
+ ]
+}

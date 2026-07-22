@@ -1,0 +1,2916 @@
+{
+ "binding": {
+  "fragmentCorpus": "na-claims",
+  "targetCorpus": "pct-disclosure",
+  "schemaVersion": "1",
+  "canonVersion": "c1"
+ },
+ "claimGates": {
+  "c1": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:506f16237a6aff35e0defe60b68a6e205e314ba0080381b22bee28129ceaea64",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:7b6b9d0c5d1502c402bedab82826b6a8dda17d7a233cbf03b4a7247212606a38"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c7": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:552246ff341adbaf9c58b3acd6fe83b010df0ac1d007634776c470fe7d393d97",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:33cc04a856b1c802775b774e8227379b2e927a0a7cc05aeddad65c4e9573c6ab"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c9": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:dff64b09f7fa5d4b3e7457931f7e7e7d3e1105ac9a56e83dd9f2bc0af0b3defc"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c13": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:588d999f1f42451f08968b569c7cc3d8a92fd2e2997c79b86368ebd644996282",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:0684449022b25f557b75e02d4f9e47c38e13981e76cc265a1b487102029efb2b"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c15": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:55d8198ac242ef56bb128641e19cb511a03b3ff3e1cc5ab6a723cc994dc3a27f"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c16": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:048667b5256e52201f22d8617807bbe739448e319d3f6b6a23ef2735b4d333c0",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:039edad0a18a6c00e78e84f76dd6b2b9fc6b14bc5f507de99576d09ab1cdf9e2"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c22": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:78b36fa95710fe4775fe9a189f125e65e0ef433881f571bedd5d85d1d2c939bc",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:c30c8ea536c6c4be04e7329dffb80943992e45269b8145463711b06ed8836672"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ],
+  "c29": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:93b55459fa1065c8d4a840848767b8e0a5a8418acbd9669e74596619b2a2dfc1",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:da9f517d4426e70362553bd1fb04f6d838272da705d1e8e00b2cfe6475c5f761"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ]
+ },
+ "fragments": {
+  "c1u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:c774888f1033f77e335a620fad7c6c8fff7de8d3efa018d17e4af20ed0750c5e"
+   },
+   "fragmentTextHash": "sha256/c1:c7e2f3e50281a4bd043bdae5bb9d8f118f51f89e741855a4b470c4deaced1109",
+   "targets": [
+    {
+     "block": "S094",
+     "textHash": "sha256/c1:1d7a5242bce88f22a35666dd428b95919fa4efb3ff6c125789c3bdc14cab57d1",
+     "role": "specific",
+     "note": "Computing environment: processor, memory, storage executing instruction code"
+    },
+    {
+     "block": "S066",
+     "textHash": "sha256/c1:77bd262e34076983a73baf736f463ca4efa20515bb92666ac6c32bc91d66a72a",
+     "role": "context",
+     "note": "Anti-piracy system 100 identifying unauthorized distributions frame"
+    },
+    {
+     "block": "PC8",
+     "textHash": "sha256/c1:32d923f604ca5877646a5a93534eb999797e36473406471757f40cfb5766bc78",
+     "role": "context",
+     "note": "PCT claim 8: processor/memory computing environment"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c1u0p1",
+     "text": "one or more processors and memory storing instructions",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:085330e129d96cc5b518e4043a6443497b41b838c9618b5077c6ef4d5101c78a"
+     },
+     "targets": [
+      {
+       "block": "S094",
+       "textHash": "sha256/c1:1d7a5242bce88f22a35666dd428b95919fa4efb3ff6c125789c3bdc14cab57d1",
+       "role": "specific",
+       "note": "Processor, memory, storage capable of executing instruction code"
+      }
+     ]
+    }
+   ]
+  },
+  "c1u1": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:3ed0447e7be9e5c112ae92ff44970ea3cc2ce7c3797e752beb6d3a1d87710522"
+   },
+   "fragmentTextHash": "sha256/c1:1d88bceceadb10853f8efae16d8622840ce46da638caaa592cc550eecda3ce15",
+   "targets": [
+    {
+     "block": "S067",
+     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
+     "role": "specific",
+     "note": "Pipeline receives live or pre-recorded video captured from cameras 101, creating reference content 1"
+    },
+    {
+     "block": "S079",
+     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
+     "role": "combination",
+     "note": "Pipeline 102 records camera-cut timings and transitions as time codes in list 103"
+    },
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "context",
+     "note": "EDL entry: source material reference plus time code"
+    },
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "context",
+     "note": "Reference EDL table records Source Camera and cut time codes"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c1u1p1",
+     "text": "structured list of instructions describing edits",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:ad7d0936d0f31d6ea0bcf0dea0021588ab2db8f283ea43ad50ffc650a88eece7"
+     },
+     "targets": [
+      {
+       "block": "S089",
+       "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+       "role": "specific",
+       "note": "Structured list 103 described as an Edit Decision List"
+      }
+     ]
+    }
+   ]
+  },
+  "c1u2": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:4b43d60ca6873c2a2bb6e44dba5dc607a99087622ab079ff9a3af2d263726d51"
+   },
+   "fragmentTextHash": "sha256/c1:812893148e4dcfa32ca6c3a3c3fe50fa0dadeef743137072f5778b9dd3a1e877",
+   "targets": [
+    {
+     "block": "S080",
+     "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
+     "role": "specific",
+     "note": "Mate creation component 110 automatically applies variations to the time code of any camera cut in list 103"
+    },
+    {
+     "block": "S041",
+     "textHash": "sha256/c1:3ba47657d94b5521ce6ba1209bb268802eb6cc219fd58916ba3f075544777a2c",
+     "role": "context",
+     "note": "Summary: programmatic variations to camera-cut time codes in the structured list"
+    },
+    {
+     "block": "S163",
+     "textHash": "sha256/c1:e4ccb3924741bc5779a2237881a8afbe58aba0524693c99eb4149915e995545f",
+     "role": "context",
+     "note": "Example 1 metacode applies a variation to the cut timestamp"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c1u2p1",
+     "text": "automatically vary a time code",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:180670d44645cd3934c919a93bd6cf0510eef94b83c860a494c72bedf91eedb1"
+     },
+     "targets": [
+      {
+       "block": "S080",
+       "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
+       "role": "specific",
+       "note": "Automatic time-code variation by the mate creation component"
+      }
+     ]
+    }
+   ]
+  },
+  "c1u3": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:5196b4f37847744f0f211b6ff76a546dcea91d30fdbb67e4a544805c174b9ae3"
+   },
+   "fragmentTextHash": "sha256/c1:befe1c032b8f8603739e0adbd0762de6ce697f175f4323870a031546521dbbe3",
+   "targets": [
+    {
+     "block": "S080",
+     "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
+     "role": "specific",
+     "note": "Variations to the recorded list originate one or more unique mates 111"
+    },
+    {
+     "block": "S068",
+     "textHash": "sha256/c1:9fb662b4840382bb373855d9cfb9f40144ca0fb519ff595c3d06e7bc75a045f5",
+     "role": "context",
+     "note": "Mate defined as a distinguishable version of the same underlying content"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Example 2 mate EDL implements the varied structured list"
+    }
+   ]
+  },
+  "c1u4": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:0c11b476b768471edb2e5d4cf82d16644301d7db5559c301ff1a2c0d444db80b"
+   },
+   "fragmentTextHash": "sha256/c1:d9aa66ed557f8def4787a079ed5a9bf75a98d8e81c646381ea792df4528ec8ce",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "specific",
+     "note": "Reference EDL: Camera 2 to Camera 3 boundary at the recorded cut time codes",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S165",
+     "textHash": "sha256/c1:8b1a8bf489d71b8e23b1cd72c1868f2372befd73de00d25fcbf5c59a00ad3cc3",
+     "role": "context",
+     "note": "Example 2 setup: simplified reference EDL"
+    }
+   ]
+  },
+  "c1u5": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:cdb7d5e820c8861ef8f14eb47b973b6e324d9f609dd8522035c8f8631877364c"
+   },
+   "fragmentTextHash": "sha256/c1:2538d31dd46efcc25d3d856ffc9b179e61d7fa7e1cc36cbe01a8ca0ffb23da82",
+   "targets": [
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "specific",
+     "note": "Mate EDL: same Camera 2 to Camera 3 order with the boundary moved ten frames later",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Cut 2 extended to end at 00:00:20:10; cut 3 begins ten frames later"
+    }
+   ]
+  },
+  "c1u6": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:cacaa4617d8c664697d095adb38efdd794da8f83a3b30b78b50ad0a129c8cf10"
+   },
+   "fragmentTextHash": "sha256/c1:81fc5e1f58338d08628fcc122d041a7f21197aa313e4b05b0445e47eab6d4348",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "combination",
+     "note": "Cut 2 extended ten frames delays the Cut 3 boundary; with Tables 1-2 the interval frames come from different cameras",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Mate cut-duration adjustments around the moved boundary"
+    },
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference EDL ties Cut 2/Cut 3 to Camera 2/Camera 3"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL keeps the same cut-to-camera assignment at the moved boundary"
+    }
+   ]
+  },
+  "c2u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:229174f463b734213efbfb0bcd49ab454eed03917cf530362233444e40038a7e"
+   },
+   "fragmentTextHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "specific",
+     "note": "Cut 4 starts at the same time as the reference to maintain synchronization from Cut 4 onwards",
+     "caution": {
+      "gateId": "na-gate-example2-priority",
+      "type": "source-gate",
+      "code": "example2-priority",
+      "source": {
+       "corpus": "na-claims",
+       "block": "S007",
+       "textHash": "sha256/c1:3880ad8f845fb1f44b35fb6bca7953cb057a5c065646a36cf40a0e69a8c29c1d"
+      }
+     }
+    },
+    {
+     "block": "S168.r4",
+     "textHash": "sha256/c1:8211a2e07d51ea180260dee168fad34f296b984bb03bcd4da161855e517d79c5",
+     "role": "specific",
+     "note": "Mate EDL row Cut 4 adjusted to the reference"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Cut 3 duration adjusted so Cut 4 starts at the intended time"
+    }
+   ]
+  },
+  "c3u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:822ce86c773954acb957b3b8f807a59d836295533c1d108aa04a6b2f34a5abf7"
+   },
+   "fragmentTextHash": "sha256/c1:da8771640f0d15b763af9d6f3360a5adb581179f67268cc89fb0f686b433d46b",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "specific",
+     "note": "Ten-frame extension of Cut 2 delaying Cut 3, resynchronized at Cut 4",
+     "caution": {
+      "gateId": "na-gate-example2-priority",
+      "type": "source-gate",
+      "code": "example2-priority",
+      "source": {
+       "corpus": "na-claims",
+       "block": "S007",
+       "textHash": "sha256/c1:3880ad8f845fb1f44b35fb6bca7953cb057a5c065646a36cf40a0e69a8c29c1d"
+      }
+     }
+    },
+    {
+     "block": "S168.r2",
+     "textHash": "sha256/c1:2926c8d61138f24ad9f520537544742677c1b280c577655d334305a95e5a3625",
+     "role": "specific",
+     "note": "Row Cut 2 extended by 10 frames"
+    },
+    {
+     "block": "S168.r3",
+     "textHash": "sha256/c1:e107315d205a43c193360c4b215c7a355931b3966371c104ff470abf434fd25f",
+     "role": "specific",
+     "note": "Row Cut 3 start delayed by 10 frames, duration adjusted"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Explanation of the ten-frame extension and realignment"
+    }
+   ]
+  },
+  "c4u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:42d66d2b2edb18fe2ede97e9b5f3c5562651fdb15b53032853289e680abef3c4"
+   },
+   "fragmentTextHash": "sha256/c1:7848a790f1390ec3c0b234bde5dbbddb3b21ea69a418c9746fbbdd521b21b066",
+   "targets": [
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "specific",
+     "note": "EDL: structured list of edit instructions with source reference and time code"
+    },
+    {
+     "block": "S165",
+     "textHash": "sha256/c1:8b1a8bf489d71b8e23b1cd72c1868f2372befd73de00d25fcbf5c59a00ad3cc3",
+     "role": "specific",
+     "note": "Core EDL elements named: cut number, source camera, in-point, out-point"
+    },
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "context",
+     "note": "Reference EDL table with those columns"
+    }
+   ]
+  },
+  "c5u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:a43192ae1836109463a40367c6953b99931649b2db675c50d6bda0c34b1d45cc"
+   },
+   "fragmentTextHash": "sha256/c1:725a5f843127889a113ebbb456d215d88f6dc5cb6c1883a9b1f9ea99c1eadb0d",
+   "targets": [
+    {
+     "block": "S078",
+     "textHash": "sha256/c1:a65aa5da4bf5699ded166f62c4069b17e42a026f6fd37feb36d478f65c68f720",
+     "role": "specific",
+     "note": "Cameras 101 capture a scene/event from diverse viewpoints"
+    },
+    {
+     "block": "S079",
+     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
+     "role": "specific",
+     "note": "Director commands real-time switching; pipeline records the selections"
+    },
+    {
+     "block": "S091",
+     "textHash": "sha256/c1:06104ad3964c86a0ee20e3c7e5ebca247551cd1786a8314f42c50670f4d8faf6",
+     "role": "context",
+     "note": "Live production switched live by the director"
+    }
+   ]
+  },
+  "c6u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:1208b82d5c3ac961ad860d0495b7fba050f6c4a4620b115eb1c26d77337c46df"
+   },
+   "fragmentTextHash": "sha256/c1:7b4694ea523af0cbbcbcb720162abf7c2763161f59ba476b66574ff44b291f9c",
+   "targets": [
+    {
+     "block": "S108",
+     "textHash": "sha256/c1:fe0bb04ee3693c48396f20d9a9c5572933c502cac049d9991faa3662bd12d8e0",
+     "role": "specific",
+     "note": "A single time-code variation applied at each director-commanded camera cut"
+    },
+    {
+     "block": "S045",
+     "textHash": "sha256/c1:0034086fecd9518b9260a00cb059959c9587390e2382012d349f652e4f13e133",
+     "role": "context",
+     "note": "Summary: single time-code variations at director-commanded cuts"
+    }
+   ]
+  },
+  "c7u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:018da15bd6cb9ffe2e2d35dae6234c6b01ecee66d732eaac024293b0c3471a49"
+   },
+   "fragmentTextHash": "sha256/c1:94ad6f046e9514e63e7cf02f42ef8c49d975754a6181b509859d2bb0e843d334",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference EDL rows carry source-camera identifiers on both sides of each boundary",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL retains the Camera 2/Camera 3 identifiers while the boundary time code differs"
+    },
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "context",
+     "note": "EDL entries pair a source reference with a time code"
+    }
+   ]
+  },
+  "c8u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:569d3b1a3236ff12d7948b30a0827e2d91a9e85e4d0edd496283314220cc0520"
+   },
+   "fragmentTextHash": "sha256/c1:37c8ab55e7f31f4845eecb446477e4c183d8f996c5edeb51ce3eb94090612c90",
+   "targets": [
+    {
+     "block": "S114",
+     "textHash": "sha256/c1:b82af3c5e23e5077ab87a6bce46296191bfa0c3f40e98888ca6c35b93212496a",
+     "role": "specific",
+     "note": "Pipeline components overlay additional audio/video elements nonexistent in the reference content"
+    },
+    {
+     "block": "S153",
+     "textHash": "sha256/c1:e0a47d1de6b030d867e50985e8d48dd0d8ba7bfc078fd8330b03b5dbb4b863c2",
+     "role": "context",
+     "note": "Overlay of additional elements in the programming step"
+    },
+    {
+     "block": "PC4",
+     "textHash": "sha256/c1:40592a91c128e9af04c2adb5e2d281e6ad92df6ba2e7411c562b257544593115",
+     "role": "context",
+     "note": "PCT claim 4: overlaying additional elements"
+    }
+   ]
+  },
+  "c9u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:d9a17732fdb762323291af5091ccba4016132a29229353179b4039235f746fb6"
+   },
+   "fragmentTextHash": "sha256/c1:a56da723f9e6243fe405068ddb8cea5caf28e421a484157213362db46694d7cb",
+   "targets": [
+    {
+     "block": "S095",
+     "textHash": "sha256/c1:a6ff92df775d3a60e04261f67a00ac3956a83cfa3b086e8845149b2c0d902714",
+     "role": "combination",
+     "note": "Deployment across one or more server clusters"
+    },
+    {
+     "block": "S094",
+     "textHash": "sha256/c1:1d7a5242bce88f22a35666dd428b95919fa4efb3ff6c125789c3bdc14cab57d1",
+     "role": "context",
+     "note": "Processor/memory computing environment"
+    },
+    {
+     "block": "PC11",
+     "textHash": "sha256/c1:0eb51e04b80bab4ea10f55b12103309783c63dea7f7aae6ad332a79a0d64656f",
+     "role": "context",
+     "note": "PCT claim 11: distribution apparatus with transcoding components"
+    }
+   ]
+  },
+  "c9u1": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:fc9fc78befbcfa7153d1ff81d59e4ad7838319be2969baa8b0609b1a21f7df2c"
+   },
+   "fragmentTextHash": "sha256/c1:5243cdaff8b426443cefc47bd6f083b5144baa4737be554449ab62606f66b586",
+   "targets": [
+    {
+     "block": "S055",
+     "textHash": "sha256/c1:1809bc018625901b7d78377df6642de62fe24f9478ae9db9242d63043fdba348",
+     "role": "combination",
+     "note": "Licensor transmits one or more mates to licensees; the reference version reads with the ensemble definition"
+    },
+    {
+     "block": "S098",
+     "textHash": "sha256/c1:5037d02b0c90072121e34146a1907d60ac17f27156f017a9388c949a9ecf9567",
+     "role": "context",
+     "note": "Distribution manages multiple mates alongside the reference content"
+    },
+    {
+     "block": "S068",
+     "textHash": "sha256/c1:9fb662b4840382bb373855d9cfb9f40144ca0fb519ff595c3d06e7bc75a045f5",
+     "role": "context",
+     "note": "Ensemble 112 combines the reference and its mates"
+    }
+   ]
+  },
+  "c9u2": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:017e65d1bfa8058a34543aadc87d1d0caf3630ef17ef080fdb83a44480cf5e8c"
+   },
+   "fragmentTextHash": "sha256/c1:f49a66dac5c689c96181db5cee688f44a6efa748f1373edda485374cf5e6e52a",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "specific",
+     "note": "Reference EDL: ordered camera boundary at the recorded time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S165",
+     "textHash": "sha256/c1:8b1a8bf489d71b8e23b1cd72c1868f2372befd73de00d25fcbf5c59a00ad3cc3",
+     "role": "context",
+     "note": "Example 2 reference EDL setup"
+    }
+   ]
+  },
+  "c9u3": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:a99098cb1e2efed3757a05a35d47cc20a5e3386498ec198f62757fec1322faf2"
+   },
+   "fragmentTextHash": "sha256/c1:4f307fe9e20a1bd88f47fa675b785fb08c609e3ad49ff5bd643e40e5e36ffa6e",
+   "targets": [
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "specific",
+     "note": "Mate EDL: same ordered boundary at a different time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Boundary moved ten frames later in the mate"
+    }
+   ]
+  },
+  "c9u4": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:341a1dfd8fe8a02d00054e2b8c8b368ccc37079d961cd37052177c591d9acfe2"
+   },
+   "fragmentTextHash": "sha256/c1:b6a2568d41d73a457fd84de179b61bc82f80d8c466d693fadff7be7ab7551484",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "combination",
+     "note": "Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval plays different cameras in reference and mate",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Adjusted durations around the moved boundary"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL rows identify the cameras on each side of the moved boundary"
+    }
+   ]
+  },
+  "c9u5": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:7b74a4e3c039870c39b72dbbfa74acbea1b517bb69ee42f1c13fa39e745a3208"
+   },
+   "fragmentTextHash": "sha256/c1:f3e2ec7853d5694c2e433d52a46bd8f8a4c367aaf17082ee7899c0de43577abc",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Transcoding components 120 segment the ensemble 112 into chunks 113"
+    },
+    {
+     "block": "S146",
+     "textHash": "sha256/c1:83dc843db69b2c88409e29d2939d13749929362683ccc8d11e1ffc35ebf5b907",
+     "role": "context",
+     "note": "Segmenting step 240"
+    },
+    {
+     "block": "PC11",
+     "textHash": "sha256/c1:0eb51e04b80bab4ea10f55b12103309783c63dea7f7aae6ad332a79a0d64656f",
+     "role": "context",
+     "note": "PCT claim 11: segmenting the ensemble in chunks"
+    }
+   ]
+  },
+  "c9u6": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:1a4bc461c900a473256d582662a10bd4403215c2c7c8cfa32c963f5d54fa8c9f"
+   },
+   "fragmentTextHash": "sha256/c1:19c65fd607af3c80cf5d3269c2074b0a40214c118e94a9a0998f0ffcb9d6b05a",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Manifest files 121 point to unique interleaved combinations of chunks of the ensemble"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Manifests for reference and mate differ in how they reference chunks where edits were made"
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Example 3 mate manifest references a different chunk for the altered cut"
+    },
+    {
+     "block": "PC11",
+     "textHash": "sha256/c1:0eb51e04b80bab4ea10f55b12103309783c63dea7f7aae6ad332a79a0d64656f",
+     "role": "context",
+     "note": "PCT claim 11: manifest generation by transcoding components"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c9u6p1",
+     "text": "camera-cut timing pattern",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:3f48482bb81b701eb1fa60dfdf69026c8dd99358d10d532f4fae078696dc9bfb"
+     },
+     "targets": [
+      {
+       "block": "S064",
+       "textHash": "sha256/c1:0e4c3061bf3c5b7207271370ba1cb3d5160782d34cb7cd2080dc3851106c4ff7",
+       "role": "specific",
+       "note": "Timing of camera cuts altered per the structured list acts as the distinguishing fingerprint",
+       "caution": {
+        "type": "generalization-note",
+        "code": "beyond-literal-example"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "c9u7": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:0f83b2761dfe174c520152414e7efd5d319fcffe3fd103ee91d00b5552c9f90a"
+   },
+   "fragmentTextHash": "sha256/c1:264e770e8a8f37c68425c4ac68772f02251b4f60715b64056b16a218f2782e43",
+   "targets": [
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "specific",
+     "note": "Players request the chunk sequence listed in the delivered manifest file"
+    },
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "context",
+     "note": "CDN distribution enabling adaptive streaming fruition"
+    },
+    {
+     "block": "S149",
+     "textHash": "sha256/c1:bf241b703bf322a1d44076cac2f1605eef01953686dcbaa4463ecd7fea5b64b2",
+     "role": "context",
+     "note": "Distribution step 260 to end users"
+    }
+   ]
+  },
+  "c9u8": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:dea30e6e512917e398396f52d4cd850b4d28623541a7ceb10c0f4b0c9c678108"
+   },
+   "fragmentTextHash": "sha256/c1:678ebc7091eea4238cd7f50aed38a998ee74f00323c01984784f484cc5ee2ab4",
+   "targets": [
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger 122 records which end user or group received which manifest file"
+    },
+    {
+     "block": "S101",
+     "textHash": "sha256/c1:fe32bf070acf20f625dec87a6c81b108d0fbbbd3feb374d0bec57ca6c7a7674a",
+     "role": "context",
+     "note": "Manifest files archived and associated with spectators or group distributions"
+    },
+    {
+     "block": "S086",
+     "textHash": "sha256/c1:9387ad44a473b47b05f411226155d2def5eb0dddf438c77b362fe550531e4178",
+     "role": "context",
+     "note": "Mates associated with different manifest files distributed to end users",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c9u8p1",
+     "text": "record of associations",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:fa2a782b6e07ffb9667cdba5cc1f58a8c0803e98696ceb48ff718552b5fe46b8"
+     },
+     "targets": [
+      {
+       "block": "S070",
+       "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+       "role": "specific",
+       "note": "Record of associations between distinguishable versions and recipients"
+      },
+      {
+       "block": "S082",
+       "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+       "role": "context",
+       "note": "Ledger implementation of the record"
+      }
+     ]
+    }
+   ]
+  },
+  "c10u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:2bf4eb67c431fcb98958240f484da97e54ce7e8c220d2b6d45be29b9c63fd8bd"
+   },
+   "fragmentTextHash": "sha256/c1:0d79851e6b9c10738b151e9f25bc8b945843d15f29a147b5a66aebcaa1cff326",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "CDN distribution with adaptive streaming; manifests tailored to devices and network conditions"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "context",
+     "note": "Adaptive selection of segments by bandwidth and resolution"
+    },
+    {
+     "block": "PC11",
+     "textHash": "sha256/c1:0eb51e04b80bab4ea10f55b12103309783c63dea7f7aae6ad332a79a0d64656f",
+     "role": "context",
+     "note": "PCT claim 11: CDN and tailored manifest files"
+    }
+   ]
+  },
+  "c11u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:fb4d1316b71245a286b13ed4291a12c30068cb74466ff76f48d8991eee3c16cc"
+   },
+   "fragmentTextHash": "sha256/c1:e0939ddb3c05f9b35798a8c48f9bbce5bba326529958a477e3e6855ec7778f45",
+   "targets": [
+    {
+     "block": "S099",
+     "textHash": "sha256/c1:8feecb1dedd8fb0846ebb32149a5d7ceed0c8bc37ccce1da16717007df6deaaa",
+     "role": "specific",
+     "note": "Mixing component 123 integrates reference and mate chunks and progressively assigns individualized manifests"
+    },
+    {
+     "block": "S200",
+     "textHash": "sha256/c1:920547e26f29cbda321cedf1262d94dcf8822f49e89f05f7187c6cdedfb066fb",
+     "role": "context",
+     "note": "Example 4: user-manifest associations updated as variations accumulate"
+    },
+    {
+     "block": "PC12",
+     "textHash": "sha256/c1:f9f41c696c7985e31f7d9ad4f258e43d28c76dba35445f4e36634bab49347529",
+     "role": "context",
+     "note": "PCT claim 12: mixing component"
+    }
+   ]
+  },
+  "c12u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:92d6feeb995a8d8f83cbecc580e82b1a780e7eecab6c3e7cc695071f6f99db16"
+   },
+   "fragmentTextHash": "sha256/c1:236b1b69cdf72f241fac864558f7861b1d5c35b13aeb2c6a169eed640e2079fc",
+   "targets": [
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger identifies which end user or group of end users received a manifest file"
+    },
+    {
+     "block": "S074",
+     "textHash": "sha256/c1:320bfb6359a0c237362f943d2c433981779abcf28c76ce567c5e1602739198a5",
+     "role": "context",
+     "note": "The record is a ledger 122"
+    },
+    {
+     "block": "PC14",
+     "textHash": "sha256/c1:83f51c69750f17e43942f2f4814c8a3197a79bd7268002d94e17025ff33c05c7",
+     "role": "context",
+     "note": "PCT claim 14: ledger of manifest files and receiving users"
+    }
+   ]
+  },
+  "c13u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:fdc428b4724ed97aba2962440dd850cde8295409e353734e4aafdba803a75a71"
+   },
+   "fragmentTextHash": "sha256/c1:90001b2225e3dc72ade9adfc5037b76a109b2e05258fcf097079e5812ae66329",
+   "targets": [
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "context",
+     "note": "Reference and mate manifests differ in the chunks referenced for the altered region"
+    }
+   ]
+  },
+  "c13u1": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:3c89b9a84ad739fbf815fffa97490923d7c7bdf13e91c11d1e53da74e2e51274"
+   },
+   "fragmentTextHash": "sha256/c1:d9681dde484cd2455d3ded743ac1d5661ef38b1b99205542a36e98d2379c0a19",
+   "targets": [
+    {
+     "block": "S176",
+     "textHash": "sha256/c1:85d472f46376907963e6efec4fcb01c1e431165533806ca76832c35eab910fb1",
+     "role": "specific",
+     "note": "Example 3 reference manifest lists the reference segments"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "context",
+     "note": "Manifest guides playback of the specific version"
+    }
+   ]
+  },
+  "c13u2": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:87fda27c06590c6bd364c593b18ceadfe64ced3c95a9d41e9c6c87c8cf629e92"
+   },
+   "fragmentTextHash": "sha256/c1:e495b9d106028c8921e482f75ce2342f04a6a96b3730d607bb56860df460d504",
+   "targets": [
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Example 3 mate manifest points to mate_segment3_001 for the altered cut"
+    },
+    {
+     "block": "S179",
+     "textHash": "sha256/c1:689664d0285261b6ace7faf4d41cb31754d242bdfc00a030e9afadbe939dc3ee",
+     "role": "context",
+     "note": "The 001 chunk is the variant carrying the EDL modification"
+    }
+   ]
+  },
+  "c13u3": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:49d8267537c2346c9342e05430030b4c3e4b044ed280ecde7c653b6cb6f84252"
+   },
+   "fragmentTextHash": "sha256/c1:9ddfe2f62db89bf416f19338b3f62b3cb19b18db156f75ca5dd305268426d621",
+   "targets": [
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "specific",
+     "note": "Reference and mate manifests point to sets of chunks of equal duration"
+    },
+    {
+     "block": "S175",
+     "textHash": "sha256/c1:145a26beb31ceffe15661d1f9c7f4d89832b54da14eb6186f635d9effba92366",
+     "role": "context",
+     "note": "Chunks of equal duration in Example 3"
+    },
+    {
+     "block": "S180",
+     "textHash": "sha256/c1:5f18470e4338eaf7522409baced9102f2af31d1a5661638e5ba3b8d03fee1e8d",
+     "role": "context",
+     "note": "Both versions use equal-duration chunks"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c13u3p1",
+     "text": "equal playback durations",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:602da65cc84b4ba47cafe704effe920e86d365edb21eeecba455466bdd824e83"
+     },
+     "targets": [
+      {
+       "block": "S085",
+       "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+       "role": "specific",
+       "note": "Chunk sets of equal duration for reference and mate"
+      }
+     ]
+    }
+   ]
+  },
+  "c13u4": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:9cdeffa5f3557787e97d4e96ea227c805a8a33daead103f27568f4150c191e91"
+   },
+   "fragmentTextHash": "sha256/c1:eab9d721b734ca005964808b0683af46c86c31f63660b3d90eef47a46160f469",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference boundary falls inside the cut-2/cut-3 chunk region",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S176",
+     "textHash": "sha256/c1:85d472f46376907963e6efec4fcb01c1e431165533806ca76832c35eab910fb1",
+     "role": "combination",
+     "note": "Reference manifest selects reference_segment3_000 for the third-cut interval"
+    }
+   ]
+  },
+  "c13u5": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:6fefaabecd91b0a49c977e8e394e09f7de0b3e2c357c91359486c5909a340965"
+   },
+   "fragmentTextHash": "sha256/c1:ba91d4fce7fa9c9ce7a227518dd7a1fa96c6beeee7d91d2f5dff07bb9c7c0984",
+   "targets": [
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate boundary at the delayed time code inside the same region",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "combination",
+     "note": "Variant chunk selected by the second manifest reflects the delay"
+    }
+   ]
+  },
+  "c14u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:aaf29f516cc6d7f8b4761f18937295a55c222fe5b943deac585d0ac3f92d262f"
+   },
+   "fragmentTextHash": "sha256/c1:51a3e15919ba4a3554b9370da1fc54a8cba24fb7b5ae5fe9d3baf4008ce2f971",
+   "targets": [
+    {
+     "block": "S127",
+     "textHash": "sha256/c1:8d27b854f75e37897dcfa2848dfaea7760871177539efe9b77fe5634783fc277",
+     "role": "specific",
+     "note": "Chunks distributed using unicasting"
+    },
+    {
+     "block": "S155",
+     "textHash": "sha256/c1:f9f9e17475ae6a642a5255f35b10fb1f19df055e794ac0d72feb997ddbe6f0ab",
+     "role": "specific",
+     "note": "Unicasting provides each spectator a unique content stream"
+    },
+    {
+     "block": "PC6",
+     "textHash": "sha256/c1:37020aa1a6591cd3258415208cea6ba11edf2e256c48318a9ac829dee03f9c82",
+     "role": "context",
+     "note": "PCT claim 6: unicast distribution"
+    }
+   ]
+  },
+  "c15u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:a2f28f3c779d2d30a11d74d7cfb17a7d367f659984d359da1be05b801439126d"
+   },
+   "fragmentTextHash": "sha256/c1:7d43e15a571ed0b647b88689e01685d31a9936a977353c7d7dc662d376847dca",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Manifests point to unique interleaved combinations of chunks of the ensemble"
+    },
+    {
+     "block": "S088",
+     "textHash": "sha256/c1:7e5ccccfaff70c4a3215d38c7b808f78792df15d0d7343a901f21acd38975168",
+     "role": "combination",
+     "note": "Each varied camera cut doubles the version set: a per-cut reference/mate choice",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S172",
+     "textHash": "sha256/c1:8945e4696548e7529fe3a76de9fd9de4ff01642c128125763d0ff129d5773ffb",
+     "role": "context",
+     "note": "Example 2: version count multiplies at every camera cut"
+    }
+   ]
+  },
+  "c16u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:6395e1b19b3ef5deb0fad7f690452b79e3cb8b191fb027f56227c27272306424"
+   },
+   "fragmentTextHash": "sha256/c1:80bd4e4242afc6ca0519a8e870bb9a54f8d188ba03baad41b077025c5504423a",
+   "targets": [
+    {
+     "block": "S066",
+     "textHash": "sha256/c1:77bd262e34076983a73baf736f463ca4efa20515bb92666ac6c32bc91d66a72a",
+     "role": "specific",
+     "note": "System 100 identifies unauthorized distributions of streaming content"
+    },
+    {
+     "block": "S071",
+     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+     "role": "context",
+     "note": "Detection apparatus frame"
+    },
+    {
+     "block": "S094",
+     "textHash": "sha256/c1:1d7a5242bce88f22a35666dd428b95919fa4efb3ff6c125789c3bdc14cab57d1",
+     "role": "context",
+     "note": "Processor/memory computing environment"
+    }
+   ]
+  },
+  "c16u1": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:87a7ee147487e046d41cc18082d18003f6c2ca3422a7a69c3767a6995e5eef2d"
+   },
+   "fragmentTextHash": "sha256/c1:0920e90e3c93c2f27dd5f1b747cc391a93240c99e591c24d1ff779b931874ea5",
+   "targets": [
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "combination",
+     "note": "Ledger holds the delivered-version records used as candidates",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S086",
+     "textHash": "sha256/c1:9387ad44a473b47b05f411226155d2def5eb0dddf438c77b362fe550531e4178",
+     "role": "combination",
+     "note": "Each delivered version is tied to its distinguishing variation"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "The stored inter-version difference: same boundary order at different time codes"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c16u1p1",
+     "text": "candidate camera-source-transition patterns",
+     "occurrence": 1,
+     "status": "counsel-review-required",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:0146de1d8e06c638e9952c0b5d830eaa5f12c74c49e78d311216231f6800552a"
+     }
+    }
+   ]
+  },
+  "c16u2": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:144a4d31305b1bfb16d817fc1803d781a36514c00cac2b321b730e40d750c067"
+   },
+   "fragmentTextHash": "sha256/c1:6248cd773a7195fab1ba199c9e40ecd65bad9bdcf850f971e5282e38a268d5d4",
+   "targets": [
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "specific",
+     "note": "Record of associations between distinguishable versions and respective recipients"
+    },
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger identifies which end user received which manifest"
+    },
+    {
+     "block": "PC14",
+     "textHash": "sha256/c1:83f51c69750f17e43942f2f4814c8a3197a79bd7268002d94e17025ff33c05c7",
+     "role": "context",
+     "note": "PCT claim 14: ledger"
+    }
+   ]
+  },
+  "c16u3": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:831dc5480070269342ed16653759dfe0ebb42657ad0f0df3625072c3ed0e338a"
+   },
+   "fragmentTextHash": "sha256/c1:58cdcf652b2b21126f300d83846d7ab863a98fe96e34628bc6d38390b991b948",
+   "targets": [
+    {
+     "block": "S094",
+     "textHash": "sha256/c1:1d7a5242bce88f22a35666dd428b95919fa4efb3ff6c125789c3bdc14cab57d1",
+     "role": "context",
+     "note": "Instructions executed within the computing environment"
+    }
+   ]
+  },
+  "c16u4": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:07c3584dc4c4b9944f860949fe2d81da0e8e7c9d94763c4b56879a34a7842300"
+   },
+   "fragmentTextHash": "sha256/c1:51d20e866a7d2576a18bdbc79ec8ead86ae0c6be5bdd8936cd23a5fc08d3de97",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Detection component 130 detects a pirate webcasting of the event"
+    },
+    {
+     "block": "S139",
+     "textHash": "sha256/c1:c706299cf80d1ebce5aa51da68cb4528a5212c88ee8a9f45251e29f27fa9a3f7",
+     "role": "context",
+     "note": "Monitoring step 280"
+    }
+   ]
+  },
+  "c16u5": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:349b1407aab540f59b27f642ca0e715d871824bcc9dda7fba47f1d5ae84fae88"
+   },
+   "fragmentTextHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Cuts detection algorithm analyzes camera-cut timings in the pirate webcast and devises time codes"
+    },
+    {
+     "block": "S071",
+     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+     "role": "context",
+     "note": "Detection apparatus detects camera-switch timings in the suspect"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Scene-change-detection comparison of mate stream against reference"
+    }
+   ],
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   },
+   "phrases": [
+    {
+     "id": "c16u5p1",
+     "text": "camera-switch timing",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:47bef893478944eebe8771a9de0495b12dfb6f663cc283638147f9c73db39aed"
+     },
+     "targets": [
+      {
+       "block": "S071",
+       "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+       "role": "specific",
+       "note": "Detecting camera-switch timings in a suspected unauthorized distribution"
+      }
+     ]
+    }
+   ]
+  },
+  "c16u6": {
+   "status": "counsel-review-required",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:11f9c40a7b162ffc25c9b6b64c9aae47ecf418283715be1a5a5097205e737212"
+   },
+   "fragmentTextHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   }
+  },
+  "c16u7": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:eb41e4e30cd3a7db2826374592a92ae85b00605e90d3ad23350b176bf3bf98a9"
+   },
+   "fragmentTextHash": "sha256/c1:08fc431aebb952cd67d7649195da78e5ed45d107fed03f921da55f9722847f2c",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "combination",
+     "note": "Reconstructed manifests built from devised time codes stand in for the matched version"
+    },
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "context",
+     "note": "Matching delivered manifests equal to the reconstruction"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Comparison identifies the specific manifest fingerprint"
+    }
+   ],
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   }
+  },
+  "c16u8": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:c15ab9fdf89a3216458173ca21510ae9ecb59570776fb90b625d6d67d8dc7033"
+   },
+   "fragmentTextHash": "sha256/c1:820d8a60013928fbd7f793d58c4ca692196e025b57e322e44c6fe1ff195d906d",
+   "targets": [
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "specific",
+     "note": "Retrieval component 140 searches the ledger and identifies the end-user account(s)"
+    },
+    {
+     "block": "S232",
+     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
+     "role": "specific",
+     "note": "PCT claim 15: retrieval component searching the ledger"
+    },
+    {
+     "block": "S140",
+     "textHash": "sha256/c1:1aeca9ef8664bcda039e92729fa979eacd07c6a2e118824e921145dbf4ccb31e",
+     "role": "context",
+     "note": "Searching step 290"
+    }
+   ]
+  },
+  "c17u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:f05ea36c3d38e3447e4fb24f5f97d5a9381e6639dcb4c4ccc2122d4ac171407d"
+   },
+   "fragmentTextHash": "sha256/c1:b4c5083e246dfe4415919e46a61ef6f925794e0e758b85d1f9cc31216556dc78",
+   "targets": [
+    {
+     "block": "S109",
+     "textHash": "sha256/c1:34d559925424465f607aebd37015bf7c070edd885ad94eee6688674eb441ce55",
+     "role": "specific",
+     "note": "Detection algorithm compares reference content with the pirate webcast using a perceptual hash method"
+    },
+    {
+     "block": "S205",
+     "textHash": "sha256/c1:41776f37a1d2e215991ca4a560449fae23aa9fea4509bd6c04f1e4e4cde06a2b",
+     "role": "specific",
+     "note": "Example 5: perceptual hashing of frames resilient to minor alterations"
+    },
+    {
+     "block": "PC2",
+     "textHash": "sha256/c1:3cb7bffd2d9e3367986b5e38239a452a1272d46271773ab7e42d14feef4233e8",
+     "role": "context",
+     "note": "PCT claim 2: perceptual hash comparison"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c17u0p1",
+     "text": "perceptual hashes of frames",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:224a0ba5baa565aa0f7361d7a0fda8f37d324dc22c41c322e6d55aa0962883dc"
+     },
+     "targets": [
+      {
+       "block": "S205",
+       "textHash": "sha256/c1:41776f37a1d2e215991ca4a560449fae23aa9fea4509bd6c04f1e4e4cde06a2b",
+       "role": "specific",
+       "note": "Per-frame perceptual hash values"
+      }
+     ]
+    }
+   ]
+  },
+  "c18u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:54209f4d4fa94880da91cd3a8e65d2d5db44a940084ae60c0e8f8d6abccb3afa"
+   },
+   "fragmentTextHash": "sha256/c1:e524a1ef7e817312823dd8b7d7613dc4fb518b7bb6f1279db5fe5ad58e3e2404",
+   "targets": [
+    {
+     "block": "S205",
+     "textHash": "sha256/c1:41776f37a1d2e215991ca4a560449fae23aa9fea4509bd6c04f1e4e4cde06a2b",
+     "role": "specific",
+     "note": "Fuzzy matching compares perceptual hashes of groups of frames using sliding windows"
+    },
+    {
+     "block": "S206",
+     "textHash": "sha256/c1:1b797a64526399c4a768e63409c810459aba60f9b6d0a7912e771c384c84e0b4",
+     "role": "combination",
+     "note": "Example 5 fuzzy_matching code"
+    },
+    {
+     "block": "PC3",
+     "textHash": "sha256/c1:03bb5d92a6db1efda3f53e8673490919c4d288eed07e94e39ab4444b5d00b02a",
+     "role": "context",
+     "note": "PCT claim 3: fuzzy matching comparison"
+    }
+   ]
+  },
+  "c19u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:424f461e2c1854e1f975011525209592b08ef8237704510ed0f122a842063e58"
+   },
+   "fragmentTextHash": "sha256/c1:a93303e7a69c74237d23e9a288bace56b36171902a5699e70ffa2de5b45bc327",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Algorithm devises time codes and builds reconstructed manifest files 121' from them"
+    },
+    {
+     "block": "S231",
+     "textHash": "sha256/c1:ae667460937d9314f724de9f81d28d5eed0e05a57d8010e5715e1854fb863788",
+     "role": "specific",
+     "note": "PCT claim 15: detection component building reconstructed manifests from devised time codes"
+    },
+    {
+     "block": "S151",
+     "textHash": "sha256/c1:8c258830147d043f42f4c6fb04f60e44f0dbe5d25ceac08718b0a23a36c83c5d",
+     "role": "context",
+     "note": "Monitoring step devising time codes and reconstructing manifests"
+    }
+   ]
+  },
+  "c20u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:e7ea45d964da282419c14ab0d1da4d7a839a4ccd4422a831e092fcff6f202812"
+   },
+   "fragmentTextHash": "sha256/c1:e80deed833e2580033bbc0f900a1db5ece5974e60224cd161b4fc1f4b66cf43c",
+   "targets": [
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "specific",
+     "note": "Ledger searched for spectators whose manifests equal the reconstructed manifests"
+    },
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger of manifest files delivered to end users"
+    },
+    {
+     "block": "S232",
+     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
+     "role": "context",
+     "note": "PCT claim 15: retrieval component identifies end-user accounts"
+    }
+   ]
+  },
+  "c21u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:f5baf4ec0f72ff41c4a00c2911326687c0cfe66cdbd72961a7d9f0df55b25123"
+   },
+   "fragmentTextHash": "sha256/c1:90221ff2fa0caa47cb76fda0b86041eb92e3fdb537f0da2512542b9d67b9bb41",
+   "targets": [
+    {
+     "block": "S113",
+     "textHash": "sha256/c1:f357b8e5cf45c3c5d25c57dda5096821c22c2189e3eba9d5dcc5a6dd5bb8603d",
+     "role": "combination",
+     "note": "Collusion handling: each mixed segment traced back; ledger identifies the accounts involved"
+    },
+    {
+     "block": "S116",
+     "textHash": "sha256/c1:77f28f1dd04dc3915e8d559049f26060413e82a30d69395ceb52e5d3d77cf67d",
+     "role": "context",
+     "note": "Detection component using a probabilistic fingerprinting algorithm, preferably Tardos"
+    },
+    {
+     "block": "S120",
+     "textHash": "sha256/c1:3e5cd246e260e2367fd89a0c81605608ac83332587c96ef01ed15815a096c5b6",
+     "role": "combination",
+     "note": "Segmented fingerprints localize pirated segments and the colluders"
+    }
+   ],
+   "caution": {
+    "gateId": "na-gate-collusion-output",
+    "type": "source-gate",
+    "code": "collusion-output",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S026",
+     "textHash": "sha256/c1:5c5715f84b978d586639d2256b25b15dd6af07da6bce4cb096541e47d6343cde"
+    }
+   },
+   "phrases": [
+    {
+     "id": "c21u0p1",
+     "text": "probabilistic fingerprinting algorithm",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:675d8776445bb8f91b36fae5fc0cf4043244e8bb49fd8ceb363bc251f9d23fe0"
+     },
+     "targets": [
+      {
+       "block": "S116",
+       "textHash": "sha256/c1:77f28f1dd04dc3915e8d559049f26060413e82a30d69395ceb52e5d3d77cf67d",
+       "role": "specific",
+       "note": "Detection component using a probabilistic fingerprinting algorithm"
+      }
+     ]
+    }
+   ]
+  },
+  "c22u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:0ffcd5e8ae0020a4cac2f133d639bde7443a1740eca8fa77774c1ca789582171"
+   },
+   "fragmentTextHash": "sha256/c1:a62b380686f8a23180ad3a89334dd213ccd15ff30f6592c5816f721d0267b2a9",
+   "targets": [
+    {
+     "block": "S132",
+     "textHash": "sha256/c1:f336ff6af72948a7261fa491d213a8e1276fe8cbf42b6c78e5c5d7087f6aa56e",
+     "role": "specific",
+     "note": "Method 200 of identification and protection of streaming content"
+    },
+    {
+     "block": "PC16",
+     "textHash": "sha256/c1:63bf04cf36f2a28dfb8ffccdbae648df91109b3eea97d153d4bb4c5948b65030",
+     "role": "context",
+     "note": "PCT claim 16: the method"
+    }
+   ]
+  },
+  "c22u1": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:4a36ff6ce3830abf5a1900cd53667ad180fd8b4dd25d3c408f3d63e4e11afb5e"
+   },
+   "fragmentTextHash": "sha256/c1:21a872f77fe0c4a37bc6902938a9a983c469080a548154e25c3dd25473f29d49",
+   "targets": [
+    {
+     "block": "S133",
+     "textHash": "sha256/c1:8b6c6e6fd39639e31b608360ae5b2691c9e08511c4c1505fac3d2907fc0e6e1f",
+     "role": "specific",
+     "note": "Capturing step 201 from diverse viewpoints"
+    },
+    {
+     "block": "S134",
+     "textHash": "sha256/c1:2a68ac92370651ac6271d74b50883a034b1a0cc9ec1f1732a91314ba183c41b4",
+     "role": "combination",
+     "note": "Management step 210 processing captured video through the pipeline"
+    },
+    {
+     "block": "S144",
+     "textHash": "sha256/c1:ff58a588e2bf48768e07b4b58060cfab1a3424cd85258b322138ec44ac3353f6",
+     "role": "context",
+     "note": "Cut timings and transitions recorded in structured list 103"
+    }
+   ]
+  },
+  "c22u2": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:3e6b4e4d52ed7df4183a488db65ecd6fe7c8c5e83c7c75fe6b1f8f7b683e5e03"
+   },
+   "fragmentTextHash": "sha256/c1:e8ad230f0807529a40a12768818f6053f7b68fde00c4735be35ffc1d850a2d1e",
+   "targets": [
+    {
+     "block": "S136",
+     "textHash": "sha256/c1:8bfad968a069a61970d29559e4d306a9fd6583c037b80052578a5eb5b3613405",
+     "role": "specific",
+     "note": "Programming step 230: automatic time-code variations generate the mates"
+    },
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "combination",
+     "note": "Moved boundary keeps the camera order while the interval swaps cameras",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL with the same ordered boundary at a different time code"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c22u2p1",
+     "text": "temporally corresponding frames captured by different cameras",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:b3f06685d5c7f593cc19ce2c3abc70a7a41db1e612ec1995ab171022c0d5f921"
+     },
+     "targets": [
+      {
+       "block": "S167",
+       "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+       "role": "combination",
+       "note": "Interval between boundaries plays different cameras in reference and mate",
+       "caution": {
+        "type": "generalization-note",
+        "code": "beyond-literal-example"
+       }
+      },
+      {
+       "block": "S168",
+       "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+       "role": "combination",
+       "note": "Mate EDL rows supply the camera identities on each side of the moved boundary"
+      }
+     ]
+    }
+   ]
+  },
+  "c22u3": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:7a5856030f1bfa4b8bfb895f68b67c6ba625721be086f519b936d2edee5aa433"
+   },
+   "fragmentTextHash": "sha256/c1:c9f09ec22844431e2ce71d05c21f57a9ccf16dd63cba32073f23799e47fb301f",
+   "targets": [
+    {
+     "block": "S137",
+     "textHash": "sha256/c1:e92cd4109a5f73a95523e5d0a85b8eecd1e11ec308dd0a92d103218d9fe98b89",
+     "role": "specific",
+     "note": "Distribution step 260 delivers the mates to recipients"
+    },
+    {
+     "block": "S149",
+     "textHash": "sha256/c1:bf241b703bf322a1d44076cac2f1605eef01953686dcbaa4463ecd7fea5b64b2",
+     "role": "context",
+     "note": "Streamed content distributed to end users"
+    },
+    {
+     "block": "S069",
+     "textHash": "sha256/c1:26d2c2bd57b2871b2cd8b9814e1f7df3a9ecc1b744720b3c341d6ab7c90c9f0a",
+     "role": "context",
+     "note": "Distribution apparatus delivering distinguishable versions to recipients"
+    }
+   ]
+  },
+  "c22u4": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:4c751f01ab2e089f0b96126d39ba057ce112fa57a808e7fc1738ca583665266d"
+   },
+   "fragmentTextHash": "sha256/c1:95ccba6b494aace6c92be92b4a604dc1547e26e8feba6397b1842e78b37d7704",
+   "targets": [
+    {
+     "block": "S138",
+     "textHash": "sha256/c1:ea0f8331d489255d2f6d71c17adbeb5d2c53542bc2e10d26921a80d62f047166",
+     "role": "specific",
+     "note": "Recording step 270: distribution of mates to recipients recorded"
+    },
+    {
+     "block": "S150",
+     "textHash": "sha256/c1:1feea6538a050a1be2737c834e134ef168e38e04b1edd3906fe90f832206c0e7",
+     "role": "specific",
+     "note": "Ledger recording step: manifest distribution recorded per spectator"
+    },
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "context",
+     "note": "Ledger contents",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ]
+  },
+  "c22u5": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:717756250ca3928878c3e8426a4fa06dcc547c3e8b29ddeaaeb265cf3809eda6"
+   },
+   "fragmentTextHash": "sha256/c1:5c58b37ddf207d31992fbe80998a4e7799489c0d0627a35a95b93004b7b17ef1",
+   "targets": [
+    {
+     "block": "S139",
+     "textHash": "sha256/c1:c706299cf80d1ebce5aa51da68cb4528a5212c88ee8a9f45251e29f27fa9a3f7",
+     "role": "specific",
+     "note": "Monitoring step 280 detecting scene changes in pirate webcasting"
+    },
+    {
+     "block": "S151",
+     "textHash": "sha256/c1:8c258830147d043f42f4c6fb04f60e44f0dbe5d25ceac08718b0a23a36c83c5d",
+     "role": "specific",
+     "note": "Monitoring step devising time codes from detected changes"
+    },
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "context",
+     "note": "Cuts detection algorithm analyzing timings"
+    }
+   ],
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   }
+  },
+  "c22u6": {
+   "status": "counsel-review-required",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:abdc4e574136cb977c537b0afa7e8c8856b3343861843075059856985f67ce47"
+   },
+   "fragmentTextHash": "sha256/c1:b1c8f33dc7370bbe87212ea519926c84fb968158a2a4f49c5b6d20c77238bc20",
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   }
+  },
+  "c22u7": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:19e092cddd096bd85a4e4aa23ec5b734c6bd15cd3d6d89465b3e885166d41d40"
+   },
+   "fragmentTextHash": "sha256/c1:f7437d32ff00d57d1430e564095f98afcb96bee703b3c6a0792e0a36f92d7f47",
+   "targets": [
+    {
+     "block": "S151",
+     "textHash": "sha256/c1:8c258830147d043f42f4c6fb04f60e44f0dbe5d25ceac08718b0a23a36c83c5d",
+     "role": "combination",
+     "note": "Reconstructed manifests built from the devised time codes; matching occurs in the searching step"
+    },
+    {
+     "block": "S140",
+     "textHash": "sha256/c1:1aeca9ef8664bcda039e92729fa979eacd07c6a2e118824e921145dbf4ccb31e",
+     "role": "context",
+     "note": "Recipients identified via manifests having the detected scene changes"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Comparison pinpoints the specific manifest"
+    }
+   ],
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   }
+  },
+  "c22u8": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:77d7e8ef07efe28c6f953c4ed957bfcf1836904bd28cf232c0b1d7d35a3db90a"
+   },
+   "fragmentTextHash": "sha256/c1:aadb32c995f54b2e63acb53e25a3509c72b0edf8dbf27cc53b5d619ca8655155",
+   "targets": [
+    {
+     "block": "S152",
+     "textHash": "sha256/c1:2442e586630ab44fcb831b3d08b07289d090c90d3baf1321e0a8d9cd87269c67",
+     "role": "specific",
+     "note": "Searching step 290: ledger searched for the associated end-user account(s)"
+    },
+    {
+     "block": "S140",
+     "textHash": "sha256/c1:1aeca9ef8664bcda039e92729fa979eacd07c6a2e118824e921145dbf4ccb31e",
+     "role": "specific",
+     "note": "Record searched to identify recipients associated with the matching manifest"
+    },
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "context",
+     "note": "Retrieval component search"
+    }
+   ]
+  },
+  "c23u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:fc774decc83aac6ac5aee41df195c3ef04e550459b96e652809f75292ceda616"
+   },
+   "fragmentTextHash": "sha256/c1:fde1b1647c3aa0916bc4fe544011c46c530c9eba4704451d433b56559919d00c",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "specific",
+     "note": "Cut 4 starts as in the reference, restoring synchronization onwards",
+     "caution": {
+      "gateId": "na-gate-example2-priority",
+      "type": "source-gate",
+      "code": "example2-priority",
+      "source": {
+       "corpus": "na-claims",
+       "block": "S007",
+       "textHash": "sha256/c1:3880ad8f845fb1f44b35fb6bca7953cb057a5c065646a36cf40a0e69a8c29c1d"
+      }
+     }
+    },
+    {
+     "block": "S168.r4",
+     "textHash": "sha256/c1:8211a2e07d51ea180260dee168fad34f296b984bb03bcd4da161855e517d79c5",
+     "role": "specific",
+     "note": "Mate row Cut 4 adjusted to the reference"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Realignment explanation"
+    }
+   ]
+  },
+  "c24u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:54d1e8a184f4051f809a3bd184d8988d4cde465565951651ec74cab8e26f9596"
+   },
+   "fragmentTextHash": "sha256/c1:7fdb564832aa8fba84318c21ac3bc1baabd07e979b65450119f7215bffd5a755",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "context",
+     "note": "Transcoding and manifest machinery"
+    }
+   ]
+  },
+  "c24u1": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:ab8bf2af3a92f2ba2fef47aa15272a8bf52b76095aabbb7d75813049b8c74c75"
+   },
+   "fragmentTextHash": "sha256/c1:9aefa1031ce9187a5d524b4eadbd94dc7d775fe0d66199ad9d6c9719885aee21",
+   "targets": [
+    {
+     "block": "S146",
+     "textHash": "sha256/c1:83dc843db69b2c88409e29d2939d13749929362683ccc8d11e1ffc35ebf5b907",
+     "role": "specific",
+     "note": "Segmenting step 240 into optimized chunks"
+    },
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "context",
+     "note": "Segmenting the ensemble into chunks 113"
+    }
+   ]
+  },
+  "c24u2": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:71a2894ba05225d385061c324820584fff98742f96be23039bc5e62f480972c6"
+   },
+   "fragmentTextHash": "sha256/c1:a8d2dcb0a28767f4b14a4c494c71f49fd6305f920808be75cf5283c3f53d7a11",
+   "targets": [
+    {
+     "block": "S147",
+     "textHash": "sha256/c1:b71b0d010eb5655551a2e0cf01ebbbba2a4830f9b1935d8a20b1ec79b9b82649",
+     "role": "specific",
+     "note": "Generation step 250: different manifest files generated"
+    },
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Manifests point to unique interleaved combinations of chunks"
+    },
+    {
+     "block": "S148",
+     "textHash": "sha256/c1:8be03c59b7311baffd0f7c4c46e2570c52a0a4d8251261a4b5950c2c9a4e57b6",
+     "role": "context",
+     "note": "Players use the chunk sequences the manifests point to"
+    }
+   ]
+  },
+  "c24u3": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:522e909aa391547b95a4af0b2572ff54644828bf7f67a6881a3cbf5d8f59e5f6"
+   },
+   "fragmentTextHash": "sha256/c1:ffc134c6d964979b2291494320f85954ea612a2e820b280ef25db9717b129f8f",
+   "targets": [
+    {
+     "block": "S150",
+     "textHash": "sha256/c1:1feea6538a050a1be2737c834e134ef168e38e04b1edd3906fe90f832206c0e7",
+     "role": "specific",
+     "note": "Ledger recording step identifies recipients of particular manifests"
+    },
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger records which user or group received each manifest"
+    }
+   ]
+  },
+  "c25u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:6023b1da92ffe40e188d7bcf9277cdb90c61bb5f60dca18cf0b751b38030e979"
+   },
+   "fragmentTextHash": "sha256/c1:e02554eb1dd608fbe2d4bbc60543ce061504c528e34d519ac92bf33ecc84cefd",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Time codes devised and reconstructed manifests built from them"
+    },
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "specific",
+     "note": "Ledger searched for manifests equal to the reconstruction; accounts identified"
+    },
+    {
+     "block": "S151",
+     "textHash": "sha256/c1:8c258830147d043f42f4c6fb04f60e44f0dbe5d25ceac08718b0a23a36c83c5d",
+     "role": "context",
+     "note": "Method monitoring step"
+    },
+    {
+     "block": "S152",
+     "textHash": "sha256/c1:2442e586630ab44fcb831b3d08b07289d090c90d3baf1321e0a8d9cd87269c67",
+     "role": "context",
+     "note": "Method searching step"
+    }
+   ]
+  },
+  "c26u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:a98cc467fa0b9e6bf8e5fdd088caab52c727ba24fcf42b9adfd7642c3f1eece0"
+   },
+   "fragmentTextHash": "sha256/c1:6e78b75d173fe770dd73371667fb455d2f63ae710daed7dc6553f8f910a2a525",
+   "targets": [
+    {
+     "block": "S156",
+     "textHash": "sha256/c1:88b2af340a9ef31476bc8136fd619a1a547863d08add75bd32985f481cce9dfa",
+     "role": "specific",
+     "note": "Monitoring step compares reference and pirate webcast with the perceptual hash method"
+    },
+    {
+     "block": "S157",
+     "textHash": "sha256/c1:52c683cb240d850cd9967018c98a937bf70a079c24f046aa92af042af31bfa3e",
+     "role": "specific",
+     "note": "Monitoring step uses the fuzzy matching method"
+    },
+    {
+     "block": "S205",
+     "textHash": "sha256/c1:41776f37a1d2e215991ca4a560449fae23aa9fea4509bd6c04f1e4e4cde06a2b",
+     "role": "context",
+     "note": "Example 5: sliding-window comparison of hash groups"
+    }
+   ]
+  },
+  "c27u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:e502efae943bb1023deda4732ab7f71ea6af8c36f1d6198bb98427a9ea6658be"
+   },
+   "fragmentTextHash": "sha256/c1:c0b1c4c2a41e7ef7f44210b6dce0c5b945a7efd651133be4387e82ddc04ab40a",
+   "targets": [
+    {
+     "block": "S155",
+     "textHash": "sha256/c1:f9f9e17475ae6a642a5255f35b10fb1f19df055e794ac0d72feb997ddbe6f0ab",
+     "role": "specific",
+     "note": "Distribution step uses unicasting per spectator"
+    },
+    {
+     "block": "S127",
+     "textHash": "sha256/c1:8d27b854f75e37897dcfa2848dfaea7760871177539efe9b77fe5634783fc277",
+     "role": "context",
+     "note": "Chunks distributed using unicasting"
+    },
+    {
+     "block": "PC6",
+     "textHash": "sha256/c1:37020aa1a6591cd3258415208cea6ba11edf2e256c48318a9ac829dee03f9c82",
+     "role": "context",
+     "note": "PCT claim 6: unicasting"
+    }
+   ]
+  },
+  "c28u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:eb4cfc0bb7f16226a6103506da89fc7b4b3b8591f3f675f9e0502737c0b56e90"
+   },
+   "fragmentTextHash": "sha256/c1:ced9d3c48b21fe77467a099520688c7aa090b7723acd87321885d1a0e6fe89fa",
+   "targets": [
+    {
+     "block": "S113",
+     "textHash": "sha256/c1:f357b8e5cf45c3c5d25c57dda5096821c22c2189e3eba9d5dcc5a6dd5bb8603d",
+     "role": "specific",
+     "note": "Colluders' mixed copies: each segment traced back to its distribution"
+    },
+    {
+     "block": "S208",
+     "textHash": "sha256/c1:bc0296be234bd47b5058a9b90dfc1290d678a5db8462032dd3e3fde779094f49",
+     "role": "specific",
+     "note": "Monitoring step leverages the probabilistic fingerprinting algorithm"
+    },
+    {
+     "block": "S116",
+     "textHash": "sha256/c1:77f28f1dd04dc3915e8d559049f26060413e82a30d69395ceb52e5d3d77cf67d",
+     "role": "context",
+     "note": "Tardos algorithm for accusation"
+    }
+   ],
+   "caution": {
+    "gateId": "na-gate-collusion-output",
+    "type": "source-gate",
+    "code": "collusion-output",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S026",
+     "textHash": "sha256/c1:5c5715f84b978d586639d2256b25b15dd6af07da6bce4cb096541e47d6343cde"
+    }
+   }
+  },
+  "c29u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:924db8513a9d325f34fa17f4cfb16d5d96f9bc3f59a84b4dc0663533431db0ff"
+   },
+   "fragmentTextHash": "sha256/c1:408ad28c99a5dacec2fce75e351fc30debef660f2a32964351cdd9d4747dfcf3",
+   "targets": [
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Mate manifest selects the variant chunk reflecting the moved boundary"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Manifest chunk references differ exactly where the timing was altered",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "context",
+     "note": "Interleaved chunk combinations per manifest"
+    }
+   ]
+  },
+  "c30u0": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:8a83bc7376f0f5ca3ca69bf3da26ba1fb271c9a33e01062a5fa74edc0b915e63"
+   },
+   "fragmentTextHash": "sha256/c1:a039c486171cd7bbb2ea2f38cd883f3ab1ae81759724a54dac1fd6b81ee02fa4",
+   "targets": [
+    {
+     "block": "S153",
+     "textHash": "sha256/c1:e0a47d1de6b030d867e50985e8d48dd0d8ba7bfc078fd8330b03b5dbb4b863c2",
+     "role": "specific",
+     "note": "Additional audio-video elements overlaid onto the ensemble in the programming step"
+    },
+    {
+     "block": "S114",
+     "textHash": "sha256/c1:b82af3c5e23e5077ab87a6bce46296191bfa0c3f40e98888ca6c35b93212496a",
+     "role": "specific",
+     "note": "Overlay elements nonexistent in the reference content"
+    },
+    {
+     "block": "PC4",
+     "textHash": "sha256/c1:40592a91c128e9af04c2adb5e2d281e6ad92df6ba2e7411c562b257544593115",
+     "role": "context",
+     "note": "PCT claim 4: overlay components"
+    }
+   ]
+  }
+ },
+ "dispositions": [
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c1"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:506f16237a6aff35e0defe60b68a6e205e314ba0080381b22bee28129ceaea64",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:b354a32d2ef355c8eba980ee163fe408a46cbd102d2ced4f4860b728cd072485"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c7"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:552246ff341adbaf9c58b3acd6fe83b010df0ac1d007634776c470fe7d393d97",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:6abda6fe2d076bd6dcba62e45ff16340be18430a9989b2fcce2df8795e41469e"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c9"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:250b838d8669ceb39b50580a03e2f560b48a091be06ba9c9736ba41d3cc8df71"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c13"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:588d999f1f42451f08968b569c7cc3d8a92fd2e2997c79b86368ebd644996282",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:db89d74a1a5647fa2f8dd934251aece3d56a78d9f50021946312833484c55259"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c15"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:f370be3e2a64cadc64352f864d35e73c22e351b2f268980f0940396d2c0898d7"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c16"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:048667b5256e52201f22d8617807bbe739448e319d3f6b6a23ef2735b4d333c0",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:3ef7fe2545455f6d4bcd18df14678e076d77b332575f21840c824610acc916b5"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c22"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:78b36fa95710fe4775fe9a189f125e65e0ef433881f571bedd5d85d1d2c939bc",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:e84e2982be93462f2222d2e2ad50b72709913b35b6882f5e71aba5d98bcc1dd7"
+   }
+  },
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c29"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:93b55459fa1065c8d4a840848767b8e0a5a8418acbd9669e74596619b2a2dfc1",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:613c89a772ff56802bf0f6ab8c3ee3eb6297f475a8038de4ccd8a5ea897aac66"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c16u5"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:4b8bd623f68a6f4c7c0862d240a56ccb567095347e4cccc8c71b1a40c76946a3"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c16u6"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:adc8f51a4a2695d0a221f9e0c890322e581a4eb88836592cb062d0afadaf6cbe"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c16u7"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:08fc431aebb952cd67d7649195da78e5ed45d107fed03f921da55f9722847f2c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:4190071938f80a18740408a460329bd4f7cbb661bbfc521a0dde36381b574c5d"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c22u5"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:5c58b37ddf207d31992fbe80998a4e7799489c0d0627a35a95b93004b7b17ef1",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:7597c8a5e2f2cb4e2e423ac8219323a5fabeb59adc9a4dd94c29f054245404c5"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c22u6"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:b1c8f33dc7370bbe87212ea519926c84fb968158a2a4f49c5b6d20c77238bc20",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:f98080f42fe25b4a0e5b736eb00141c8b50995899aff8af5e12673e6499a3cf0"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c22u7"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:f7437d32ff00d57d1430e564095f98afcb96bee703b3c6a0792e0a36f92d7f47",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:afb7cb065583500ddd8db531b92499871e11a73107bc6ee7e68776d34282de1a"
+   }
+  },
+  {
+   "gateId": "na-gate-collusion-output",
+   "subject": {
+    "kind": "fragment",
+    "id": "c21u0"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:51ebb8df02cfc10da236251d54c462f4becb7e278c345bc45523a63cff56eebb",
+   "subjectHash": "sha256/c1:90221ff2fa0caa47cb76fda0b86041eb92e3fdb537f0da2512542b9d67b9bb41",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:7b4713cb4ecf63c327249d25b4d8d0d3474ac8da3867ea9090daeea871e374e7"
+   }
+  },
+  {
+   "gateId": "na-gate-collusion-output",
+   "subject": {
+    "kind": "fragment",
+    "id": "c28u0"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:51ebb8df02cfc10da236251d54c462f4becb7e278c345bc45523a63cff56eebb",
+   "subjectHash": "sha256/c1:ced9d3c48b21fe77467a099520688c7aa090b7723acd87321885d1a0e6fe89fa",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:29146699ac748298a1b4c6d93a2c27b7e5c2d200a35d3fec2d68262cce24a5c5"
+   }
+  },
+  {
+   "gateId": "na-gate-example2-priority",
+   "subject": {
+    "kind": "fragment",
+    "id": "c2u0"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:ea64410533704df9cd17b6787b38baa73d1055acfc9eed8199817bb8ca7ace05",
+   "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:f19672ea78b3cbdeada2f9a622debbfc4edb9aa62ad236db81f35194736766fa"
+   }
+  },
+  {
+   "gateId": "na-gate-example2-priority",
+   "subject": {
+    "kind": "fragment",
+    "id": "c3u0"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:ea64410533704df9cd17b6787b38baa73d1055acfc9eed8199817bb8ca7ace05",
+   "subjectHash": "sha256/c1:da8771640f0d15b763af9d6f3360a5adb581179f67268cc89fb0f686b433d46b",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:efe08b9f018fd8210efe65f9c832566fc307eb6cb6446205a591e7e200b3d1bb"
+   }
+  },
+  {
+   "gateId": "na-gate-example2-priority",
+   "subject": {
+    "kind": "fragment",
+    "id": "c23u0"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:ea64410533704df9cd17b6787b38baa73d1055acfc9eed8199817bb8ca7ace05",
+   "subjectHash": "sha256/c1:fde1b1647c3aa0916bc4fe544011c46c530c9eba4704451d433b56559919d00c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:895dce1b2c7bd467f9226e9508f8605e3edb6ebe52c9555d579c9c45508d43fd"
+   }
+  }
+ ]
+}

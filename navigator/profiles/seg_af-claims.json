@@ -1,0 +1,15 @@
+{
+ "profileVersion": "1",
+ "corpusId": "af-claims",
+ "claimsHeading": "Candidate claims",
+ "comment": "Policy for the AF claim-set document (AF-2026-07-17-v2). §3 claims are the fragment corpus (class 'claims', parsed by lib.claims). The §3 Example 2 priority-gate blockquote is guidance: designated quotable here, excluded from the unit census by the claims parser, and rendered as a visibly labeled guidance note (TDD §2, §5.1). Quotable guidance blocks serve as caution/gate sources.",
+ "rules": [
+  {"match": {"kind": "blockquote", "path": ["*", "Candidate claims"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Candidate claims"]}, "class": "claims"},
+  {"match": {"path": ["*", "AF objective and architecture"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Claim count and dependency control"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Why this order is allowance-first"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Support and filing gates"]}, "class": "quotable"},
+  {"match": {"path": ["*", "Enforcement and portfolio cautions"]}, "class": "quotable"}
+ ]
+}

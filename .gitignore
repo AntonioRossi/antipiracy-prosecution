@@ -267,3 +267,26 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,visualstudiocode,python
+
+### AA11393US claims navigator ###
+# The navigator tree is source plus committed build products (TDD §13 step 9);
+# override the generic Python template patterns (lib/, dist/, build/) above.
+!navigator/lib/
+!navigator/lib/**
+# Keep Python bytecode ignored despite the source-tree exception above.
+navigator/lib/**/__pycache__/
+!navigator/dist/
+!navigator/dist/**
+
+# Local Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment/configuration
+.env.*
+!.env.example
+
+# Generated navigator artifacts
+navigator/.build/
+navigator/tmp/

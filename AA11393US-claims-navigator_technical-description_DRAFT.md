@@ -5,7 +5,7 @@
 > Single live specification for the interactive HTML5 navigators linking the AA11393US
 > candidate claim sets to the PCT application as filed (PCT/IB2025/051755, published as
 > WO 2025/181623 A1). One shared technical contract, **two current editions** built from it:
-> the **NA edition** (normal-allowance claim set, NA-2026-07-17-v1) and the **AF edition**
+> the **NA edition** (normal-allowance claim set, NA-2026-07-21-v2) and the **AF edition**
 > (allowance-first claim set, AF-2026-07-17-v2). The editions are alternative counsel-review
 > strategies, never cumulative layers. This document always describes the current intended
 > state; superseded content is removed, not annotated. Implementation follows only from this
@@ -13,8 +13,9 @@
 >
 > **Interpretation clause:** this document is a specification. Normative language —
 > including present-tense descriptions of tests, fixtures, gates, and tools — describes
-> required behavior of an implementation that does not yet exist; nothing described here is
-> an implemented fact until built and verified under §14.
+> required behavior; the implementation lives under `navigator/` and is verified against
+> §14 by its acceptance suite (`navigator/tests/`). Where implementation and specification
+> disagree, the specification governs and the implementation is defective.
 
 ## 1. Purpose and audience
 
@@ -30,7 +31,7 @@ edition may identify AF neutrally as an allowance-first drafting strategy whose 
 is anticipating examiner objections; whether it achieves that aim is counsel work, outside
 the navigator. Every screen and every printed page carries the standing disclaimer (§9.1).
 
-- **Primary user:** US prosecution counsel reviewing claim-set versions NA-2026-07-17-v1
+- **Primary user:** US prosecution counsel reviewing claim-set versions NA-2026-07-21-v2
   and/or AF-2026-07-17-v2.
 - **Secondary user:** the internal reviewer (Antonio) validating claim-support work product.
 
@@ -84,12 +85,21 @@ created for it.
 Every input is a registered corpus (§8.1) with a globally unique id. Visibility is declared
 per corpus and refined by its segmentation profile.
 
+**Corpus and edition ids are stable, version-neutral names.** The claim-set version is a
+registry label and an edition-config parameter, never part of an id. A claim-set version
+change updates the pins and version label **in place** and enters the §13 update procedure
+(`migrate` resolves the consequences); new ids are never minted for new versions. Artifact
+names embed the claim-set version (§13), so a stale navigator remains identifiable. Renaming
+an id is deliberately expensive: the relation binding participates in every review
+projection, so a rename re-enters review for every owner — ids are stable by construction,
+not convention.
+
 | Corpus id | Path | Role | Visibility | Used for |
 |---|---|---|---|---|
 | `pct-pdf` | `PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf` (60 pp.) | `authoritative` | `internal` (identity/hash may appear as authority metadata in embedded provenance, §13) | As-filed authority of record; never rendered |
 | `pct-disclosure` | `PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/` (markdown + `figures/Fig-1..4.png`, each file pinned) | `derivative` | `rendered` | The as-filed disclosure package: title, description, Examples 1–5, PCT claims 1–18, abstract, four drawing sheets |
-| `na-claims-v1` | `US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable`; rest excluded | NA claims 1–30 verbatim; guidance blocks as caution/gate sources |
-| `af-claims-v2` | `US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable` (including the §3 Example 2 priority-gate blockquote, excluded from the unit census); rest excluded | AF claims 1–20 verbatim; guidance blocks as caution/gate sources |
+| `na-claims` | `US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable`; rest excluded | NA claims 1–30 verbatim; guidance blocks as caution/gate sources |
+| `af-claims` | `US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable` (including the §3 Example 2 priority-gate blockquote, excluded from the unit census); rest excluded | AF claims 1–20 verbatim; guidance blocks as caution/gate sources |
 | `na-priority-map` | `US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md` | `qa-source` | `internal` | QA cross-check of the NA mapping (§9); never rendered, never quoted, never identified in an artifact |
 | `af-priority-map` | `US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md` | `qa-source` | `internal` | QA cross-check of the AF mapping (§9); never rendered, never quoted, never identified in an artifact |
 | `af-na-crosswalk` | `US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md` | `qa-source` | `internal` | Non-conflation QA; **review context and a non-transfer warning for cross-edition reuse proposals (§10) — never evidence that reuse is substantively correct**; never rendered, never quoted, never identified in an artifact |
@@ -122,20 +132,20 @@ edition-specific is declared in the edition config, whose normative parameters a
 
 | Parameter | NA edition | AF edition |
 |---|---|---|
-| Claim corpus | `na-claims-v1` (NA-2026-07-17-v1) | `af-claims-v2` (AF-2026-07-17-v2) |
+| Claim corpus | `na-claims` (NA-2026-07-21-v2) | `af-claims` (AF-2026-07-17-v2) |
 | Claims | 30 | 20 |
-| Limitation units (census, test-enforced) | 65 | 60 |
+| Limitation units (census, test-enforced) | 68 | 60 |
 | Independent claims | 1, 9, 16, 22 | 1, 20 |
 | §3 group headings | 4 actor groups | 7 structural groups |
 | Largest decompositions | claims 9, 16, 22 = 9 units each | claims 1, 20 = 15 units each |
 | Display prefix (mandatory) | `NA claim N` | `AF claim N` |
-| Relation set | `relations/na-v1__pct.json` | `relations/af-v2__pct.json` |
-| Gate inventory | `profiles/gates_na-claims-v1.json` | `profiles/gates_af-claims-v2.json` |
-| Dependency map (authored + cross-validated, §8.1) | `profiles/deps_na-claims-v1.json` | `profiles/deps_af-claims-v2.json` |
-| Edition config | `editions/na-v1.json` | `editions/af-v2.json` |
+| Relation set | `relations/na__pct.json` | `relations/af__pct.json` |
+| Gate inventory | `profiles/gates_na-claims.json` | `profiles/gates_af-claims.json` |
+| Dependency map (authored + cross-validated, §8.1) | `profiles/deps_na-claims.json` | `profiles/deps_af-claims.json` |
+| Edition config | `editions/na.json` | `editions/af.json` |
 | QA cross-check source | `na-priority-map` | `af-priority-map` |
 | Forbidden terms in authored user-visible text | — (NA claims legitimately use both pattern terms, with distinct claim functions) | `camera-cut timing pattern` (crosswalk non-conflation boundary) |
-| Artifact (default name, §17) | `AA11393US-NA-claims-spec-navigator_NA-2026-07-17-v1.html` | `AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html` |
+| Artifact (default name, §17) | `AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html` | `AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html` |
 
 Edition rules:
 
@@ -201,9 +211,9 @@ over the left pane).
 ### 5.2 Clickable units — two-tier granularity
 
 Every claim is decomposed into **limitation units** — its markdown paragraphs: preamble plus
-each clause. The census is normative per edition (§3): NA 30 claims / 65 units (claim 9 =
-9 units); AF 20 claims / 60 units (claims 1 and 20 = 15 units each). The extraction test
-asserts the census exactly.
+each clause. The census is normative per edition (§3): NA 30 claims / 68 units (claim 1 = 7 units;
+claims 9, 16, and 22 = 9 units each); AF 20 claims / 60 units (claims 1 and 20 = 15 units
+each). The extraction test asserts the census exactly.
 
 - **Tier 1 — limitation unit.** One activation region per unit. Activating it opens the
   unit's recorded candidates, or its status notice (§5.3).
@@ -285,7 +295,9 @@ Pinned to the top of the right pane while a forward selection is active:
   registered display path (§10, enum exhaustiveness).
 
 Ordering: first target is the most specific recorded candidate; the rest follow in
-decreasing specificity. The data records **all** recorded candidates (no authoring cap); if
+decreasing specificity — **derived at build from the role enum** (`specific` before
+`combination` before `context`, stable in authored order within a rank), never
+separately authored. The data records **all** recorded candidates (no authoring cap); if
 more than 5 exist, the inline soft-highlight set shows the first 5 with a "+N more" control
 in the bar, and the printable schedule (§11) always lists all.
 
@@ -304,6 +316,8 @@ edition.
   count summary `5 fragments · 3 claims`, then `2 of 5 : NA claim 9 · limitation 6  ◀ ▶  ×`.
   Fragments are listed claims-ascending, units before phrases within a claim; phrase entries
   display as `NA claim 1 · "structured list"`.
+- Whole-claim anchors (`PC1`–`PC18`) are targets like any block and carry their own
+  badge, rendered at the claim head.
 - Disclosure body text remains non-clickable; the badge is the only reverse affordance.
 - The reverse index is derived at build time by inverting the forward relation set; it is
   never separately authored and cannot disagree with the forward direction.
@@ -359,7 +373,9 @@ Each corpus is registered in `navigator/corpora.json`: globally unique id (§2),
 `quotable` | `internal`), per-file SHA-256 (a multi-file corpus pins every file
 individually), version label, and a **segmentation profile** (declarative file listing which
 sections are targetable, editorial, quotable, or excluded — policy lives in reviewable data,
-not parser code; quotability and targetability are profile-designated, never hardcoded).
+not parser code; quotability and targetability are profile-designated, never hardcoded;
+**content matched by no profile rule is excluded** — the fail-safe default: nothing
+renders unless designated).
 
 Each fragment corpus has a **gate inventory** (`profiles/gates_<corpusId>.json`) — authored,
 reviewed data enumerating every guidance gate of that claim-set document. Exact entry shape:
@@ -378,20 +394,34 @@ reviewed data enumerating every guidance gate of that claim-set document. Exact 
   authored against. Inventory source locators are eligible for mechanical re-anchoring
   (§10) under a unique canonical-hash match.
 
-**Gate dispositions — policies are total over evidence states.** Satisfaction of a
-mandatory gate is recorded as a reviewed, lifecycle-bearing **disposition** pinned to gate
-and subject, from a closed enum: `satisfied-by-target` (a carrying target exists);
-`satisfied-by-fragment-fallback` (the applicable fragment is `counsel-review-required`, and
-the same gate is carried at fragment scope instead); `inapplicable-no-candidate` (the
-applicable fragment is `counsel-review-required` and no honest target exists — recorded,
-reviewed, releasable). **A mandatory requirement is never satisfiable only by creating
-evidence**: an honest no-candidate fragment releases without a fabricated mapping, and a
-fixture proves it.
+**Gate dispositions — policies are total over evidence states.** How a mandatory gate is
+carried is recorded as a reviewed, lifecycle-bearing **disposition** that pins the gate by
+its inventory-entry digest — computed over the entry's review projection, source locator
+excluded per the declared locator exception, `appliesTo` hashes included so applicability
+changes deliberately cascade — and the subject by its identity tuple and content hash, from a
+closed enum of recording facts: `carried-at-required-scope` (an instance of the gate is
+carried at the inventory's required scope — for target scope, on ≥ 1 recorded target of the
+applicable fragment); `carried-at-fragment-fallback` (target scope only: the applicable
+fragment is `counsel-review-required`, so no target exists to carry the gate, and the same
+gate is carried at fragment scope instead — the single declared exception to the
+scope-match rule); `no-target-recorded` (target scope only: the applicable fragment is
+`counsel-review-required` and carries no instance — the structural fact is recorded,
+reviewed, releasable). A **requiredScope × evidence-state matrix** in the invariants module
+declares exactly which dispositions are permitted in each configuration and is total: every
+reachable configuration has at least one permitted disposition, none of which requires
+creating evidence. **A mandatory requirement is never satisfiable only by creating
+evidence**: an honest no-candidate fragment releases without a fabricated mapping. Five
+fixtures prove the matrix — one per enum value, the no-candidate release case, and a
+rejected wrong-scope case.
 
 Each fragment corpus also has an authored **dependency map**
-(`profiles/deps_<corpusId>.json`) — the claim dependency graph, authored from the claim-set
-document's own dependency tables and **cross-validated against the parsed "of claim N"
-references in the claim text; any mismatch fails the build**. M39 dependency-chain hashes
+(`profiles/deps_<corpusId>.json`) — the claim dependency graph, independently authored from
+the claim text and **cross-validated against the parsed "of claim N" references in the
+claim text; any mismatch fails the build**. For AF — whose claim-set document publishes its
+own §2 dependency table — validation is three-way: authored map, parsed references, and the
+document's table must agree. NA publishes no dependency table, so its map rests on the
+two-way check. Validation also proves each graph total (every claim present exactly once),
+acyclic, and rooted at the edition's declared independent claims. Dependency-chain hashes
 (§8.2) are computed only from a validated map — structural graphs are dual-sourced, never
 parsed-only (inference) or authored-only (typo risk).
 
@@ -412,8 +442,9 @@ One shared canonicalization module is the only hashing path for all digests — 
 and composite alike; a test asserts no digest is computed outside it. The rule set carries a
 **canonVersion**, recorded with every stored digest (`sha256/c1:…`). Changing any rule bumps
 the version; a version mismatch is ordinary staleness resolved through migration (§10).
-**The canonVersion pins its Unicode version** (NFC tables change across Unicode releases)
-and its whitespace character set (the Unicode White_Space property of that pinned version).
+**canonVersion c1 pins Unicode 15.1.0**: NFC normalization tables and the whitespace
+character set (the White_Space property) are read from that Unicode version regardless of
+interpreter, since NFC tables change across Unicode releases.
 
 Per-type text rules (canonVersion c1):
 
@@ -426,19 +457,29 @@ Per-type text rules (canonVersion c1):
 - **Figures:** domain-tagged composition (`aa11393:figure:c1`) over
   `SHA-256(file bytes) ‖ SHA-256(canonical caption text)`.
 
-**Canonical object serialization (composite digests) — defined by rule, confirmed by
-vector:** canonical JSON meaning UTF-8 output; all strings NFC-normalized; **objects whose
-keys collide after NFC are rejected**; object keys sorted by Unicode code point of the NFC
-key string; escaping exactly: the two-character forms `\"` `\\` `\n` `\r` `\t` and `\u00XX`
-for remaining control characters below U+0020 — nothing else escaped; numbers are integers
-with |n| < 2⁵³; array order preserved exactly as authored. Inner digests compose as **raw
-32-byte values**, never hex strings. Every composite digest is framed
-`tag ‖ 0x00 ‖ canonical-payload` (tags are ASCII, never containing NUL):
-`aa11393:claim-agg:c1`, `aa11393:dep-chain:c1`, `aa11393:review:c1`,
-`aa11393:inventory:c1`, `aa11393:lock:c1`, `aa11393:figure:c1`. Composite digest types:
+**Canonical serialization (composite digests) — defined by rule, confirmed by vector.**
+Every composite digest takes exactly one of two payload forms, declared per tag:
 
-- **Aggregate claim hash** — domain-tagged digest over the claim's ordered unit hashes.
-- **Dependency-chain hash** — domain-tagged digest over the ordered aggregate claim hashes
+- **Digest-list composites** (`claim-agg`, `dep-chain`, `figure`): the payload is the raw
+  binary concatenation of the listed 32-byte digest values, in declared order — no JSON
+  involved.
+- **Object composites** (`review`, `inventory`, `lock`, and the verification-record kinds):
+  the payload is canonical JSON — UTF-8 output; all strings NFC-normalized; **objects whose
+  keys collide after NFC are rejected**; object keys sorted by Unicode code point of the
+  NFC key string; escaping exactly: the two-character forms `\"` `\\` `\n` `\r` `\t` and
+  `\u00XX` for remaining control characters below U+0020 — nothing else escaped; numbers
+  are integers only with |n| < 2⁵³, serialized in base-10 with no exponent or fraction
+  forms and −0 serialized as `0`; array order preserved exactly as authored. Digests inside
+  an object composite appear as their full prefixed string form (`sha256/c1:<64 hex>`).
+
+Every composite digest is framed `tag ‖ 0x00 ‖ payload` (tags are ASCII, never containing
+NUL): `aa11393:claim-agg:c1`, `aa11393:dep-chain:c1`, `aa11393:review:c1`,
+`aa11393:inventory:c1`, `aa11393:lock:c1`, `aa11393:figure:c1`, and one tag per
+verification-record kind — `aa11393:qa-record:c1`, `aa11393:attestation:c1`,
+`aa11393:release-record:c1`, `aa11393:bundle-record:c1`. Composite digest types:
+
+- **Aggregate claim hash** — digest-list composite over the claim's ordered unit hashes.
+- **Dependency-chain hash** — digest-list composite over the ordered aggregate claim hashes
   of the owner claim's ancestor chain (independent claim first, owner's claim last), per
   the validated dependency map (§8.1).
 
@@ -449,121 +490,295 @@ SHA-256 digest**; abbreviated prefixes are display-only.
 
 One relation set per (fragment corpus, target corpus) pair, its binding declared in the file
 header; entries referencing any other corpus are schema-invalid. The examples below are
-**abridged renderings of the required fixtures** (`navigator/tests/fixtures/`); the test
+**abridged renderings of the required fixtures** (fields may be omitted, arrays truncated from the end, and digests abbreviated) (`navigator/tests/fixtures/`); the test
 suite must validate each fixture against the shipped schemas and pinned corpora **and
 compare this document's code blocks against the fixtures' projections**. Hashes are
 abbreviated here; data files carry full digests with their canonVersion prefix.
 
-NA fixture (excerpt of `relations/na-v1__pct.json`):
+NA fixture (excerpt of `relations/na__pct.json`):
 
 ```json
 {
-  "binding": {"fragmentCorpus": "na-claims-v1", "targetCorpus": "pct-disclosure",
-              "schemaVersion": "1", "canonVersion": "c1"},
-  "claimGates": {},
+  "binding": {
+    "fragmentCorpus": "na-claims",
+    "targetCorpus": "pct-disclosure",
+    "schemaVersion": "1",
+    "canonVersion": "c1"
+  },
+  "claimGates": {
+    "c9": [
+      {
+        "gateId": "na-gate-combined-example",
+        "type": "source-gate",
+        "code": "combined-example",
+        "claimHash": "sha256/c1:8aef…",
+        "reviewState": "internally-reviewed",
+        "migrationState": "current",
+        "review": {
+          "by": "claude-opus-4.8",
+          "date": "2026-07-21",
+          "contentHash": "sha256/c1:dff6…"
+        },
+        "source": {
+          "corpus": "na-claims",
+          "block": "S020",
+          "textHash": "sha256/c1:597e…"
+        }
+      }
+    ]
+  },
   "fragments": {
     "c9u6": {
       "status": "mapped",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
-      "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:5aa0…"},
-      "fragmentTextHash": "sha256/c1:19d2…",
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:1a4b…"
+      },
+      "fragmentTextHash": "sha256/c1:19c6…",
       "targets": [
-        {"block": "S054", "textHash": "sha256/c1:9f3a…", "role": "specific",
-         "note": "Manifest files 121 point to unique interleaved chunk combinations"},
-        {"block": "PC11", "textHash": "sha256/c1:d051…", "role": "context",
-         "note": "PCT claim 11: transcoding components / manifest generation",
-         "caution": {"gateId": "na-gate-combined-example",
-                     "type": "source-gate", "code": "combined-example",
-                     "source": {"corpus": "na-claims-v1", "block": "S142",
-                                "textHash": "sha256/c1:66c1…"}}}
+        {
+          "block": "S081",
+          "textHash": "sha256/c1:df14…",
+          "role": "specific",
+          "note": "Manifest files 121 point to unique interleaved combinations of chunks of the ensemble"
+        },
+        {
+          "block": "S085",
+          "textHash": "sha256/c1:dfee…",
+          "role": "combination",
+          "note": "Manifests for reference and mate differ in how they reference chunks where edits were made"
+        }
       ],
       "phrases": [
-        {"id": "c9u6p1", "text": "camera-cut timing pattern", "occurrence": 1,
-         "status": "mapped", "reviewState": "internally-reviewed",
-         "migrationState": "current",
-         "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:c711…"},
-         "targets": [{"block": "S042", "textHash": "sha256/c1:77b2…", "role": "specific",
-                      "note": "Timing-pattern definition",
-                      "caution": {"type": "generalization-note",
-                                  "code": "beyond-literal-example"}}]}
+        {
+          "id": "c9u6p1",
+          "text": "camera-cut timing pattern",
+          "occurrence": 1,
+          "status": "mapped",
+          "reviewState": "internally-reviewed",
+          "migrationState": "current",
+          "review": {
+            "by": "claude-opus-4.8",
+            "date": "2026-07-21",
+            "contentHash": "sha256/c1:3f48…"
+          },
+          "targets": [
+            {
+              "block": "S064",
+              "textHash": "sha256/c1:0e4c…",
+              "role": "specific",
+              "note": "Timing of camera cuts altered per the structured list acts as the distinguishing fingerprint",
+              "caution": {
+                "type": "generalization-note",
+                "code": "beyond-literal-example"
+              }
+            }
+          ]
+        }
       ]
     },
     "c16u6": {
       "status": "counsel-review-required",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
-      "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:90bf…"},
-      "fragmentTextHash": "sha256/c1:3ab0…",
-      "caution": {"gateId": "na-gate-detection-support",
-                  "type": "source-gate", "code": "detection-support",
-                  "source": {"corpus": "na-claims-v1", "block": "S171",
-                             "textHash": "sha256/c1:0e44…"}}
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:11f9…"
+      },
+      "fragmentTextHash": "sha256/c1:5f35…",
+      "caution": {
+        "gateId": "na-gate-detection-support",
+        "type": "source-gate",
+        "code": "detection-support",
+        "source": {
+          "corpus": "na-claims",
+          "block": "S025",
+          "textHash": "sha256/c1:15d9…"
+        }
+      }
     }
-  }
+  },
+  "dispositions": [
+    {
+      "gateId": "na-gate-combined-example",
+      "subject": {
+        "kind": "claim",
+        "id": "c9"
+      },
+      "disposition": "carried-at-required-scope",
+      "gateEntryHash": "sha256/c1:9352…",
+      "subjectHash": "sha256/c1:8aef…",
+      "reviewState": "internally-reviewed",
+      "migrationState": "current",
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:250b…"
+      }
+    },
+    {
+      "gateId": "na-gate-detection-support",
+      "subject": {
+        "kind": "fragment",
+        "id": "c16u6"
+      },
+      "disposition": "carried-at-required-scope",
+      "gateEntryHash": "sha256/c1:8d3b…",
+      "subjectHash": "sha256/c1:5f35…",
+      "reviewState": "internally-reviewed",
+      "migrationState": "current",
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:adc8…"
+      }
+    }
+  ]
 }
 ```
 
-AF fixture (excerpt of `relations/af-v2__pct.json`):
+AF fixture (excerpt of `relations/af__pct.json`):
 
 ```json
 {
-  "binding": {"fragmentCorpus": "af-claims-v2", "targetCorpus": "pct-disclosure",
-              "schemaVersion": "1", "canonVersion": "c1"},
+  "binding": {
+    "fragmentCorpus": "af-claims",
+    "targetCorpus": "pct-disclosure",
+    "schemaVersion": "1",
+    "canonVersion": "c1"
+  },
   "claimGates": {
-    "c1": [{"gateId": "af-gate-claim-as-a-whole",
-            "type": "source-gate", "code": "claim-as-a-whole",
-            "claimHash": "sha256/c1:e7a2…",
-            "reviewState": "internally-reviewed", "migrationState": "current",
-            "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:12d4…"},
-            "source": {"corpus": "af-claims-v2", "block": "S103",
-                       "textHash": "sha256/c1:41f7…"}}],
-    "c2": [{"gateId": "af-gate-example2-priority",
-            "type": "source-gate", "code": "example2-priority-gate",
-            "claimHash": "sha256/c1:52b8…",
-            "reviewState": "internally-reviewed", "migrationState": "current",
-            "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:7e6a…"},
-            "source": {"corpus": "af-claims-v2", "block": "S018",
-                       "textHash": "sha256/c1:8c2e…"}}]
+    "c1": [
+      {
+        "gateId": "af-gate-claim-as-a-whole",
+        "type": "source-gate",
+        "code": "claim-as-a-whole",
+        "claimHash": "sha256/c1:e572…",
+        "reviewState": "internally-reviewed",
+        "migrationState": "current",
+        "review": {
+          "by": "claude-opus-4.8",
+          "date": "2026-07-21",
+          "contentHash": "sha256/c1:5792…"
+        },
+        "source": {
+          "corpus": "af-claims",
+          "block": "S018",
+          "textHash": "sha256/c1:b1ef…"
+        }
+      }
+    ],
+    "c2": [
+      {
+        "gateId": "af-gate-example2-priority",
+        "type": "source-gate",
+        "code": "example2-priority-gate",
+        "claimHash": "sha256/c1:76eb…",
+        "reviewState": "internally-reviewed",
+        "migrationState": "current",
+        "review": {
+          "by": "claude-opus-4.8",
+          "date": "2026-07-21",
+          "contentHash": "sha256/c1:23c1…"
+        },
+        "source": {
+          "corpus": "af-claims",
+          "block": "S013",
+          "textHash": "sha256/c1:11e3…"
+        }
+      }
+    ]
   },
   "fragments": {
     "c1u8": {
       "status": "mapped",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
-      "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:41c8…"},
-      "fragmentTextHash": "sha256/c1:b4d9…",
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:c650…"
+      },
+      "fragmentTextHash": "sha256/c1:80d5…",
       "targets": [
-        {"block": "S060", "textHash": "sha256/c1:2f18…", "role": "combination",
-         "note": "Detection component derives time codes from delivered-version timings"}
+        {
+          "block": "S166",
+          "textHash": "sha256/c1:102b…",
+          "role": "combination",
+          "note": "EDL rows hold the source-camera identifiers and time codes a candidate record draws on",
+          "caution": {
+            "type": "generalization-note",
+            "code": "beyond-literal-example"
+          }
+        }
       ],
       "phrases": [
-        {"id": "c1u8p1", "text": "camera-source-transition pattern", "occurrence": 1,
-         "status": "mapped", "reviewState": "internally-reviewed",
-         "migrationState": "current",
-         "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:d977…"},
-         "targets": [{"block": "S058", "textHash": "sha256/c1:aa31…", "role": "context",
-                      "note": "Camera-cuts detection algorithm 131 timing analysis"}]}
+        {
+          "id": "c1u8p1",
+          "text": "camera-source-transition pattern",
+          "occurrence": 1,
+          "status": "counsel-review-required",
+          "reviewState": "internally-reviewed",
+          "migrationState": "current",
+          "review": {
+            "by": "claude-opus-4.8",
+            "date": "2026-07-21",
+            "contentHash": "sha256/c1:f99d…"
+          }
+        }
       ]
     },
-    "c1u11": {
+    "c1u12": {
       "status": "counsel-review-required",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
-      "review": {"by": "amc", "date": "2026-07-21", "contentHash": "sha256/c1:03e5…"},
-      "fragmentTextHash": "sha256/c1:77e0…",
-      "caution": {"gateId": "af-gate-source-identity",
-                  "type": "source-gate", "code": "source-identity-detection",
-                  "source": {"corpus": "af-claims-v2", "block": "S104",
-                             "textHash": "sha256/c1:c95d…"}}
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:366f…"
+      },
+      "fragmentTextHash": "sha256/c1:5f35…",
+      "caution": {
+        "gateId": "af-gate-source-identity",
+        "type": "source-gate",
+        "code": "source-identity-detection",
+        "source": {
+          "corpus": "af-claims",
+          "block": "S019",
+          "textHash": "sha256/c1:98f1…"
+        }
+      }
     }
-  }
+  },
+  "dispositions": [
+    {
+      "gateId": "af-gate-claim-as-a-whole",
+      "subject": {
+        "kind": "claim",
+        "id": "c1"
+      },
+      "disposition": "carried-at-required-scope",
+      "gateEntryHash": "sha256/c1:27f8…",
+      "subjectHash": "sha256/c1:e572…",
+      "reviewState": "internally-reviewed",
+      "migrationState": "current",
+      "review": {
+        "by": "claude-opus-4.8",
+        "date": "2026-07-21",
+        "contentHash": "sha256/c1:f27e…"
+      }
+    }
+  ]
 }
 ```
 
-A third required fixture exercises the **`inapplicable-no-candidate` gate disposition**: a
+A third required fixture exercises the **`no-target-recorded` gate disposition**: a
 `counsel-review-required` fragment listed by a mandatory target-scope gate, released without
-any fabricated mapping.
+any fabricated mapping. It is one of the five disposition fixtures required by §8.1.
 
 Optional per-target `role` is a closed descriptive enum — `specific` | `context` |
 `combination` — with no legal implication. An optional `rationale` may accompany a target:
@@ -595,10 +810,13 @@ stales its owner.
   reviewed content or endpoint change — visible or hidden — invalidates
   `internally-reviewed`; transplanting a reviewed entry to a textually identical fragment
   in another claim or edition invalidates it (AF claims 1 and 20 contain verbatim-identical
-  units, so this case is real); **amending a parent claim invalidates the reviews of all
+  units, and NA claim 16's detect/derive units are byte-identical to AF claim 1's — the
+  case is real both within and across editions); **amending a parent claim invalidates the reviews of all
   its dependents** — deliberate churn; and **mechanical re-anchoring does not** (block ids
   are declared locators outside the review projection, their identity covered by the
-  included `textHash`, §13). Reuse proposals always enter as `pending`.
+  included `textHash`, §13). Reuse proposals always enter as `pending`. `review.by` and `review.date` are
+  `review: exclude`: re-stamping the reviewer identity changes no digest — the git
+  commit is the trust root for who reviewed (§10).
 - `migrationState: current | stale` — `stale` is set only by `migrate` (§10) with a
   closed-enum `reason`: `changed | ambiguous | fragment-removed | target-removed |
   target-changed | source-changed | endpoint-changed | unclassified` — and preserved prior
@@ -639,7 +857,14 @@ fragment; phrase ids unique within a unit.
 **Caution codes are closed:** every `source-gate` code must exist in the applicable gate
 inventory, every `generalization-note` code in the generalization-code registry
 (`strings.json`), each with a per-edition display entry — enum exhaustiveness (§10) covers
-types, scopes, and codes. Claim-scope gates display at the claim header and as the
+types, scopes, and codes.
+
+**Gate dispositions render only through registered microcopy** — one `strings.json` entry
+per enum value, in neutral recording language (e.g. `carried-at-required-scope` → "Gate
+recorded on candidate target"; `carried-at-fragment-fallback` → "Gate recorded on the
+limitation — no candidate target recorded"). `no-target-recorded` renders as the structural
+statement that no candidate target is recorded — never as a statement about the gate's
+applicability, satisfaction, or any legal conclusion. Claim-scope gates display at the claim header and as the
 **claim-level gate chip class**; "claim-as-a-whole" is one code among several; gates are
 **never inherited down to units**. A gate covering several claims attaches to each gated
 claim individually with the same pinned source and its own aggregate claim hash.
@@ -657,7 +882,7 @@ relation files are migrated in place in the same commit.
 
 ### 8.6 Edition configs
 
-An edition config (`editions/na-v1.json`, `editions/af-v2.json`) is the **complete parameter
+An edition config (`editions/na.json`, `editions/af.json`) is the **complete parameter
 set** for one artifact: fragment corpus, relation set(s), target corpus, gate inventory,
 dependency map, normative census, display prefix and label formats, forbidden-terms list,
 QA-source bindings, output filename, provenance wording keys, legend references, and the
@@ -674,7 +899,10 @@ read edition knowledge from the config only (§10, edition-blindness).
    disclosure, per claim family; mandatory-gate dispositions recorded honestly (§8.1).
 3. **Independent verification pass.** Every proposed target is re-checked adversarially
    against the block text; phrase substrings verified verbatim; status and disposition
-   honesty confirmed.
+   honesty confirmed. The pass receives the **complete pinned block texts — never
+   truncated excerpts** — and every refutation is re-adjudicated against the pinned text
+   before any data change: excerpt-induced refutation is a known failure mode of
+   adversarial review.
 4. **Completeness audit.** Gate referential integrity and dispositions pass in both
    directions; every owner has its applicable lifecycle fields and valid `contentHash`; the
    dependency map cross-validation passes; the mapping is cross-checked against the
@@ -718,11 +946,11 @@ navigator/
   profiles/               # segmentation profiles + gate inventories + dependency maps
                           #   (gates_/deps_ per fragment corpus)
   relations/
-    na-v1__pct.json       # NA relation set (binding: na-claims-v1 → pct-disclosure)
-    af-v2__pct.json       # AF relation set (binding: af-claims-v2 → pct-disclosure)
+    na__pct.json       # NA relation set (binding: na-claims → pct-disclosure)
+    af__pct.json       # AF relation set (binding: af-claims → pct-disclosure)
   editions/
-    na-v1.json            # complete NA parameter set incl. declared transitive inputs
-    af-v2.json            # complete AF parameter set incl. declared transitive inputs
+    na.json               # complete NA parameter set incl. declared transitive inputs
+    af.json               # complete AF parameter set incl. declared transitive inputs
   bundles/
     na-af-2026.json       # bundle config: enumerated members, versions, digests, manifest
   schema/                 # versioned, closed JSON Schemas with per-axis tags + declared
@@ -736,13 +964,18 @@ navigator/
                           #   bundle-manifest text (digest-bound approvals)
   build.py                # content plane: `preview` / `candidate` / `migrate`;
                           #   verification plane: `release` / `bundle` / `attest` /
-                          #   `record-qa`; `propose-reuse` (deferred)
-  tests/                  # golden parser + canon() + serialization vectors, invariant +
-                          #   acceptance tests, registry-access, edition-blindness,
-                          #   writer-set, diff-classifier, projection, forbidden-terms,
-                          #   escaping fixtures, golden bundle fixture, no-candidate
-                          #   disposition fixture, traceability meta-test, TDD-example and
-                          #   procedure-vs-matrix comparisons, per-edition fixtures
+                          #   `record-qa`; `status` (digest-chain report);
+                          #   `propose-reuse` (deferred)
+  tools/                  # authoring aids (action class d, outside the pipeline):
+                          #   stamp (endpoint pins + contentHashes), make_fixtures,
+                          #   sync_tdd_examples, pre-commit-check
+  tests/                  # golden parser + canon() + serialization vectors + property-
+                          #   based canon tests, invariant + acceptance tests, registry-
+                          #   access, edition-blindness, writer-set, diff-classifier,
+                          #   projection, forbidden-terms, escaping fixtures, golden bundle
+                          #   fixture, five disposition fixtures, traceability meta-test,
+                          #   TDD-example and procedure-vs-matrix comparisons, per-edition
+                          #   fixtures
 ```
 
 **Action taxonomy.** A closed classification of what any tool may do to reviewed data:
@@ -761,7 +994,7 @@ membership, cells enumerate exact kind sets, and an omitted privilege is a denie
 Kind → plane: content plane — registered sources and policy data; artifact outputs —
 `preview`, `candidate`, `sealed`, `bundle`, `bundle-manifest`, `artifact-checksum`,
 `bundle-checksum`; verification records (append-only) — `qa-record`, `attestation`,
-`release-record`.
+`release-record`, `bundle-record`.
 
 | Command | Reads (kinds) | Writes (kinds) |
 |---|---|---|
@@ -769,23 +1002,41 @@ Kind → plane: content plane — registered sources and policy data; artifact o
 | `candidate` | content (edition allowlist) | `candidate` |
 | `migrate` | content (edition allowlist) | sources: edition's relation set + gate-inventory locators (action classes b + c only) |
 | `propose-reuse` (deferred) | content (pair-scoped grant) | sources: destination relation set (class c only) |
-| `attest` | content + verification records | `attestation` |
-| `record-qa` | content + `candidate` + verification records | `qa-record` |
-| `release` | content + `candidate` + verification records | `sealed`, `artifact-checksum`, `release-record` |
-| `bundle` | content + `sealed` + `artifact-checksum` + verification records | `bundle-manifest`, `bundle`, `bundle-checksum` |
+| `attest` | content + `attestation` | `attestation` |
+| `record-qa` | content + `candidate` + `attestation` + `qa-record` | `qa-record` |
+| `release` | content + `candidate` + `qa-record` + `attestation` | `sealed`, `artifact-checksum`, `release-record` |
+| `bundle` | content + `sealed` + `artifact-checksum` + `release-record` | `bundle-manifest`, `bundle`, `bundle-checksum`, `bundle-record` |
+| `status` | content + `candidate` + `sealed` + `artifact-checksum` + `bundle` + `bundle-checksum` + `qa-record` + `attestation` + `release-record` + `bundle-record` | — |
+
+The `bundle-manifest` is counsel-facing and carries no verification-plane references; the
+chain from bundle to its authorizing release records lives in the `bundle-record`.
 
 - **Content plane** — sources, relations, inventories, dependency maps, profiles, edition
   configs, schemas, strings projection, builder tree, declared timestamp. The
   **content-input lock** is derived from the gateway's read log over this plane, sorted
   deterministically; **candidate and release must reproduce it byte-identically**. The
   **exact-set check** compares the read log against the edition config's declared
-  transitive input set.
+  transitive input set **in both directions**: an undeclared read fails, and a declared
+  input that was never read fails.
 - **Verification plane — append-only, forward-chaining.** Records are digest-addressed and
   immutable; an overwrite attempt is a gateway error; each record references its
   predecessors by digest: `record-qa` creates the authorization record **before** release;
   `release` reads and references it, writing the sealed artifact, its checksum, and a
-  **`release-record`** (what was sealed, when, on which authorizations); bundle records
-  reference release records. Verification artifacts are never content inputs — circularity
+  **`release-record`** (what was sealed, when, on which authorizations); the
+  `bundle-record` references the release records of the bundle's members. Consumers
+  resolve records by **digest equality with the derivation in hand** — `release` selects
+  the `qa-record` whose candidate digest *and* lock digest match the derivation being
+  sealed (a policy change can move the lock without moving the artifact bytes); `bundle`
+  selects release records by sealed digest — never by recency or record-store ordering.
+  Superseded records persist unchanged by design and match no current derivation;
+  re-appending a byte-identical record is idempotent, since with digest-addressed names
+  an identical write is not an overwrite. Attestation records additionally carry the
+  edition id they attest for: an identity-affecting change orphans them by construction
+  and fresh attestations are issued; the orphans persist like any superseded record.
+  Release checks **attestation sufficiency, never universality**: for each required
+  attestation type a current double-sided attestation must exist; superseded
+  attestations in the append-only store are ignored, not errors. Verification
+  artifacts are never content inputs — circularity
   is unrepresentable in the matrix. **The §13 update procedure's write-statements are
   validated against `planes.json` by the procedure-vs-matrix comparison test** — prose
   about who writes what is checked, not trusted.
@@ -819,14 +1070,20 @@ Guardrails, each tied to the failure it prevents:
    |---|---|
    | Exactly one eligible canonical-hash match at a new position | Mechanical re-anchoring: locator fields only (relations and gate inventories); semantic content and review state untouched |
    | No match — fragment text changed | Owner `stale` / `changed`; `previousTargets` retained |
-   | Multiple matches — repeated text (expected: identical EDL rows) | Owner `stale` / `ambiguous` |
+   | Multiple matches — repeated text (expected: identical EDL rows; description recitals verbatim-identical to PCT claim elements) | Owner `stale` / `ambiguous` |
    | Source fragment removed | Owner `stale` / `fragment-removed`; the human deletes the entry in the resolving commit |
    | Target block removed (fragment still exists) | Owning fragment `stale` / `target-removed`; human re-targets or downgrades to `counsel-review-required` |
    | Target block text changed | Owning fragment `stale` / `target-changed`; `previousTargets` retained |
    | Caution-source block removed or text changed | Owning fragment or gate assignment `stale` / `source-changed` |
    | Claim text changed (aggregate hash mismatch), ancestor claim changed (dependency-chain mismatch), or gate endpoints changed | Affected owners `stale` / `endpoint-changed` |
    | New fragment appears | Entry created as `counsel-review-required` + `pending` |
+   | canonVersion mismatch on the relation binding | Every owner `stale` / `unclassified` — no digest comparison is meaningful across canon versions |
    | Splits, merges, anything not listed above | Owner `stale` / `unclassified` |
+
+   Sequential locators make removal observable only where the locator itself
+   disappears (a container-tail deletion): a mid-document deletion re-fills the
+   locator with the shifted successor, so the vanished digest mechanically classifies
+   as `target-changed` — equally reviewed, equally honest.
 
 7. **Cross-edition reuse — deferred, bounded.** `propose-reuse` (class c only): explicit
    source and destination editions; pair-scoped read grant per invocation; proposals only
@@ -861,12 +1118,14 @@ Guardrails, each tied to the failure it prevents:
     heuristic sourced from the registered crosswalk.
 13. **Enum exhaustiveness.** Every closed enum that reaches the UI (status, role, caution
     type, scope, code, migration reason, gate disposition) has a registered presentation
-    entry; build checks assert exact coverage; the type×scope matrix, code closure, and
+    entry; build checks assert exact coverage **in both directions** — an enum value in
+    use without a registered entry and a registered entry with no use both fail; the type×scope matrix, code closure, and
     applicability matrices (§8.4, §8.5) are schema-enforced.
 14. **Edition-blindness.** Shared modules contain no edition tokens — AST/grep-test
     enforced.
 15. **Generated-file discipline.** `GENERATED` banner + detached SHA-256 + local pre-commit
-    rebuild-and-compare.
+    rebuild-and-compare; repository ignore rules must not exclude the committed generated
+    artifacts (stock ignore templates match `dist/` and `lib/` at any depth).
 16. **Confidentiality guardrail.** Build aborts in CI environments; `--private-runner` is
     the logged override. An accidental-disclosure guardrail, not proof of runner trust.
 17. **Documentation that cannot lie.** The §8.3 examples, the §14 criteria list, and the
@@ -891,16 +1150,16 @@ cite a row of the guarantee → enforcement map or carry an explicit scope.
 | Silent re-anchoring cannot occur | Hash-pinned references (schema) + migration case table + diff-classifier test |
 | Associations cannot silently re-aim | Both-endpoint pinning with lifecycle (schema) + migration rows |
 | Every mandatory gate is carried or honestly disposed at its required scope and cardinality | Gate inventory + bidirectional referential integrity over instances and dispositions + declared uniqueness keys |
-| An honest no-candidate fragment is releasable without a fabricated mapping | Closed gate-disposition enum incl. `inapplicable-no-candidate` + dedicated fixture |
+| An honest no-candidate fragment is releasable without a fabricated mapping | Closed gate-disposition enum incl. `no-target-recorded` + requiredScope×evidence-state totality matrix + the five disposition fixtures |
 | The inventory reflects the prose gates | Digest-bound human attestation — human, stated as such |
 | Reviewed status cannot outlive reviewed content, visible or hidden, or its context (owner identity, binding, claim ancestry) | Review projection derived from schema axes incl. identity tuples and dependency-chain hash + `contentHash` validation |
-| Mechanical re-anchoring never invalidates review | Declared locator exception: `ship: artifact` + `review: exclude` permitted only with a named covering digest (schema) |
-| Dependency-chain hashes rest on a validated graph | Authored dependency map cross-validated against parsed claim references; mismatch fails the build |
+| Mechanical re-anchoring never invalidates review | Declared locator exception: `ship: artifact` + `review: exclude` permitted only with a named covering digest, unique in the eligible block set or supplemented by review-included contextual identity (schema) |
+| Dependency-chain hashes rest on a validated graph | Authored dependency map cross-validated against parsed claim references (AF three-way against its document table); totality/acyclicity/root checks; mismatch fails the build |
 | Attestations cannot outlive either side | Double-sided digest binding + typed append-only records + envelope verification |
 | Evidence that authorized a release survives it unchanged; release outcomes are themselves recorded | Append-only verification plane + forward-chaining records incl. `release-record`; overwrite is a gateway error |
 | Provenance cannot be self-referential | Plane separation: verification artifacts are never content inputs (privilege matrix) |
-| Exactly the required inputs were read | Content read log + exact-set check against the edition config's declared transitive inputs |
-| Composite digests are implementation-independent | Completed canonical serialization law (pinned Unicode version, duplicate-key rejection, exact escapes, integer range, raw composition) + NUL-framed domain tags + single-digest-path test + golden vectors |
+| Exactly the required inputs were read | Content read log + two-sided exact-set check against the edition config's declared transitive inputs (undeclared reads and unread declarations both fail) |
+| Composite digests are implementation-independent | Completed canonical serialization law (pinned Unicode 15.1.0, duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms) + NUL-framed domain tags incl. per-record-kind tags + single-digest-path test + golden vectors + property-based canon tests |
 | Derived content cannot drift | No-stored-derivables rule (schema has no fields for them) |
 | Policy drift is visible and attestation-invalidating | Content-input lock derived from the gateway read log (visibility, not prevention — git commit is the trust root); diagnostics excluded from the lock digest |
 | Tools act only within declared action classes | Action taxonomy + diff-classifier + writer-set tests |
@@ -916,7 +1175,7 @@ cite a row of the guarantee → enforcement map or carry an explicit scope.
 | Every registered acceptance criterion is carried by a live test, and every acceptance test maps to a criterion | Criteria registry + traceability matrix + bidirectional meta-test |
 | The page attempts no network requests, cookie writes, Web Storage use, or navigation-API calls in the enumerated policy | CSP (§11) + attempted-use instrumentation per `api-policy.json` — governs the page; extensions and user actions are outside it; residual APIs marked CSP-governed or procedural in the policy file |
 | Not built on hosted CI | CI-environment guard — procedural, not proof of trust |
-| Deterministic output, artifact and bundle | Declared release timestamp + double-build comparison + STORE ZIP rules + golden bundle fixture |
+| Deterministic output, artifact and bundle | Declared release timestamp + cross-process double-build comparison + STORE ZIP rules + golden bundle fixture |
 | Universal claims in this document are scoped or table-backed | Procedural TDD-review discipline |
 | New mechanisms do not collide with existing guarantees | Collision review against this table (procedural) |
 
@@ -938,14 +1197,16 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
   (base64 data URIs, 882,762 bytes total pre-encoding) inlined. Estimated size ≈ 1.5–2 MB
   each.
 - **Build modes:** `preview` (watermarked, same projection), `candidate`, `release`,
-  `bundle` — all read-only via the gateways; `attest`/`record-qa` write append-only
-  verification records.
+  `bundle` — all **content-plane read-only** via the gateways, writing only their declared
+  output kinds per the privilege matrix (§10); `attest`/`record-qa` write append-only
+  verification records; `status` resolves and reports the current digest chain
+  (which records authorize the current derivation), writing nothing.
 - **Delivery bundle:** a deterministic STORE ZIP containing exactly: both sealed artifacts,
   their detached checksums, and the **neutral manifest** (`bundle-manifest` output kind;
   microcopy-registry text, counsel-approvable) identifying them as *alternative
   counsel-review editions*; the bundle ships with its own detached checksum. Either
   artifact remains releasable alone. Default bundle name:
-  `AA11393US-claims-navigators_NA-2026-07-17-v1_AF-2026-07-17-v2.zip`.
+  `AA11393US-claims-navigators_NA-2026-07-21-v2_AF-2026-07-17-v2.zip`.
 - **Network and runtime posture:** the application performs no network requests and
   attempts no use of the APIs enumerated in `schema/api-policy.json` (cookies,
   localStorage/sessionStorage/indexedDB, history/location mutation) — instrumented as
@@ -953,10 +1214,15 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
   style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action
   'none'; object-src 'none'; connect-src 'none'` (`base-uri` and `form-action` do not
   inherit from `default-src`). Governs the page; cannot govern extensions or user actions;
-  the policy file marks each API as probed, CSP-governed, or procedural.
+  the policy file marks each API as probed, CSP-governed, or procedural (Location
+  navigation methods are non-configurable on the platform and therefore procedural,
+  never probed).
 - **Output encoding (normative):** all source-derived text escaped for its context; no
   untrusted `innerHTML`; embedded JSON script-safe-escaped (including `</script`
   sequences). **Adversarial escaping fixtures** are part of the acceptance suite.
+- **Scripted testability:** the artifact script keeps its pure selection model in a
+  delimited, extractable section; AC-10's scripted checks execute that model from the
+  candidate bytes, never from source.
 - **Progressive readability:** with JavaScript disabled, the claims, disclosure, standing
   disclaimer, provenance panel, and flat mapping schedule (static markup) remain fully
   readable and printable.
@@ -987,6 +1253,9 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
   (`schema/support-matrix.json`), release-approved; the QA record references it rather than
   defining it.
 - **Reduced motion:** `prefers-reduced-motion` disables smooth scrolling.
+- **About & schedule surface:** the provenance panel and the flat mapping schedule
+  render in a dedicated toggled view with its own scroll container (the page body still
+  never scrolls); both are always present in print and in no-JS output.
 - **Print stylesheet:** claims, disclosure, disclaimer, provenance, and schedule print
   cleanly; the legend repeats on every page.
 
@@ -999,7 +1268,12 @@ relation-schema field carries a tag per axis — `ship: artifact | schedule-only
 `schedule-only` field is `review: include`, **except schema-declared locator fields**
 (`ship: artifact` + `review: exclude`), each of which must name the review-included digest
 covering its identity (block ids ↔ target `textHash`) — an exception without its covering
-proof is schema-invalid. Binding endpoint hashes, declared context references, owner
+proof is schema-invalid. The exception applies to **block locators only**, and the covering
+digest suffices only where it is unique within the block's eligible set; where pinned text
+legitimately repeats (the identical Example 2 EDL rows), the reference's review projection
+additionally includes **contextual identity** — the parent container's canonical hash plus
+the occurrence index — so the covering proof remains unique and re-anchoring stays
+review-neutral only when identity is genuinely unambiguous. Binding endpoint hashes, declared context references, owner
 identity tuples, and the dependency-chain hash are `review: include` though `ship: never`;
 lifecycle metadata and `contentHash` itself are `review: exclude`. Projections are generated
 from the axes, never hand-maintained.
@@ -1024,13 +1298,17 @@ from the axes, never hand-maintained.
   including internal QA sources; a sibling **`reproductionDiagnostics`** section
   (interpreter version, locale, platform settings — non-normative, **excluded from the lock
   digest and the candidate↔release equality check**); the release-verification envelope
-  (candidate digest, lock digest, all double-sided attestations by digest reference); the
-  reference to the release-approved support matrix; and the operator.
+  (candidate digest, lock digest, and the **current** double-sided attestations by digest
+  reference — superseded attestations are never referenced); the digest of the
+  release-approved support matrix together with its approver; and the operator.
 - **Deterministic build:** declared release timestamp; stable ordering; double-build
-  byte-identity; candidate/release lock reproduction and byte comparison; deterministic
+  byte-identity **across separate interpreter processes** (an in-process double build
+  shares interpreter state — notably hash seeds — and cannot detect seed-dependent
+  ordering); candidate/release lock reproduction and byte comparison; deterministic
   STORE bundle with golden fixture.
 - **Normative update procedure (per edition):** (1) amend source(s), gate inventory,
-  dependency map, or relations; (2) `build.py candidate <edition>` — read-only; fails
+  dependency map, relations, or builder code — the builder tree is a pinned content
+  input, so tooling changes re-enter this procedure like any other amendment; (2) `build.py candidate <edition>` — read-only; fails
   listing every hash-stale entry, referential-integrity or disposition gap, exact-set
   mismatch, and schema violation; (3) `build.py migrate <edition>` — applies the §10 case
   table; (4) resolve each `stale`/`pending`, restore `reviewState: internally-reviewed`
@@ -1079,8 +1357,10 @@ additionally requires AC-20.**
 6. **AC-06** The edition's fixtures (including the disposition fixture) validate against
    schemas and pinned corpora; this document's examples match the fixture projections.
 7. **AC-07** Registry-access, edition-blindness, writer-set, diff-classifier,
-   single-digest-path, and procedure-vs-matrix tests pass; canonical serialization golden
-   vectors pass.
+   single-digest-path, and procedure-vs-matrix tests pass; the migration case-table
+   scenario test passes against a mutated corpus copy; canonical serialization golden
+   vectors pass; property-based canonicalization tests (idempotence, NFC duplicate-key
+   rejection, escaping exactness, integer edge rules over generated inputs) pass.
 8. **AC-08** Projection tests pass: no `never`-tagged field and no internal QA-source
    identifier appears in any artifact kind, previews included.
 9. **AC-09** Adversarial escaping fixtures render safely through every authored and quoted
@@ -1097,8 +1377,9 @@ additionally requires AC-20.**
 15. **AC-15** Attempted-use instrumentation per `schema/api-policy.json` records zero
     external requests, zero cookie writes, zero Web Storage/IndexedDB use, and zero
     navigation-API mutation attempts.
-16. **AC-16** Double build byte-identical; content-input lock reproduces byte-identically
-    between candidate and release (diagnostics excluded); exact-set check passes; `release`
+16. **AC-16** Double build byte-identical across separate interpreter processes;
+    content-input lock reproduces byte-identically between candidate and release
+    (diagnostics excluded); exact-set check passes in both directions; `release`
     byte-compares against the QA'd candidate and seals the same bytes; lock, envelope, and
     release-record written append-only; checksums emitted and matching.
 17. **AC-17** §9.1 disclaimer and approved legend present on screen, in print, and no-JS;
@@ -1142,14 +1423,14 @@ manifest matching its approved wording digest.
 | Reviews & attestations | Double-sided digest binding; `review.contentHash` over the review projection — content, hidden endpoints, identity tuples, and dependency-chain hash; **declared locators excluded, so mechanical re-anchoring never invalidates review**; parent-claim amendments deliberately cascade re-review to dependents; typed append-only records |
 | Trust root & planes | Content-input lock derived from the gateway read log with exact-set check, **diagnostics excluded from the lock digest**; forward-chaining verification records incl. `release-record`; command×kind privilege matrix; procedure prose validated against the matrix; git commit is the human trust root |
 | Enumerations & boundaries | All projections derived from schema axis tags with declared, justified exceptions; gateway-enforced output-kind registry with plane membership; derived content never stored |
-| Serialization | Completed canonical-JSON law (pinned Unicode version, post-NFC duplicate-key rejection, exact escapes, integer range, raw-digest composition) + NUL-framed domain tags incl. `figure`, versioned under canonVersion; single-digest-path test; golden vectors confirm |
-| Structural graphs | Dual-sourced: authored dependency maps cross-validated against parsed claim references; mismatch fails the build |
+| Serialization | Completed canonical law (pinned Unicode 15.1.0, post-NFC duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms — digest-list vs canonical-JSON) + NUL-framed domain tags incl. `figure` and per-record-kind tags, versioned under canonVersion; single-digest-path test; golden vectors + property-based tests confirm |
+| Structural graphs | Dual-sourced: authored dependency maps cross-validated against parsed claim references (AF three-way against its document table); totality/acyclicity/root checks; mismatch fails the build |
 | Cross-edition isolation | Unique corpus ids; scoped triples; binding rules; per-edition allowlists; edition failures never cross (shared-input failures affect both; bundle needs both) |
 | Cross-edition reuse | Deferred optional hardening; pair-granted, proposal-only; crosswalk is context and warning, not evidence |
 | Click granularity | Two-tier: limitation units + inner key phrases with stable phrase IDs |
 | Evidence model | `status` (units/phrases) ⊥ `reviewState` ⊥ `migrationState` per applicability matrix; no forced positive mappings — including via gate cardinality; release predicate defined once |
 | Cautions | Closed types × scopes × codes with schema-enforced matrix; claim-level gates never inherited to units; "claim-as-a-whole" is one code, not the class name |
-| Identity | Positional IDs as declared locators; semantic identity pinned by full SHA-256 canonical hashes (incl. aggregate claim and dependency-chain hashes) |
+| Identity | Positional IDs as declared locators; semantic identity pinned by full SHA-256 canonical hashes (incl. aggregate claim and dependency-chain hashes); corpus/edition ids stable and version-neutral — claim-set versions update pins in place via migrate |
 | Tool behavior | Closed action taxonomy; commands declare classes; diff-classifier enforces; reviewed semantic content is never tool-modified |
 | Migration | Closed case table with roll-up staleness and complete reason enum; auto-re-anchoring only on unique canonical-hash match |
 | Release lifecycle | Promotion by verification per edition; edition release = AC-01–AC-19, bundle adds AC-20; deterministic STORE bundle with golden fixture; previews pass the same projection |

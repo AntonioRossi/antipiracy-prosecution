@@ -1,0 +1,13 @@
+{
+ "supportMatrixVersion": "1",
+ "comment": "Release-approved browser/OS/assistive-technology support matrix (TDD §12). Normative data referenced by the QA record (digest + approver). Approval is recorded by attestation; changing this file invalidates it.",
+ "approver": "amc (pending counsel/QA confirmation — normative default, TDD §17)",
+ "targets": [
+  {"browser": "Chrome ≥ 126", "os": "macOS 13+ / Windows 11", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Edge ≥ 126", "os": "Windows 11", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Firefox ≥ 128", "os": "macOS 13+ / Windows 11", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Safari ≥ 17", "os": "macOS 13+", "at": "VoiceOver", "mode": "local file, double-click"},
+  {"browser": "Chrome ≥ 126", "os": "Windows 11", "at": "NVDA 2024+", "mode": "local file, double-click"}
+ ],
+ "viewport": {"minimum": [1280, 720], "stackedBelowMinimum": true}
+}

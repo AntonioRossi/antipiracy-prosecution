@@ -1,0 +1,1 @@
+This bundle contains two alternative counsel-review editions of the AA11393US claims-to-specification navigator: the NA edition (claim set NA-2026-07-21-v2) and the AF edition (claim set AF-2026-07-17-v2). Each edition presents one candidate claim strategy for counsel review. Inclusion of both editions expresses no comparison, preference, or filing recommendation.

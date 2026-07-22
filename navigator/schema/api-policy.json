@@ -1,0 +1,21 @@
+{
+ "apiPolicyVersion": "1",
+ "comment": "Enumerated runtime API policy (TDD §11, AC-15). 'probed' APIs carry attempted-use instrumentation in the artifact (attempted use, not final state); 'csp-governed' APIs are blocked by the CSP; 'procedural' entries are authored-code disciplines checked by review/tests, not instrumentable at runtime. The CSP governs the page; extensions and user actions are outside it.",
+ "csp": "default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'; connect-src 'none'",
+ "apis": {
+  "document.cookie": {"class": "probed", "instrument": "cookie-write"},
+  "window.localStorage": {"class": "probed", "instrument": "web-storage"},
+  "window.sessionStorage": {"class": "probed", "instrument": "web-storage"},
+  "indexedDB.open": {"class": "probed", "instrument": "web-storage"},
+  "history.pushState": {"class": "probed", "instrument": "navigation-mutation"},
+  "history.replaceState": {"class": "probed", "instrument": "navigation-mutation"},
+  "location.assign": {"class": "procedural", "note": "Location methods are non-configurable and cannot be probe-wrapped; authored code never navigates (checked by the writer-set/navigation review and AC-10 scripted checks)"},
+  "location.replace": {"class": "procedural", "note": "as location.assign"},
+  "fetch": {"class": "csp-governed", "instrument": "network"},
+  "XMLHttpRequest": {"class": "csp-governed", "instrument": "network"},
+  "WebSocket": {"class": "csp-governed", "instrument": "network"},
+  "EventSource": {"class": "csp-governed", "instrument": "network"},
+  "navigator.sendBeacon": {"class": "probed", "instrument": "network"},
+  "innerHTML-untrusted": {"class": "procedural", "note": "no untrusted innerHTML; source-derived text escaped for context (AC-09)"}
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "comment": "Adversarial payloads for every authored/quoted channel (AC-09). The renderer must neutralize each.",
+ "payloads": [
+  "<script>alert(1)</script>",
+  "</script><script>alert(2)</script>",
+  "\" onmouseover=\"alert(3)",
+  "<img src=x onerror=alert(4)>",
+  "&lt;already-escaped&gt; & <b>bold</b>",
+  "`code`**bold**<i>i</i>",
+  "line sep  para </ScRiPt >"
+ ]
+}

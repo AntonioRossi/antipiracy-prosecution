@@ -1,0 +1,49 @@
+{
+ "schemaVersion": "1",
+ "comment": "Closed schema for edition configs (TDD §8.6): the complete parameter set for one artifact, including the declared transitive input set used by the exact-set check.",
+ "type": "object",
+ "required": ["editionVersion", "editionId", "displayName", "strategyName", "strategyPrefix", "claimCorpus", "targetCorpus", "claimSetVersion", "relationSet", "gateInventory", "dependencyMap", "independentClaims", "census", "groups", "forbiddenTerms", "qaSources", "stringsNamespace", "artifactName", "declaredReleaseTimestamp", "declaredTransitiveInputs"],
+ "additionalProperties": false,
+ "properties": {
+  "editionVersion": {"type": "string", "enum": ["1"]},
+  "editionId": {"type": "string"},
+  "displayName": {"type": "string"},
+  "strategyName": {"type": "string"},
+  "strategyPrefix": {"type": "string"},
+  "claimCorpus": {"type": "string"},
+  "targetCorpus": {"type": "string"},
+  "claimSetVersion": {"type": "string"},
+  "relationSet": {"type": "string"},
+  "gateInventory": {"type": "string"},
+  "dependencyMap": {"type": "string"},
+  "independentClaims": {"type": "array", "items": {"type": "integer"}},
+  "census": {
+   "type": "object",
+   "required": ["claims", "units", "perClaim"],
+   "additionalProperties": false,
+   "properties": {
+    "claims": {"type": "integer"},
+    "units": {"type": "integer"},
+    "perClaim": {
+     "type": "object",
+     "additionalProperties": false,
+     "patternProperties": {"^[0-9]+$": {"type": "integer"}}
+    }
+   }
+  },
+  "groups": {"type": "array", "items": {"type": "string"}},
+  "forbiddenTerms": {"type": "array", "items": {"type": "string"}},
+  "qaSources": {
+   "type": "object",
+   "additionalProperties": false,
+   "properties": {
+    "priorityMap": {"type": "string"},
+    "crosswalk": {"type": "string"}
+   }
+  },
+  "stringsNamespace": {"type": "string"},
+  "artifactName": {"type": "string"},
+  "declaredReleaseTimestamp": {"type": "string"},
+  "declaredTransitiveInputs": {"type": "array", "items": {"type": "string"}}
+ }
+}

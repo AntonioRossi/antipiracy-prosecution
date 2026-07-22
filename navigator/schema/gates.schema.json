@@ -1,0 +1,74 @@
+{
+ "schemaVersion": "1",
+ "comment": "Closed schema for gate inventories (TDD §8.1). appliesTo carries hashed endpoints per requiredScope: claim scope -> claims with aggregate claim hashes; fragment scope -> fragments with fragment hashes; target scope -> fragments with hashes plus a required cardinality. Scope-shape conformity and hash currency are checked by the validator (invariants + model).",
+ "type": "object",
+ "required": ["inventoryVersion", "corpusId", "profileDigest", "gates"],
+ "additionalProperties": false,
+ "properties": {
+  "inventoryVersion": {"type": "string", "enum": ["1"]},
+  "corpusId": {"type": "string"},
+  "profileDigest": {"type": "string"},
+  "comment": {"type": "string"},
+  "gates": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": ["gateId", "code", "requiredScope", "requirement", "source", "appliesTo"],
+    "additionalProperties": false,
+    "properties": {
+     "gateId": {"type": "string"},
+     "code": {"type": "string"},
+     "requiredScope": {"type": "string", "enum": ["target", "fragment", "claim"]},
+     "requirement": {"type": "string", "enum": ["mandatory", "optional"]},
+     "source": {
+      "type": "object",
+      "required": ["block", "textHash"],
+      "additionalProperties": false,
+      "properties": {
+       "block": {"type": "string"},
+       "textHash": {"type": "string"}
+      }
+     },
+     "appliesTo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "claims": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "required": ["claim", "claimHash"],
+         "additionalProperties": false,
+         "properties": {
+          "claim": {"type": "integer"},
+          "claimHash": {"type": "string"}
+         }
+        }
+       },
+       "fragments": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "required": ["id", "hash"],
+         "additionalProperties": false,
+         "properties": {
+          "id": {"type": "string"},
+          "hash": {"type": "string"}
+         }
+        }
+       },
+       "cardinality": {
+        "type": "object",
+        "required": ["minTargetsPerFragment"],
+        "additionalProperties": false,
+        "properties": {
+         "minTargetsPerFragment": {"type": "integer"}
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

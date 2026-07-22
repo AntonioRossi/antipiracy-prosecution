@@ -1,0 +1,153 @@
+{
+ "binding": {
+  "fragmentCorpus": "na-claims",
+  "targetCorpus": "pct-disclosure",
+  "schemaVersion": "1",
+  "canonVersion": "c1"
+ },
+ "claimGates": {
+  "c9": [
+   {
+    "gateId": "na-gate-combined-example",
+    "type": "source-gate",
+    "code": "combined-example",
+    "claimHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "claude-opus-4.8",
+     "date": "2026-07-21",
+     "contentHash": "sha256/c1:dff64b09f7fa5d4b3e7457931f7e7e7d3e1105ac9a56e83dd9f2bc0af0b3defc"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    }
+   }
+  ]
+ },
+ "fragments": {
+  "c9u6": {
+   "status": "mapped",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:1a4bc461c900a473256d582662a10bd4403215c2c7c8cfa32c963f5d54fa8c9f"
+   },
+   "fragmentTextHash": "sha256/c1:19c65fd607af3c80cf5d3269c2074b0a40214c118e94a9a0998f0ffcb9d6b05a",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Manifest files 121 point to unique interleaved combinations of chunks of the ensemble"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Manifests for reference and mate differ in how they reference chunks where edits were made"
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Example 3 mate manifest references a different chunk for the altered cut"
+    },
+    {
+     "block": "PC11",
+     "textHash": "sha256/c1:0eb51e04b80bab4ea10f55b12103309783c63dea7f7aae6ad332a79a0d64656f",
+     "role": "context",
+     "note": "PCT claim 11: manifest generation by transcoding components"
+    }
+   ],
+   "phrases": [
+    {
+     "id": "c9u6p1",
+     "text": "camera-cut timing pattern",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "claude-opus-4.8",
+      "date": "2026-07-21",
+      "contentHash": "sha256/c1:3f48482bb81b701eb1fa60dfdf69026c8dd99358d10d532f4fae078696dc9bfb"
+     },
+     "targets": [
+      {
+       "block": "S064",
+       "textHash": "sha256/c1:0e4c3061bf3c5b7207271370ba1cb3d5160782d34cb7cd2080dc3851106c4ff7",
+       "role": "specific",
+       "note": "Timing of camera cuts altered per the structured list acts as the distinguishing fingerprint",
+       "caution": {
+        "type": "generalization-note",
+        "code": "beyond-literal-example"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "c16u6": {
+   "status": "counsel-review-required",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:11f9c40a7b162ffc25c9b6b64c9aae47ecf418283715be1a5a5097205e737212"
+   },
+   "fragmentTextHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "caution": {
+    "gateId": "na-gate-detection-support",
+    "type": "source-gate",
+    "code": "detection-support",
+    "source": {
+     "corpus": "na-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    }
+   }
+  }
+ },
+ "dispositions": [
+  {
+   "gateId": "na-gate-combined-example",
+   "subject": {
+    "kind": "claim",
+    "id": "c9"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
+   "subjectHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:250b838d8669ceb39b50580a03e2f560b48a091be06ba9c9736ba41d3cc8df71"
+   }
+  },
+  {
+   "gateId": "na-gate-detection-support",
+   "subject": {
+    "kind": "fragment",
+    "id": "c16u6"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
+   "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "claude-opus-4.8",
+    "date": "2026-07-21",
+    "contentHash": "sha256/c1:adc8f51a4a2695d0a221f9e0c890322e581a4eb88836592cb062d0afadaf6cbe"
+   }
+  }
+ ]
+}

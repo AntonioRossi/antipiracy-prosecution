@@ -1,0 +1,140 @@
+{
+ "comment": "Golden test vectors for canonVersion c1 (TDD §8.2). Vectors confirm the law; they do not define it.",
+ "cases": [
+  {
+   "name": "prose whitespace collapse",
+   "kind": "prose",
+   "input": "  Hello  world \t\r\n twice  ",
+   "output": "Hello world twice"
+  },
+  {
+   "name": "prose NFC",
+   "kind": "prose",
+   "input": "éclair café",
+   "output": "éclair café"
+  },
+  {
+   "name": "prose ideographic space",
+   "kind": "prose",
+   "input": "　ideographic　space ",
+   "output": "ideographic space"
+  },
+  {
+   "name": "code LF + trailing strip + indent preserved",
+   "kind": "code",
+   "input": "def f():\r\n    x = 1   \r\n\tdone\t \n",
+   "output": "def f():\n    x = 1\n\tdone\n"
+  },
+  {
+   "name": "table serialization",
+   "kind": "table",
+   "input": {
+    "rows": [
+     [
+      "Cut",
+      "Cam"
+     ],
+     [
+      "1",
+      "Camera 1"
+     ]
+    ],
+    "caption": "Table 9. Test"
+   },
+   "output": "Cut\u001fCam\u001e1\u001fCamera 1\u001eTable 9. Test"
+  },
+  {
+   "name": "table row serialization",
+   "kind": "table-row",
+   "input": [
+    "1",
+    "Camera  1"
+   ],
+   "output": "1\u001fCamera 1"
+  },
+  {
+   "name": "text digest abc",
+   "kind": "text-digest",
+   "input": "abc",
+   "output": "sha256/c1:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+  },
+  {
+   "name": "canonical json sorting + NFC strings",
+   "kind": "json",
+   "input": {
+    "b": 1,
+    "a": [
+     true,
+     false,
+     null
+    ],
+    "z": "é"
+   },
+   "output": "{\"a\":[true,false,null],\"b\":1,\"z\":\"é\"}"
+  },
+  {
+   "name": "canonical json escaping exactness",
+   "kind": "json",
+   "input": {
+    "s": "quote\" back\\ nl\n cr\r tab\t ctl\u0001"
+   },
+   "output": "{\"s\":\"quote\\\" back\\\\ nl\\n cr\\r tab\\t ctl\\u0001\"}"
+  },
+  {
+   "name": "canonical json minus zero int",
+   "kind": "json",
+   "input": {
+    "n": 0
+   },
+   "output": "{\"n\":0}"
+  },
+  {
+   "name": "digest-list claim-agg",
+   "kind": "composite",
+   "input": {
+    "tag": "aa11393:claim-agg:c1",
+    "digests": [
+     "abc",
+     "def"
+    ]
+   },
+   "output": "sha256/c1:1e055dd68595554e26926244679c583b41f7ff3367b02e3c34c68c52a7018bc7"
+  },
+  {
+   "name": "digest-list dep-chain order-sensitive",
+   "kind": "composite",
+   "input": {
+    "tag": "aa11393:dep-chain:c1",
+    "digests": [
+     "def",
+     "abc"
+    ]
+   },
+   "output": "sha256/c1:f918e0e8fd30c2c8c1743359b6808b36c56becb667c3173daf34d28b298d954b"
+  },
+  {
+   "name": "object review composite",
+   "kind": "composite-obj",
+   "input": {
+    "tag": "aa11393:review:c1",
+    "obj": {
+     "k": "v",
+     "d": "sha256/c1:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+   },
+   "output": "sha256/c1:84841d6c9590ca92e3c0b106316f37dbd298ad938dd40dd8b41b3f09e6ef5969"
+  },
+  {
+   "name": "figure composite",
+   "kind": "composite",
+   "input": {
+    "tag": "aa11393:figure:c1",
+    "digests": [
+     "abc",
+     "def"
+    ]
+   },
+   "output": "sha256/c1:9f2c0867edaeefedd71802c1c031e5d3235db20162779d5ac59b9d7fb3ee68bc"
+  }
+ ]
+}

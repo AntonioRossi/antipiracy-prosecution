@@ -1,0 +1,161 @@
+{
+ "schemaVersion": "1",
+ "comment": "Closed relation-set schema (TDD §8.3–§8.5, §13). Boundaries are axes on one schema: every leaf field carries x-ship (artifact | schedule-only | never) and x-review (include | exclude); an untagged leaf is a schema error. Declared locator exceptions (x-locatorException) are permitted only as ship:artifact + review:exclude with a named review-included covering digest, block locators only; where the covering digest is not unique in the eligible set the review projection additionally includes contextual identity (computed, never stored). Applicability is structural: gate assignments and dispositions have no status field, so 'status on a gate assignment' is unrepresentable. Conditional rules (targets only when mapped, source-gate needs gateId+source, generalization-note refuses source/claim scope, uniqueness keys, bounds) live in schema/invariants.py, consumed by validator and tests alike.",
+ "type": "object",
+ "required": ["binding", "claimGates", "fragments", "dispositions"],
+ "additionalProperties": false,
+ "properties": {
+  "binding": {
+   "type": "object",
+   "required": ["fragmentCorpus", "targetCorpus", "schemaVersion", "canonVersion"],
+   "additionalProperties": false,
+   "properties": {
+    "fragmentCorpus": {"type": "string", "x-ship": "never", "x-review": "include"},
+    "targetCorpus": {"type": "string", "x-ship": "never", "x-review": "include"},
+    "schemaVersion": {"type": "string", "enum": ["1"], "x-ship": "never", "x-review": "include"},
+    "canonVersion": {"type": "string", "enum": ["c1"], "x-ship": "never", "x-review": "include"}
+   }
+  },
+  "claimGates": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {
+    "^c[0-9]+$": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": ["gateId", "type", "code", "claimHash", "reviewState", "migrationState", "review", "source"],
+      "additionalProperties": false,
+      "properties": {
+       "gateId": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+       "type": {"type": "string", "enum": ["source-gate"], "x-ship": "artifact", "x-review": "include"},
+       "code": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+       "claimHash": {"type": "string", "x-ship": "never", "x-review": "include"},
+       "reviewState": {"type": "string", "enum": ["pending", "internally-reviewed"], "x-ship": "never", "x-review": "exclude"},
+       "migrationState": {"type": "string", "enum": ["current", "stale"], "x-ship": "never", "x-review": "exclude"},
+       "migrationReason": {"type": "string", "enum": ["changed", "ambiguous", "fragment-removed", "target-removed", "target-changed", "source-changed", "endpoint-changed", "unclassified"], "x-ship": "never", "x-review": "exclude"},
+       "review": {"$ref": "#/definitions/review"},
+       "source": {"$ref": "#/definitions/source"}
+      }
+     }
+    }
+   }
+  },
+  "fragments": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {
+    "^c[0-9]+u[0-9]+$": {
+     "type": "object",
+     "required": ["status", "reviewState", "migrationState", "review", "fragmentTextHash"],
+     "additionalProperties": false,
+     "properties": {
+      "status": {"type": "string", "enum": ["mapped", "counsel-review-required"], "x-ship": "artifact", "x-review": "include"},
+      "reviewState": {"type": "string", "enum": ["pending", "internally-reviewed"], "x-ship": "never", "x-review": "exclude"},
+      "migrationState": {"type": "string", "enum": ["current", "stale"], "x-ship": "never", "x-review": "exclude"},
+      "migrationReason": {"type": "string", "enum": ["changed", "ambiguous", "fragment-removed", "target-removed", "target-changed", "source-changed", "endpoint-changed", "unclassified"], "x-ship": "never", "x-review": "exclude"},
+      "review": {"$ref": "#/definitions/review"},
+      "fragmentTextHash": {"type": "string", "x-ship": "never", "x-review": "include"},
+      "targets": {"type": "array", "items": {"$ref": "#/definitions/target"}},
+      "caution": {"$ref": "#/definitions/caution"},
+      "phrases": {"type": "array", "items": {"$ref": "#/definitions/phrase"}},
+      "previousTargets": {"type": "array", "items": {"type": "object"}, "x-ship": "never", "x-review": "exclude"},
+      "proposedFrom": {"type": "object", "x-ship": "never", "x-review": "exclude"}
+     }
+    }
+   }
+  },
+  "dispositions": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": ["gateId", "subject", "disposition", "gateEntryHash", "subjectHash", "reviewState", "migrationState", "review"],
+    "additionalProperties": false,
+    "properties": {
+     "gateId": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+     "subject": {
+      "type": "object",
+      "required": ["kind", "id"],
+      "additionalProperties": false,
+      "properties": {
+       "kind": {"type": "string", "enum": ["fragment", "claim"], "x-ship": "artifact", "x-review": "include"},
+       "id": {"type": "string", "x-ship": "artifact", "x-review": "include"}
+      }
+     },
+     "disposition": {"type": "string", "enum": ["carried-at-required-scope", "carried-at-fragment-fallback", "no-target-recorded"], "x-ship": "artifact", "x-review": "include"},
+     "gateEntryHash": {"type": "string", "x-ship": "never", "x-review": "include"},
+     "subjectHash": {"type": "string", "x-ship": "never", "x-review": "include"},
+     "reviewState": {"type": "string", "enum": ["pending", "internally-reviewed"], "x-ship": "never", "x-review": "exclude"},
+     "migrationState": {"type": "string", "enum": ["current", "stale"], "x-ship": "never", "x-review": "exclude"},
+     "migrationReason": {"type": "string", "enum": ["changed", "ambiguous", "fragment-removed", "target-removed", "target-changed", "source-changed", "endpoint-changed", "unclassified"], "x-ship": "never", "x-review": "exclude"},
+     "review": {"$ref": "#/definitions/review"}
+    }
+   }
+  }
+ },
+ "definitions": {
+  "review": {
+   "type": "object",
+   "required": ["by", "date", "contentHash"],
+   "additionalProperties": false,
+   "properties": {
+    "by": {"type": "string", "x-ship": "never", "x-review": "exclude"},
+    "date": {"type": "string", "x-ship": "never", "x-review": "exclude"},
+    "contentHash": {"type": "string", "x-ship": "never", "x-review": "exclude"}
+   }
+  },
+  "source": {
+   "type": "object",
+   "required": ["corpus", "block", "textHash"],
+   "additionalProperties": false,
+   "properties": {
+    "corpus": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "block": {"type": "string", "x-ship": "artifact", "x-review": "exclude", "x-locatorException": {"coveredBy": "textHash"}},
+    "textHash": {"type": "string", "x-ship": "never", "x-review": "include"}
+   }
+  },
+  "caution": {
+   "type": "object",
+   "required": ["type", "code"],
+   "additionalProperties": false,
+   "properties": {
+    "gateId": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "type": {"type": "string", "enum": ["source-gate", "generalization-note"], "x-ship": "artifact", "x-review": "include"},
+    "code": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "source": {"$ref": "#/definitions/source"}
+   }
+  },
+  "target": {
+   "type": "object",
+   "required": ["block", "textHash", "note"],
+   "additionalProperties": false,
+   "properties": {
+    "block": {"type": "string", "x-ship": "artifact", "x-review": "exclude", "x-locatorException": {"coveredBy": "textHash"}},
+    "textHash": {"type": "string", "x-ship": "never", "x-review": "include"},
+    "role": {"type": "string", "enum": ["specific", "context", "combination"], "x-ship": "artifact", "x-review": "include"},
+    "note": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "rationale": {"type": "string", "x-ship": "schedule-only", "x-review": "include"},
+    "caution": {"$ref": "#/definitions/caution"}
+   }
+  },
+  "phrase": {
+   "type": "object",
+   "required": ["id", "text", "occurrence", "status", "reviewState", "migrationState", "review"],
+   "additionalProperties": false,
+   "properties": {
+    "id": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "text": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "occurrence": {"type": "integer", "x-ship": "artifact", "x-review": "include"},
+    "status": {"type": "string", "enum": ["mapped", "counsel-review-required"], "x-ship": "artifact", "x-review": "include"},
+    "reviewState": {"type": "string", "enum": ["pending", "internally-reviewed"], "x-ship": "never", "x-review": "exclude"},
+    "migrationState": {"type": "string", "enum": ["current", "stale"], "x-ship": "never", "x-review": "exclude"},
+    "migrationReason": {"type": "string", "enum": ["changed", "ambiguous", "fragment-removed", "target-removed", "target-changed", "source-changed", "endpoint-changed", "unclassified"], "x-ship": "never", "x-review": "exclude"},
+    "review": {"$ref": "#/definitions/review"},
+    "targets": {"type": "array", "items": {"$ref": "#/definitions/target"}},
+    "caution": {"$ref": "#/definitions/caution"},
+    "previousTargets": {"type": "array", "items": {"type": "object"}, "x-ship": "never", "x-review": "exclude"},
+    "proposedFrom": {"type": "object", "x-ship": "never", "x-review": "exclude"}
+   }
+  }
+ }
+}

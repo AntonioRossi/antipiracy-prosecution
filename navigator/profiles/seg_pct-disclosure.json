@@ -1,0 +1,19 @@
+{
+ "profileVersion": "1",
+ "corpusId": "pct-disclosure",
+ "pctClaimsSection": ["International Application Text", "Claims"],
+ "comment": "Policy for the as-filed disclosure package (TDD §2, §7, §8.1). First matching rule wins; unmatched blocks are excluded. The PCT claims section is a declared targetable part of the common disclosure corpus. Editorial content (transcription note, drawing-sheet note, figure numeral captions, filing-data footer) renders visibly labeled and is non-targetable.",
+ "rules": [
+  {"match": {"path": ["Cover Letter*"]}, "class": "excluded"},
+  {"match": {"path": ["PCT Contracting States*"]}, "class": "excluded"},
+  {"match": {"path": ["WIPO*"]}, "class": "excluded"},
+  {"match": {"path": ["Form PCT/RO/101*"]}, "class": "excluded"},
+  {"match": {"kind": "footer"}, "class": "editorial", "editorialLabel": "Filing data (editorial, not filed text)"},
+  {"match": {"kind": "heading", "path": ["AA11393US-PCT*"]}, "class": "editorial", "editorialLabel": "Transcription title (editorial, not filed text)"},
+  {"match": {"kind": "blockquote", "path": ["AA11393US-PCT*"]}, "class": "editorial", "editorialLabel": "Transcription note (editorial, not filed text)"},
+  {"match": {"kind": "blockquote", "path": ["Drawings"]}, "class": "editorial", "editorialLabel": "Drawing-sheet note (editorial, not filed text)"},
+  {"match": {"kind": "paragraph", "path": ["Drawings"]}, "class": "editorial", "editorialLabel": "Figure reference-numeral caption (editorial, not filed text)"},
+  {"match": {"path": ["Drawings"]}, "class": "targetable"},
+  {"match": {"path": ["International Application Text"]}, "class": "targetable"}
+ ]
+}

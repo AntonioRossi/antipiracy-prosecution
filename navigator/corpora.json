@@ -1,0 +1,75 @@
+{
+ "registryVersion": "1",
+ "corpora": {
+  "pct-pdf": {
+   "role": "authoritative",
+   "visibility": "internal",
+   "version": "PCT/IB2025/051755 as filed 19.02.2025 (WO 2025/181623 A1)",
+   "files": {
+    "PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf": "sha256/c1:e131c1dcb1d76a0deebb34d19c7cba9d032fd279d040f0a984df6577e2abd667"
+   },
+   "primary": "PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf"
+  },
+  "pct-disclosure": {
+   "role": "derivative",
+   "visibility": "rendered",
+   "version": "transcription of PCT/IB2025/051755 as filed (pinned)",
+   "primary": "PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/AA11393US-PCT_RAPPORTO_DEPOSITO.md",
+   "profile": "navigator/profiles/seg_pct-disclosure.json",
+   "files": {
+    "PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/AA11393US-PCT_RAPPORTO_DEPOSITO.md": "sha256/c1:642b644417ab351e9830fc29723098e4e0e5b3c2fa2a7323732df00816993ccf",
+    "PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/figures/Fig-1.png": "sha256/c1:1c9cf63e1e8db8927cacd1234ddd08c829c85d04985c88751f27293eb77c3de0",
+    "PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/figures/Fig-2.png": "sha256/c1:9aab63149557260ab536c6827bea0d25d161c1ef6c549db53a9e075a028eb7c4",
+    "PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/figures/Fig-3.png": "sha256/c1:32fcbb114af15d704c164e4792b515751fa06254335e1343fd1d9b8c7dd6ee19",
+    "PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/figures/Fig-4.png": "sha256/c1:5c9daeb9e2af4388f69a0daa1f72cdc379e51e1cd15d7160c16306b3e4478c4b"
+   }
+  },
+  "na-claims": {
+   "role": "fragment-source",
+   "visibility": "rendered",
+   "version": "NA-2026-07-21-v2",
+   "primary": "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md",
+   "profile": "navigator/profiles/seg_na-claims.json",
+   "files": {
+    "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md": "sha256/c1:c3120fd5bb3d553818cebb84e72c5b0c3940d1cc9f9307fe7e7cbcc36228f9c6"
+   }
+  },
+  "af-claims": {
+   "role": "fragment-source",
+   "visibility": "rendered",
+   "version": "AF-2026-07-17-v2",
+   "primary": "US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md",
+   "profile": "navigator/profiles/seg_af-claims.json",
+   "files": {
+    "US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md": "sha256/c1:39b8990dc2b302dce50ea78bc34982dd7e1649eea46c2f169a9c4fdfc35693b9"
+   }
+  },
+  "na-priority-map": {
+   "role": "qa-source",
+   "visibility": "internal",
+   "version": "pinned",
+   "primary": "US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md",
+   "files": {
+    "US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md": "sha256/c1:4510b01665a618b2223ec2e3b14676ca2aeefa98eb8fe787e2a75bc1377ec66f"
+   }
+  },
+  "af-priority-map": {
+   "role": "qa-source",
+   "visibility": "internal",
+   "version": "pinned",
+   "primary": "US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md",
+   "files": {
+    "US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md": "sha256/c1:c3eb0d27a776e13a66bae7dd507ad041786545861cd20580de450c369cb04c65"
+   }
+  },
+  "af-na-crosswalk": {
+   "role": "qa-source",
+   "visibility": "internal",
+   "version": "pinned",
+   "primary": "US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md",
+   "files": {
+    "US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md": "sha256/c1:3252ad8554462dce984f5aa0a713a7c2ab2cd92136388e7b2631ec63907c8d31"
+   }
+  }
+ }
+}
