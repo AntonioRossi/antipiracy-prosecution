@@ -221,7 +221,7 @@ the second chunk contains frames from the first camera source before the mate ca
 
 ## 6. Enforcement and portfolio cautions
 
-1. NA claim 16 is detector-focused and does not require the accused monitoring actor to perform production or delivery. Its stored ledger must nevertheless contain delivered-manifest mappings to reference/mate chunk combinations with the claimed mate timing difference. Its art position faces A4, A6, A13, B6, B8, B9, and A20 combination pressure.
+1. NA claim 16 is detector-focused and does not require the accused monitoring actor to perform production or delivery. Its stored ledger must nevertheless contain delivered-manifest mappings to reference/mate chunk combinations with the claimed mate timing difference. Its art position faces A4, A6, A13, B6, B8, B9, A20, and A21 combination pressure.
 2. NA claim 22 may require performance by, or attribution to, one entity across production, delivery, detection, and lookup. Analyze divided infringement and proof separately from validity.
 3. The reference/mate relationship, chunk provenance, manifest-to-chunk mappings, recipient ledger, matched delivered manifest, source-camera entries and moved boundaries for NA claim 19, plural detected cut times, reconstructed manifest, equality comparison, and contributor analysis may require evidence controlled by different infrastructure operators.
 4. Do not describe any independent as categorically eligible, enabled, supported, novel, nonobvious, or infringed without the corresponding counsel analysis.

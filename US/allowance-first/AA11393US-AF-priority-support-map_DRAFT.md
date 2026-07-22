@@ -1,6 +1,6 @@
 # AA11393US — AF Allowance-First Provisional/PCT Priority and Support Map (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v4 · STATUS 22 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 22 JULY 2026**
 >
 > **INTERNAL COUNSEL ANALYSIS — NOT A LEGAL OPINION OR A PRIORITY CONCLUSION.** This map distinguishes support in PCT/IB2025/051755 as filed from entitlement to the 26 February 2024 filing date of US provisional 63/557,868. Counsel must verify the official file wrappers and analyze each claim as a whole.
 >
@@ -12,7 +12,7 @@
 |---|---:|---|---|
 | US provisional 63/557,868 | 26.02.2024 | `../../PPA2/as filed 63 557868.pdf` | Earliest claimed benefit source |
 | PCT/IB2025/051755 | 19.02.2025 | `../../PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf` and converted Markdown | As-filed international disclosure and claims |
-| AF candidate set `AF-2026-07-22-v4` | Internal draft; not a filing date | `AA11393US-AF-US_claim-set_DRAFT.md` | Proposed US wording; not a support source |
+| AF candidate set `AF-2026-07-22-v6` | Internal draft; not a filing date | `AA11393US-AF-US_claim-set_DRAFT.md` | Proposed US wording; not a support source |
 
 Page citations are repository bundle-PDF pages, not printed specification pages. The PCT has no numbered paragraphs. Counsel must confirm citations against the official USPTO and WIPO records.
 
@@ -49,7 +49,9 @@ The provisional places the complete basic recovery loop in one claim. Provisiona
 | Search ledger for recipient associated with an equal delivered manifest | Claim 1(n) expressly searches for the spectator receiving a manifest equal to the reconstructed manifest; method claim 10(k) | Claim 15 and Method 200/claim 17 expressly recite equality, ledger search, and account identification | **D.** |
 | AF claim 1 as a complete chain | Provisional claim 1 recites production, manifest delivery/recording, cut-time reconstruction, equality, and recipient identification in one system claim | PCT claim 1 supplies the general integrated system; claims 10–15 supply the concrete production/distribution/recovery chain | **D/CE/G.** The overall loop is direct. Counsel must decide the plural retained-camera-boundary-to-reconstructed-manifest relationship as a whole. |
 
-## 4. AF claim 19 — method map
+## 4. AF method claims
+
+### 4.1 AF claims 19–22 — integrated method map
 
 Provisional method claim 10 directly recites the production-to-attribution sequence. PCT Method 200 and claims 16–17 directly recite management, camera-cut recording and variation, segmentation, manifest generation and distribution, ledger recording, scene-change/time-code detection, reconstructed-manifest building, and account identification.
 
@@ -62,9 +64,33 @@ Provisional method claim 10 directly recites the production-to-attribution seque
 | Search ledger for recipient associated with an equal delivered manifest | Method claim 10(k) | Method 200 searching step; claims 16–17 | **D.** |
 | AF claim 19 as a complete method | Provisional method claim 10 | Method 200 and claims 16–17 | **D/CE/G.** Obtain a separate claim-as-a-whole opinion; system-format support does not itself establish method support. |
 
+AF claims 20–22 provide two method branches beneath AF claim 19. AF claim 20 supplies the causal-nexus fallback. AF claims 21–22 form a separate detection-implementation chain so they do not inherit AF claim 20's relationship-specific gate. Each inherits AF claim 19's complete-method posture.
+
+| AF claim | Added method limitation | Provisional basis | PCT basis | Grade and action |
+|---:|---|---|---|---|
+| 20 | Delivered recipient timing-choice combination includes at least one mate timing; reconstructed manifest represents the same detected timing-choice combination | Geometric-progression, manifest-combination, ledger, and reconstruction passages; claims 1(g)–(n) and 10(g)–(k) | Examples 3–5; claims 11–17; Method 200 | **D/CE/G.** The operations and plural choice architecture are disclosed; confirm the exact delivered recipient-combination → affirmative mate choice → reconstruction of the same detected combination relationship. Inherits AF claim 19. |
+| 21 | Perceptual-hash comparison for plural cut-time identification | Provisional claim 3; detection discussion and Example 5 | Example 5; detection description | **D.** Direct implementation support; depends separately from and inherits AF claim 19, not AF claim 20. |
+| 22 | Sliding-window fuzzy matching of perceptual-hash groups | Provisional claim 4; Example 5 discussion | Example 5 | **D.** Direct implementation support; inherits AF claims 21 and 19, not AF claim 20. |
+
+### 4.2 AF claim 23 — monitor-side reconstructed-manifest method
+
+AF claim 23 combines the affirmative detector-only method environment with the mate-containing delivered-combination-to-reconstructed-combination nexus. It does not inherit AF claim 19's integrated-method mode or the applicant-assigned Mode A posture of system-format NA claim 16 or AF-CONT claim 11.
+
+| AF claim 23 operation or relationship | Provisional basis | PCT basis | Classification and action |
+|---|---|---|---|
+| Receive the suspected unauthorized distribution | Method claim 10(j); system claim 1(l) | Method 200/claims 16–17; claim 15 | **D.** |
+| Apply scene-change detection and identify plural camera-cut time codes | Method claim 10(j); system claim 1(m) | Claim 15 and Method 200/claim 17 | **D.** No suspect-side physical-camera labeling is required. |
+| Build reconstructed manifests, including one representing a detected plural timing combination | Method claim 10(j), read with the geometric-progression and reconstruction passages | Claim 15 and Method 200/claim 17, read with Examples 3–5 | **D** for reconstruction from identified cut time codes; **D/CE/G** for representation of the same plural timing combination used in the mate-containing delivered-manifest relationship. |
+| Search a delivered-manifest/recipient ledger for an equal manifest to identify the recipient | Method claim 10(k), read with method claim 10(e), (g)–(i) and system claim 1(e), (g)–(k), (n) | Claims 10–15 and Method 200/claims 16–17 | **D/CE/G** for the affirmative method together with the passive delivered-manifest environment. Determine who performs the search-to-identify operation and, if performers are split, whether the other conduct is legally attributable to one entity under the applicable method-claim standard. |
+| Delivered manifests identify reference/mate chunk combinations; each represents plural reference/mate timing choices | Claims 1(e), (g)–(k) and 10(e), (g)–(i), read with Examples 2–4 and the geometric-progression passages | Claims 10–14 and 16–17, read with Examples 2–4 | **D/CE/G.** Confirm the complete method-environment relationship rather than treating system-format disclosure as automatically sufficient. |
+| Equal delivered manifest contains an affirmative mate timing and matches the detected combination represented by the reconstruction | Claims 1(g)–(n) and 10(g)–(k), read with the geometric-progression, manifest-combination, ledger, and reconstruction passages | Examples 3–5; claims 11–17; Method 200 | **D/CE/G.** Confirm the delivered mate-containing combination → reconstruction of the same detected combination nexus. |
+| AF claim 23 as a whole | Method claim 10(j)–(k), read with claims 1(e), (g)–(n), 10(e), (g)–(i), and Examples 2–4 | Method 200 and claims 15–17, read with claims 10–14 and Examples 2–5 | **D/CE/G; mode unassigned.** Determine written description and enablement in each filing, effective date, limiting effect of the passive environment, equality construction, actor performance, eligibility, and art as a whole. |
+
+The reconstruction operation is disclosed more clearly as a required result than as a detailed noise-tolerant algorithm. Counsel must determine full-scope enablement and any § 112(f) consequence. The claim set must use a supported construction of an “equal” manifest file—such as byte identity, equivalent chunk selections, or equivalent represented timing choices—and address dynamic URLs, tokens, and metadata.
+
 ## 5. AF dependent claims
 
-Every dependent inherits AF claim 1's claim-as-a-whole posture. The grades below address the added limitation.
+Every system dependent inherits AF claim 1's claim-as-a-whole posture. The grades below address the added limitation. AF claims 20–22 are mapped with the method family in § 4; AF claim 23 is independently mapped there.
 
 | AF claim | Added limitation | Provisional basis | PCT basis | Grade and action |
 |---:|---|---|---|---|
@@ -88,7 +114,7 @@ Every dependent inherits AF claim 1's claim-as-a-whole posture. The grades below
 
 ## 6. Mandatory gates
 
-### 6.1 Claim-as-a-whole plural-cut integration — AF claims 1 and 19
+### 6.1 Claim-as-a-whole plural-cut integration — AF claims 1 and 19–22
 
 The basic production-to-reconstruction loop is express in provisional claims 1 and 10 and in the PCT system/method disclosure. The remaining written-description question is whether each filing conveys the strengthened claim relationship in which:
 
@@ -114,11 +140,16 @@ Example 2 directly shows Camera 2 followed by Camera 3, the corresponding out/in
 | Equal-duration same-interval chunks | **D** | Ordinary breadth and antecedent review |
 | Each paired chunk straddles the retained transition at its own timing | **CE/G** | AF claim 14's exact chunk geometry |
 | Recipient-associated timing choices across plural cuts | **D/CE/G** | AF claim 17's manifest representation and ledger association |
+| Delivered mate-containing recipient combination → reconstructed same detected timing-choice combination | **D/CE/G** | AF claim 20's inherited integrated-method fallback and AF claim 23's independent monitor-side causal nexus |
 | Manifest sequence as probabilistic collusion input | **C/CE/G** | AF claim 11's exact input and respective-contribution output |
 
-### 6.5 DW-05A modes and B10
+### 6.5 Monitor-side method — AF claim 23
 
-Counsel must assign AF claims 1 and 19 separately:
+AF claim 23 is a detector-only subset of the disclosed complete method chain, but the subset observation does not assign an effective date. The individual suspect-acquisition, cut-time detection, reconstruction, equality, and search-to-identify operations are direct. The method-form delivered-manifest environment and the mate-containing delivered-combination-to-reconstructed-same-combination nexus are **D/CE/G**, and the claim as a whole is **D/CE/G; mode unassigned**. Counsel must determine whether each filing conveys possession and enablement of the affirmative method together with that passive environment, whether the environment receives limiting effect, and whether one monitoring entity performs every affirmative operation or another performer's conduct is legally attributable to that entity under the applicable method-claim standard. AF claim 23 inherits neither NA claim 16's system-format Mode A assignment nor AF claim 19's integrated-method mode.
+
+### 6.6 DW-05A modes and B10
+
+Counsel must assign AF claims 1, 19, and 23 separately; AF claims 20–22 inherit claim 19's effective-date mode and add the separately graded limitations stated above:
 
 | Mode | Required conclusion | Consequence |
 |---|---|---|
@@ -134,6 +165,9 @@ B10 remains assessed as low-materiality and cumulative-or-weaker: it lacks plura
 |---|---|---|
 | 1 | Direct closed loop; **D/CE/G** for plural retained-camera-boundary-to-reconstructed-manifest integration | Principal AF system candidate; obtain a written claim-as-a-whole PCT/provisional opinion |
 | 19 | Direct method loop; same **D/CE/G** integration | Complementary method candidate; obtain a separate opinion and § 101/performance review |
+| 20 | Disclosed components; **D/CE/G** for the affirmative mate-containing delivered combination and reconstruction of the same detected combination | Principal causal-nexus method fallback; obtain a written relationship-specific support determination and inherit AF claim 19's review |
+| 21–22 | Direct perceptual-hash and sliding-window method limitations; inherit AF claim 19 without AF claim 20 | Support-safe detection branch; ordinary wording and antecedent review plus inherited claim-as-a-whole, eligibility, performance, and art review |
+| 23 | Direct individual recovery operations; **D/CE/G; mode unassigned** for the method-form delivered-manifest environment and mate-containing delivered-combination-to-reconstructed-same-combination nexus as a whole | Monitor-side independent candidate; obtain a separate claim-as-a-whole PCT/provisional written-description and enablement determination, effective-date mode, equality construction, actor, eligibility, restriction, proof, and art review |
 | 2–3 | Direct mechanics with provisional inconsistency | Use only after written counsel determination |
 | 4–5, 7–10, 13, 15–16 | Added limitations direct | Ordinary wording, breadth, antecedent, and inherited-parent review |
 | 6, 11–12, 14, 17–18 | Added relationship direct/contextual/combined-example as specified above | Retain as expressly gated dependents; do not describe the added relationship as unqualified direct support |
@@ -141,15 +175,18 @@ B10 remains assessed as low-materiality and cumulative-or-weaker: it lacks plura
 ## 8. Pending counsel determinations
 
 1. Verify the provisional and PCT repository copies against the official records.
-2. For AF claims 1 and 19 separately, conclude PCT written description, PCT enablement, provisional written description and enablement for benefit entitlement, effective date, and DW-05A mode.
+2. For AF claims 1, 19, and 23 separately, conclude PCT written description, PCT enablement, provisional written description and enablement for benefit entitlement, effective date, and DW-05A mode; apply AF claim 19's result to dependent AF claims 20–22 while separately confirming their added limitations. Do not transfer a system-format or integrated-method mode to AF claim 23.
 3. Decide the claim-as-a-whole plural retained-boundary/manifest/reconstruction relationship.
 4. Decide the first/second-source-camera and plural selected-cut generalization.
 5. Resolve the provisional Example 2 inconsistency for AF claims 2–3.
 6. Confirm AF claim 6's respective single-cut mate relationship.
 7. Confirm AF claims 11–12's manifest-sequence and segmented-Tardos contribution relationships.
 8. Confirm AF claim 14's paired-chunk geometry, AF claim 17's plural manifest choices, and AF claim 18's pipeline order.
-9. Review § 112(f), definiteness, eligibility, restriction, divided infringement, and proof independently of this map.
-10. Preserve the NA actor-focused claims as a portfolio option; adequate AF support does not resolve actor or proof limitations.
+9. Decide AF claim 20's affirmative mate-containing delivered-combination-to-reconstructed-combination relationship and confirm that AF claims 21–22 remain independent of that gate.
+10. Determine AF claim 23's method-form delivered-manifest environment, mate-containing delivered-combination-to-reconstructed-same-combination nexus, equality construction, full-scope reconstruction enablement, and affirmative-operation performer or legally attributable performance.
+11. Review § 112(f), definiteness, restriction, divided infringement, territorial performance, and proof independently of this map; AF claims 20–22 do not cure AF claim 19's performance-attribution risk, and AF claim 23 targets only the production/delivery actor split where one entity performs the complete recovery method or the remaining conduct is legally attributable to that entity under the applicable method-claim standard.
+12. For AF claim 23, identify the asserted exception under Step 2A Prong One, analyze practical application under Step 2A Prong Two, analyze the additional elements individually and as an ordered combination under Step 2B, and identify specification support and evidence for any asserted technical improvement. The passive manifest/ledger environment and mate-timing nexus do not alone resolve eligibility.
+13. Preserve the NA actor-focused claims as a portfolio option; adequate AF support does not resolve actor or proof limitations.
 
 ## 9. Intervening-information trigger
 

@@ -13,7 +13,7 @@
 | 16 | Detector system | Delivered reference/mate chunk combinations with a mate cut-timing difference → plural scene-change-derived cut times → reconstructed manifest → equality → ledger recipient |
 | 22 | End-to-end method | Production boundary + manifest delivery/association + plural cut-time reconstruction + equality lookup |
 
-Canonical evidence is stored in [`../prior-art/`](../prior-art/README.md). The exact claim text in [`AA11393US-NA-US_claim-set_DRAFT.md`](AA11393US-NA-US_claim-set_DRAFT.md) controls.
+Canonical evidence comprises 33 sources in [`../prior-art/`](../prior-art/README.md): A1–A21, B1–B10, C8, and C3. The exact claim text in [`AA11393US-NA-US_claim-set_DRAFT.md`](AA11393US-NA-US_claim-set_DRAFT.md) controls.
 
 ## 2. Limitation and combination audit
 
@@ -23,8 +23,8 @@ Canonical evidence is stored in [`../prior-art/`](../prior-art/README.md). The e
 | Same ordered transition at noncoincident timings with different-camera frames between | B9 varies actual switch points; A4 has camera-perspective fragments; B6 varies local temporal regions | Retained same physical-camera order and resulting alternate-camera interval | Preserve the full structural relationship; variable timing alone is crowded |
 | Manifest-selected chunks preserve one transition timing and are recipient-associated | A4/A6/C8 teach manifests, variants, recipient sequences, and records | Binding those known delivery objects to the claimed physical-camera boundary | Claims 9, 13, and 15 retain the production-derived structure |
 | Delivered manifests identify chunk combinations from a reference/mate ensemble having a mate cut-timing difference | A4/A6/C8 teach recipient-associated manifest combinations; B6/B9 teach recipient-specific local timing or stream-switch variation | The claimed delivered-manifest universe tied to reference/mate camera-cut timing variation | This relationship strengthens NA claim 16 but remains exposed to A4/A6/C8+B6/B9 combinations |
-| Detect plural cut times and reconstruct a manifest | A4 recovers version sequences; A6 detects temporal patterns; A13 regenerates manifests from segment identifiers; B6/B8 reacquire timing | Reconstruction from scene-change-derived plural cut times | NA claim 16 faces material combination pressure |
-| Search for the recipient associated with an equal delivered manifest | A4/A6 resolve users from recovered patterns; A13 regenerates manifests; A20 has registry lookup | Exact equality at the end of the claimed cut-time reconstruction | Equality is direct filing support but not a stand-alone novelty center |
+| Detect plural cut times and reconstruct a manifest | A4 recovers version sequences; A6 detects temporal patterns; A13 regenerates manifests from segment identifiers; A21 detects shot boundaries and derives a duration/time-slice fingerprint sequence; B6/B8 reacquire timing | Reconstruction of a delivered manifest, rather than a generic video fingerprint, from scene-change-derived plural cut times | NA claim 16 faces material combination pressure |
+| Search for the recipient associated with an equal delivered manifest | A4/A6 resolve users from recovered patterns; A13 regenerates manifests; A20 has registry lookup; A21 performs exact database fingerprint equality | Equality to a delivered manifest linked to a recipient, rather than equality to a generic video fingerprint | Equality is direct filing support but not a stand-alone novelty center |
 | Equal matched manifest selects a mate chunk spanning the same physical-camera transition at a noncoincident timing | A4 supplies camera-perspective fragments/manifests; B9 supplies actual switch-time variation; A20 supplies EDL source/time fields and forensic motivation | The matched manifest's concrete mate chunk, retained ordered physical-camera transition, noncoincident timing, and intervening different-camera frames | NA claim 19 carries this combined relationship; direct multicamera/EDL art remains a material search target |
 
 ## 3. Stored-art comparison
@@ -53,6 +53,7 @@ Legend: **P** = concrete partial or analogous mapping; **—** = no concrete who
 | **A18 — US 12,328,488 B2** | P — dynamic-segment substitution | P — user-keyed metadata | P — dynamic segments and user metadata; no mate camera-cut structure or suspect recovery | — |
 | **A19 — US 2023/0353582 A1** | — | P — assigned-bit/client records | P — pirate acquisition and client identification; no claimed manifest-equality chain | P |
 | **A20 — US 2012/0114309 A1** | P — individualized EDL versions and time-defined elements | P — recipient/version registry | P — unique EDL versions, source/time fields, registry, and cross-reference analysis; no delivered reference/mate chunk manifests or cut-time reconstruction | P |
+| **A21 — US 2021/0166036 A1** | — | — | P — shot-boundary duration-sequence fingerprint and exact database equality; no manifests, recipient ledger, mate timing, or physical-camera production | P — recovery operations only |
 | **B1 / D2 — CN 117278762 A** | — | P — codec provenance | P — provenance recovery; no reference/mate manifest or scene-change reconstruction | — |
 | **B2 — WO 2021/224688 A1** | P — D1-family disclosure | P | P | P |
 | **B3 — WO 2017/017603 A1** | — | P — source watermark | P — watermark capture/extraction/comparison; no claimed manifest chain | — |
@@ -86,16 +87,16 @@ The claim requires manifest-selected chunks to preserve the physical-camera tran
 
 ### NA claim 16
 
-1. **A4 + B9 + A13 + A5/B7:** perspective manifests and user resolution plus user-different switch timings, manifest regeneration, and scene/shot detection.
-2. **A6 + A13 + B6/B8:** tailored recipient sequences plus manifest regeneration and local-timing or relative-time reacquisition.
+1. **A4 + B9 + A13 + A21 or A5/B7:** perspective manifests and user resolution plus user-different switch timings, manifest regeneration, and shot-boundary or scene detection. A21 adds duration-sequence fingerprinting and exact database equality but not manifest or recipient relationships.
+2. **A6 + A13 + A21 or B6/B8:** tailored recipient sequences plus manifest regeneration and shot-duration, local-timing, or relative-time reacquisition.
 3. **A20 + A13 + B7, with B6 or B9:** forensic EDL/registry motivation plus manifest regeneration, shot detection, and recipient-specific timing variation.
-4. **A4/B9 + A13, with A5/B7/B8 as needed:** manifest/switch-position combinations plus manifest regeneration and a cut-time recovery technique.
+4. **A4/B9 + A13, with A21/A5/B7/B8 as needed:** manifest/switch-position combinations plus manifest regeneration and a cut-time recovery technique.
 
 The response must test whether the art supplies a delivered-manifest ledger tied to reference/mate chunks having a camera-cut timing difference and reconstruction of an equal delivered manifest from plural scene-change-derived camera-cut time codes with a reasoned motivation and reasonable expectation of success.
 
 ### NA claim 22
 
-The leading route is **A20+B9+A4/A6/A13**, with direct multicamera/EDL art supplying physical-camera edit entries and A5/B7/B8 supplying cut detection if needed. The exact production-boundary-to-delivered-manifest-to-reconstructed-manifest relationship remains the central issue.
+The leading route is **A20+B9+A4/A6/A13/A21**, with direct multicamera/EDL art supplying physical-camera edit entries and A21/A5/B7/B8 supplying cut detection or timing-sequence recovery as needed. The exact production-boundary-to-delivered-manifest-to-reconstructed-manifest relationship remains the central issue.
 
 Do not characterize A20 as teaching away. Its unique-EDL and product-signature language supports forensic individualization. Apply the evidence requirements in [MPEP § 2143](https://www.uspto.gov/web/offices/pac/mpep/s2143.html) and [MPEP § 2144.03](https://www.uspto.gov/web/offices/pac/mpep/s2144.html).
 
@@ -110,7 +111,7 @@ Do not characterize A20 as teaching away. Its unique-EDL and product-signature l
 | 13, 25 | Same-interval/equal-duration paired chunks with transition geometry | A4/B9/C8 pressure packaging; retained physical-camera boundary remains material |
 | 14, 27 | Unicast | Conventional implementation |
 | 15, 24, 29 | Recipient timing combinations and manifest preservation | Multi-position sequences are crowded; exact physical-camera relationship carries value |
-| 17–18, 26 | Perceptual hashes and sliding-window fuzzy comparison | Crowded by A5, B6–B8 |
+| 17–18, 26 | Perceptual hashes and sliding-window fuzzy comparison | Crowded by A5, A21, B6–B8; A21 is partial because it uses cumulative histograms and a sliding-window boundary detector, not the claimed perceptual-hash/fuzzy combination |
 | 19 | Equal matched manifest selects a mate chunk spanning the same physical-camera transition at a noncoincident timing | A4/B9/A20 and direct multicamera/EDL art create combination pressure; the full matched-manifest geometry is the material relationship |
 | 20 | Plural recipient timing combination represented by the reconstructed manifest | Timing sequences are crowded; the claim inherits claim 19 and additionally requires the detected plural combination to be represented by the reconstruction |
 | 21, 28 | Manifest-sequence collusion attribution | A2–A4, A6, A9, A19, B6, C3 provide substantial pressure |
@@ -142,5 +143,7 @@ DW-08A should cover:
 5. scene-change-derived manifest reconstruction;
 6. equal-manifest lookup from detected cut sequences; and
 7. manifest-sequence collusion attribution.
+
+A21 is a direct recovery-side reference but does not close the production, manifest, or recipient-ledger gaps. Its stated cropping/rotation robustness also limits any technical-effect argument based only on robust shot-boundary fingerprint retrieval.
 
 Re-score upon any claim amendment or renumbering; completion of DW-08A; addition or replacement of a canonical source; receipt of an Italian or US citation; authoritative B6 review; C7 acquisition; or a substantive AF matrix change.

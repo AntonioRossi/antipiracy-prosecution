@@ -2,7 +2,7 @@
 
 > **DERIVED COPIES — NOT OFFICIAL COPIES AND NOT FOR FILING.**
 
-These are the 16 image-only source PDFs from `../` for which a searchable derivative is present, with a machine-generated OCR text layer added so they can be searched and text-selected in a PDF viewer. The generation method is `ocrmypdf --skip-text --output-type pdf` (`--language eng`, or `chi_sim+eng` for B5 and B6). A19 remains image-only in the source store and has an OCR Markdown transcription, but no searchable-PDF derivative.
+These are the 16 image-only source PDFs from `../` for which a searchable derivative is present, with a machine-generated OCR text layer added so they can be searched and text-selected in a PDF viewer. The generation method is `ocrmypdf --skip-text --output-type pdf` (`--language eng`, or `chi_sim+eng` for B5 and B6). A19 and A21 remain image-only in the source store and have OCR Markdown transcriptions, but no searchable-PDF derivatives.
 
 | | |
 |---|---|

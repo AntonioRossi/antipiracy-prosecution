@@ -7,7 +7,7 @@
 ## 1. Scope and controls
 
 - **Claims:** the 30-claim set in [`AA11393US-NA-US_claim-set_DRAFT.md`](AA11393US-NA-US_claim-set_DRAFT.md), with independents 1, 9, 16, and 22.
-- **Documents:** the 32 canonical copies in [`../prior-art/`](../prior-art/) identified as A1–A20, B1–B10, C8, and C3. C7 is an unscored acquisition target.
+- **Documents:** the 33 canonical copies in [`../prior-art/`](../prior-art/) identified as A1–A21, B1–B10, C8, and C3. C7 is an unscored acquisition target.
 - **Authority:** source PDFs control. Markdown and OCR copies are review aids; verify every relied-on quotation against the source PDF or an official copy.
 - **Analytic division:** [`AA11393US-NA-prior-art-comparison-matrix_DRAFT.md`](AA11393US-NA-prior-art-comparison-matrix_DRAFT.md) states the combination analysis. This file projects the current claims against individual documents.
 
@@ -46,6 +46,7 @@ Dependent deltas: **2** later resynchronization · **3** ten-frame implementatio
 | A18 | — | — | — | — | — | — | — | P — dynamically selected replacement segments |
 | A19 | — | — | — | — | — | — | — | P — watermark-bit variants |
 | A20 | **P** — individualized structured-edit-list versions and source/time fields; no claimed camera-boundary movement | — | — | **Y** — express EDL source/time fields | — | P — individualized changes at plural edit positions | P — source/time fields without retained-pair boundary movement | P — unique inserted content elements |
+| A21 | — — recovery-side shot-boundary fingerprinting only | — | — | — | — | — | — | — |
 | B1 | — | — | — | — | — | — | — | P — codec provenance marking |
 | B2 | *scored with A1* | | | | | | | |
 | B3 | — | — | — | — | — | — | — | P — embedded source watermark |
@@ -71,11 +72,11 @@ Dependent deltas: **10** CDN/adaptive-streaming tailoring · **11** mixing and p
 | A1 | P — recipient variant sequences and assignments; no physical-camera transition | — | P | P | — | — | P |
 | A2 | P — segment-version assignments | — | P | P — key/player records | — | — | P — coded version sequences |
 | A3 | P — multilevel segment assignments | — | P | P | — | — | P |
-| A4 | **P** — customized perspective manifests and user resolution; no moved camera boundary | **Y** — CDN/ABR manifests | P — per-request variant selection | **Y** — manifest/user association | P — aligned alternative fragments | P | Y — recovered recipient sequences |
+| A4 | **P** — customized perspective manifests and user resolution; no moved camera boundary | **Y** — CDN/ABR manifests | P — per-request variant selection | **Y** — manifest/user association | P — aligned alternative fragments | P | P — recovered recipient sequences without the claimed physical-camera timing choices |
 | A5 | — | — | — | — | — | — | — |
-| A6 | **P** — tailored manifests and recipient temporal events; no physical-camera boundary | **Y** — tailored CDN/ABR manifests | P — unique served-sequence selection | P — device-linked sequence without a manifest ledger | P — variable-duration fragments | P | Y — recipient-specific temporal sequences |
+| A6 | **P** — tailored manifests and recipient temporal events; no physical-camera boundary | **Y** — tailored CDN/ABR manifests | P — unique served-sequence selection | P — device-linked sequence without a manifest ledger | P — variable-duration fragments | P | P — recipient-specific temporal sequences without the claimed physical-camera timing choices |
 | A7 | P — device-selected segment versions | P — CDN/ABR delivery with a common manifest | — | P — request-device association | — | P | P |
-| A8 | P — randomized recipient variants | P — edge/CDN delivery | — | — | — | — | Y — identifying variant sequences |
+| A8 | P — randomized recipient variants | P — edge/CDN delivery | — | — | — | — | P — identifying variant sequences without the claimed physical-camera timing choices |
 | A9 | P — client policies and identifiers | — | — | P — policy datastore | — | — | P |
 | A10 | P — device-identifying modulation | — | — | P — device identity | — | — | P |
 | A11 | — | — | — | — | — | — | — |
@@ -86,41 +87,42 @@ Dependent deltas: **10** CDN/adaptive-streaming tailoring · **11** mixing and p
 | A16 | P — per-request manifests and recording IDs | P — adaptive-manifest and edge mechanics | P — per-request manifest construction without progressive variation assignment | P — recording-ID association | P — shared-timeline chunks | P | P |
 | A17 | P — per-account substituted segments | — | — | P — account records | — | P | P |
 | A18 | P — dynamic segment resolution and user metadata | P — device-capability selection | — | P — user/device metadata | — | P | P |
-| A19 | P — assigned fingerprint bits and client records | — | — | P — client records | — | — | Y — client code sequences |
+| A19 | P — assigned fingerprint bits and client records | — | — | P — client records | — | — | P — client code sequences without the claimed physical-camera timing choices |
 | A20 | **P** — recipient-specific versions and registry; no manifest-preserved moved camera boundary | — | — | P — consumer registry, not received-manifest records | — | — | P — unique-version signatures |
+| A21 | — — no personalization, delivery, manifest, or recipient association | — | — | — | — | — | — |
 | B1 | P — codec provenance | — | — | P | — | — | — |
 | B2 | *scored with A1* | | | | | | |
 | B3 | P — source watermark delivery | — | — | — | — | — | — |
 | B4 | P — per-playback marks and identity | — | — | P | — | — | P |
 | B5 | P — receiver identity marks | — | — | P | — | — | — |
-| B6 | P — buyer-specific local transformations | — | — | P — buyer/key records | P — local temporal regions | — | Y — plural recipient transformations |
+| B6 | P — buyer-specific local transformations | — | — | P — buyer/key records | P — local temporal regions | — | P — plural recipient transformations without the claimed physical-camera timing choices |
 | B7 | — | — | — | — | — | — | — |
 | B8 | — | — | — | — | — | — | P — relative-time event sequences |
-| B9 | **P** — user-keyed stream switching and origin codes; no manifests or physical-camera boundary | — | P — user-keyed stream selection | P — key records without a manifest ledger | P — identical-segmentation switch structure | — | Y — plural key-selected switch positions |
+| B9 | **P** — user-keyed stream switching and origin codes; no manifests or physical-camera boundary | — | P — user-keyed stream selection | P — key records without a manifest ledger | P — identical-segmentation switch structure | — | P — plural key-selected switch positions without the claimed physical-camera or manifest relationship |
 | B10 | P — per-user object attributes and code mapping | — | — | P — user-code records | — | — | P |
-| C8 | **P** — standardized A/B manifest sequences and account/session patterns | **Y** — edge manifest operations | P — A/B chunk selection without progressive variation assignment | P — account/session association | P — aligned chunks | P | Y — session sequences |
-| C3 | P — user code assignments | — | — | P — analogous user assignment, not a manifest ledger | — | — | Y — codeword choices across positions |
+| C8 | **P** — standardized A/B manifest sequences and account/session patterns | **Y** — edge manifest operations | P — A/B chunk selection without progressive variation assignment | P — account/session association | P — aligned chunks | P | P — session sequences without the claimed physical-camera timing choices |
+| C3 | P — user code assignments | — | — | P — analogous user assignment, not a manifest ledger | — | — | P — codeword choices across positions without camera-switch timing or manifest relationships |
 | C7 | *nr — copy outstanding* | | | | | | |
 
-**Distribution assessment.** A4 is the closest manifest/association reference and B9 the closest actual-switch-position reference. No reviewed document maps the complete physical-camera transition, alternate-camera interval, manifest preservation, delivery, and recipient-association relationship of NA claim 9. The ledger need only associate delivered manifests with recipients; it does not store suspect-side camera labels.
+**Distribution assessment.** A4 is the closest manifest/association reference and B9 the closest actual-switch-position reference. No reviewed document maps the complete physical-camera transition, alternate-camera interval, manifest preservation, delivery, and recipient-association relationship of NA claim 9. The ledger need only associate delivered manifests with recipients; it does not store suspect-side camera labels. Generic recipient codewords, variant sequences, or switch-position sequences score `P`, not `Y`, against NA claim 15 unless the document substantially maps the added physical-camera timing-choice and manifest relationships.
 
 ## 4. Detection / recipient-resolution system — NA claims 16–21
 
 Dependent deltas: **17** perceptual-hash comparison · **18** sliding-window fuzzy matching · **19** matched-manifest mate chunk with physical-camera transition geometry · **20** plural recipient timing combination represented by the reconstruction · **21** probabilistic manifest-sequence contributor identification.
 
-The NA claim 16 whole-claim column applies the complete reference/mate chunk-combination ledger, mate cut-timing difference, plural scene-change-derived cut times, reconstructed-manifest equality, and recipient-lookup relationship to each of the 32 canonical sources.
+The NA claim 16 whole-claim column applies the complete reference/mate chunk-combination ledger, mate cut-timing difference, plural scene-change-derived cut times, reconstructed-manifest equality, and recipient-lookup relationship to each of the 33 canonical sources.
 
 | Document | 16 whole | 17 delta | 18 delta | 19 delta | 20 delta | 21 delta |
 |---|---|---|---|---|---|---|
 | A1 | P — recoverable recipient variants; no reference/mate chunk-manifest or cut-time reconstruction relationship | — | — | P — recipient versions without matched mate-chunk camera geometry | P — sequence choices without manifest reconstruction | P — tracing objective |
-| A2 | P — assigned segment sequences and tracing; no camera-cut mate or reconstructed-manifest equality | — | — | P — segment versions without physical-camera geometry | P — coded sequences without cut-time manifest reconstruction | Y — collusion tracing |
-| A3 | P — coded segment assignments, recovered-copy scoring, and user tracing; no claimed manifest-reconstruction chain | — | — | P — segment variants without physical-camera geometry | P — code sequences without cut-time manifest reconstruction | Y — multilevel collusion scoring |
-| A4 | **P** — perspective manifests, alignment, version-sequence recovery, and user resolution; no claimed mate cut-timing/equal-manifest chain | — | — | P — camera-perspective fragments and manifests without the same-transition mate-chunk geometry | P — recovered position sequences without detected timing-combination manifest reconstruction | Y — probabilistic group/colluder recovery |
+| A2 | P — assigned segment sequences and tracing; no camera-cut mate or reconstructed-manifest equality | — | — | P — segment versions without physical-camera geometry | P — coded sequences without cut-time manifest reconstruction | P — collusion tracing without the claimed manifest-sequence input and respective-portion output |
+| A3 | P — coded segment assignments, recovered-copy scoring, and user tracing; no claimed manifest-reconstruction chain | — | — | P — segment variants without physical-camera geometry | P — code sequences without cut-time manifest reconstruction | P — multilevel collusion scoring without the claimed manifest-sequence input and respective-portion output |
+| A4 | **P** — perspective manifests, alignment, version-sequence recovery, and user resolution; no claimed mate cut-timing/equal-manifest chain | — | — | P — camera-perspective fragments and manifests without the same-transition mate-chunk geometry | P — recovered position sequences without detected timing-combination manifest reconstruction | P — probabilistic group/colluder recovery without the claimed respective-portion relationship |
 | A5 | P — suspect/reference shot comparison; no manifest ledger or mate timing relationship | **Y** — perceptual hashes | P — hash-distance/key-frame-set comparison; express sliding-window matching not identified | — | — | — |
-| A6 | **P** — tailored manifests, temporal-pattern detection, and device resolution; no physical-camera mate or equal reconstructed manifest | — | — | P — manifests and temporal events without matched physical-camera geometry | P — recipient temporal sequences without reconstructed-manifest representation | Y — colluder identification |
+| A6 | **P** — tailored manifests, temporal-pattern detection, and device resolution; no physical-camera mate or equal reconstructed manifest | — | — | P — manifests and temporal events without matched physical-camera geometry | P — recipient temporal sequences without reconstructed-manifest representation | P — colluder identification without the claimed manifest-sequence input and respective-portion output |
 | A7 | P — device-selected segments and tracing; no camera-cut manifest reconstruction | — | — | P — segment-version combinations without physical-camera geometry | P — version choices without cut-time reconstruction | P |
 | A8 | P — randomized recipient variants and sequence identification; no claimed manifest-equality chain | — | — | P — recipient variants without physical-camera geometry | P — variant sequences without cut-time manifest reconstruction | P — anti-collusion hardening |
-| A9 | P — suspect watermark identification and client variants; no camera-cut manifest reconstruction | — | — | P — policy-selected versions without physical-camera geometry | P — client patterns without reconstructed-manifest representation | Y — colluding-source identification |
+| A9 | P — suspect watermark identification and client variants; no camera-cut manifest reconstruction | — | — | P — policy-selected versions without physical-camera geometry | P — client patterns without reconstructed-manifest representation | P — colluding-source identification without the claimed manifest-sequence input and respective-portion output |
 | A10 | P — capture and device-mark extraction; no chunk-manifest or camera-cut reconstruction relationship | — | — | — | P — temporal modulation pattern without manifest reconstruction | P — collusion robustness |
 | A11 | — | — | — | — | — | — |
 | A12 | P — piracy classification; no manifest ledger, mate timing, or equality reconstruction | P — trained-feature comparison, not perceptual hashes | — | — | — | — |
@@ -130,23 +132,24 @@ The NA claim 16 whole-claim column applies the complete reference/mate chunk-com
 | A16 | P — per-request manifests and recording identifiers; no mate camera-cut structure or suspect recovery | — | — | P — per-request manifests without matched mate-chunk geometry | P — manifest choices without cut-time reconstruction | — |
 | A17 | P — personalized segments and account records; no mate camera-cut structure or suspect recovery | — | — | P — personalized segments without physical-camera geometry | P — personalized choices without cut-time reconstruction | — |
 | A18 | P — dynamic segments and user-keyed metadata; no mate camera-cut structure or suspect recovery | — | — | P — dynamic segments without physical-camera geometry | P — dynamic choices without cut-time reconstruction | — |
-| A19 | P — pirate acquisition, extraction, and client identification; no claimed manifest-equality chain | — | — | P — client fingerprints without matched mate-chunk geometry | P — client patterns without cut-time manifest reconstruction | Y — per-client confidence and pirate-list output |
+| A19 | P — pirate acquisition, extraction, and client identification; no claimed manifest-equality chain | — | — | P — client fingerprints without matched mate-chunk geometry | P — client patterns without cut-time manifest reconstruction | P — per-client confidence and pirate-list output without the claimed manifest-sequence and respective-portion relationship |
 | A20 | P — unique EDL versions, source/time fields, consumer registry, and cross-reference analysis; no delivered reference/mate chunk manifests or cut-time reconstruction | — | — | P — source/time fields and unique versions without matched mate-chunk physical-camera geometry | P — product signatures without reconstructed timing manifest | — |
+| A21 | P — shot-boundary duration-sequence fingerprint and exact database equality; no reference/mate manifests, recipient ledger, or physical-camera production | P — cumulative-histogram frame comparison, not perceptual hashes | P — sliding-window boundary detector, not fuzzy matching of perceptual-hash groups | — | P — cut-duration sequence without a recipient timing-combination manifest | — |
 | B1 | P — provenance metadata recovery; no reference/mate manifest or scene-change reconstruction | — | — | — | — | — |
 | B2 | *scored with A1* | | | | | |
 | B3 | P — watermark capture, extraction, and comparison; no claimed manifest chain | — | — | — | — | — |
 | B4 | P — point-of-piracy identification; no reference/mate chunk-manifest reconstruction | — | — | — | — | — |
 | B5 | P — watermark monitoring/alarm; no camera-cut manifest chain | — | — | — | — | — |
-| B6 | **P** — recipient-local timing variation, hash reacquisition, and contributor search; no physical-camera mate manifest or manifest equality | P — multimedia hashes/local comparison, not express frame pHash | P — local tolerant comparison, not express sliding-window groups of perceptual hashes | P — local timing variants without matched physical-camera mate-chunk geometry | P — plural timing patterns without reconstructed-manifest representation | Y — likelihood-based contributor list |
+| B6 | **P** — recipient-local timing variation, hash reacquisition, and contributor search; no physical-camera mate manifest or manifest equality | P — multimedia hashes/local comparison, not express frame pHash | P — local tolerant comparison, not express sliding-window groups of perceptual hashes | P — local timing variants without matched physical-camera mate-chunk geometry | P — plural timing patterns without reconstructed-manifest representation | P — likelihood-based contributor list without the claimed manifest-sequence input and respective-portion output |
 | B7 | P — shot-sequence comparison; no ledger or mate-chunk relationship | P — shot/reference comparison without hashes | P — tolerance-based shot comparison, not perceptual-hash sliding windows | — | P — detected cut sequence without reconstructed-manifest representation | — |
 | B8 | P — distortion-tolerant relative-time pattern matching; no manifests, recipient ledger, or mate-chunk relationship | — | P — distortion-tolerant timing-pattern comparison, not pHash | — | P — plural relative-time patterns without reconstructed-manifest representation | — |
 | B9 | P — recipient stream combinations and user-different switch times; suspect recovery and physical-camera source relationship not disclosed | — | — | P — matched-user stream choices and switch timing without physical-camera mate-chunk geometry or equality lookup | P — plural switch-time choices without reconstructed-manifest representation | P — collusion-resilient design |
 | B10 | P — per-user variants, leaked-video detection, and user-code inference; no camera-cut manifest chain | — | — | P — delivered variants without physical-camera mate-chunk geometry | P — user code without cut-time manifest reconstruction | — |
 | C8 | P — A/B manifest sequences, account/session patterns, and tracing objective; extraction and camera-cut reconstruction outside scope | — | — | P — aligned A/B chunks and manifests without physical-camera transition geometry | P — account/session patterns without detected timing-combination reconstruction | P — tracing objective |
-| C3 | P — accusation algorithm; no suspect acquisition, reference/mate manifest, or reconstruction loop | — | — | — | P — code sequence without cut-time manifest reconstruction | Y — thresholded guilty-user output |
+| C3 | P — accusation algorithm; no suspect acquisition, reference/mate manifest, or reconstruction loop | — | — | — | P — code sequence without cut-time manifest reconstruction | P — thresholded guilty-user output without the claimed manifest-sequence input or respective-portion relationship |
 | C7 | *nr — copy outstanding* | | | | | |
 
-**Detection assessment.** No reviewed document maps NA claim 16 as a whole. The principal routes are A4+B9+A13+A5/B7; A6+A13+B6/B8; A20+A13+B7 with a timing-variation teaching; and A4/B9+A13 with scene-change detection as needed. The carrying relationship is a ledger of delivered reference/mate chunk combinations having a mate cut-timing difference → plural scene-change-derived cut times → reconstructed manifest → equality → recipient. NA claim 16 is assigned DW-05A Mode A. NA claims 19–20 additionally require the matched-manifest physical-camera mate chunk and plural timing reconstruction and must be tested against A20+B9+A4/A6/A13 plus direct multicamera/EDL art. NA claim 21 retains its collusion gate.
+**Detection assessment.** No reviewed document maps NA claim 16 as a whole. The principal routes are A4+B9+A13+A21/A5/B7; A6+A13+A21/B6/B8; A20+A13+A21/B7 with a timing-variation teaching; and A4/B9+A13 with scene-change detection as needed. A21 directly strengthens the shot-boundary, duration-sequence, and exact-equality portions but supplies no manifest or recipient relationship. The carrying relationship is a ledger of delivered reference/mate chunk combinations having a mate cut-timing difference → plural scene-change-derived cut times → reconstructed manifest → equality → recipient. NA claim 16 is assigned DW-05A Mode A. NA claims 19–20 additionally require the matched-manifest physical-camera mate chunk and plural timing reconstruction and must be tested against A20+B9+A4/A6/A13/A21 plus direct multicamera/EDL art. NA claim 21 retains its collusion gate; a generic accusation or contributor output scores `P` unless the document also substantially maps the claimed manifest-sequence input and respective-portion relationship.
 
 ## 5. End-to-end method — NA claims 22–30
 
@@ -155,14 +158,14 @@ Dependent deltas: **23** resynchronization · **24** manifest preservation of ei
 | Document | 22 whole | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
 |---|---|---|---|---|---|---|---|---|---|
 | A1 | P — assign/deliver/recover loop; no physical-camera production or manifest reconstruction | — | P | P — transformed segment copies without physical-camera geometry | — | — | P | P | P |
-| A2 | P — assign-and-trace loop | — | P | — | — | — | Y | P | P |
-| A3 | P — multilevel assign-and-trace loop | — | P | — | — | — | Y | P | P |
-| A4 | **P** — camera-perspective manifests, sequence recovery, and user resolution; no moved EDL boundary or equal-manifest reconstruction | — | P | P — aligned alternatives without retained physical-camera geometry | — | P | Y | Y | P |
+| A2 | P — assign-and-trace loop | — | P | — | — | — | P | P | P |
+| A3 | P — multilevel assign-and-trace loop | — | P | — | — | — | P | P | P |
+| A4 | **P** — camera-perspective manifests, sequence recovery, and user resolution; no moved EDL boundary or equal-manifest reconstruction | — | P | P — aligned alternatives without retained physical-camera geometry | — | P | P | P | P |
 | A5 | — — comparison technique only | — | — | — | P — perceptual hashes and key-frame-set distance; no express sliding-window matching | — | — | — | — |
-| A6 | P — tailored manifests, temporal detection, and device resolution; no camera-boundary production | — | P | P — variable-duration fragments without physical-camera geometry | — | P | Y | Y | P |
+| A6 | P — tailored manifests, temporal detection, and device resolution; no camera-boundary production | — | P | P — variable-duration fragments without physical-camera geometry | — | P | P | P | P |
 | A7 | P — device-driven variant delivery/tracing | — | P | — | — | P | P | P | P |
-| A8 | P — variant sequence delivery/identification | — | P | — | — | — | P | Y | — |
-| A9 | P — client variants and collusion detector | — | — | — | — | — | Y | P | Y |
+| A8 | P — variant sequence delivery/identification | — | P | — | — | — | P | P | — |
+| A9 | P — client variants and collusion detector | — | — | — | — | — | P | P | Y |
 | A10 | P — per-device rendering/capture loop | — | — | — | — | — | P | P | P |
 | A11 | — | — | — | — | — | — | — | — | P — visible overlay |
 | A12 | — — classification technique only | — | — | — | P — trained-feature comparison, not the claimed pHash/sliding-window combination | — | — | — | — |
@@ -172,23 +175,24 @@ Dependent deltas: **23** resynchronization · **24** manifest preservation of ei
 | A16 | — — no suspect loop | — | P | P — shared-timeline chunks without physical-camera geometry | — | P | — | P | — |
 | A17 | — — no suspect loop | — | P | — | — | P | — | P | P |
 | A18 | — — no suspect loop | — | P | — | — | P | — | P | P |
-| A19 | P — pirate acquisition, scoring, and recipient identification; no production chain | — | — | — | — | — | Y | P | P |
+| A19 | P — pirate acquisition, scoring, and recipient identification; no production chain | — | — | — | — | — | P | P | P |
 | A20 | **P** — individualized EDL versions, registry, and cross-reference lookup; no claimed camera-boundary/reconstruction chain | — | — | — | — | — | — | P | P |
+| A21 | P — shot-boundary duration-sequence fingerprint and exact database equality; no production, delivery, manifests, or recipient ledger | — | — | — | P — cumulative-histogram/sliding-window implementation, not the claimed perceptual-hash fuzzy comparison | — | — | P — cut-duration sequence without recipient-associated camera timing choices | — |
 | B1 | — — codec provenance only | — | — | — | — | — | — | — | P |
 | B2 | *scored with A1* | | | | | | | | |
 | B3 | — — watermark monitoring loop only | — | — | — | — | — | — | — | P |
 | B4 | P — per-playback mark and point-of-piracy loop | — | — | — | — | — | — | P | P |
 | B5 | — — broadcast monitoring only | — | — | — | — | — | — | — | P |
-| B6 | P — per-buyer local timing transform, hash reacquisition, contributor search | — | P | — | P — multimedia hashes and local comparison; no express frame-pHash sliding windows | — | Y | Y | P |
+| B6 | P — per-buyer local timing transform, hash reacquisition, contributor search | — | P | — | P — multimedia hashes and local comparison; no express frame-pHash sliding windows | — | P | P | P |
 | B7 | — — shot-comparison technique only | — | — | — | P — tolerance-based shot comparison, not the claimed pHash/sliding-window combination | — | — | P | — |
-| B8 | — — relative-time identification only | — | — | — | P — distortion-tolerant timing comparison, not the claimed pHash/sliding-window combination | — | — | Y | — |
-| B9 | P — key-derived user switching and origin codes; no detection/reconstruction | — | P | P — identical segmentation without physical-camera geometry | — | — | P | Y | — |
+| B8 | — — relative-time identification only | — | — | — | P — distortion-tolerant timing comparison, not the claimed pHash/sliding-window combination | — | — | P | — |
+| B9 | P — key-derived user switching and origin codes; no detection/reconstruction | — | P | P — identical segmentation without physical-camera geometry | — | — | P | P | — |
 | B10 | P — per-user modification and leaked-video inference; no claimed camera chain | — | — | — | — | — | — | P | P |
-| C8 | P — standardized A/B session loop | — | P | P — aligned A/B chunks without physical-camera geometry | — | P | P | Y | P |
-| C3 | — — accusation algorithm only | — | — | — | — | — | Y | P | — |
+| C8 | P — standardized A/B session loop | — | P | P — aligned A/B chunks without physical-camera geometry | — | P | P | P | P |
+| C3 | — — accusation algorithm only | — | — | — | — | — | P | P | — |
 | C7 | *nr — copy outstanding* | | | | | | | | |
 
-**Method assessment.** No reviewed document maps NA claim 22 as a whole. A20+B9+A4/A6/A13 with direct multicamera/EDL and cut-detection teachings is the principal combination route. NA claim 22 is assigned DW-05A Mode A. The dependent columns score only their added limitations and retain the support gates recorded in the priority map.
+**Method assessment.** No reviewed document maps NA claim 22 as a whole. A20+B9+A4/A6/A13/A21 with direct multicamera/EDL teachings is the principal combination route. A21 supplies recovery-side cut-boundary sequencing and exact fingerprint equality but no production, manifest, or recipient-ledger operations. NA claim 22 is assigned DW-05A Mode A. The dependent columns score only their added limitations and retain the support gates recorded in the priority map. Generic collusion outputs and generic multi-position sequences score `P`, not `Y`, against NA claims 28–29 absent the claimed manifest-sequence/respective-portion or physical-camera timing-combination relationships.
 
 ## 6. B10, search, and re-score controls
 

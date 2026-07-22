@@ -33,7 +33,7 @@ The principal support gates are:
 6. manifest-sequence collusion attribution in NA claims 21 and 28; and
 7. overlay before segmentation in NA claim 30.
 
-The detector independent is exposed to A4, A6, A13, B6, B8, B9, and A20 because those references collectively teach substantial manifest delivery, recovery, timing variation, pattern reacquisition, registry, or manifest-regeneration operations. NA claims 19–20 require the matched physical-camera mate chunk and plural timing reconstruction but face A20+B9+A4/A6/A13 plus direct multicamera/EDL pressure. The end-to-end method retains the production-side physical-camera boundary as its principal structural distinction. No limited-search result is a clearance or allowance opinion.
+The detector independent is exposed to A4, A6, A13, B6, B8, B9, A20, and A21 because those references collectively teach substantial manifest delivery, recovery, timing variation, pattern reacquisition, registry, manifest regeneration, or shot-boundary time-slice fingerprint comparison. NA claims 19–20 require the matched physical-camera mate chunk and plural timing reconstruction but face A20+B9+A4/A6/A13+A21 plus direct multicamera/EDL pressure. The end-to-end method retains the production-side physical-camera boundary as its principal structural distinction. No limited-search result is a clearance or allowance opinion.
 
 ## 3. Document set
 
@@ -43,7 +43,7 @@ The detector independent is exposed to A4, A6, A13, B6, B8, B9, and A20 because 
 | [`AA11393US-NA-US_counsel-briefing_DRAFT.md`](AA11393US-NA-US_counsel-briefing_DRAFT.md) | Decision-focused art, support, enforcement, procedure, and filing instructions |
 | [`AA11393US-NA-priority-support-map_DRAFT.md`](AA11393US-NA-priority-support-map_DRAFT.md) | Provisional/PCT limitation map and claim-as-a-whole gates |
 | [`AA11393US-NA-prior-art-comparison-matrix_DRAFT.md`](AA11393US-NA-prior-art-comparison-matrix_DRAFT.md) | Feature, combination, and fallback analysis |
-| [`AA11393US-NA-claim-document-mapping-matrix_DRAFT.md`](AA11393US-NA-claim-document-mapping-matrix_DRAFT.md) | Claim-group mapping against all 32 canonical sources |
+| [`AA11393US-NA-claim-document-mapping-matrix_DRAFT.md`](AA11393US-NA-claim-document-mapping-matrix_DRAFT.md) | Claim-group mapping against all 33 canonical sources |
 
 Use `NA claim N`, `AF claim N`, and `PCT claim N` outside exact claim text.
 
@@ -64,7 +64,7 @@ Do not fork shared IDS, filing-control, or public-comment records into this dire
 1. Select NA, AF, or a supported hybrid and the filing route.
 2. Confirm or reject the applicant's Mode A assessment for NA claims 16 and 22 by separately concluding PCT written description, PCT enablement, provisional written description and enablement for benefit entitlement, and effective date; perform the same analysis and assign a DW-05A mode for every other selected independent and material gated fallback.
 3. Decide the production, distribution, plural-timing, collusion, chunk-geometry, overlay, and Example 2 gates recorded in the support map.
-4. Test NA claim 16 against A4, A6, A13, B6, B8, B9, A20, and other detector/delivery art; test NA claims 19–20 and NA claim 22 against A20+B9+A4/A6/A13 and direct multicamera/EDL art.
+4. Test NA claim 16 against A4, A6, A13, B6, B8, B9, A20, A21, and other detector/delivery art; test NA claims 19–20 and NA claim 22 against A20+B9+A4/A6/A13+A21 and direct multicamera/EDL art.
 5. Analyze actor attribution, divided infringement, obtainable proof, § 101, § 112(f), restriction, unity, double patenting, and continuation placement.
 6. Complete DW-08A, official-copy verification, C7 acquisition, B6 foreign-language handling, and all IDS materiality decisions before final claim approval.
 

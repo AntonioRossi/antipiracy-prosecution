@@ -4,7 +4,7 @@
 >
 > **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** This is an applicant-prepared decision package, not counsel advice, an allowance prediction, or a validity opinion.
 >
-> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A and DW-08A remain pre-filing controls. No counsel opinion or filing choice is represented as obtained.
+> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A and DW-08A remain pre-filing controls; DW-08B and DW-08C control objective evidence and infringement proof. No counsel opinion or filing choice is represented as obtained.
 
 ## 1. Decision requested
 
@@ -63,13 +63,13 @@ NA claim 16 directly recites:
 5. equality to a delivered manifest; and
 6. recipient identification.
 
-A4 and A6 are strong on manifest delivery, suspect-pattern recovery, and recipient resolution. A13 is the closest stored manifest-regeneration reference but reconstructs from segment identifiers rather than scene-change-derived cut times. B6 and B9 create recipient-specific timing pressure; B8 creates relative-time recovery pressure; A20 supplies forensic EDL/registry motivation; and A5 and B7 pressure perceptual-hash and shot-detection implementations. NA claim 16 does not carry the physical-camera geometry of claims 1, 9, 19, or 22. Its principal routes are A4+B9+A13+A5/B7, A6+A13+B6/B8, A20+A13+B7 with B6/B9, and A4/B9+A13 with cut detection as needed.
+A4 and A6 are strong on manifest delivery, suspect-pattern recovery, and recipient resolution. A13 is the closest stored manifest-regeneration reference but reconstructs from segment identifiers rather than scene-change-derived cut times. A21 detects shot boundaries, derives a shot-duration/time-slice fingerprint, and performs exact database fingerprint comparison; it does not reconstruct a delivered manifest or identify a recipient from a delivered-manifest ledger. B6 and B9 create recipient-specific timing pressure; B8 creates relative-time recovery pressure; A20 supplies forensic EDL/registry motivation; and A5 and B7 pressure perceptual-hash and shot-detection implementations. NA claim 16 does not carry the physical-camera geometry of claims 1, 9, 19, or 22. Its principal routes are A4+B9+A13+A21 or A5/B7, A6+A13+A21 or B6/B8, A20+A13+A21/B7 with B6/B9, and A4/B9+A13 with A21 or other cut detection as needed.
 
-NA claim 19 requires the delivered manifest found equal by the search to select a mate chunk spanning the same ordered first-to-second physical-camera transition at a noncoincident timing, including temporally corresponding different-camera frames in the intervening interval. NA claim 20 inherits that relationship and requires the reconstructed manifest to represent a recipient-associated plural timing combination. Test both against A20+B9+A4/A6/A13 and direct multicamera/EDL art; the words `mate` and `manifest` are not, by themselves, distinctions.
+NA claim 19 requires the delivered manifest found equal by the search to select a mate chunk spanning the same ordered first-to-second physical-camera transition at a noncoincident timing, including temporally corresponding different-camera frames in the intervening interval. NA claim 20 inherits that relationship and requires the reconstructed manifest to represent a recipient-associated plural timing combination. Test both against A20+B9+A4/A6/A13+A21 and direct multicamera/EDL art; the words `mate` and `manifest` are not, by themselves, distinctions.
 
 ### End-to-end method
 
-NA claim 22 combines the physical-camera production boundary, manifest delivery/association, plural cut-time reconstruction, equality, and recipient lookup. No reviewed document maps that complete chain, but A20+B9+A4/A6/A13 is a credible combination route. The method category adds enforcement coverage, not technical novelty.
+NA claim 22 combines the physical-camera production boundary, manifest delivery/association, plural cut-time reconstruction, equality, and recipient lookup. No reviewed document maps that complete chain, but A20+B9+A4/A6/A13+A21 is a credible combination route. The method category adds enforcement coverage, not technical novelty.
 
 Under MPEP § 2143, counsel should require an evidence-backed account of every limitation, motivation, modification, and reasonable expectation of success. Unsupported common knowledge or official notice should not supply the central disputed relationship after a specific traverse under MPEP § 2144.03.
 
@@ -122,6 +122,8 @@ NA claim 19 additionally requires proof that the equal matched manifest selects 
 
 The system claims require proof of the claimed system as a whole. The method requires performance of every step by one entity or legally attributable actors. Do not transpose system-use and method-attribution tests.
 
+DW-08C controls the evidence program: lawfully obtained multi-recipient captures, original manifests and chunks, session and request metadata, transition-time analysis, recipient associations, actor/custodian mapping, and chain of custody. Observed facts, technical inference, and attorney argument must remain separately identified.
+
 ## 6. Procedure, count, and continuation
 
 `NA-2026-07-22-v4` contains 30 total claims, four independent claims, and no multiple-dependent claim. It is at the current Track One numerical ceiling and has no net claim-count headroom. It also exceeds the basic 20-total/three-independent allocation. Counsel must verify current limits and fees.
@@ -136,14 +138,14 @@ Use only the canonical shared [IDS inventory](../common/AA11393US-US_IDS-referen
 
 The current IDS inventory is not an admission that every item is prior art or material. Counsel must complete official-copy verification, C7 acquisition, B6 foreign-language handling, publication/grant-pair decisions, and materiality dispositions.
 
-Public PCT comments must remain consistent with the filed claims and verified art. Do not characterize D1, A20, or another reference more narrowly than its actual disclosure.
+Public PCT comments must remain consistent with the filed claims and verified art. Do not characterize D1, A20, A21, or another reference more narrowly than its actual disclosure.
 
 ## 8. Pending written recommendations
 
 1. Should NA, AF, or a supported hybrid be filed, and by which route?
 2. Are NA claims 1 and 9 adequately supported as complete claims, and what mode applies to each?
-3. Does Mode A NA claim 16 retain sufficient patentability value after A4/A6/A13/B6/B8/B9/A20 review, and do NA claims 19–20 provide useful enforceable fallbacks over the leading combinations?
-4. How should A20+B9+A4/A6/A13 and direct multicamera/EDL art be answered for Mode A NA claim 22?
+3. Does Mode A NA claim 16 retain sufficient patentability value after A4/A6/A13/B6/B8/B9/A20/A21 review, and do NA claims 19–20 provide useful enforceable fallbacks over the leading combinations?
+4. How should A20+B9+A4/A6/A13+A21 and direct multicamera/EDL art be answered for Mode A NA claim 22?
 5. Which Example 2, production, manifest, chunk-geometry, plural-timing, collusion, and overlay dependents should be retained?
 6. Which likely actors can be proved to practice the system claims and every method step?
 7. What restriction/election and continuation plan preserves commercially valuable scope?

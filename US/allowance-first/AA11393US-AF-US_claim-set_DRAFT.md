@@ -1,6 +1,6 @@
 # AA11393US — AF Allowance-First US Claim Strategy and Candidate Claim Set (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v4 · STATUS 22 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 22 JULY 2026**
 >
 > **INTERNAL COUNSEL-REVIEW DRAFT — NOT FOR FILING AS-IS.** Use `AF claim N` outside the claim text. This branch is an allowance-first alternative to the normal-allowance (`NA`) branch; it does not replace the actor-focused NA claims or determine a filing route.
 >
@@ -8,16 +8,18 @@
 
 ## 1. AF objective and architecture
 
-This branch places the disclosed production-to-attribution loop in **one independent system claim and one independent method claim that mirrors the complete operational chain**. Its allowance-first premise is that the strongest present distinction is not any isolated use of segmentation, manifests, timing fingerprints, shot detection, or a recipient ledger. It is the operational combination in which:
+This branch contains **one independent system claim and one independent method claim that each recite the complete production-to-attribution chain, together with one monitor-side independent method claim directed to the disclosed recipient-recovery operation**. Its allowance-first premise is that the strongest present distinction is not any isolated use of segmentation, manifests, timing fingerprints, shot detection, or a recipient ledger. For AF claims 1 and 19, it is the operational combination in which:
 
 1. successive edit entries identify different physical source cameras and their in-point and out-point time codes;
 2. recorded time codes at a plurality of director-commanded cuts are varied while the source-camera identifiers and their order are retained, producing reference and mate versions with noncoincident timings for the retained camera transitions;
 3. manifest files direct delivery of respective combinations of reference and mate chunks and are associated with recipients in a ledger; and
 4. plural camera-cut time codes detected in suspected content are used to build one or more reconstructed manifest files, and the ledger is searched for the recipient associated with an equal delivered manifest file.
 
-AF claim 1 recites that integrated system, and AF claim 19 recites the same chain as affirmative method steps. Each output is used by a later operation: the edit instructions determine the reference and mates; those versions supply the chunks selected by delivered manifests; the delivered manifests populate the recipient ledger; and plural detected cut time codes produce the reconstructed-manifest object used for recipient identification. Neither independent claim is a list of unrelated production, distribution, and detection operations.
+AF claim 1 recites that integrated system, and AF claim 19 recites the same chain as affirmative method steps. AF claim 20 provides a causal-nexus fallback requiring an affirmative mate-timing choice in the delivered recipient-associated combination and reconstruction of the same detected timing-choice combination. AF claims 21–22 provide a support-safe perceptual-hash and sliding-window detection branch. Each output in the integrated claims is used by a later operation: the edit instructions determine the reference and mates; those versions supply the chunks selected by delivered manifests; the delivered manifests populate the recipient ledger; and plural detected cut time codes produce the reconstructed-manifest object used for recipient identification.
 
-This architecture trades enforcement breadth for a concentrated patentability position. It may be best suited to a vertically integrated operator or a system whose components are operated or controlled by one entity. The NA branch should remain available for subsystem and actor-focused coverage, whether in the initial case or in properly supported continuation/divisional practice selected by counsel.
+AF claim 23 places suspect acquisition, plural cut-time derivation, reconstruction, and ledger search to identify a recipient in one affirmative monitor-side method. Its searched-ledger environment requires delivered reference/mate chunk-combination manifests, and the equal delivered manifest must contain an affirmative mate timing and match the same detected plural timing combination represented by the reconstruction. It does not require the monitoring actor to produce, segment, deliver, or record the reference/mate versions and does not require suspect-side identification of physical camera sources.
+
+The integrated claims trade enforcement breadth for a concentrated patentability position and may be best suited to a vertically integrated operator or a system whose components are operated or controlled by one entity. AF claim 23 targets a narrower direct-performer position but carries a materially more exposed recovery-side art, eligibility, support, restriction, and proof posture. The NA branch should remain available for production, distribution, detection-system, and broader method coverage, whether in the initial case or in properly supported continuation/divisional practice selected by counsel.
 
 ## 2. Claim count and dependency control
 
@@ -42,10 +44,14 @@ This architecture trades enforcement breadth for a concentrated patentability po
 | 17 | Dependent | 1 | Recipient-associated reference/mate timing choices across the plural selected cuts |
 | 18 | Dependent | 1 | Additional overlaid audio/video elements before segmentation |
 | 19 | Independent method | — | Method twin of AF claim 1's complete generation-to-attribution chain |
+| 20 | Dependent | 19 | Affirmative mate timing in a recipient combination and reconstruction of the same detected timing-choice combination |
+| 21 | Dependent | 19 | Perceptual-hash cut-time detection |
+| 22 | Dependent | 21 | Sliding-window fuzzy matching |
+| 23 | Independent method | — | Monitor-side reconstruction and ledger lookup with an affirmative mate timing in the equal delivered manifest and the same detected plural timing combination |
 
-**Count:** 19 total claims; 2 independent claims; 17 singly dependent claims; no multiple-dependent claims. AF claim 19 is included in the complete counsel-review proposal. Counsel may omit AF claim 19 at filing if the marginal simplicity of a one-independent posture is judged more important than the complementary method coverage; no separate AF claim-set document should be created for that filing choice.
+**Count:** 23 total claims; 3 independent claims; 20 singly dependent claims; no multiple-dependent claims. All claims are included in the complete counsel-review proposal. AF claims 19–22 form the integrated method family; AF claim 23 is a separately standing monitor-side method. Any filing decision that omits either family must be recorded in the filed topology and every claim-indexed package document. Omission or cancellation of AF claim 19 requires corresponding omission or cancellation of AF claims 20–22. No separate AF claim-set document should be created for a filing subset.
 
-No claim as drafted depends from AF claim 19. This keeps omission of the method independent surgical, but the current AF parent proposal contains no intermediate method-narrowing tier if AF claim 19 is retained and rejected. Counsel may narrow or amend AF claim 19 or add supported method dependents in the parent, subject to claim-count, fee, Track One, dependency, support, and art controls. The continuation reservation separately carries broader and intermediate method candidates—including commercially useful and supportable NA claims 23–30—subject to copendency, support, art, and business-value controls.
+AF claims 20–22 provide method-narrowing tiers beneath AF claim 19. AF claim 20 preserves the delivered-combination-to-reconstructed-combination causal nexus but carries the relationship-specific support gate stated below. AF claims 21–22 form a separate directly supported detection branch so that they do not inherit AF claim 20's gate. None cures AF claim 19's performance-attribution or divided-infringement risk. AF claim 23 is drafted to reduce that actor split only where one monitoring entity performs every affirmative recovery operation, including the ledger search to identify the recipient, or another performer's conduct is legally attributable to that entity under the applicable method-claim standard. The continuation reservation separately carries broader and complementary actor-focused candidates—including the broader detector-only method and commercially useful NA claims 23–30—subject to copendency, support, art, and business-value controls.
 
 ## 3. Candidate claims
 
@@ -161,6 +167,38 @@ building one or more reconstructed manifest files from the plurality of identifi
 
 searching the ledger to identify a recipient associated with a delivered manifest file that is equal to one of the one or more reconstructed manifest files.
 
+### Integrated-method fallback ladder
+
+**20.** The method of claim 19, wherein:
+
+each respective combination of chunks preserves, across the plurality of selected camera cuts, a recipient-associated combination of choices between the reference camera-switch timings and the later mate camera-switch timings;
+
+building the one or more reconstructed manifest files comprises generating a reconstructed manifest file representing a detected combination of camera-switch timings across the plurality of selected camera cuts; and
+
+the delivered manifest file that is equal to the reconstructed manifest file represents a recipient-associated combination that includes at least one of the later mate camera-switch timings and matches the detected combination represented by the reconstructed manifest file.
+
+**21.** The method of claim 19, wherein identifying the plurality of time codes comprises comparing frames of the suspected unauthorized distribution with frames of one or both of the reference audio-video content and the one or more mates using perceptual hashes of the frames.
+
+**22.** The method of claim 21, wherein the comparing comprises fuzzy matching in which perceptual hashes of groups of frames are compared using sliding windows.
+
+### Monitor-side reconstructed-manifest method
+
+**23.** A method of identifying a recipient associated with a suspected unauthorized distribution of audio-video content, the method comprising:
+
+receiving the suspected unauthorized distribution;
+
+applying a scene-change detection algorithm to the suspected unauthorized distribution to identify a plurality of time codes of camera cuts in the suspected unauthorized distribution;
+
+building one or more reconstructed manifest files from the plurality of identified time codes, the one or more reconstructed manifest files including a reconstructed manifest file representing a detected combination of camera-cut timings across a plurality of camera cuts; and
+
+searching a ledger comprising associations between a plurality of delivered manifest files and respective recipients to identify a recipient associated with a delivered manifest file that is equal to the reconstructed manifest file,
+
+wherein each of the plurality of delivered manifest files identifies a respective combination of chunks selected from an ensemble comprising reference audio-video content and one or more mates of the reference audio-video content, each mate having at least one camera-cut timing different from a corresponding camera-cut timing of the reference audio-video content,
+
+wherein each of the plurality of delivered manifest files represents, across the plurality of camera cuts, a recipient-associated combination of choices between respective reference camera-cut timings and respective different mate camera-cut timings, and
+
+wherein the delivered manifest file that is equal to the reconstructed manifest file represents a recipient-associated combination that includes at least one of the respective different mate camera-cut timings and matches the detected combination represented by the reconstructed manifest file.
+
 ## 4. Why this order is allowance-first
 
 | Tier | AF claims | Function in prosecution |
@@ -171,6 +209,8 @@ searching the ledger to identify a recipient associated with a delivered manifes
 | Delivery fallbacks | 9–10, 13–17 | Adds adaptive CDN delivery, mixing, concrete paired chunks, blockchain registration, unicast, or plural recipient-associated timing choices |
 | Collusion fallbacks | 11–12 | Requires a positive contributor-identification output and preserves a segmented Tardos implementation; does not treat “Tardos” as a novelty label by itself |
 | Pipeline fallback | 18 | Adds pre-segmentation overlays |
+| Integrated-method fallbacks | 20–22 | Add a delivered-to-reconstructed timing-choice causal nexus with an affirmative mate choice and a separate perceptual-hash/sliding-window implementation branch, without changing AF claim 19's actor-attribution posture |
+| Monitor-side recovery independent | 23 | Places the affirmative suspect-analysis and lookup chain with one monitoring actor while retaining the mate-containing delivered-combination-to-reconstructed-combination nexus as the recovery-side patentability position |
 
 Known implementations such as perceptual hashing, fuzzy matching, manifests, adaptive streaming, recipient ledgers, and probabilistic tracing are intentionally dependent limitations. Their role is to provide concrete implementation and combination fallbacks, not to imply that each is independently novel.
 
@@ -185,23 +225,26 @@ Known implementations such as perceptual hashing, fuzzy matching, manifests, ada
 7. **AF claim 14 gate.** Equal-duration corresponding reference/mate chunks are express, but the proposition that each paired same-interval chunk itself spans the retained transition between identified cameras at its respective internal timing is not stated verbatim in one passage. Treat AF claim 14 as a combined-example fallback pending counsel review.
 8. **Collusion-output gate.** General Tardos/probabilistic collusion handling, manifest-associated chunk combinations, segmented Tardos codes, and positive source-account identification are disclosed. Confirm support for AF claim 11's use of recipient-associated manifest chunk-selection sequences as the probabilistic input and AF claim 12's relationship between respective portions and contributing recipients. Preserve positive identification rather than optional invocation of an algorithm.
 9. **Overlay sequencing gate.** The overlay feature is express, but AF claim 18 specifies overlay before segmentation. Counsel must verify that the disclosed pipeline order supports that sequence and revise the wording if necessary.
+10. **Method fallback ladder.** AF claim 20 combines disclosed plural timing choices, manifest associations, and reconstructed-manifest recovery, but the exact delivered recipient-combination → affirmative mate choice → reconstruction of the same detected combination relationship is **D/CE/G** and requires counsel determination. AF claims 21–22 add directly disclosed perceptual-hash and sliding-window implementations and depend from AF claim 19 and AF claim 21, respectively. Each inherits AF claim 19's claim-as-a-whole, priority, enablement, eligibility, performance-attribution, and art posture; none supplies an independent cure for divided infringement.
+11. **Monitor-side method gate.** AF claim 23's affirmative suspect-acquisition, scene-change detection, plural cut-time derivation, reconstruction, and ledger-search-to-identify operations are direct components of provisional method claim 10(j)–(k) and PCT Method 200/claims 16–17. The detector-only base method is **D/G; mode unassigned**; the method-form searched-ledger and passive delivered-manifest relationship and the mate-containing delivered-combination → reconstruction of the same detected combination nexus are **D/CE/G**. AF claim 23 as a whole is **D/CE/G; mode unassigned** and inherits neither NA claim 16's system-format Mode A assignment nor AF claim 19's integrated-method mode. Counsel must determine written description and enablement in each filing, effective date, the limiting effect of the passive ledger and manifest environment, the construction of manifest equality, actor performance, § 101, § 112(f), and the claim as a whole before filing or reliance.
 
-The separate AF priority/support map records the direct bases for the reconstructed-manifest chain and the remaining production-boundary, integration, collusion, chunk-geometry, and overlay gates. The NA actor-focused claims remain the subsystem and divided-performance alternatives.
+The separate AF priority/support map records the direct bases for the reconstructed-manifest chain and the remaining production-boundary, integration, monitor-method, collusion, chunk-geometry, and overlay gates. The NA actor-focused claims remain the production, distribution, detection-system, and broader-method alternatives.
 
 ## 6. Enforcement and portfolio cautions
 
-1. **Actor and proof analysis.** AF claims 1 and 19 each span production, delivery/association, detection, and lookup. A validity-oriented allowance anchor is not necessarily the best infringement claim. Counsel should separately analyze direction/control or joint-enterprise attribution for the method steps, whole-system use for the system claim, divided infringement, and available evidence. AF claim 19 adds a complementary claim format; it does not cure the actor-split risk or improve the prior-art position.
-2. **Preserve the NA actor split.** Do not abandon the NA production, distribution, and detection families merely because AF claims 1 and 19 are narrower. Use continuation, divisional, or parallel-claim planning only as supported and commercially justified.
-3. **Proof burden.** The successive source-camera entries, modified out-point and in-point time codes, plural noncoincident transition timings, delivered manifests, detected suspect cut time codes, reconstructed manifest, and recipient association each may require technical discovery. Plan controlled captures from multiple recipient sessions and preserve edit-list, manifest, chunk, detection, and association evidence where available.
+1. **Actor and proof analysis.** AF claims 1 and 19–22 span production, delivery/association, detection, and lookup. Counsel should separately analyze direction/control or joint-enterprise attribution for AF claim 19's method steps, whole-system use for AF claim 1, divided infringement, and available evidence. AF claim 23 does not require production or delivery by the monitoring actor, but direct infringement still requires one entity to perform suspect acquisition, cut-time derivation, reconstruction, and the ledger search to identify the recipient, or requires another performer's conduct to be legally attributable to that entity under the applicable method-claim standard. A vendor that merely supplies cut times or a reconstructed object while another entity performs the search-to-identify operation may remain outside the complete method.
+2. **Preserve the remaining NA actor split.** Do not abandon the NA production, distribution, detection-system, or broader method families merely because AF claim 23 targets one monitoring configuration. Use continuation, divisional, or parallel-claim planning only as supported and commercially justified.
+3. **Proof burden.** The successive source-camera entries, modified out-point and in-point time codes, plural noncoincident transition timings, delivered manifests, detected suspect cut time codes, reconstructed manifest, recipient association, performer of the ledger search, and recipient-identification output each may require technical discovery. Plan controlled captures from multiple recipient sessions and preserve edit-list, manifest, chunk, detection, association, query, and result evidence where available.
 4. **Functional claiming.** The processor-and-memory format does not itself eliminate § 112(f) or algorithm-sufficiency issues. Counsel should confirm structural and algorithmic support for every function.
 5. **No negative watermark limitation.** The claims do not require absence of watermarking. The specification permits complementary watermarking, and the camera-boundary mechanism should be claimed positively.
-6. **Eligibility, restriction, and unity.** The method twin can add eligibility and divided-infringement questions and may modestly increase restriction or election complexity. The production, distribution, and detection subject matter in either independent can still raise search, unity, restriction, or election issues. Route-specific consequences remain for counsel.
+6. **Eligibility, restriction, and unity.** The integrated and monitor-side methods add distinct eligibility, actor, and proof questions. AF claim 23 is a separately useful recovery subcombination with a materially different art and examination focus from the integrated production-to-attribution claims, so restriction or election exposure is meaningful although not automatic. Counsel must plan election, traversal, rejoinder, continuation/divisional treatment, and any § 121 consequences without assuming that AF claim 23 will be examined or issue with AF claim 1.
+7. **AF claim 23 eligibility pre-mortem.** The claim may be characterized as receiving content, extracting timing data, building a data representation, searching associated records, and returning a recipient association. The delivered-manifest and mate-timing relationships do not by themselves establish eligibility. Counsel must identify the asserted judicial exception under Step 2A Prong One, analyze integration into a practical application under Step 2A Prong Two, analyze the additional elements individually and as an ordered combination under Step 2B, and identify specification support and evidence for any asserted improvement to content identification, streaming security, or computer operation. Do not rely solely on a field-of-use label, generic manifest or ledger implementation, or the desired identification result.
 
 ## 7. Track One and formal check
 
-- **Numerical check:** 19 total / 2 independent / no multiple-dependent claim. The set is within the 30-total/4-independent/no-multiple-dependent numerical limits applicable to Track One and remains below the basic 20-total/3-independent allocation.
+- **Numerical check:** 23 total / 3 independent / no multiple-dependent claim. The set is within the 30-total/4-independent/no-multiple-dependent numerical limits applicable to Track One and exceeds the basic 20-total allocation by three claims; counsel must confirm the resulting excess-claim fees and all other filing requirements.
 - **No-headroom rule still matters:** if this set is used in prioritized examination, every amendment must remain within the then-applicable Track One limits. Counsel should verify the current rule and filing mechanics at filing and coordinate any additions with cancellations if required.
 - **Route check:** Track One is a § 111(a) prioritized-examination procedure and is not available merely by making a direct § 371 national-stage entry. Counsel must confirm whether a bypass continuation is selected and satisfy all route-specific requirements.
 - **PTA economics:** Track One targets accelerated final disposition, not necessarily patent issuance. It may produce little or no Office-delay patent term adjustment that might otherwise accrue, but it neither fixes PTA at zero nor determines the final adjustment. Counsel must use case-specific Office-delay, applicant-delay, remaining-term, cost, and continuation-timing assumptions.
-- **Claim-form check:** AF claims 1 and 19 are independent; all 17 dependents refer to one earlier claim; no multiple-dependent claims appear. AF claim 19 affirmatively mirrors AF claim 1's complete operational chain. Convert the draft to the filing route's required original-claim or amendment format and recheck antecedent basis, claim status, and fees.
+- **Claim-form check:** AF claims 1, 19, and 23 are independent; all 20 dependents refer to one earlier claim; no multiple-dependent claims appear. AF claim 19 affirmatively mirrors AF claim 1's complete operational chain; AF claim 20 depends from AF claim 19; AF claims 21–22 form the separate chain `19 → 21 → 22`; and AF claim 23 affirmatively recites the monitor-side recovery chain without depending from the integrated method. Convert the draft to the filing route's required original-claim or amendment format and recheck antecedent basis, claim status, and fees.
 - **Substantive caveat:** satisfying a numerical or formal check says nothing about patentability, support, priority, eligibility, enforceability, or allowance. This document recommends no legal conclusion without counsel review.
