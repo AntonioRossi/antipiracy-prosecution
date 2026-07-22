@@ -1,6 +1,6 @@
 # AA11393US — AF Allowance-First US Claim Strategy and Candidate Claim Set (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 22 JULY 2026**
 >
 > **INTERNAL COUNSEL-REVIEW DRAFT — NOT FOR FILING AS-IS.** Use `AF claim N` outside the claim text. This branch is an allowance-first alternative to the normal-allowance (`NA`) branch; it does not replace the actor-focused NA claims or determine a filing route.
 >
@@ -31,7 +31,7 @@ This architecture trades enforcement breadth for a concentrated patentability po
 | 6 | Dependent | 1 | Variations and patterns at plural recorded cuts |
 | 7 | Dependent | 1 | Perceptual-hash transition detection |
 | 8 | Dependent | 7 | Sliding-window fuzzy matching |
-| 9 | Dependent | 1 | Manifest-based delivery and reconstructed manifest |
+| 9 | Dependent | 1 | Manifest-based delivery, association of each manifest with the candidate pattern present in its delivered version, and reconstructed manifest |
 | 10 | Dependent | 9 | Delivered-manifest ledger lookup |
 | 11 | Dependent | 1 | Mixed-version suspect and positive collusion attribution |
 | 12 | Dependent | 11 | Segmented Tardos collusion analysis |
@@ -46,7 +46,7 @@ This architecture trades enforcement breadth for a concentrated patentability po
 
 **Count:** 20 total claims; 2 independent claims; 18 singly dependent claims; no multiple-dependent claims. AF claim 20 is included in the complete counsel-review proposal. Counsel may omit AF claim 20 at filing if the marginal simplicity of a one-independent posture is judged more important than the complementary method coverage; no separate AF claim-set document should be created for that filing choice.
 
-No claim as drafted depends from AF claim 20. This keeps omission of the method independent surgical, but the current AF parent proposal contains no pre-drafted intermediate method-narrowing tier if AF claim 20 is retained and rejected. Counsel may narrow or amend AF claim 20 or add supported method dependents in the parent, subject to claim-count, fee, Track One, dependency, support, and art controls. The continuation reservation separately carries broader and intermediate method candidates—including commercially useful and supportable NA claims 23–30—subject to copendency, support, art, and business-value controls.
+No claim as drafted depends from AF claim 20. This keeps omission of the method independent surgical, but the current AF parent proposal contains no intermediate method-narrowing tier if AF claim 20 is retained and rejected. Counsel may narrow or amend AF claim 20 or add supported method dependents in the parent, subject to claim-count, fee, Track One, dependency, support, and art controls. The continuation reservation separately carries broader and intermediate method candidates—including commercially useful and supportable NA claims 23–30—subject to copendency, support, art, and business-value controls.
 
 ## 3. Candidate claims
 
@@ -84,7 +84,7 @@ search the record of associations to identify a recipient associated with the ma
 
 ### Priority-gated production fallbacks
 
-> **EXAMPLE 2 PRIORITY GATE — DO NOT FILE OR RELY ON AF CLAIMS 2–3 WITHOUT A WRITTEN COUNSEL DETERMINATION.** The provisional's mate EDL table and corrective sentence disclose restoration at `00:00:30:01`, but the same paragraph also contains the stray `00:00:30:11` “mistake” sentence; the PCT text is cleaned. Counsel must determine written-description support, priority entitlement, and whether the PCT wording is a permissible clarification before these claims are used as a material patentability position. Keep resynchronization out of AF claims 1 and 20 unless that review supports moving it.
+> **EXAMPLE 2 PRIORITY GATE — DO NOT FILE OR RELY ON AF CLAIMS 2–3 WITHOUT A WRITTEN COUNSEL DETERMINATION.** The provisional's mate EDL table and corrective sentence disclose restoration at `00:00:30:01`, but the same paragraph also contains the stray `00:00:30:11` “mistake” sentence; PCT Example 2 states restoration at `00:00:30:01` and does not contain the `00:00:30:11` value. Counsel must determine written-description support, priority entitlement, and whether the PCT wording is a permissible clarification before these claims are used as a material patentability position. Keep resynchronization out of AF claims 1 and 20 unless that review supports moving it.
 
 **2.** The system of claim 1, wherein the instructions cause the system to preserve, in the mate, a timing of a later camera cut from the reference audio-video content, thereby restoring synchronization between the mate and the reference audio-video content from the later camera cut onward.
 
@@ -192,7 +192,7 @@ searching the record of associations to identify a recipient associated with the
 |---|---|---|
 | Integrated structural core | 1, 20 | Requires the full closed loop and joint source-pair/timing match at the same distinguishing region in complementary system and method forms |
 | Production-record fallbacks | 2–6 | Adds resynchronization, the concrete EDL, live direction, or repeated cut regions before relying on generic distribution machinery |
-| Detection fallbacks | 7–10 | Adds disclosed comparison and reconstruction operations while retaining AF claim 1's structural source-and-time match |
+| Detection fallbacks | 7–10 | Adds directly disclosed hash/time-code/reconstruction/ledger operations; AF claim 9's exact manifest-to-new-candidate-pattern association is CE/G, and all four claims inherit AF claim 1's structural source-and-time gate |
 | Collusion fallbacks | 11–12 | Requires a positive contributor-identification output and preserves a segmented Tardos implementation; does not treat “Tardos” as a novelty label by itself |
 | Distribution fallbacks | 13–19 | Adds chunks, manifests, CDN, mixing, unicast, repeated regions, or overlays only after the camera-source boundary mechanism is already present |
 
@@ -202,15 +202,16 @@ Known implementations such as perceptual hashing, fuzzy matching, manifests, ada
 
 1. **AF claims 1 and 20 claim-as-a-whole gate.** The PCT and provisional disclose the overall generation, manifest/recipient association, detection, and lookup architecture in system and method form. The exact same-region relationship and joint matching of both source order and timing are an abstraction formed by reading the Example 2 production disclosure with the detection and retrieval disclosure. Counsel must provide separate claim-as-a-whole § 112(a) and priority analyses for AF claims 1 and 20; isolated support for each noun and the method's substantive correspondence to the system do not replace those analyses.
 2. **Source-identity detection gate.** Generic cut-time detection is express. Detecting the identities of both camera sources on the two sides of a suspect transition, and matching that ordered pair together with timing, is not stated with the same specificity in the detection example. AF claims 1, 20, and 7–10 must not be represented as having settled direct support for that operation.
-3. **Examples 2–5 integration gate.** AF claims 1, 20, 7–10, and 13–18 combine the moved boundary between identified cameras in Example 2 with later manifest, mixing, comparison, or reconstruction passages. Counsel must decide whether the application presents those operations as one integrated system or method and whether the provisional supports the same combination.
-4. **Example 2 priority gate.** Apply the express AF claims 2–3 gate above. Revisit the priority and disclosure posture if intervening information is identified with a potentially material effective prior-art date between 26 February 2024 and 19 February 2025, or if any Office questions priority.
-5. **AF claim 14 gate.** Equal-duration corresponding reference/mate chunks are express, but the proposition that each paired same-interval chunk itself spans the ordered transition between identified cameras at its respective internal timing is not stated verbatim in one passage. Treat AF claim 14 as a combined-example fallback pending counsel review.
-6. **Collusion-output gate.** General Tardos/probabilistic collusion handling and segmented Tardos codes are disclosed. Confirm support for AF claim 11's use of recipient-associated candidate camera-source-transition patterns as the algorithm input and AF claim 12's relationship between respective portions and contributing recipients; preserve positive identification rather than optional invocation of an algorithm.
-7. **Overlay sequencing gate.** The overlay feature is express, but AF claim 19 specifies overlay before segmentation. Counsel must verify that the disclosed pipeline order supports that sequence and revise the dependency or wording if necessary.
+3. **Per-filing support modes and separate enablement.** For AF claims 1 and 20, counsel must separately conclude PCT written description and enablement, provisional written description and enablement for benefit entitlement, and effective date, then assign each claim its own Mode A, B, or C under the shared DW-05A framework. The source-identity issue is the most important **written-description support gate for the AF independents**, not a recorded ranking of every validity risk across the NA/AF portfolio. Enablement is a separate, evidence-dependent inquiry and must not be inferred from either a positive or negative written-description conclusion.
+4. **Examples 2–5 integration gate.** AF claims 1, 20, 7–10, and 13–18 combine the moved boundary between identified cameras in Example 2 with later manifest, mixing, comparison, or reconstruction passages. Counsel must decide whether the application presents those operations as one integrated system or method and whether the provisional supports the same combination.
+5. **Example 2 priority gate.** Apply the express AF claims 2–3 gate above. Revisit the priority and disclosure posture if intervening information is identified with a potentially material effective prior-art date between 26 February 2024 and 19 February 2025, or if any Office questions priority.
+6. **AF claim 14 gate.** Equal-duration corresponding reference/mate chunks are express, but the proposition that each paired same-interval chunk itself spans the ordered transition between identified cameras at its respective internal timing is not stated verbatim in one passage. Treat AF claim 14 as a combined-example fallback pending counsel review.
+7. **Collusion-output gate.** General Tardos/probabilistic collusion handling and segmented Tardos codes are disclosed. Confirm support for AF claim 11's use of recipient-associated candidate camera-source-transition patterns as the algorithm input and AF claim 12's relationship between respective portions and contributing recipients; treat AF claim 12's added limitation as direct/contextual rather than unqualified direct support. AF claim 12 also inherits AF claim 11's pattern-input gate and AF claim 1's source-identity gate. Preserve positive identification rather than optional invocation of an algorithm.
+8. **Overlay sequencing gate.** The overlay feature is express, but AF claim 19 specifies overlay before segmentation. Counsel must verify that the disclosed pipeline order supports that sequence and revise the dependency or wording if necessary.
 
 The separate AF priority/support map records the limitation-level basis and grades direct, contextual, combined-example, and gated support. It should be reviewed together with the as-filed source documents, not used as a substitute for them.
 
-That map also supplies prepared support-safer contingency paths based on direct time-code/version or reconstructed-manifest recovery, the NA actor-focused families, omission of AF claim 14, and sequence-neutral treatment of AF claim 19. Those paths are counsel decision inputs, not preapproved claim text. Removing the same ordered source pair, noncoincident timings, intervening different-camera frames, or linked recipient recovery creates a new strategy version requiring fresh support and art review.
+That map also supplies prepared support-safer contingency paths based on direct time-code/version or reconstructed-manifest recovery, the NA actor-focused families, omission of AF claim 14, and sequence-neutral treatment of AF claim 19. AF claims 9–10 are directly supported as to their added derive/build/search operations but, as dependents, inherit AF claim 1 and do not themselves cure its source-identity gate. Selection of that contingency therefore requires approved independent system/method wording, a new strategy version, and fresh support, art, dependency, count, and actor review. Those paths are counsel decision inputs, not preapproved claim text. Removing the same ordered source pair, noncoincident timings, intervening different-camera frames, or linked recipient recovery creates a new strategy version requiring fresh support and art review.
 
 ## 6. Enforcement and portfolio cautions
 
@@ -229,8 +230,3 @@ That map also supplies prepared support-safer contingency paths based on direct 
 - **PTA economics:** Track One targets accelerated final disposition, not necessarily patent issuance. It may produce little or no Office-delay patent term adjustment that might otherwise accrue, but it neither fixes PTA at zero nor determines the final adjustment. Counsel must use case-specific Office-delay, applicant-delay, remaining-term, cost, and continuation-timing assumptions.
 - **Claim-form check:** AF claims 1 and 20 are independent; all 18 dependents refer to one earlier claim; no multiple-dependent claims appear. AF claim 20 affirmatively mirrors AF claim 1's complete operational chain. Convert the draft to the filing route's required original-claim or amendment format and recheck antecedent basis, claim status, and fees.
 - **Substantive caveat:** satisfying a numerical or formal check says nothing about patentability, support, priority, eligibility, enforceability, or allowance. This document recommends no legal conclusion without counsel review.
-
-## 8. Revision record
-
-- **AF-2026-07-17-v2 (17 July 2026):** repaired first recitation of the ordered transition in AF claim 1; added independent method AF claim 20 as an affirmative twin of the complete AF claim 1 chain; updated the 20-total/2-independent topology, support gates, enforcement cautions, filing-choice direction, and narrative exact-language alignment. No separate system-only AF package is created; counsel may omit AF claim 20 from the single AF proposal if a one-independent filing posture is selected.
-- **Initial-contact defensibility controls (17 July 2026):** made AF claim 20's no-dependent fallback trade-off express; routed prepared support-safer contingency paths without changing the candidate claims; and added qualified Track One/PTA economics. The text of AF claims 1–20 is unchanged by this control pass.

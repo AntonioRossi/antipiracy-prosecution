@@ -1,6 +1,6 @@
 # AA11393US — AF/NA Claim and Coverage Crosswalk (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 22 JULY 2026**
 >
 > **INTERNAL COUNSEL ANALYSIS — NOT FOR FILING AND NOT A CLAIM-CONSTRUCTION POSITION.** This crosswalk compares functional coverage; it does not state that any AF and NA claim has identical scope. Every external reference is strategy-qualified.
 >
@@ -26,7 +26,7 @@ AF claim 1 is narrower than any isolated NA subsystem claim because it requires 
 | AF claim 8 | Sliding-window fuzzy hash matching | NA claim 18 and method NA claim 26 | Same implementation family; AF claim 8 remains dependent through AF claim 7. |
 | AF claim 9 | Delivery by respective manifests, manifest-to-candidate-pattern association, derivation of a time code from the detected switch timing, and reconstructed-manifest building | NA claims 9, 19, and 24–25 | AF claim 9 combines delivery, candidate-pattern association, and reconstruction inside AF claim 1; it does not create a standalone platform or monitoring claim. |
 | AF claim 10 | Delivered-manifest ledger/account lookup | NA claims 12, 20, and 25 | AF claim 10 requires the AF claim 9 reconstruction path; NA claim 12 is a broader standalone distribution-ledger fallback. |
-| AF claim 11 | Mixed-version suspect, probabilistic analysis of recipient-associated candidate camera-source-transition patterns, and positive contributor identification | NA claims 21 and 28 | AF claim 11 omits NA claim 21's attribution-score requirement but expressly uses AF claim 1's newly formulated candidate patterns as the algorithm input; that integration remains support-gated. |
+| AF claim 11 | Mixed-version suspect, probabilistic analysis of recipient-associated candidate camera-source-transition patterns, and positive contributor identification | NA claims 21 and 28 | AF claim 11 omits NA claim 21's attribution-score requirement but expressly uses AF claim 1's claimed candidate patterns as the algorithm input; that integration remains support-gated. |
 | AF claim 12 | Segmented Tardos fingerprints applied to content segments and identification of a contributor for at least one respective portion | NA claims 21 and 28 | No NA claim has this exact segmented-Tardos/portion relationship. AF claim 12 deliberately does not carry NA claim 21's attribution-score language. |
 | AF claim 13 | Chunk/manifest delivery preserving one boundary timing and storing manifest/pattern/recipient association | NA claims 9, 24, and 29 | AF claim 13 supplies a complete manifest subsystem only after inheriting AF claim 1's generation and detection chain. |
 | AF claim 14 | Same-interval, equal-duration reference/mate chunks, each straddling its respective transition | NA claim 13 | Substantially corresponding structural fallback; both require the combined-example geometry review. |
@@ -47,7 +47,8 @@ Selecting AF for the initial case would not carry the following NA coverage as s
 | Distribution/recipient association without proof that the same defendant generated or later detected the versions | NA claims 9–15 | Targets streaming platforms, origin services, licensees, and CDN operators | AF claims 13–19 remain tied to AF claim 1's production and recovery operations. |
 | Detection/recipient resolution without proof that the detector generated and delivered the candidates | NA claims 16–21 | Targets monitoring providers, rights owners, and trust/safety systems | AF claims 7–12 remain tied to AF claim 1's upstream operations. |
 | Broader or actor-specific method scope and method fallbacks | NA claims 22–30 | Preserves method formulations that may target a narrower performer or retain implementation fallbacks without every AF claim 20 limitation | AF claim 20 preserves the integrated end-to-end method category, but it does not preserve the different breadth of NA claim 22 or the resynchronization, hashing, manifest, unicast, collusion, and overlay fallbacks of NA claims 23–30. |
-| Broader recipient-ledger, reconstructed-manifest, unicast, and collusion fallbacks under subsystem claims | NA claims 12, 14, 17–21, 25–28 | May be easier to plead or prove against a subsystem operator | AF carries these only in a narrower integrated tree. |
+| Recipient-ledger, reconstructed-manifest, unicast, and collusion fallbacks under subsystem claims | NA claims 12, 14, 17–21 | May be easier to plead or prove against a distribution or detection subsystem operator | AF carries these only in a narrower integrated tree. NA claims 19–20 remain dependent from NA claim 16 and inherit its source-identity gate. |
+| End-to-end method dependents | NA claims 25–28 | Preserve reconstruction, hashing, unicast, and positive contributor-identification deltas in method form | These claims inherit NA claim 22's complete production-through-recovery method and are not subsystem-only claims; NA claim 25 also inherits the source-identity gate, and NA claim 28 has no attribution-score limitation. |
 | Computer-readable-medium coverage | Not present in the current NA set; identified as a portfolio option | May target software distribution where system use is difficult to prove | AF contains no CRM claim; any CRM must be drafted support-safely and not as an unsupported end-to-end abstraction. |
 
 This deferral is the central cost of AF. A continuation plan must identify which families have enough commercial value to justify prosecution; “preserve everything later” is not a completed decision.
@@ -58,20 +59,22 @@ This deferral is the central cost of AF. A continuation plan must identify which
 2. The provisional Example 2 inconsistency follows AF claims 2–3 and NA claims 2–3 and 23; it is not cured by choosing one strategy.
 3. The Examples 2→3→4 manifest integration affects AF claims 13–18 and related NA claims 9, 13, 15, 22, 24, and 29, but the exact limitations differ.
 4. The weaker Examples 2→5 source-identity detection path is most acute for AF claims 1 and 20 and AF claims 7–10, and for NA claims 16–20 and 22–26.
-5. AF claims 11–12 require review of the recipient-associated candidate-pattern input and the exact segmented-fingerprint/portion-to-contributor relationship. The attribution-score gate affects NA claim 21 only; no attribution-score limitation appears in the AF set, and it should not be reintroduced without an identified support basis.
+5. AF claims 11–12 require review of the recipient-associated candidate-pattern input and the exact segmented-fingerprint/portion-to-contributor relationship. The attribution-score gate affects NA claim 21 only; no attribution-score limitation appears in the AF set, and such a limitation requires an identified support basis.
 6. The AF claim 14 and NA claim 13 chunk-geometry formulations are closely related, but neither receives support merely because equal-duration alternative chunks are conventional or disclosed.
 7. Art scores may strengthen or weaken when limitations are combined. Neither AF nor NA matrix scores may be copied into the other matrix without rescoring the complete claim.
 8. AF claim 20 changes claim category, not the technical novelty center. It inherits every claim-as-a-whole, source-identity, same-region, combined-example, and priority gate applicable to the corresponding AF claim 1 operations and requires its own § 101, restriction, and performance-proof review.
+9. AF claims 9–10 and NA claims 19–20/25 provide directly supported derive/build/search operations, but they remain dependent and do not cure an inherited source-identity gate. A support-safer reconstructed-manifest route must be drafted as new independent or intermediate wording and separately mapped under DW-05A Modes A–C.
 
 ## 5. Continuation reservation recommendations
 
 If counsel selects AF for the parent, the initial continuation reservation should at minimum evaluate:
 
-1. an `NA-2026-07-21-v2` claim 1-style production system with NA claims 2–8 fallbacks, plus separate evaluation of the former broader local-substitution theory without the same-pair requirement;
+1. an `NA-2026-07-21-v2` claim 1-style production system with NA claims 2–8 fallbacks, plus separate evaluation of a broader local-substitution theory without the same-pair requirement;
 2. an NA claim 9-style distribution system with NA claims 10–15 fallbacks;
 3. an NA claim 16-style detection system with NA claims 17–21 fallbacks;
 4. a broader or actor-specific method beginning from NA claim 22, together with each commercially useful and supportable NA claims 23–30 fallback not retained by AF claim 20; and
-5. a production- or detection-focused CRM claim only if the filed algorithmic and structural disclosure supports it.
+5. independent support-safer reconstructed-manifest detection-system and method formulations, using AF claims 9–10 and NA claims 19–20/25 only as sources for added operations rather than as presently operative fallbacks; and
+6. a production- or detection-focused CRM claim only if the filed algorithmic and structural disclosure supports it.
 
 Which family is filed first should follow commercial actors, restriction/election history, prior-art developments, proof access, and budget—not the numerical order above. The continuation memo controls the pre-issue filing gate and completion evidence.
 
@@ -85,8 +88,3 @@ This crosswalk is valid only for `AF-2026-07-17-v2` and `NA-2026-07-21-v2`. AF c
 4. a recorded decision whether the change creates an additional continuation reservation.
 
 No amendment or argument may treat the AF terminology hierarchy as a family-wide definition or disclaimer without an express counsel decision recorded across the affected cases.
-
-## 7. Revision record
-
-- **21 July 2026 — NA-v2 synchronization:** reviewed the crosswalk against `NA-2026-07-21-v2`, updated its validity control, and recorded the former broader production theory as a separate continuation candidate rather than present NA claim 1 scope. AF claim text and version are unchanged.
-- **AF-2026-07-17-v2 (17 July 2026):** added an exact AF claim 20 to NA claim 22 comparison; recorded the one-package deletion option and continuation reservations for broader or actor-specific methods and NA claims 23–30; propagated the independent support and art gates; preserved the AF/NA terminology non-concession; and aligned AF claim 1's production description with its actual structured-list limitation rather than an unstated EDL requirement.

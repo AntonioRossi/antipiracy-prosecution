@@ -1,6 +1,6 @@
 # AA11393US — Normal-Allowance / Balanced Actor-Split Package
 
-> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-21-v2 · STATUS 21 JULY 2026**
+> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-21-v2 · STATUS 22 JULY 2026**
 >
 > **INTERNAL COUNSEL-REVIEW DRAFT — NOT FOR FILING.** Use `NA claim N` outside the claim text. This is the current substantive baseline, not a prediction or guarantee of allowance.
 
@@ -57,13 +57,13 @@ The folder name `PPA2` does not establish a second provisional. The local filing
 | Priority | Issue | Direction supplied by this package |
 |---|---|---|
 | High | D1 is broader than a watermark-only characterization | Acknowledge D1's arbitrary identifiers, random/pseudorandom selection, delay, and frame-rate transformations; distinguish the synchronized multi-camera edit-boundary mechanism and closed recovery loop |
-| High | All original US draft independent claims spanned production, distribution, and detection | Organize claims around the production operator, distributor/platform, detector/monitoring provider, and the end-to-end combination |
+| High | Coverage must address production, distribution, and detection without depending solely on one actor performing the entire lifecycle | Maintain independent claims directed to the production operator, distributor/platform, detector/monitoring provider, and the end-to-end combination |
 | High | Generic segment variants, manifest-coded identifiers, shot detection, hashing, and temporal fingerprints were known | Preserve novelty focus on local camera-source boundary substitution and later recovery; use supplemental art in the matrix and IDS review |
 | High | A4 combines camera-perspective fragment alternatives, customized manifests, unauthorized-copy pattern recovery, and probabilistic recipient resolution; A6 supplies recipient-specific temporal events/manifests and a detection-to-user loop | Do not rely on a generic “camera-cut origin” label. In NA claims 1, 9, 16, and 22 preserve the same ordered camera-source transition at different switch timings and the intervening alternate-camera interval; where claimed, preserve matching of transition identity plus timing at the distinguishing region |
 | High | B9 teaches key-derived, user-different actual stream-switch positions selected with reference to shot cuts; its time/switch pattern is not fixed | Distinguish B9 through synchronized physical-camera provenance, the structured edit list and moved recorded camera boundary, not through variable switch timing by itself |
-| High | PCT support is not the same as entitlement to the provisional date | Confirm every material claim limitation against both the provisional and PCT disclosures |
+| High | PCT support is not the same as entitlement to the provisional date, and written description is not enablement | For every gated claim, separately conclude PCT written description, PCT enablement, provisional support for benefit entitlement, and effective date; record DW-05A Mode A, B, or C |
 | High | Provisional Example 2 contains an internally inconsistent Cut 4 time, although its table and corrective text expressly state the reference-aligned time | Require a written counsel view on priority for resynchronization NA claims 2, 3, and 23; keep the issue in internal analysis unless counsel directs otherwise |
-| High | Detection NA claim 16 can otherwise be characterized as generic matching of informational timing data | Require operational derivation and matching of camera-source-transition structure at regions where delivered versions select different synchronized camera views |
+| High | Detection NA claim 16 can otherwise be characterized as generic matching of informational timing data | Require operational derivation and matching of camera-source-transition structure at regions where delivered versions select different synchronized camera views; if the source-identity route fails PCT support, draft and newly version an independent cut-time/reconstructed-manifest contingency rather than relying on dependent NA claims 19–20/25 |
 | High | Later-discovered information may make entitlement to the provisional date outcome-determinative | If potentially material art or another prior-art event has an effective date after 26 February 2024 but before 19 February 2025, or an Office challenges priority, require counsel to reassess priority, disclosure obligations, and every effective-filing-date representation |
 | Medium | D1's frame-rate transformation can change inter-cut intervals | Maintain a fallback requiring a local boundary shift and a later cut that retains reference timing or restores synchronization |
 | Medium | B6 teaches recipient-specific local frame-count/timing variation and hash reacquisition robust to temporal edits and advertisements | Treat timing-only, relative-timing, and hash-reacquisition fallbacks as known; preserve different-camera provenance and the moved ordered source transition |
@@ -86,8 +86,8 @@ The controlling strategy-neutral deadline snapshot and the separate US-filing, E
 5. Address expressly the provisional Example 2 inconsistency and its effect, if any, on the provisional date for resynchronization claims.
 6. Preserve an operational camera-source-transition limitation in the detection independent rather than relying only on the informational origin of stored timing data.
 7. Confirm that NA claim 16 support-safely ties the candidate inter-version difference, detection, and matching to the same candidate-distinguishing region and requires agreement in both the ordered camera-source transition and its switch timing.
-8. Confirm that “camera-cut timing pattern” and “camera-source-transition pattern” retain the distinct claim functions stated above and that NA claims 17–18 are support-safe as harmonized.
-9. Confirm written-description and priority support separately for NA claim 1's generalized output relationship and NA claim 7's narrower internal requirement that the varied structured list retain the first/second camera identifiers while changing the recorded transition time code; also confirm the structural replacements in NA claims 13 and 29.
+8. Confirm that “camera-cut timing pattern” and “camera-source-transition pattern” retain the distinct claim functions stated above and that NA claims 17–18 are support-safe as drafted.
+9. Confirm written-description and priority support separately for NA claim 1's generalized output relationship and NA claim 7's narrower internal requirement that the varied structured list retain the first/second camera identifiers while changing the recorded transition time code; also confirm the structural limitations in NA claims 13 and 29.
 10. Confirm §112(f), §112(a)/(b), and §101 posture and revise nonce terms such as “component” and “apparatus” where appropriate.
 11. Confirm benefit to provisional 63/557,868 feature by feature and ensure ADS/continuity language is correct for the selected route.
 12. Establish a monitoring rule for potentially material information having an effective prior-art date in the provisional-to-PCT interval and for any Office priority challenge.
@@ -97,7 +97,8 @@ The controlling strategy-neutral deadline snapshot and the separate US-filing, E
 16. Align the WIPO informal comments with the intended US and EP positions and avoid unintended disclaimer.
 17. Evaluate NA claim 9's increased infringement-proof burden and adopt an evidence plan, including controlled captures from multiple recipient sessions and anticipated discovery into manifest/source-chunk mappings and recipient-association records.
 18. Determine and document the package's confidentiality, privilege/work-product, circulation, access, version-control, retention, and legal-hold treatment without relying on repository labels as establishing protection.
-19. Reserve the former broader production theory—local alternate-camera substitution without the same-pair requirement—for a coordinated continuation or other counsel-approved strategy, and do not use it to characterize present NA claim 1.
+19. Reserve the broader production theory—local alternate-camera substitution without the same-pair requirement—for a coordinated continuation or other counsel-approved strategy, and do not use it to characterize present NA claim 1.
+20. Distinguish each dependent's inherited parent gate from its added-limitation support: NA claims 19–20/25 supply directly supported contingency building blocks, NA claim 21 alone recites attribution scores, and NA claim 28 requires positive contributor identification without a score limitation.
 
 ## 7. Filing-readiness checklist
 
@@ -105,16 +106,18 @@ The controlling strategy-neutral deadline snapshot and the separate US-filing, E
 - [ ] Reassess that priority view if potentially material information has an effective prior-art date between 26 February 2024 and 19 February 2025 or an Office challenges priority.
 - [ ] Confirm claim-as-a-whole support for NA claim 1's same ordered first-camera-to-second-camera transition at noncoincident timings and the intervening temporally corresponding different-camera frames.
 - [ ] Confirm support for NA claim 16's same-region operational relationship: stored noncoincident positions of the same ordered camera-source transition, detection at that candidate-distinguishing region, and matching of both source order and timing.
+- [ ] Record separate PCT written-description, PCT enablement, provisional-entitlement, effective-date, and DW-05A mode conclusions for every gated claim.
+- [ ] If source-identity recovery is not retained, approve newly versioned independent system/method contingency wording; do not treat dependent NA claims 19–20/25 as curing NA claims 16/22.
 - [ ] Separately confirm support for NA claim 7's structured-list identifier/time-code delta, the structural fallbacks in NA claims 13 and 29, and the relationship between PCT Examples 2–4 and the corresponding provisional passages in NA claims 9, 13, 15, and 29.
 - [ ] Approve an NA claim 9 infringement-evidence plan addressing controlled multi-recipient captures, content comparison, and discovery into manifest/source-chunk mappings and recipient associations.
 - [ ] Obtain US counsel's written package-handling determination and implement approved recipient, access, circulation, version, retention, and legal-hold controls.
-- [ ] Confirm the distinct claim functions of camera-cut timing patterns and camera-source-transition patterns and approve the harmonized NA claims 17–18.
+- [ ] Confirm the distinct claim functions of camera-cut timing patterns and camera-source-transition patterns and approve NA claims 17–18 as drafted.
 - [ ] Confirm that NA claims 21 and 28 affirmatively require mixed-version suspected content and performance of probabilistic attribution, and confirm written-description support for NA claim 21's candidate contributions and respective attribution scores.
 - [ ] Manage the 30/4 Track One set with no net claim-count headroom.
 - [ ] Confirm a compliant inventor oath/declaration or authorized delayed/substitute handling.
 - [ ] Confirm applicant identity, continuity/benefit data, assignment chain, obligations to assign, and any appropriate USPTO recordation.
 - [ ] Complete authoritative English-family and foreign-language handling for B6 and inspect the EP 2 811 416 A1 file history.
-- [ ] Confirm the stored patent working copies against official registers; obtain Lin 2008 (C7) — Tardos 2003 (C3) was stored 20.07.2026 in its author-hosted extended form, with the STOC version reserved for counsel's filing-copy decision; and decide publication/grant-pair and supplemental-reference treatment.
+- [ ] Confirm the patent working copies against official registers; obtain Lin 2008 (C7); use the available author-hosted extended form of Tardos 2003 (C3) subject to counsel's filing-copy decision; and decide publication/grant-pair and supplemental-reference treatment.
 - [ ] Commission and document the focused search for direct vision-mixer/EDL/multi-camera boundary-personalization art and reassess NA claims 1, 7, 9, 13, 15, 16, 22, and 29 against its results.
 - [ ] Obtain the Italian search report and route every newly cited reference into the IDS review.
 - [ ] Confirm and docket the nominal and apparently weekend-adjusted European-phase entry dates, set an earlier internal deadline, and complete the applicable Rule 159 entry acts and Rule 162 entry-stage claims-fee plan.
@@ -129,7 +132,3 @@ The document-retrieval, disclosure, formalities, ownership, and EP tasks above a
 - Do not characterize an IDS citation as an admission of prior-art status or materiality.
 - Do not add an unnecessary US-specification admission that D1 is prior art; let counsel determine any required background treatment. Disclosure through an IDS is separate from an applicant admission.
 - Maintain one consistent vocabulary: **reference content**, **mate**, **camera-selection boundary/camera cut**, **structured list of edit instructions**, **camera-cut timing pattern**, **camera-source-transition pattern**, **record of associations/ledger**, and **suspected unauthorized distribution**. Preserve the distinct claim functions of the two pattern terms rather than flattening them into synonyms or treating one as categorically richer than the other.
-
-## 9. Revision record
-
-- **NA-2026-07-21-v2 (21 July 2026):** synchronized the package index and prosecution controls to the claim ladder that places the observable same ordered transition in NA claim 1, uses NA claim 7 for the narrower structured-list identifier/time-code fallback, leaves claims 2–3 as dependent resynchronization fallbacks, and reserves the former broader production theory for coordinated continuation review.

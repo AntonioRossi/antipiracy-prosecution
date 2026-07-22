@@ -2,7 +2,7 @@
 
 > **INTERNAL ROUTING BANNER — REMOVE THIS ENTIRE QUOTED BLOCK AND `(DRAFT)` FROM THE TITLE BEFORE FILING.** The filed copy must not include the canonical-status label, repository handling instructions, or this removal instruction.
 >
-> **CANONICAL SHARED PUBLIC-FILING DRAFT · STATUS 21 JULY 2026**
+> **CANONICAL SHARED PUBLIC-FILING DRAFT · STATUS 22 JULY 2026**
 >
 > **For review, quotation verification, and filing only by the appointed agent through ePCT.** This is the single public-comments draft for both strategy packages; neither strategy directory may maintain a competing version.
 >
