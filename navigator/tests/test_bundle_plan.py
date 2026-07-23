@@ -11,6 +11,7 @@ from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lib import acceptance, authority, bundleplan, bundlezip, canon  # noqa: E402
+from lib import currentstate  # noqa: E402
 from lib import qaevidence, recordprovenance, release, render  # noqa: E402
 from tests import acceptance_support  # noqa: E402
 import build as build_mod  # noqa: E402
@@ -583,9 +584,9 @@ class BundlePlanTests(unittest.TestCase):
 
         class Content:
             def read_text(self, path):
-                if path == build_mod.BUNDLE_CONFIG:
+                if path == currentstate.BUNDLE_CONFIG:
                     return json.dumps(fixture["cfg"])
-                if path == build_mod.BUNDLE_MANIFEST_RESOURCE:
+                if path == currentstate.BUNDLE_MANIFEST_RESOURCE:
                     return json.dumps({
                         "manifestVersion": "3",
                         "releaseProfile": fixture["cfg"][
@@ -636,18 +637,18 @@ class BundlePlanTests(unittest.TestCase):
                 mock.patch.object(build_mod.gateway, "ArtifactGateway",
                                   return_value=Artifacts()), \
                 mock.patch.object(
-                    build_mod, "bundle_attestation_context",
+                    currentstate, "bundle_attestation_context",
                     return_value=(fixture["required"], fixture["sides"])), \
                 mock.patch.object(
-                    build_mod, "bundle_acceptance_context",
+                    currentstate, "bundle_acceptance_context",
                     return_value=fixture["acceptance"]), \
                 mock.patch.object(
-                    build_mod, "current_release_bindings",
+                    currentstate, "current_release_bindings",
                     return_value=fixture["bindings"]), \
                 mock.patch.object(
-                    build_mod, "bundle_qa_authorization_context",
+                    currentstate, "bundle_qa_authorization_context",
                     return_value=fixture["qa_authorization"]), \
-                mock.patch.object(build_mod, "DELIVERY_EDITION_COUNT", 1), \
+                mock.patch.object(currentstate, "DELIVERY_EDITION_COUNT", 1), \
                 mock.patch.object(sys, "stdout", stdout):
             build_mod.cmd_bundle_plan([])
 

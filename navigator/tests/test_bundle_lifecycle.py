@@ -12,6 +12,7 @@ from unittest import mock
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import build as build_mod  # noqa: E402
 from lib import acceptance, bundlezip, canon, gateway, qaevidence  # noqa: E402
+from lib import currentstate  # noqa: E402
 from lib import recordprovenance, release, render  # noqa: E402
 from tests import acceptance_support  # noqa: E402
 
@@ -334,7 +335,7 @@ class BundleLifecycleTests(unittest.TestCase):
         self.assertEqual(config["bundleVersion"], "3")
         self.assertEqual(config["releaseProfile"], "technical-preview")
         self.assertIn("TECHNICAL-PREVIEW", config["name"])
-        policy = build_mod.bundle_attestation_policy(config)
+        policy = currentstate.bundle_attestation_policy(config)
         self.assertEqual(frozenset(policy["na"]),
                          BASE_REQUIRED_ATTESTATIONS)
         self.assertEqual(
@@ -370,7 +371,7 @@ class BundleLifecycleTests(unittest.TestCase):
 
         plan = bundlezip.resolve_bundle_members(
             config, releases, qas, attestations, read_artifact, manifest,
-            wording, build_mod.approval_evidence_problems,
+            wording, currentstate.approval_evidence_problems,
             FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
             expected_edition_count=1,
             acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -394,7 +395,7 @@ class BundleLifecycleTests(unittest.TestCase):
         plan = bundlezip.resolve_bundle_members(
             config, releases, qas, attestations,
             lambda kind, name: stored[(kind, name)], manifest, wording,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
             expected_edition_count=1,
             acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -450,7 +451,7 @@ class BundleLifecycleTests(unittest.TestCase):
         plan = bundlezip.resolve_bundle_members(
             config, releases, qas, attestations,
             lambda kind, name: stored[(kind, name)], manifest, wording,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
             expected_edition_count=1,
             acceptance_context_by_edition={"na": context},
@@ -469,7 +470,7 @@ class BundleLifecycleTests(unittest.TestCase):
         self.assertEqual(bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems, context, None), [])
+            currentstate.approval_evidence_problems, context, None), [])
 
         # A preview cannot acquire a compatibility implication merely by
         # pointing at an otherwise valid validated-release QA envelope.
@@ -481,7 +482,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             changed, validated_qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems, context, None)
+            currentstate.approval_evidence_problems, context, None)
         self.assertTrue(any(
             "deferred observations must have null qaRecord" in problem
             for problem in problems), problems)
@@ -497,7 +498,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.resolve_bundle_members(
                 config, releases, qas, attestations,
                 lambda kind, name: stored[(kind, name)], manifest,
-                wording, build_mod.approval_evidence_problems,
+                wording, currentstate.approval_evidence_problems,
                 FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                 expected_edition_count=1,
                 acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -516,7 +517,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.resolve_bundle_members(
                 config, releases, qas, attestations,
                 lambda kind, name: stored[(kind, name)], manifest,
-                wording, build_mod.approval_evidence_problems,
+                wording, currentstate.approval_evidence_problems,
                 FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                 expected_edition_count=1,
                 acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -532,7 +533,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.resolve_bundle_members(
                 config, releases, qas, attestations,
                 lambda kind, name: stored[(kind, name)], manifest,
-                wording, build_mod.approval_evidence_problems,
+                wording, currentstate.approval_evidence_problems,
                 FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                 expected_edition_count=1,
                 acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -553,7 +554,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.resolve_bundle_members(
                 config, releases, qas, attestations,
                 lambda kind, name: stored[(kind, name)], manifest,
-                wording, build_mod.approval_evidence_problems,
+                wording, currentstate.approval_evidence_problems,
                 FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                 expected_edition_count=1,
                 acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -571,7 +572,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.resolve_bundle_members(
                 config, releases, qas, attestations,
                 lambda kind, name: stored[(kind, name)], manifest,
-                wording, build_mod.approval_evidence_problems,
+                wording, currentstate.approval_evidence_problems,
                 FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                 expected_edition_count=1,
                 acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -603,7 +604,7 @@ class BundleLifecycleTests(unittest.TestCase):
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS,
             FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT,
             _qa_authorization_context(qas)), [])
 
@@ -618,7 +619,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 problems = bundlezip.release_chain_problems(
                     changed, qas, attestations,
                     BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-                    build_mod.approval_evidence_problems,
+                    currentstate.approval_evidence_problems,
                     FIXTURE_ACCEPTANCE_CONTEXT,
                     _qa_authorization_context(qas))
                 self.assertTrue(any(
@@ -630,7 +631,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.release_chain_problems(
                 missing_kind, qas, attestations,
                 BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-                build_mod.approval_evidence_problems,
+                currentstate.approval_evidence_problems,
                 FIXTURE_ACCEPTANCE_CONTEXT,
                 _qa_authorization_context(qas))))
 
@@ -645,7 +646,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 release_for_unbound_registry, [unbound_registry],
                 attestations, BASE_REQUIRED_ATTESTATIONS,
                 FIXTURE_SIDE_DIGESTS,
-                build_mod.approval_evidence_problems,
+                currentstate.approval_evidence_problems,
                 FIXTURE_ACCEPTANCE_CONTEXT,
                 _qa_authorization_context(qas))))
 
@@ -656,7 +657,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 pending_release, qas, attestations,
                 BASE_REQUIRED_ATTESTATIONS,
                 FIXTURE_SIDE_DIGESTS,
-                build_mod.approval_evidence_problems,
+                currentstate.approval_evidence_problems,
                 FIXTURE_ACCEPTANCE_CONTEXT,
                 _qa_authorization_context(qas))))
 
@@ -670,7 +671,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 release_for_qa, [pending_qa], attestations,
                 BASE_REQUIRED_ATTESTATIONS,
                 FIXTURE_SIDE_DIGESTS,
-                build_mod.approval_evidence_problems,
+                currentstate.approval_evidence_problems,
                 FIXTURE_ACCEPTANCE_CONTEXT,
                 _qa_authorization_context(qas))))
 
@@ -699,7 +700,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 release_for_att, [changed_qa], changed_attestations,
                 BASE_REQUIRED_ATTESTATIONS,
                 FIXTURE_SIDE_DIGESTS,
-                build_mod.approval_evidence_problems,
+                currentstate.approval_evidence_problems,
                 FIXTURE_ACCEPTANCE_CONTEXT,
                 _qa_authorization_context(qas))))
 
@@ -708,7 +709,7 @@ class BundleLifecycleTests(unittest.TestCase):
             unused_stored, unused_manifest, unused_wording = _fixture()
         record = attestations[0]["record"]
         self.assertEqual(bundlezip._attestation_record_problems(
-            record, "na", build_mod.approval_evidence_problems), [])
+            record, "na", currentstate.approval_evidence_problems), [])
         for producer in (None, "navigator/build.py attest/v2",
                          "navigator/build.py release/v1"):
             with self.subTest(producer=producer):
@@ -718,7 +719,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 else:
                     changed["producerCommand"] = producer
                 problems = bundlezip._attestation_record_problems(
-                    changed, "na", build_mod.approval_evidence_problems)
+                    changed, "na", currentstate.approval_evidence_problems)
                 self.assertTrue(any(
                     "producerCommand" in problem for problem in problems),
                     problems)
@@ -748,7 +749,7 @@ class BundleLifecycleTests(unittest.TestCase):
         self.assertEqual(bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, _qa_authorization_context(qas)), [])
 
     def test_release_chain_compares_independently_current_qa_context(self):
@@ -761,7 +762,7 @@ class BundleLifecycleTests(unittest.TestCase):
         unavailable = bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT)
         self.assertIn(
             "current QA authorization context has the wrong fields",
@@ -779,7 +780,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, current)
         self.assertIn("QA internal-input lock is not current", problems)
 
@@ -788,7 +789,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, current)
         self.assertIn("QA supportMatrix approver is not current", problems)
 
@@ -798,7 +799,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, current)
         self.assertTrue(any("current support matrix" in problem
                             for problem in problems), problems)
@@ -808,7 +809,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, current)
         self.assertTrue(any("minimumViewport" in problem
                             for problem in problems), problems)
@@ -818,7 +819,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, current)
         self.assertTrue(any("current probed hooks" in problem
                             for problem in problems), problems)
@@ -861,7 +862,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 problems = bundlezip.release_chain_problems(
                     changed_release, [changed_qa], attestations,
                     BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-                    build_mod.approval_evidence_problems,
+                    currentstate.approval_evidence_problems,
                     FIXTURE_ACCEPTANCE_CONTEXT,
                     _qa_authorization_context(qas))
                 self.assertTrue(any(expected in problem
@@ -880,7 +881,7 @@ class BundleLifecycleTests(unittest.TestCase):
         exact_problems = bundlezip.release_chain_problems(
             current_release, qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT, _qa_authorization_context(qas))
         self.assertEqual(exact_problems, [])
 
@@ -916,7 +917,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             changed_release, [changed_qa], changed_attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT,
             _qa_authorization_context([changed_qa]))
         self.assertIn(
@@ -947,7 +948,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 problems = bundlezip.release_chain_problems(
                     changed, qas, attestations,
                     BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
-                    build_mod.approval_evidence_problems,
+                    currentstate.approval_evidence_problems,
                     FIXTURE_ACCEPTANCE_CONTEXT,
                     _qa_authorization_context(qas))
                 self.assertTrue(any("acceptance" in problem
@@ -993,7 +994,7 @@ class BundleLifecycleTests(unittest.TestCase):
             bundlezip.resolve_bundle_members(
                 config, [changed_release], [changed_qa], changed_attestations,
                 lambda kind, name: stored[(kind, name)], manifest, wording,
-                build_mod.approval_evidence_problems,
+                currentstate.approval_evidence_problems,
                 FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                 expected_edition_count=1,
                 acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
@@ -1033,7 +1034,7 @@ class BundleLifecycleTests(unittest.TestCase):
                     bundlezip.resolve_bundle_members(
                         config, releases, qas, attestations,
                         lambda kind, name: stored[(kind, name)], manifest,
-                        wording, build_mod.approval_evidence_problems,
+                        wording, currentstate.approval_evidence_problems,
                         FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
                         expected_edition_count=1,
                         acceptance_context_by_edition=
@@ -1099,7 +1100,7 @@ class BundleLifecycleTests(unittest.TestCase):
         problems = bundlezip.release_chain_problems(
             release_envelope, qas, attestations, required,
             FIXTURE_SIDE_DIGESTS,
-            build_mod.approval_evidence_problems,
+            currentstate.approval_evidence_problems,
             FIXTURE_ACCEPTANCE_CONTEXT,
             _qa_authorization_context(qas))
         self.assertTrue(any("required attestation" in problem
@@ -1142,10 +1143,10 @@ class BundleLifecycleTests(unittest.TestCase):
             ("sealed", "a.html"): artifact,
             ("artifact-checksum", "a.html.sha256"): checksum,
         })
-        self.assertEqual(build_mod.release_artifact_status(
+        self.assertEqual(currentstate.release_artifact_status(
             complete, "a.html", digest), (True, True))
         missing_checksum = Stored({("sealed", "a.html"): artifact})
-        self.assertEqual(build_mod.release_artifact_status(
+        self.assertEqual(currentstate.release_artifact_status(
             missing_checksum, "a.html", digest), (True, False))
 
     def test_bundle_record_chain_is_ordered_and_exact(self):
@@ -1341,19 +1342,19 @@ class BundleLifecycleTests(unittest.TestCase):
                     mock.patch.object(build_mod, "RECORDS", records), \
                     mock.patch.object(build_mod, "load_planes",
                                       return_value=planes), \
-                    mock.patch.object(build_mod, "DELIVERY_EDITION_COUNT", 1), \
+                    mock.patch.object(currentstate, "DELIVERY_EDITION_COUNT", 1), \
                     mock.patch.object(
-                        build_mod, "bundle_attestation_context",
+                        currentstate, "bundle_attestation_context",
                         return_value=(FIXTURE_ATTESTATION_POLICY,
                                       FIXTURE_CURRENT_SIDES)), \
                     mock.patch.object(
-                        build_mod, "bundle_acceptance_context",
+                        currentstate, "bundle_acceptance_context",
                         return_value=preview_contexts), \
                     mock.patch.object(
-                        build_mod, "current_release_bindings",
+                        currentstate, "current_release_bindings",
                         return_value=current_bindings), \
                     mock.patch.object(
-                        build_mod, "bundle_qa_authorization_context",
+                        currentstate, "bundle_qa_authorization_context",
                         return_value=current_qa_authorization), \
                     mock.patch.object(
                         build_mod.release_mod,
@@ -1402,19 +1403,19 @@ class BundleLifecycleTests(unittest.TestCase):
                     mock.patch.object(build_mod, "RECORDS", records), \
                     mock.patch.object(build_mod, "load_planes",
                                       return_value=planes), \
-                    mock.patch.object(build_mod, "DELIVERY_EDITION_COUNT", 1), \
+                    mock.patch.object(currentstate, "DELIVERY_EDITION_COUNT", 1), \
                     mock.patch.object(
-                        build_mod, "bundle_attestation_context",
+                        currentstate, "bundle_attestation_context",
                         return_value=(FIXTURE_ATTESTATION_POLICY,
                                       FIXTURE_CURRENT_SIDES)), \
                     mock.patch.object(
-                        build_mod, "bundle_acceptance_context",
+                        currentstate, "bundle_acceptance_context",
                         return_value=preview_contexts), \
                     mock.patch.object(
-                        build_mod, "current_release_bindings",
+                        currentstate, "current_release_bindings",
                         return_value=current_bindings), \
                     mock.patch.object(
-                        build_mod, "bundle_qa_authorization_context",
+                        currentstate, "bundle_qa_authorization_context",
                         return_value=current_qa_authorization), \
                     mock.patch.dict(os.environ, {
                         "NAV_OPERATOR": "reviewer@example.test",

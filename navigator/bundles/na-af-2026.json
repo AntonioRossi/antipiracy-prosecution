@@ -9,28 +9,28 @@
  "manifestApproval": "sha256/c1:68eba0745da6df9a50d146fdd7887ae9665627cc5896c29a0f73c227234367d5",
  "members": [
   {
-   "digest": "sha256/c1:4638d5c21187bd21760546caf52e7142d8e3ed973b9262b8d1bdf3214c25ba80",
+   "digest": "sha256/c1:4bf21c1cdc53b91f37c36646e846bab60466c426424cf8badfec863fb2ab9ba6",
    "edition": "na",
    "kind": "sealed",
    "name": "AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html",
-   "releaseRecord": "sha256/c1:b624843851fd755ec5c649dd3d28846ebaac593b23e8a6af2fe5d0e1194d3417"
+   "releaseRecord": "sha256/c1:e2132ad5702646fc9f1e011e68cc9ead8cc1e1cc35d1295ec5fdb5ba3fb83cff"
   },
   {
    "artifact": "AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html",
-   "digest": "sha256/c1:f52dd78cee97bc640f49a58e34dbb6963abd38668247b1562132ff72cb266496",
+   "digest": "sha256/c1:aac8956543485f4d10bde5637a1b0c0cd5c4f61af407c8a15111f71cc883a67b",
    "kind": "artifact-checksum",
    "name": "AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html.sha256"
   },
   {
-   "digest": "sha256/c1:3cc5758a8ded0884eb22b221137669f0982d817637dc2969aadd09e2c6a9fb72",
+   "digest": "sha256/c1:422f6162d9a7d9fe0916a2259e3faf9d70dcd068190d66c3ea7db885bac69838",
    "edition": "af",
    "kind": "sealed",
    "name": "AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html",
-   "releaseRecord": "sha256/c1:8e7e81365a6d2e173a8ba44a4a699ec4730bcefc2fee083d00aae8361ce4ff14"
+   "releaseRecord": "sha256/c1:4cce99375f44f0c6d35cb87c422fef63384f324c2f05631bd1451e3ac30eb1b8"
   },
   {
    "artifact": "AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html",
-   "digest": "sha256/c1:239fb31b87cd63a50bd8423d2a91202f3d9b2cd366fecc91b06d243086d36241",
+   "digest": "sha256/c1:1bad5be8b4d8e865b24fc22e545c799fa86283dedd629d72f87932f70454db23",
    "kind": "artifact-checksum",
    "name": "AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html.sha256"
   },

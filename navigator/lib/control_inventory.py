@@ -11,6 +11,7 @@ CONTROL_SOURCE_PATHS = (
     "navigator/lib/bundleplan.py",
     "navigator/lib/bundlezip.py",
     "navigator/lib/control_inventory.py",
+    "navigator/lib/currentstate.py",
     "navigator/lib/migrate.py",
     "navigator/lib/pinplan.py",
     "navigator/lib/qaevidence.py",

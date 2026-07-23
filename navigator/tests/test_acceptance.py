@@ -21,8 +21,8 @@ from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lib import (acceptance, authority, bundlezip, canon, control_inventory,
-                 gateway, inputlock, model, profilepolicy, projections,
-                 recordprovenance, render_inventory)  # noqa: E402
+                 currentstate, gateway, inputlock, model, profilepolicy,
+                 projections, recordprovenance, render_inventory)  # noqa: E402
 from lib import render, schema_validate, validate  # noqa: E402
 from tests import acceptance_support  # noqa: E402
 
@@ -1448,7 +1448,7 @@ class Acceptance(unittest.TestCase):
         # inventory-completeness attestation current (double-sided)
         for ed in EDITIONS:
             m = get_model(ed)
-            from build import (  # noqa: E402
+            from lib.currentstate import (  # noqa: E402
                 _approval_selection_key, attestation_evidence_problems,
                 current_side_digests)
             sides_now = current_side_digests(m)
@@ -1515,8 +1515,8 @@ class Acceptance(unittest.TestCase):
                     authority.is_authoritative_operator(kind, identity),
                     pair_authorized)
 
-        from build import (  # noqa: E402
-            approval_evidence_problems, operator_id)
+        from build import operator_id  # noqa: E402
+        from lib.currentstate import approval_evidence_problems  # noqa: E402
 
         for kind in ("human", "model"):
             with self.subTest(environment_kind=kind), mock.patch.dict(
@@ -1774,6 +1774,66 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(
             forbidden_json_reads, [],
             "production JSON reads bypass canon.parse_json")
+        # import direction: a render source never imports a control source,
+        # and no production source imports a test module.  Imported names
+        # resolve against the two closed inventories ("navigator/" stripped,
+        # lib/x.py -> lib.x, build.py -> build, tests/*.py -> tests helpers);
+        # from-imports resolve against the importer's package at any level.
+        def direction_module_name(relpath):
+            parts = relpath.split("/")
+            if parts[0] == "navigator":
+                parts = parts[1:]
+            if parts[-1] == "__init__.py":
+                parts = parts[:-1]
+            elif parts[-1].endswith(".py"):
+                parts[-1] = parts[-1][:-3]
+            return ".".join(parts)
+
+        render_modules = {
+            direction_module_name(path)
+            for path in render_inventory.RENDER_SOURCE_PATHS}
+        control_modules = {
+            direction_module_name(path)
+            for path in control_inventory.CONTROL_SOURCE_PATHS}
+        test_modules = {"tests"}
+        for name in os.listdir(os.path.join(NAV, "tests")):
+            if name.endswith(".py"):
+                test_modules.add(name[:-3])
+                test_modules.add("tests." + name[:-3])
+        direction_problems = []
+        for path in scope:
+            relpath = os.path.relpath(path, ROOT).replace(os.sep, "/")
+            importer = direction_module_name(relpath)
+            tree = ast.parse(file_text(path), filename=path)
+            for node in ast.walk(tree):
+                imported = []
+                if isinstance(node, ast.Import):
+                    imported = [alias.name for alias in node.names]
+                elif isinstance(node, ast.ImportFrom):
+                    package = importer.split(".")[:-1]
+                    if node.level:
+                        package = package[:len(package) - node.level + 1]
+                    base = ".".join(
+                        package + ([node.module] if node.module else []))
+                    imported = [base] if base else []
+                    imported.extend(
+                        "%s.%s" % (base, alias.name) if base else alias.name
+                        for alias in node.names)
+                for name in imported:
+                    normalized = name
+                    if normalized.startswith("navigator."):
+                        normalized = normalized[len("navigator."):]
+                    if normalized in test_modules:
+                        direction_problems.append(
+                            "%s:%d imports test module %s"
+                            % (relpath, node.lineno, name))
+                    elif importer in render_modules and \
+                            normalized in control_modules:
+                        direction_problems.append(
+                            "%s:%d render source imports control source %s"
+                            % (relpath, node.lineno, name))
+        self.assertEqual(direction_problems, [],
+                         "import direction violations")
         # edition-blindness: shared modules contain no edition tokens
         for path in scope:
             base = os.path.basename(path)
@@ -2306,7 +2366,7 @@ class Acceptance(unittest.TestCase):
                 self.assertEqual(fh.read(), before_gate_bytes)
 
     def test_ac07_hard_current_boundary(self):
-        import build as build_mod
+        from lib import currentstate
 
         # Obsolete primary-strategy versions fail, while the distinct
         # continuation strategy namespace cannot be mistaken for AF.
@@ -2318,8 +2378,8 @@ class Acceptance(unittest.TestCase):
                     "NA-2026-07-22-v4 " + "AF-" + "2026-07-21-v5 "
                     "AF-CONT-2026-07-20-v2\n")
             content = gateway.ContentGateway(root)
-            with mock.patch.object(build_mod, "ROOT", root):
-                version_problems = build_mod._live_version_problems(
+            with mock.patch.object(currentstate, "ROOT", root):
+                version_problems = currentstate._live_version_problems(
                     content, {
                         "NA": "NA-2026-07-22-v4",
                         "AF": "AF-2026-07-22-v6",
@@ -2331,7 +2391,7 @@ class Acceptance(unittest.TestCase):
                              for problem in version_problems),
                          version_problems)
 
-        inventory_problems = build_mod._exact_inventory_problems(
+        inventory_problems = currentstate._exact_inventory_problems(
             {"current", "orphan"}, {"current", "required"}, "dist")
         self.assertTrue(any("orphan" in problem
                             for problem in inventory_problems))
@@ -2343,8 +2403,8 @@ class Acceptance(unittest.TestCase):
 
         for edition in EDITIONS:
             with self.subTest(edition=edition):
-                self.assertEqual(build_mod._pin_plan_problems(
-                    build_mod.current_pin_plan(edition)), [])
+                self.assertEqual(currentstate._pin_plan_problems(
+                    currentstate.current_pin_plan(edition)), [])
 
         command = get_model(EDITIONS[0]).planes["commands"][
             "verify-current"]
@@ -2357,11 +2417,11 @@ class Acceptance(unittest.TestCase):
 
         # Full-repository and bundle acceptance runs select both editions;
         # standalone releases select one and must not read the inactive side.
-        if len(EDITIONS) == build_mod.DELIVERY_EDITION_COUNT:
+        if len(EDITIONS) == currentstate.DELIVERY_EDITION_COUNT:
             content = gateway.ContentGateway(ROOT)
             self.assertEqual(
-                build_mod._classified_navigator_source_problems(
-                    content, build_mod.delivery_edition_ids()), [])
+                currentstate._classified_navigator_source_problems(
+                    content, currentstate.delivery_edition_ids()), [])
 
     def test_ac08_projections(self):
         for ed in EDITIONS:
@@ -2390,7 +2450,7 @@ class Acceptance(unittest.TestCase):
                 self.assertEqual(_ship_axis_leaks(
                     projected_live, relation_schema, relation_schema), [])
 
-            qa_registry = m.qa_registry()
+            qa_registry = currentstate.edition_qa_registry(m)
             internal_tokens = {"qa-source"}
             for corpus_id, entry in qa_registry.corpora.items():
                 internal_tokens.add(corpus_id)
@@ -3009,7 +3069,7 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
             lock = m.gw.lock()
             self.assertEqual(inputlock.exact_set_problems(
                 lock, m.edition["declaredTransitiveInputs"]), [])
-            from build import (  # noqa: E402
+            from lib.currentstate import (  # noqa: E402
                 _approval_selection_key, _required_attestation_types,
                 approval_evidence_problems, current_authorized_qa_records,
                 current_side_digests, qa_input_lock)
@@ -3111,7 +3171,7 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
             "navigator/strings.json"))
         legend_digest = canon.text_digest(
             canon.canon_prose(strings["counselLegend"]))
-        from build import (  # noqa: E402
+        from lib.currentstate import (  # noqa: E402
             _approval_selection_key, attestation_evidence_problems,
             current_side_digests)
         for ed in EDITIONS:
@@ -3141,7 +3201,7 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
         atts = read_records("attestation")
         for ed in EDITIONS:
             m = get_model(ed)
-            from build import (  # noqa: E402
+            from lib.currentstate import (  # noqa: E402
                 _approval_selection_key, attestation_evidence_problems,
                 current_side_digests)
             sides_now = current_side_digests(m)
@@ -3495,7 +3555,7 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
             self.assertTrue(values)
             required[edition] = frozenset(values)
 
-        from build import approval_evidence_problems  # noqa: E402
+        from lib.currentstate import approval_evidence_problems  # noqa: E402
 
         resolved = bundlezip.resolve_bundle_members(
             cfg, chain["releaseRecords"], chain["qaRecords"],
@@ -3582,7 +3642,7 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
         if ACCEPTANCE_CALLBACK_CONTEXT is not None:
             self._assert_ac20_transaction(ACCEPTANCE_CALLBACK_CONTEXT)
             return
-        from build import (  # noqa: E402
+        from lib.currentstate import (  # noqa: E402
             _approval_selection_key, _propose_current_bundle_config,
             approval_evidence_problems, bundle_acceptance_context,
             bundle_attestation_context, bundle_qa_authorization_context,

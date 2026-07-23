@@ -15,7 +15,7 @@ from unittest import mock
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
-from lib import canon, gateway, migrate, model, validate  # noqa: E402
+from lib import canon, currentstate, gateway, migrate, model, validate  # noqa: E402
 import build as build_mod  # noqa: E402
 from tools import stamp as stamp_tool  # noqa: E402
 
@@ -353,7 +353,7 @@ class TestMigrationLifecycle(unittest.TestCase):
             unused_model.relation["fragments"]["c1u0"]["review"]["by"] = \
                 "unauthorized-migration"
 
-        with mock.patch.object(build_mod, "build_model",
+        with mock.patch.object(currentstate, "build_model",
                                return_value=(object(), fake_model)), \
                 mock.patch.object(build_mod.migrate_mod,
                                   "migrate_inventory"), \

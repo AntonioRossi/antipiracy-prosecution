@@ -12,7 +12,7 @@ from types import SimpleNamespace
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
-from lib import canon, gateway, model, registry  # noqa: E402
+from lib import canon, currentstate, gateway, model, registry  # noqa: E402
 
 
 def authoritative_registry():
@@ -184,7 +184,7 @@ class TestRegistryStructure(unittest.TestCase):
             gw=SimpleNamespace(root=temporary.name, byte_source=None),
         )
         with self.assertRaisesRegex(model.ModelError, "duplicate corpus"):
-            model.EditionModel.qa_registry(fake)
+            currentstate.edition_qa_registry(fake)
 
 
 if __name__ == "__main__":

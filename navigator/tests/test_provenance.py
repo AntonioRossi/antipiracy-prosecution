@@ -12,8 +12,7 @@ import unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
-import build  # noqa: E402
-from lib import canon, control_inventory, gateway, model  # noqa: E402
+from lib import canon, control_inventory, currentstate, gateway, model  # noqa: E402
 from lib import projections, render, render_inventory  # noqa: E402
 
 
@@ -195,7 +194,7 @@ class TestProvenance(unittest.TestCase):
                 edition: snapshot(edition, root)[1:]
                 for edition in ("na", "af")
             }
-            before_sides = build.current_side_digests(
+            before_sides = currentstate.current_side_digests(
                 load_model("na", root), include_bundle=True)
             rewrite_json(
                 root, "navigator/bundle-manifest.json",
@@ -208,7 +207,7 @@ class TestProvenance(unittest.TestCase):
                 edition: snapshot(edition, root)[1:]
                 for edition in ("na", "af")
             }
-            after_sides = build.current_side_digests(
+            after_sides = currentstate.current_side_digests(
                 load_model("na", root), include_bundle=True)
             self.assertEqual(before, after)
             self.assertNotEqual(before_sides["manifestWording"],
@@ -222,9 +221,9 @@ class TestProvenance(unittest.TestCase):
             na, _, na_content = snapshot("na", root)
             af, _, af_content = snapshot("af", root)
             candidate = canon.bytes_digest(b"candidate")
-            before_na = build.qa_input_lock(
+            before_na = currentstate.qa_input_lock(
                 na, candidate, na_content["lockDigest"])
-            before_af = build.qa_input_lock(
+            before_af = currentstate.qa_input_lock(
                 af, candidate, af_content["lockDigest"])
 
             rewrite_json(
@@ -232,9 +231,9 @@ class TestProvenance(unittest.TestCase):
                 lambda unused_value: None)
             na_after_model, _, na_content_after = snapshot("na", root)
             af_after_model, _, af_content_after = snapshot("af", root)
-            after_na = build.qa_input_lock(
+            after_na = currentstate.qa_input_lock(
                 na_after_model, candidate, na_content_after["lockDigest"])
-            after_af = build.qa_input_lock(
+            after_af = currentstate.qa_input_lock(
                 af_after_model, candidate, af_content_after["lockDigest"])
 
             self.assertEqual(na_content, na_content_after)
@@ -249,7 +248,7 @@ class TestProvenance(unittest.TestCase):
                 "navigator/profiles/qa_af.json")
             self.assertNotIn(
                 "navigator/profiles/qa_af.json",
-                na_after_model.qa_registry().gw.read_log)
+                currentstate.edition_qa_registry(na_after_model).gw.read_log)
 
     def test_csp_comes_from_the_registered_api_policy(self):
         m = load_model("na")

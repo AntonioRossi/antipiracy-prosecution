@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
 import build  # noqa: E402
 from lib import acceptance, authority, bundlezip, canon  # noqa: E402
-from lib import control_inventory, gateway  # noqa: E402
+from lib import control_inventory, currentstate, gateway  # noqa: E402
 from lib import pinplan, profilepolicy  # noqa: E402
 from lib import qaevidence, qaregistry  # noqa: E402
 from lib import recordprovenance, release, render, snapshot  # noqa: E402
@@ -418,7 +418,7 @@ class TestAcceptanceReceipts(unittest.TestCase):
             second["releaseProfileContract"])
         with mock.patch.object(acceptance, "acceptance_context",
                                   side_effect=[first, second]):
-            contexts = build.bundle_acceptance_context({
+            contexts = currentstate.bundle_acceptance_context({
                 "editions": ["one", "two"],
                 "releaseProfile": "validated-release",
             })
@@ -768,17 +768,17 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                     fh.write(b"mutated by last test\n")
                 return "Ran 1 test"
 
-            with mock.patch.object(build, "ROOT", root), \
+            with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
-                        build, "_verify_current_closure",
-                        side_effect=lambda byte_source:
+                        currentstate, "_verify_current_closure",
+                        side_effect=lambda byte_source, load_planes:
                             self._closure_report()), \
                     mock.patch.object(
-                        build, "_run_full_test_suite",
+                        currentstate, "_run_full_test_suite",
                         side_effect=mutate_sandbox), \
                     self.assertRaisesRegex(
                         RuntimeError, "tests mutated the verified snapshot"):
-                build.verify_current_state(run_tests=True)
+                currentstate.verify_current_state(run_tests=True)
             with open(verified, "rb") as fh:
                 self.assertEqual(fh.read(), b"verified\n")
 
@@ -793,17 +793,17 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                     fh.write(b"mutated live\n")
                 return "Ran 1 test"
 
-            with mock.patch.object(build, "ROOT", root), \
+            with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
-                        build, "_verify_current_closure",
-                        side_effect=lambda byte_source:
+                        currentstate, "_verify_current_closure",
+                        side_effect=lambda byte_source, load_planes:
                             self._closure_report()), \
                     mock.patch.object(
-                        build, "_run_full_test_suite",
+                        currentstate, "_run_full_test_suite",
                         side_effect=mutate_live), \
                     self.assertRaisesRegex(
                         RuntimeError, "live repository changed"):
-                build.verify_current_state(run_tests=True)
+                currentstate.verify_current_state(run_tests=True)
 
     def test_first_closure_consumes_the_initial_snapshot(self):
         with tempfile.TemporaryDirectory() as root:
@@ -812,7 +812,7 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                 fh.write(b"captured\n")
             seen = []
 
-            def closure(byte_source):
+            def closure(byte_source, load_planes):
                 seen.append(byte_source(source))
                 if len(seen) == 1:
                     # A live change after the initial capture must not reach
@@ -823,13 +823,13 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                     seen.append(byte_source(source))
                 return self._closure_report()
 
-            with mock.patch.object(build, "ROOT", root), \
+            with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
-                        build, "_verify_current_closure",
+                        currentstate, "_verify_current_closure",
                         side_effect=closure), \
                     self.assertRaisesRegex(
                         RuntimeError, "live repository changed"):
-                build.verify_current_state(run_tests=False)
+                currentstate.verify_current_state(run_tests=False)
             self.assertEqual(seen, [b"captured\n", b"captured\n"])
 
     def test_final_closure_consumes_a_snapshot_equal_to_the_initial(self):
@@ -839,15 +839,15 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                 fh.write(b"stable\n")
             received = []
 
-            def closure(byte_source):
+            def closure(byte_source, load_planes):
                 received.append(byte_source(source))
                 return self._closure_report()
 
-            with mock.patch.object(build, "ROOT", root), \
+            with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
-                        build, "_verify_current_closure",
+                        currentstate, "_verify_current_closure",
                         side_effect=closure):
-                report = build.verify_current_state(run_tests=False)
+                report = currentstate.verify_current_state(run_tests=False)
             self.assertEqual(received, [b"stable\n", b"stable\n"])
             self.assertEqual(report["status"], "current")
             self.assertIn("repositorySnapshot", report["checks"])
@@ -1134,7 +1134,7 @@ class TestAttestationEvidence(unittest.TestCase):
     def test_confirmation_requires_structured_authorized_final_evidence(self):
         current = {"legendWording": "legend-digest"}
         attestation = self._attestation()
-        self.assertEqual(build.attestation_evidence_problems(
+        self.assertEqual(currentstate.attestation_evidence_problems(
             attestation, current, "na"), [])
 
         model = copy.deepcopy(attestation)
@@ -1142,53 +1142,53 @@ class TestAttestationEvidence(unittest.TestCase):
             "operator": "codex:gpt-5.6-sol:run-test-001",
             "operatorKind": "model",
         })
-        self.assertEqual(build.attestation_evidence_problems(
+        self.assertEqual(currentstate.attestation_evidence_problems(
             model, current, "na"), [])
 
         legacy = copy.deepcopy(attestation)
         legacy["record"].pop("approvalStatus")
         legacy["record"].pop("operatorKind")
-        self.assertTrue(build.attestation_evidence_problems(
+        self.assertTrue(currentstate.attestation_evidence_problems(
             legacy, current, "na"))
 
         pending = copy.deepcopy(attestation)
         pending["record"]["note"] = "Pending counsel confirmation"
         self.assertTrue(any("pending" in problem for problem in
-                            build.attestation_evidence_problems(
+                            currentstate.attestation_evidence_problems(
                                 pending, current, "na")))
 
         failed = copy.deepcopy(attestation)
         failed["record"]["note"] = "Review failed; do not release"
         self.assertTrue(any("failure" in problem for problem in
-                            build.attestation_evidence_problems(
+                            currentstate.attestation_evidence_problems(
                                 failed, current, "na")))
 
         no_errors = copy.deepcopy(attestation)
         no_errors["record"]["note"] = \
             "Counsel review passed with no errors"
-        self.assertEqual(build.attestation_evidence_problems(
+        self.assertEqual(currentstate.attestation_evidence_problems(
             no_errors, current, "na"), [])
 
         invisible_operator = copy.deepcopy(attestation)
         invisible_operator["record"]["operator"] = "\u200b\u2060\u200e"
         self.assertTrue(any("identified operator" in problem for problem in
-                            build.attestation_evidence_problems(
+                            currentstate.attestation_evidence_problems(
                                 invisible_operator, current, "na")))
 
         missing_note = copy.deepcopy(attestation)
         missing_note["record"].pop("note")
         self.assertTrue(any("note" in problem for problem in
-                            build.attestation_evidence_problems(
+                            currentstate.attestation_evidence_problems(
                                 missing_note, current, "na")))
 
         wrong_sides = copy.deepcopy(attestation)
         wrong_sides["record"]["sides"]["extra"] = "digest"
         self.assertTrue(any("exactly" in problem for problem in
-                            build.attestation_evidence_problems(
+                            currentstate.attestation_evidence_problems(
                                 wrong_sides, current, "na")))
 
         malformed = {"digest": "x", "record": []}
-        self.assertTrue(build.attestation_evidence_problems(
+        self.assertTrue(currentstate.attestation_evidence_problems(
             malformed, current, "na"))
 
     def test_attestation_provenance_is_exact_and_mandatory(self):
@@ -1201,7 +1201,7 @@ class TestAttestationEvidence(unittest.TestCase):
                     attestation["record"].pop("producerCommand")
                 else:
                     attestation["record"]["producerCommand"] = producer
-                problems = build.attestation_evidence_problems(
+                problems = currentstate.attestation_evidence_problems(
                     attestation, current, "na")
                 self.assertTrue(any(
                     "producerCommand" in problem for problem in problems),
@@ -1271,7 +1271,7 @@ class TestAttestationEvidence(unittest.TestCase):
                     "manifestWording": canon.text_digest(
                         canon.canon_prose(manifest_text)),
                 })
-                self.assertEqual(build.attestation_evidence_problems(
+                self.assertEqual(currentstate.attestation_evidence_problems(
                     envelopes[0], record["sides"], "na"), [])
 
     def test_support_matrix_attest_requires_exact_named_approver(self):
@@ -1347,13 +1347,13 @@ class TestAttestationEvidence(unittest.TestCase):
         human_b["digest"] = "bbb-human"
         human_a = copy.deepcopy(human_b)
         human_a["digest"] = "aaa-human"
-        chosen, problems = build._confirmed_current_attestations(
+        chosen, problems = currentstate._confirmed_current_attestations(
             [model, human_b, human_a], current, "na",
             ("legend-approval",), None)
         self.assertEqual(problems, [])
         self.assertEqual(chosen["legend-approval"]["digest"], "aaa-human")
 
-        chosen, problems = build._confirmed_current_attestations(
+        chosen, problems = currentstate._confirmed_current_attestations(
             [model], current, "na", ("legend-approval",), None)
         self.assertEqual(problems, [])
         self.assertEqual(chosen["legend-approval"]["digest"], "000-model")
@@ -1365,13 +1365,13 @@ class TestAttestationEvidence(unittest.TestCase):
             "sides": {"supportMatrix": "matrix-digest"},
             "operator": "Named Support Approver",
         })
-        chosen, problems = build._confirmed_current_attestations(
+        chosen, problems = currentstate._confirmed_current_attestations(
             [attestation], {"supportMatrix": "matrix-digest"}, "na",
             ("support-matrix-approval",), "Named Support Approver")
         self.assertEqual(problems, [])
         self.assertEqual(chosen["support-matrix-approval"], attestation)
 
-        chosen, problems = build._confirmed_current_attestations(
+        chosen, problems = currentstate._confirmed_current_attestations(
             [attestation], {"supportMatrix": "matrix-digest"}, "na",
             ("support-matrix-approval",), "Different Support Approver")
         self.assertEqual(chosen, {})
@@ -1464,7 +1464,7 @@ class TestManualEvidence(unittest.TestCase):
         model = SimpleNamespace(
             release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             api_policy={})
-        with mock.patch.object(build, "derive", return_value=(
+        with mock.patch.object(currentstate, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
                 mock.patch.object(
                     build.acceptance, "release_profile_contract",
@@ -1552,7 +1552,7 @@ class TestManualEvidence(unittest.TestCase):
         model = SimpleNamespace(
             release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             api_policy={})
-        with mock.patch.object(build, "derive", return_value=(
+        with mock.patch.object(currentstate, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
                 mock.patch.object(
                     build.acceptance, "release_profile_contract",
@@ -1574,7 +1574,7 @@ class TestManualEvidence(unittest.TestCase):
         model = SimpleNamespace(
             release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             api_policy={})
-        with mock.patch.object(build, "derive", return_value=(
+        with mock.patch.object(currentstate, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
                 mock.patch.object(
                     build.acceptance, "release_profile_contract",
@@ -1630,7 +1630,7 @@ class TestManualEvidence(unittest.TestCase):
             with open(os.path.join(root, "qa", "manual.json"), "wb") as fh:
                 fh.write(canon.canonical_json(payload))
             with mock.patch.object(build, "ROOT", root), \
-                    mock.patch.object(build, "derive", return_value=(
+                    mock.patch.object(currentstate, "derive", return_value=(
                         model, candidate, lock)), \
                     mock.patch.object(
                         build.acceptance, "release_profile_contract",
@@ -1648,19 +1648,19 @@ class TestManualEvidence(unittest.TestCase):
                                       return_value=artifact_gateway), \
                     mock.patch.object(build.gateway, "VerificationGateway",
                                       return_value=verification_gateway), \
-                    mock.patch.object(build, "qa_input_lock",
+                    mock.patch.object(currentstate, "qa_input_lock",
                                       return_value=qa_lock), \
-                    mock.patch.object(build, "current_side_digests",
+                    mock.patch.object(currentstate, "current_side_digests",
                                       return_value={
                                           "legendWording":
                                               canon.text_digest(
                                                   "Approved legend")}), \
-                    mock.patch.object(build, "_required_attestation_types",
+                    mock.patch.object(currentstate, "_required_attestation_types",
                                       return_value=tuple(chosen)), \
                     mock.patch.object(
-                        build, "_confirmed_current_attestations",
+                        currentstate, "_confirmed_current_attestations",
                         return_value=(chosen, [])), \
-                    mock.patch.object(build, "qa_authorization_problems",
+                    mock.patch.object(currentstate, "qa_authorization_problems",
                                       authorization), \
                     mock.patch.dict(os.environ, {
                         "NAV_OPERATOR": "codex:test:check-only",
@@ -2045,7 +2045,7 @@ class TestQaInputLock(unittest.TestCase):
                 "claimSetVersion": "NA-2026-07-22-v4",
                 "qaSources": {
                     "priorityMap": "qa-priority", "crosswalk": None}},
-            qa_registry=lambda: qa_registry,
+            _qa_registry=qa_registry,
         )
 
     def test_lock_reads_all_pins_and_binds_candidate(self):
@@ -2059,9 +2059,9 @@ class TestQaInputLock(unittest.TestCase):
                       "wb") as fh:
                 fh.write(second)
             m = self._model(root, first, second)
-            first_lock = build.qa_input_lock(m, "candidate-a", "content-lock")
-            again = build.qa_input_lock(m, "candidate-a", "content-lock")
-            changed = build.qa_input_lock(m, "candidate-b", "content-lock")
+            first_lock = currentstate.qa_input_lock(m, "candidate-a", "content-lock")
+            again = currentstate.qa_input_lock(m, "candidate-a", "content-lock")
+            changed = currentstate.qa_input_lock(m, "candidate-b", "content-lock")
             self.assertEqual(first_lock, again)
             self.assertEqual(len(first_lock["reads"]), 2)
             self.assertEqual(first_lock["candidateDigest"], "candidate-a")
@@ -2080,7 +2080,7 @@ class TestQaInputLock(unittest.TestCase):
                 fh.write(second)
             m = self._model(root, first, second)
             with self.assertRaisesRegex(SystemExit, "drifted"):
-                build.qa_input_lock(m, "candidate", "content-lock")
+                currentstate.qa_input_lock(m, "candidate", "content-lock")
 
     def test_bundle_context_is_derived_from_live_qa_and_support_inputs(self):
         binding = {
@@ -2103,15 +2103,15 @@ class TestQaInputLock(unittest.TestCase):
             },
             api_policy={})
         with mock.patch.object(
-                build, "derive", return_value=(
+                currentstate, "derive", return_value=(
                     edition_model, b"current candidate",
                     {"lockDigest": binding["lockDigest"]})), \
                 mock.patch.object(
-                    build, "qa_input_lock", return_value=expected_lock) as lock, \
+                    currentstate, "qa_input_lock", return_value=expected_lock) as lock, \
                 mock.patch.object(
                     build.render, "api_probe_instruments",
                     return_value={"document.cookie": "cookie-write"}):
-            context = build.bundle_qa_authorization_context(
+            context = currentstate.bundle_qa_authorization_context(
                 {"editions": ["na"]}, {"na": binding})
         self.assertEqual(context, {"na": {
             "qaInputLock": expected_lock,
@@ -2126,7 +2126,7 @@ class TestQaInputLock(unittest.TestCase):
         drifted = copy.deepcopy(binding)
         drifted["sealedDigest"] = canon.bytes_digest(b"earlier candidate")
         with mock.patch.object(
-                build, "derive", return_value=(
+                currentstate, "derive", return_value=(
                     edition_model, b"current candidate",
                     {"lockDigest": binding["lockDigest"]})), \
                 mock.patch.object(
@@ -2135,7 +2135,7 @@ class TestQaInputLock(unittest.TestCase):
             with self.assertRaisesRegex(
                     build.model.ModelError,
                     "changed while deriving QA authorization context"):
-                build.bundle_qa_authorization_context(
+                currentstate.bundle_qa_authorization_context(
                     {"editions": ["na"]}, {"na": drifted})
 
 
@@ -2214,7 +2214,7 @@ class TestReleaseEvidence(unittest.TestCase):
                 qa_lock, support_matrix, attestations, sides)
 
     def _problems(self, qa, content_lock, qa_lock, matrix, atts, sides):
-        return build.qa_authorization_problems(
+        return currentstate.qa_authorization_problems(
             qa, "candidate", content_lock, qa_lock, matrix, QA_API_PROBES,
             "legend", atts, sides, "na",
             ("inventory-completeness", "qa-priority-map",
@@ -2260,7 +2260,7 @@ class TestReleaseEvidence(unittest.TestCase):
         records = [qa("000-model", "model"),
                    qa("bbb-human", "human"),
                    qa("aaa-human", "human")]
-        with mock.patch.object(build, "current_side_digests",
+        with mock.patch.object(currentstate, "current_side_digests",
                                return_value={}), \
                 mock.patch.object(build.acceptance, "load_registry",
                                   return_value={}), \
@@ -2271,13 +2271,13 @@ class TestReleaseEvidence(unittest.TestCase):
                 mock.patch.object(
                     build.recordprovenance,
                     "current_record_format_problems", return_value=[]), \
-                mock.patch.object(build, "qa_input_lock", return_value={}), \
+                mock.patch.object(currentstate, "qa_input_lock", return_value={}), \
                 mock.patch.object(build.canon, "parse_json", return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
                                   return_value={}), \
-                mock.patch.object(build, "qa_authorization_problems",
+                mock.patch.object(currentstate, "qa_authorization_problems",
                                   return_value=[]):
-            valid, rejected = build.current_authorized_qa_records(
+            valid, rejected = currentstate.current_authorized_qa_records(
                 edition, "candidate", content_lock, records, [])
         self.assertEqual(rejected, [])
         self.assertEqual(
@@ -2296,7 +2296,7 @@ class TestReleaseEvidence(unittest.TestCase):
             "lockDigest": "old-lock", "operatorKind": "model",
             "releaseProfile": "validated-release",
         }}]
-        with mock.patch.object(build, "current_side_digests",
+        with mock.patch.object(currentstate, "current_side_digests",
                                return_value={}), \
                 mock.patch.object(build.acceptance, "load_registry",
                                   return_value={}), \
@@ -2307,11 +2307,11 @@ class TestReleaseEvidence(unittest.TestCase):
                 mock.patch.object(
                     build.recordprovenance,
                     "current_record_format_problems", return_value=[]), \
-                mock.patch.object(build, "qa_input_lock", return_value={}), \
+                mock.patch.object(currentstate, "qa_input_lock", return_value={}), \
                 mock.patch.object(build.canon, "parse_json", return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
                                   return_value={}):
-            valid, rejected = build.current_authorized_qa_records(
+            valid, rejected = currentstate.current_authorized_qa_records(
                 edition, "candidate", content_lock, stale, [])
         self.assertEqual(valid, [])
         self.assertEqual(rejected, [("<current-binding>", [
@@ -2334,7 +2334,7 @@ class TestReleaseEvidence(unittest.TestCase):
                 "releaseProfile": "validated-release",
             },
         }]
-        with mock.patch.object(build, "current_side_digests",
+        with mock.patch.object(currentstate, "current_side_digests",
                                return_value={}), \
                 mock.patch.object(build.acceptance, "load_registry",
                                   return_value={}), \
@@ -2345,15 +2345,15 @@ class TestReleaseEvidence(unittest.TestCase):
                 mock.patch.object(
                     build.recordprovenance,
                     "current_record_format_problems", return_value=[]), \
-                mock.patch.object(build, "qa_input_lock", return_value={}), \
+                mock.patch.object(currentstate, "qa_input_lock", return_value={}), \
                 mock.patch.object(build.canon, "parse_json", return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
                                   return_value={}), \
                 mock.patch.object(
-                    build, "qa_authorization_problems",
+                    currentstate, "qa_authorization_problems",
                     side_effect=AssertionError(
                         "superseded evidence was re-authorized")):
-            valid, rejected = build.current_authorized_qa_records(
+            valid, rejected = currentstate.current_authorized_qa_records(
                 edition, "candidate", content_lock, prior_profile, [])
         self.assertEqual(valid, [])
         self.assertEqual(rejected, [("<current-binding>", [

@@ -126,7 +126,6 @@ class EditionModel:
         self.registry = registry_mod.Registry(
             gw, registry_paths=self.edition["corpusRegistries"],
             allowed_corpora=allowed, require_exact=True)
-        self._qa_registry = None
         for field, expected_role in (
                 ("claimCorpus", "fragment-source"),
                 ("targetCorpus", "derivative")):
@@ -332,32 +331,6 @@ class EditionModel:
                     a.digest, []).append(a.id)
 
     # -- lookups ----------------------------------------------------------
-
-    def qa_registry(self):
-        """Load this edition's QA-only registry outside the content lock.
-
-        Verification commands call this lazily.  Candidate derivation never
-        reads QA pins, and another edition's QA registry is not reachable.
-        """
-        if self._qa_registry is None:
-            from . import qaregistry
-
-            allowed = {
-                corpus_id
-                for corpus_id in self.edition.get("qaSources", {}).values()
-                if corpus_id is not None
-            }
-            selected = qaregistry.QaRegistry(
-                gateway.ContentGateway(
-                    self.gw.root, byte_source=self.gw.byte_source),
-                self.edition["qaRegistry"], allowed)
-            overlap = set(selected.corpora) & set(self.registry.corpora)
-            if overlap:
-                raise ModelError(
-                    "QA and artifact registries duplicate corpus id(s): %r"
-                    % sorted(overlap))
-            self._qa_registry = selected
-        return self._qa_registry
 
     def claim_of(self, fragment_id):
         m = FRAG_ID_RE.match(fragment_id) or PHRASE_ID_RE.match(fragment_id)

@@ -79,12 +79,12 @@ class TestGatewayPaths(unittest.TestCase):
                         gateway.ContentGateway(root, allowlist=bad)
 
     def test_edition_id_cannot_inject_a_path_component(self):
-        import build as build_mod
+        from lib import currentstate
         for bad in ("../na", "sub/na", "NA", "_na", "na\\other", ""):
             with self.subTest(edition=bad):
                 with self.assertRaisesRegex(SystemExit, "edition id"):
-                    build_mod.edition_path(bad)
-        self.assertEqual(build_mod.edition_path("na"),
+                    currentstate.edition_path(bad)
+        self.assertEqual(currentstate.edition_path("na"),
                          "navigator/editions/na.json")
 
     def test_content_plane_cannot_read_artifact_or_verification_outputs(self):

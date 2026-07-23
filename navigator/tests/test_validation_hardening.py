@@ -16,8 +16,8 @@ from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import build as build_mod  # noqa: E402
-from lib import authority, canon, gateway, model, pinplan, \
-    schema_validate, segmenter, validate  # noqa: E402
+from lib import authority, canon, currentstate, gateway, model, \
+    pinplan, schema_validate, segmenter, validate  # noqa: E402
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -861,7 +861,7 @@ VERSION_KEY_CHECKS = {
     "depsVersion": ("enum", "1", "navigator/schema/deps.schema.json"),
     "editionVersion": ("enum", "2", "navigator/schema/edition.schema.json"),
     "inventoryVersion": ("enum", "1", "navigator/schema/gates.schema.json"),
-    "manifestVersion": ("sentinel", "3", "build.bundle_manifest_input"),
+    "manifestVersion": ("sentinel", "3", "currentstate.bundle_manifest_input"),
     "planesVersion": ("sentinel", "1", "build.load_planes"),
     "profileVersion": ("sentinel", "1", "segmenter.profile_problems"),
     "qaRegistryVersion": ("sentinel", "1", "qaregistry.QaRegistry"),
@@ -1049,7 +1049,7 @@ class VersionRegistryWalk(unittest.TestCase):
 
     def test_pin_plan_enforces_plan_version(self):
         self.assertEqual(
-            build_mod._pin_plan_problems(self._current_pin_plan()), [])
+            currentstate._pin_plan_problems(self._current_pin_plan()), [])
         for bad in (None, "1", "2"):
             with self.subTest(planVersion=bad):
                 plan = self._current_pin_plan()
@@ -1057,7 +1057,7 @@ class VersionRegistryWalk(unittest.TestCase):
                     del plan["planVersion"]
                 else:
                     plan["planVersion"] = bad
-                problems = build_mod._pin_plan_problems(plan)
+                problems = currentstate._pin_plan_problems(plan)
                 self.assertTrue(
                     any("planVersion" in problem for problem in problems),
                     problems)
@@ -1077,12 +1077,12 @@ class VersionRegistryWalk(unittest.TestCase):
             with self.subTest(edition=edition):
                 self.assertEqual(
                     schema_validate.validate(
-                        build_mod.current_pin_plan(edition), schema), [])
+                        currentstate.current_pin_plan(edition), schema), [])
 
     def test_pin_plan_missing_declared_corpus_fails(self):
         plan = self._current_pin_plan()
         del plan["corpora"]["pct-disclosure"]
-        problems = build_mod._pin_plan_problems(plan)
+        problems = currentstate._pin_plan_problems(plan)
         self.assertTrue(
             any("corpus inventory is not exact" in problem
                 for problem in problems), problems)
@@ -1090,7 +1090,7 @@ class VersionRegistryWalk(unittest.TestCase):
     def test_pin_plan_missing_declared_corpus_file_fails(self):
         plan = self._current_pin_plan()
         plan["corpora"]["pct-pdf"]["files"] = []
-        problems = build_mod._pin_plan_problems(plan)
+        problems = currentstate._pin_plan_problems(plan)
         self.assertTrue(
             any("schema" in problem for problem in problems), problems)
         self.assertTrue(
