@@ -2,7 +2,7 @@
 
 > **INTERNAL ROUTING BANNER — REMOVE THIS ENTIRE QUOTED BLOCK AND `(DRAFT)` FROM THE TITLE BEFORE FILING.** The filed copy must not include the canonical-status label, repository handling instructions, or this removal instruction.
 >
-> **CANONICAL SHARED PUBLIC-FILING DRAFT · STATUS 22 JULY 2026**
+> **CANONICAL SHARED PUBLIC-FILING DRAFT · STATUS 23 JULY 2026**
 >
 > **For review, quotation verification, and filing only by the appointed agent through ePCT.** This is the single public-comments draft for both strategy packages; neither strategy directory may maintain a competing version.
 >
@@ -85,5 +85,5 @@ Respectfully submitted,
 > 2. Confirm that the comments are consistent with the final US claim strategy and the planned EP Rule 161 response. In particular, do not turn “no pixel-domain data required” into a negative watermark limitation unless deliberately chosen.
 > 3. The discussion of delay and frame rate is intentionally accurate but does not assert that the PCT claims already contain the later-resynchronization limitation. That limitation is presented as a disclosed operation intended for national-phase claim drafting.
 > 4. WIPO recommends informal comments by 28 months. That date has passed. File promptly and before 26 August 2026 so that the comments can be transmitted to designated Offices in the normal course.
-> 5. Informal comments do not amend the application or replace the separate US preliminary amendment/bypass claims or EP Rule 161 response.
+> 5. Informal comments do not amend the application. They do not replace separate US § 371 national-stage claim papers or amendments, or the EP Rule 161 response.
 > 6. Sections 3.7 and 6.1 state a problem-solution position about **D1 alone** (and, in section 6.1, the cited D1/D2 record). Do not generalize “D1 gives no reason” into an assertion that no motivation exists under a multi-reference §103/inventive-step theory. In particular, A20 documents a motivation to individualize EDL-controlled products for identification and license enforcement, while B9 and other art document timing/switch variation. Before filing, counsel should reassess whether the D1-only wording remains accurate and should answer any combined-art theory through the exact claimed relationships, evidence-backed modification path, predictable result, and reasonable expectation of success.

@@ -1,10 +1,10 @@
 # AA11393US — IDS and Disclosure Inventory (DRAFT)
 
-> **CANONICAL SHARED RECORD · STATUS 22 JULY 2026**
+> **CANONICAL SHARED RECORD · STATUS 23 JULY 2026**
 >
 > **COUNSEL-REVIEW SOURCE LIST — NOT A COMPLETED IDS AND NOT FOR FILING AS-IS.** This one inventory controls for both `NA` and `AF`; do not fork it by strategy.
 >
-> Application: proposed US phase of PCT/IB2025/051755, filed 19 February 2025 and published 4 September 2025 as [WO 2025/181623 A1](../../PCT/README.md#official-publication-record), claiming benefit of US provisional 63/557,868 filed 26 February 2024. Applicant: STEALTH COMPANY SRL START UP INNOVATIVA. Inventor: Antonio Rossi.
+> Application: proposed ordinary § 371 US national stage of PCT/IB2025/051755, filed 19 February 2025 and published 4 September 2025 as [WO 2025/181623 A1](../../PCT/README.md#official-publication-record), with a priority claim to US provisional 63/557,868 filed 26 February 2024 and an intended US benefit claim under § 119(e). Applicant: STEALTH COMPANY SRL START UP INNOVATIVA. Inventor: Antonio Rossi.
 
 ## 1. Purpose and disclosure posture
 
@@ -95,10 +95,10 @@ The current in-house search record covers citation mining of the A4 and D1-grant
 
 No identified document expressly uses plural recorded physical-camera boundary changes to produce recipient-associated manifest combinations and couples those combinations to reconstruction from plural detected cut time codes. No identified document expressly maps AF claim 23's complete monitor method operating on delivered reference/mate manifests where the equal delivered manifest contains an affirmative mate timing and the reconstruction represents the same detected plural timing combination. No identified document expressly maps NA claim 16's delivered reference/mate chunk-combination ledger plus scene-change-derived equal-manifest recovery or NA claim 19's matched-manifest physical-camera mate-chunk geometry. The nearest classes are viewer-driven interactivity, profile/DAI assembly, director assistance or production automation, second-screen views, A20's per-recipient unique EDL embodiment, and A21's shot-boundary time-slice fingerprint and exact database comparison. A20 supplies examiner-favorable forensic-EDL motivation, generic source/time/transition fields, a recipient registry, and cross-reference analysis. A21 materially strengthens the known use of scene-change positions and shot durations as a robust lookup fingerprint, but it does not supply camera-boundary personalization, manifests, or recipient association. A4/A6+A13+A21, with A20 or B9 supplying personalization or timing motivation, creates material combination pressure against AF claim 23 even though no single reviewed source maps it as a whole. This is a bounded in-house result, not an exhaustive search, clearance opinion, or substitute for DW-08A.
 
-## 6. Route-specific handling
+## 6. Application-specific handling
 
-1. **§371 national stage.** Confirm the PCT/DO/EO/903 or equivalent record shows which ISR references and copies were transmitted. Properly transmitted ISR references may be considered by the examiner without a duplicative IDS, but a conservative IDS may still be appropriate for clarity and for supplemental references.
-2. **§111(a) bypass.** Do not assume the national-stage automatic-consideration procedure applies. Prepare a conventional IDS satisfying 37 CFR 1.97 and 1.98 for references counsel elects to submit.
+1. **§ 371 national-stage parent.** Confirm the PCT/DO/EO/903 or equivalent record shows which ISR references and copies were transmitted. Properly transmitted ISR references may be considered by the examiner without a duplicative IDS, but a conservative IDS may still be appropriate for clarity and for supplemental references.
+2. **§ 111(a) continuation or divisional.** Do not assume the national-stage transmission treatment applies in a successor. Prepare a conventional IDS satisfying 37 CFR 1.97 and 1.98 for references counsel elects to submit, and coordinate it with the parent record under the shared continuation-preservation memo.
 3. **Foreign-language documents.** Provide copies and English translations, abstracts, or concise explanations as required and as available. If an English translation is already in the applicant's or counsel's possession or readily available, preserve and provide it for counsel review. Do not describe an unverified machine translation as authoritative.
 4. **Timing.** Prefer filing the initial IDS with the US papers. Track later EP, Italian, or other national-phase citations and submit supplemental IDSs within the applicable 37 CFR 1.97 windows.
 
@@ -106,7 +106,8 @@ No identified document expressly uses plural recorded physical-camera boundary c
 
 The deferred retrieval, ownership/formalities, and EP-coordination tasks are controlled by `AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`. Only outstanding disclosure actions appear here.
 
-- [ ] Select the §371 or bypass route and apply the correct IDS treatment.
+- [ ] Verify the § 371 PCT/DO/EO/903 or equivalent record and apply the approved parent IDS treatment.
+- [ ] Apply a separate IDS decision to every § 111(a) continuation or divisional under `CONT-05`.
 - [ ] Verify publication numbers, kind codes, dates, titles, inventors/applicants, and family relationships against official records where the current source is not already authoritative.
 - [ ] Complete foreign-language handling for B1, B5, B6, and B10; do not characterize machine translations as authoritative.
 - [ ] Send the ready PRAXI request concerning the Italian search report; if a report exists or issues, add every new citation and route it for US/EP review.

@@ -1,8 +1,8 @@
 # AA11393US — AF Actor-Focused Continuation Priority and Support Map (DRAFT)
 
-> **STRATEGY AF-CONT · CLAIM-SET VERSION AF-CONT-2026-07-22-v2 · STATUS 22 JULY 2026**
+> **STRATEGY AF-CONT · CLAIM-SET VERSION AF-CONT-2026-07-22-v2 · STATUS 23 JULY 2026**
 >
-> **INTERNAL COUNSEL ANALYSIS — NOT A LEGAL OPINION — NOT FILED — CONTINUATION NOT PRESERVED.** This map addresses the candidate claims in [`AA11393US-AF-CONT-US_claim-set_DRAFT.md`](AA11393US-AF-CONT-US_claim-set_DRAFT.md). It does not establish copendency, a benefit relationship, provisional entitlement, or filing approval.
+> **INTERNAL COUNSEL ANALYSIS — NOT A LEGAL OPINION — NOT FILED. CONTINUATION STATUS: NOT YET PRESERVED.** This map addresses the candidate claims in [`AA11393US-AF-CONT-US_claim-set_DRAFT.md`](AA11393US-AF-CONT-US_claim-set_DRAFT.md). It does not establish copendency, a benefit relationship, provisional entitlement, or filing approval.
 
 ## 1. Sources and classifications
 
@@ -116,4 +116,4 @@ B10 remains low-materiality and cumulative-or-weaker because it lacks plural cam
 
 ## 5. Filing control
 
-The continuation-preservation memo controls copendency, filing route, ownership, docketing, filing evidence, benefit verification, AF claim 23/AF-CONT claim 19 overlap treatment, recursive preservation, and chain closure. This support map is not completion evidence for AF-CONT-08 or AF-CONT-09. Until the memo's conditions are satisfied, the operative status remains **NOT FILED — CONTINUATION NOT PRESERVED**.
+The shared [`continuation-preservation memo`](../common/AA11393US-continuation-preservation_MEMO.md) controls the successor vehicle, copendency, ownership, docketing, filing evidence, benefit verification, recursive preservation, and chain closure. This map controls the AF claim 23/AF-CONT claim 19 support and overlap analysis but is not CONT-05 completion evidence. Until the memo's conditions are satisfied, the operative status remains **NOT YET PRESERVED**.

@@ -1,10 +1,10 @@
 # AA11393US — NA Claim Strategy and Candidate Claim Set (DRAFT)
 
-> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-22-v4 · STATUS 22 JULY 2026**
+> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-22-v4 · STATUS 23 JULY 2026**
 >
 > **COUNSEL-REVIEW DRAFT — NOT FOR FILING AS-IS.** Use `NA claim N` outside the claim text.
 >
-> Prepared for the US phase of PCT/IB2025/051755. This document proposes an actor-focused claim architecture and a candidate fallback ladder with express support gates. US counsel must confirm wording, claim construction, § 101, § 102, § 103, § 112(a)/(b)/(f), antecedent basis, restriction, fees, priority entitlement, amendment format, and conformity with the selected § 371 or § 111(a) route.
+> Prepared for ordinary US national-stage entry under 35 U.S.C. § 371 of PCT/IB2025/051755. This document proposes an actor-focused claim architecture and a candidate fallback ladder with express support gates. US counsel must confirm wording, claim construction, § 101, § 102, § 103, § 112(a)/(b)/(f), antecedent basis, restriction, fees, benefit entitlement, and national-stage amendment format. Filing and successor controls are canonical in [`../common/`](../common/).
 
 ## 1. Operative architecture
 
@@ -17,7 +17,7 @@ The candidate set uses four independent claims directed to likely commercial ope
 | 16 — detection system | Monitoring provider, platform, rights owner | Reference/mate chunk-combination manifests with a mate cut-timing difference, plural suspect cut-time detection, reconstructed-manifest building, equal-delivered-manifest lookup, and recipient identification |
 | 22 — end-to-end method | Vertically integrated operator | Production variation, manifest delivery/association, plural cut-time reconstruction, and equal-manifest recipient lookup |
 
-The set contains **30 total claims / 4 independent claims / 26 singly dependent claims / no multiple-dependent claims**. It is at the current Track One numerical ceiling and has no net claim-count headroom. Counsel should verify current limits, fees, and route mechanics at filing and coordinate any addition with a cancellation.
+The set contains **30 total claims / 4 independent claims / 26 singly dependent claims / no multiple-dependent claims**. It exceeds the basic 20-total/three-independent allocation by ten total claims and one independent claim. Counsel must verify ordinary excess-claim fees, unity, restriction exposure, and national-stage mechanics.
 
 No operative NA claim requires suspect-side identification of physical camera sources or joint matching of an ordered physical-source pair with timing. Physical-camera identity remains in production and distribution structures, including the stored matched-manifest relationship in NA claim 19. Suspect recovery in NA claims 16, 19–20, and 22 uses the disclosed cut-time/reconstructed-manifest/equality path.
 
@@ -225,4 +225,4 @@ the second chunk contains frames from the first camera source before the mate ca
 2. NA claim 22 may require performance by, or attribution to, one entity across production, delivery, detection, and lookup. Analyze divided infringement and proof separately from validity.
 3. The reference/mate relationship, chunk provenance, manifest-to-chunk mappings, recipient ledger, matched delivered manifest, source-camera entries and moved boundaries for NA claim 19, plural detected cut times, reconstructed manifest, equality comparison, and contributor analysis may require evidence controlled by different infrastructure operators.
 4. Do not describe any independent as categorically eligible, enabled, supported, novel, nonobvious, or infringed without the corresponding counsel analysis.
-5. Convert the claims to the selected route's original-claim or amendment format and recheck status identifiers, antecedent basis, count, fees, and Track One requirements.
+5. Convert the claims to the required § 371 national-stage amendment format and recheck status identifiers, antecedent basis, count, ordinary excess-claim fees, unity, and restriction exposure.

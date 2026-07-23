@@ -2,15 +2,15 @@
 
 > **INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.**
 >
-> Repository status date: **22 July 2026**. This glossary records the current operative meaning of identifiers and terms used across the corpus and points to the controlling document for each. It restates no analysis; where a term's treatment could diverge, the controlling document governs.
+> Repository status date: **23 July 2026**. This glossary records the current operative meaning of identifiers and terms used across the corpus and points to the controlling document for each. It restates no analysis; where a term's treatment could diverge, the controlling document governs.
 
 ## Strategy and version identifiers
 
 | Term | Current meaning | Controlling document |
 |---|---|---|
 | **NA** | Normal-allowance strategy: balanced actor-split coverage; current substantive baseline | [`US/README.md`](US/README.md) |
-| **AF** | Allowance-first strategy: integrated chain plus monitor-side method, with broader scope reserved for a copending continuation | [`US/README.md`](US/README.md) |
-| **AF-CONT** | AF continuation candidate: unfiled, unpreserved actor-focused reservation | [`US/allowance-first/AA11393US-AF-continuation-preservation_MEMO.md`](US/allowance-first/AA11393US-AF-continuation-preservation_MEMO.md) |
+| **AF** | Allowance-first strategy: integrated chain plus monitor-side method, with broader scope identified for a controlled successor | [`US/README.md`](US/README.md) |
+| **AF-CONT** | AF actor-focused continuation claim candidate; unfiled and unpreserved; not the universal continuation procedure | [`US/allowance-first/AA11393US-AF-CONT-US_claim-set_DRAFT.md`](US/allowance-first/AA11393US-AF-CONT-US_claim-set_DRAFT.md) |
 | Claim-set version | Version header (`NA-2026-07-22-v4`, `AF-2026-07-22-v6`, `AF-CONT-2026-07-22-v2`) locking a claim set to its maps and matrices | [`US/README.md`](US/README.md) |
 
 ## Support-posture codes
@@ -43,7 +43,7 @@ Open pre-filing and post-engagement work items with owners, triggers, and requir
 
 | Code | Subject | Code | Subject |
 |---|---|---|---|
-| **DW-01** | § 371 vs § 111(a) route; Track One decision | **DW-08A** | Focused professional art search; historical/technical evidence preservation |
+| **DW-01** | Execute ordinary § 371 national-stage filing | **DW-08A** | Focused professional art search; historical/technical evidence preservation |
 | **DW-02** | Inventor oath/declaration | **DW-08B** | Objective indicia and technical-results evidence with claim nexus |
 | **DW-03** | Applicant identity, ownership, assignment chain | **DW-08C** | Lawful infringement, actor, and proof record |
 | **DW-04** | Entity status | **DW-09** | Italian search report for IT 102025000003210 |
@@ -54,9 +54,9 @@ Open pre-filing and post-engagement work items with owners, triggers, and requir
 
 Controlling document for the full register: [`US/common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](US/common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md).
 
-## Continuation-preservation controls (AF-CONT-\*)
+## Continuation-preservation controls (CONT-\*)
 
-Generation-recursive controls applied while supported, commercially valuable scope remains deliberately deferred under the AF strategy. **AF-CONT-01** approves the strategy and deferred coverage; **AF-CONT-02** through **AF-CONT-11** (with **AF-CONT-06A** as the double-patenting/transaction gate) run benefit-chain analysis, ownership, docketing, support chart, family/route selection, filing, receipt and benefit verification, IDS coordination, and outcome confirmation. The only operative outcomes are `CONTINUATION PRESERVED` and `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`. Current status: **NOT FILED — CONTINUATION NOT PRESERVED**. Controlling document: [`US/allowance-first/AA11393US-AF-continuation-preservation_MEMO.md`](US/allowance-first/AA11393US-AF-continuation-preservation_MEMO.md).
+Strategy-neutral controls applied whether the ordinary § 371 parent uses `NA`, `AF`, or an approved hybrid. **CONT-01** through **CONT-06** govern the controlled parent and benefit chain, owner and docket, filed-versus-reserved scope, successor vehicle and authorization, filing and verification, and generation outcome. Current status: **NOT YET PRESERVED**. Controlling document: [`US/common/AA11393US-continuation-preservation_MEMO.md`](US/common/AA11393US-continuation-preservation_MEMO.md).
 
 ## Prior-art inventory identifiers
 
@@ -71,15 +71,16 @@ Generation-recursive controls applied while supported, commercially valuable sco
 
 Canonical PDFs in [`US/prior-art/`](US/prior-art/) are checksum-controlled and never edited; `markdown/` and `searchable/` copies are nonauthoritative review aids.
 
-## Filing, route, and record terms
+## Filing and record terms
 
 | Term | Current meaning |
 |---|---|
 | **Provisional / PPA2** | US 63/557,868, filed 26.02.2024; record in [`PPA2/`](PPA2/) |
-| **PCT** | PCT/IB2025/051755, filed 19.02.2025, published as WO 2025/181623 A1 on 04.09.2025; record and provenance in [`PCT/`](PCT/) |
+| **PCT** | PCT/IB2025/051755, filed 19.02.2025, published as WO 2025/181623 A1 on 04.09.2025, with a priority claim to US 63/557,868; record and provenance in [`PCT/`](PCT/) |
 | **ISR / Written Opinion** | International search report and the EPO's negative Written Opinion; D1/D2 derive from the ISR |
-| **§ 371 vs § 111(a)** | US national-stage entry versus bypass continuation; open under DW-01 |
-| **Track One** | USPTO prioritized-examination request; the claim sets budget against its numerical ceilings (four independent / thirty total) and the three-independent / twenty-total basic allocation, subject to counsel confirming rules and fees in force at filing |
+| **§ 371 parent** | Current US route: ordinary national-stage entry of PCT/IB2025/051755; counsel confirmation and filing evidence remain required under DW-01 |
+| **§ 119(e) benefit** | Intended US benefit of provisional 63/557,868; official-record and claim-specific written-description and enablement verification remain required under DW-05 and DW-05A |
+| **§ 111(a) successor** | Ordinary continuation or, when supported by the restriction record, divisional filed while a qualifying parent remains pending under `CONT-*` |
 | **ADS** | Application Data Sheet carrying continuity/benefit data; verification under DW-05 |
 | **IDS** | Information disclosure statement; the inventory in `US/common/` is the only disclosure inventory (DW-10) |
 | **PRAXI / UIBM** | Italian counsel liaison and the Italian Patent and Trademark Office for IT 102025000003210 (DW-09) |
@@ -104,5 +105,6 @@ Canonical PDFs in [`US/prior-art/`](US/prior-art/) are checksum-controlled and n
 |---|---|
 | `_DRAFT` | Internal counsel-review draft; not filed; not a legal opinion |
 | `_MEMO` | Controlling instrument governing execution decisions |
-| `CONTINUATION PRESERVED` | AF-CONT-11 outcome: a verified successor with recognized benefit preserves the generation's reserved families |
-| `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED` | AF-CONT-11 outcome: applicant-approved relinquishment of deferred scope |
+| `NOT YET PRESERVED` | No qualifying successor and verified benefit relationship complete the current generation |
+| `CONTINUATION PRESERVED` | CONT-06 outcome: a verified successor with recognized benefit preserves the generation's identified families |
+| `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED` | CONT-06 outcome: applicant-approved relinquishment of the generation's identified deferred scope |

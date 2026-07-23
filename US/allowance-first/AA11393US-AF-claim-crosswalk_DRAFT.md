@@ -1,6 +1,6 @@
 # AA11393US — AF/NA Claim and Coverage Crosswalk (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 22 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 23 JULY 2026**
 >
 > **INTERNAL COUNSEL ANALYSIS — NOT FOR FILING AND NOT A CLAIM-CONSTRUCTION POSITION.** This crosswalk compares functional coverage; it does not state that any AF and NA claim has identical scope. Every external reference is strategy-qualified.
 
@@ -63,9 +63,9 @@ Selecting AF for the initial case does not supply the following as standalone cl
 9. Art scores cannot transfer between AF and NA without rescoring the complete limitation set. AF's integrated plural-cut chain and NA claim 22 face material combination pressure from A20+B9+A4/A6/A13/A21. AF claim 23 separately faces A4/A6+A13+A21, with A20 or B9 supplying personalization or timing motivation. NA claim 16 faces A4+B9+A13+A21/A5/B7, A6+A13+A21/B6/B8, and A20/A4/B9+A13+A21 routes; NA claims 19–20 also face direct multicamera/EDL pressure.
 10. Written description and enablement remain separate inquiries; neither conclusion establishes the other.
 
-## 5. Continuation reservations
+## 5. Successor reservations
 
-If AF is selected for the parent, the continuation docket should evaluate:
+For any selected § 371 parent, CONT-03 must identify every supported, commercially valuable family absent from the filed topology. If AF supplies the parent claims, the current candidate families are:
 
 1. an NA claim 1-style production system with useful NA claims 2–8;
 2. an NA claim 9-style distribution system with useful NA claims 10–15;
@@ -75,7 +75,9 @@ If AF is selected for the parent, the continuation docket should evaluate:
 6. a production- or detection-focused computer-readable-medium claim only if supported and commercially justified; and
 7. any broader local alternate-camera substitution theory only after support and art review.
 
-The continuation memo controls the pre-issue filing gate, copendency evidence, and chain-closure record.
+If NA supplies the parent claims, counsel must separately evaluate the supported AF integrated system and method positions, AF claim 23, AF-CONT formulations not represented in NA, and any other commercially useful omitted family. An approved hybrid requires the same review for every unfiled row in this crosswalk.
+
+The shared [`continuation-preservation memo`](../common/AA11393US-continuation-preservation_MEMO.md) controls the pre-issue filing gate, copendency evidence, and chain-closure record.
 
 ## 6. Operative package control
 

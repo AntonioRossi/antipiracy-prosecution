@@ -1,6 +1,6 @@
 # AA11393US — NA Normal-Allowance Strategy Router
 
-> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-22-v4 · STATUS 22 JULY 2026**
+> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-22-v4 · STATUS 23 JULY 2026**
 >
 > **INTERNAL COUNSEL-REVIEW PROPOSAL — NOT FOR FILING AS-IS.** This branch preserves actor-oriented production, distribution, detector, and end-to-end coverage. It is not a legal conclusion or allowance prediction.
 
@@ -17,7 +17,7 @@ The NA branch contains four independent claims:
 
 Physical-camera identity remains in production and distribution structure, including NA claim 19's stored matched-manifest relationship. Suspect recovery in NA claims 16, 19–20, and 22 uses plural camera-cut time codes and reconstructed manifests; it does not require suspect-side physical-camera labeling.
 
-The set contains **30 total / four independent / 26 singly dependent / no multiple-dependent claims**. It has no Track One numerical headroom and exceeds the basic 20-total/three-independent allocation. Counsel must verify current rules, fees, and route mechanics.
+The set contains **30 total / four independent / 26 singly dependent / no multiple-dependent claims**. It exceeds the basic 20-total/three-independent allocation by ten total claims and one independent claim. Counsel must verify ordinary excess-claim fees, unity, restriction exposure, and national-stage mechanics.
 
 ## 2. Current support and art posture
 
@@ -61,7 +61,7 @@ Do not fork shared IDS, filing-control, or public-comment records into this dire
 
 ## 5. Decisions requested from US counsel
 
-1. Select NA, AF, or a supported hybrid and the filing route.
+1. Select NA, AF, or a supported hybrid for the ordinary § 371 parent and record every deferred family under `CONT-03`.
 2. Confirm or reject the applicant's Mode A assessment for NA claims 16 and 22 by separately concluding PCT written description, PCT enablement, provisional written description and enablement for benefit entitlement, and effective date; perform the same analysis and assign a DW-05A mode for every other selected independent and material gated fallback.
 3. Decide the production, distribution, plural-timing, collusion, chunk-geometry, overlay, and Example 2 gates recorded in the support map.
 4. Test NA claim 16 against A4, A6, A13, B6, B8, B9, A20, A21, and other detector/delivery art; test NA claims 19–20 and NA claim 22 against A20+B9+A4/A6/A13+A21 and direct multicamera/EDL art.
@@ -71,8 +71,8 @@ Do not fork shared IDS, filing-control, or public-comment records into this dire
 ## 6. Filing-readiness controls
 
 - Claims are applicant-prepared and not represented as counsel-approved or filing-ready.
-- Convert to the selected route's original-claim or amendment format.
-- Recheck claim count, dependencies, antecedent basis, fees, Track One limits, support maps, and every matrix row after any amendment.
+- Convert to the required § 371 national-stage amendment format.
+- Recheck claim count, dependencies, antecedent basis, ordinary excess-claim fees, unity, restriction exposure, support maps, and every matrix row after any amendment.
 - Complete the DW-12 transmission, access, retention, and preservation controls.
-- Coordinate public positions, IDS decisions, and continuation claims across NA and AF.
+- Apply the shared [`continuation-preservation memo`](../common/AA11393US-continuation-preservation_MEMO.md) and coordinate public positions, IDS decisions, and continuation claims across NA, AF, and any approved hybrid.
 - Continuation practice cannot cure missing disclosure or restore an unsupported filing date.

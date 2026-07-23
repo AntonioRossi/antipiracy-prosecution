@@ -2,18 +2,20 @@
 
 > **MASTER INDEX — INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.**
 >
-> Repository status date: **22 July 2026**. Directory names and draft labels do not establish attorney-client privilege, work-product protection, or any other protected status. Retained US counsel must determine treatment, circulation, retention, and legal-hold requirements.
+> Repository status date: **23 July 2026**. Directory names and draft labels do not establish attorney-client privilege, work-product protection, or any other protected status. Retained US counsel must determine treatment, circulation, retention, and legal-hold requirements.
 
 This directory separates two alternative US claiming strategies for PCT/IB2025/051755 while preserving one canonical evidence and disclosure record. The alternatives are not cumulative filing instructions. Counsel should select, revise, or deliberately hybridize them and record which claim set controls.
 
-**Initial-contact status.** The strategy branches and shared controls contain the applicant's present claims, support maps, art analysis, fallback directions, and execution register and are ready for applicant-controlled initial transmission to prospective or retained US counsel under DW-12. Open counsel opinions, route choices, and professional-search tasks are pending pre-filing decisions; their absence does not make the initial decision package incomplete, but no branch is counsel-approved or filing-ready.
+**Initial-contact status.** The strategy branches and shared controls contain the applicant's present claims, support maps, art analysis, fallback directions, and execution register and are ready for applicant-controlled initial transmission to prospective or retained US counsel under DW-12. Open counsel opinions, claim-topology selection, filing execution, and professional-search tasks remain pending; no branch is counsel-approved or filing-ready.
+
+**US route and continuation control.** The current filing direction is ordinary national-stage entry under 35 U.S.C. § 371 for PCT/IB2025/051755. Track One is outside the current parent and continuation plan. The shared [`continuation-preservation memo`](common/AA11393US-continuation-preservation_MEMO.md) applies whether the parent uses `NA`, `AF`, or an approved hybrid. No successor is filed or preserved.
 
 ## Strategy routing
 
 | Strategy ID | Directory | Objective | Current status |
 |---|---|---|---|
 | **NA** | [`normal-allowance/`](normal-allowance/) | Balanced actor-split coverage: standalone production, distribution, and detection claims plus an end-to-end patentability anchor | **Current substantive baseline**; internal draft only |
-| **AF** | [`allowance-first/`](allowance-first/) | One plural physical-camera boundary/manifest/reconstructed-manifest chain in integrated system and method formats plus a narrower monitor-side method, with broader and complementary actor-specific coverage reserved for a copending continuation | **Alternative for counsel evaluation**; AF-CONT v2 is drafted but not filed or preserved |
+| **AF** | [`allowance-first/`](allowance-first/) | One plural physical-camera boundary/manifest/reconstructed-manifest chain in integrated system and method formats plus a narrower monitor-side method, with broader and complementary actor-specific coverage identified for a controlled successor | **Alternative for counsel evaluation**; AF-CONT v2 is drafted but not filed or preserved |
 
 Use `NA claim N`, `AF claim N`, and `AF-CONT claim N` in every analysis or communication outside the claim text itself. An unqualified claim number is ambiguous and must not be used to transfer a conclusion between strategies.
 
@@ -21,7 +23,7 @@ Use `NA claim N`, `AF claim N`, and `AF-CONT claim N` in every analysis or commu
 
 | Location | Controlling function |
 |---|---|
-| [`common/`](common/) | Single IDS inventory, public PCT informal-comments draft, and deferred filing/disclosure/formalities/EP work memo |
+| [`common/`](common/) | Single IDS inventory, public PCT informal-comments draft, continuation-preservation memo, and deferred filing/disclosure/formalities/EP work memo |
 | [`prior-art/`](prior-art/) | Single source store for prior-art PDFs, searchable copies, Markdown review aids, provenance, and checksums |
 | [`../PCT/`](../PCT/) | PCT application and international-search record |
 | [`../PPA2/`](../PPA2/) | Provisional 63/557,868 filing record |
@@ -44,14 +46,14 @@ Shared materials must not be copied into a strategy directory. Strategy document
 1. The IDS inventory in `common/` is the only disclosure inventory. Art relevance may be analyzed differently by strategy, but disclosure decisions must be coordinated across every related US application.
 2. The PCT informal-comments draft in `common/` is the only public-comments draft. Do not create strategy-specific public versions; counsel must approve one consistent filing-facing text.
 3. The prior-art PDFs remain clean and unchanged. Quotations from Markdown/OCR aids must be checked against the source PDF or an official copy.
-4. The AF strategy is viable only with a controlled continuation plan. For each generation in which supported, commercially valuable scope remains deliberately deferred, an approved successor must be filed and verified while a qualifying benefit-chain application remains pending, or counsel and the applicant must record `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`. The AF memo applies this control recursively without requiring an endless chain or mislabeling closure as preservation.
+4. The controlled-continuation procedure applies to `NA`, `AF`, and any approved hybrid. For each generation in which supported, commercially valuable scope remains deliberately deferred, an approved successor must be filed and verified while a qualifying benefit-chain application remains pending, or counsel and the applicant must record `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`. The shared memo applies this control recursively without requiring an endless chain or mislabeling closure as preservation.
 5. Arguments, priority positions, and IDS decisions must be coordinated across NA and AF to avoid contradictory records.
 
 ## Recommended counsel reading order
 
 1. This router and [`common/README.md`](common/README.md).
-2. The README and counsel briefing for the strategy being evaluated.
-3. That strategy's exact claim set and priority/support map.
-4. That strategy's applicable prior-art and claim-document matrices.
-5. For AF, the claim crosswalk, continuation/coverage-reservation memo, and AF-CONT v2 claim set, support map, and art matrix.
+2. The shared [`continuation-preservation memo`](common/AA11393US-continuation-preservation_MEMO.md).
+3. The README and counsel briefing for the strategy being evaluated.
+4. That strategy's exact claim set, priority/support map, and applicable matrices.
+5. When AF-CONT scope is evaluated, the AF claim crosswalk and AF-CONT v2 claim set, support map, and art matrix.
 6. The canonical IDS inventory, prior-art provenance record, and underlying official filing sources.

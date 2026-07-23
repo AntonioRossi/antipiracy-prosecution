@@ -1,10 +1,10 @@
 # AA11393US — NA US Counsel Briefing (DRAFT)
 
-> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-22-v4 · STATUS 22 JULY 2026**
+> **STRATEGY NA · CLAIM-SET VERSION NA-2026-07-22-v4 · STATUS 23 JULY 2026**
 >
 > **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** This is an applicant-prepared decision package, not counsel advice, an allowance prediction, or a validity opinion.
 >
-> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A and DW-08A remain pre-filing controls; DW-08B and DW-08C control objective evidence and infringement proof. No counsel opinion or filing choice is represented as obtained.
+> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A and DW-08A remain pre-filing controls; DW-08B and DW-08C control objective evidence and infringement proof. No counsel approval or filing evidence is recorded.
 
 ## 1. Decision requested
 
@@ -15,7 +15,7 @@ Determine whether the initial US case should use the actor-oriented NA topology:
 3. NA claim 16 — reconstructed-manifest detector system; and
 4. NA claim 22 — end-to-end reconstructed-manifest method.
 
-Counsel should select the filing route, decide whether restriction risk warrants a narrower initial election, identify continuation ownership, and determine whether AF's concentrated chain or an approved hybrid better serves the applicant.
+Counsel should determine whether NA, AF's concentrated chain, or an approved hybrid should supply the ordinary § 371 parent claims, decide whether restriction risk warrants a narrower initial election, and implement the shared controlled-continuation procedure for every deferred family.
 
 ## 2. Operative claim architecture
 
@@ -126,15 +126,15 @@ DW-08C controls the evidence program: lawfully obtained multi-recipient captures
 
 ## 6. Procedure, count, and continuation
 
-`NA-2026-07-22-v4` contains 30 total claims, four independent claims, and no multiple-dependent claim. It is at the current Track One numerical ceiling and has no net claim-count headroom. It also exceeds the basic 20-total/three-independent allocation. Counsel must verify current limits and fees.
+`NA-2026-07-22-v4` contains 30 total claims, four independent claims, and no multiple-dependent claim. It exceeds the basic 20-total/three-independent allocation by ten total claims and one independent claim. Counsel must verify ordinary excess-claim fees.
 
-Track One is available only through a qualifying route and filing. A direct § 371 national-stage entry does not obtain Track One merely by requesting it. Counsel must decide § 371 versus a qualifying § 111(a) bypass, continuity language, declarations, inventorship, applicant, assignment, entity status, fees, restriction, unity, double patenting, and continuation timing.
+The parent is directed to ordinary § 371 national-stage filing. Counsel must confirm the national-stage claim format, § 119(e) benefit data, declarations, inventorship, applicant, assignment, entity status, fees, restriction, unity, double patenting, and continuation timing.
 
-If NA is selected, preserve supported AF or other commercially valuable scope through a qualifying successor while a parent remains pending. Continuation practice cannot cure missing disclosure.
+If NA supplies the parent claims, identify supported AF, AF-CONT, or other commercially valuable reservations under [`CONT-03`](../common/AA11393US-continuation-preservation_MEMO.md). Continuation practice cannot cure missing disclosure.
 
 ## 7. Shared disclosure and public positions
 
-Use only the canonical shared [IDS inventory](../common/AA11393US-US_IDS-reference-list_DRAFT.md), [PCT informal-comments draft](../common/AA11393US-PCT_informal-comments-IB_DRAFT.md), and [filing/disclosure controls](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md).
+Use only the canonical shared [IDS inventory](../common/AA11393US-US_IDS-reference-list_DRAFT.md), [PCT informal-comments draft](../common/AA11393US-PCT_informal-comments-IB_DRAFT.md), [filing/disclosure controls](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md), and [continuation-preservation controls](../common/AA11393US-continuation-preservation_MEMO.md).
 
 The current IDS inventory is not an admission that every item is prior art or material. Counsel must complete official-copy verification, C7 acquisition, B6 foreign-language handling, publication/grant-pair decisions, and materiality dispositions.
 
@@ -142,20 +142,20 @@ Public PCT comments must remain consistent with the filed claims and verified ar
 
 ## 8. Pending written recommendations
 
-1. Should NA, AF, or a supported hybrid be filed, and by which route?
+1. Should NA, AF, or a supported hybrid supply the ordinary § 371 parent claims?
 2. Are NA claims 1 and 9 adequately supported as complete claims, and what mode applies to each?
 3. Does Mode A NA claim 16 retain sufficient patentability value after A4/A6/A13/B6/B8/B9/A20/A21 review, and do NA claims 19–20 provide useful enforceable fallbacks over the leading combinations?
 4. How should A20+B9+A4/A6/A13+A21 and direct multicamera/EDL art be answered for Mode A NA claim 22?
 5. Which Example 2, production, manifest, chunk-geometry, plural-timing, collusion, and overlay dependents should be retained?
 6. Which likely actors can be proved to practice the system claims and every method step?
 7. What restriction/election and continuation plan preserves commercially valuable scope?
-8. What Track One, fee, IDS, public-comment, and cross-jurisdiction positions are approved?
+8. What fee, IDS, public-comment, and cross-jurisdiction positions are approved?
 
 ## 9. Authorities for counsel to confirm
 
 - [MPEP § 1893 — § 371 national stage](https://www.uspto.gov/web/offices/pac/mpep/s1893.html)
-- [MPEP § 1895 — bypass applications](https://www.uspto.gov/web/offices/pac/mpep/s1895.html)
-- [USPTO Track One program](https://www.uspto.gov/patents/initiatives/usptos-prioritized-patent-examination-program)
+- [MPEP § 201.07 — continuation applications](https://www.uspto.gov/web/offices/pac/mpep/s201.html)
+- [MPEP § 211.01(b) — copendency](https://www.uspto.gov/web/offices/pac/mpep/s211.html)
 - [MPEP § 2106 — eligibility](https://www.uspto.gov/web/offices/pac/mpep/s2106.html)
 - [MPEP § 2143 — obviousness rationales](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
 - [MPEP § 2144.03 — common knowledge and official notice](https://www.uspto.gov/web/offices/pac/mpep/s2144.html)

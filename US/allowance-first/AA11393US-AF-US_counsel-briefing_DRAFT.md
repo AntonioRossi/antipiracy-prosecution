@@ -1,12 +1,12 @@
 # AA11393US — AF Allowance-First US Counsel Briefing (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 22 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 23 JULY 2026**
 >
 > **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** “Allowance-first” is a proposed claim-selection strategy, not a prediction, promise, or legal conclusion. Use `AF claim N`, `AF-CONT claim N`, `NA claim N`, and `PCT claim N` outside claim text.
 >
 > **FAMILY TERMINOLOGY BOUNDARY.** AF and NA place physical-camera identifiers in their production-side limitations and use plural detected camera-cut time codes and reconstructed manifests for suspect recovery. AF claims 1 and 19 integrate plural paired edit-entry changes into complete system and method chains; AF claim 23 separately recites the monitor-side method with the mate-containing reconstructed-same-combination nexus. NA preserves separate production, distribution, and detector-system actors. Neither strategy defines or construes the other.
 >
-> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A's § 112/priority opinion and DW-08A's direct-art search remain pending pre-filing controls; DW-08B and DW-08C control objective evidence and infringement proof. No counsel opinion or filing choice is represented as obtained.
+> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A's § 112/priority opinion and DW-08A's direct-art search remain pending pre-filing controls; DW-08B and DW-08C control objective evidence and infringement proof. No counsel approval or filing evidence is recorded.
 
 ## 1. Decision requested
 
@@ -178,15 +178,15 @@ DW-08C controls the evidence program: lawfully obtained multi-recipient captures
 
 ## 7. Procedure and claim-count controls
 
-`AF-2026-07-22-v6` contains 23 total claims, three independent claims, 20 singly dependent claims, and no multiple-dependent claim. It is within the current Track One ceiling of four independent claims, 30 total claims, and no multiple-dependent claim, but exceeds the basic 20-total allocation by three claims. Counsel must confirm excess-claim fees. This does not establish Track One eligibility or strategic merit.
+`AF-2026-07-22-v6` contains 23 total claims, three independent claims, 20 singly dependent claims, and no multiple-dependent claim. It exceeds the basic 20-total allocation by three claims. Counsel must confirm ordinary excess-claim fees. This numerical check does not establish strategic merit.
 
-Track One is available for qualifying original nonprovisional applications under § 111(a), including qualifying continuing applications; it is not available merely by requesting it in a direct § 371 national-stage application. Counsel must decide the route, filing format, benefit claim, declarations, inventorship, applicant, assignment, entity status, fees, restriction, unity, double patenting, and terminal-disclaimer posture.
+The parent is directed to ordinary § 371 national-stage filing. Counsel must confirm the national-stage claim format, § 119(e) benefit data, declarations, inventorship, applicant, assignment, entity status, fees, restriction, unity, double patenting, and terminal-disclaimer posture.
 
 AF claims 19–22 and AF claim 23 are separate method families and may be omitted only through recorded strategy decisions reflected in the filed claim listing and all claim-indexed AF records. Any amendment, cancellation, renumbering, or claim-status change requires count, dependency, antecedent, support, matrix, crosswalk, and filed-topology review. Counsel must pre-plan election, traversal, continuation/divisional treatment, and any § 121 consequences because AF claim 23 presents a separately useful recovery subcombination and a materially different search and eligibility focus; examination or rejoinder with AF claim 1 must not be assumed.
 
 ## 8. Continuation preservation
 
-If AF is selected, the continuation docket should preserve commercially valuable supported scope before the parent issues. The controlling workflow is [`AA11393US-AF-continuation-preservation_MEMO.md`](AA11393US-AF-continuation-preservation_MEMO.md). The operative actor-focused reservation is [`AF-CONT-2026-07-22-v2`](AA11393US-AF-CONT-US_claim-set_DRAFT.md): 19 total claims, four independent claims, 15 singly dependent claims, and no multiple-dependent claim. It is not filed and does not preserve continuation rights.
+If AF supplies the parent claims, the shared [`continuation-preservation memo`](../common/AA11393US-continuation-preservation_MEMO.md) controls every deferred family. The current actor-focused candidate is [`AF-CONT-2026-07-22-v2`](AA11393US-AF-CONT-US_claim-set_DRAFT.md): 19 total claims, four independent claims, 15 singly dependent claims, and no multiple-dependent claim. It is not filed and does not preserve continuation rights.
 
 Current reservation families are:
 
@@ -204,7 +204,7 @@ For each generation in which valuable scope remains deferred, file and verify a 
 
 ## 9. Shared disclosure and consistency
 
-Use only the canonical shared [`IDS inventory`](../common/AA11393US-US_IDS-reference-list_DRAFT.md), [`PCT informal-comments draft`](../common/AA11393US-PCT_informal-comments-IB_DRAFT.md), and [`filing/disclosure controls`](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md). The IDS inventory is not an admission that every item is prior art or material. Counsel must coordinate disclosure and public positions across the parent and every continuation.
+Use only the canonical shared [`IDS inventory`](../common/AA11393US-US_IDS-reference-list_DRAFT.md), [`PCT informal-comments draft`](../common/AA11393US-PCT_informal-comments-IB_DRAFT.md), [`filing/disclosure controls`](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md), and [`continuation-preservation controls`](../common/AA11393US-continuation-preservation_MEMO.md). The IDS inventory is not an admission that every item is prior art or material. Counsel must coordinate disclosure and public positions across the parent and every continuation.
 
 ## 10. Pending written recommendations
 
@@ -217,7 +217,7 @@ Use only the canonical shared [`IDS inventory`](../common/AA11393US-US_IDS-refer
 7. Does AF claim 23 satisfy its separate PCT/provisional written-description and enablement, effective-date, equality, § 112(f), art, actor, territorial, and proof gates; what are counsel's Step 2A Prong One, Step 2A Prong Two, and Step 2B conclusions; and which DW-05A mode applies?
 8. Should AF claims 19–22 and AF claim 23 each be filed, omitted, or canceled?
 9. Should AF-CONT v2's four actor-focused independents and causal-nexus claims 17–19 be maintained, revised, split after restriction, or omitted, and how should the AF claim 23/AF-CONT claim 19 overlap be controlled?
-10. Which route and Track One posture should be used, and what restriction, election, divisional, double-patenting, and terminal-disclaimer consequences are expected?
+10. What restriction, election, divisional, double-patenting, and terminal-disclaimer consequences are expected for the § 371 parent and its controlled successor?
 11. What IDS, PCT-comment, and continuing disclosure actions are approved?
 
 ## 11. Authorities for counsel to confirm at action time
@@ -225,9 +225,6 @@ Use only the canonical shared [`IDS inventory`](../common/AA11393US-US_IDS-refer
 - [MPEP § 201.07 — continuation applications](https://www.uspto.gov/web/offices/pac/mpep/s201.html)
 - [MPEP § 211.01(b) — copendency and benefit](https://www.uspto.gov/web/offices/pac/mpep/s211.html)
 - [MPEP § 1893 — § 371 national stage](https://www.uspto.gov/web/offices/pac/mpep/s1893.html)
-- [MPEP § 1895 — bypass applications](https://www.uspto.gov/web/offices/pac/mpep/s1895.html)
-- [USPTO Track One program](https://www.uspto.gov/patents/initiatives/usptos-prioritized-patent-examination-program)
-- [MPEP § 708.02(b) — Track One](https://www.uspto.gov/web/offices/pac/mpep/s708.html)
 - [MPEP § 609 — IDS practice](https://www.uspto.gov/web/offices/pac/mpep/s609.html)
 - [MPEP § 2001 — disclosure and candor](https://www.uspto.gov/web/offices/pac/mpep/s2001.html)
 - [MPEP § 2106 — eligibility](https://www.uspto.gov/web/offices/pac/mpep/s2106.html)

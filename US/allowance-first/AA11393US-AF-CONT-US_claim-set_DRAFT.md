@@ -1,14 +1,14 @@
 # AA11393US — AF Actor-Focused Continuation Candidate Claim Set (DRAFT)
 
-> **STRATEGY AF-CONT · CLAIM-SET VERSION AF-CONT-2026-07-22-v2 · STATUS 22 JULY 2026**
+> **STRATEGY AF-CONT · CLAIM-SET VERSION AF-CONT-2026-07-22-v2 · STATUS 23 JULY 2026**
 >
-> **INTERNAL COUNSEL-REVIEW DRAFT — NOT FILED — CONTINUATION NOT PRESERVED.** No successor application, application number, filing date, fee receipt, or recognized benefit relationship is recorded. This candidate does not establish copendency, benefit, priority, patentability, or filing approval.
+> **INTERNAL COUNSEL-REVIEW DRAFT — NOT FILED. CONTINUATION STATUS: NOT YET PRESERVED.** No successor application, application number, filing date, fee receipt, or recognized benefit relationship is recorded. This candidate does not establish copendency, benefit, priority, patentability, or filing approval.
 >
-> This reservation is controlled by [`AA11393US-AF-continuation-preservation_MEMO.md`](AA11393US-AF-continuation-preservation_MEMO.md). The responsible US attorney must confirm claim wording, § 101, § 102, § 103, § 112(a)/(b)/(f), support, effective date, inventorship, restriction, double patenting, fees, route, copendency, ADS/benefit data, and filing evidence.
+> This is one candidate successor claim set; the universal procedure is controlled by [`../common/AA11393US-continuation-preservation_MEMO.md`](../common/AA11393US-continuation-preservation_MEMO.md). The responsible US attorney must confirm claim wording, § 101, § 102, § 103, § 112(a)/(b)/(f), support, effective date, inventorship, restriction, double patenting, fees, successor vehicle, copendency, ADS/benefit data, and filing evidence.
 
 ## 1. Operative reservation architecture
 
-The candidate preserves four actor-focused positions not exhausted by the AF parent. The production, distribution, and detector-system positions remain outside the parent; AF-CONT claim 14 is broader than AF claim 23, and AF-CONT claim 19 overlaps AF claim 23's causal-nexus formulation:
+The candidate records four actor-focused positions not exhausted by the AF parent. The production, distribution, and detector-system positions remain outside the parent; AF-CONT claim 14 is broader than AF claim 23, and AF-CONT claim 19 overlaps AF claim 23's causal-nexus formulation:
 
 | Independent claim | Principal actor | Reserved operation |
 |---:|---|---|
@@ -17,9 +17,9 @@ The candidate preserves four actor-focused positions not exhausted by the AF par
 | 11 | Monitoring provider, platform, rights owner | Delivered reference/mate manifest ledger, plural suspect cut-time derivation, reconstructed-manifest equality, and recipient lookup |
 | 14 | Actor performing suspect analysis and ledger lookup | Affirmative detector-only method counterpart of claim 11 |
 
-The candidate contains **19 total claims / 4 independent claims / 15 singly dependent claims / no multiple-dependent claims**. It leaves eleven total-claim positions below the 30-total Track One ceiling but no additional independent-claim position below the four-independent ceiling, subject to counsel confirming the rules and fees in force at filing. It is below the 20-total basic allocation but exceeds the three-independent basic allocation by one independent claim.
+The candidate contains **19 total claims / 4 independent claims / 15 singly dependent claims / no multiple-dependent claims**. It is below the 20-total basic allocation and exceeds the three-independent basic allocation by one independent claim. Counsel must verify the resulting ordinary excess-independent-claim fee, restriction exposure, and successor filing requirements.
 
-The final successor must record whether AF-CONT claims 14 and 19 are retained, differentiated, substituted, or omitted in light of AF claim 23's status, any parent restriction/election, claim differentiation, double patenting, terminal-disclaimer consequences, and current commercial need. This unfiled baseline preserves drafting options; it does not direct filing of duplicative scope.
+The final successor must record whether AF-CONT claims 14 and 19 are retained, differentiated, substituted, or omitted in light of AF claim 23's status, any parent restriction/election, claim differentiation, double patenting, terminal-disclaimer consequences, and current commercial need. This unfiled baseline records drafting options; it does not direct filing of duplicative scope.
 
 No claim requires suspect-side identification of physical camera sources. AF-CONT claims 11–16 and 18–19 use plural detected camera-cut time codes, reconstructed manifests, equality to a delivered manifest, and recipient lookup. Physical-camera identity remains in the production and distribution structures of AF-CONT claims 1–10 and 17.
 
@@ -169,7 +169,7 @@ A Mode B conclusion requires intervening-art review, including B10, before filin
 
 **Reconstruction and equality gate.** Counsel must determine whether each filing enables the full claimed operation of building a reconstructed manifest from noisy detected cut times and whether any functional language implicates § 112(f). Counsel must also select and use one supported construction of an “equal” manifest file—such as byte identity, equivalent chunk selections, or equivalent represented timing choices—and account for dynamic URLs, tokens, and metadata in definiteness, art, and infringement analysis.
 
-## 4. Additional excluded gated reservations and headroom
+## 4. Additional excluded gated reservations
 
 The following limitations remain available for counsel review but are not included in this 19-claim baseline:
 
@@ -192,6 +192,6 @@ AF-CONT claims 17–19 require proof that the actually delivered equal manifest 
 
 ## 6. Filing and recursive preservation controls
 
-This candidate becomes a preserved continuation position only when the conditions for `CONTINUATION PRESERVED` in the continuation memo are satisfied. Before then, its operative status is **NOT FILED — CONTINUATION NOT PRESERVED**.
+This candidate becomes a preserved continuation position only when the conditions for `CONTINUATION PRESERVED` in the shared continuation memo are satisfied. Before then, its operative status is **NOT YET PRESERVED**.
 
-If a qualifying successor containing some or all of these claims is filed and other supported commercial scope remains deferred, counsel must designate the next controlled parent and reapply AF-CONT-02 through AF-CONT-11. If no successor is authorized, the package must use the memo's `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED` outcome and identify the relinquished positions.
+If a qualifying successor containing some or all of these claims is filed and other supported commercial scope remains deferred, counsel must designate the next controlled parent and reapply CONT-01 through CONT-06. If no successor is authorized, the package must use the memo's `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED` outcome and identify the relinquished positions.
