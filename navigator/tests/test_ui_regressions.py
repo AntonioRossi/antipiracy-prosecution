@@ -390,7 +390,8 @@ process.stdout.write(JSON.stringify({mode:state.mode, prevented:prevented}));
             render.CSS)
         self.assertIsNotNone(reserve)
         self.assertIn(
-            "#masthead > .legend,#masthead > .disclaimer { display:none; }",
+            "#masthead > .legend,#masthead > .release-profile,\n"
+            "  #masthead > .disclaimer { display:none; }",
             render.CSS)
         self.assertRegex(
             render.CSS,
@@ -410,6 +411,7 @@ process.stdout.write(JSON.stringify({mode:state.mode, prevented:prevented}));
         self.assertRegex(
             render.HTML_TEMPLATE,
             r"<footer><p class=\"legend\">@@LEGEND@@</p>"
+            r"<p class=\"release-profile\">@@RELEASEPROFILE@@</p>"
             r"<p class=\"disclaimer\">@@DISCLAIMER@@</p></footer>")
         self.assertGreater(render.HTML_TEMPLATE.index("<footer>"),
                            render.HTML_TEMPLATE.index('</div>\n</div>'))

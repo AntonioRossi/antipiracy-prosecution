@@ -21,6 +21,29 @@ from lib import recordprovenance, release, render  # noqa: E402
 
 
 MANUAL_FIELDS = ("ac11", "ac12", "ac13", "ac15")
+TECHNICAL_PREVIEW_PROFILE = {
+    "id": "technical-preview",
+    "manualQaEvidence": "deferred",
+    "compatibilityAuthorization": "not-authorized",
+    "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
+    "requiredQaRecordFields": [],
+    "artifactLabel": (
+        "TECHNICAL PREVIEW — Manual cross-platform and "
+        "assistive-technology QA is deferred; browser and "
+        "assistive-technology compatibility is not validated."
+    ),
+}
+VALIDATED_RELEASE_PROFILE = {
+    "id": "validated-release",
+    "manualQaEvidence": "required",
+    "compatibilityAuthorization": "support-matrix-authorized",
+    "deferredObservations": [],
+    "requiredQaRecordFields": list(MANUAL_FIELDS),
+    "artifactLabel": (
+        "VALIDATED-RELEASE PROFILE — Delivery requires current full "
+        "seven-row cross-platform and assistive-technology QA."
+    ),
+}
 
 with open(os.path.join(ROOT, "navigator", "schema", "support-matrix.json"),
           encoding="utf-8") as _support_fh:
@@ -115,7 +138,7 @@ def _manual_checks(operator="QA Reviewer", operator_kind="human"):
     }
 
 
-def _receipt_context():
+def _receipt_context(profile=VALIDATED_RELEASE_PROFILE):
     context = {
         "registryDigest": canon.bytes_digest(b"receipt registry"),
         "runnerInputs": [{
@@ -129,21 +152,27 @@ def _receipt_context():
             "release-postcondition": ["AC-16"],
             "bundle-postcondition": ["AC-20"],
         },
+        "releaseProfile": profile["id"],
+        "releaseProfileContract": copy.deepcopy(profile),
     }
     context["runnerDigest"] = release._runner_digest(
         context["registryDigest"], context["runnerInputs"],
-        context["receiptPhases"], context["runnerEditions"])
+        context["receiptPhases"], context["runnerEditions"],
+        context["releaseProfile"], context["releaseProfileContract"])
     return context
 
 
 def _release_receipt(context, subjects):
     return {
-        "receiptVersion": "1",
+        "receiptVersion": "2",
         "registryDigest": context["registryDigest"],
         "runnerDigest": context["runnerDigest"],
         "runnerInputs": copy.deepcopy(context["runnerInputs"]),
         "runnerEditions": copy.deepcopy(context["runnerEditions"]),
         "runnerKind": "tool",
+        "releaseProfile": context["releaseProfile"],
+        "releaseProfileContract": copy.deepcopy(
+            context["releaseProfileContract"]),
         "results": [
             {"phase": "release-preflight",
              "criteria": ["AC-%02d" % number for number in range(1, 20)],
@@ -230,6 +259,18 @@ class TestCliArity(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "--evidence-file"):
             build.main(["record-qa"])
 
+    def test_release_profile_is_explicit_and_closed(self):
+        for argv in ([], ["--profile="], ["--profile=preview"],
+                     ["--profile=technical-preview", "unexpected"]):
+            with self.subTest(argv=argv), self.assertRaises(SystemExit):
+                build._release_profile_arg(argv)
+        self.assertEqual(build._release_profile_arg(
+            ["--profile=technical-preview"]), "technical-preview")
+        self.assertEqual(build._release_profile_arg(
+            ["--profile=validated-release"]), "validated-release")
+        with self.assertRaisesRegex(SystemExit, "--profile="):
+            build.main(["release", "na"])
+
 
 class TestAcceptanceReceipts(unittest.TestCase):
     def setUp(self):
@@ -238,7 +279,8 @@ class TestAcceptanceReceipts(unittest.TestCase):
             "na", canon.bytes_digest(b"candidate"),
             canon.bytes_digest(b"content lock"),
             canon.bytes_digest(b"qa record"),
-            canon.bytes_digest(b"qa input lock"))
+            canon.bytes_digest(b"qa input lock"),
+            VALIDATED_RELEASE_PROFILE)
         self.receipt = _release_receipt(self.context, self.subjects)
 
     def problems(self, receipt=None, context=None, subjects=None):
@@ -254,6 +296,8 @@ class TestAcceptanceReceipts(unittest.TestCase):
             ("runnerDigest", canon.bytes_digest(b"other runner")),
             ("runnerEditions", ["af"]),
             ("runnerKind", "human"),
+            ("releaseProfile", "technical-preview"),
+            ("releaseProfileContract", TECHNICAL_PREVIEW_PROFILE),
         )
         for field, value in mutations:
             with self.subTest(field=field):
@@ -276,7 +320,9 @@ class TestAcceptanceReceipts(unittest.TestCase):
         af_context["runnerEditions"] = ["af"]
         af_context["runnerDigest"] = release._runner_digest(
             af_context["registryDigest"], af_context["runnerInputs"],
-            af_context["receiptPhases"], af_context["runnerEditions"])
+            af_context["receiptPhases"], af_context["runnerEditions"],
+            af_context["releaseProfile"],
+            af_context["releaseProfileContract"])
         af_receipt = _release_receipt(af_context, self.subjects)
         self.assertTrue(any(
             "runner edition does not match" in problem
@@ -294,6 +340,95 @@ class TestAcceptanceReceipts(unittest.TestCase):
         malformed_receipt["subjects"]["candidateDigest"] = "not-a-digest"
         self.assertTrue(any("candidateDigest" in problem
                             for problem in self.problems(malformed_receipt)))
+
+    def test_preview_receipt_has_explicit_deferred_profile_and_no_qa_subject(self):
+        context = _receipt_context(TECHNICAL_PREVIEW_PROFILE)
+        subjects = release.release_subjects(
+            "na", canon.bytes_digest(b"candidate"),
+            canon.bytes_digest(b"content lock"), None, None,
+            TECHNICAL_PREVIEW_PROFILE)
+        receipt = _release_receipt(context, subjects)
+        self.assertEqual(release.acceptance_receipt_problems(
+            receipt, "release", context, subjects), [])
+        self.assertEqual(receipt["receiptVersion"], "2")
+        self.assertEqual(receipt["releaseProfile"], "technical-preview")
+        self.assertEqual(receipt["releaseProfileContract"],
+                         TECHNICAL_PREVIEW_PROFILE)
+        self.assertIsNone(receipt["subjects"]["qaRecord"])
+        self.assertIsNone(receipt["subjects"]["qaInputLockDigest"])
+        self.assertEqual(receipt["subjects"]["compatibilityAuthorization"],
+                         "not-authorized")
+        self.assertEqual(receipt["subjects"]["deferredObservations"],
+                         ["AC-11", "AC-12", "AC-13", "AC-15"])
+
+        claimed = copy.deepcopy(subjects)
+        claimed["qaRecord"] = canon.bytes_digest(b"inapplicable QA")
+        problems = release.acceptance_receipt_problems(
+            _release_receipt(context, claimed), "release", context, claimed)
+        self.assertTrue(any("must be null" in problem for problem in problems),
+                        problems)
+
+    def test_release_preflight_applies_profile_specific_qa_policy(self):
+        candidate = b"candidate bytes"
+        candidate_digest = canon.bytes_digest(candidate)
+        lock_digest = canon.bytes_digest(b"content lock")
+        content_lock = {"reads": [], "lockDigest": lock_digest}
+        model = SimpleNamespace(edition={
+            "editionId": "na", "declaredTransitiveInputs": [],
+        })
+        child = SimpleNamespace(
+            returncode=0,
+            stdout=canon.canonical_json({
+                "candidateDigest": candidate_digest,
+                "lockDigest": lock_digest,
+            }).decode("utf-8"),
+            stderr="",
+        )
+        with mock.patch.object(render, "render", return_value=candidate), \
+                mock.patch.object(release.subprocess, "run",
+                                  return_value=child):
+            release._verify_release_preflight(
+                ROOT, model, candidate, candidate, content_lock, None,
+                TECHNICAL_PREVIEW_PROFILE)
+            with self.assertRaisesRegex(
+                    release.AcceptanceError, "must not claim"):
+                release._verify_release_preflight(
+                    ROOT, model, candidate, candidate, content_lock,
+                    {"record": {}}, TECHNICAL_PREVIEW_PROFILE)
+            with self.assertRaisesRegex(
+                    release.AcceptanceError, "QA authorization"):
+                release._verify_release_preflight(
+                    ROOT, model, candidate, candidate, content_lock, None,
+                    VALIDATED_RELEASE_PROFILE)
+
+    def test_preview_release_transaction_emits_no_qa_binding(self):
+        context = _receipt_context(TECHNICAL_PREVIEW_PROFILE)
+        candidate = b"candidate bytes"
+        content_lock = {
+            "reads": [], "lockDigest": canon.bytes_digest(b"content lock"),
+        }
+        model = SimpleNamespace(edition={
+            "editionId": "na", "artifactName": "preview.html",
+            "declaredTransitiveInputs": [],
+        })
+        output = mock.Mock()
+        with mock.patch.object(
+                release, "acceptance_context",
+                side_effect=[context, copy.deepcopy(context)]), \
+                mock.patch.object(release, "_run_registered_callbacks"), \
+                mock.patch.object(release, "_verify_release_preflight") \
+                as preflight, \
+                mock.patch.object(release, "_verify_release_postcondition"):
+            receipt = release.run_release_acceptance_transaction(
+                ROOT, model, candidate, candidate, content_lock, None, output,
+                release_profile="technical-preview")
+        self.assertEqual(receipt["releaseProfile"], "technical-preview")
+        self.assertIsNone(receipt["subjects"]["qaRecord"])
+        self.assertIsNone(receipt["subjects"]["qaInputLockDigest"])
+        preflight.assert_called_once()
+        self.assertIsNone(preflight.call_args.args[5])
+        self.assertEqual(preflight.call_args.args[6],
+                         TECHNICAL_PREVIEW_PROFILE)
 
     def test_receipt_is_acyclic_and_runner_is_distinct_from_approver(self):
         outer_record = {
@@ -318,7 +453,9 @@ class TestAcceptanceReceipts(unittest.TestCase):
             b"changed runner source")
         second["runnerDigest"] = release._runner_digest(
             second["registryDigest"], second["runnerInputs"],
-            second["receiptPhases"], second["runnerEditions"])
+            second["receiptPhases"], second["runnerEditions"],
+            second["releaseProfile"],
+            second["releaseProfileContract"])
         models = [
             (None, SimpleNamespace(edition={
                 "declaredTransitiveInputs": ["one.py"]})),
@@ -422,7 +559,7 @@ class TestAcceptanceReceipts(unittest.TestCase):
         extra_top["unexpected"] = True
         mutations.append(extra_top)
         wrong_version = copy.deepcopy(registry)
-        wrong_version["acceptanceVersion"] = "2"
+        wrong_version["acceptanceVersion"] = "1"
         mutations.append(wrong_version)
         blank_comment = copy.deepcopy(registry)
         blank_comment["comment"] = " "
@@ -454,6 +591,46 @@ class TestAcceptanceReceipts(unittest.TestCase):
         mutations.append(canon_owned_by_wrong_criterion)
         for index, mutated in enumerate(mutations):
             with self.subTest(mutation=index):
+                with self.assertRaises(release.AcceptanceError):
+                    release._validate_registry(mutated)
+
+    def test_registry_declares_exact_active_and_future_release_profiles(self):
+        with open(os.path.join(
+                ROOT, "navigator", "schema", "acceptance.json"),
+                encoding="utf-8") as fh:
+            registry = json.load(fh)
+        self.assertEqual(registry["acceptanceVersion"], "2")
+        self.assertEqual(registry["runner"]["runnerVersion"], "2")
+        self.assertEqual(registry["runner"]["activeReleaseProfile"],
+                         "technical-preview")
+        self.assertEqual(registry["runner"]["releaseProfiles"], [
+            TECHNICAL_PREVIEW_PROFILE, VALIDATED_RELEASE_PROFILE])
+        selected, contract = release.release_profile_contract(
+            registry, "technical-preview")
+        self.assertEqual(selected, "technical-preview")
+        self.assertEqual(contract, TECHNICAL_PREVIEW_PROFILE)
+        with self.assertRaisesRegex(
+                release.AcceptanceError, "not the active release profile"):
+            release.release_profile_contract(registry, "validated-release")
+
+        mutations = []
+        swapped = copy.deepcopy(registry)
+        swapped["runner"]["releaseProfiles"].reverse()
+        mutations.append(swapped)
+        unknown_active = copy.deepcopy(registry)
+        unknown_active["runner"]["activeReleaseProfile"] = "preview"
+        mutations.append(unknown_active)
+        weakened_preview = copy.deepcopy(registry)
+        weakened_preview["runner"]["releaseProfiles"][0][
+            "deferredObservations"] = []
+        mutations.append(weakened_preview)
+        weakened_validated = copy.deepcopy(registry)
+        weakened_validated["runner"]["releaseProfiles"][1][
+            "requiredQaRecordFields"] = []
+        mutations.append(weakened_validated)
+        for mutated in mutations:
+            with self.subTest(mutated=mutated["runner"].get(
+                    "activeReleaseProfile")):
                 with self.assertRaises(release.AcceptanceError):
                     release._validate_registry(mutated)
 
@@ -516,7 +693,8 @@ class TestAcceptanceReceipts(unittest.TestCase):
         from tests import test_bundle_lifecycle as lifecycle
 
         cfg, release_records, qa_records, attestations, stored, \
-            manifest_bytes, unused_wording = lifecycle._fixture()
+            manifest_bytes, unused_wording = lifecycle._fixture(
+                profile=lifecycle.TECHNICAL_PREVIEW_PROFILE)
         planned_members = [
             (member["name"], manifest_bytes
              if member["kind"] == "bundle-manifest"
@@ -541,9 +719,10 @@ class TestAcceptanceReceipts(unittest.TestCase):
                 "currentSidesByEdition":
                     lifecycle.FIXTURE_CURRENT_SIDES,
                 "acceptanceContextByEdition":
-                    lifecycle.FIXTURE_ACCEPTANCE_CONTEXTS,
+                    {"na": lifecycle._acceptance_context(
+                        lifecycle.TECHNICAL_PREVIEW_PROFILE)},
                 "qaAuthorizationContextByEdition": {
-                    "na": lifecycle._qa_authorization_context(qa_records),
+                    "na": None,
                 },
                 "currentReleaseBindingsByEdition": {
                     "na": {
@@ -616,13 +795,6 @@ class TestAcceptanceReceipts(unittest.TestCase):
             "currentReleaseBindingsByEdition"]["na"]["sealedDigest"] = \
             canon.bytes_digest(b"stale current candidate")
         bad_plans["release"] = (copy.deepcopy(cfg), stale_release)
-
-        stale_qa = copy.deepcopy(plan)
-        stale_qa["acceptanceChain"][
-            "qaAuthorizationContextByEdition"]["na"][
-                "qaInputLock"]["lockDigest"] = canon.bytes_digest(
-                    b"stale QA lock")
-        bad_plans["qa"] = (copy.deepcopy(cfg), stale_qa)
 
         stale_attestation = copy.deepcopy(plan)
         stale_attestation["acceptanceChain"][
@@ -757,7 +929,10 @@ class TestAttestationEvidence(unittest.TestCase):
         with open(os.path.join(ROOT, "navigator", "schema", "planes.json"),
                   encoding="utf-8") as fh:
             planes = json.load(fh)
-        manifest_text = "Current manifest wording"
+        manifest_text = (
+            TECHNICAL_PREVIEW_PROFILE["artifactLabel"] +
+            " This bundle does not claim compatibility authorization."
+        )
         for kind, identity in (
                 ("human", "reviewer@example.test"),
                 ("model", "codex:gpt-5.6-sol:run-attest-cli")):
@@ -768,7 +943,11 @@ class TestAttestationEvidence(unittest.TestCase):
                 with open(os.path.join(navigator, "bundle-manifest.json"),
                           "w", encoding="utf-8") as fh:
                     json.dump({
-                        "manifestVersion": "1",
+                        "manifestVersion": "2",
+                        "releaseProfile": "technical-preview",
+                        "compatibilityAuthorization": "not-authorized",
+                        "deferredObservations":
+                            ["AC-11", "AC-12", "AC-13", "AC-15"],
                         "bundleManifestText": manifest_text,
                     }, fh)
                 with mock.patch.object(build, "ROOT", tmp), \
@@ -992,6 +1171,10 @@ class TestManualEvidence(unittest.TestCase):
             api_policy={})
         with mock.patch.object(build, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
+                mock.patch.object(
+                    build.release_mod, "release_profile_contract",
+                    return_value=("technical-preview",
+                                  TECHNICAL_PREVIEW_PROFILE)), \
                 mock.patch.object(build, "registry_manual_fields",
                                   return_value=MANUAL_FIELDS), \
                 mock.patch.object(build.render, "api_probe_instruments",
@@ -1076,6 +1259,10 @@ class TestManualEvidence(unittest.TestCase):
             api_policy={})
         with mock.patch.object(build, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
+                mock.patch.object(
+                    build.release_mod, "release_profile_contract",
+                    return_value=("validated-release",
+                                  VALIDATED_RELEASE_PROFILE)), \
                 mock.patch.object(build, "registry_manual_fields",
                                   return_value=MANUAL_FIELDS), \
                 mock.patch.object(build.render, "api_probe_instruments",
@@ -1086,6 +1273,28 @@ class TestManualEvidence(unittest.TestCase):
                     "NAV_OPERATOR_KIND": "model",
                 }, clear=True), \
                 self.assertRaisesRegex(SystemExit, "missing"):
+            build.cmd_record_qa("na", [])
+
+    def test_record_qa_is_deferred_for_the_technical_preview(self):
+        model = SimpleNamespace(
+            acceptance={}, support_matrix=QA_SUPPORT_MATRIX,
+            api_policy={})
+        with mock.patch.object(build, "derive", return_value=(
+                model, b"", {"reads": [], "lockDigest": "unused"})), \
+                mock.patch.object(
+                    build.release_mod, "release_profile_contract",
+                    return_value=("technical-preview",
+                                  TECHNICAL_PREVIEW_PROFILE)), \
+                mock.patch.object(build, "registry_manual_fields",
+                                  return_value=MANUAL_FIELDS), \
+                mock.patch.object(build.render, "api_probe_instruments",
+                                  return_value={api: None
+                                                for api in QA_API_PROBES}), \
+                mock.patch.object(
+                    build, "operator_id",
+                    side_effect=AssertionError(
+                        "deferred preview QA requested an identity")), \
+                self.assertRaisesRegex(SystemExit, "deferred.*technical-preview"):
             build.cmd_record_qa("na", [])
 
     def test_check_only_validates_inline_and_file_without_append(self):
@@ -1128,6 +1337,10 @@ class TestManualEvidence(unittest.TestCase):
             with mock.patch.object(build, "ROOT", root), \
                     mock.patch.object(build, "derive", return_value=(
                         model, candidate, lock)), \
+                    mock.patch.object(
+                        build.release_mod, "release_profile_contract",
+                        return_value=("validated-release",
+                                      VALIDATED_RELEASE_PROFILE)), \
                     mock.patch.object(build, "registry_manual_fields",
                                       return_value=MANUAL_FIELDS), \
                     mock.patch.object(build.render, "api_probe_instruments",
@@ -1661,6 +1874,7 @@ class TestReleaseEvidence(unittest.TestCase):
         support_matrix = copy.deepcopy(QA_SUPPORT_MATRIX)
         support_matrix["approver"] = "Support Owner"
         record = {
+            "releaseProfile": "validated-release",
             "edition": "na",
             "candidateDigest": "candidate",
             "lockDigest": "content-lock",
@@ -1700,6 +1914,22 @@ class TestReleaseEvidence(unittest.TestCase):
     def test_complete_human_evidence_authorizes_release(self):
         fixture = self._fixture()
         self.assertEqual(self._problems(*fixture), [])
+
+    def test_qa_record_is_explicitly_scoped_to_validated_release(self):
+        fixture = self._fixture()
+        self.assertEqual(fixture[0]["record"]["releaseProfile"],
+                         "validated-release")
+        for bad_profile in (None, "technical-preview", "preview"):
+            with self.subTest(release_profile=bad_profile):
+                qa = copy.deepcopy(fixture[0])
+                if bad_profile is None:
+                    qa["record"].pop("releaseProfile")
+                else:
+                    qa["record"]["releaseProfile"] = bad_profile
+                problems = self._problems(qa, *fixture[1:])
+                self.assertTrue(any(
+                    "validated-release profile" in problem
+                    for problem in problems), problems)
 
     def test_current_qa_selection_prefers_human_then_digest(self):
         content_lock = {"lockDigest": "current-lock", "reads": []}
@@ -1779,6 +2009,12 @@ class TestReleaseEvidence(unittest.TestCase):
         fixture[0] = qa
         fixture[4] = attestations
         self.assertEqual(self._problems(*fixture), [])
+        self.assertEqual(qa["record"]["operator"], identity)
+        self.assertEqual(qa["record"]["releaseProfile"],
+                         "validated-release")
+        self.assertEqual(qa["record"]["candidateDigest"], "candidate")
+        self.assertEqual(qa["record"]["lockDigest"], "content-lock")
+        self.assertEqual(qa["record"]["qaInputLock"], fixture[2])
 
     def test_legacy_pending_and_nonauthoritative_evidence_cannot_authorize(self):
         fixture = self._fixture()
@@ -1800,7 +2036,7 @@ class TestReleaseEvidence(unittest.TestCase):
             fixture[0], fixture[1], fixture[2], fixture[3], atts, fixture[5])
         self.assertTrue(any("operatorKind" in p for p in problems), problems)
 
-        for bad_kind in (None, "automation"):
+        for bad_kind in (None, "tool", "automation"):
             with self.subTest(operator_kind=bad_kind):
                 fixture = self._fixture()
                 qa = copy.deepcopy(fixture[0])
@@ -1811,6 +2047,13 @@ class TestReleaseEvidence(unittest.TestCase):
                 self.assertTrue(any(
                     "operatorKind" in problem for problem in
                     self._problems(qa, *fixture[1:])))
+
+        fixture = self._fixture()
+        qa = copy.deepcopy(fixture[0])
+        qa["record"]["candidateDigest"] = "stale-candidate"
+        self.assertTrue(any(
+            "candidate digest is not current" in problem for problem in
+            self._problems(qa, *fixture[1:])))
 
         fixture = self._fixture()
         qa = copy.deepcopy(fixture[0])

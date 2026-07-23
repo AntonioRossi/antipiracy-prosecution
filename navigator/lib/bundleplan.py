@@ -214,6 +214,7 @@ def propose_bundle_config(
         expected = (
             edition, binding["sealed"], binding["sealedDigest"],
             binding["lockDigest"], binding["declaredReleaseTimestamp"],
+            cfg["releaseProfile"],
         )
         eligible = []
         rejected = []
@@ -226,6 +227,7 @@ def propose_bundle_config(
                 record.get("edition"), record.get("sealed"),
                 record.get("sealedDigest"), record.get("lockDigest"),
                 record.get("declaredReleaseTimestamp"),
+                record.get("releaseProfile"),
             )
             if actual != expected:
                 continue

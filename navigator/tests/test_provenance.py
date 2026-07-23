@@ -195,7 +195,9 @@ class TestProvenance(unittest.TestCase):
             rewrite_json(
                 root, "navigator/bundle-manifest.json",
                 lambda value: value.update({
-                    "bundleManifestText": "Changed bundle-only wording",
+                    "bundleManifestText":
+                        value["bundleManifestText"] +
+                        " Changed bundle-only wording.",
                 }))
             after = {
                 edition: snapshot(edition, root)[1:]

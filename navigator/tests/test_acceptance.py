@@ -33,6 +33,30 @@ TDD = os.path.join(
     ROOT, "AA11393US-claims-navigator_technical-description_DRAFT.md")
 ACCEPTANCE_CALLBACK_CONTEXT = None
 
+TECHNICAL_PREVIEW_PROFILE = {
+    "id": "technical-preview",
+    "manualQaEvidence": "deferred",
+    "compatibilityAuthorization": "not-authorized",
+    "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
+    "requiredQaRecordFields": [],
+    "artifactLabel": (
+        "TECHNICAL PREVIEW — Manual cross-platform and "
+        "assistive-technology QA is deferred; browser and "
+        "assistive-technology compatibility is not validated."
+    ),
+}
+VALIDATED_RELEASE_PROFILE = {
+    "id": "validated-release",
+    "manualQaEvidence": "required",
+    "compatibilityAuthorization": "support-matrix-authorized",
+    "deferredObservations": [],
+    "requiredQaRecordFields": ["ac11", "ac12", "ac13", "ac15"],
+    "artifactLabel": (
+        "VALIDATED-RELEASE PROFILE — Delivery requires current full "
+        "seven-row cross-platform and assistive-technology QA."
+    ),
+}
+
 _cache = {}
 
 
@@ -1057,6 +1081,42 @@ process.stdout.write(JSON.stringify({
 
 class Acceptance(unittest.TestCase):
     maxDiff = None
+
+    def _assert_active_technical_preview(self, acceptance):
+        profile_id, contract = release_mod.release_profile_contract(
+            acceptance)
+        self.assertEqual(profile_id, "technical-preview")
+        self.assertEqual(contract, TECHNICAL_PREVIEW_PROFILE)
+        self.assertEqual(
+            contract["deferredObservations"],
+            ["AC-11", "AC-12", "AC-13", "AC-15"])
+        self.assertEqual(contract["requiredQaRecordFields"], [])
+        self.assertEqual(
+            contract["compatibilityAuthorization"], "not-authorized")
+        return contract
+
+    def _assert_preview_artifact_label(self, html, contract,
+                                       require_print_footer=False,
+                                       require_profile_metadata=True):
+        label = render.esc(contract["artifactLabel"])
+        self.assertIn(label, html)
+        if require_profile_metadata:
+            nav_match = re.search(
+                r'<script type="application/json" id="nav-data">'
+                r'(.*?)</script>', html, re.S)
+            self.assertIsNotNone(nav_match)
+            edition = canon.parse_json(nav_match.group(1))["edition"]
+            self.assertEqual(edition["releaseProfile"], contract["id"])
+            self.assertEqual(
+                edition["compatibilityAuthorization"],
+                contract["compatibilityAuthorization"])
+            self.assertEqual(
+                edition["deferredObservations"],
+                contract["deferredObservations"])
+        if require_print_footer:
+            footer = re.search(r"<footer>.*?</footer>", html, re.S)
+            self.assertIsNotNone(footer)
+            self.assertIn(label, footer.group(0))
 
     def _assert_authorized_record(self, record, label):
         self.assertIsInstance(record, dict, label)
@@ -2545,7 +2605,10 @@ class Acceptance(unittest.TestCase):
         return selected
 
     def test_ac11_accessibility_static(self):
-        support = get_model("na").support_matrix
+        na_model = get_model("na")
+        preview = self._assert_active_technical_preview(na_model.acceptance)
+        self.assertIn("AC-11", preview["deferredObservations"])
+        support = na_model.support_matrix
         expected_targets = [
             {"browser": "Chrome ≥ 126", "os": "macOS 13+", "at": "none",
              "mode": "local file, double-click"},
@@ -2578,6 +2641,7 @@ class Acceptance(unittest.TestCase):
         })
         for ed in EDITIONS:
             html = get_html(ed).decode("utf-8")
+            self._assert_preview_artifact_label(html, preview)
             self.assertIn('aria-live="polite"', html)
             self.assertNotIn("<button", re.sub(
                 r"<button[^>]*>[^<]*</button>", "", html).replace(
@@ -2589,39 +2653,44 @@ class Acceptance(unittest.TestCase):
             for b in re.findall(r"<button[^>]*>", html):
                 self.assertTrue("aria-label" in b or "data-goto" in b or
                                 "data-aux" in b, b)
-        # Identified human/model confirmation across the support matrix lives
-        # in the QA record; its nested checks carry the same identity and kind.
-        # Safari uses browser-native evidence and never requires VoiceOver.
-        for ed in EDITIONS:
-            qa = self._current_qa(ed)
-            self.assertIn("ac11", qa["record"]["manualChecks"])
+        # Live row-by-row browser/OS/AT observations remain part of the
+        # validated-release profile.  They are explicitly deferred here and
+        # therefore do not authorize a compatibility claim for this preview.
 
     def test_ac12_print_static(self):
+        preview = self._assert_active_technical_preview(
+            get_model("na").acceptance)
+        self.assertIn("AC-12", preview["deferredObservations"])
         for ed in EDITIONS:
             html = get_html(ed).decode("utf-8")
+            self._assert_preview_artifact_label(
+                html, preview, require_print_footer=True)
             self.assertIn("@media print", html)
             self.assertIn("@page { margin:12mm 10mm; }", html)
             self.assertRegex(
                 html,
                 r"#content-root \{ display:block; overflow:visible; "
-                r"padding-bottom:29mm;[^}]*"
+                r"padding-bottom:37mm;[^}]*"
                 r"-webkit-box-decoration-break:clone; "
                 r"box-decoration-break:clone;")
             self.assertIn(
-                "#masthead > .legend,#masthead > .disclaimer { display:none; }",
+                "#masthead > .legend,#masthead > .release-profile,\n"
+                "  #masthead > .disclaimer { display:none; }",
                 html)
             self.assertRegex(
                 html,
                 r"footer \{ position:fixed; top:auto; bottom:0;[^}]*"
-                r"height:27mm;[^}]*overflow:hidden;")
+                r"height:35mm;[^}]*overflow:hidden;")
             self.assertNotIn("transform:translateY", html)
-            qa = self._current_qa(ed)
-            self.assertIn("ac12", qa["record"]["manualChecks"])
 
     def test_ac13_layout_static(self):
+        preview = self._assert_active_technical_preview(
+            get_model("na").acceptance)
+        self.assertIn("AC-13", preview["deferredObservations"])
         for ed in EDITIONS:
             m = get_model(ed)
             html = get_html(ed).decode("utf-8")
+            self._assert_preview_artifact_label(html, preview)
             width, height = m.support_matrix["viewport"]["minimum"]
             self.assertTrue(
                 m.support_matrix["viewport"]["stackedBelowMinimum"])
@@ -2631,14 +2700,21 @@ class Acceptance(unittest.TestCase):
             self.assertIn(render.esc(render.microcopy(
                 m.strings["ui"]["viewportNote"],
                 width=width, height=height)), html)
-            qa = self._current_qa(ed)
-            self.assertIn("ac13", qa["record"]["manualChecks"])
 
     def test_ac14_nojs_static(self):
+        preview = self._assert_active_technical_preview(
+            get_model("na").acceptance)
+        self.assertNotIn("AC-14", preview["deferredObservations"])
+        ac14 = next(
+            criterion for criterion in get_model("na").acceptance["criteria"]
+            if criterion["id"] == "AC-14")
+        self.assertEqual(ac14["enforcedBy"]["qaRecordFields"], [])
         for ed in EDITIONS:
             m = get_model(ed)
             html = get_html(ed).decode("utf-8")
             static = _without_scripts(html)
+            self._assert_preview_artifact_label(
+                static, preview, require_profile_metadata=False)
             self.assertNotIn("<script", static.lower())
 
             parser = _StaticSectionParser((
@@ -2778,9 +2854,11 @@ class Acceptance(unittest.TestCase):
                 "{editionVersion}", m.edition["claimSetVersion"])
             self.assertGreaterEqual(static.count(render.esc(disclaimer)), 2)
             self.assertIn("<noscript>", static)
-            self._current_qa(ed)  # candidate authorization is human/model only
 
     def test_ac15_api_policy(self):
+        preview = self._assert_active_technical_preview(
+            get_model("na").acceptance)
+        self.assertIn("AC-15", preview["deferredObservations"])
         for ed in EDITIONS:
             m = get_model(ed)
             self.assertEqual(
@@ -2788,6 +2866,7 @@ class Acceptance(unittest.TestCase):
                  for api, spec in m.api_policy["apis"].items()},
                 render.EXPECTED_API_CLASSES)
             html = get_html(ed).decode("utf-8")
+            self._assert_preview_artifact_label(html, preview)
             js = html.split("<script>")[-1].split("</script>")[0]
             probe, page = js.split("})();", 1)
             probe += "})();"
@@ -2884,8 +2963,6 @@ class Acceptance(unittest.TestCase):
                         "prevent trusting the empty attempts list")
                     self.assertEqual(failed["deltas"], {api: []})
                     self.assertEqual(failed["calls"][call_counter], 1)
-            qa = self._current_qa(ed)
-            self.assertIn("ac15", qa["record"]["manualChecks"])
 
     def test_ac16_determinism(self):
         for ed in EDITIONS:
@@ -2927,47 +3004,60 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
                 current_side_digests, qa_input_lock)
             all_qas = read_records("qa-record")
             all_attestations = read_records("attestation")
-            qa, rejected = current_authorized_qa_records(
-                m, canon.bytes_digest(candidate_bytes), lock, all_qas,
-                all_attestations)
-            self.assertTrue(
-                qa, "no complete current authorized-operator QA: %s"
-                % rejected)
-            self._assert_authorized_record(
-                min(qa, key=_approval_selection_key)["record"],
-                "%s release-preflight QA" % ed)
             self.assertNotIn("reproductionDiagnostics",
                              json.dumps(lock))  # diagnostics excluded
-            valid_qa_digests = {record["digest"] for record in qa}
             required_types = _required_attestation_types(m)
             current_sides = current_side_digests(m)
             current_acceptance = release_mod.acceptance_context(
                 ROOT, m.edition["declaredTransitiveInputs"], (ed,))
-            current_qa_authorization = {
-                "qaInputLock": qa_input_lock(
-                    m, canon.bytes_digest(candidate_bytes),
-                    lock["lockDigest"]),
-                "supportMatrixApprover":
-                    m.support_matrix.get("approver"),
-                "supportMatrixTargets": copy.deepcopy(
-                    m.support_matrix.get("targets")),
-                "supportMatrixViewport": copy.deepcopy(
-                    m.support_matrix.get("viewport")),
-                "apiProbeApis": sorted(render.api_probe_instruments(
-                    m.api_policy)),
-            }
+            profile_contract = current_acceptance["releaseProfileContract"]
+            profile_fields = release_mod.profile_record_fields(
+                profile_contract)
+            qa = []
+            valid_qa_digests = set()
+            current_qa_authorization = None
+            if profile_contract["manualQaEvidence"] == "required":
+                qa, rejected = current_authorized_qa_records(
+                    m, canon.bytes_digest(candidate_bytes), lock, all_qas,
+                    all_attestations)
+                self.assertTrue(
+                    qa, "no complete current authorized-operator QA: %s"
+                    % rejected)
+                self._assert_authorized_record(
+                    min(qa, key=_approval_selection_key)["record"],
+                    "%s release-preflight QA" % ed)
+                valid_qa_digests = {record["digest"] for record in qa}
+                current_qa_authorization = {
+                    "qaInputLock": qa_input_lock(
+                        m, canon.bytes_digest(candidate_bytes),
+                        lock["lockDigest"]),
+                    "supportMatrixApprover":
+                        m.support_matrix.get("approver"),
+                    "supportMatrixTargets": copy.deepcopy(
+                        m.support_matrix.get("targets")),
+                    "supportMatrixViewport": copy.deepcopy(
+                        m.support_matrix.get("viewport")),
+                    "apiProbeApis": sorted(render.api_probe_instruments(
+                        m.api_policy)),
+                }
             rel = []
             for envelope in read_records("release-record"):
                 record = envelope.get("record", {})
                 if (record.get("edition"), record.get("sealed"),
                         record.get("sealedDigest"), record.get("lockDigest"),
-                        record.get("declaredReleaseTimestamp")) != (
+                        record.get("declaredReleaseTimestamp"),
+                        record.get("releaseProfile")) != (
                         ed, m.edition["artifactName"],
                         canon.bytes_digest(candidate_bytes),
                         lock["lockDigest"],
-                        m.edition["declaredReleaseTimestamp"]):
+                        m.edition["declaredReleaseTimestamp"],
+                        current_acceptance["releaseProfile"]):
                     continue
-                if record.get("qaRecord") not in valid_qa_digests:
+                if profile_contract["manualQaEvidence"] == "deferred" and \
+                        record.get("qaRecord") is not None:
+                    continue
+                if profile_contract["manualQaEvidence"] == "required" and \
+                        record.get("qaRecord") not in valid_qa_digests:
                     continue
                 if bundlezip.release_chain_problems(
                         envelope, all_qas, all_attestations, required_types,
@@ -2982,12 +3072,14 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
             release_envelope = min(rel, key=_approval_selection_key)
             self._assert_authorized_record(
                 release_envelope["record"], "%s release authorization" % ed)
+            for field, expected in profile_fields.items():
+                self.assertEqual(release_envelope["record"][field], expected)
             sealed_name = release_envelope["record"]["sealed"]
             sealed = os.path.join(DIST, sealed_name)
             with open(sealed, "rb") as fh:
                 sealed_bytes = fh.read()
             self.assertEqual(sealed_bytes, candidate_bytes,
-                             "sealed bytes differ from QA'd candidate")
+                             "sealed bytes differ from profile candidate")
             with open(sealed + ".sha256", "rb") as fh:
                 checksum = fh.read()
             bundlezip.verify_detached_checksum(
@@ -3062,6 +3154,31 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
     def test_ac19_traceability_meta(self):
         registry = canon.parse_json(file_text(
             os.path.join(NAV, "schema", "acceptance.json")))
+        self.assertEqual(registry.get("acceptanceVersion"), "2")
+        runner = registry.get("runner")
+        self.assertIsInstance(runner, dict)
+        self.assertEqual(runner.get("activeReleaseProfile"),
+                         "technical-preview")
+        self.assertEqual(runner.get("releaseProfiles"), [
+            TECHNICAL_PREVIEW_PROFILE, VALIDATED_RELEASE_PROFILE])
+        profile_id, active_profile = release_mod.release_profile_contract(
+            registry)
+        self.assertEqual(profile_id, "technical-preview")
+        self.assertEqual(active_profile, TECHNICAL_PREVIEW_PROFILE)
+        selected_id, selected_profile = release_mod.release_profile_contract(
+            registry, "technical-preview")
+        self.assertEqual((selected_id, selected_profile),
+                         (profile_id, active_profile))
+        with self.assertRaisesRegex(
+                release_mod.AcceptanceError, "not the active release profile"):
+            release_mod.release_profile_contract(
+                registry, "validated-release")
+        # Callers receive an isolated contract and cannot mutate the registry
+        # or the value returned by a later lookup.
+        active_profile["deferredObservations"].clear()
+        self.assertEqual(
+            release_mod.release_profile_contract(registry)[1],
+            TECHNICAL_PREVIEW_PROFILE)
         self.assertEqual(release_mod._validate_registry(
             copy.deepcopy(registry)), registry)
         self.assertEqual(acceptance_runner_floor_problems(registry), [])
@@ -3114,6 +3231,61 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
                 release_mod.AcceptanceError, "runner is malformed"):
             release_mod._validate_registry(wrong_manual_evidence_version)
 
+        # Profile selection and both exact contracts are part of the
+        # independent executable floor.  The preview cannot gain QA authority
+        # by relabelling itself, and the future validated profile cannot drop
+        # any of its four structured manual-evidence fields.
+        profile_mutations = []
+        changed_active = copy.deepcopy(registry)
+        changed_active["runner"]["activeReleaseProfile"] = \
+            "validated-release"
+        profile_mutations.append(("active profile", changed_active))
+        reordered = copy.deepcopy(registry)
+        reordered["runner"]["releaseProfiles"].reverse()
+        profile_mutations.append(("profile order", reordered))
+        removed_preview = copy.deepcopy(registry)
+        removed_preview["runner"]["releaseProfiles"].pop(0)
+        profile_mutations.append(("technical-preview profile",
+                                  removed_preview))
+        removed_validated = copy.deepcopy(registry)
+        removed_validated["runner"]["releaseProfiles"].pop()
+        profile_mutations.append(("validated-release profile",
+                                  removed_validated))
+        weakened_preview = copy.deepcopy(registry)
+        weakened_preview["runner"]["releaseProfiles"][0][
+            "deferredObservations"].remove("AC-15")
+        profile_mutations.append(("preview deferrals", weakened_preview))
+        authorized_preview = copy.deepcopy(registry)
+        authorized_preview["runner"]["releaseProfiles"][0][
+            "compatibilityAuthorization"] = "support-matrix-authorized"
+        profile_mutations.append(("preview authorization",
+                                  authorized_preview))
+        preview_with_qa = copy.deepcopy(registry)
+        preview_with_qa["runner"]["releaseProfiles"][0][
+            "requiredQaRecordFields"] = ["ac11"]
+        profile_mutations.append(("preview QA fields", preview_with_qa))
+        relabeled_preview = copy.deepcopy(registry)
+        relabeled_preview["runner"]["releaseProfiles"][0][
+            "artifactLabel"] += " Changed."
+        profile_mutations.append(("preview artifact label",
+                                  relabeled_preview))
+        weakened_validated = copy.deepcopy(registry)
+        weakened_validated["runner"]["releaseProfiles"][1][
+            "requiredQaRecordFields"].remove("ac15")
+        profile_mutations.append(("validated QA fields",
+                                  weakened_validated))
+        relabeled_validated = copy.deepcopy(registry)
+        relabeled_validated["runner"]["releaseProfiles"][1][
+            "artifactLabel"] += " Changed."
+        profile_mutations.append(("validated artifact label",
+                                  relabeled_validated))
+        for label, changed in profile_mutations:
+            with self.subTest(profile_contract_mutation=label):
+                self.assertTrue(
+                    acceptance_runner_floor_problems(changed), label)
+                with self.assertRaises(release_mod.AcceptanceError):
+                    release_mod._validate_registry(changed)
+
         # Bidirectional set closure alone cannot detect criterion swapping.
         # Callback names carry their AC identity, independently enforced by
         # the registry validator.
@@ -3128,11 +3300,11 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
                 release_mod.AcceptanceError, "criterion identity"):
             release_mod._validate_registry(swapped)
 
-        runner = registry.get("runner")
         self.assertEqual(set(runner), {
-            "runnerVersion", "manualQaEvidenceVersion", "editions",
+            "runnerVersion", "manualQaEvidenceVersion",
+            "activeReleaseProfile", "releaseProfiles", "editions",
             "testModules", "fixtures", "testScopes", "supportFiles"})
-        self.assertEqual(runner["runnerVersion"], "1")
+        self.assertEqual(runner["runnerVersion"], "2")
         self.assertEqual(runner["manualQaEvidenceVersion"], "3")
         self.assertEqual(runner["editions"], sorted(set(runner["editions"])))
         module_specs = {
@@ -3163,11 +3335,22 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
         for path in active_fixtures:
             self.assertTrue(os.path.isfile(os.path.join(ROOT, path)), path)
 
+        validated_manual_fields = {
+            "AC-11": ["ac11"],
+            "AC-12": ["ac12"],
+            "AC-13": ["ac13"],
+            "AC-15": ["ac15"],
+        }
         registered_tests = set()
         for crit in registry["criteria"]:
             enforced = crit["enforcedBy"]
             self.assertTrue(enforced["tests"] or enforced["qaRecordFields"],
                             crit["id"])
+            self.assertEqual(
+                enforced["qaRecordFields"],
+                validated_manual_fields.get(crit["id"], []),
+                "%s validated-release QA requirements drifted" %
+                crit["id"])
             for tname in enforced["tests"]:
                 parts = tname.split(".")
                 self.assertEqual(len(parts), 3, tname)
@@ -3189,12 +3372,10 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
                 elif module_name == "test_canon":
                     self.assertEqual(crit["id"], "AC-07", tname)
                 registered_tests.add(tname)
-            for field in enforced["qaRecordFields"]:
-                qa = read_records("qa-record")
-                self.assertTrue(qa)
-                self.assertIn(field, qa[-1]["record"]["manualChecks"],
-                              "%s: QA-record field %r missing"
-                              % (crit["id"], field))
+        self.assertEqual(
+            sorted(field for fields in validated_manual_fields.values()
+                   for field in fields),
+            VALIDATED_RELEASE_PROFILE["requiredQaRecordFields"])
         # reverse direction: every acceptance-designated test and every
         # golden/property canonicalization test maps back to the registry.
         for name in dir(Acceptance):
@@ -3413,15 +3594,27 @@ print(canon.bytes_digest(render.render(m, mode="candidate")))
             for envelope in chain["attestations"]
             if isinstance(envelope, dict)
         }
+        profile_contract = chain["acceptanceContextByEdition"][
+            cfg["editions"][0]]["releaseProfileContract"]
+        profile_fields = release_mod.profile_record_fields(profile_contract)
+        self.assertTrue(manifest_text.startswith(
+            profile_contract["artifactLabel"]))
         for member in cfg["members"]:
             if member["kind"] != "sealed":
                 continue
             record = release_by_digest[member["releaseRecord"]]["record"]
             self._assert_authorized_record(
                 record, "%s resolved release" % member["edition"])
-            qa_record = qa_by_digest[record["qaRecord"]]["record"]
-            self._assert_authorized_record(
-                qa_record, "%s resolved QA" % member["edition"])
+            for field, expected in profile_fields.items():
+                self.assertEqual(record[field], expected)
+            if profile_contract["manualQaEvidence"] == "deferred":
+                self.assertIsNone(record["qaRecord"])
+            else:
+                qa_record = qa_by_digest[record["qaRecord"]]["record"]
+                self._assert_authorized_record(
+                    qa_record, "%s resolved QA" % member["edition"])
+                self.assertEqual(qa_record["releaseProfile"],
+                                 cfg["releaseProfile"])
             for digest in record["attestations"]:
                 self._assert_authorized_record(
                     attestation_by_digest[digest]["record"],

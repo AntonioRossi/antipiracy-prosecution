@@ -1,12 +1,14 @@
 """Release lifecycle — promotion by verification (TDD §10.8, §10.10, §13).
 
-candidate -> manual QA against those exact bytes (record-qa writes the
-immutable authorization) -> release re-derives, verifies the content-input
-lock byte-identically, byte-compares the candidate, verifies every
-double-sided attestation in the envelope, and seals the same bytes, writing
-the sealed artifact, its checksum, and the release-record.
+candidate -> profile-governed promotion.  A validated release requires manual
+QA against those exact bytes; a technical preview binds the explicit deferred
+observation contract and makes no compatibility authorization claim.  Both
+profiles re-derive and byte-compare the candidate, verify the content-input
+lock and current attestations, and seal the same bytes with a checksum and an
+append-only release record.
 """
 
+import copy
 import io
 import importlib
 import locale
@@ -28,7 +30,8 @@ _ACCEPTANCE_IDS = tuple("AC-%02d" % number for number in range(1, 21))
 _RELEASE_PREFLIGHT_IDS = _ACCEPTANCE_IDS[:-1]
 _RECEIPT_FIELDS = frozenset((
     "receiptVersion", "registryDigest", "runnerDigest", "runnerInputs",
-    "runnerEditions", "runnerKind", "results", "subjects",
+    "runnerEditions", "runnerKind", "releaseProfile",
+    "releaseProfileContract", "results", "subjects",
 ))
 _RUNNER_INPUT_FIELDS = frozenset(("path", "digest"))
 _REGISTRY_FIELDS = frozenset((
@@ -38,20 +41,50 @@ _CRITERION_FIELDS = frozenset((
     "id", "applicability", "text", "enforcedBy",
 ))
 _RUNNER_FIELDS = frozenset((
-    "runnerVersion", "manualQaEvidenceVersion", "editions", "testModules",
-    "fixtures", "testScopes", "supportFiles",
+    "runnerVersion", "manualQaEvidenceVersion", "activeReleaseProfile",
+    "releaseProfiles", "editions", "testModules", "fixtures",
+    "testScopes", "supportFiles",
 ))
+_RELEASE_PROFILE_FIELDS = frozenset((
+    "id", "manualQaEvidence", "compatibilityAuthorization",
+    "deferredObservations", "requiredQaRecordFields", "artifactLabel",
+))
+_RELEASE_PROFILE_IDS = ("technical-preview", "validated-release")
+_MANUAL_QA_FIELDS = ("ac11", "ac12", "ac13", "ac15")
+_PROFILE_SEMANTICS = {
+    "technical-preview": {
+        "manualQaEvidence": "deferred",
+        "compatibilityAuthorization": "not-authorized",
+        "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
+        "requiredQaRecordFields": [],
+        "artifactLabel": (
+            "TECHNICAL PREVIEW — Manual cross-platform and "
+            "assistive-technology QA is deferred; browser and "
+            "assistive-technology compatibility is not validated."),
+    },
+    "validated-release": {
+        "manualQaEvidence": "required",
+        "compatibilityAuthorization": "support-matrix-authorized",
+        "deferredObservations": [],
+        "requiredQaRecordFields": list(_MANUAL_QA_FIELDS),
+        "artifactLabel": (
+            "VALIDATED-RELEASE PROFILE — Delivery requires current full "
+            "seven-row cross-platform and assistive-technology QA."),
+    },
+}
 _TEST_MODULE_FIELDS = frozenset(("module", "path"))
 _FIXTURE_FIELDS = frozenset(("path", "editions"))
 _TEST_SCOPE_FIELDS = frozenset(("test", "editions"))
 _RESULT_FIELDS = frozenset(("phase", "criteria", "status"))
 _RELEASE_SUBJECT_FIELDS = frozenset((
     "edition", "candidateDigest", "contentLockDigest", "qaRecord",
-    "qaInputLockDigest",
+    "qaInputLockDigest", "releaseProfile", "compatibilityAuthorization",
+    "deferredObservations", "artifactLabel",
 ))
 _BUNDLE_SUBJECT_FIELDS = frozenset((
     "bundleConfigDigest", "bundleDigest", "releaseRecords", "members",
-    "manifestApproval",
+    "manifestApproval", "releaseProfile", "compatibilityAuthorization",
+    "deferredObservations", "artifactLabel",
 ))
 
 # The registry is data, so it cannot be the authority for whether its own
@@ -74,7 +107,19 @@ _EXECUTABLE_FLOOR_DIGESTS = {
         "sha256/c1:1921d431ddad8f569963232f3a8af70a4320233d250aacd97ead40c583fb6d69",
     "criterion enforcement":
         "sha256/c1:a3d3ca6aeab609b91ee587c8a041531d566e273b225d7164b3a5ad971c92dd0b",
+    "release profiles":
+        "sha256/c1:e24c7708bcd272b3fe53f9aa5bb9f76ba3b75937d1d1e9e6013f96bddafbda7f",
 }
+
+
+def expected_release_profile_contract(profile_id):
+    """Return the code-locked exact contract for one known profile id."""
+    if profile_id not in _RELEASE_PROFILE_IDS:
+        raise AcceptanceError("unknown release profile %r" % profile_id)
+    return {
+        "id": profile_id,
+        **copy.deepcopy(_PROFILE_SEMANTICS[profile_id]),
+    }
 
 
 def _receipt_results(kind, receipt_phases):
@@ -95,15 +140,108 @@ def _receipt_plans():
     }
 
 
+def _release_profile_entry_problems(contract):
+    """Return defects in one closed release-profile contract."""
+    if not isinstance(contract, dict) or set(contract) != \
+            _RELEASE_PROFILE_FIELDS:
+        return ["release profile has the wrong fields"]
+    profile_id = contract.get("id")
+    if profile_id not in _RELEASE_PROFILE_IDS:
+        return ["release profile has unknown id %r" % profile_id]
+    problems = []
+    expected = expected_release_profile_contract(profile_id)
+    for field in ("manualQaEvidence", "compatibilityAuthorization",
+                  "deferredObservations", "requiredQaRecordFields",
+                  "artifactLabel"):
+        if contract.get(field) != expected[field]:
+            problems.append(
+                "%s release profile %s must be exactly %r" %
+                (profile_id, field, expected[field]))
+    label = contract.get("artifactLabel")
+    if not isinstance(label, str) or not label or label.strip() != label or \
+            canon.normalize_nfc(label) != label or \
+            any(ord(character) < 32 or ord(character) == 127
+                for character in label):
+        problems.append(
+            "%s release profile artifactLabel is not canonical visible text"
+            % profile_id)
+    return problems
+
+
+def _release_profiles_problems(runner):
+    """Return structural and semantic defects in the ordered profile set."""
+    if not isinstance(runner, dict):
+        return ["acceptance runner is unavailable for release profiles"]
+    profiles = runner.get("releaseProfiles")
+    if not isinstance(profiles, list):
+        return ["releaseProfiles is not an ordered array"]
+    ids = [profile.get("id") if isinstance(profile, dict) else None
+           for profile in profiles]
+    problems = []
+    if ids != list(_RELEASE_PROFILE_IDS):
+        problems.append(
+            "releaseProfiles must contain exactly %s in order" %
+            list(_RELEASE_PROFILE_IDS))
+    for index, profile in enumerate(profiles):
+        problems.extend(
+            "releaseProfiles[%d]: %s" % (index, problem)
+            for problem in _release_profile_entry_problems(profile))
+    active = runner.get("activeReleaseProfile")
+    if active not in _RELEASE_PROFILE_IDS:
+        problems.append(
+            "activeReleaseProfile must name one declared release profile")
+    return problems
+
+
+def release_profile_contract(registry, release_profile=None):
+    """Return the active profile id and an isolated exact contract copy.
+
+    An explicit selection is an assertion about the live governance mode, not
+    a caller-controlled downgrade.  It must therefore equal the registry's
+    active profile.  Changing modes requires an intentional registry and
+    executable-floor update.
+    """
+    registry = _validate_registry(registry)
+    runner = registry["runner"]
+    active = runner["activeReleaseProfile"]
+    if release_profile is not None and release_profile != active:
+        raise AcceptanceError(
+            "release profile %r is not the active release profile %r" %
+            (release_profile, active))
+    selected = active if release_profile is None else release_profile
+    contract = next(profile for profile in runner["releaseProfiles"]
+                    if profile["id"] == selected)
+    return selected, copy.deepcopy(contract)
+
+
+def profile_record_fields(contract):
+    """Project one validated profile into release/bundle record fields."""
+    problems = _release_profile_entry_problems(contract)
+    if problems:
+        raise AcceptanceError("release profile contract is malformed: %s"
+                              % "; ".join(problems))
+    return {
+        "releaseProfile": contract["id"],
+        "compatibilityAuthorization":
+            contract["compatibilityAuthorization"],
+        "deferredObservations": copy.deepcopy(
+            contract["deferredObservations"]),
+        "artifactLabel": contract["artifactLabel"],
+    }
+
+
 def _runner_digest(registry_digest, runner_inputs, receipt_phases,
-                   runner_editions):
+                   runner_editions, release_profile,
+                   release_profile_contract):
     return canon.composite_digest(
         "aa11393:lock:c1", {
-            "runnerVersion": "1",
+            "runnerVersion": "2",
             "runnerEditions": runner_editions,
             "registryDigest": registry_digest,
             "runnerInputs": runner_inputs,
             "plans": receipt_phases,
+            "releaseProfile": release_profile,
+            "releaseProfileContract": release_profile_contract,
     })
 
 
@@ -129,6 +267,11 @@ def _registry_floor_problems(value):
                         "qaRecordFields"),
                 } for criterion in value.get("criteria", ())],
             },
+            "release profiles": {
+                "activeReleaseProfile": runner.get(
+                    "activeReleaseProfile"),
+                "releaseProfiles": runner.get("releaseProfiles"),
+            },
         }
     except (AttributeError, TypeError):
         return ["runner inventory is malformed for executable-floor comparison"]
@@ -150,7 +293,7 @@ def _validate_registry(value):
     """Validate the closed acceptance plan and its data-declared runner."""
     criteria = value.get("criteria") if isinstance(value, dict) else None
     if not isinstance(value, dict) or set(value) != _REGISTRY_FIELDS or \
-            value.get("acceptanceVersion") != "1" or \
+            value.get("acceptanceVersion") != "2" or \
             not isinstance(value.get("comment"), str) or \
             not value.get("comment", "").strip():
         raise AcceptanceError(
@@ -181,9 +324,14 @@ def _validate_registry(value):
 
     runner = value.get("runner")
     if not isinstance(runner, dict) or set(runner) != _RUNNER_FIELDS or \
-            runner.get("runnerVersion") != "1" or \
+            runner.get("runnerVersion") != "2" or \
             runner.get("manualQaEvidenceVersion") != "3":
         raise AcceptanceError("acceptance registry runner is malformed")
+    profile_problems = _release_profiles_problems(runner)
+    if profile_problems:
+        raise AcceptanceError(
+            "acceptance registry release profiles are malformed: %s" %
+            "; ".join(profile_problems))
     editions = runner.get("editions")
     if not isinstance(editions, list) or not editions or \
             editions != sorted(editions) or \
@@ -220,6 +368,7 @@ def _validate_registry(value):
     declared_modules = set(module_names)
     referenced_modules = set()
     registered_tests = set()
+    declared_qa_fields = []
     for criterion in criteria:
         enforced = criterion.get("enforcedBy")
         if not isinstance(enforced, dict) or set(enforced) != {
@@ -233,6 +382,7 @@ def _validate_registry(value):
                         for field in qa_fields):
             raise AcceptanceError(
                 "%s has malformed QA-record fields" % criterion["id"])
+        declared_qa_fields.extend(qa_fields)
         tests = enforced.get("tests")
         if not isinstance(tests, list) or not tests or \
                 len(tests) != len(set(tests)):
@@ -269,6 +419,10 @@ def _validate_registry(value):
                     % registered)
             referenced_modules.add(module_name)
             registered_tests.add(registered)
+    if tuple(declared_qa_fields) != _MANUAL_QA_FIELDS:
+        raise AcceptanceError(
+            "validated-release QA-record fields do not match the exact "
+            "criterion enforcement order")
     if referenced_modules != declared_modules:
         raise AcceptanceError(
             "acceptance registry test modules and callbacks do not close")
@@ -373,7 +527,8 @@ def _runner_input_paths(registry, declared_inputs, runner_editions):
         set(runner["supportFiles"])))
 
 
-def acceptance_context(root, declared_inputs, editions):
+def acceptance_context(root, declared_inputs, editions,
+                       release_profile=None):
     """Snapshot the exact live registry and executable runner inputs.
 
     This context is computed before and after each promotion transaction.  A
@@ -385,7 +540,9 @@ def acceptance_context(root, declared_inputs, editions):
     registry_path = "navigator/schema/acceptance.json"
     registry_bytes = content.read_bytes(registry_path)
     registry_digest = canon.bytes_digest(registry_bytes)
-    registry = _validate_registry(canon.parse_json(registry_bytes))
+    registry = canon.parse_json(registry_bytes)
+    selected_profile, profile_contract = release_profile_contract(
+        registry, release_profile)
     runner_editions = _runner_editions(registry, editions)
     reads = []
     for path in _runner_input_paths(
@@ -394,13 +551,16 @@ def acceptance_context(root, declared_inputs, editions):
                       "digest": canon.bytes_digest(content.read_bytes(path))})
     plans = registry["receiptPhases"]
     runner_digest = _runner_digest(
-        registry_digest, reads, plans, list(runner_editions))
+        registry_digest, reads, plans, list(runner_editions),
+        selected_profile, profile_contract)
     return {
         "registryDigest": registry_digest,
         "runnerDigest": runner_digest,
         "runnerEditions": list(runner_editions),
         "runnerInputs": reads,
         "receiptPhases": plans,
+        "releaseProfile": selected_profile,
+        "releaseProfileContract": profile_contract,
     }
 
 
@@ -424,6 +584,8 @@ def combine_acceptance_contexts(context_by_edition, editions):
 
     registry_digest = None
     receipt_phases = None
+    release_profile = None
+    release_profile_contract_value = None
     inputs_by_path = {}
     for edition in runner_editions:
         context = context_by_edition[edition]
@@ -436,10 +598,17 @@ def combine_acceptance_contexts(context_by_edition, editions):
         if registry_digest is None:
             registry_digest = context["registryDigest"]
             receipt_phases = context["receiptPhases"]
+            release_profile = context["releaseProfile"]
+            release_profile_contract_value = context[
+                "releaseProfileContract"]
         elif context["registryDigest"] != registry_digest or \
-                context["receiptPhases"] != receipt_phases:
+                context["receiptPhases"] != receipt_phases or \
+                context["releaseProfile"] != release_profile or \
+                context["releaseProfileContract"] != \
+                release_profile_contract_value:
             raise AcceptanceError(
-                "standalone acceptance contexts do not share one registry")
+                "standalone acceptance contexts do not share one registry "
+                "and release profile")
         for entry in context["runnerInputs"]:
             path = entry["path"]
             previous = inputs_by_path.get(path)
@@ -456,10 +625,14 @@ def combine_acceptance_contexts(context_by_edition, editions):
         "registryDigest": registry_digest,
         "runnerDigest": _runner_digest(
             registry_digest, runner_inputs, receipt_phases,
-            list(runner_editions)),
+            list(runner_editions), release_profile,
+            release_profile_contract_value),
         "runnerEditions": list(runner_editions),
         "runnerInputs": runner_inputs,
         "receiptPhases": receipt_phases,
+        "releaseProfile": release_profile,
+        "releaseProfileContract": copy.deepcopy(
+            release_profile_contract_value),
     }
     problems = _context_problems(combined)
     if problems:
@@ -480,13 +653,23 @@ def _digest_problem(value, label):
 def _context_problems(context):
     if not isinstance(context, dict) or set(context) != {
             "registryDigest", "runnerDigest", "runnerInputs",
-            "runnerEditions", "receiptPhases"}:
+            "runnerEditions", "receiptPhases", "releaseProfile",
+            "releaseProfileContract"}:
         return ["current acceptance context is unavailable or malformed"]
     problems = []
     problems.extend(_digest_problem(context.get("registryDigest"),
                                     "current acceptance registry digest"))
     problems.extend(_digest_problem(context.get("runnerDigest"),
                                     "current acceptance runner digest"))
+    profile_contract = context.get("releaseProfileContract")
+    profile_problems = _release_profile_entry_problems(profile_contract)
+    problems.extend(
+        "current acceptance release profile: %s" % problem
+        for problem in profile_problems)
+    if not profile_problems and context.get("releaseProfile") != \
+            profile_contract.get("id"):
+        problems.append(
+            "current acceptance releaseProfile does not match its contract")
     runner_editions = context.get("runnerEditions")
     if not isinstance(runner_editions, list) or not runner_editions or \
             runner_editions != sorted(runner_editions) or \
@@ -523,7 +706,9 @@ def _context_problems(context):
     try:
         expected_runner_digest = _runner_digest(
             context.get("registryDigest"), context.get("runnerInputs"),
-            context.get("receiptPhases"), context.get("runnerEditions"))
+            context.get("receiptPhases"), context.get("runnerEditions"),
+            context.get("releaseProfile"),
+            context.get("releaseProfileContract"))
         if context.get("runnerDigest") != expected_runner_digest:
             problems.append("current acceptance runner digest does not derive "
                             "from its exact inputs and phase plan")
@@ -533,20 +718,45 @@ def _context_problems(context):
     return problems
 
 
-def _subject_problems(kind, subjects, label):
+def _subject_problems(kind, subjects, label, release_profile_contract=None):
     expected_fields = (_RELEASE_SUBJECT_FIELDS if kind == "release"
                        else _BUNDLE_SUBJECT_FIELDS)
     if not isinstance(subjects, dict) or set(subjects) != expected_fields:
         return ["%s subjects have the wrong fields" % label]
     problems = []
+    try:
+        expected_profile_fields = profile_record_fields(
+            release_profile_contract)
+    except AcceptanceError as exc:
+        problems.append("%s release profile contract is malformed: %s"
+                        % (label, exc))
+        expected_profile_fields = None
+    if expected_profile_fields is not None:
+        for field, expected in expected_profile_fields.items():
+            if subjects.get(field) != expected:
+                problems.append(
+                    "%s %s does not match the current release profile" %
+                    (label, field))
     if kind == "release":
         if not isinstance(subjects.get("edition"), str) or \
                 not subjects.get("edition", "").strip():
             problems.append("%s edition is not a non-empty string" % label)
-        for field in ("candidateDigest", "contentLockDigest", "qaRecord",
-                      "qaInputLockDigest"):
+        for field in ("candidateDigest", "contentLockDigest"):
             problems.extend(_digest_problem(
                 subjects.get(field), "%s %s" % (label, field)))
+        manual_qa = release_profile_contract.get("manualQaEvidence") \
+            if isinstance(release_profile_contract, dict) else None
+        if manual_qa == "required":
+            for field in ("qaRecord", "qaInputLockDigest"):
+                problems.extend(_digest_problem(
+                    subjects.get(field), "%s %s" % (label, field)))
+        elif manual_qa == "deferred":
+            if subjects.get("qaRecord") is not None or \
+                    subjects.get("qaInputLockDigest") is not None:
+                problems.append(
+                    "%s technical-preview QA subjects must be null" % label)
+        else:
+            problems.append("%s manual-QA policy is unavailable" % label)
         return problems
 
     for field in ("bundleConfigDigest", "bundleDigest", "manifestApproval"):
@@ -604,14 +814,15 @@ def acceptance_receipt_problems(receipt, kind, current_context,
     problems = []
     if set(receipt) != _RECEIPT_FIELDS:
         problems.append("%s acceptance receipt has the wrong fields" % kind)
-    if receipt.get("receiptVersion") != "1":
+    if receipt.get("receiptVersion") != "2":
         problems.append("%s acceptance receipt has the wrong version" % kind)
     if receipt.get("runnerKind") != "tool":
         problems.append("%s acceptance receipt runnerKind is not 'tool'" % kind)
     problems.extend(_context_problems(current_context))
     if isinstance(current_context, dict):
         for field in ("registryDigest", "runnerDigest", "runnerInputs",
-                      "runnerEditions"):
+                      "runnerEditions", "releaseProfile",
+                      "releaseProfileContract"):
             if receipt.get(field) != current_context.get(field):
                 problems.append("%s acceptance receipt %s is stale"
                                 % (kind, field))
@@ -628,10 +839,14 @@ def acceptance_receipt_problems(receipt, kind, current_context,
              set(result) != _RESULT_FIELDS for result in results):
         problems.append("%s acceptance receipt result shape is invalid" % kind)
     subjects = receipt.get("subjects")
+    profile_contract = current_context.get("releaseProfileContract") \
+        if isinstance(current_context, dict) else None
     problems.extend(_subject_problems(
-        kind, subjects, "%s acceptance receipt" % kind))
+        kind, subjects, "%s acceptance receipt" % kind,
+        profile_contract))
     expected_problems = _subject_problems(
-        kind, expected_subjects, "current %s acceptance" % kind)
+        kind, expected_subjects, "current %s acceptance" % kind,
+        profile_contract)
     problems.extend(expected_problems)
     if subjects != expected_subjects:
         problems.append("%s acceptance receipt subjects are stale or wrong"
@@ -645,19 +860,22 @@ def acceptance_receipt_problems(receipt, kind, current_context,
 
 
 def release_subjects(edition, candidate_digest, content_lock_digest,
-                     qa_record_digest, qa_input_lock_digest):
-    return {
+                     qa_record_digest, qa_input_lock_digest,
+                     release_profile_contract):
+    subjects = {
         "edition": edition,
         "candidateDigest": candidate_digest,
         "contentLockDigest": content_lock_digest,
         "qaRecord": qa_record_digest,
         "qaInputLockDigest": qa_input_lock_digest,
     }
+    subjects.update(profile_record_fields(release_profile_contract))
+    return subjects
 
 
 def bundle_subjects(bundle_config_digest, bundle_digest, release_records,
-                    members, manifest_approval):
-    return {
+                    members, manifest_approval, release_profile_contract):
+    subjects = {
         "bundleConfigDigest": bundle_config_digest,
         "bundleDigest": bundle_digest,
         "releaseRecords": list(release_records),
@@ -665,6 +883,8 @@ def bundle_subjects(bundle_config_digest, bundle_digest, release_records,
                     for item in members],
         "manifestApproval": manifest_approval,
     }
+    subjects.update(profile_record_fields(release_profile_contract))
+    return subjects
 
 
 def _make_receipt(kind, context, subjects):
@@ -673,12 +893,15 @@ def _make_receipt(kind, context, subjects):
         raise AcceptanceError("cannot create acceptance receipt: %s"
                               % "; ".join(context_problems))
     receipt = {
-        "receiptVersion": "1",
+        "receiptVersion": "2",
         "registryDigest": context["registryDigest"],
         "runnerDigest": context["runnerDigest"],
         "runnerInputs": context["runnerInputs"],
         "runnerEditions": context["runnerEditions"],
         "runnerKind": "tool",
+        "releaseProfile": context["releaseProfile"],
+        "releaseProfileContract": copy.deepcopy(
+            context["releaseProfileContract"]),
         "results": _receipt_results(kind, context["receiptPhases"]),
         "subjects": subjects,
     }
@@ -716,7 +939,10 @@ def _run_registered_callbacks_child(payload):
         raise AcceptanceError("acceptance child selection is malformed")
     registry = _registry(root)
     runner_editions = _runner_editions(registry, edition_ids)
-    context = acceptance_context(root, declared_inputs, runner_editions)
+    expected_profile = expected_context.get("releaseProfile") \
+        if isinstance(expected_context, dict) else None
+    context = acceptance_context(
+        root, declared_inputs, runner_editions, expected_profile)
     if context != expected_context:
         raise AcceptanceError(
             "acceptance runner bytes differ before callback import")
@@ -797,7 +1023,8 @@ def _run_registered_callbacks_child(payload):
         if isinstance(cache, dict):
             cache.clear()
     if acceptance_context(
-            root, declared_inputs, runner_editions) != expected_context:
+            root, declared_inputs, runner_editions,
+            expected_profile) != expected_context:
         raise AcceptanceError(
             "acceptance registry or runner inputs changed during callbacks")
 
@@ -846,7 +1073,8 @@ def _run_registered_callbacks(root, criterion_ids, edition_ids,
 
 
 def _verify_release_preflight(root, model, derived_bytes, candidate_bytes,
-                              content_lock, qa_envelope):
+                              content_lock, qa_envelope,
+                              release_profile_contract):
     from . import render
 
     problems = []
@@ -859,21 +1087,33 @@ def _verify_release_preflight(root, model, derived_bytes, candidate_bytes,
         problems.append("in-process double build is not byte-identical")
     problems.extend(exact_set_check(
         content_lock, model.edition["declaredTransitiveInputs"]))
-    qa_record = qa_envelope.get("record") \
-        if isinstance(qa_envelope, dict) else None
-    if not isinstance(qa_record, dict):
-        problems.append("QA authorization is not an object")
-    else:
-        if qa_record.get("candidateDigest") != candidate_digest:
-            problems.append("QA authorization does not bind candidate bytes")
-        if qa_record.get("lockDigest") != content_lock.get("lockDigest"):
-            problems.append("QA authorization does not bind the content lock")
-        qa_lock = qa_record.get("qaInputLock")
-        if not isinstance(qa_lock, dict) or \
-                qa_lock.get("candidateDigest") != candidate_digest or \
-                qa_lock.get("contentLockDigest") != content_lock.get(
-                    "lockDigest"):
-            problems.append("QA input lock does not bind release inputs")
+    profile_problems = _release_profile_entry_problems(
+        release_profile_contract)
+    problems.extend("release profile: %s" % problem
+                    for problem in profile_problems)
+    manual_qa = release_profile_contract.get("manualQaEvidence") \
+        if not profile_problems else None
+    if manual_qa == "required":
+        qa_record = qa_envelope.get("record") \
+            if isinstance(qa_envelope, dict) else None
+        if not isinstance(qa_record, dict):
+            problems.append("QA authorization is not an object")
+        else:
+            if qa_record.get("candidateDigest") != candidate_digest:
+                problems.append(
+                    "QA authorization does not bind candidate bytes")
+            if qa_record.get("lockDigest") != content_lock.get("lockDigest"):
+                problems.append(
+                    "QA authorization does not bind the content lock")
+            qa_lock = qa_record.get("qaInputLock")
+            if not isinstance(qa_lock, dict) or \
+                    qa_lock.get("candidateDigest") != candidate_digest or \
+                    qa_lock.get("contentLockDigest") != content_lock.get(
+                        "lockDigest"):
+                problems.append("QA input lock does not bind release inputs")
+    elif manual_qa == "deferred" and qa_envelope is not None:
+        problems.append(
+            "technical-preview release must not claim a QA authorization")
 
     script = """
 import sys
@@ -925,7 +1165,8 @@ def _verify_release_postcondition(output, sealed_name, candidate_bytes,
 
 def run_release_acceptance_transaction(root, model, derived_bytes,
                                        candidate_bytes, content_lock,
-                                       qa_envelope, output):
+                                       qa_envelope, output,
+                                       release_profile=None):
     """Run release criteria, write/read-back outputs, and return the receipt.
 
     The append-only release record is intentionally outside this transaction
@@ -935,7 +1176,8 @@ def run_release_acceptance_transaction(root, model, derived_bytes,
     """
     declared = model.edition["declaredTransitiveInputs"]
     edition_ids = (model.edition["editionId"],)
-    before = acceptance_context(root, declared, edition_ids)
+    before = acceptance_context(
+        root, declared, edition_ids, release_profile)
     registered_ids = tuple(
         criterion for criterion in
         before["receiptPhases"]["release-preflight"]
@@ -943,7 +1185,8 @@ def run_release_acceptance_transaction(root, model, derived_bytes,
     _run_registered_callbacks(
         root, registered_ids, edition_ids, declared, before)
     _verify_release_preflight(
-        root, model, derived_bytes, candidate_bytes, content_lock, qa_envelope)
+        root, model, derived_bytes, candidate_bytes, content_lock, qa_envelope,
+        before["releaseProfileContract"])
     sealed_name = model.edition["artifactName"]
     checksum_bytes = checksum_text(
         sealed_name, candidate_bytes).encode("utf-8")
@@ -951,15 +1194,22 @@ def run_release_acceptance_transaction(root, model, derived_bytes,
     output.write("artifact-checksum", sealed_name + ".sha256", checksum_bytes)
     _verify_release_postcondition(
         output, sealed_name, candidate_bytes, checksum_bytes)
-    after = acceptance_context(root, declared, edition_ids)
+    after = acceptance_context(
+        root, declared, edition_ids, before["releaseProfile"])
     if after != before:
         raise AcceptanceError(
             "acceptance registry or runner inputs changed during release")
-    qa_record = qa_envelope["record"]
+    if before["releaseProfileContract"]["manualQaEvidence"] == "required":
+        qa_record_digest = qa_envelope["digest"]
+        qa_input_lock_digest = qa_envelope["record"]["qaInputLock"][
+            "lockDigest"]
+    else:
+        qa_record_digest = None
+        qa_input_lock_digest = None
     subjects = release_subjects(
         model.edition["editionId"], canon.bytes_digest(candidate_bytes),
-        content_lock["lockDigest"], qa_envelope["digest"],
-        qa_record["qaInputLock"]["lockDigest"])
+        content_lock["lockDigest"], qa_record_digest,
+        qa_input_lock_digest, before["releaseProfileContract"])
     return _make_receipt("release", before, subjects)
 
 
@@ -1037,7 +1287,13 @@ def run_bundle_acceptance_transaction(root, declared_inputs, cfg,
         raise AcceptanceError(
             "AC-20 resolved acceptance chain context is unavailable")
     runner_editions = cfg.get("editions") if isinstance(cfg, dict) else None
-    before = acceptance_context(root, declared_inputs, runner_editions)
+    release_profile = cfg.get("releaseProfile") \
+        if isinstance(cfg, dict) else None
+    if not isinstance(release_profile, str) or not release_profile:
+        raise AcceptanceError(
+            "AC-20 bundle config has no explicit releaseProfile")
+    before = acceptance_context(
+        root, declared_inputs, runner_editions, release_profile)
     manifest_member = next(
         member for member in cfg["members"]
         if member["kind"] == "bundle-manifest")
@@ -1052,7 +1308,8 @@ def run_bundle_acceptance_transaction(root, declared_inputs, cfg,
         _bundle_callback_context(
             cfg, bundle_config_digest, plan, zip_bytes, checksum_bytes,
             manifest_bytes, output))
-    after = acceptance_context(root, declared_inputs, runner_editions)
+    after = acceptance_context(
+        root, declared_inputs, runner_editions, release_profile)
     if after != before:
         raise AcceptanceError(
             "acceptance registry or runner inputs changed during bundle")
@@ -1060,7 +1317,8 @@ def run_bundle_acceptance_transaction(root, declared_inputs, cfg,
                for name, data in plan["members"]]
     subjects = bundle_subjects(
         bundle_config_digest, canon.bytes_digest(zip_bytes),
-        plan["releaseRecords"], members, plan["manifestApproval"])
+        plan["releaseRecords"], members, plan["manifestApproval"],
+        before["releaseProfileContract"])
     return _make_receipt("bundle", before, subjects)
 
 

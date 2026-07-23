@@ -56,11 +56,31 @@ def load_planes():
 def bundle_manifest_input(content):
     """Return the closed bundle-only manifest text, bytes, and wording hash."""
     value = canon.parse_json(content.read_text(BUNDLE_MANIFEST_RESOURCE))
+    release_profile = value.get("releaseProfile") \
+        if isinstance(value, dict) else None
+    try:
+        profile_contract = release_mod.expected_release_profile_contract(
+            release_profile)
+        expected_profile = release_mod.profile_record_fields(profile_contract)
+    except release_mod.AcceptanceError:
+        expected_profile = None
     if not isinstance(value, dict) or \
-            set(value) != {"manifestVersion", "bundleManifestText"} or \
-            value.get("manifestVersion") != "1" or \
+            set(value) != {"manifestVersion", "releaseProfile",
+                           "compatibilityAuthorization",
+                           "deferredObservations", "bundleManifestText"} or \
+            value.get("manifestVersion") != "2" or \
+            expected_profile is None or \
+            value.get("compatibilityAuthorization") != \
+                expected_profile["compatibilityAuthorization"] or \
+            value.get("deferredObservations") != \
+                expected_profile["deferredObservations"] or \
             not isinstance(value.get("bundleManifestText"), str) or \
-            not value["bundleManifestText"]:
+            not value["bundleManifestText"] or \
+            not value["bundleManifestText"].startswith(
+                expected_profile["artifactLabel"]) or \
+            release_profile == "technical-preview" and \
+                "does not claim compatibility authorization" not in \
+                    value["bundleManifestText"]:
         raise SystemExit("bundle manifest resource is malformed")
     manifest_text = value["bundleManifestText"]
     return (
@@ -216,7 +236,7 @@ ATTESTATION_RECORD_FIELDS = frozenset((
     "operatorKind", "producerCommand",
 ))
 QA_RECORD_FIELDS = frozenset((
-    "edition", "candidateDigest", "lockDigest", "contentLock",
+    "releaseProfile", "edition", "candidateDigest", "lockDigest", "contentLock",
     "qaInputLock", "reproductionDiagnostics", "attestations",
     "supportMatrix", "legendApproval", "manualEvidenceVersion",
     "manualChecks", "approvalStatus", "operator", "operatorKind",
@@ -758,6 +778,9 @@ def qa_authorization_problems(qa, candidate_digest, content_lock,
     if not isinstance(raw_record, dict) or set(raw_record) != QA_RECORD_FIELDS:
         problems.append("QA record has the wrong fields")
     record = raw_record if isinstance(raw_record, dict) else {}
+    if record.get("releaseProfile") != "validated-release":
+        problems.append(
+            "QA record is not scoped to the validated-release profile")
     operator = record.get("operator")
     operator_kind = record.get("operatorKind")
     problems.extend(qaevidence.manual_check_problems(
@@ -903,6 +926,8 @@ def current_authorized_qa_records(m, candidate_digest, content_lock,
 def cmd_record_qa(edition_id, argv):
     options = parse_record_qa_options(argv)
     m, html, lock = derive(edition_id, "candidate")
+    release_profile, profile_contract = \
+        release_mod.release_profile_contract(m.acceptance)
     manual_fields = registry_manual_fields(m.acceptance)
     api_probe_apis = sorted(render.api_probe_instruments(m.api_policy))
     if options["template"]:
@@ -911,6 +936,12 @@ def cmd_record_qa(edition_id, argv):
         print(json.dumps(template, indent=2, ensure_ascii=False,
                          sort_keys=True))
         return
+
+    if profile_contract["manualQaEvidence"] != "required":
+        raise SystemExit(
+            "record-qa is deferred for the active %s profile; switch the "
+            "reviewed acceptance contract to validated-release before "
+            "recording compatibility authorization" % release_profile)
 
     operator, operator_kind = operator_id()
     manual_args = options["manualArgs"]
@@ -953,6 +984,7 @@ def cmd_record_qa(edition_id, argv):
     legend_attestation = chosen["legend-approval"]["digest"]
     legend_digest = side_digests["legendWording"]
     record = {
+        "releaseProfile": release_profile,
         "edition": edition_id,
         "candidateDigest": candidate_digest,
         "lockDigest": lock["lockDigest"],
@@ -1001,31 +1033,71 @@ def cmd_record_qa(edition_id, argv):
     print("qa-record %s -> records/%s\n  %s" % (edition_id, rname, digest))
 
 
+RELEASE_USAGE = (
+    "usage: build.py release <edition> "
+    "--profile=technical-preview|validated-release"
+)
+
+
+def _release_profile_arg(argv):
+    if len(argv) != 1 or not isinstance(argv[0], str) or \
+            not argv[0].startswith("--profile="):
+        raise SystemExit(RELEASE_USAGE)
+    release_profile = argv[0].split("=", 1)[1]
+    if release_profile not in ("technical-preview", "validated-release"):
+        raise SystemExit(
+            "unknown release profile %r; expected technical-preview or "
+            "validated-release" % release_profile)
+    return release_profile
+
+
 def cmd_release(edition_id, argv):
+    requested_profile = _release_profile_arg(argv)
     planes = load_planes()
     m, html, lock = derive(edition_id, "release")
+    release_profile, profile_contract = \
+        release_mod.release_profile_contract(
+            m.acceptance, requested_profile)
+    manual_qa_required = profile_contract["manualQaEvidence"] == "required"
     name = "candidate_" + m.edition["artifactName"]
     if not os.path.exists(os.path.join(DIST, name)):
         raise SystemExit("no candidate to release")
     candidate_bytes = gateway.ArtifactGateway(
         DIST, "release", planes).read("candidate", name)
     if candidate_bytes != html:
-        raise SystemExit("release derivation does not byte-match the QA'd "
-                         "candidate")
+        raise SystemExit("release derivation does not byte-match the "
+                         "profile candidate")
     candidate_digest = canon.bytes_digest(candidate_bytes)
     vgw = gateway.VerificationGateway(RECORDS, "release", planes)
     qa_records = vgw.read_all("qa-record")
     attestations = vgw.read_all("attestation")
-    valid_qa, rejected = current_authorized_qa_records(
-        m, candidate_digest, lock, qa_records, attestations)
-    if not valid_qa:
-        for digest, qa_problems in rejected:
-            for problem in qa_problems:
-                sys.stderr.write("  [release] qa-record %s: %s\n"
-                                 % (digest, problem))
-        raise SystemExit("release refused: no matching qa-record carries "
-                         "complete passed authorized operator evidence")
-    qa = valid_qa[0]
+    qa = None
+    if manual_qa_required:
+        valid_qa, rejected = current_authorized_qa_records(
+            m, candidate_digest, lock, qa_records, attestations)
+        if not valid_qa:
+            for digest, qa_problems in rejected:
+                for problem in qa_problems:
+                    sys.stderr.write("  [release] qa-record %s: %s\n"
+                                     % (digest, problem))
+            raise SystemExit(
+                "release refused: validated-release requires a matching "
+                "qa-record with complete passed authorized operator evidence")
+        qa = valid_qa[0]
+        attestation_refs = sorted(qa["record"]["attestations"])
+    else:
+        required = _required_attestation_types(m)
+        chosen, attestation_problems = _confirmed_current_attestations(
+            attestations, current_side_digests(m), edition_id, required,
+            m.support_matrix.get("approver"))
+        if attestation_problems:
+            for problem in attestation_problems:
+                sys.stderr.write("  [release] %s\n" % problem)
+            raise SystemExit(
+                "release refused: technical-preview requires current "
+                "authorized content attestations")
+        attestation_refs = sorted(
+            envelope["digest"] for envelope in chosen.values())
     problems = []
     errors = validate.validate_edition(m, for_release=True)
     problems += ["release predicate: [%s] %s" % (c, msg) for c, msg in errors]
@@ -1038,18 +1110,21 @@ def cmd_release(edition_id, argv):
     sealed_name = m.edition["artifactName"]
     try:
         acceptance_receipt = release_mod.run_release_acceptance_transaction(
-            ROOT, m, html, candidate_bytes, lock, qa, out)
+            ROOT, m, html, candidate_bytes, lock, qa, out,
+            release_profile=release_profile)
     except (release_mod.AcceptanceError, gateway.GatewayError,
             bundlezip.BundleError, OSError, subprocess.SubprocessError) as exc:
         raise SystemExit("release refused: acceptance transaction failed: %s"
                          % exc)
     record = {
+        "recordVersion": "2",
+        **release_mod.profile_record_fields(profile_contract),
         "edition": edition_id,
         "sealed": sealed_name,
         "sealedDigest": candidate_digest,
         "lockDigest": lock["lockDigest"],
-        "qaRecord": qa["digest"],
-        "attestations": sorted(qa["record"]["attestations"]),
+        "qaRecord": qa["digest"] if qa is not None else None,
+        "attestations": attestation_refs,
         "declaredReleaseTimestamp": m.edition["declaredReleaseTimestamp"],
         "approvalStatus": "passed",
         "operator": operator,
@@ -1078,15 +1153,34 @@ def cmd_release(edition_id, argv):
 
         fresh_qas = vgw.read_all("qa-record")
         fresh_attestations = vgw.read_all("attestation")
-        fresh_valid, unused_rejected = current_authorized_qa_records(
-            fresh_m, candidate_digest, fresh_lock,
-            fresh_qas, fresh_attestations)
-        if not fresh_valid or fresh_valid[0]["digest"] != qa["digest"]:
+        fresh_profile, fresh_profile_contract = \
+            release_mod.release_profile_contract(
+                fresh_m.acceptance, requested_profile)
+        if fresh_profile != release_profile or \
+                fresh_profile_contract != profile_contract:
             raise bundlezip.BundleError(
-                "selected QA authorization changed during promotion")
+                "release profile changed during promotion")
+        if manual_qa_required:
+            fresh_valid, unused_rejected = current_authorized_qa_records(
+                fresh_m, candidate_digest, fresh_lock,
+                fresh_qas, fresh_attestations)
+            if not fresh_valid or fresh_valid[0]["digest"] != qa["digest"]:
+                raise bundlezip.BundleError(
+                    "selected QA authorization changed during promotion")
+        else:
+            fresh_chosen, fresh_attestation_problems = \
+                _confirmed_current_attestations(
+                    fresh_attestations, current_side_digests(fresh_m),
+                    edition_id, _required_attestation_types(fresh_m),
+                    fresh_m.support_matrix.get("approver"))
+            fresh_refs = sorted(
+                envelope["digest"] for envelope in fresh_chosen.values())
+            if fresh_attestation_problems or fresh_refs != attestation_refs:
+                raise bundlezip.BundleError(
+                    "selected preview attestations changed during promotion")
         fresh_context = release_mod.acceptance_context(
             ROOT, fresh_m.edition["declaredTransitiveInputs"],
-            (edition_id,))
+            (edition_id,), release_profile=release_profile)
         envelope = {
             "kind": "release-record",
             "digest": canon.composite_digest(
@@ -1097,7 +1191,7 @@ def cmd_release(edition_id, argv):
             envelope, fresh_qas, fresh_attestations,
             _required_attestation_types(fresh_m),
             current_side_digests(fresh_m), approval_evidence_problems,
-            fresh_context, {
+            fresh_context, ({
                 "qaInputLock": qa_input_lock(
                     fresh_m, candidate_digest, fresh_lock["lockDigest"]),
                 "supportMatrixApprover":
@@ -1108,7 +1202,7 @@ def cmd_release(edition_id, argv):
                     fresh_m.support_matrix.get("viewport")),
                 "apiProbeApis": sorted(render.api_probe_instruments(
                     fresh_m.api_policy)),
-            })
+            } if manual_qa_required else None))
         if chain_problems:
             raise bundlezip.BundleError("; ".join(chain_problems))
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
@@ -1185,7 +1279,8 @@ def bundle_acceptance_context(cfg):
         _, edition_model = build_model(edition_id)
         declared = edition_model.edition["declaredTransitiveInputs"]
         contexts[edition_id] = release_mod.acceptance_context(
-            ROOT, declared, (edition_id,))
+            ROOT, declared, (edition_id,),
+            release_profile=cfg.get("releaseProfile"))
         bundle_inputs.update(declared)
     return contexts, sorted(bundle_inputs)
 
@@ -1462,6 +1557,9 @@ def cmd_bundle(argv):
         bundlezip.verify_detached_checksum(
             checksum_bytes, cfg["name"], canon.bytes_digest(zip_bytes))
         record = {
+            "recordVersion": "2",
+            **release_mod.profile_record_fields(
+                fresh_bundle_receipt_context["releaseProfileContract"]),
             "bundle": cfg["name"],
             "bundleDigest": canon.bytes_digest(zip_bytes),
             "members": [{"name": n, "digest": canon.bytes_digest(d)}
@@ -1522,6 +1620,10 @@ def cmd_status(argv):
         return
     release_bindings = {}
     qa_authorization_contexts = {}
+    print("release profile: %s (%s)" % (
+        cfg["releaseProfile"],
+        acceptance_contexts[cfg["editions"][0]][
+            "releaseProfileContract"]["compatibilityAuthorization"]))
     for ed in cfg["editions"]:
         print("edition %s" % ed)
         try:
@@ -1556,12 +1658,19 @@ def cmd_status(argv):
             print("  dist candidate: %s" % ("current" if current else "STALE"))
         else:
             print("  dist candidate: missing")
-        valid_qa, _ = current_authorized_qa_records(
-            m, cdig, lock, qa_records, attestations)
+        manual_qa = acceptance_contexts[ed][
+            "releaseProfileContract"]["manualQaEvidence"]
+        valid_qa = []
+        if manual_qa == "required":
+            valid_qa, _ = current_authorized_qa_records(
+                m, cdig, lock, qa_records, attestations)
         qa_digest = valid_qa[0]["digest"] if valid_qa else None
-        print("  qa-record: %s" % (
-            qa_digest[:20] + "…" if qa_digest
-            else "none with complete current authorized operator evidence"))
+        if manual_qa == "deferred":
+            print("  qa-record: deferred by technical-preview (not required)")
+        else:
+            print("  qa-record: %s" % (
+                qa_digest[:20] + "…" if qa_digest else
+                "none with complete current authorized operator evidence"))
 
         valid_qa_digests = {record["digest"] for record in valid_qa}
         releases = []
@@ -1572,12 +1681,18 @@ def cmd_status(argv):
                 continue
             if (record.get("edition"), record.get("sealed"),
                     record.get("sealedDigest"), record.get("lockDigest"),
-                    record.get("declaredReleaseTimestamp")) != (
+                    record.get("declaredReleaseTimestamp"),
+                    record.get("releaseProfile")) != (
                     ed, m.edition["artifactName"], cdig,
                     lock["lockDigest"],
-                    m.edition["declaredReleaseTimestamp"]):
+                    m.edition["declaredReleaseTimestamp"],
+                    cfg["releaseProfile"]):
                 continue
-            if record.get("qaRecord") not in valid_qa_digests:
+            if manual_qa == "deferred" and \
+                    record.get("qaRecord") is not None:
+                continue
+            if manual_qa == "required" and \
+                    record.get("qaRecord") not in valid_qa_digests:
                 continue
             if bundlezip.release_chain_problems(
                     envelope, qa_records, attestations,
@@ -1679,7 +1794,6 @@ def main(argv):
         "preview": cmd_preview,
         "candidate": cmd_candidate,
         "migrate": cmd_migrate,
-        "release": cmd_release,
     }
     if cmd in single_edition:
         if len(rest) != 1 or rest[0].startswith("--"):
@@ -1691,6 +1805,10 @@ def main(argv):
         if not rest or rest[0].startswith("--"):
             raise SystemExit(RECORD_QA_USAGE)
         cmd_record_qa(rest[0], rest[1:])
+    elif cmd == "release":
+        if not rest or rest[0].startswith("--"):
+            raise SystemExit(RELEASE_USAGE)
+        cmd_release(rest[0], rest[1:])
     elif cmd == "bundle-plan":
         if rest:
             raise SystemExit("usage: build.py bundle-plan")

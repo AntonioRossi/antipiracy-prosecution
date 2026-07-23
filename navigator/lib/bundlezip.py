@@ -30,12 +30,13 @@ class BundleError(ValueError):
 
 
 _RELEASE_FIELDS = frozenset((
-    "edition", "sealed", "sealedDigest", "lockDigest", "qaRecord",
-    "attestations", "declaredReleaseTimestamp", "approvalStatus",
-    "operator", "operatorKind", "acceptanceReceipt",
+    "recordVersion", "releaseProfile", "compatibilityAuthorization",
+    "deferredObservations", "artifactLabel", "edition", "sealed", "sealedDigest",
+    "lockDigest", "qaRecord", "attestations", "declaredReleaseTimestamp",
+    "approvalStatus", "operator", "operatorKind", "acceptanceReceipt",
 ))
 _QA_FIELDS = frozenset((
-    "edition", "candidateDigest", "lockDigest", "contentLock",
+    "releaseProfile", "edition", "candidateDigest", "lockDigest", "contentLock",
     "qaInputLock", "reproductionDiagnostics", "attestations",
     "supportMatrix", "legendApproval", "manualEvidenceVersion",
     "manualChecks", "approvalStatus", "operator", "operatorKind",
@@ -208,8 +209,9 @@ def validate_bundle_config(cfg, expected_edition_count=2):
     """Validate the closed, member-enumerating bundle configuration."""
     if not isinstance(cfg, dict):
         raise BundleError("bundle config must be an object")
-    allowed = {"bundleVersion", "name", "comment", "editions",
-               "declaredTimestamp", "manifestApproval", "members"}
+    allowed = {"bundleVersion", "releaseProfile", "name", "comment",
+               "editions", "declaredTimestamp", "manifestApproval",
+               "members"}
     if set(cfg) - allowed:
         raise BundleError("unknown bundle config fields: %s"
                           % sorted(set(cfg) - allowed))
@@ -217,13 +219,21 @@ def validate_bundle_config(cfg, expected_edition_count=2):
     missing = required - set(cfg)
     if missing:
         raise BundleError("missing bundle config fields: %s" % sorted(missing))
-    if cfg["bundleVersion"] != "2":
+    if cfg["bundleVersion"] != "3":
         raise BundleError("unsupported bundleVersion %r"
                           % cfg["bundleVersion"])
+    release_profile = cfg.get("releaseProfile")
+    if release_profile not in ("technical-preview", "validated-release"):
+        raise BundleError("releaseProfile must be technical-preview or "
+                          "validated-release")
     validate_member_name(cfg["name"])
     _require_artifact_path("bundle", cfg["name"], "name")
     if not cfg["name"].endswith(".zip"):
         raise BundleError("bundle output name must end in .zip")
+    if release_profile == "technical-preview" and \
+            "TECHNICAL-PREVIEW" not in cfg["name"]:
+        raise BundleError(
+            "technical-preview bundle name must contain TECHNICAL-PREVIEW")
     if "comment" in cfg and (not isinstance(cfg["comment"], str) or
                              not cfg["comment"]):
         raise BundleError("comment must be a non-empty string when present")
@@ -504,6 +514,8 @@ def release_chain_problems(release_envelope, qa_records, attestations,
     problems = []
     if set(record) != _RELEASE_FIELDS:
         problems.append("release record has the wrong fields")
+    if record.get("recordVersion") != "2":
+        problems.append("release record has the wrong version")
     problems.extend(_authorized_record_problems(record, "release record"))
     edition = record.get("edition")
     if not isinstance(edition, str) or not edition:
@@ -515,8 +527,6 @@ def release_chain_problems(release_envelope, qa_records, attestations,
                                     "release sealedDigest"))
     problems.extend(_digest_problem(record.get("lockDigest"),
                                     "release lockDigest"))
-    problems.extend(_digest_problem(record.get("qaRecord"),
-                                    "release qaRecord"))
     release_refs = record.get("attestations")
     problems.extend(_digest_list_problems(
         release_refs, "release attestation references"))
@@ -526,6 +536,75 @@ def release_chain_problems(release_envelope, qa_records, attestations,
             "release declaredReleaseTimestamp")
     except BundleError as exc:
         problems.append(str(exc))
+
+    profile_contract = current_acceptance_context.get(
+        "releaseProfileContract") \
+        if isinstance(current_acceptance_context, dict) else None
+    try:
+        expected_profile_fields = release_mod.profile_record_fields(
+            profile_contract)
+    except release_mod.AcceptanceError as exc:
+        problems.append("current release profile is unavailable: %s" % exc)
+        expected_profile_fields = None
+    if expected_profile_fields is not None:
+        for field, expected in expected_profile_fields.items():
+            if record.get(field) != expected:
+                problems.append(
+                    "release record %s does not match the current release "
+                    "profile" % field)
+    manual_qa = profile_contract.get("manualQaEvidence") \
+        if isinstance(profile_contract, dict) else None
+
+    if manual_qa == "deferred":
+        if record.get("qaRecord") is not None:
+            problems.append(
+                "technical-preview release qaRecord must be null")
+        receipt_subjects = release_mod.release_subjects(
+            edition, record.get("sealedDigest"), record.get("lockDigest"),
+            None, None, profile_contract)
+        problems.extend(release_mod.acceptance_receipt_problems(
+            record.get("acceptanceReceipt"), "release",
+            current_acceptance_context, receipt_subjects))
+
+        by_type = {}
+        if isinstance(release_refs, list):
+            for digest in release_refs:
+                try:
+                    att = _record_by_digest(
+                        attestations, digest, "attestation", "attestation")
+                except BundleError as exc:
+                    problems.append(str(exc))
+                    continue
+                att_record = att.get("record")
+                att_problems = _attestation_record_problems(
+                    att_record, edition, approval_evidence_problems)
+                att_problems.extend(_attestation_currency_problems(
+                    att_record, current_side_digests))
+                problems.extend("attestation %s: %s" % (digest, problem)
+                                for problem in att_problems)
+                if isinstance(att_record, dict) and \
+                        isinstance(att_record.get("type"), str):
+                    by_type.setdefault(
+                        att_record["type"], []).append(att_record)
+        required_types = frozenset(required_attestation_types) \
+            if isinstance(required_attestation_types, (
+                set, frozenset, list, tuple)) else frozenset()
+        allowed_types = _BASE_RELEASE_ATTESTATIONS | {"qa-crosswalk"}
+        if not _BASE_RELEASE_ATTESTATIONS.issubset(required_types) or \
+                not required_types.issubset(allowed_types):
+            problems.append("release attestation policy is invalid")
+        if frozenset(by_type) != required_types or \
+                any(len(records) != 1 for records in by_type.values()):
+            problems.append(
+                "technical-preview release does not reference exactly one "
+                "current required attestation of each type")
+        return problems
+
+    if manual_qa != "required":
+        problems.append("release manual-QA profile policy is unavailable")
+        return problems
+    problems.extend(_digest_problem(record.get("qaRecord"),
+                                    "release qaRecord"))
 
     try:
         qa = _record_by_digest(
@@ -540,6 +619,10 @@ def release_chain_problems(release_envelope, qa_records, attestations,
     if set(qa_record) != _QA_FIELDS:
         problems.append("QA record has the wrong fields")
     problems.extend(_authorized_record_problems(qa_record, "QA record"))
+    if qa_record.get("releaseProfile") != "validated-release" or \
+            qa_record.get("releaseProfile") != record.get("releaseProfile"):
+        problems.append(
+            "QA releaseProfile does not match the validated release")
     if qa_record.get("edition") != edition:
         problems.append("QA edition does not match the release")
     if qa_record.get("candidateDigest") != record.get("sealedDigest"):
@@ -610,7 +693,7 @@ def release_chain_problems(release_envelope, qa_records, attestations,
         if isinstance(qa_lock, dict) else None
     receipt_subjects = release_mod.release_subjects(
         edition, record.get("sealedDigest"), record.get("lockDigest"),
-        record.get("qaRecord"), qa_lock_digest)
+        record.get("qaRecord"), qa_lock_digest, profile_contract)
     problems.extend(release_mod.acceptance_receipt_problems(
         record.get("acceptanceReceipt"), "release",
         current_acceptance_context, receipt_subjects))
@@ -759,6 +842,40 @@ def resolve_bundle_members(cfg, release_records, qa_records, attestations,
             set(acceptance_context_by_edition) != set(cfg["editions"]):
         raise BundleError("acceptance receipt context must cover exactly "
                           "the configured editions")
+    profile_contract = None
+    for edition in cfg["editions"]:
+        context = acceptance_context_by_edition[edition]
+        if not isinstance(context, dict) or \
+                context.get("releaseProfile") != cfg["releaseProfile"]:
+            raise BundleError(
+                "acceptance receipt context for %s does not bind the "
+                "configured release profile" % edition)
+        current_contract = context.get("releaseProfileContract")
+        try:
+            profile_fields = release_mod.profile_record_fields(
+                current_contract)
+        except release_mod.AcceptanceError as exc:
+            raise BundleError(
+                "acceptance receipt context for %s has an invalid release "
+                "profile: %s" % (edition, exc))
+        if profile_fields["releaseProfile"] != cfg["releaseProfile"]:
+            raise BundleError(
+                "acceptance receipt context for %s has the wrong release "
+                "profile contract" % edition)
+        if profile_contract is None:
+            profile_contract = current_contract
+        elif current_contract != profile_contract:
+            raise BundleError(
+                "acceptance receipt contexts do not share one release "
+                "profile contract")
+    try:
+        manifest_text = manifest_bytes.decode("utf-8")
+    except (AttributeError, UnicodeDecodeError) as exc:
+        raise BundleError("generated manifest is not UTF-8: %s" % exc)
+    if not manifest_text.startswith(profile_contract["artifactLabel"]):
+        raise BundleError(
+            "generated manifest does not begin with the exact release "
+            "profile label")
     if not isinstance(qa_authorization_context_by_edition, dict) or \
             set(qa_authorization_context_by_edition) != set(cfg["editions"]):
         raise BundleError("current QA authorization context must cover exactly "
@@ -807,12 +924,14 @@ def resolve_bundle_members(cfg, release_records, qa_records, attestations,
                 raise BundleError(
                     "release record %s is not fully authorized: %s"
                     % (member["releaseRecord"], "; ".join(chain_problems)))
-            expected = (member["edition"], name, member["digest"])
+            expected = (member["edition"], name, member["digest"],
+                        cfg["releaseProfile"])
             actual = (record.get("edition"), record.get("sealed"),
-                      record.get("sealedDigest"))
+                      record.get("sealedDigest"),
+                      record.get("releaseProfile"))
             if actual != expected:
                 raise BundleError("release record %s does not bind configured "
-                                  "edition/member/digest"
+                                  "edition/member/digest/profile"
                                   % member["releaseRecord"])
             data = read_artifact("sealed", name)
             if canon.bytes_digest(data) != member["digest"]:
@@ -882,13 +1001,17 @@ def bundle_record_problems(record, cfg, bundle_digest,
     if not isinstance(record, dict):
         return ["bundle record is not an object"]
     expected_fields = {
-        "bundle", "bundleDigest", "members", "releaseRecords",
+        "recordVersion", "releaseProfile", "compatibilityAuthorization",
+        "deferredObservations", "artifactLabel", "bundle", "bundleDigest",
+        "members", "releaseRecords",
         "manifestWording", "manifestApproval", "bundleConfigDigest",
         "approvalStatus", "operator", "operatorKind", "acceptanceReceipt",
     }
     problems = []
     if set(record) != expected_fields:
         problems.append("bundle record has the wrong fields")
+    if record.get("recordVersion") != "2":
+        problems.append("bundle record has the wrong version")
     if not authority.is_identified_operator_identity(
             record.get("operator")):
         problems.append("bundle record has no identified operator")
@@ -898,6 +1021,25 @@ def bundle_record_problems(record, cfg, bundle_digest,
             record.get("operatorKind")):
         problems.append(
             "bundle record operatorKind is not release-authoritative")
+    profile_contract = current_acceptance_context.get(
+        "releaseProfileContract") \
+        if isinstance(current_acceptance_context, dict) else None
+    try:
+        expected_profile_fields = release_mod.profile_record_fields(
+            profile_contract)
+    except release_mod.AcceptanceError as exc:
+        problems.append("current bundle release profile is unavailable: %s"
+                        % exc)
+        expected_profile_fields = None
+    if expected_profile_fields is not None:
+        for field, expected in expected_profile_fields.items():
+            if record.get(field) != expected:
+                problems.append(
+                    "bundle record %s does not match current release profile"
+                    % field)
+    if record.get("releaseProfile") != cfg.get("releaseProfile"):
+        problems.append(
+            "bundle record releaseProfile does not match current config")
     manifest = next(m for m in cfg["members"]
                     if m["kind"] == "bundle-manifest")
     expected_members = [{"name": m["name"], "digest": m["digest"]}
@@ -920,7 +1062,7 @@ def bundle_record_problems(record, cfg, bundle_digest,
         problems.append("bundle record config digest is stale")
     receipt_subjects = release_mod.bundle_subjects(
         bundle_config_digest, bundle_digest, expected_releases,
-        expected_members, cfg.get("manifestApproval"))
+        expected_members, cfg.get("manifestApproval"), profile_contract)
     problems.extend(release_mod.acceptance_receipt_problems(
         record.get("acceptanceReceipt"), "bundle",
         current_acceptance_context, receipt_subjects))

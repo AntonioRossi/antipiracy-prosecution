@@ -9,6 +9,7 @@ import json
 import re
 
 from . import projections
+from . import release as release_mod
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;")
@@ -634,6 +635,9 @@ def render(m, mode="candidate"):
     """Render the edition artifact. mode: 'preview' adds the watermark
     (additive only — identical shipping projection)."""
     strings = m.strings
+    release_profile, profile_contract = \
+        release_mod.release_profile_contract(m.acceptance)
+    profile_label = profile_contract["artifactLabel"]
     ship = projections.ship_relation(m, "artifact")
     ship_schedule = projections.ship_relation(m, "schedule")
     reverse = projections.reverse_index(ship)
@@ -671,6 +675,11 @@ def render(m, mode="candidate"):
             "id": m.edition["editionId"], "prefix": prefix,
             "version": m.edition["claimSetVersion"],
             "name": m.edition["displayName"],
+            "releaseProfile": release_profile,
+            "compatibilityAuthorization":
+                profile_contract["compatibilityAuthorization"],
+            "deferredObservations":
+                profile_contract["deferredObservations"],
         },
         "strings": {
             "ui": strings["ui"], "status": strings["status"],
@@ -698,8 +707,9 @@ def render(m, mode="candidate"):
     probe_instruments = api_probe_instruments(m.api_policy)
 
     replacements = {
-        "@@TITLE@@": esc("%s — %s" % (m.edition["displayName"],
-                                      m.edition["claimSetVersion"])),
+        "@@TITLE@@": esc("%s — %s — %s" % (
+            m.edition["displayName"], m.edition["claimSetVersion"],
+            release_profile)),
         "@@CSP@@": esc(m.api_policy["csp"]),
         "@@CSS@@": responsive_css(m.support_matrix),
         "@@WATERMARK@@": watermark,
@@ -713,6 +723,7 @@ def render(m, mode="candidate"):
         "@@DISCLOSUREPANELABEL@@": esc(
             strings["ui"]["asFiledDisclosureLabel"]),
         "@@LEGEND@@": esc(strings["counselLegend"]),
+        "@@RELEASEPROFILE@@": esc(profile_label),
         "@@DISCLAIMER@@": esc(disclaimer),
         "@@CLAIMSPANE@@": _claims_pane(m, ship, strings),
         "@@DISCLOSUREPANE@@": _disclosure_pane(m, reverse, figures_b64, strings),
@@ -743,6 +754,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 @@WATERMARK@@
 <header id="masthead">
 <p class="legend">@@LEGEND@@</p>
+<p class="release-profile">@@RELEASEPROFILE@@</p>
 <h1>@@HEADERTITLE@@ <span class="strategy">@@STRATEGY@@</span></h1>
 <p class="meta">@@CLAIMSETLABEL@@ <strong>@@VERSION@@</strong> · @@WO@@
 <button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">@@AUXLABEL@@</button></p>
@@ -767,7 +779,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 @@ABOUT@@
 </div>
 </div>
-<footer><p class="legend">@@LEGEND@@</p><p class="disclaimer">@@DISCLAIMER@@</p></footer>
+<footer><p class="legend">@@LEGEND@@</p><p class="release-profile">@@RELEASEPROFILE@@</p><p class="disclaimer">@@DISCLAIMER@@</p></footer>
 <noscript><style>
 #content-root{display:block;overflow-y:auto;min-height:0;flex:1 1 auto}
 #panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{
@@ -805,6 +817,8 @@ footer { display:none; }
 .strategy { color:var(--accent); font-weight:normal; }
 #masthead .meta { margin:2px 0; font-size:12px; }
 .legend { font-size:10px; letter-spacing:.4px; color:#7a1f1f; margin:2px 0;
+       font-weight:bold; }
+.release-profile { font-size:10.5px; color:#704d00; margin:2px 0;
        font-weight:bold; }
 .disclaimer { font-size:10.5px; color:#444; margin:2px 0; }
 #content-root { flex:1 1 auto; display:flex; flex-direction:column;
@@ -930,7 +944,7 @@ body.aux-open #panes { display:none; }
 @page { margin:12mm 10mm; }
 @media print {
   body { overflow:visible; display:block; }
-  #content-root { display:block; overflow:visible; padding-bottom:29mm;
+  #content-root { display:block; overflow:visible; padding-bottom:37mm;
        -webkit-box-decoration-break:clone; box-decoration-break:clone; }
   #aux { display:block; overflow:visible; }
   #panes { display:block; }
@@ -941,11 +955,12 @@ body.aux-open #panes { display:none; }
        display:none !important; }
   .phrase-btn { border:none; background:transparent; color:inherit;
        cursor:default; min-height:0; padding:0; }
-  #masthead > .legend,#masthead > .disclaimer { display:none; }
+  #masthead > .legend,#masthead > .release-profile,
+  #masthead > .disclaimer { display:none; }
   /* Clone content padding at every page fragment to reserve space for the
      fixed banner instead of letting it cover printable prose or tables. */
   footer { position:fixed; top:auto; bottom:0; left:0; right:0;
-       display:block; height:27mm; min-height:0; overflow:hidden;
+       display:block; height:35mm; min-height:0; overflow:hidden;
        transform:none; padding:2mm 0 0; background:#fff;
        border-top:1px solid var(--line); border-bottom:none; }
   footer .legend,footer .disclaimer { position:static; margin:1mm 0 0; }

@@ -1,42 +1,43 @@
 {
- "bundleVersion": "2",
- "name": "AA11393US-claims-navigators_NA-2026-07-21-v2_AF-2026-07-17-v2.zip",
- "comment": "Bundle config (TDD §10.9, §11): ordered member names and bytes are pinned explicitly. Each sealed artifact binds one digest-addressed release record; checksum entries bind the stored detached-checksum bytes; the manifest is an enumerated bundle-manifest output and requires the selected confirmed authorized-operator approval. Either artifact remains releasable alone.",
+ "bundleVersion": "3",
+ "releaseProfile": "technical-preview",
+ "name": "AA11393US-claims-navigators_NA-2026-07-21-v2_AF-2026-07-17-v2_TECHNICAL-PREVIEW.zip",
+ "comment": "Technical-preview bundle config (TDD §10.9, §11): ordered member names and bytes are pinned explicitly. Manual cross-platform and assistive-technology QA is deferred, and this bundle does not claim validated browser or assistive-technology compatibility. Each sealed artifact binds one digest-addressed profile-authorized release record; checksum entries bind the stored detached-checksum bytes; the manifest is an enumerated bundle-manifest output and requires the selected confirmed authorized-operator approval. Either artifact remains releasable alone under the same technical-preview profile.",
  "editions": ["na", "af"],
  "declaredTimestamp": "2026-07-21T00:00:00Z",
- "manifestApproval": "sha256/c1:7815d0248c7b3ee45ae57531bd1c079d8dbd49aab2066cdd86d523305fde6910",
+  "manifestApproval": "sha256/c1:d970b98254f96c55381b8b00b02df0dec380e97d9ee105bb2aa475adb4681d28",
  "members": [
   {
    "kind": "sealed",
    "name": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html",
    "edition": "na",
-   "digest": "sha256/c1:ad58caf4b60e515aeb071cb2e5f828310a545fa0dbb6b31bf63cea1902ed762d",
-   "releaseRecord": "sha256/c1:51e8f3569d3d29d56679563eb54884ecc60e9bc846c484665e3525cfa4dc635b"
+      "digest": "sha256/c1:3ed08bb6a10f8cf7a1e67a5762a4611ee67ec14d54bf9db6fff08619acc92406",
+      "releaseRecord": "sha256/c1:57622f500a95e5bff30b861a87131b263fa8d77ced0b09e640c8ebd0422155eb"
   },
   {
    "kind": "artifact-checksum",
    "name": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html.sha256",
    "artifact": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html",
-   "digest": "sha256/c1:516f2a2e2d0810fca8b31eae2d9abfbdf166465fe56b48628c198e85ff014050"
+      "digest": "sha256/c1:af1f5abae3c3d9fd0151e687c9c0616557140661cc631c999d5eacd099b98b79"
   },
   {
    "kind": "sealed",
    "name": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html",
    "edition": "af",
-   "digest": "sha256/c1:34e3618df548fcd7561fe34dbf38a2ddbf9f9618aa1eeb084a4430ef55076770",
-   "releaseRecord": "sha256/c1:057c50f07d0fd8875673a045081f5f06cee1cbb473cf104527062360a070d703"
+      "digest": "sha256/c1:dd417756fe81013d8b92ecefa32c982ffff62b26b834e8937ce7d8bc1a1dbaf5",
+      "releaseRecord": "sha256/c1:26a679af2d80426ded32132377a7395c82b580a7b68c92e9d08adc9f4ea9fc2a"
   },
   {
    "kind": "artifact-checksum",
    "name": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html.sha256",
    "artifact": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html",
-   "digest": "sha256/c1:63e03d0254c78b5601ce6038846dacf682951345eea558dddcf30b35496cfc67"
+      "digest": "sha256/c1:d89ae7f90a83484b992ae621f5664786424dccaa229a79cc1f713780703f69fe"
   },
   {
    "kind": "bundle-manifest",
    "name": "MANIFEST.txt",
-   "digest": "sha256/c1:10c522d875e9f69ea13f6b87c9803860f140d0f935fdda6db3743b4e9de20735",
-   "wordingDigest": "sha256/c1:0f03ba3933fbdb0a62c8b9bb4b8c690d9a44599a796d546a90602ae456cc13d2"
+      "digest": "sha256/c1:02d07162b9f03bb8bb52127b437af90e696ed0f45b7dfe747a44ccc085f88c98",
+      "wordingDigest": "sha256/c1:5d65a079fa33818b180a1c4a355770c6c711d0d62f52b6fea64d82e36e31578a"
   }
  ]
 }

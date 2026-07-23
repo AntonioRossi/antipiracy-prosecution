@@ -31,6 +31,20 @@ edition may identify AF neutrally as an allowance-first drafting strategy whose 
 is anticipating examiner objections; whether it achieves that aim is counsel work, outside
 the navigator. Every screen and every printed page carries the standing disclaimer (§9.1).
 
+**Current release profile — technical preview.** The initial delivery is explicitly the
+`technical-preview` profile and carries this exact label on screen, in print, in no-JS output,
+in its manifest, config, verification records, and acceptance receipts:
+**“TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA is deferred;
+browser and assistive-technology compatibility is not validated.”** Automated quality,
+determinism, security, privacy/offline, content-validation, and bundle-integrity checks remain
+release-blocking. The future `validated-release` profile preserves the complete current
+seven-row browser/OS/optional-AT policy and requires its structured version-3 evidence. This
+release-profile meaning is distinct from the authoring-only `preview` build mode, which merely
+adds a “not for QA or delivery” watermark and never authorizes delivery.
+
+> Manual cross-platform and assistive-technology QA is deferred for the initial
+> technical-preview release.
+
 - **Primary user:** US prosecution counsel reviewing claim-set versions NA-2026-07-21-v2
   and/or AF-2026-07-17-v2.
 - **Secondary user:** the internal reviewer (Antonio) validating claim-support work product.
@@ -386,8 +400,9 @@ graphs are dual-sourced** (§8.1, §8.4, §13).
 
 Shared PCT corpora are registered in `navigator/corpora.json`; each config also selects one
 edition claim registry (`profiles/corpora_<edition>.json`). Internal QA corpora live in the
-separate selected `profiles/qa_<edition>.json`, read only by verification commands and bound
-by raw path/digest inside `qaInputLock`. Registry resources are closed and versioned; their
+separate selected `profiles/qa_<edition>.json`, read only by verification commands and, for
+validated-release, bound by raw path/digest inside `qaInputLock`. Technical-preview does not
+create or claim a QA input lock. Registry resources are closed and versioned; their
 merged artifact corpus set must exactly equal the three corpus ids named by the edition.
 Every entry has a globally unique id (§2), role
 (`authoritative` | `derivative` | `fragment-source` | `qa-source`), visibility (`rendered` |
@@ -1030,8 +1045,9 @@ knowledge from the config only (§10, edition-blindness).
    edition's priority-support map and — for AF — the crosswalk non-conflation boundary.
    The two-source inventory and QA cross-check attestations bind their exact declared side
    sets, and wording/data approvals bind their exact single side (§10). The typed `attest`
-   command creates immutable attestation records; `record-qa` consumes those attestations
-   and creates the immutable QA record. A change to any declared attestation side
+   command creates immutable attestation records. For validated-release only, `record-qa`
+   consumes those attestations and creates the immutable QA record; technical-preview has no
+   QA record. A change to any declared attestation side
    mechanically invalidates that attestation.
 5. **Authorized-operator review.** Final pass by an identified human or model operator over
    each explicitly selected owner; `reviewState: internally-reviewed`, fresh `contentHash`,
@@ -1039,6 +1055,11 @@ knowledge from the config only (§10, edition-blindness).
    Tool work remains truthfully labeled and cannot authorize release.
 
 ### 9.1 Standing disclaimer (always visible on screen; repeated on every printed page)
+
+The exact selected-profile `artifactLabel` precedes the disclaimer everywhere it appears,
+including no-JS and every printed page. For the active profile it is: **“TECHNICAL PREVIEW —
+Manual cross-platform and assistive-technology QA is deferred; browser and
+assistive-technology compatibility is not validated.”**
 
 > Draft navigation aid generated from claim-set {edition version} and PCT/IB2025/051755 as
 > filed (WO 2025/181623 A1). Mappings are author-recorded candidate associations for counsel
@@ -1083,12 +1104,13 @@ navigator/
                           #   module; planes.json (command×kind privilege matrix);
                           #   acceptance.json (criteria registry); api-policy.json
                           #   (probed/CSP-governed/procedural API sets);
-                          #   support-matrix.json (release-approved browser/OS/AT matrix)
+                          #   support-matrix.json (validated-release browser/OS/AT target policy)
                           #   + support-matrix.schema.json (closed matrix shape)
   strings.json            # shared artifact microcopy + counsel legend
-  bundle-manifest.json    # bundle-only neutral wording (digest-bound approval)
-  build.py                # content plane: `preview` / `candidate` / `migrate`;
-                          #   verification plane: `release` / `bundle` / `attest` /
+  bundle-manifest.json    # version-2 bundle-only structured profile/status/deferred data
+                          #   + neutral wording (digest-bound approval)
+  build.py                # content plane: authoring `preview` / `candidate` / `migrate`;
+                          #   verification plane: profile-explicit `release` / `bundle` / `attest` /
                           #   `record-qa`; `bundle-plan` / `status` (read-only
                           #   proposal and digest-chain report);
                           #   `propose-reuse` (deferred)
@@ -1113,8 +1135,8 @@ exact-hash-proven identity (relation locators and gate-inventory source locators
 semantic content and review state untouched — consistent by construction, since locators
 are outside the review projection (§13); (c) **proposal writing** — new `pending` entries
 and `stale` marks only; (d) **authorized-operator edit** via git. Attestation records are
-written only by the typed `attest` command into the verification plane; `record-qa` reads
-them and writes a QA record. Every command declares
+written only by the typed `attest` command into the verification plane; validated-release
+`record-qa` reads them and writes a QA record, while technical-preview creates none. Every command declares
 its action classes; a **diff-classifier test** verifies observed writes fall within declared
 classes. Before either source file is written, `migrate` also applies that same closed
 classifier to deep snapshots of the relation set and gate inventory, validates both
@@ -1167,13 +1189,23 @@ and exercises both directions of the disjointness rule.
 
 Every cell above is an exact set, not a minimum or an illustrative subset; `content` is the
 single content-plane kind narrowed by the row's declared scope, and an omitted kind is
-denied. In particular, `bundle` must read the `qa-record` and `attestation` predecessors of
-each configured `release-record`; the mere presence of a release record is not authority.
+denied. In particular, `bundle` must read each configured `release-record` and its exact
+attestation predecessors, plus its `qa-record` predecessor only under validated-release; the
+mere presence of a release record is not authority.
+`record-qa` produces evidence only while validated-release is active, and `release` is
+invoked as `release <edition> --profile=<technical-preview|validated-release>` with no
+implicit profile.
 `bundle-plan` has the same read boundary needed to evaluate current release chains but no
 write privilege; its stdout is a proposal, not a content, artifact, or evidence write.
 
 The `bundle-manifest` is counsel-facing and carries no verification-plane references; the
 chain from bundle to its authorizing release records lives in the `bundle-record`.
+
+`preview` in this command matrix is an **authoring artifact mode**, not a release profile.
+It writes a watermarked file that is neither QA evidence nor delivery. Conversely,
+`technical-preview` is a release-governance profile selected explicitly by `release
+--profile=technical-preview`; it produces sealed, checksum-verified bytes and profile-labelled
+records without claiming the deferred compatibility observations.
 
 - **Content plane** — sources, relations, inventories, dependency maps, profiles, edition
   configs, schemas, strings projection, builder tree, declared timestamp. The builder tree
@@ -1204,18 +1236,21 @@ chain from bundle to its authorizing release records lives in the `bundle-record
 - **Verification plane — append-only, forward-chaining.** Records are digest-addressed and
   immutable; every record filename carries its kind plus the complete 64-hex digest (never
   an abbreviated storage address), and an overwrite attempt is a gateway error; each record references its
-  predecessors by digest: `record-qa` creates the authorization record **before** release;
-  `release` reads and references it, writing the sealed artifact, its checksum, and a
+  predecessors by digest. Under validated-release, `record-qa` creates the authorization
+  record **before** release and `release` reads and references it. Under technical-preview,
+  release has no QA predecessor. Both branches write the sealed artifact, its checksum, and a
   **`release-record`** (what was sealed, when, on which authorizations); the
   `bundle-record` references the release records of the bundle's members. Consumers
   resolve records by **explicit digest equality, never recency or record-store ordering**:
-  `release` considers only `qa-record`s whose candidate digest *and* content-lock digest
-  match the derivation being sealed (a policy change can move the lock without moving the
-  artifact bytes), rejects every incomplete authorization, and if several complete records
-  remain deterministically prefers a valid human authorization, otherwise a valid model
-  authorization, then uses canonical record-digest order as the tie-breaker. `bundle` resolves the exact
+  validated-release considers only `qa-record`s whose candidate digest *and* content-lock
+  digest match the derivation being sealed (a policy change can move the lock without moving
+  the artifact bytes); technical-preview rejects any claimed QA predecessor. Every profile
+  rejects incomplete authorization, and if several complete records remain deterministically
+  prefers a valid human authorization, otherwise a valid model authorization, then uses
+  canonical record-digest order as the tie-breaker. `bundle` resolves the exact
   `releaseRecord` digest pinned beside each sealed member in its config and then resolves
-  that release's exact QA and attestation predecessors.
+  release's exact profile-specific predecessors: attestations directly for technical-preview,
+  or QA plus attestations for validated-release.
   Superseded records persist unchanged by design and match no current derivation;
   re-appending a byte-identical record is idempotent, since with digest-addressed names
   an identical write is not an overwrite. Attestation records additionally carry the
@@ -1233,65 +1268,95 @@ chain from bundle to its authorizing release records lives in the `bundle-record
   validated against `planes.json` by the procedure-vs-matrix comparison test** — prose
   about who writes what is checked, not trusted.
 
-**Authorized-operator evidence is closed and structured.** `attest`, `record-qa`, `release`,
-and `bundle` require an explicitly supplied, non-empty `NAV_OPERATOR` and an explicit
-`NAV_OPERATOR_KIND=human|model`; tools, defaults, missing identities, and unknown kinds are
-not accepted as authority. An identified operator is NFC, has no surrounding whitespace or
-Unicode control/format characters, and contains at least one visible character. Every
-authorizing record has `approvalStatus: passed`, an identified operator, and its truthful
-`operatorKind`; authorizing evidence text must be non-empty and final, and failure,
-rejection, skipped, pending, or do-not-release language invalidates it. Every attestation
-also carries the exact closed producer marker
+**Authorized-operator evidence and release profiles are closed and structured.** `attest`,
+`record-qa`, `release`, and `bundle` require an explicitly supplied, non-empty `NAV_OPERATOR`
+and an explicit `NAV_OPERATOR_KIND=human|model`; tools, defaults, missing identities, and
+unknown kinds are not accepted as authority. An identified operator is NFC, has no
+surrounding whitespace or Unicode control/format characters, and contains at least one
+visible character. Every authorizing record has `approvalStatus: passed`, an identified
+operator, and its truthful `operatorKind`; authorizing evidence text must be non-empty and
+final, and failure, rejection, skipped, pending, or do-not-release language invalidates it.
+
+Acceptance version 2 / runner version 2 declares one explicit `activeReleaseProfile` and an
+exact ordered two-entry `releaseProfiles` list. Each profile has exactly `{id,
+manualQaEvidence, compatibilityAuthorization, deferredObservations,
+requiredQaRecordFields, artifactLabel}`. The active profile is `technical-preview`, whose
+manual QA is `deferred`, compatibility authorization is `not-authorized`, deferred set is
+exactly `[AC-11, AC-12, AC-13, AC-15]`, required QA fields are exactly empty, and artifact
+label is the exact sentence in §1. `validated-release` has manual QA `required`,
+`support-matrix-authorized`, no deferred observations, required fields exactly `[ac11, ac12,
+ac13, ac15]`, and label **“VALIDATED-RELEASE PROFILE — Delivery requires current full
+seven-row cross-platform and assistive-technology QA.”** AC-14 is deliberately absent from
+both the deferred set and the manual field set: its static no-JS completeness proof is
+automated under both profiles.
+
+Every attestation carries the exact closed producer marker
 `producerCommand: "navigator/build.py attest/v1"`; a missing or unknown marker is rejected.
 This digest-bound marker represents the typed attest-command output contract under the
 repository/Git trust root; it is audit metadata, not a cryptographic signature or proof of
-who executed the command. Attestation side keys
-are exact: inventory completeness = `{claimSet, gateInventory}`; priority QA =
-`{relationSet, priorityMap}`; AF crosswalk QA = `{relationSet, crosswalk}`; legend approval =
-`{legendWording}`; manifest approval = `{manifestWording}`; support-matrix approval =
-`{supportMatrix}`. A QA record is candidate-bound, declares
-`manualEvidenceVersion: "3"`, and contains exactly the required structured
-operator-performed fields `ac11`, `ac12`, `ac13`, and `ac15`; each has `status: passed`,
-non-empty final evidence, and the same operator identity and kind as the outer QA record.
-The version-3 grammar is decisive rather than free-form: AC-11 and AC-13 copy every current
-atomic support-matrix target in exact normative order and record actual browser/OS/AT
-versions in their canonical product/version grammar, with minimum versions enforced;
-AC-11 additionally records the configured traversal chord and typed keyboard,
+who executed the command. Attestation side keys are exact: inventory completeness =
+`{claimSet, gateInventory}`; priority QA = `{relationSet, priorityMap}`; AF crosswalk QA =
+`{relationSet, crosswalk}`; legend approval = `{legendWording}`; manifest approval =
+`{manifestWording}`; support-matrix target-policy approval = `{supportMatrix}`. These content
+and policy attestations remain required under both profiles; support-matrix approval approves
+the future validated-release target policy, not evidence that its rows were exercised.
+
+The `technical-preview` chain has **no QA record prerequisite and creates no QA record**.
+The release command still runs every automated acceptance callback and requires current
+content, lifecycle, attestation, determinism, security, privacy/offline, and output-integrity
+evidence. Its release record carries the exact `releaseProfile`,
+`compatibilityAuthorization`, `deferredObservations`, and `artifactLabel`; none of those
+fields may be omitted, inferred, or relabelled as compatibility authorization. The eventual
+bundle record carries those same four exact selected-profile values; the bundle config adds
+only `releaseProfile`, while the structured manifest exposes the profile, compatibility
+status, deferred set, and exact label to recipients.
+
+A `qa-record` exists only for `validated-release`. It is candidate-bound, explicitly carries
+`releaseProfile: "validated-release"`, declares `manualEvidenceVersion: "3"`, and contains
+exactly the structured operator-performed fields `ac11`, `ac12`, `ac13`, and `ac15`; each has
+`status: passed`, non-empty final evidence, and the same operator identity and kind as the
+outer QA record. The version-3 grammar is decisive rather than free-form: AC-11 and AC-13
+copy every current atomic support-matrix target in exact normative order and record actual
+browser/OS/AT versions in their canonical product/version grammar, with minimum versions
+enforced; AC-11 additionally records the configured traversal chord and typed keyboard,
 focus, computed-semantics, and live-region results; AC-13 records the exact minimum and an
 actual below-minimum viewport with typed local-file and layout results. AC-12 records the
 actual print engine, positive page count, and typed readable-claims, readable-disclosure,
 disclaimer-on-every-printed-page, legend-on-every-printed-page, provenance, schedule, and
-no-content-clipping results. AC-12 and
-AC-15 browser/OS environments must match a current `at: none` support target and meet its
-minimum versions. AC-15 records the actual runtime, `ready: true`, the exact installed/no-error hook map, and exact empty
+no-content-clipping results. AC-12 and AC-15 browser/OS environments must match a current
+`at: none` support target and meet its minimum versions. AC-15 records the actual runtime,
+`ready: true`, the exact installed/no-error hook map, and exact empty
 attempt/resource/network/cookie/storage/IndexedDB/navigation ledgers. Missing, extra,
 duplicate, reordered, stale-target, failed, or malformed results are not authorization.
-`record-qa --template` prints a deliberately pending version-3 skeleton derived from the
-live support targets, minimum viewport, and API-probe set; it requires no operator identity
-and writes nothing. An operator may supply the completed object with mutually exclusive
-`--evidence-file=<workspace-relative.json>` input, which is read through a fresh confined
-gateway and excluded from both candidate and QA-input locks, or retain the four inline
-`--acNN=<JSON>` arguments. `--check-only` requires the explicit operator identity and kind,
-performs the same candidate, attestation, and full authorization self-check as append mode,
-prints the prospective digest, and writes nothing. Append mode validates that same complete
-constructed QA record before writing it.
-The record references exactly one
-current `inventory-completeness`, `qa-priority-map`, `legend-approval`, and
+
+`record-qa --template` prints a deliberately pending validated-release version-3 skeleton
+derived from the live support targets, minimum viewport, and API-probe set; it requires no
+operator identity and writes nothing. An operator may supply the completed object with
+mutually exclusive `--evidence-file=<workspace-relative.json>` input, which is read through a
+fresh confined gateway and excluded from both candidate and QA-input locks, or retain the four
+inline `--acNN=<JSON>` arguments. `--check-only` requires the explicit operator identity and
+kind, performs the same candidate, attestation, and full validated-release authorization
+self-check as append mode, prints the prospective digest, and writes nothing. Append mode
+validates that same complete constructed QA record before writing it. The record references
+exactly one current `inventory-completeness`, `qa-priority-map`, `legend-approval`, and
 `support-matrix-approval` attestation (AF additionally requires `qa-crosswalk`); the
 `manifest-approval` attestation is bundle-only. The QA record embeds the approved legend and
-support-matrix bindings and carries both locks described below. A release record is itself
-passed authorized-operator evidence and repeats the exact QA attestation
-set; it cannot authorize different candidate bytes, a different lock, or an unapproved side.
+support-matrix bindings and carries both locks described below. A validated-release record
+repeats the exact QA attestation set and cannot authorize different candidate bytes, a
+different lock, or an unapproved side.
 
-**Executable acceptance evidence is closed, current, and nested rather than a new record
-kind.** Every `release-record` and `bundle-record` has a required `acceptanceReceipt`; the
-outer record remains identified human/model authorization, while the receipt truthfully
-identifies its executable runner as `runnerKind: tool`. A tool runner supplies executable
-evidence but is never authoritative. The receipt's exact
-closed fields are `{receiptVersion, registryDigest, runnerDigest, runnerInputs,
-runnerEditions, runnerKind, results, subjects}`:
+**Executable acceptance evidence is closed, current, profile-labelled, and nested rather
+than a new record kind.** Every `release-record` and `bundle-record` has a required
+`acceptanceReceipt`; the outer record remains identified human/model authorization, while the
+receipt truthfully identifies its executable runner as `runnerKind: tool`. A tool runner
+supplies executable evidence but is never authoritative. The receipt's exact closed fields
+are `{receiptVersion, registryDigest, runnerDigest, runnerInputs, runnerEditions, runnerKind,
+releaseProfileContract, results, subjects}`. `releaseProfileContract` is the complete exact
+selected entry copied from the version-2 registry, so the receipt itself binds the profile
+id, compatibility status, deferred set, manual-evidence policy, required fields, and artifact
+label:
 
-- `receiptVersion` is `"1"`; `registryDigest` is the ordinary raw-byte SHA-256 digest of
+- `receiptVersion` is `"2"`; `registryDigest` is the ordinary raw-byte SHA-256 digest of
   the exact `navigator/schema/acceptance.json` bytes, including its closed
   `receiptPhases` map.
 - `runnerEditions` is the exact sorted selected edition set: one edition for a standalone
@@ -1299,7 +1364,8 @@ runnerEditions, runnerKind, results, subjects}`:
   path-sorted `{path, digest}` lock over every Python input in the selected edition builder
   input set(s), plus every registry-declared test module and support file, every shared
   fixture, and only the fixtures scoped to a selected edition. The registry's closed
-  `runner` object declares `manualQaEvidenceVersion: "3"`, its supported editions,
+  `runner` object declares `runnerVersion: "2"`, `manualQaEvidenceVersion: "3"`, the exact
+  active/two-profile policy, its supported editions,
   fixture edition scopes, and callback edition scopes as data, together with the live acceptance and canonicalization modules,
   the TDD, excerpt/disposition/escaping/golden/edition-parameter/migration fixtures,
   canonical vectors, package initializer, and the fixture-generation, TDD-sync, and
@@ -1307,17 +1373,19 @@ runnerEditions, runnerKind, results, subjects}`:
   floor of field-specific c1 lock commitments inside the already content-locked
   edition-blind `lib/release.py` fixes the complete
   supported-edition, module path, fixture path→scope, callback-scope, support-file,
-  manual-QA-evidence-version, and per-criterion callback/QA-field inventories before any registry-selected callback is
+  active/two-profile policy, manual-QA-evidence-version, and per-criterion
+  callback/validated-release-QA-field inventories before any registry-selected callback is
   imported; callback ownership is unique. Thus deleting or redirecting the AC-19 callback
   cannot remove the auditor, and a registry entry cannot shrink its own lock. The floor
   compares inactive-edition metadata but does not open or hash inactive-edition fixture
   bytes.
   `runnerDigest` is the c1 object-composite digest with tag `aa11393:lock:c1` and payload
-  `{runnerVersion: "1", runnerEditions, registryDigest, runnerInputs,
-  plans: receiptPhases}`. The selected-edition context is snapshotted before execution,
+  `{runnerVersion: "2", runnerEditions, registryDigest, runnerInputs,
+  releaseProfileContract, plans: receiptPhases}`. The selected-edition/profile context is
+  snapshotted before execution,
   recomputed in an isolated fresh interpreter with an empty bytecode-cache location before
   any registered test module is imported, and recomputed again after execution; any
-  registry, runner-edition, or active runner-input change aborts the transaction. An
+  registry, runner-edition, release-profile, or active runner-input change aborts the transaction. An
   inactive edition's fixture is neither opened nor bound by a standalone run.
 - Release `results` is exactly
   `[{phase: "release-preflight", criteria: ["AC-01" … "AC-19"], status: "passed"},
@@ -1329,26 +1397,32 @@ runnerEditions, runnerKind, results, subjects}`:
   set-preserving criterion swap. The synthetic migration callback and fixture are NA-scoped. The
   split AC-16 checks prove both pre-write reproducibility and post-write sealed/checksum
   readback.
-  Release `subjects` is exactly `{edition, candidateDigest, contentLockDigest, qaRecord,
-  qaInputLockDigest}`.
+  Release `subjects` always bind `{edition, candidateDigest, contentLockDigest,
+  releaseProfile, compatibilityAuthorization, deferredObservations, artifactLabel}`.
+  `technical-preview` has no QA predecessor. `validated-release` additionally binds the
+  exact `qaRecord` and `qaInputLockDigest`.
 - Bundle `results` is exactly
   `[{phase: "bundle-postcondition", criteria: ["AC-20"], status: "passed"}]`; it is
   produced only after manifest, ZIP, and checksum write/readback and deterministic member
   verification, followed by execution of the registry-named AC-20 callback in the same
   isolated fresh-interpreter runner. The callback consumes a closed transaction context
   containing the exact evidence collections and independently derived current per-edition
-  acceptance, QA, attestation-side, support-approver, and candidate/content-lock bindings;
-  it independently re-resolves every release→QA→attestation chain and the identified
-  authorized-operator manifest approval rather than trusting the previously resolved plan.
+  acceptance, profile, attestation-side, and candidate/content-lock bindings. For
+  `technical-preview` it proves that no QA predecessor is claimed; for `validated-release`
+  it additionally consumes the exact QA, support-approver, target/viewport, API-probe, and
+  manual-evidence bindings and re-resolves every release→QA→attestation chain. Both profiles
+  independently re-resolve the identified authorized-operator manifest approval rather than
+  trusting the previously resolved plan.
   It also reads back
   the just-written outputs and rechecks exact configured members, STORE and deterministic
   ZIP form, detached checksum, neutral manifest, release references, and the golden bundle
-  fixture; callback failure prevents receipt creation. Bundle `subjects` is
-  exactly `{bundleConfigDigest, bundleDigest, releaseRecords, members: [{name, digest}],
-  manifestApproval}`.
+  fixture; callback failure prevents receipt creation. Bundle `subjects` binds
+  `{bundleConfigDigest, bundleDigest, releaseRecords, members: [{name, digest}],
+  manifestApproval, releaseProfile, compatibilityAuthorization, deferredObservations,
+  artifactLabel}`.
 
 No receipt contains its enclosing record's digest. Typed predecessor authorization digests
-(`qaRecord`, `releaseRecords`, and `manifestApproval`) point only to already existing
+(`releaseRecords`, `manifestApproval`, and, only for validated-release, `qaRecord`) point only to already existing
 records, and all other subjects are facts known before the outer record is hashed, so the
 verification graph remains acyclic.
 
@@ -1413,25 +1487,31 @@ Guardrails, each tied to the failure it prevents:
    no authoring tool rewrites or removes that provenance. Because the command and its
    pair-scoped verifier are deferred, the current release predicate rejects every
    `proposedFrom` regardless of otherwise-current local review metadata.
-8. **Release by verification (candidate → sealed), per edition.** Operator-performed QA runs against
-   candidate bytes; `release` re-derives, verifies the content-input lock byte-identically,
-   byte-compares the candidate, verifies the candidate-bound QA input lock and every
-   exact-side attestation in the verification envelope, and executes the registered
-   `release-preflight` acceptance plan. It promotes the same bytes, reads back the sealed
-   artifact and checksum, executes the AC-16 `release-postcondition`, and only then appends
-   the identified authorized human/model release record carrying the current non-authoritative
-   tool-run acceptance receipt.
-   `preview` is watermarked and passes the identical shipping projection — the watermark is
-   additive, never the protection.
+8. **Profile-explicit release by verification (candidate → sealed), per edition.** `release
+   <edition> --profile=<technical-preview|validated-release>` has no implicit profile and
+   refuses a selection that is not the registry's explicit active profile. It re-derives,
+   verifies the content-input lock byte-identically, byte-compares the candidate, verifies
+   every exact-side content/policy attestation in the verification envelope, and executes
+   the registered `release-preflight` acceptance plan. `technical-preview` has no QA-record
+   prerequisite; `validated-release` additionally verifies the candidate-bound QA input lock
+   and full version-3 record. The command promotes the same bytes with the exact profile
+   artifact label, reads back the sealed artifact and checksum, executes the AC-16
+   `release-postcondition`, and only then appends the identified authorized human/model
+   release record carrying the exact profile contract and current non-authoritative tool-run
+   acceptance receipt. The separate authoring `preview` command is watermarked “not for QA or
+   delivery” and passes the identical shipping projection — the watermark is additive, never
+   release authority and never the `technical-preview` profile label.
 9. **Composition planning and sealing.** `bundle-plan` is a read-only bridge from two
    independently current releases to the explicit bundle config. It derives each edition's
    current candidate digest and content-lock binding from content, verifies the stored
    sealed/checksum bytes, and considers only release records whose exact current
-   side/QA/attestation/**acceptance-receipt** chain validates. The QA step independently
-   reproduces the selected-registry-bound `qaInputLock` from current private inputs and
-   compares the support-matrix approver, exact ordered atomic targets/viewport, current API
-   probe set, and locked manual-evidence version from live inputs; it does not accept those
-   QA-record copies as self-authenticating currency evidence. It likewise resolves only a
+   side/profile/attestation/**acceptance-receipt** chain validates. For a validated-release
+   chain only, it independently reproduces the selected-registry-bound `qaInputLock` from
+   current private inputs and compares the support-matrix approver, exact ordered atomic
+   targets/viewport, current API probe set, and locked manual-evidence version from live
+   inputs; it does not accept QA-record copies as self-authenticating currency evidence. A
+   technical-preview chain must have no QA predecessor and must carry the exact deferred
+   observation set and not-authorized compatibility status. It likewise resolves only a
    current identified authorized human/model manifest approval, then validates the proposed config through
    the same final member resolver used by `bundle`. If multiple release records (or manifest
    approvals) authorize the same current subject, selection is deterministic: prefer valid
@@ -1446,29 +1526,36 @@ Guardrails, each tied to the failure it prevents:
    in-repo writer (fixed member ordering, real canonical RFC 3339 UTC-second declared
    timestamps—with an even second and DOS-range year for ZIP metadata—fixed permissions, pinned
    UTF-8 filename flags and central-directory behavior — verified against a **byte-exact
-   golden bundle fixture**) from the explicit, closed bundle config. The config pins the
+   golden bundle fixture**) from the explicit, closed version-3 bundle config. The config
+   carries its exact `releaseProfile` and pins the
    exact ordered edition/member set; every member's kind, name, and byte digest; the exact
    stored detached-checksum bytes and their sealed artifact; each sealed member's
    digest-addressed release record; the manifest's byte and wording digests; and the exact
-   identified authorized human/model manifest-approval attestation. Member names are safe
+   identified authorized human/model manifest-approval attestation. The version-2 manifest
+   carries structured profile, compatibility-status, deferred-observation, and exact
+   artifact-label fields together with its neutral text. Member names are safe
    NFC root basenames,
    unique case-insensitively, conform to their central artifact-kind path families (the
    manifest is exactly `MANIFEST.txt`, and every stored checksum is exactly
    `<sealed-name>.sha256`), and may not collide with the bundle or bundle-checksum output.
    Before writing any output, `bundle` verifies every stored member and the complete
-   authorized `release-record → qa-record → attestation` chain, including a current release
-   acceptance receipt. For every edition it independently re-reads the selected QA registry
-   and pin-verified QA sources to reproduce the exact current `qaInputLock`, and re-reads the
-   current support-matrix approver, exact ordered atomic targets/viewport, API probe set,
-   and manual-evidence version, then independently revalidates every typed AC-11/12/13/15
-   result; copied QA-record values are not their own currency proof.
+   authorized profile-specific release chain, including a current release acceptance receipt.
+   A technical-preview member resolves directly from its release record to current exact-side
+   attestations and has no QA predecessor. A validated-release member additionally resolves
+   `release-record → qa-record → attestation`; for every edition it independently re-reads the
+   selected QA registry and pin-verified QA sources to reproduce the exact current
+   `qaInputLock`, and re-reads the current support-matrix approver, exact ordered atomic
+   targets/viewport, API probe set, and manual-evidence version, then independently
+   revalidates every typed AC-11/12/13/15 result. Copied QA-record values are not their own
+   currency proof.
    Pending/legacy evidence is not authority. It then emits and reads
    back the manifest, deterministic ZIP, and detached ZIP checksum, runs the AC-20
    `bundle-postcondition`, and appends the identified authorized human/model bundle record
    with its non-authoritative tool-run receipt last.
-10. **Two locks + verification envelope** (plane separation above). The private QA record
-    carries a `contentLock`: the exact sorted content-gateway read set and its digest. It
-    separately carries a candidate-bound `qaInputLock`: the raw selected QA-registry
+10. **Content lock, optional validated-QA lock, and verification envelope** (plane separation
+    above). Both profiles carry a `contentLock`: the exact sorted content-gateway read set and
+    its digest. A validated-release private QA record separately carries a candidate-bound
+    `qaInputLock`: the raw selected QA-registry
     path/digest, verified internal QA-source reads, candidate digest, and `contentLock`
     digest, with its own lock digest. The other edition's QA registry is never opened.
     **Runtime diagnostics live in a sibling
@@ -1486,8 +1573,10 @@ Guardrails, each tied to the failure it prevents:
     The support matrix is
     separately byte-digested, names its approver, and is bound by an identified authorized
     human/model
-    `support-matrix-approval` attestation; the QA record pins that digest, approver, and
-    attestation digest. Authored per-entry text (notes, rationales) is subject to the same
+    `support-matrix-approval` attestation as approval of the validated-release target policy;
+    a validated-release QA record pins that digest, approver, and attestation digest, while
+    technical-preview does not claim it as observed compatibility evidence. Authored
+    per-entry text (notes, rationales) is subject to the same
     neutrality and forbidden-terms checks.
 12. **Terminology guard, full authored-visible surface.** Forbidden-terms checks cover the
     complete shared-plus-selected-edition strings projection, target notes and rationales,
@@ -1516,9 +1605,11 @@ Guardrails, each tied to the failure it prevents:
     survive drift in the contract it claims to execute.
 18. **Traceability closure, self-binding.** Criteria carry stable IDs in
     `schema/acceptance.json`; the traceability matrix maps registry IDs to named tests or
-    QA-record fields; the meta-test closes both directions over the registry, itself
-    included. The same registry declares the exact `receiptPhases` sets, and its byte digest
-    plus the locked runner inputs are embedded in every acceptance receipt.
+    validated-release QA-record fields; the meta-test closes both directions over the
+    registry, itself included, including the exact active/two-profile policy and the
+    technical-preview deferred set. The same registry declares the exact `receiptPhases`
+    sets, and its byte digest, selected profile contract, and locked runner inputs are embedded
+    in every acceptance receipt.
 19. **Collision review (procedural).** Every new mechanism folded into this document is
     checked against the guarantee → enforcement map for conflicts with existing mechanisms
     before adoption — at this density, the table's second function is collision detection.
@@ -1541,21 +1632,21 @@ cite a row of the guarantee → enforcement map or carry an explicit scope.
 | Dependency-chain hashes rest on a validated graph | Authored dependency map cross-validated against parsed claim references (AF three-way against its document table); totality/acyclicity/root checks; mismatch fails the build |
 | Attestations cannot outlive any declared side or masquerade as output from another producer contract | Exact-side digest binding + typed passed identified-authorized-operator append-only records + exact `producerCommand: navigator/build.py attest/v1` validation + envelope verification; the marker is digest-bound repository/Git audit metadata, not a signature |
 | Evidence that authorized a release survives it unchanged; release outcomes are themselves recorded | Append-only verification plane + forward-chaining records incl. `release-record`; output readback before the outer record is appended last; overwrite is a gateway error |
-| A release or bundle cannot claim an unexecuted or stale acceptance suite | Required closed `acceptanceReceipt` + registry-byte digest + explicit runner-edition set + registry-declared shared/edition-scoped test-module/fixture/support-file lock + fresh-interpreter before-import/after-run context equality + closed phase/result sets + typed subject bindings |
+| A release or bundle cannot claim an unexecuted, stale, or differently profiled acceptance suite | Required closed version-2 `acceptanceReceipt` + exact copied release-profile contract + registry-byte digest + explicit runner-edition set + registry-declared shared/edition-scoped test-module/fixture/support-file lock + fresh-interpreter before-import/after-run context equality + closed phase/result sets + typed profile/subject bindings |
 | Provenance cannot be self-referential | Plane separation: verification artifacts are never content inputs (privilege matrix); receipts omit their enclosing record digest and typed predecessor subjects point only backward |
 | Exactly the required inputs were read | Content read log + two-sided exact-set check against the edition config's declared transitive inputs (undeclared reads and unread declarations both fail) |
 | Composite digests are implementation-independent | Completed canonical serialization law (vendored interpreter-independent Unicode 15.1 NFC/White_Space data, raw and post-NFC duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms) + NUL-framed domain tags incl. per-record-kind tags + single-digest-path test + golden vectors + property-based canon tests |
 | Derived content cannot drift | No-stored-derivables rule (schema has no fields for them) |
-| Policy drift is visible and attestation-invalidating | Edition content-input lock derived from its exact gateway read log plus raw selected-QA-registry and pin-verified QA-source binding in `qaInputLock` (visibility, not prevention — git commit is the trust root); diagnostics excluded from both lock digests |
+| Policy drift is visible and attestation-invalidating | Edition content-input lock derived from its exact gateway read log; validated-release additionally binds the raw selected-QA-registry and pin-verified QA sources in `qaInputLock` (visibility, not prevention — git commit is the trust root); diagnostics excluded from applicable lock digests |
 | Tools act only within declared action classes | Action taxonomy + diff-classifier + writer-set tests |
 | No automatic cross-edition inheritance | `propose-reuse` deferred, pair-granted, proposal-only; immutable `proposedFrom` survives local authorized-operator review, and its presence unconditionally blocks release until a pair-scoped verifier can authenticate the source side |
 | Shared code contains no edition knowledge | Edition-blindness AST test |
-| Released bytes = operator-tested bytes | Seal gate: content-lock reproduction + byte-compare + QA-record digest check |
+| Released bytes = profile-authorized candidate bytes | Seal gate: content-lock reproduction + byte-compare + exact profile contract; validated-release additionally checks the current QA-record digest, while technical-preview expressly has no manual-QA prerequisite |
 | No `pending` / `stale` / non-authoritative owner review / unverifiable `proposedFrom` / unapproved legend ships | Release predicate (invariants module) + attestation checks |
 | Editorial / `internal` content never rendered or quoted; internal QA identifiers never ship; only public configured authority metadata may identify the non-rendered authority corpus | Visibility rules (schema) + provenance projection + projection test |
 | Authoring-lifecycle fields never ship, in any artifact kind including previews | Ship-axis-derived projection (schema) + projection test |
-| Bundle-config refresh cannot silently mutate source or arbitrarily choose among current authorizations | Read-only `bundle-plan` + independently derived current candidate/content-lock bindings + exact current attestation sides, QA-input lock, support approver/targets/viewport, API probe set, manual-evidence version, and receipt-chain validation + deterministic human-over-model, then digest, precedence; an existing pin survives only when it is the selected winner |
-| A bundle contains exactly its enumerated members and only fully authorized releases | Closed exact-member/checksum/manifest-approval config + deterministic STORE ZIP + golden bundle fixture + complete release→QA→typed-manual-evidence→attestation chain and current release-receipt verification + AC-20 postcondition receipt |
+| Bundle-config refresh cannot silently mutate source, switch profiles, or arbitrarily choose among current authorizations | Read-only `bundle-plan` + independently derived current candidate/content-lock/profile bindings + exact current attestation sides and receipt-chain validation; validated-release additionally verifies QA-input lock, support approver/targets/viewport, API probe set, and manual-evidence version; deterministic human-over-model, then digest, precedence; an existing pin survives only when it is the selected winner |
+| A bundle contains exactly its enumerated members and only releases authorized for its explicit profile | Closed version-3 exact-member/checksum/manifest-approval/profile config + version-2 structured labelled manifest + deterministic STORE ZIP + golden bundle fixture + complete profile-specific release chain and current release-receipt verification + AC-20 postcondition receipt |
 | AF/NA terminology non-conflation in authored text | Forbidden-terms check (heuristic, crosswalk-sourced) |
 | Examples, criteria, and procedure statements in this TDD match their registered data | Fixture validation + TDD-comparison tests (fixtures; acceptance registry; privilege matrix) |
 | Every registered acceptance criterion is carried by a live test, and every acceptance test maps to a criterion | Criteria registry + traceability matrix + bidirectional meta-test |
@@ -1582,21 +1673,29 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
   shipped relation data (ship-axis projection, §13), disclosure text, and the four figures
   (base64 data URIs, 882,762 bytes total pre-encoding) inlined. Estimated size ≈ 1.5–2 MB
   each.
-- **Build modes:** `preview` (watermarked, same projection), `candidate`, `release`,
-  `bundle` — all **content-plane read-only** via the gateways, writing only their declared
+- **Build modes and profiles:** authoring `preview` (watermarked “not for QA or delivery,”
+  same projection), `candidate`, profile-explicit `release`, and `bundle` — all
+  **content-plane read-only** via the gateways, writing only their declared
   output kinds per the privilege matrix (§10); `attest`/`record-qa` write append-only
   verification records; `status` resolves and reports the current digest chain
-  (which records authorize the current derivation), writing nothing.
-- **Delivery bundle:** a deterministic STORE ZIP containing exactly: both sealed artifacts,
-  their detached checksums, and the **neutral manifest** (`bundle-manifest` output kind;
-  microcopy-registry text, counsel-approvable) identifying them as *alternative
-  counsel-review editions*; the bundle ships with its own detached checksum. Either
+  (which records authorize the current derivation and under which profile), writing nothing.
+  The authoring mode named `preview` and the `technical-preview` release profile are not
+  synonyms (§10.8).
+- **Technical-preview delivery bundle:** a deterministic STORE ZIP containing exactly: both
+  sealed, exact-profile-labelled artifacts, their detached checksums, and the **neutral
+  version-2 structured manifest** (`bundle-manifest` output kind; microcopy-registry text,
+  counsel-approvable) identifying them as *alternative counsel-review editions* and carrying
+  the exact profile id, `not-authorized` compatibility status, `[AC-11, AC-12, AC-13, AC-15]`
+  deferred set, and technical-preview artifact label; the bundle ships with its own detached
+  checksum. Either
   artifact remains releasable alone. The ordered names and exact bytes are digest-pinned by
-  the bundle config; each sealed member names one exact release-record digest, each stored
+  the version-3 bundle config, whose `releaseProfile` is exact; each sealed member names one
+  exact release-record digest, each stored
   checksum is verified rather than regenerated, and manifest wording must match the config's
   exact identified authorized human/model approval. Packaging proceeds only after both configured
-  release→QA→attestation chains validate completely. Default bundle name:
-  `AA11393US-claims-navigators_NA-2026-07-21-v2_AF-2026-07-17-v2.zip`.
+  release→attestation chains and profile-bound receipts validate completely; the active
+  technical-preview chain contains no QA record. Default bundle name visibly includes
+  `TECHNICAL-PREVIEW`.
 - **Network and runtime posture:** the application performs no network requests and
   attempts no use of the APIs enumerated in `schema/api-policy.json` (cookies,
   localStorage/sessionStorage/indexedDB, history/location mutation) — instrumented as
@@ -1604,7 +1703,9 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
   `window.__apiProbeStatus` with the exact sorted registered API set and a per-API
   `{status, error, detail}` installation result. Initialization throws after publishing
   that ledger unless every registered hook verifies as installed; QA may trust an empty
-  `window.__apiAttempts` only when the ledger is exact and `ready: true`. CSP —
+  `window.__apiAttempts` as validated-release observation only when the ledger is exact and
+  `ready: true`; technical-preview still executes the automated instrumentation and
+  fail-closed harness but defers the actual-browser ledger observation. CSP —
   `default-src 'none'; img-src data:;
   style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action
   'none'; object-src 'none'; connect-src 'none'` (`base-uri` and `form-action` do not
@@ -1622,9 +1723,10 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
 - **Scripted testability:** the artifact script keeps its pure selection model in a
   delimited, extractable section; AC-10's scripted checks execute that model from the
   candidate bytes, never from source.
-- **Progressive readability:** with JavaScript disabled, the claims, disclosure, standing
-  disclaimer, provenance panel, and flat mapping schedule (static markup) remain fully
-  readable and printable.
+- **Progressive readability:** the automated script-stripped parser proves that, with
+  JavaScript absent, the claims, disclosure, standing disclaimer, profile label, provenance
+  panel, and flat mapping schedule remain present in readable document order. AC-14 has no
+  deferred manual observation under either profile.
 - **Confidentiality and delivery:** each artifact carries the §9.1 disclaimer and approved
   legend on screen and in print. Delivery is the bundle over a secure share, checksums via a
   separate channel. No artifact is ever published to any hosting or artifact service.
@@ -1638,7 +1740,9 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
 - **Scroll ownership (one owner per mode):** side-by-side — each pane owns its scroll;
   stacked — one dedicated combined container; the page body never scrolls in any mode.
 - **Viewport:** minimum 1280 × 720 (About panel states it); below minimum, panes stack with
-  navigation preserved. Both layouts acceptance-tested.
+  navigation preserved. The breakpoint and stacking implementation are always
+  acceptance-tested automatically; actual browser/OS layout observations are deferred under
+  technical-preview and required under validated-release.
 - Highlight palette: strong vs soft clearly distinct; every state has a non-color
   indicator; claim-level gate chips visually distinct from fragment/target chips.
 - **Semantic controls:** discrete `<button>` elements; no nested interactive controls
@@ -1648,19 +1752,23 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
 - **Keyboard:** Tab/Shift-Tab traverse when they are the configured browser/OS
   full-keyboard-navigation chord. On macOS, Keyboard Navigation must be enabled; Safari's
   “Press Tab to highlight each item” setting determines whether controls use
-  Tab/Shift-Tab or Option-Tab/Option-Shift-Tab, and QA records both the configuration and
-  chord actually exercised. Enter/Space activate; ←/→
+  Tab/Shift-Tab or Option-Tab/Option-Shift-Tab. Validated-release QA records both the
+  configuration and chord actually exercised; technical-preview defers those observations.
+  Enter/Space activate; ←/→
   cycle **only while the navigation bar has focus**; Esc clears. No global arrow-key capture.
 - **Accessibility semantics and announcements:** controls expose browser-native names,
   roles, states, and polite `aria-live` updates (mode, position, target label, caution/gate
-  presence). For a support-matrix row whose `at` value is `none`, QA uses the browser's
+  presence). Under validated-release, for a support-matrix row whose `at` value is `none`, QA uses the browser's
   native DOM/ARIA semantics together with trusted keyboard, focus, and live-region
   checks; it does not require an external assistive technology. A row that explicitly names
   an assistive technology requires that named technology. **VoiceOver-specific operation and
   VoiceOver-driven release evidence are outside this delivery contract; Safari remains a
-  required browser target with `at: "none"`.** The supported browser/OS/optional-AT set is
-  **normative data** (`schema/support-matrix.json`), release-approved; the QA record references
-  it rather than defining it. Version 2 has seven atomic rows, each naming exactly one OS;
+  required validated-release browser target with `at: "none"`. VoiceOver is not a deferred
+  technical-preview observation and cannot be introduced by either profile.** The supported
+  browser/OS/optional-AT set is **normative validated-release target-policy data**
+  (`schema/support-matrix.json`); its approval does not assert that a technical-preview
+  exercised it, and only a validated-release QA record references it as observed evidence.
+  Version 2 has seven atomic rows, each naming exactly one OS;
   `at` is the fail-closed enum `none | NVDA 2024+`, so aliases cannot silently bring
   VoiceOver back into scope. Its version, target rows, exact row fields, non-empty target
   set, exact `[1280, 720]` minimum viewport, and required `stackedBelowMinimum: true` behavior
@@ -1669,8 +1777,10 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
 - **About & schedule surface:** the provenance panel and the flat mapping schedule
   render in a dedicated toggled view with its own scroll container (the page body still
   never scrolls); both are always present in print and in no-JS output.
-- **Print stylesheet:** claims, disclosure, disclaimer, provenance, and schedule print
-  cleanly; both the standing disclaimer and the approved legend repeat on every page.
+- **Print stylesheet:** automated checks always require the claims, disclosure, disclaimer,
+  profile label, provenance, and schedule print rules and the per-page disclaimer/legend
+  mechanism. Actual print readability, page count, per-page presence, and clipping
+  observations are deferred under technical-preview and required under validated-release.
 
 ## 13. Versioning, provenance and regeneration
 
@@ -1717,7 +1827,9 @@ never hand-maintained.
   and strings-projection digests, the builder source-tree hash, the declared release
   timestamp, and counts. **Internal QA-source identifiers, paths, and hashes never appear
   in an artifact.**
-- **Private QA record** (`qa-record` kind; append-only): the complete `contentLock` over
+- **Validated-release private QA record only** (`qa-record` kind; append-only): no QA record
+  exists in a technical-preview chain. A validated-release record explicitly carries
+  `releaseProfile: "validated-release"`, the complete `contentLock` over
   exact content-plane reads; a distinct, candidate-bound `qaInputLock` over the raw selected
   QA-registry path/digest and verified internal QA-source bytes plus candidate and
   content-lock digests; a sibling
@@ -1726,15 +1838,16 @@ never hand-maintained.
   digests and the candidate↔release equality check**); the release-verification envelope
   (candidate digest, content-lock digest, and exactly one **current exact-side** attestation
   of every required type by digest reference — superseded attestations are never
-  referenced); the approved legend binding; the byte digest of the release-approved support
+  referenced); the approved legend binding; the byte digest of the validated-release support
   matrix together with its named approver and exact approval-attestation digest; the four
   structured passed operator-performed checks bound to those candidate bytes; and the
   identified authorized human/model operator with explicit kind and identity.
-- **Acceptance receipt** (required inside each `release-record` / `bundle-record`): the
+- **Version-2 acceptance receipt** (required inside each `release-record` / `bundle-record`): the
   exact acceptance-registry byte digest, closed sorted executable-runner input lock and
-  composite runner digest, tool runner kind, exact passed phase/criterion set, and typed
-  release or bundle subjects (§10). It is separate from both content locks: it proves which
-  executable acceptance contract ran against which subjects, while the outer record remains
+  composite runner digest, tool runner kind, exact copied `releaseProfileContract`, exact
+  passed phase/criterion set, and typed release or bundle subjects (§10). It is separate from
+  content and optional validated-QA locks: it proves which executable acceptance contract and
+  profile ran against which subjects, while the outer record remains
   the identified human/model operator's authorization; the tool runner is never authority.
 - **Deterministic build:** declared release timestamp; stable ordering; double-build
   byte-identity **across separate interpreter processes** (an in-process double build
@@ -1762,12 +1875,16 @@ never hand-maintained.
   explicitly owner-scoped authorized-operator action; (7) `build.py candidate <edition>`;
   (8) refresh
   every required exact-side attestation via `attest` as needed (new immutable records);
-  (9) use `record-qa --template` if desired, perform and complete the four version-3
-  structured operator checks against those exact candidate bytes, including every atomic
-  matrix target and the actual versions/configuration, optionally validate the completed
-  inline or workspace-relative evidence with `record-qa --check-only`, then run `record-qa`
-  without `--check-only` (immutable, candidate-bound authorization record); (10) `build.py release
-  <edition>` — reproduces both locks, byte-compares the candidate, verifies the envelope,
+  (9) if and only if releasing under `validated-release`, use `record-qa --template` if
+  desired, perform and complete the four version-3 structured operator checks against those
+  exact candidate bytes, including every atomic matrix target and the actual
+  versions/configuration, optionally validate the completed inline or workspace-relative
+  evidence with `record-qa --check-only`, then run `record-qa` without `--check-only`
+  (immutable, candidate-bound validated-release authorization record); technical-preview
+  skips this step and neither requires nor creates a QA record; (10) run `build.py release
+  <edition> --profile=<technical-preview|validated-release>` with an explicit profile equal to
+  the registry's active profile — reproduces the content lock (and the validated-QA lock only
+  for validated-release), byte-compares the candidate, verifies the envelope,
   executes the registry-bound `release-preflight`, writes and reads back the sealed artifact
   and checksum, passes the AC-16 `release-postcondition`, then appends the identified
   authorized human/model `release-record` with its non-authoritative tool-run receipt last;
@@ -1777,8 +1894,9 @@ never hand-maintained.
   read-only, applies deterministic human-over-model then digest precedence among valid
   current authorizations, rejects incomplete or malformed chains, and never writes config or
   evidence; (12) run
-  `build.py bundle` when the applied config's complete authorization chains and current
-  release receipts validate; it writes/reads back the manifest, ZIP, and checksum, passes
+  `build.py bundle` when the applied version-3 config's exact profile, complete
+  profile-specific authorization chains, and current release receipts validate; it
+  writes/reads back the version-2 structured profile-labelled manifest, ZIP, and checksum, passes
   the AC-20 `bundle-postcondition` through its registry-named fresh-interpreter callback,
   then appends the identified authorized human/model `bundle-record` with its
   non-authoritative tool-run receipt last; (13) commit sources +
@@ -1790,16 +1908,20 @@ never hand-maintained.
 
 ## 14. Acceptance criteria (definition of done)
 
-Criteria carry stable IDs in the criteria registry (`schema/acceptance.json`); this section
+Acceptance version 2 carries stable criterion IDs and the exact active/two-profile policy in
+the criteria registry (`schema/acceptance.json`); this section
 must match the registry (comparison test, §10.17); the traceability matrix and meta-test
 close both directions over the registry, **including AC-19 and AC-20 themselves**.
 The registry's closed `receiptPhases` map is also normative: `release-preflight` covers
 AC-01–AC-19, `release-postcondition` covers AC-16 after output write/readback, and
 `bundle-postcondition` covers AC-20 after bundle output write/readback.
-**Applicability: a standalone edition release requires AC-01 – AC-19; bundle creation
-additionally requires AC-20. A claim of passage is valid only in the current, subject-bound
-acceptance receipt carried by an identified authorized human/model outer record; its tool
-runner is evidence, never authority.**
+**Applicability: a standalone edition release requires AC-01 – AC-19 under its explicit
+profile; bundle creation additionally requires AC-20 under that same profile. Automated
+checks always remain required. Only the technical-preview observations enumerated exactly as
+AC-11/12/13/15 are deferred; AC-14 has no deferred manual observation. A claim of passage is
+valid only in the current, profile-and-subject-bound version-2 acceptance receipt carried by
+an identified authorized human/model outer record; its tool runner is evidence, never
+authority.**
 
 **Per edition (AC-01 … AC-18)** — all pass (automated except where noted):
 
@@ -1840,43 +1962,25 @@ runner is evidence, never authority.**
    channel.
 10. **AC-10** Forward and reverse navigation behave per §§5–6, including claim-level gate
     display (scripted checks on the built candidate).
-11. **AC-11** Keyboard-only operation, focus determinism, browser-native computed accessible names/roles/states, and polite live-region updates per §12 are checked against candidate bytes for every atomic release-approved support-matrix row. The versioned QA evidence copies the exact ordered target set, records actual browser/OS/AT versions and the configured traversal chord, and carries typed passed results for traversal, activation keys, focus, scoped arrows, computed semantics, and live-region mutation. Rows with `at: "none"`, including Safari, require browser-native evidence but no external assistive technology; a named-AT row requires that exact named technology and version. VoiceOver is outside this delivery contract. Results are recorded by the same identified authorized human/model operator; tool is never authority.
-12. **AC-12** Print output per §12 is checked against candidate bytes and recorded as versioned structured QA evidence with the actual browser/OS versions, positive page count, and typed passed results for readable claims/disclosure, the disclaimer on every printed page, the legend on every printed page, provenance, schedule, and absence of content clipping, by the same identified authorized human/model operator; tool is never authority.
-13. **AC-13** Local-file operation across every atomic row of `schema/support-matrix.json` is checked against the exact candidate bytes. Versioned structured QA evidence copies the exact ordered target set, records actual browser/OS/AT versions, the exact minimum and a below-minimum viewport, and typed passed local-file, minimum-layout, and stacked-layout results, by the same identified authorized human/model operator; tool is never authority.
-14. **AC-14** With JavaScript disabled, the §11 static content is fully readable on the
-    candidate authorized by an identified human/model QA operator; tool is never authority.
-15. **AC-15** Self-auditing attempted-use instrumentation per `schema/api-policy.json` exposes the exact registered probe set and fails closed unless every hook reports installed with null error/detail. Versioned structured candidate-bound QA evidence records the actual browser/OS versions, ready=true, the exact installed hook map, and exact empty attempted-use, resource, external-request, cookie-write, Web Storage, IndexedDB, and navigation-mutation ledgers; it is authorized by an identified human/model operator, never tool.
-16. **AC-16** Double build byte-identical across separate interpreter processes;
-    content-input lock reproduces byte-identically between candidate and release
-    (diagnostics excluded); exact-set check passes in both directions; `release`
-    byte-compares against the QA'd candidate and seals the same bytes; lock, envelope, and
-    release-record written append-only; checksums emitted and matching. The candidate-bound
-    `qaInputLock` over pin-verified internal QA inputs also reproduces before release. The
-    release record is appended last only after sealed/checksum readback, is authorized by an
-    identified human/model operator, and carries a current registry/runner/subject-bound
-    acceptance receipt whose exact `release-preflight` result covers AC-01–AC-19 and whose
-    post-write `release-postcondition` covers AC-16; the tool runner supplies evidence but is
-    never authority.
-17. **AC-17** §9.1 disclaimer and approved legend present on screen, in print, and no-JS;
-    legend approval by an identified authorized human/model operator matches the shipped
-    wording digest, and tool evidence is rejected.
-18. **AC-18** Double-sided QA attestations by identified authorized human/model operators are current and carry producerCommand: navigator/build.py attest/v1, the exact typed attest-command output contract: priority-map cross-check and, for AF, the crosswalk non-conflation check; missing or unknown producer metadata and tool evidence are rejected. The producer marker is digest-bound audit metadata under the repository/Git trust root, not a cryptographic signature.
+11. **AC-11** Automated candidate-byte checks always verify the §12 semantic-control structure, focus and keyboard implementation, polite live-region implementation, reduced-motion rule, and closed support-matrix shape. Under technical-preview, the actual cross-platform browser/OS/assistive-technology observations are explicitly deferred and no browser or assistive-technology compatibility is authorized. Under validated-release, versioned QA evidence must copy every atomic support-matrix row in exact order, record actual browser/OS/AT versions and the configured traversal chord, and carry typed passed traversal, activation-key, focus, scoped-arrow, computed-name/role/state, and live-region results by one identified authorized human/model operator; tool is never authority. Rows with `at: "none"`, including Safari, require browser-native evidence but no external assistive technology; a named-AT row requires that exact named technology and version. VoiceOver remains outside both profiles.
+12. **AC-12** Automated candidate-byte checks always verify the §12 print stylesheet, page margins, repeated-footer mechanism, print visibility rules, and overflow/clipping safeguards. Under technical-preview, actual print-engine/browser/OS observations are explicitly deferred and no print compatibility is authorized. Under validated-release, versioned structured QA evidence must record the actual browser/OS versions, a positive page count, and typed passed results for readable claims/disclosure, the disclaimer on every printed page, the legend on every printed page, provenance, schedule, and absence of content clipping, by the same identified authorized human/model operator; tool is never authority.
+13. **AC-13** Automated candidate-byte checks always verify the local-file architecture, exact support-matrix viewport policy, derived responsive breakpoint, below-minimum stacking rule, and viewport notice. Under technical-preview, actual local-file launches and layout observations across the support matrix are explicitly deferred and no browser/OS layout compatibility is authorized. Under validated-release, versioned structured QA evidence must copy every atomic support-matrix row in exact order, record actual browser/OS/AT versions, the exact minimum and a below-minimum viewport, and typed passed local-file, minimum-layout, and stacked-layout results, by the same identified authorized human/model operator; tool is never authority.
+14. **AC-14** Automated script-stripped candidate parsing always proves that the §11 claims, disclosure, schedule, provenance, disclaimer, legend, and noscript content remain present in readable document order. AC-14 has no deferred manual observation and no QA-record field under either release profile.
+15. **AC-15** Automated candidate-byte checks always verify that self-auditing attempted-use instrumentation per `schema/api-policy.json` exposes the exact registered probe set, wires every required hook, records attempted use, and fails closed unless every hook reports installed with null error/detail; page code contains no registered forbidden use. Under technical-preview, actual browser/OS runtime and ledger observations are explicitly deferred and no runtime compatibility is authorized. Under validated-release, versioned structured candidate-bound QA evidence must record the actual browser/OS versions, ready=true, the exact installed hook map, and exact empty attempted-use, resource, external-request, cookie-write, Web Storage, IndexedDB, and navigation-mutation ledgers; it is authorized by an identified human/model operator, never tool.
+16. **AC-16** Double build is byte-identical across separate interpreter processes; the content-input lock reproduces byte-identically between candidate and release (diagnostics excluded); the exact-set check passes in both directions; release byte-compares and seals the same current candidate bytes; lock, envelope, release-profile label, and release-record are written append-only; checksums are emitted and match. These determinism and output-integrity checks do not depend on manual cross-platform QA. Technical-preview has no QA-record prerequisite; validated-release additionally reproduces the candidate-bound `qaInputLock` over pin-verified internal QA inputs and binds the current validated QA record. The release record is appended last only after sealed/checksum readback, is authorized by an identified human/model operator, carries the exact releaseProfile, compatibilityAuthorization, deferredObservations, and artifactLabel contract, and carries a current registry/runner/profile/subject-bound acceptance receipt whose exact release-preflight result covers AC-01–AC-19 and whose post-write release-postcondition covers AC-16; the tool runner supplies evidence but is never authority.
+17. **AC-17** The exact selected-profile artifact label, §9.1 disclaimer, and approved legend are present on screen, in print, and no-JS; the legend approval by an identified authorized human/model operator matches the shipped wording digest, and tool evidence is rejected. The technical-preview label explicitly states that manual cross-platform and assistive-technology QA is deferred and compatibility is not validated.
+18. **AC-18** Double-sided content-QA attestations by identified authorized human/model operators are current and carry producerCommand: navigator/build.py attest/v1, the exact typed attest-command output contract: priority-map cross-check and, for AF, the crosswalk non-conflation check; missing or unknown producer metadata and tool evidence are rejected. These attestations remain required for both release profiles and do not represent deferred browser/OS/assistive-technology observations. The producer marker is digest-bound audit metadata under the repository/Git trust root, not a cryptographic signature.
 
-**Shared** — **AC-19** Before importing any registry-selected callback, the production runner
-rejects drift from an independent locked executable floor: the supported-edition set, module
-path specifications, fixture path→scope map, callback test scopes, support-file inventory,
-manual-QA-evidence version, and exact per-criterion callback/QA-field map are deletion- and redirection-resistant, with
-unique callback ownership. The traceability meta-test then proves every registered criterion
-(AC-01 through AC-20, including this one) maps to its named live tests with
-criterion-matching `test_acNN_` identity or QA-record fields, only AC-07 owns
-canonicalization callbacks, every acceptance-designated test maps back to a registered
-criterion, and every floored support input and every shared or active-edition fixture exists
-and is locked without opening inactive-edition fixture bytes.
+**Shared** — **AC-19** Before importing any registry-selected callback, the production runner rejects drift from an independent locked executable floor: the supported-edition set, module path specifications, fixture path→scope map, callback test scopes, support-file inventory, manual-QA-evidence version, exact active/two-profile policy, and exact per-criterion callback/validated-release-QA-field map are deletion- and redirection-resistant, with unique callback ownership. The traceability meta-test then proves every registered criterion (AC-01 through AC-20, including this one) maps to its named live tests with criterion-matching `test_acNN_` identity or validated-release QA-record fields, the technical-preview deferred-observation set is exactly AC-11/12/13/15 while AC-14 is never deferred, only AC-07 owns canonicalization callbacks, every acceptance-designated test maps back to a registered criterion, and every floored support input and every shared or active-edition fixture exists and is locked without opening inactive-edition fixture bytes.
 
-**Bundle** — **AC-20** The bundle matches its config exactly (enumerated members only, including the bundle-manifest), every member digest verified, deterministic STORE ZIP conforming to the golden bundle fixture with its own detached checksum, and the neutral manifest matching its approved wording digest. Every configured release-record resolves by its explicit digest to a complete passed release→QA→exact-attestation chain with exact typed producer metadata and authorization by identified human/model operators, matches independently derived current candidate/content-lock bindings, exact current qaInputLock (including the raw selected-QA-registry read), current support-matrix approver, exact live ordered support targets/viewport, current API probe set, and the locked manual-QA evidence version; bundle verification independently revalidates the typed AC-11/12/13/15 evidence rather than trusting QA-copied context. The manifest approval is current identified authorized human/model evidence. Every resolved release receipt is current, and the bundle record is appended last only after manifest/ZIP/checksum readback by an identified authorized human/model operator with a current registry/runner/subject-bound bundle-postcondition receipt covering AC-20; tool records and the tool runner are never authority.
+**Bundle** — **AC-20** Automated bundle integrity checks always require the bundle to match its config exactly (enumerated members only, including the bundle-manifest), verify every member digest, produce a deterministic STORE ZIP conforming to the golden bundle fixture with its own detached checksum, and match the neutral manifest's approved wording digest. Every configured release-record must resolve by explicit digest to a current release→exact-attestation chain with exact typed producer metadata and authorization by identified human/model operators, independently current candidate/content-lock bindings, and the same explicit release profile in the config, records, artifact labels, and receipts. Under technical-preview, no QA record or manualChecks is required or created; the manifest carries the profile, compatibility status, deferred-observation set, and exact technical-preview label, and neither the bundle nor its records claim browser or assistive-technology compatibility. Under validated-release, every release additionally resolves a current QA record with exact qaInputLock, support-matrix approver/targets/viewport, API probe set, and locked manual-evidence version, and bundle verification independently revalidates the complete typed AC-11/12/13/15 version-3 evidence rather than trusting QA-copied context. The manifest approval is current identified authorized human/model evidence. Every resolved release receipt is current, and the bundle record is appended last only after manifest/ZIP/checksum readback by an identified human/model operator with a current registry/runner/profile/subject-bound bundle-postcondition receipt covering AC-20; tool records and the tool runner are never authority.
 
 ## 15. Roadmap (not in the current deliverable)
 
+- Activate `validated-release` only after current full version-3 AC-11/12/13/15 evidence has
+  been performed across the preserved seven-row target policy; switch the explicit active
+  profile and executable-floor commitment deliberately, then regenerate all affected records
+  and artifacts. VoiceOver remains out of scope.
 - `propose-reuse` cross-edition proposal tooling (optional hardening; boundary specified in
   §10.7).
 - Provisional-support layer as additional relation sets per edition, after the PCT
@@ -1896,11 +2000,11 @@ and is locked without opening inactive-edition fixture bytes.
 |---|---|
 | Editions | Two current editions (NA, AF) of one shared contract; alternatives, never layers; one single-edition artifact each |
 | Edition knowledge | Kernel edition-blind (AST-test-enforced); edition configs are the complete parameter set incl. declared transitive inputs; censuses, gate inventories, and dependency maps are normative data |
-| Requirements as data | Coverage proven by bidirectional referential integrity over instances and dispositions; **policies are total over evidence states — honest absence is a releasable, reviewed disposition**; inventory completeness is a digest-bound identified-authorized-operator attestation; acceptance criteria, API policy, and support matrix live in registries |
+| Requirements as data | Coverage proven by bidirectional referential integrity over instances and dispositions; **policies are total over evidence states — honest absence is a releasable, reviewed disposition**; inventory completeness is a digest-bound identified-authorized-operator attestation; acceptance criteria, exact active/two-profile release policy, API policy, and validated-release support matrix live in registries |
 | Associations | Every association pins both endpoints by digest and carries lifecycle where reviewed; `gateId` required on every source-gate instance; declared uniqueness keys on every collection |
 | Lifecycle | Ownership model with schema-declared applicability matrices and per-owner identity tuples; sub-object changes roll up; closed staleness-reason enum |
 | Reviews & attestations | Exact-declared-side digest binding; required owner review provenance `{by, operatorKind, date, contentHash}` with closed `human | model | tool` kinds and release authority only for an NFC identified human/model operator with no surrounding whitespace or control/format characters, at least one visible character, and a real canonical date; reviewer identity/date/kind excluded from `review.contentHash`, which covers the schema-derived review projection — content, hidden endpoints, identity tuples, and dependency-chain hash, stopping at declared nested-owner boundaries; **declared locators excluded, so mechanical re-anchoring never invalidates review**; parent-claim amendments deliberately cascade re-review to dependents; model/tool authorship stays truthful; tool never authorizes; typed passed identified-authorized-operator append-only authorization records; exact typed attest-producer marker is digest-bound Git-root metadata, not a signature |
-| Trust root & planes | `contentLock` derived from the exact gateway read log plus a candidate-bound `qaInputLock` over pin-verified internal QA bytes, **diagnostics excluded from both lock digests**; current registry-byte + exact runner-input acceptance lock; forward-chaining verification records incl. `release-record`; exact command×kind privilege matrix; procedure prose validated against the matrix; reviewed git commit is the trust root |
+| Trust root & planes | `contentLock` derived from the exact gateway read log under both profiles; validated-release additionally carries a candidate-bound `qaInputLock` over pin-verified internal QA bytes, **diagnostics excluded from applicable lock digests**; current registry-byte + exact profile + runner-input acceptance lock; forward-chaining verification records incl. `release-record`; exact command×kind privilege matrix; procedure prose validated against the matrix; reviewed git commit is the trust root |
 | Enumerations & boundaries | All projections derived from schema axis tags with declared, justified locator and nested-owner-boundary rules; gateway-enforced output-kind registry with plane membership; derived content never stored |
 | Serialization | Completed canonical law (vendored interpreter-independent Unicode 15.1 NFC/White_Space data, raw and post-NFC duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms — digest-list vs canonical-JSON) + NUL-framed domain tags incl. `figure` and per-record-kind tags, versioned under canonVersion; single-digest-path test; golden vectors + property-based tests confirm |
 | Structural graphs | Dual-sourced: authored dependency maps cross-validated against parsed claim references (AF three-way against its document table); totality/acyclicity/root checks; mismatch fails the build |
@@ -1912,12 +2016,12 @@ and is locked without opening inactive-edition fixture bytes.
 | Identity | Positional IDs as declared locators; semantic identity pinned by full SHA-256 canonical hashes (incl. aggregate claim and dependency-chain hashes); corpus/edition ids stable and version-neutral — claim-set versions update pins in place via migrate |
 | Tool behavior | Closed action taxonomy; commands declare classes; diff-classifier enforces; reviewed semantic content is never tool-modified |
 | Migration | Closed case table with roll-up staleness and complete reason enum; auto-re-anchoring only on unique canonical-hash match |
-| Release lifecycle | Promotion by passed identified-human/model-operator, candidate-bound verification per edition; required nested tool receipt binds exact registry, runner inputs, phase results, and subjects but is never authority; release-preflight = AC-01–AC-19, post-write release-postcondition = AC-16, post-write bundle-postcondition = AC-20; outer authorized-operator record appended last after output readback; read-only `bundle-plan` derives current bindings/chains and proposes fail-closed config refresh for authorized-operator application; bundle resolves exact configured release digests and their full current receipt/QA/attestation chains, including exact typed attestation-producer metadata, before deterministic STORE packaging; previews pass the same projection |
+| Release lifecycle | Explicit `release --profile=<technical-preview\|validated-release>` promotion by passed identified-human/model operator, candidate-bound verification per edition; technical-preview has no QA predecessor and explicitly defers AC-11/12/13/15 observations without compatibility authorization; validated-release retains the full seven-row version-3 QA gate; required version-2 nested tool receipt binds exact registry, selected profile contract, runner inputs, phase results, and subjects but is never authority; release-preflight = AC-01–AC-19, post-write release-postcondition = AC-16, post-write bundle-postcondition = AC-20; outer authorized-operator record appended last after output readback; read-only `bundle-plan` derives current profile bindings/chains and proposes fail-closed config refresh for authorized-operator application; bundle resolves exact configured release digests and their full current profile-specific receipt/attestation chains (plus QA only for validated-release), including exact typed attestation-producer metadata, before deterministic STORE packaging; authoring previews pass the same projection but never authorize delivery |
 | Traceability | Guarantee table (claims→enforcers, and collision detection between mechanisms) + fixture/registry/procedure comparisons + bidirectional traceability meta-test: checked loops that include themselves |
-| Environment | Negative guarantees instrumented as attempted use per the enumerated API policy; runtime determinants as non-normative diagnostics outside both lock digests; support matrix is release-approved normative data with a pinned digest, named approver, and exact approval attestation |
+| Environment | Negative guarantees are always instrumented and tested per the enumerated API policy; actual-browser runtime observations are deferred under technical-preview and required under validated-release; runtime determinants are non-normative diagnostics outside applicable lock digests; the seven-row support matrix is validated-release normative target-policy data with a pinned digest, named approver, and exact policy-approval attestation; VoiceOver is outside both profiles |
 | Multi-candidate behavior | Jump to first + cycle; all candidates kept; display cap presentation-only |
 | Right-column scope | As-filed disclosure package; editorial content labeled and non-targetable; PCT claims targetable per the disclosure profile |
-| QA boundary | Corpus visibility validator-enforced; QA sources `internal`, never quoted, never identified in artifacts; the configured authoritative PDF is read and pin-verified but only its public authority metadata may appear |
+| QA boundary | Corpus visibility validator-enforced; QA sources `internal`, never quoted, never identified in artifacts; the configured authoritative PDF is read and pin-verified but only its public authority metadata may appear; no technical-preview QA record exists, while validated-release alone records the full structured manual evidence |
 | Directionality | Left→right primary; reverse via edition-scoped badges only; disclosure text never clickable |
 | Terminology | Neutral throughout; selected edition strings resources; forbidden-terms and neutrality checks over the full authored-visible surface, excluding pinned verbatim source text; approvals digest-bound |
 | Guarantees | Every hard claim names its enforcer; procedural-only claims say so; universal claims cite the table or carry a scope; new mechanisms pass collision review |

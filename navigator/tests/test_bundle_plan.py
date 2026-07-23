@@ -19,25 +19,56 @@ REQUIRED = frozenset((
     "inventory-completeness", "qa-priority-map", "legend-approval",
     "support-matrix-approval",
 ))
-ACCEPTANCE_CONTEXT = {
-    "registryDigest": canon.bytes_digest(b"planner acceptance registry"),
-    "runnerEditions": ["na"],
-    "runnerInputs": [{
-        "path": "navigator/lib/release.py",
-        "digest": canon.bytes_digest(b"planner runner input"),
-    }],
-    "receiptPhases": {
-        "release-preflight": [
-            "AC-%02d" % number for number in range(1, 20)],
-        "release-postcondition": ["AC-16"],
-        "bundle-postcondition": ["AC-20"],
-    },
+TECHNICAL_PREVIEW_PROFILE = {
+    "id": "technical-preview",
+    "manualQaEvidence": "deferred",
+    "compatibilityAuthorization": "not-authorized",
+    "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
+    "requiredQaRecordFields": [],
+    "artifactLabel": (
+        "TECHNICAL PREVIEW — Manual cross-platform and "
+        "assistive-technology QA is deferred; browser and "
+        "assistive-technology compatibility is not validated."
+    ),
 }
-ACCEPTANCE_CONTEXT["runnerDigest"] = release._runner_digest(
-    ACCEPTANCE_CONTEXT["registryDigest"],
-    ACCEPTANCE_CONTEXT["runnerInputs"],
-    ACCEPTANCE_CONTEXT["receiptPhases"],
-    ACCEPTANCE_CONTEXT["runnerEditions"])
+VALIDATED_RELEASE_PROFILE = {
+    "id": "validated-release",
+    "manualQaEvidence": "required",
+    "compatibilityAuthorization": "support-matrix-authorized",
+    "deferredObservations": [],
+    "requiredQaRecordFields": ["ac11", "ac12", "ac13", "ac15"],
+    "artifactLabel": (
+        "VALIDATED-RELEASE PROFILE — Delivery requires current full "
+        "seven-row cross-platform and assistive-technology QA."
+    ),
+}
+
+
+def _acceptance_context(profile=VALIDATED_RELEASE_PROFILE):
+    context = {
+        "registryDigest": canon.bytes_digest(b"planner acceptance registry"),
+        "runnerEditions": ["na"],
+        "runnerInputs": [{
+            "path": "navigator/lib/release.py",
+            "digest": canon.bytes_digest(b"planner runner input"),
+        }],
+        "receiptPhases": {
+            "release-preflight": [
+                "AC-%02d" % number for number in range(1, 20)],
+            "release-postcondition": ["AC-16"],
+            "bundle-postcondition": ["AC-20"],
+        },
+        "releaseProfile": profile["id"],
+        "releaseProfileContract": copy.deepcopy(profile),
+    }
+    context["runnerDigest"] = release._runner_digest(
+        context["registryDigest"], context["runnerInputs"],
+        context["receiptPhases"], context["runnerEditions"],
+        context["releaseProfile"], context["releaseProfileContract"])
+    return context
+
+
+ACCEPTANCE_CONTEXT = _acceptance_context()
 
 NAV = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(NAV, "schema", "support-matrix.json"),
@@ -123,15 +154,18 @@ def _envelope(kind, record):
     }
 
 
-def _release_receipt(subjects):
+def _release_receipt(subjects, context=ACCEPTANCE_CONTEXT):
     return {
-        "receiptVersion": "1",
-        "registryDigest": ACCEPTANCE_CONTEXT["registryDigest"],
-        "runnerDigest": ACCEPTANCE_CONTEXT["runnerDigest"],
-        "runnerInputs": copy.deepcopy(ACCEPTANCE_CONTEXT["runnerInputs"]),
+        "receiptVersion": "2",
+        "registryDigest": context["registryDigest"],
+        "runnerDigest": context["runnerDigest"],
+        "runnerInputs": copy.deepcopy(context["runnerInputs"]),
         "runnerEditions": copy.deepcopy(
-            ACCEPTANCE_CONTEXT["runnerEditions"]),
+            context["runnerEditions"]),
         "runnerKind": "tool",
+        "releaseProfile": context["releaseProfile"],
+        "releaseProfileContract": copy.deepcopy(
+            context["releaseProfileContract"]),
         "results": [
             {"phase": "release-preflight",
              "criteria": ["AC-%02d" % number for number in range(1, 20)],
@@ -158,14 +192,20 @@ def _approval_problems(record):
     return problems
 
 
-def _fixture():
+def _fixture(profile=VALIDATED_RELEASE_PROFILE):
+    context = _acceptance_context(profile)
     artifact_name = "current.html"
     artifact = b"current sealed artifact\n"
     artifact_digest = canon.bytes_digest(artifact)
     checksum_name = artifact_name + ".sha256"
     checksum = release.checksum_text(artifact_name, artifact).encode("utf-8")
-    manifest = b"Current neutral delivery manifest.\n"
-    wording = canon.text_digest(canon.canon_prose(manifest.decode("utf-8")))
+    manifest_text = profile["artifactLabel"] + " Planner fixture manifest."
+    if profile["id"] == "technical-preview":
+        manifest_text += (
+            " This technical-preview bundle does not claim compatibility "
+            "authorization.")
+    manifest = (manifest_text + "\n").encode("utf-8")
+    wording = canon.text_digest(canon.canon_prose(manifest_text))
     sides = {
         "claimSet": canon.bytes_digest(b"claims"),
         "gateInventory": canon.bytes_digest(b"gates"),
@@ -228,6 +268,7 @@ def _fixture():
         "aa11393:lock:c1", qa_lock_payload)
     qa_operator = "qa@example.test"
     qa = _envelope("qa-record", {
+        "releaseProfile": "validated-release",
         "edition": "na", "candidateDigest": artifact_digest,
         "lockDigest": lock_digest, "contentLock": content_lock,
         "qaInputLock": qa_lock,
@@ -252,17 +293,25 @@ def _fixture():
         "operatorKind": "human",
     })
     release_record = {
+        "recordVersion": "2",
+        **release.profile_record_fields(profile),
         "edition": "na", "sealed": artifact_name,
         "sealedDigest": artifact_digest, "lockDigest": lock_digest,
-        "qaRecord": qa["digest"], "attestations": refs,
+        "qaRecord": (qa["digest"] if profile["manualQaEvidence"] ==
+                     "required" else None),
+        "attestations": refs,
         "declaredReleaseTimestamp": "2026-07-22T00:00:00Z",
         "approvalStatus": "passed", "operator": "release@example.test",
         "operatorKind": "human",
     }
     release_record["acceptanceReceipt"] = _release_receipt(
         release.release_subjects(
-            "na", artifact_digest, lock_digest, qa["digest"],
-            qa_lock["lockDigest"]))
+            "na", artifact_digest, lock_digest,
+            qa["digest"] if profile["manualQaEvidence"] == "required"
+            else None,
+            qa_lock["lockDigest"] if profile["manualQaEvidence"] ==
+            "required" else None,
+            profile), context)
     release_envelope = _envelope("release-record", release_record)
     manifest_approval = _envelope("attestation", {
         "type": "manifest-approval", "edition": None,
@@ -274,7 +323,11 @@ def _fixture():
     })
     attestations.append(manifest_approval)
     cfg = {
-        "bundleVersion": "2", "name": "delivery.zip",
+        "bundleVersion": "3",
+        "releaseProfile": profile["id"],
+        "name": ("delivery-TECHNICAL-PREVIEW.zip"
+                 if profile["id"] == "technical-preview"
+                 else "delivery.zip"),
         "comment": "planner fixture", "editions": ["na"],
         "declaredTimestamp": "2026-07-22T00:00:00Z",
         "manifestApproval": manifest_approval["digest"],
@@ -305,10 +358,20 @@ def _fixture():
         "lockDigest": lock_digest,
         "declaredReleaseTimestamp": "2026-07-22T00:00:00Z",
     }}
+    qa_records = [qa] if profile["manualQaEvidence"] == "required" else []
+    qa_authorization = ({
+        "qaInputLock": copy.deepcopy(qa_lock),
+        "supportMatrixApprover": "attestor@example.test",
+        "supportMatrixTargets": copy.deepcopy(
+            FIXTURE_SUPPORT_MATRIX["targets"]),
+        "supportMatrixViewport": copy.deepcopy(
+            FIXTURE_SUPPORT_MATRIX["viewport"]),
+        "apiProbeApis": copy.deepcopy(FIXTURE_API_PROBES),
+    } if profile["manualQaEvidence"] == "required" else None)
     return {
         "cfg": cfg,
         "release_records": [release_envelope],
-        "qa_records": [qa],
+        "qa_records": qa_records,
         "attestations": attestations,
         "stored": stored,
         "manifest_bytes": manifest,
@@ -316,16 +379,8 @@ def _fixture():
         "required": {"na": REQUIRED},
         "sides": {"na": sides},
         "bindings": bindings,
-        "acceptance": {"na": ACCEPTANCE_CONTEXT},
-        "qa_authorization": {"na": {
-            "qaInputLock": copy.deepcopy(qa_lock),
-            "supportMatrixApprover": "attestor@example.test",
-            "supportMatrixTargets": copy.deepcopy(
-                FIXTURE_SUPPORT_MATRIX["targets"]),
-            "supportMatrixViewport": copy.deepcopy(
-                FIXTURE_SUPPORT_MATRIX["viewport"]),
-            "apiProbeApis": copy.deepcopy(FIXTURE_API_PROBES),
-        }},
+        "acceptance": {"na": context},
+        "qa_authorization": {"na": qa_authorization},
     }
 
 
@@ -378,6 +433,48 @@ class BundlePlanTests(unittest.TestCase):
             ("artifact-checksum", "current.html.sha256"),
         ])
         self.assertIsNot(proposed, stale)
+
+    def test_technical_preview_selects_current_model_release_without_qa(self):
+        fixture = _fixture(TECHNICAL_PREVIEW_PROFILE)
+        self.assertEqual(fixture["cfg"]["bundleVersion"], "3")
+        self.assertEqual(fixture["cfg"]["releaseProfile"],
+                         "technical-preview")
+        self.assertEqual(fixture["qa_records"], [])
+        self.assertEqual(fixture["qa_authorization"], {"na": None})
+
+        model_record = copy.deepcopy(
+            fixture["release_records"][0]["record"])
+        model_record.update({
+            "operator": "codex:gpt-5.6-sol:run-preview-plan",
+            "operatorKind": "model",
+        })
+        model_release = _envelope("release-record", model_record)
+
+        # An authorized human record for another profile cannot outrank the
+        # exact-profile model release selected for this preview bundle.
+        wrong_profile_record = copy.deepcopy(model_record)
+        wrong_profile_record.update(
+            release.profile_record_fields(VALIDATED_RELEASE_PROFILE))
+        wrong_profile_record.update({
+            "operator": "release@example.test",
+            "operatorKind": "human",
+        })
+        wrong_profile_release = _envelope(
+            "release-record", wrong_profile_record)
+        fixture["release_records"] = [
+            wrong_profile_release, model_release,
+        ]
+
+        proposed = _propose(fixture)
+        self.assertEqual(proposed["members"][0]["releaseRecord"],
+                         model_release["digest"])
+        self.assertIsNone(model_record["qaRecord"])
+        self.assertEqual(model_record["compatibilityAuthorization"],
+                         "not-authorized")
+        self.assertEqual(model_record["deferredObservations"],
+                         ["AC-11", "AC-12", "AC-13", "AC-15"])
+        self.assertEqual(model_record["operator"],
+                         "codex:gpt-5.6-sol:run-preview-plan")
 
     def test_release_selection_uses_kind_then_digest_not_existing_pin(self):
         fixture = _fixture()
@@ -549,7 +646,13 @@ class BundlePlanTests(unittest.TestCase):
                     return json.dumps(fixture["cfg"])
                 if path == build_mod.BUNDLE_MANIFEST_RESOURCE:
                     return json.dumps({
-                        "manifestVersion": "1",
+                        "manifestVersion": "2",
+                        "releaseProfile": fixture["cfg"][
+                            "releaseProfile"],
+                        "compatibilityAuthorization":
+                            VALIDATED_RELEASE_PROFILE[
+                                "compatibilityAuthorization"],
+                        "deferredObservations": [],
                         "bundleManifestText":
                             fixture["manifest_bytes"].decode("utf-8").rstrip(
                                 "\n"),
