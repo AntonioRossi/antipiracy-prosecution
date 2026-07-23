@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-This repository is a patent-prosecution document corpus. `US/normal-allowance/` and `US/allowance-first/` contain the two claim strategies. Shared IDS, filing-control, and public-comment materials belong in `US/common/`; do not fork them into strategy directories. `US/prior-art/` stores canonical source PDFs, `markdown/` review transcriptions, `searchable/` OCR convenience copies, and `.pipeline/` conversion utilities. `PCT/`, `PPA2/`, and `ITA/` hold filing and prosecution records. Keep response drafts in their existing response directory.
+This repository is a patent-prosecution document corpus maintained under the maximum-honest-defensibility discipline stated in the root `README.md` under "Purpose"; read every rule below against that purpose. `US/normal-allowance/` and `US/allowance-first/` contain the two claim strategies. Shared IDS, filing-control, and public-comment materials belong in `US/common/`; do not fork them into strategy directories. `US/prior-art/` stores canonical source PDFs, `markdown/` review transcriptions, `searchable/` OCR convenience copies, and `.pipeline/` conversion utilities. `PCT/`, `PPA2/`, and `ITA/` hold filing and prosecution records. Keep response drafts in their existing response directory.
 
 ## Build, Test, and Development Commands
 
@@ -18,7 +18,7 @@ These validate whitespace, changed Markdown rendering, and source checksums. Reg
 
 ## Documentation Style & Naming Conventions
 
-Use GitHub-flavored Markdown, descriptive headings, compact prose, and readable tables. Prefer relative links within repository documents. Follow established names such as `AA11393US-AF-US_claim-set_DRAFT.md`, using `AF` or `NA` consistently and retaining document-status suffixes such as `_DRAFT` and `_MEMO`.
+Use GitHub-flavored Markdown, descriptive headings, compact prose, and readable tables. Prefer relative links within repository documents. Follow established names such as `AA11393US-AF-US_claim-set_DRAFT.md`, using `AF` or `NA` consistently and retaining document-status suffixes such as `_DRAFT` and `_MEMO`. Artifact types and their naming patterns are classified in the root `README.md` under "Artifact taxonomy"; identifiers and controlled-vocabulary terms (strategy IDs, support-posture codes, DW register, AF-CONT controls, art inventory IDs) are defined in the root `GLOSSARY.md`, which points to each term's controlling document.
 
 Never edit canonical prior-art PDFs or silently treat OCR text as authoritative.
 
