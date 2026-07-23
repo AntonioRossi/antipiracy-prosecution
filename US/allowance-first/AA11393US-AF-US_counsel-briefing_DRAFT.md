@@ -1,252 +1,239 @@
 # AA11393US — AF Allowance-First US Counsel Briefing (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 21 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 23 JULY 2026**
 >
-> **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** “Allowance-first” is a proposed claim-selection strategy, not a prediction, promise, or legal conclusion. Use `AF claim N`, `NA claim N`, and `PCT claim N` outside the claim text.
+> **INTERNAL ATTORNEY BRIEFING — NOT FOR FILING.** “Allowance-first” is a proposed claim-selection strategy, not a prediction, promise, or legal conclusion. Use `AF claim N`, `AF-CONT claim N`, `NA claim N`, and `PCT claim N` outside claim text.
 >
-> **TERMINOLOGY / FAMILY-RECORD NON-CONCESSION.** AF's use of `camera-source-transition pattern` is a deliberate claim-drafting label for the ordered source identities and switch timing positively recited in the AF claims. It does not declare that term synonymous with, narrower than, or exhaustive of `camera-cut timing pattern`; redefine either term in the specification or NA branch; disclaim timing-only, manifest-based, or other disclosed embodiments; or state a claim-construction position. Counsel must preserve this distinction in any filed amendment or argument and assess family-wide disclaimer and construction effects before characterizing either expression.
-
-> **INITIAL-CONTACT STATUS.** This briefing and its linked documents contain the applicant's present claims, support analysis, art analysis, fallback directions, and execution controls and are ready for applicant-controlled initial transmission to prospective or retained US counsel consistent with DW-12. The § 112/priority opinion and direct-art search are tracked as DW-05A and DW-08A. No requested opinion or filing choice is represented as already answered. Those post-engagement determinations control filing and reliance; they are not prerequisites to counsel receiving this decision package.
+> **FAMILY TERMINOLOGY BOUNDARY.** AF and NA place physical-camera identifiers in their production-side limitations and use plural detected camera-cut time codes and reconstructed manifests for suspect recovery. AF claims 1 and 19 integrate plural paired edit-entry changes into complete system and method chains; AF claim 23 separately recites the monitor-side method with the mate-containing reconstructed-same-combination nexus. NA preserves separate production, distribution, and detector-system actors. Neither strategy defines or construes the other.
+>
+> **INITIAL-CONTACT STATUS.** The package is ready for applicant-controlled initial transmission under DW-12. DW-05A's § 112/priority opinion and DW-08A's direct-art search remain pending pre-filing controls; DW-08B and DW-08C control objective evidence and infringement proof. No counsel approval or filing evidence is recorded.
 
 ## 1. Decision requested
 
-Determine whether the initial US case should pursue AF claim 1 as a concentrated allowance-oriented system anchor and AF claim 20 as its independent method counterpart, while preserving the actor-focused NA families through a timely continuation or other counsel-approved portfolio structure. Counsel may omit or cancel AF claim 20 at filing if the documented strategy choice is to retain one-independent-claim simplicity; AF claim 20 is an evaluated option, not an instruction to sacrifice that objective automatically.
+Determine whether the initial US case should pursue AF claim 1 as a concentrated system anchor, AF claims 19–22 as its integrated method counterpart and fallback branches, and AF claim 23 as a narrower monitor-side independent, while preserving broader and complementary actor-focused families through a timely continuation or other counsel-approved structure.
 
-The requested post-engagement decisions are:
+Counsel should decide:
 
-1. whether AF claim 1 and AF claim 20 are each supported as a complete operational chain under § 112(a) and entitled, limitation by limitation, to the claimed filing dates;
-2. whether the structural concentration of the AF independents materially improves the patentability position after a focused direct-art search;
-3. whether the enforcement and proof costs of AF claim 1 and AF claim 20 are acceptable for the applicant's expected market;
-4. whether AF claim 20's additional method-enforcement category justifies a second independent claim after considering § 101, restriction, proof, and examination focus; and
-5. if AF is selected, who owns the continuation filing and what pre-issue gate will control it.
+1. whether AF claims 1, 19, and 23 are each supported as complete claims and entitled to the asserted benefit date, with a separate mode assigned to each;
+2. whether the plural-cut reconstructed-manifest architecture provides a defensible patentability position after DW-08A;
+3. whether AF claim 23's proposed monitor-side enforceability gain justifies its weaker art, eligibility, restriction, and proof posture;
+4. whether the enforcement and proof costs fit the applicant's expected actors and actual allocation of detection, reconstruction, and the search-to-identify operation;
+5. whether AF claims 19–22 and AF claim 23 justify their separate method families after § 101, restriction, proof, fee, and examination-focus review; and
+6. who owns continuation preservation and what pre-issue gate controls it.
 
-## 2. Allowance thesis—one operational chain in two claim categories
+## 2. Allowance thesis
 
-AF claim 1 requires a system to:
+AF claims 1 and 19 require the following linked chain:
 
-1. receive multi-camera video and a structured list of edit instructions identifying camera sources and cut time codes;
-2. create a reference and a mate in which the **same ordered transition** from a first identified camera to a second identified camera occurs at noncoincident timings and the interval between those timings contains temporally corresponding frames from different cameras;
-3. deliver generated versions and associate each recipient with a candidate pattern actually present in the delivered version;
-4. examine suspected content at the corresponding distinguishing region and derive the detected source order and timing;
-5. require both ordered source pair and timing to match at that region; and
-6. use that match to search the association record and identify the recipient.
+1. receive plural-camera video and a structured edit list containing, for plural director-commanded cuts, successive entries identifying different physical source cameras and paired out/in-point time codes;
+2. at plural selected cuts, modify those paired time codes while retaining the camera identifiers and order, producing reference and mate transition timings;
+3. segment the reference/mate ensemble, generate manifests pointing to respective chunk combinations, deliver according to those manifests, and associate each delivered manifest with its recipient in a ledger;
+4. detect a plurality of camera-cut time codes in suspected content and build one or more reconstructed manifests from those time codes; and
+5. identify the recipient associated with a delivered manifest equal to a reconstructed manifest.
 
-This is not a list of unrelated modules. Each claimed output constrains a later operation: the edit instructions determine generated content; generated content determines delivered candidate patterns; delivery populates the recipient record; and the same-region joint match supplies the lookup key.
+Each output constrains a later operation. The structured list generates the reference and mates; the reference/mate ensemble supplies manifest-selected chunks; delivery populates the ledger; and plural detected cut times produce the reconstructed object used in the ledger search.
 
-The reviewed references densely teach pieces of the loop—variant delivery, customized manifests, timing patterns, shot/hash comparison, recipient records, and traitor tracing. No reviewed document was identified as disclosing the complete structured-list-created identified-camera-boundary chain recited by the AF independents. An EDL is a likely implementation and important search field, but EDL fields first become an express limitation in AF claim 4. The limited-search absence is not a guarantee against anticipation or an obviousness combination.
+The reviewed art densely teaches manifest delivery, temporal variants, scene-change or timing analysis, manifest reconstruction, recipient records, and tracing. No reviewed document was identified disclosing the complete claimed conjunction with plural recorded boundary changes between retained identified physical cameras. That limited-search result is not a clearance or allowance prediction.
 
-AF claim 20 places the integrated operations in method form. It does not add a separate technical distinction over the reviewed art or improve the patentability thesis merely by changing statutory category. Its purpose is to preserve a method-performance theory if the applicant and counsel conclude that the added enforcement category is worth the second independent claim.
+AF claim 19 provides a method-performance category, not a different technical novelty theory. AF claim 23 is a distinct monitor-side enforcement position: it omits affirmative production and delivery, and its patentability position rests on the delivered reference/mate manifest environment and the affirmative mate-containing delivered-combination-to-reconstructed-same-combination nexus.
 
-## 3. Exact AF topology
+## 3. Exact topology
 
-The controlling candidate text is [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md): **20 total claims / two independent claims (AF claim 1 system; AF claim 20 method) / 18 singly dependent claims / no multiple-dependent claim**. Counsel may omit or cancel AF claim 20 at filing for a documented one-independent-claim strategy; if so, annotate the actual filed topology across the claim-indexed AF documents rather than silently treating all 20 claims as filed or creating a second AF package.
+The controlling text is [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md): **23 total claims / three independent claims / 20 singly dependent claims / no multiple-dependent claim**.
 
-| AF claims | Added function | Prosecution role |
+| AF claims | Added function | Role |
 |---|---|---|
-| AF claim 1 | Integrated generation, delivery/association, same-region source-and-time detection, and recipient lookup | Claim-as-a-whole allowance candidate |
-| AF claims 2–3 | Later-cut resynchronization; concrete ten-frame operation | Strong technical fallbacks, expressly priority-gated |
-| AF claims 4–6 | EDL fields, live direction, plural cut regions | Concrete production fallbacks; direct EDL art remains an open search priority |
-| AF claims 7–8 | Perceptual hashes and sliding-window fuzzy matching | Implementation detail; reviewed art is crowded |
-| AF claims 9–10 | Manifest delivery, manifest-to-candidate-pattern association, switch-time derivation and reconstructed-manifest building, followed by delivered-manifest ledger lookup | Narrow implementation loop, inheriting the AF claim 1 source-identity gate |
-| AF claims 11–12 | Mixed-copy positive attribution from recipient-associated candidate camera-source-transition patterns and a segmented Tardos implementation identifying a contributor for a respective portion | Collusion fallbacks; the pattern-input integration and exact portion-to-contributor relationship remain support-gated |
-| AF claims 13–19 | Chunk/manifest delivery and implementation fallbacks | Preserve the identified-camera transition structure while adding packaging, delivery, mixing, repeated-region, or overlay detail |
-| AF claim 20 | Independent performance of the integrated generation-through-recipient-identification method | Additional enforcement category based on the same technical chain; not an additional patentability thesis and subject to every AF claim 1 support/priority gate |
+| 1 | Complete plural physical-camera boundary variation, manifest delivery/association, plural cut-time reconstruction, and recipient lookup system | Principal system candidate |
+| 2–3 | Later-cut resynchronization and ten-frame implementation | Technical fallbacks subject to the Example 2 priority gate |
+| 4–6 | EDL label, live direction, and respective single-cut mates | Concrete production fallbacks |
+| 7–8 | Perceptual hashes and sliding-window fuzzy matching | Detection implementations; reviewed art is crowded |
+| 9–10 | Adaptive CDN delivery, reference/mate mixing, and progressive manifest assignment | Delivery implementations |
+| 11–12 | Manifest-sequence collusion attribution and segmented Tardos | Collusion fallbacks with relationship-specific support gates |
+| 13–17 | Same-interval chunks, retained transition geometry, blockchain, unicast, and plural timing-choice records | Packaging and record fallbacks |
+| 18 | Pre-segmentation overlay | Pipeline implementation |
+| 19 | Complete method counterpart to AF claim 1 | Additional enforcement category |
+| 20 | Delivered recipient timing-choice combination with an affirmative mate choice → reconstruction of the same detected combination | Causal-nexus method fallback; relationship-specific **D/CE/G** support gate |
+| 21–22 | Perceptual-hash detection → sliding-window fuzzy matching | Separate directly disclosed method implementation branch; not separate novelty centers or an actor-attribution cure |
+| 23 | Monitor-side suspect acquisition, plural cut-time reconstruction, equal delivered-manifest ledger lookup, and recipient identification, with an affirmative mate timing and the same detected plural timing combination | Direct-performer method candidate; separate **D/CE/G; mode unassigned** support, art, eligibility, restriction, and proof posture |
 
-Known mechanisms remain dependent because their presence alone is not the present novelty center. Do not promote manifests, hashing, timing fingerprints, CDN delivery, ledgers, or Tardos terminology as independent distinctions without claim-specific analysis.
-
-No claim as drafted depends from AF claim 20. That topology makes omission of the method independent surgical, but the current AF parent proposal contains no pre-drafted intermediate method-narrowing tier if AF claim 20 is retained and rejected. Counsel may narrow or amend AF claim 20 or add supported method dependents in the parent under the applicable count, fee, Track One, dependency, support, and art controls. The continuation reservation also carries broader and intermediate method formulations, including commercially useful and supportable NA claims 23–30; none is automatically approved for later filing.
+AF claim 20 depends from AF claim 19. AF claim 21 separately depends from AF claim 19, and AF claim 22 depends from AF claim 21. AF claim 23 is independent. Any decision to omit or cancel the integrated method family or the monitor-side method must address them separately and be reflected throughout the filed topology and claim-indexed AF package. A one-independent posture requires omission of AF claims 19–23.
 
 ## 4. Art pressure and examiner-facing position
 
-The focused [`prior-art comparison matrix`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) and [`claim-document mapping matrix`](AA11393US-AF-claim-document-mapping-matrix_DRAFT.md) identify the following principal pressure:
+The leading references are:
 
-- **A4, US 10,834,158 B1**: customized manifests, camera-perspective alternatives, temporal alignment, version-pattern recovery, and probabilistic user resolution;
-- **A6, US 2014/0325550 A1**: recipient-specific temporal events, tailored manifests, forced distinguishable events, detected-pattern comparison, and device/colluder identification;
-- **B9, WO 2009/156973 A1**: key-derived actual switch points among desynchronized transformed streams;
-- **B6, CN 100583750 C / Microsoft family**: individualized local frame-count/timing variation and robust hash reacquisition;
-- **A20, US 2012/0114309 A1**: a unique EDL for each consumer, expressly motivated by identification and control of each version and by license-enforcement tracing, together with consumer/version association and later cross-reference lookup;
-- **A5 and B7**: shot/cut and perceptual comparison; and
-- **B8, EP 2 811 416 A1**: distortion-tolerant relative-time-pattern matching.
+- **A20, US 2012/0114309 A1:** unique EDL per consumer, time-code-defined content elements, product-signature motivation, recipient/version registry, and later cross-reference lookup;
+- **B9, WO 2009/156973 A1:** key-derived actual switch points among transformed streams;
+- **A4, US 10,834,158 B1:** camera-perspective alternatives, customized manifests, temporal alignment, recovered version sequences, and user/group resolution;
+- **A6, US 2014/0325550 A1:** recipient temporal events, tailored manifests, detected-pattern comparison, and device/colluder identification;
+- **A13, US 2023/0103449 A1:** manifest generation and regeneration from segment identifiers;
+- **A21, US 2021/0166036 A1:** shot-boundary detection, shot-duration/time-slice fingerprint generation, and exact database fingerprint comparison;
+- **B6, CN 100583750 C / Microsoft family:** local timing variation, hash reacquisition, and contributor search; and
+- **A5, B7, and B8:** shot, perceptual-hash, and distortion-tolerant timing comparison.
 
-A20 is examiner-favorable on the motivation limb and should not be characterized as different-solution or teaching-away evidence. Its background describes generic EDL events using source identifiers, time-code-defined content elements, transitions including cuts, and transition durations. Its individualized-EDL embodiment lists “random sizes” for content elements as a way to create a “product signature.” “Sizes” is undefined; because A20 also describes time-code-defined content elements, a temporal interpretation is plausible, but A20 does not expressly say to vary element duration, camera-cut timing, or a boundary between identified synchronized cameras. The selected/front-page `F/C/A/C` bracketed time-range exemplar reproduces **Figure 2** on drawing Sheet 2 of 33. `330` is a final-product reference numeral, not a figure number. **Figure 3** is a separate multiple-source `A/B/C` drawing that also uses reference numeral `330`. The bracketed exemplar must be cited to the selected/front-page drawing or Figure 2 on Sheet 2, not as “Fig. 330” or as transcribed specification prose. “Product signature” supports motivation to make copies distinguishable, but it does not disclose a structural detector that recovers an ordered camera-source pair jointly with timing at the same region. Example 1B's express recovery path analyzes and cross-references a unique watermark.
+A20 is examiner-favorable motivation evidence and should not be characterized as teaching away. Its “random sizes” language is undefined, and a temporal interpretation is plausible because its elements are time-code-defined. Its drawings do not expressly disclose plural temporal movement of physical-camera selection boundaries. Figure 2 on drawing Sheet 2 contains the F/C/A/C exemplar; Figure 3 separately depicts A/B/C sources; `330` is a final-product reference numeral, not a figure number. Its express Example 1B recovery path is watermark cross-reference, not cut-time reconstructed-manifest equality.
 
-The most plausible § 103 route is A20 combined with conventional multicamera/vision-mixer/EDL practice and B9, A4, A6, or B6 for variation/delivery, with A5, B7, B6, or B8 where a recovery teaching is needed. A20 makes forensic EDL individualization documentary rather than hypothetical. The response should therefore concede that general motivation and remain structural and operational:
+A21 materially strengthens the recovery-side proposition that shot-boundary positions can yield a duration-sequence fingerprint and that the resulting fingerprint can be matched exactly against database fingerprints. It does not disclose recipient-specific production, physical-camera edit-boundary variation, delivered reference/mate chunk-combination manifests, a recipient ledger, or reconstruction of a delivered manifest. A technical-effect position cannot rest only on robust cut-time fingerprint recovery because A21 also asserts tolerance to cropping, rotation, and shot-detection errors.
 
-- the same ordered transition between identified camera sources;
-- two noncoincident boundary timings and actual alternate-camera frames in the intervening interval;
-- a candidate pattern generated from the delivered version;
-- detection at the corresponding distinguishing region; and
-- joint matching of both source order and timing before recipient lookup.
+The leading combination route is **A20 + B9 + A4/A6/A13 + A21**, with direct multicamera/vision-mixer/EDL art potentially supplying physical-camera edit entries and with a reasoned combination and reasonable expectation of success still required. The examiner-facing distinction should remain the exact operational relationship:
 
-### Claim-specific KSR pre-mortem
+- paired out/in-point changes at plural cuts;
+- retention of identified physical-camera order;
+- manifests representing combinations of reference/mate chunks produced by those changes;
+- reconstruction from plural scene-change-derived cut time codes; and
+- equal-manifest ledger lookup.
 
-Counsel should prepare for MPEP § 2143 rationales A, D, and F. An examiner may characterize the proposal as a combination of familiar elements yielding predictable results; application of the known per-recipient EDL-individualization technique to a multicamera editing system ready for improved traceability; or a predictable EDL variation prompted by A20's express design incentive. Those routes are plausible, not established. They still require an evidence-backed account of why a skilled person would select and implement the claimed relationship, not merely generic timing variation or an unspecified EDL parameter, and why the combination would have had a reasonable expectation of producing the complete claimed chain.
+AF claim 20 further requires the equal delivered manifest to represent a recipient timing-choice combination containing at least one mate timing and requires the reconstructed manifest to represent the same detected combination. No reviewed document maps that complete added nexus, although multi-position assignment, manifest reconstruction, and timing-pattern art create material combination pressure.
 
-Rationale E is conditional rather than automatic. “Obvious to try” requires a finite number of **identified, predictable** solutions and a reasonable expectation of success. Counsel should not concede that the existence of a finite number of generic EDL field types by itself identifies movement of a recorded transition between synchronized camera sources as a known forensic option.
+AF claim 23 carries that causal nexus without AF claims 1 and 19's affirmative production and delivery operations. Its leading route is **A4/A6 + A13 + A21**, with A20 or B9 supplying personalization or switch-timing motivation. The claim must be defended through the reason a skilled artisan would reconstruct and search for the delivered reference/mate manifest carrying an affirmative mate timing through the same detected plural combination, rather than through the production-side EDL limitations absent from claim 23.
 
-A separate patent reference is not invariably required for every implementation detail: common knowledge or a predictable consequence may contribute to an articulated obviousness rationale when properly supported. Under current [MPEP § 2144.03](https://www.uspto.gov/web/offices/pac/mpep/s2144.html), however, unsupported official notice or common knowledge must be used judiciously, may fill only an insubstantial gap, and cannot be the principal evidence for a central missing claim relationship. If counsel contests such a factual assertion, the traverse should be specific—explaining why the asserted fact is not well known or indisputable, rather than merely requesting a citation. If the rejection is maintained after an adequate traverse, the examiner must provide documentary evidence in the next Office action or, if relying on an Office employee’s personal knowledge, an affidavit or declaration setting forth specific factual statements and explanation under [37 C.F.R. § 1.104(d)(2)](https://www.ecfr.gov/current/title-37/chapter-I/subchapter-A/part-1/subpart-B/section-1.104). The applicant may contradict or explain that personal-knowledge showing with counter-evidence. These controls do not require a separate reference or documentary evidence for every inference in an otherwise evidence-backed KSR analysis.
+Do not rely on the labels `EDL`, `manifest`, `timing pattern`, `scene change`, or `reconstructed manifest` alone.
 
-Under current [MPEP § 2143.03](https://www.uspto.gov/web/offices/pac/mpep/s2143.html), every limiting word and claimed relationship must be considered. AF claims 1 and 20 may rely on their positively recited same-region detection and joint source-pair-plus-timing match: a rejection must account for those operations as well as generation and delivery. Do not overstate that point by asserting that all reviewed detection art is embedded-mark based. A4 includes camera-perspective/version-pattern recovery, A6 includes forced or natural event-pattern recovery, and B7 supplies shot/cut comparison; the narrower question is whether the articulated combination supplies the AF claims' joint source identities, timing, and same-region relationship. This detector rebuttal is claim-specific and must not be exported to NA claims 1, 7, or 9, which do not recite those detection operations.
+### KSR pre-mortem
 
-US counsel should own evidence development with the inventor or technical lead and, as appropriate, a search or test professional. They should promptly preserve genuinely dated materials and identify witnesses concerning: (1) which EDL parameters were actually recognized as per-recipient forensic variables; (2) whether moving the claimed synchronized-camera boundary would predictably preserve program continuity and create the claimed alternate-camera interval; (3) whether the art taught a workable route to recover both source identities and timing at the same region; and (4) any unexpected technical result tied to the claimed relationship. Counsel should complete the historical-evidence review before approving final claims. Later testing may show technical behavior, but a memorandum created in 2026 is not itself contemporaneous evidence of what a person of ordinary skill knew at the relevant time; formal testing or a declaration should be prepared only if counsel decides it is warranted. Do not characterize silence, use of another technique, or a portfolio's failure to select this technique as teaching away or failure of others. Any objective-indicia position should be supported by evidence of a recognized persistent need, documented unsuccessful attempts or skepticism, satisfaction of that need, and a nexus to the claimed relationship.
+MPEP § 2143 rationales based on combining known elements, applying a known technique, and predictable variation are facially plausible. A20 supplies a documentary reason to individualize an EDL for tracing. An “obvious to try” rationale still requires identified predictable options and a reasonable expectation of success; the existence of generic EDL fields does not itself establish that plural physical-camera cut boundaries were a known forensic code.
 
-Do not argue that the number of combined references alone defeats obviousness. Require the rejection to identify every operation and an articulated reason and workable path to combine them. Conversely, do not characterize D1 or the supplemental art categorically; use the exact disclosures and qualifications recorded in the matrices.
+The response should require an evidence-backed path to every claimed relationship and should not rely on the number of references. Under [MPEP § 2143.03](https://www.uspto.gov/web/offices/pac/mpep/s2143.html), every limitation and relationship must be considered. Under [MPEP § 2144.03](https://www.uspto.gov/web/offices/pac/mpep/s2144.html), unsupported common knowledge or official notice should not supply the central missing relationship after an adequate specific traverse.
 
-A professional search directed to vision mixers, EDLs, personalized alternate-angle edits, screener differentiation, camera-boundary fingerprints, and recovery of source-camera identity remains a condition to any recommendation to broaden either AF independent and to the final filing recommendation. It is a tracked post-engagement task, not a prerequisite to applicant-controlled initial transmission of this package.
+US counsel should preserve genuinely dated evidence concerning which edit parameters were recognized as per-recipient forensic variables, whether plural camera-boundary movement was predictable and operationally robust, and whether scene-change-derived cut sequences were used to reconstruct delivered manifests. Later testing may establish technical behavior but is not contemporaneous evidence of filing-date knowledge.
 
-## 5. Pending § 112 and priority determinations before filing
+DW-08A should cover vision mixers, live and post-production EDLs, personalized alternate-angle edits, screener differentiation, plural switch-boundary fingerprints, scene-change-derived delivered-manifest reconstruction, monitoring products that allocate reconstruction and lookup across systems or actors, and A21's family, citations, nonpatent literature, and duration-sequence implementations.
 
-AF's principal strength against the reviewed art is also its principal support risk. Counsel should use the [`AF priority/support map`](AA11393US-AF-priority-support-map_DRAFT.md) and record a written claim-as-a-whole analysis before filing.
+## 5. § 112 and priority determinations
 
-### AF claim 1
+The provisional directly recites the basic complete loop in system claim 1 and method claim 10. In particular, provisional claim 1(m)–(n) and method claim 10(j)–(k) connect plural camera-cut time-code detection, reconstructed-manifest matching, ledger search, and account identification. PCT claim 15 and Method 200/claims 16–17 supply parallel direct recovery support.
 
-The filings disclose the general closed loop. The exact candidate-pattern object, detection of both camera identities, same-region relation, and joint source-pair/timing match are combined formulations rather than one verbatim passage. Isolated disclosure of each noun or generic cut-time detection is insufficient. Prepare a support-safer alternative based on version timing or reconstructed-manifest matching if the exact formulation is not adequately conveyed.
+### AF claims 1 and 19
 
-### AF claim 20
+The operative claim-as-a-whole question is whether each filing conveys the strengthened relationship among:
 
-AF claim 20 independently recites the integrated operations in method form. Although it does not depend from AF claim 1, every AF claim 1 claim-as-a-whole, candidate-pattern, source-identity, same-region, joint-matching, combined-example, and priority gate applies to the corresponding AF claim 20 limitations. Changing statutory category does not supply missing disclosure or an earlier effective date. Counsel must also assess the method claim as a whole under § 101, including whether its concrete video-generation, delivery-record, suspect-analysis, and lookup operations provide the required eligible-application context under then-current law.
+1. plural paired out/in-point modifications that retain physical-camera identifiers and order;
+2. delivery of manifests representing reference/mate chunk combinations produced by those modifications; and
+3. reconstruction of an equal delivered manifest from plural suspect cut time codes.
 
-### Example 2 and AF claims 2–3
+The overall loop and each operational stage are express. Example 2 supplies the physical-camera boundary; Examples 3–4 supply chunk/manifest combinations; and the filed recovery claims supply plural cut-time reconstruction and equality. Counsel must still decide the exact integration and generalized breadth as claims as a whole.
 
-At provisional PDF pp. 26–27, the mate table places Cut 4 at `00:00:30:01` and marks it adjusted to the reference. The accompanying text includes `00:00:30:11`, characterizes that value as a mistake, and then gives `00:00:30:01` as the correct approach; PCT Example 2 uses the cleaned value. Counsel must decide what a skilled reader would understand, whether the PCT text is permissible clarification, and whether AF claims 2–3 receive the provisional date. Keep resynchronization dependent unless that written analysis supports a different course.
+For each independent, counsel must separately conclude PCT written description, PCT enablement, provisional written description and enablement for benefit entitlement, effective date, and DW-05A Mode A, B, or C. Written description and enablement are separate inquiries; neither answer establishes the other.
 
-### Combined examples and specific dependents
+### Specific dependent gates
 
-- The Examples 2→3→4 path for the moved boundary, chunks, manifests, and recipient assignment is the stronger combined-example route, but the exact AF relationship is not stated verbatim.
-- The Examples 2→5 path for detecting both source identities and timing at the same region is materially weaker and affects AF claim 1 and AF claims 7–10.
-- AF claim 20 affirmatively repeats the complete generation, delivery/association, detection, matching, and lookup sequence; the method format does not reduce either combined-example concern above.
-- AF claim 11 applies probabilistic analysis to candidate camera-source-transition patterns associated with recipients and identifies recipients whose delivered versions contributed respective portions. That pattern-specific input is a combined-example relationship rather than a direct Tardos disclosure. AF claim 12 adds segmented Tardos fingerprints on content segments and positive identification of a contributor for at least one respective portion. The filings expressly discuss segmented Tardos handling and positive colluder identification, but counsel should confirm the pattern-input integration and the exact portion-to-contributor relationship. The earlier unsupported attribution-score formulation is not part of this AF set and should not be reintroduced without an identified basis.
-- AF claim 14's equal-duration paired chunks are disclosed, but each chunk's claimed internal transition geometry at its respective timing is a combined-example formulation.
-- AF claim 19's overlay is express; counsel must confirm the claimed before-segmentation sequence in the PCT disclosure and preserve a sequence-neutral alternative if needed.
+- **AF claims 2–3:** provisional Example 2 contains a stray `00:00:30:11` “mistake” sentence despite the table and surrounding restoration explanation using `00:00:30:01`. PCT Example 2 uses `00:00:30:01`. Obtain a written priority/support determination.
+- **AF claim 6:** confirm the respective-mate/only-one-selected-cut relationship.
+- **AF claims 11–12:** confirm recipient-associated manifest chunk-selection sequences as the probabilistic input and the exact segmented-fingerprint/portion-to-contributor relationship. No AF attribution-score limitation is asserted.
+- **AF claim 14:** confirm that each paired same-interval chunk contains the retained transition at its respective timing.
+- **AF claim 17:** confirm the plural reference/mate timing-choice combination represented by each delivered manifest.
+- **AF claim 18:** confirm overlay before segmentation in both asserted support sources.
+- **AF claim 20:** plural timing choices, manifest association, and reconstructed-manifest recovery are disclosed, but confirm the exact delivered recipient-combination → affirmative mate choice → reconstruction of the same detected timing-choice combination as **D/CE/G**.
+- **AF claims 21–22:** perceptual-hash and sliding-window limitations have direct component support. They form a separate branch from AF claim 19 and do not inherit AF claim 20's relationship-specific gate.
 
-### Prepared support-safer contingency paths
+### AF claim 23
 
-The priority/support map gives counsel concrete paths rather than leaving an open-ended redraft request:
+The individual suspect-acquisition, scene-change detection, plural cut-time derivation, reconstruction, and ledger-search-to-identify operations are direct. The detector-only base method is **D/G; mode unassigned**; the method-form delivered-manifest environment and the mate-containing delivered-combination-to-reconstructed-same-combination nexus are **D/CE/G**. AF claim 23 as a whole is **D/CE/G; mode unassigned** and inherits neither NA claim 16's system-format Mode A assignment nor AF claim 19's integrated-method mode.
 
-1. if source-identity recovery or the same-region joint source/time object is not adequately conveyed, retain the multi-camera production structure and use the directly disclosed cut-time/version or reconstructed-manifest recovery and recipient-ledger route;
-2. if the Examples 2→3→4 integration is not adequately conveyed, use the applicable NA actor-focused production, distribution, and detection families rather than deleting AF's connective limitations while retaining the integrated-AF label;
-3. if the Examples 2→5 route does not support recovery of both source identities, retain the ordered-camera/noncoincident-timing/alternate-frame production structure and substitute direct timing/version or reconstructed-manifest recovery on the suspect side;
-4. omit AF claim 14 if its paired-chunk geometry is not supported, because equal duration and a common playback interval alone add little distinction; and
-5. remove the before-segmentation ordering or retain a sequence-neutral AF claim 19 fallback if that sequence is not supported.
+Counsel must separately determine PCT and provisional written description and enablement, effective date, manifest-equality construction, full-scope reconstruction enablement, the limiting effect of the passive ledger/manifest structure, § 101, § 112(f), actor performance, territorial performance, art, and proof. Equality must account for byte identity, equivalent chunk selections, or equivalent timing choices and for dynamic URLs, tokens, and metadata.
 
-Each path sacrifices part of the present art-facing structure and must be rescored. Any deletion of the same ordered source pair, noncoincident reference/mate timings, intervening different-camera frames, or operationally linked recipient recovery creates a new strategy version, not an equivalent AF cleanup.
+### AF claim 23 — eligibility pre-mortem
 
-Patentability value does not establish written description. A continuation cannot cure a § 112 deficiency in the common disclosure, and a continuation claim receives an earlier date only to the extent the required subject matter is adequately supported in the benefit chain.
+AF claim 23 may be characterized as receiving content, extracting timing data, building a reconstructed data object, searching associated records, and returning a recipient association. The manifest, ledger, and mate-timing relationships are claimed data relationships and do not alone establish a practical application or an inventive concept. The claim does not presently recite a specialized machine, a physical-content transformation, or an express improvement to computer operation.
 
-Reopen priority and disclosure analysis if potentially material information appears with an effective date between 26 February 2024 and 19 February 2025 or an Office questions priority. Coordinate any resulting IDS or representation decision through the shared control documents.
+Before filing, counsel should identify the asserted judicial exception under Step 2A Prong One; analyze the claim as a whole under Step 2A Prong Two, including whether any additional element integrates the exception into a practical application; analyze the additional elements individually and as an ordered combination under Step 2B; and identify the specification passages and evidence supporting any asserted improvement to content identification, streaming security, or computer functionality. A field-of-use label, generic manifest or ledger implementation, or desired identification result is not a substitute for that analysis. Any eligibility-driven amendment requires renewed support, art, actor, proof, and claim-count review.
+
+B10's 2 December 2024 publication is potentially citable principally in Mode B. It is too late by publication date in Mode A; in Mode C the PCT current-disclosure defect independently controls. B10 remains low-materiality on the current substantive mapping.
+
+If counsel rejects the integrated support position, AF claim 23 and the actor-focused NA families remain subject to their own support and effective-date determinations; neither automatically inherits the integrated claims' result. A Mode C conclusion for AF claim 23 bars reliance on that formulation as drafted and cannot be repaired by continuation practice.
 
 ## 6. Enforcement and evidence trade
 
-AF claim 1 and AF claim 20 trade actor-specific scope and evidentiary simplicity for a concentrated technical chain. Neither is necessarily the strongest direct-infringement claim against a market divided among production, streaming, and monitoring providers, and adding method form does not convert separated commercial conduct into single-actor infringement.
+AF claims 1 and 19–22 trade actor-specific breadth for a concentrated chain. AF claim 23 targets the actor performing the recovery method and does not require that actor to perform production, segmentation, delivery, or ledger recording.
 
-### AF claim 1—whole-system use
+### AF claim 1 — whole-system use
 
-For a system claim, counsel should analyze whether a target makes, sells, offers, or **uses the claimed system as a whole**. Under the fact-specific `Centillion` framework, a party may use a distributed system by putting the entire claimed system into service, controlling that system-level use, and obtaining its benefit even without physically possessing every component. `CloudofChange` confirms the limit: a vendor is not necessarily the user merely because it supplies or hosts part of the system when independent customers initiate and benefit from the claimed whole-system operation and their acts are not attributable to the vendor. The package therefore must not assume that ownership of servers, provision of software, or customer access alone establishes AF claim 1 infringement.
+Counsel should analyze whether a target makes, sells, offers, or uses the claimed system as a whole. Under the fact-specific `Centillion` framework, a party may use a distributed system by putting the whole system into service, controlling that use, and obtaining its benefit. `CloudofChange` confirms that supplying or hosting part of a system does not necessarily make the vendor the user when customers initiate and benefit from the whole-system operation.
 
-### AF claim 20—performance or attribution of method steps
+### AF claim 19 — method performance and attribution
 
-For a method claim, direct infringement ordinarily requires every claimed step to be performed by one entity or to be attributable to one entity. Under the fact-specific `Akamai` framework, attribution may exist through agency, contract, joint enterprise, or direction/control, including circumstances in which an alleged infringer conditions participation in an activity or receipt of a benefit on performance of claimed steps and establishes the manner or timing of that performance. The presence of a commercial relationship, instructions, or a platform by itself does not establish the test. AF claim 20 adds a method-performance and potential attribution category; it does not guarantee an attribution theory, alter the prior-art comparison, or independently improve patentability.
+Direct method infringement ordinarily requires every step to be performed by one entity or attributable to one entity. Under `Akamai`, attribution may arise through agency, contract, joint enterprise, or direction/control, including conditioning participation or a benefit on performance while establishing the manner or timing. A commercial relationship or platform alone is insufficient.
 
-Do not transpose the two analyses: `Akamai` method-step attribution does not by itself establish that a party uses AF claim 1's claimed system as a whole, and `Centillion` system use does not dispense with proof that every AF claim 20 step was performed by or attributable to one entity.
+Do not transpose the tests: method-step attribution does not itself establish whole-system use, and system use does not dispense with proof of every method step.
 
-Proof may require:
+### AF claim 23 — monitor-side performance
 
-- the structured list of edit instructions and evidence that it identifies the claimed source-camera identifiers and recorded cut time codes;
-- synchronized captures of different recipient versions;
-- proof that the same ordered camera pair switches at different timings;
-- the alternate-camera frame interval;
-- delivery, manifest, candidate-pattern, and recipient-association records;
-- suspect-side source identification and timing output at the same region; and
-- the lookup linking the matched pattern to a recipient.
+Direct infringement requires one entity to receive the suspect content, derive plural cut time codes, build the reconstruction, and search the ledger to identify the recipient, or requires another performer's conduct to be legally attributable to that entity under the applicable method-claim standard. Ledger ownership or physical location is not dispositive; the operative questions are who performs the remote search-to-identify operation and whether another actor's conduct is legally attributable to the accused entity. A monitoring vendor that supplies cut times or a reconstructed object while a platform backend performs the search-to-identify operation does not necessarily perform the complete claim. Counsel must also determine the domestic location of every claimed method step.
 
-AF claim 20 additionally requires proof of who performed each affirmative step, when it was performed, and the facts supporting attribution if multiple actors were involved. Before selecting AF claim 1 and AF claim 20—or omitting AF claim 20 for one-independent simplicity—counsel should assess direction/control, whole-system use, method-step attribution, divided infringement, discovery access, reverse engineering, evidence preservation, § 101, restriction, and likely defendants. The crosswalk identifies broader and actor-focused NA coverage deliberately deferred rather than lost by accident.
+Across AF claims 1 and 19–23, proof may require:
+
+- structured edit entries with physical source-camera identifiers and paired out/in-point time codes;
+- reference and mate versions showing plural retained-camera boundary changes;
+- chunk and manifest generation records;
+- delivery and manifest-recipient ledger records;
+- suspect-side scene-change output identifying plural cut time codes;
+- reconstructed manifests and equality comparison; and
+- the ledger result identifying the recipient.
+
+For AF claim 23 specifically, proof requires that the searched ledger have the claimed delivered reference/mate manifest environment, the equal delivered manifest contain an affirmative mate timing, the reconstruction represent the same detected plural timing combination, and one entity perform every affirmative operation or another performer's conduct be legally attributable to that entity under the applicable method-claim standard. API requests and responses, query and backend logs, code and workflow evidence, actor/custodian mapping, and step location may be decisive.
+
+AF claims 19–22 additionally require evidence identifying the performer of each step and any attribution facts. AF claim 20 also requires proof that the equal delivered manifest embodies an affirmative mate choice and the reconstructed manifest represents the matching detected timing-choice combination. The dependent branches do not cure divided infringement. The crosswalk identifies NA actor-focused coverage outside AF.
+
+DW-08C controls the evidence program: lawfully obtained multi-recipient captures, original manifests and chunks, session and request metadata, transition-time analysis, recipient associations, reconstruction and equality results, API and backend allocation evidence, actor/custodian and territorial mapping, and chain of custody. Observed facts, technical inference, and attorney argument must remain separately identified.
 
 ## 7. Procedure and claim-count controls
 
-AF-2026-07-17-v2 contains 20 total claims, two independent claims, 18 singly dependent claims, and no multiple-dependent claim. It is numerically within the current 30-total/four-independent/no-multiple-dependent Track One limits and exactly uses the basic 20-total allocation while remaining below the basic three-independent allocation. That formal fact does not establish eligibility, patentability, allowance, or that two independent categories best serve the allowance-first objective.
+`AF-2026-07-22-v6` contains 23 total claims, three independent claims, 20 singly dependent claims, and no multiple-dependent claim. It exceeds the basic 20-total allocation by three claims. Counsel must confirm ordinary excess-claim fees. This numerical check does not establish strategic merit.
 
-The USPTO describes Track One as targeting final disposition—not necessarily patent issuance—in about twelve months. Accelerated disposition may produce little or no Office-delay PTA that otherwise might accrue under 35 U.S.C. § 154(b), but Track One neither fixes PTA at zero nor determines the final adjustment. Counsel should compare expected time to issuance, actual Office and applicant delay, remaining family term, cost, and continuation timing using a case-specific PTA assumption.
+The parent is directed to ordinary § 371 national-stage filing. Counsel must confirm the national-stage claim format, § 119(e) benefit data, declarations, inventorship, applicant, assignment, entity status, fees, restriction, unity, double patenting, and terminal-disclaimer posture.
 
-Counsel is expressly authorized to omit AF claim 20 from the original filing or cancel it in the filing amendment if a documented decision favors one-independent-claim simplicity. Conversely, AF claim 20 should not be retained merely because numerical room exists. The filed claim listing, count, matrices, support map, crosswalk, and strategy record must identify which topology was actually submitted.
+AF claims 19–22 and AF claim 23 are separate method families and may be omitted only through recorded strategy decisions reflected in the filed claim listing and all claim-indexed AF records. Any amendment, cancellation, renumbering, or claim-status change requires count, dependency, antecedent, support, matrix, crosswalk, and filed-topology review. Counsel must pre-plan election, traversal, continuation/divisional treatment, and any § 121 consequences because AF claim 23 presents a separately useful recovery subcombination and a materially different search and eligibility focus; examination or rejoinder with AF claim 1 must not be assumed.
 
-Counsel must decide and document:
+## 8. Continuation preservation
 
-- direct § 371 national-stage entry or a § 111(a) bypass continuation;
-- whether Track One is available and worthwhile under the selected route;
-- the compliant original-claim or preliminary-amendment format;
-- continuity/benefit and priority-document data;
-- oath/declaration, applicant, inventorship, assignment, entity-status, and fee handling; and
-- restriction, unity, terminal-disclaimer, and double-patenting consequences.
+If AF supplies the parent claims, the shared [`continuation-preservation memo`](../common/AA11393US-continuation-preservation_MEMO.md) controls every deferred family. The current actor-focused candidate is [`AF-CONT-2026-07-22-v2`](AA11393US-AF-CONT-US_claim-set_DRAFT.md): 19 total claims, four independent claims, 15 singly dependent claims, and no multiple-dependent claim. It is not filed and does not preserve continuation rights.
 
-System and method claims directed to corresponding operations may still draw restriction, classification, search, or election treatment; counsel must not equate two statutory categories with two patentably distinct inventions or assume they will be examined together.
-
-This briefing and the associated AF analyses are valid only for `AF-2026-07-17-v2`. The expressly authorized omission or cancellation of AF claim 20 must be recorded across the single AF-v2 package but does not require creation of a separate system-only package. Any other amendment, omission, cancellation, renumbering, terminology characterization, or route-driven claim-status change requires a dependency/count check, an actual-filed-topology record, and coordinated updates of both AF matrices, the support map, and the crosswalk. No filed argument should turn AF's transition-pattern label into a narrowing family-wide definition or disclaimer without an express, recorded counsel decision.
-
-## 8. Continuation is part of the AF decision
-
-If AF is selected because actor-specific breadth is being deferred, continuation preservation is not an optional reminder. The applicant and US counsel should approve an owner, docket, trigger, proposed claim families, and completion evidence when the parent is filed.
-
-The continuing application must satisfy the applicable copendency and benefit requirements. For the first and each later generation in which supported, commercially valuable scope remains deliberately deferred, the internal safety rule is to file and verify an approved successor while a qualifying application remains pending, with an earlier target no later than issue-fee handling unless counsel directs a safer event. Otherwise, counsel and the applicant must record `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`, identifying the deliberately relinquished scope and basis. A notice of allowance must trigger execution, not begin strategy discussion. This conditional recursive control does not require an endless continuation chain or treat closure as preservation.
-
-The controlling workflow is [`AA11393US-AF-continuation-preservation_MEMO.md`](AA11393US-AF-continuation-preservation_MEMO.md). It preserves, subject to support and business value:
+Current reservation families are:
 
 1. standalone NA production coverage;
-2. standalone NA distribution/recipient-association coverage;
-3. standalone NA detection/recipient-resolution coverage;
-4. broader or actor-specific method scope, the NA claims 23–30 method fallbacks not carried by AF claim 20, and support-safe software-medium alternatives; and
-5. any properly elected/divided subject matter.
+2. standalone NA distribution and recipient-association coverage;
+3. standalone NA reconstructed-manifest detection and recipient-resolution coverage;
+4. AF-CONT claim 14's broader monitor-side method and claims 15–16's implementations, with AF-CONT claim 19 treated as an overlapping causal-nexus prosecution backup to AF claim 23;
+5. broader or actor-specific methods and useful NA claims 23–30 fallbacks;
+6. additional supported detector-side implementations if commercially justified; and
+7. supported software-medium coverage if commercially justified.
 
-Continuation practice is not a cure for unsupported AF language, new matter, or a broken benefit chain.
+Parent-versus-continuation placement, restriction history, claim differentiation, double patenting, terminal-disclaimer consequences, and whether AF-CONT claim 19 is retained, substituted, or omitted must be recorded when the successor is prepared. The unfiled AF-CONT candidate does not presently preserve any of that scope.
 
-## 9. Shared IDS, public comments, and consistency
+For each generation in which valuable scope remains deferred, file and verify a qualifying successor while a parent remains pending or record `CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED`. Continuation practice cannot cure missing disclosure or a broken benefit chain.
 
-Use only the canonical [`../common/AA11393US-US_IDS-reference-list_DRAFT.md`](../common/AA11393US-US_IDS-reference-list_DRAFT.md), [`../common/AA11393US-PCT_informal-comments-IB_DRAFT.md`](../common/AA11393US-PCT_informal-comments-IB_DRAFT.md), and [`../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md).
+## 9. Shared disclosure and consistency
 
-The IDS inventory is not a concession that every listed item is prior art or material. Counsel must make and coordinate disclosure decisions for the parent and every continuation. Do not create an AF-specific public-comments draft. Any filed argument must remain consistent with the exact disclosure of D1 and the supplemental art and with positions taken in US, PCT, EP, and Italian proceedings.
+Use only the canonical shared [`IDS inventory`](../common/AA11393US-US_IDS-reference-list_DRAFT.md), [`PCT informal-comments draft`](../common/AA11393US-PCT_informal-comments-IB_DRAFT.md), [`filing/disclosure controls`](../common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md), and [`continuation-preservation controls`](../common/AA11393US-continuation-preservation_MEMO.md). The IDS inventory is not an admission that every item is prior art or material. Counsel must coordinate disclosure and public positions across the parent and every continuation.
 
-## 10. Pending written recommendations requested after initial transmission
+## 10. Pending written recommendations
 
-The following are counsel work products requested from this prepared decision package. None is represented as already answered, and their pending status does not prevent the initial controlled transmission.
-
-1. Is AF claim 1 adequately supported as a whole, including source identities, same-region detection, and joint source/time matching?
-2. Which support-safer AF claim 1 alternative should be kept ready?
-3. Does focused direct-art searching support the allowance thesis; how should counsel answer the A20-led rationales A/D/F and any properly supported rationale E; and what evidence addresses the exact claimed relationships and reasonable expectation of success?
-4. Are AF claims 2–3 entitled to the provisional date despite the Example 2 inconsistency?
-5. Are the Examples 2→3→4 relationships in AF claims 13–18 and the Examples 2→5 relationships in AF claims 1 and 7–10 adequately disclosed?
-6. Are AF claim 11's recipient-associated candidate-pattern input and AF claim 12's segmented-fingerprint/portion-to-contributor relationship adequately conveyed, and is AF claim 14's exact chunk geometry supportable?
-7. Is AF claim 19's before-segmentation order supported, or should a sequence-neutral fallback replace it?
-8. Do AF claim 1's whole-system-use theory and AF claim 20's performance/attribution theory fit the applicant's likely actors and available evidence under the fact-specific `Centillion`, `CloudofChange`, and `Akamai` frameworks?
-9. Does AF claim 20 satisfy the same claim-as-a-whole support and priority gates as AF claim 1, and what § 101, restriction, search, and proof consequences follow from retaining it?
-10. Should AF claim 20 be filed, omitted, or canceled to preserve one-independent-claim simplicity, and how will the actual filed topology be propagated through the AF package?
-11. Which NA families—including broader or actor-specific methods and useful NA claims 23–30 fallbacks—must be preserved in a continuation, and which have sufficient commercial value to justify filing cost?
-12. Which application will be the parent, who owns the continuation docket, what is the target filing event, and what evidence will establish copendency before issue?
-13. Which route and Track One posture should be used, and what restriction/double-patenting consequences are expected?
-14. Are the shared IDS and public PCT comments approved, supplemented, or held, and who owns continuing disclosure monitoring?
+1. Are AF claims 1 and 19 adequately supported as complete plural-cut reconstructed-manifest chains, and which DW-05A mode applies to each?
+2. Does DW-08A support the allowance thesis, and how should A20+B9+A4/A6/A13+A21 be answered?
+3. Are AF claims 2–3 entitled to the provisional date?
+4. Are the generalization across plural selected physical-camera cuts and the paired out/in-point formulation supported?
+5. Are AF claims 6, 11–12, 14, and 17–18 supportable as drafted?
+6. Do the whole-system and method-performance theories fit likely actors and obtainable evidence?
+7. Does AF claim 23 satisfy its separate PCT/provisional written-description and enablement, effective-date, equality, § 112(f), art, actor, territorial, and proof gates; what are counsel's Step 2A Prong One, Step 2A Prong Two, and Step 2B conclusions; and which DW-05A mode applies?
+8. Should AF claims 19–22 and AF claim 23 each be filed, omitted, or canceled?
+9. Should AF-CONT v2's four actor-focused independents and causal-nexus claims 17–19 be maintained, revised, split after restriction, or omitted, and how should the AF claim 23/AF-CONT claim 19 overlap be controlled?
+10. What restriction, election, divisional, double-patenting, and terminal-disclaimer consequences are expected for the § 371 parent and its controlled successor?
+11. What IDS, PCT-comment, and continuing disclosure actions are approved?
 
 ## 11. Authorities for counsel to confirm at action time
 
-- [USPTO MPEP § 201.07 — continuation applications](https://www.uspto.gov/web/offices/pac/mpep/s201.html)
-- [USPTO MPEP § 211.01(b) — copendency and benefit](https://www.uspto.gov/web/offices/pac/mpep/s211.html)
-- [USPTO MPEP § 1893 — § 371 national stage](https://www.uspto.gov/web/offices/pac/mpep/s1893.html)
-- [USPTO MPEP § 1895 — bypass applications](https://www.uspto.gov/web/offices/pac/mpep/s1895.html)
-- [USPTO Track One program](https://www.uspto.gov/patents/initiatives/patent-application-initiatives/prioritized-patent-examination-program)
-- [USPTO MPEP § 708.02(b) — Track One controls](https://www.uspto.gov/web/offices/pac/mpep/s708.html)
-- [USPTO MPEP § 2731 — statutory patent-term-adjustment periods](https://www.uspto.gov/web/offices/pac/mpep/s2731.html)
-- [USPTO MPEP § 609 — IDS practice](https://www.uspto.gov/web/offices/pac/mpep/s609.html)
-- [USPTO MPEP § 2001 — duty of disclosure, candor, and good faith](https://www.uspto.gov/web/offices/pac/mpep/s2001.html)
-- [USPTO MPEP § 2106 — patent-subject-matter eligibility](https://www.uspto.gov/web/offices/pac/mpep/s2106.html)
-- [USPTO MPEP § 2143 — obviousness rationales](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
-- [USPTO MPEP § 2143.03 — all claim limitations must be considered](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
-- [USPTO MPEP § 2144.03 — common knowledge and official notice](https://www.uspto.gov/web/offices/pac/mpep/s2144.html)
-- [USPTO MPEP § 2145 — rebuttal arguments must remain commensurate with the claims; unclaimed limitations are not imported](https://www.uspto.gov/web/offices/pac/mpep/s2145.html)
-- [USPTO MPEP § 802 — restriction practice](https://www.uspto.gov/web/offices/pac/mpep/s802.html)
-- [Akamai Technologies, Inc. v. Limelight Networks, Inc. — method-step attribution (Fed. Cir. en banc 2015)](https://www.cafc.uscourts.gov/opinions-orders/9-1372.opinion.8-11-2015.1.pdf)
-- [Centillion Data Systems, LLC v. Qwest Communications International, Inc. — use of a distributed claimed system (Fed. Cir. 2011)](https://www.cafc.uscourts.gov/opinions-orders/10-1110-1131.pdf)
-- [CloudofChange, LLC v. NCR Corp. — system use and attribution limits (Fed. Cir. 2024)](https://www.cafc.uscourts.gov/opinions-orders/23-1111.OPINION.12-18-2024_2438003.pdf)
-
-## 12. Revision record
-
-- **21 July 2026 — § 2144.03 personal-knowledge precision:** added the examiner’s personal-knowledge affidavit/declaration pathway under 37 C.F.R. § 1.104(d)(2), the applicant counter-evidence control, and the express limitation that a separate reference or documentary evidence is not required for every inference in an otherwise evidence-backed KSR analysis. No claim text, art score, or claim-set version changed.
-- **21 July 2026 — A20/KSR defense calibration:** added A20's examiner-favorable forensic-EDL motivation, generic EDL-field disclosure, qualified element-size/product-signature treatment, and selected/front-page exemplar/Figure 2/Sheet 2 and Figure 3/`330` citation controls; added a claim-specific KSR A/D/F/E pre-mortem, current MPEP §§ 2143.03/2144.03/2145 controls, detector-art qualification, and counsel-owned historical-evidence preservation and review directions. No claim text, art score, or claim-set version changed.
-- **AF-2026-07-17-v2 (17 July 2026):** added independent method AF claim 20 to the single AF proposal; stated the recorded deletion-at-filing option; separated method-step attribution from whole-system use; propagated the claim-as-a-whole, direct-art, priority, eligibility, restriction, proof, and continuation gates; and aligned the allowance thesis with the independents' exact structured-list and temporally-corresponding-different-camera-frame language.
-- **Initial-contact defensibility pass (17 July 2026):** recorded readiness for controlled initial counsel transmission; converted support, priority, search, and filing questions into pending post-engagement decisions; added concrete support-safer contingency paths and their costs; made AF claim 20's no-dependent trade-off express; and added recursive continuation and qualified Track One/PTA controls. No claim text or art score changed.
+- [MPEP § 201.07 — continuation applications](https://www.uspto.gov/web/offices/pac/mpep/s201.html)
+- [MPEP § 211.01(b) — copendency and benefit](https://www.uspto.gov/web/offices/pac/mpep/s211.html)
+- [MPEP § 1893 — § 371 national stage](https://www.uspto.gov/web/offices/pac/mpep/s1893.html)
+- [MPEP § 609 — IDS practice](https://www.uspto.gov/web/offices/pac/mpep/s609.html)
+- [MPEP § 2001 — disclosure and candor](https://www.uspto.gov/web/offices/pac/mpep/s2001.html)
+- [MPEP § 2106 — eligibility](https://www.uspto.gov/web/offices/pac/mpep/s2106.html)
+- [MPEP § 2163 — written description](https://www.uspto.gov/web/offices/pac/mpep/s2163.html)
+- [MPEP § 2164 — enablement](https://www.uspto.gov/web/offices/pac/mpep/s2164.html)
+- [MPEP § 2143 — obviousness rationales](https://www.uspto.gov/web/offices/pac/mpep/s2143.html)
+- [MPEP § 2144.03 — common knowledge and official notice](https://www.uspto.gov/web/offices/pac/mpep/s2144.html)
+- [MPEP § 802 — restriction](https://www.uspto.gov/web/offices/pac/mpep/s802.html)
+- [Akamai v. Limelight — method-step attribution](https://www.cafc.uscourts.gov/opinions-orders/9-1372.opinion.8-11-2015.1.pdf)
+- [Centillion v. Qwest — use of a distributed system](https://www.cafc.uscourts.gov/opinions-orders/10-1110-1131.pdf)
+- [CloudofChange v. NCR — system-use limits](https://www.cafc.uscourts.gov/opinions-orders/23-1111.OPINION.12-18-2024_2438003.pdf)
+- [NTP v. Research In Motion — territorial method performance](https://www.cafc.uscourts.gov/8-02-2005-2003-1615-ntp-inc-v-research-in-motion-ltd-03-1615r/)

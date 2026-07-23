@@ -47,6 +47,7 @@ DOCS = {
     "A18": ("A18_US12328488B2", "ocr", "eng", "US 12,328,488 B2 — Dynamic segment resolution and metadata transfer (Spotify)", "20.07.2026"),
     "B10": ("B10_KR20240168593A", "text", None, "KR 2024-0168593 A — Object-attribute watermarking for preventing digital-content leakage (KETI)", "20.07.2026"),
     "A19": ("A19_US20230353582A1", "ocr", "eng", "US 2023/0353582 A1 — Anti-Piracy Methods, Devices, and Systems (Synamedia)", "20.07.2026"),
+    "A21": ("A21_US20210166036A1", "ocr", "eng", "US 2021/0166036 A1 — Method and Apparatus for Generating Video Fingerprint (Alibaba)", "22.07.2026"),
 }
 
 def run(cmd):

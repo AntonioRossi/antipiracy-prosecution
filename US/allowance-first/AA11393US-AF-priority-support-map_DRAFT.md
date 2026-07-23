@@ -1,216 +1,193 @@
 # AA11393US — AF Allowance-First Provisional/PCT Priority and Support Map (DRAFT)
 
-> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-17-v2 · STATUS 17 JULY 2026**
+> **STRATEGY AF · CLAIM-SET VERSION AF-2026-07-22-v6 · STATUS 22 JULY 2026**
 >
-> **INTERNAL COUNSEL ANALYSIS — NOT A LEGAL OPINION OR A PRIORITY CONCLUSION.** This map addresses the AF candidate claims in `AA11393US-AF-US_claim-set_DRAFT.md`. It distinguishes support in PCT/IB2025/051755 as filed from entitlement to the 26 February 2024 filing date of US provisional 63/557,868. Counsel must verify the official file wrappers and analyze each claim as a whole under the governing law.
+> **INTERNAL COUNSEL ANALYSIS — NOT A LEGAL OPINION OR A PRIORITY CONCLUSION.** This map distinguishes support in PCT/IB2025/051755 as filed from entitlement to the 26 February 2024 filing date of US provisional 63/557,868. Counsel must verify the official file wrappers and analyze each claim as a whole.
 >
-> **INITIAL-CONTACT STATUS.** This map records the applicant's present limitation-level assessment and is complete for applicant-controlled initial transmission to prospective or retained US counsel under the package-handling controls. No counsel opinion is represented as already obtained. The pending determinations below are pre-filing and reliance controls—not prerequisites to delivering this decision package for advice.
+> **INITIAL-CONTACT STATUS.** The applicant's limitation-level assessment is complete for controlled transmission. No counsel opinion is represented as obtained. DW-05A remains a pre-filing and reliance control.
 
 ## 1. Sources and citation convention
 
-| Source | Date / status | Repository copy | Function in this map |
+| Source | Date / status | Repository copy | Function |
 |---|---:|---|---|
 | US provisional 63/557,868 | 26.02.2024 | `../../PPA2/as filed 63 557868.pdf` | Earliest claimed benefit source |
-| PCT/IB2025/051755 | 19.02.2025 | `../../PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf` and converted Markdown | As-filed international disclosure and claim set |
-| AF candidate set `AF-2026-07-17-v2` | Internal draft dated 17.07.2026; not a filing date | `AA11393US-AF-US_claim-set_DRAFT.md` | Proposed US allowance-first wording; not itself a support source |
+| PCT/IB2025/051755 | 19.02.2025 | `../../PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf` and converted Markdown | As-filed international disclosure and claims |
+| AF candidate set `AF-2026-07-22-v6` | Internal draft; not a filing date | `AA11393US-AF-US_claim-set_DRAFT.md` | Proposed US wording; not a support source |
 
-Page citations are **repository bundle-PDF pages**, not printed specification pages. The as-filed PCT has no numbered paragraphs. PCT references therefore use PDF pages, paragraph subjects, Examples 1–5, and as-filed claims. Provisional references use PDF pages. Counsel should confirm every citation against the official USPTO and WIPO records.
+Page citations are repository bundle-PDF pages, not printed specification pages. The PCT has no numbered paragraphs. Counsel must confirm citations against the official USPTO and WIPO records.
 
-## 2. Support classifications
+## 2. Support classifications and legal boundary
 
-| Code | Meaning | Permitted use in this map |
-|---|---|---|
-| **D — direct** | The feature is stated expressly in one passage, claim, table, or concrete example. | Direct support for the stated feature, not automatically for its full breadth or its combination with other features. |
-| **C — contextual** | The architecture, component, or result is disclosed, but the proposed operational relationship is not stated. | Corroborating context only; not a substitute for written description of the claimed relationship. |
-| **CE — combined-example** | The proposed limitation requires reading disclosed examples or embodiments together. | Counsel must decide whether the filing conveys the combination as possessed; separate disclosure of parts is insufficient by itself. |
-| **W — weak/not express** | The proposed operation or detail has not been located expressly in the reviewed filing. | Do not characterize as settled support; rewrite, omit, or retain only after a reasoned counsel determination. |
-| **G — express gate** | A material support, generalization, priority, or internal-consistency issue remains. | The feature may be presented to counsel for advice, but do not file it or rely on it materially until the identified counsel review is completed. |
+| Code | Meaning |
+|---|---|
+| **D — direct** | Express passage, claim, table, or concrete example supports the stated feature. |
+| **C — contextual** | The architecture or result is disclosed, but the precise proposed relationship is contextual. |
+| **CE — combined-example** | The limitation requires reading disclosed examples or embodiments together. |
+| **W — weak/not express** | The reviewed filing does not expressly state the operation or detail. |
+| **G — gate** | A material support, generalization, priority, or consistency issue requires counsel determination. |
 
-Combinations such as **D/CE/G** mean that the component operations are express, but the claimed integration remains a gated combined-example position.
+A direct grade for component operations does not decide written description for the claim as a whole. Written description asks whether the filing conveys possession of the claimed combination; enablement is a separate full-scope inquiry. Neither conclusion establishes the other. See [MPEP § 2163](https://www.uspto.gov/web/offices/pac/mpep/s2163.html) and [MPEP § 2164](https://www.uspto.gov/web/offices/pac/mpep/s2164.html).
 
 ## 3. AF claim 1 — limitation-level system map
 
-AF claim 1's general production-to-recipient-attribution architecture is unusually well anchored. Provisional system claim 1 at PDF pp. 42–43 and provisional method claim 10 at pp. 43–44 recite cameras, production, cut-time variation, manifest delivery, recipient recording, pirate-copy cut-time detection, reconstructed-manifest matching, and account identification in a single claim. The PCT's general system passage at PDF pp. 19–20 and PCT claim 1 at pp. 50–51 likewise combine mate generation, delivery, association, suspect analysis, version matching, and recipient lookup.
+The provisional places the complete basic recovery loop in one claim. Provisional claim 1(a)–(e) recites plural cameras, a production pipeline, recorded cut timings and transitions, and programmed cut-time variations; claim 1(g)–(k) recites ensemble segmentation, manifest combinations, and the manifest-recipient ledger; and claim 1(l)–(n) recites pirate-stream monitoring, cut-time derivation, reconstructed-manifest matching, and account identification. Provisional method claim 10 states the corresponding sequence. PCT claims 1 and 10–17 and Method 200 provide parallel system and method support, with PCT claim 15 expressly reciting devised cut time codes, one or more reconstructed manifests, equality to delivered manifests, and ledger lookup.
 
-The principal support issue is narrower and patentability-critical: neither filing expressly states that the stored candidate difference, suspect detection, and match all concern the **same candidate-distinguishing region** and that the match jointly requires both the **ordered camera-source pair** and the **switch timing**. That relationship is deliberately assembled from Example 2, the delivered-version record, the detection passages/Example 5, and recipient lookup. It is graded **CE/G**, not direct, below.
-
-| AF claim 1 limitation | Provisional basis | PCT basis | Classification and required action |
+| AF claim 1 limitation | Provisional basis | PCT basis | Classification and action |
 |---|---|---|---|
-| Processor-and-memory system executing the recited operations | Computing and server implementation at PDF pp. 24–25 and 35–36; provisional system claim 1, pp. 42–43 | Computing environment at PDF p. 25; PCT claims 8–9 at p. 51 | **D** for generic implementation. Counsel must still review § 112(f), algorithm sufficiency, and whether one claimed system performs or controls all functions. |
-| Receive video from plural cameras | Summary/detailed pipeline at pp. 15–16 and 20–25; provisional claim 1(a)–(b), p. 42; provisional method claim 10(a)–(b), pp. 43–44 | General system and detailed embodiment, pp. 19–21; PCT claims 1, 10, and 16, pp. 50–54 | **D.** |
-| Structured list of edit instructions identifies source-camera identifiers and recorded cut time codes | EDL discussion at pp. 20–26; Example 2 reference/mate tables at pp. 26–27 expressly list source camera, in-point, and out-point; provisional claims 1(d)–(e) and 10(d)–(e), pp. 42–44 | EDL/list description at pp. 20–24; Example 2, pp. 40–42; PCT claim 10, pp. 51–52, and PCT method claims 16–17, pp. 53–54 | **D** for the concrete list fields and cut-time recording. |
-| Produce reference content according to the structured list | Pipeline summary at p. 15; EDL discussion at pp. 20–24; provisional claims 1 and 10, pp. 42–44 | General system at pp. 19–21; EDL discussion at pp. 23–24; PCT claims 1, 10, and 16–17 | **D/C.** Reference creation and the EDL are express; “according to” is a drafting relationship supported by the EDL's stated editing function. |
-| Generate mate by varying the recorded time of a selected cut comprising an ordered first-camera-to-second-camera transition while retaining that transition | Mate-generation passages at pp. 15, 24–27, and 42–44; Example 2 retains Camera 2 followed by Camera 3 while moving the boundary from `00:00:20:01` to `00:00:20:11` | Mate-generation passages at pp. 19–21 and 25; Example 2 Tables 1–2, pp. 40–41; PCT claims 1, 10, and 16–17 | **D for the concrete Camera 2→Camera 3 example; CE/G for generalized first/second-camera wording.** Counsel must confirm that the general ordered-pair formulation is a supported abstraction. |
-| Reference transition at `tR`, mate transition at different `tM` | Example 2 reference and mate EDLs, pp. 26–27 | Example 2, pp. 40–42 | **D for the shown times; CE/G for generalization.** |
-| During the interval between `tR` and `tM`, reference and mate contain temporally corresponding frames from different cameras | Example 2 tables, pp. 26–27: after the reference changes to Camera 3, the mate continues Camera 2 for the intervening ten frames | Same Example 2 tables, pp. 40–41 | **Concrete-table inference/G.** “Temporally corresponding frames” is not verbatim. Counsel must confirm the synchronized-feed inference and breadth. That inference is a proposed disclosure basis, not an additional synchronization limitation in AF claim 1. |
-| Define a candidate-distinguishing temporal region including the interval | Altered-cut and fingerprint discussion at pp. 27–28 and 36–41 | Altered-cut, distinguishing-version, and comparison discussion at pp. 19–23, 27–30, and 47–49 | **C/CE/G.** The named region is a claim-drafting construct used to tie later operations to the actual inter-version difference; no passage uses this term. |
-| Deliver generated versions including reference and mate versions to respective recipients | Licensor/licensee and distribution passages at pp. 18, 27–35, and 40–41; provisional claims 1(g)–(k) and 10(g)–(i), pp. 43–44 | Generic delivery in the system passage at p. 19; detailed distribution at pp. 21–27; PCT claims 1 and 11–14, pp. 50 and 52–53 | **D/C.** Delivery of distinguishable versions is direct. The express requirement that the delivered set include both a reference version and a mate version is consistent with the ensemble/distribution architecture but should be confirmed as a claim relationship. |
-| For each delivered version, generate a candidate pattern from the source identifiers and switch timing actually present at the distinguishing region | Example 2 source/timing tables, pp. 26–27; unique cut-sequence/fingerprint and delivery-record discussion at pp. 31–41 | Example 2, pp. 40–42; version/manifest fingerprint and association discussion at pp. 21–27 and 45–47 | **CE/G.** Version/cut fingerprints and recipient associations are disclosed, but no passage expressly derives and stores an ordered-source-pair-plus-timing pattern for each delivered version. |
-| Store an association among the delivered version, candidate pattern, and recipient | Ledger and user-manifest association passages at pp. 15, 18, and 31–35; provisional claim 1(k), p. 43; provisional method claim 10(i), p. 44 | Generic version-recipient record at pp. 19–20 and PCT claim 1, p. 50; manifest ledger at pp. 21–22 and PCT claim 14, p. 52 | **D** for delivered version/manifest-to-recipient association; **CE/G** for storing the newly formulated source-transition pattern in the same association. |
-| Receive and analyze suspected unauthorized content | Detection discussion at pp. 15 and 34–38; provisional claims 1(l)–(m) and 10(j), pp. 43–44 | General system at pp. 19–20; detailed detection at pp. 21–22; PCT claims 1 and 15–17, pp. 50 and 53–54 | **D.** |
-| Detect, at the same candidate-distinguishing region, an ordered transition between source identities and its timing | Generic scene-change/cut-time detection at pp. 15 and 34–37; Example 2 source identities at pp. 26–27; comparison of altered cuts at pp. 36–37 | Cut-time detection at pp. 19–21 and PCT claims 1 and 15; Example 2 at pp. 40–42; Example 5 at pp. 47–49 | **CE/G.** Cut-time detection is direct. Detection of both camera identities on the two sides, at the same region that stored the inter-version difference, is not express and is a material counsel gate. |
-| Derive a detected pattern identifying both source sides and timing | Same combined passages as the preceding row | Same combined passages; PCT claim 15 directly derives time codes but not source identities | **CE/G.** Do not treat generic scene-change or time-code detection as direct support for source-identity recovery. |
-| Identify a candidate only when both ordered source pair and timing jointly match at that same region | Timing/fingerprint comparison and ledger narrative at pp. 34–41, read with Example 2 | PCT claim 1 version matching and PCT claim 15 manifest matching, read with Example 2 and Example 5 | **CE/G.** Direct matching is to a version or reconstructed manifest. The claimed two-field, same-region joint match is not express. |
-| Search the association record and identify the recipient linked to the matched candidate/version | Ledger/retrieval passages at pp. 15 and 34–35; provisional claim 1(k)–(n), pp. 43; provisional method claim 10(i)–(k), p. 44 | General system at pp. 19–20; detailed ledger/retrieval at pp. 21–22; PCT claims 1 and 14–15, pp. 50 and 52–53 | **D** for record search and recipient identification; **CE/G** for using the newly formulated joint source/time match as the search key. |
-| AF claim 1 as a complete operational chain | Provisional system claim 1 and method claim 10 directly disclose the overall closed loop, pp. 42–44 | PCT general system passage, pp. 19–20; PCT claim 1, pp. 50–51; detailed embodiment, pp. 20–22 | **D/CE/G.** The general closed loop is direct. The novelty-carrying same-region source-pair/timing relationships require combined-example review. |
+| Processor/memory system | Computing and server implementation, PDF pp. 24–25 and 35–36; system claim 1 | Computing environment, PDF p. 25; claims 8–9 | **D.** Review § 112(f), algorithm sufficiency, and single-system attribution. |
+| Receive plural-camera video | Pipeline, pp. 15–16 and 20–25; claim 1(a)–(b) | General system, pp. 19–21; claims 1 and 10 | **D.** |
+| For plural director cuts, successive edit entries identify first/second source cameras and out/in-point time codes | EDL discussion, pp. 20–26; Example 2 tables, pp. 26–27, identify source camera, in-point, and out-point | List/EDL discussion, pp. 20–24; Example 2, pp. 40–42; claim 10 | **D** for the concrete fields and camera order; **CE/G** for the generalized first/second-camera formulation across plural cuts. |
+| Produce reference content according to the structured list | Pipeline and EDL discussion, pp. 15 and 20–24; claim 1 | General production and list discussion, pp. 19–24; claims 1 and 10 | **D/C.** |
+| Generate one or more mates by modifying out/in-point times at plural selected cuts while retaining source-camera identifiers and order | Claim 1(e) varies the time code of any cut; method claim 10(e) varies time codes of camera cuts; Example 2 retains Camera 2→Camera 3 while moving the boundary | Mate-generation passages, pp. 19–25; Example 2, pp. 40–42; claims 1, 10, and 16–17 | **D** for plural cut-time variation and the concrete retained Camera 2→Camera 3 boundary; **CE/G** for the generalized retained-pair operation at each selected cut. |
+| Reference transition and later mate transition; first-camera selection extended and second begins later | Example 2 tables and explanation, pp. 26–27 | Example 2, pp. 40–42 | **D** for the illustrated ten-frame operation; **CE/G** for general breadth. The independent claims do not require later resynchronization. |
+| Segment reference/mate ensemble into chunks | Claim 1(g); method claim 10(g) | Distribution passages, pp. 21–27; claims 11–12 and 17 | **D.** |
+| Generate manifests pointing to respective reference/mate chunk combinations | Claim 1(h)–(j); method claim 10(g)–(h); Examples 3–4 | Claims 11–12; Examples 3–4, pp. 42–47 | **D** for manifest combinations; **CE/G** for the complete relationship to the plural retained physical-camera boundaries. |
+| Deliver according to respective manifests and store manifest-recipient associations in a ledger | Claim 1(i)–(k); method claim 10(h)–(i) | Claims 11–14 and 16–17; ledger passages, pp. 21–22 | **D.** |
+| Receive suspected unauthorized distribution | Claim 1(l); method claim 10(j) | General detection, pp. 19–22; claims 1 and 15–17 | **D.** |
+| Scene-change detection identifies a plurality of camera-cut time codes | Claim 1(m): algorithm devises “the time codes of the camera cuts”; method claim 10(j): identify “camera cut time codes” | Component 130/algorithm 131; Example 5; claim 15; Method 200/claim 17 | **D.** No suspect-side physical-camera labeling is required. |
+| Build one or more reconstructed manifests from the plurality of identified time codes | Claim 1(m) and method claim 10(j) expressly connect detected cut time codes to manifest reconstruction | Claim 15 expressly builds one or more reconstructed manifests from devised time codes; claim 17 states the same method step | **D** for the operation; **D/CE/G** for its relationship to the particular plural production variations in the complete claim. |
+| Search ledger for recipient associated with an equal delivered manifest | Claim 1(n) expressly searches for the spectator receiving a manifest equal to the reconstructed manifest; method claim 10(k) | Claim 15 and Method 200/claim 17 expressly recite equality, ledger search, and account identification | **D.** |
+| AF claim 1 as a complete chain | Provisional claim 1 recites production, manifest delivery/recording, cut-time reconstruction, equality, and recipient identification in one system claim | PCT claim 1 supplies the general integrated system; claims 10–15 supply the concrete production/distribution/recovery chain | **D/CE/G.** The overall loop is direct. Counsel must decide the plural retained-camera-boundary-to-reconstructed-manifest relationship as a whole. |
 
-## 4. AF claim 20 — limitation-level method map
+## 4. AF method claims
 
-AF claim 20 is not treated as supported merely because its substantive limitations mirror AF claim 1. The method is mapped independently to provisional method claim 10 and the PCT method disclosure. Those sources directly place capture/management, cut recording and variation, delivery, recipient recording, monitoring, and searching in one method. The same patentability-critical refinements as AF claim 1—the named distinguishing region, recovery of both source identities, and a joint source-order/timing match—remain **CE/G** in method form.
+### 4.1 AF claims 19–22 — integrated method map
 
-| AF claim 20 method limitation | Provisional method basis | PCT method basis | Classification and required action |
+Provisional method claim 10 directly recites the production-to-attribution sequence. PCT Method 200 and claims 16–17 directly recite management, camera-cut recording and variation, segmentation, manifest generation and distribution, ledger recording, scene-change/time-code detection, reconstructed-manifest building, and account identification.
+
+| AF claim 19 operation | Provisional basis | PCT basis | Classification and action |
 |---|---|---|---|
-| Receive plural-camera video and a structured list of edit instructions containing source identifiers and recorded cut times | Method claim 10(a)–(d), pp. 43–44, read with the EDL passages and Example 2 tables at pp. 20–27 | Method 200 capture/management/camera-cut-recording steps; PCT claims 16–17, pp. 53–54; Example 2, pp. 40–42 | **D** for plural-camera capture, receipt, recorded cuts/transitions, and the concrete EDL fields. |
-| Produce reference content according to the structured list | Method claim 10(a)–(e), pp. 43–44; pipeline and EDL passages at pp. 15 and 20–24 | Method 200 management/programming steps; PCT claims 16–17; general production description | **D/C.** Reference production and the list's editing role are express; the proposed “according to” relationship is contextual drafting. |
-| Generate a mate by varying the recorded time of a selected cut comprising an ordered first-camera-to-second-camera transition while retaining that transition | Method claim 10(e), p. 44, read with Example 2 at pp. 26–27 | Method 200 programming step and PCT claims 16–17, pp. 53–54, read with Example 2, pp. 40–42 | **D for the concrete Camera 2→Camera 3 example; CE/G for generalized first/second-camera wording.** |
-| Place the retained transition at noncoincident reference and mate timings and provide the intervening alternate-camera frames | Example 2 reference/mate tables, pp. 26–27 | Example 2 reference/mate tables, pp. 40–42, read with the method 200 programming step | **D** for the shown noncoincident timings; **concrete-table inference/G** for “temporally corresponding frames” and its generalized breadth. The synchronized-feed inference is a proposed disclosure basis, not an extra AF claim 20 step. |
-| Define a candidate-distinguishing temporal region containing the interval | Altered-cut/fingerprint discussion at pp. 27–28 and 36–41, read with method claim 10 | Altered-cut and comparison discussion, including Example 5, read with method 200 | **C/CE/G.** The named region is a drafting construct that connects the disclosed method steps; it is not express terminology. |
-| Deliver generated versions including a reference version and a mate version to respective recipients | Method claim 10(h), p. 44; distribution passages at pp. 27–35 | Method 200 distribution step; PCT claim 16, p. 53; detailed distribution description | **D/C.** Distribution of distinguishable mates/versions is direct; counsel should confirm the express requirement that both reference and mate versions occur in the delivered set. |
-| For each delivered version, generate the claimed candidate source-transition pattern from the source identities and timing actually present at the region | Example 2 and unique cut-sequence/fingerprint discussion, pp. 26–27 and 31–41, read with method claim 10 | Example 2 and version/manifest-fingerprint discussion, read with method 200 and PCT claims 16–17 | **CE/G.** No method passage expressly derives the complete ordered-source-pair-plus-timing pattern for each delivered version. |
-| Store the delivered-version/candidate-pattern/recipient association | Method claim 10(i), p. 44; ledger and delivery-record passages at pp. 31–35 | Method 200 recording/ledger-recording step; PCT claims 16–17, pp. 53–54 | **D** for recording delivery or a manifest against a recipient; **CE/G** for including the newly formulated candidate source-transition pattern in that association. |
-| Receive the suspected unauthorized distribution and detect, at the same region, an ordered transition between source identities and its timing | Method claim 10(j), p. 44; detection passages at pp. 34–38, read with Example 2 | Method 200 monitoring step; PCT claims 16–17; Example 5, read with Example 2 | **D** for monitoring/detecting scene changes and timings; **CE/G** for receipt and detection of both source identities at the same stored distinguishing region. |
-| Derive a detected pattern identifying both source sides and timing | Method claim 10(j) and timing/fingerprint passages, read with Example 2 | Method 200 monitoring step and PCT claim 17's devised time codes/reconstructed manifest, read with Examples 2 and 5 | **CE/G.** Time-code derivation is direct; the ordered-source-pair-plus-timing object is not express. |
-| Select a candidate only when both source order and timing jointly match at that same region | Method claim 10(j)–(k) and comparison/search narrative, read with Example 2 | Method 200 monitoring/searching steps and PCT claims 16–17, read with Examples 2 and 5 | **CE/G.** Direct matching concerns scene changes, a version, or a reconstructed manifest; the proposed two-field same-region test requires combined-example review. |
-| Search the association record and identify the linked recipient | Method claim 10(i)–(k), p. 44 | Method 200 recording and searching steps; PCT claims 16–17, pp. 53–54 | **D** for the search and recipient-identification result; **CE/G** for using the newly formulated joint source/time pattern as the search key. |
-| AF claim 20 as a complete method chain | Provisional method claim 10 directly recites the production-to-recipient-identification method, pp. 43–44 | Method 200 narrative and Figure 4; PCT claims 16–17, pp. 53–54 | **D/CE/G.** The overall method loop is direct. The same-region source-pair/timing relationships are not made direct by restating the chain in method form. Obtain a claim-as-a-whole opinion independently of AF claim 1. |
+| Receive plural-camera video and the structured edit list | Method claim 10(a)–(d), pp. 43–44; EDL passages and Example 2 | Method 200; claims 16–17; Example 2 | **D** for capture, cut recording, and concrete fields; **CE/G** for generalized successive first/second-camera entries across plural cuts. |
+| Produce reference and generate mates by plural retained-camera-boundary variations | Method claim 10(e), read with Example 2 and plural-cut description | Method 200 programming step; claims 16–17; Example 2 | **D/CE/G** on the same basis as AF claim 1. |
+| Segment, generate manifests, deliver, and record manifest-recipient associations | Method claim 10(g)–(i); Examples 3–4 | Method 200; claims 16–17; Examples 3–4 | **D** for the operations; **CE/G** for their complete relationship to the plural retained boundaries. |
+| Receive suspect, identify plural cut time codes, and build reconstructed manifests | Method claim 10(j) | Method 200 monitoring step; claim 17 | **D.** |
+| Search ledger for recipient associated with an equal delivered manifest | Method claim 10(k) | Method 200 searching step; claims 16–17 | **D.** |
+| AF claim 19 as a complete method | Provisional method claim 10 | Method 200 and claims 16–17 | **D/CE/G.** Obtain a separate claim-as-a-whole opinion; system-format support does not itself establish method support. |
 
-## 5. AF dependent claims — claim-by-claim map
+AF claims 20–22 provide two method branches beneath AF claim 19. AF claim 20 supplies the causal-nexus fallback. AF claims 21–22 form a separate detection-implementation chain so they do not inherit AF claim 20's relationship-specific gate. Each inherits AF claim 19's complete-method posture.
 
-Every dependent claim inherits all AF claim 1 gates. The classification below concerns the **added limitation**, not the inherited claim as a whole.
-
-| AF claim | Added limitation | Provisional basis | PCT basis | Classification and counsel action |
+| AF claim | Added method limitation | Provisional basis | PCT basis | Grade and action |
 |---:|---|---|---|---|
-| 2 | Preserve a later reference cut time and restore synchronization from that cut onward | Example 2 table and explanation, pp. 26–27 | Example 2, pp. 41–42, states that Cut 4 begins at the reference time with no delay | **D/G.** The provisional contains the internal inconsistency detailed in § 6.1. Obtain a written priority/support view before filing or relying on AF claim 2. |
-| 3 | `tM` ten frames later; first selection extended ten frames; following selection shortened; later resynchronization | Example 2 reference/mate tables and explanation, pp. 26–27 | Example 2, pp. 40–42 | **D/G.** The ten-frame mechanics are express, but AF claim 3 inherits the AF claim 2 inconsistency gate. |
-| 4 | EDL with source camera, in-point, and out-point for plural cuts | Example 2 tables, pp. 26–27; general EDL discussion, pp. 20–25 | EDL discussion, pp. 23–24; Example 2, pp. 40–42 | **D.** |
-| 5 | Live diverse viewpoints and director-commanded real-time camera selection | Summary/detailed pipeline, pp. 15–16 and 20–26; provisional claim 1(a)–(d), p. 42 | Detailed pipeline, pp. 20–24; Example 1, pp. 38–40; PCT claim 10, pp. 51–52 | **D.** |
-| 6 | Vary plural director-commanded cuts; define and store patterns at plural regions | Variation of any cut at pp. 25–26; repeated generation at pp. 30–33; provisional method claim 11, p. 44 | Repeated/successive cut discussion at pp. 22–23; Example 4, pp. 45–47; PCT claim 12, p. 52 | **D** for applying variations at plural cuts; **CE/G** for generating AF claim 1's ordered-source/timing pattern at every respective region. |
-| 7 | Detect transition/timing by perceptual-hash frame comparison | Automated comparison at pp. 36–37; provisional claims 3 and 12, pp. 43–44 | Example 5, pp. 47–49; PCT claim 2, p. 50 | **D** for perceptual-hash comparison; **CE/G** for using it to recover both camera identities and the transition timing required by AF claim 1. |
-| 8 | Fuzzy comparison of perceptual hashes of frame groups using sliding windows | PDF p. 37; provisional claims 4 and 13, pp. 43–44 | Example 5, p. 48; PCT claim 3, p. 51 | **D** for the sliding-window technique; inherits AF claim 7's source-identity gate. |
-| 9 | Manifest-based delivery/association; derive time code and build reconstructed manifest | Manifest delivery/association at pp. 15, 28–35, and 42–44; time-code derivation/reconstruction at pp. 15 and 34–37 and provisional claim 1(m), p. 43 | Manifest delivery/association at pp. 21–27 and PCT claims 11–14; time-code derivation/reconstruction at pp. 21 and 37 and PCT claim 15, p. 53 | **D** for manifest delivery, association, derived time code, and reconstructed manifest. Association of each manifest with AF claim 1's newly formulated candidate source-transition pattern is **CE/G**. |
-| 10 | Ledger associates delivered manifests/accounts and is searched for a matching reconstructed manifest | Ledger/retrieval at pp. 15 and 34–35; provisional claim 1(k)–(n), p. 43 | Ledger/retrieval at pp. 21–22 and 37; PCT claims 14–15, pp. 52–53 | **D.** |
-| 11 | Mixed-version suspect; apply probabilistic analysis to recipient-associated candidate camera-source-transition patterns; positively identify recipients whose delivered versions contributed respective portions | Colluding Redistribution discussion at pp. 38–41 states that mixed-copy segments remain traceable and accounts involved can be identified; provisional claims 6 and 15, pp. 43–44 | Collusion discussion at pp. 30–34; PCT claim 5, p. 51 | **D/CE/G.** Mixed copies, probabilistic/Tardos handling, and positive source-account identification are disclosed at the functional-result level. Applying the algorithm specifically to AF claim 1's newly formulated recipient-associated candidate source-transition patterns is combined-example support. |
-| 12 | Segmented Tardos fingerprints applied to content segments, with positive identification of a contributor for a respective portion | Segmented Tardos discussion at p. 39; collusion/account-identification discussion at pp. 38–41; provisional claims 6 and 15, pp. 43–44 | Segmented Tardos and collusion discussion at pp. 30–34; PCT claim 5, p. 51 | **D/C.** Segmented Tardos codes and positive colluder identification are express. Counsel should confirm the exact relationship between a fingerprinted segment, a suspect portion, and the identified contributing recipient. |
-| 13 | Segment reference/mate; manifests select combinations preserving `tR` or `tM`; deliver assembled streams; store manifest/pattern/recipient association | Distribution machinery at pp. 15 and 28–35 and provisional claim 1(g)–(k), pp. 42–43, read with Example 2 at pp. 26–27 | Distribution machinery at pp. 21–27; Examples 3–4, pp. 43–47; PCT claims 11–14, pp. 52–53, read with Example 2, pp. 40–42 | **D** for chunks, manifests, delivery, and associations; **CE/G** for requiring each assembled stream to preserve the specific ordered transition at `tR` or `tM`. The Examples 2→3→4 linkage is signposted but not stated in the exact AF relationship. |
-| 14 | Different manifests select equal-duration chunks spanning the same playback interval, and each chunk straddles its respective transition | Equal-duration corresponding manifest positions at pp. 28–30, read with moved boundary at pp. 26–27 | Example 3 equal-duration reference/mate chunks, pp. 43–45, read with Example 2, pp. 40–42 | **CE/G.** No single passage states that each paired chunk contains frames on both sides of its respective internal transition between identified cameras. Keep only as a counsel-gated fallback. |
-| 15 | CDN adaptive delivery; manifests tailored to device/network conditions | Summary at p. 15; adaptive delivery at pp. 19–20 and 28–30; provisional claim 1(g)–(i) and provisional claim 5, p. 43 | Detailed embodiment at pp. 21–22; PCT claim 11, p. 52 | **D.** |
-| 16 | Mix reference/mate chunks and progressively assign individualized manifests as more cuts become available | Mixing and progressive assignment at pp. 31–34 | Mixing component at pp. 25–27; Example 4, pp. 45–47; PCT claim 12, p. 52 | **D.** |
-| 17 | Unicast respective streams | Summary at p. 16; provisional claims 7 and 16, pp. 43–44 | Distribution embodiment at p. 34; PCT claim 6, p. 51 | **D.** |
-| 18 | Recipient-associated manifest choices at plural distinguishing regions between reference/mate timings for ordered source transitions | Repeated cut variations and unique cut sequences at pp. 30–33 and 40–41, read with Example 2, pp. 26–27 | Repeated/successive cut variations at pp. 22–23 and Example 4, pp. 45–47, read with Example 2, pp. 40–42 | **C/CE/G.** Plural variations and sequences are express. The ordered-source-pair/noncoincident-timing relationship at each region is generalized from one concrete Example 2 transition. |
-| 19 | Overlay additional elements onto reference/mate before segmentation | Overlay/pipeline summary at p. 15; provisional claim 1(f) before segmentation element (g), p. 43; provisional method claim 10(f) before segmentation element (g), pp. 43–44 | Overlay discussion at p. 31; PCT claim 4, p. 51, read with PCT segmentation claim 11; method architecture | **D/C.** Overlay and segmentation are express; the stated pipeline sequence has direct provisional claim ordering and contextual PCT support. Counsel should preserve a less sequence-specific alternative if PCT support is disputed. |
+| 20 | Delivered recipient timing-choice combination includes at least one mate timing; reconstructed manifest represents the same detected timing-choice combination | Geometric-progression, manifest-combination, ledger, and reconstruction passages; claims 1(g)–(n) and 10(g)–(k) | Examples 3–5; claims 11–17; Method 200 | **D/CE/G.** The operations and plural choice architecture are disclosed; confirm the exact delivered recipient-combination → affirmative mate choice → reconstruction of the same detected combination relationship. Inherits AF claim 19. |
+| 21 | Perceptual-hash comparison for plural cut-time identification | Provisional claim 3; detection discussion and Example 5 | Example 5; detection description | **D.** Direct implementation support; depends separately from and inherits AF claim 19, not AF claim 20. |
+| 22 | Sliding-window fuzzy matching of perceptual-hash groups | Provisional claim 4; Example 5 discussion | Example 5 | **D.** Direct implementation support; inherits AF claims 21 and 19, not AF claim 20. |
 
-## 6. Mandatory support and priority gates
+### 4.2 AF claim 23 — monitor-side reconstructed-manifest method
 
-### 6.1 Example 2 resynchronization inconsistency — AF claims 2–3
+AF claim 23 combines the affirmative detector-only method environment with the mate-containing delivered-combination-to-reconstructed-combination nexus. It does not inherit AF claim 19's integrated-method mode or the applicant-assigned Mode A posture of system-format NA claim 16 or AF-CONT claim 11.
 
-At provisional PDF pp. 26–27:
+| AF claim 23 operation or relationship | Provisional basis | PCT basis | Classification and action |
+|---|---|---|---|
+| Receive the suspected unauthorized distribution | Method claim 10(j); system claim 1(l) | Method 200/claims 16–17; claim 15 | **D.** |
+| Apply scene-change detection and identify plural camera-cut time codes | Method claim 10(j); system claim 1(m) | Claim 15 and Method 200/claim 17 | **D.** No suspect-side physical-camera labeling is required. |
+| Build reconstructed manifests, including one representing a detected plural timing combination | Method claim 10(j), read with the geometric-progression and reconstruction passages | Claim 15 and Method 200/claim 17, read with Examples 3–5 | **D** for reconstruction from identified cut time codes; **D/CE/G** for representation of the same plural timing combination used in the mate-containing delivered-manifest relationship. |
+| Search a delivered-manifest/recipient ledger for an equal manifest to identify the recipient | Method claim 10(k), read with method claim 10(e), (g)–(i) and system claim 1(e), (g)–(k), (n) | Claims 10–15 and Method 200/claims 16–17 | **D/CE/G** for the affirmative method together with the passive delivered-manifest environment. Determine who performs the search-to-identify operation and, if performers are split, whether the other conduct is legally attributable to one entity under the applicable method-claim standard. |
+| Delivered manifests identify reference/mate chunk combinations; each represents plural reference/mate timing choices | Claims 1(e), (g)–(k) and 10(e), (g)–(i), read with Examples 2–4 and the geometric-progression passages | Claims 10–14 and 16–17, read with Examples 2–4 | **D/CE/G.** Confirm the complete method-environment relationship rather than treating system-format disclosure as automatically sufficient. |
+| Equal delivered manifest contains an affirmative mate timing and matches the detected combination represented by the reconstruction | Claims 1(g)–(n) and 10(g)–(k), read with the geometric-progression, manifest-combination, ledger, and reconstruction passages | Examples 3–5; claims 11–17; Method 200 | **D/CE/G.** Confirm the delivered mate-containing combination → reconstruction of the same detected combination nexus. |
+| AF claim 23 as a whole | Method claim 10(j)–(k), read with claims 1(e), (g)–(n), 10(e), (g)–(i), and Examples 2–4 | Method 200 and claims 15–17, read with claims 10–14 and Examples 2–5 | **D/CE/G; mode unassigned.** Determine written description and enablement in each filing, effective date, limiting effect of the passive environment, equality construction, actor performance, eligibility, and art as a whole. |
 
-- the mate EDL table places Cut 4 at `00:00:30:01` and labels it adjusted to the reference;
-- the explanatory bullet first states `00:00:30:11`, calls that value a mistake in the alignment attempt, and then says the correct approach is `00:00:30:01`, just like the reference and with no delay; and
-- the PCT Example 2 presents the corrected resynchronization without the stray value.
+The reconstruction operation is disclosed more clearly as a required result than as a detailed noise-tolerant algorithm. Counsel must determine full-scope enablement and any § 112(f) consequence. The claim set must use a supported construction of an “equal” manifest file—such as byte identity, equivalent chunk selections, or equivalent represented timing choices—and address dynamic URLs, tokens, and metadata.
 
-The correct rule therefore appears in the provisional table and corrective text. That does not establish an automatic loss of priority, but the inconsistency prevents an unqualified support conclusion. Until counsel provides a claim-specific written view on what a skilled reader would understand and whether the PCT wording is permissible clarification rather than new matter:
+## 5. AF dependent claims
 
-1. keep resynchronization out of AF claims 1 and 20;
-2. retain AF claims 2–3 only as expressly gated dependents; and
-3. do not make resynchronization the sole basis of a material patentability representation.
+Every system dependent inherits AF claim 1's claim-as-a-whole posture. The grades below address the added limitation. AF claims 20–22 are mapped with the method family in § 4; AF claim 23 is independently mapped there.
 
-### 6.2 Source-identity and same-region detection — AF claims 1, 20, and 7–10
+| AF claim | Added limitation | Provisional basis | PCT basis | Grade and action |
+|---:|---|---|---|---|
+| 2 | Preserve later reference cut timing and restore synchronization | Example 2, pp. 26–27 | Example 2, pp. 41–42 | **D/G.** Resolve the provisional inconsistency in § 6.2. |
+| 3 | Ten-frame extension/shortening and resynchronization | Example 2, pp. 26–27 | Example 2, pp. 40–42 | **D/G.** Inherits AF claim 2's gate. |
+| 4 | Structured list is an EDL | EDL discussion and Example 2 | EDL discussion and Example 2 | **D.** |
+| 5 | Live viewpoints and director-commanded switching | Pipeline discussion; claims 1(a)–(d), 10(a)–(d) | General system; claim 10; Method 200 | **D.** |
+| 6 | Respective single-cut mate for each selected cut | Single variation at any cut, geometric progression discussion, and Examples 2–4 | Mate-generation and geometric-progression discussion; Examples 2–4 | **D/C/G.** Confirm the respective-mate/only-one-selected-cut relationship. |
+| 7 | Perceptual-hash cut-time detection | Provisional claim 3; detection discussion and Example 5 | Example 5; detection description | **D.** |
+| 8 | Sliding-window fuzzy hash matching | Provisional claim 4; Example 5 discussion | Example 5 | **D.** |
+| 9 | Adaptive CDN and tailored manifests | Provisional claims 1(g)–(j), 5 and method claims 10(g)–(h), 14 | PCT claim 11 and distribution description | **D.** |
+| 10 | Reference/mate chunk mixing and progressive assignment | Mixing and progressive user-manifest mapping passages; Examples 3–4 | PCT claim 12; Example 4 | **D.** |
+| 11 | Mixed-version suspect and probabilistic analysis of recipient-associated manifest sequences | Collusion/Tardos discussion read with manifest-recipient ledger | Collusion/Tardos discussion read with claims 11–15 | **C/CE/G.** Mixed-copy tracing is disclosed; confirm manifest chunk-selection sequences as the algorithm input and respective-portion output. |
+| 12 | Segmented Tardos and at least one portion-specific contributor | Segmented/collusion discussion and provisional claim 6 | PCT collusion discussion and claim 6 | **D/C/G.** Confirm the exact segment/fingerprint/portion/contributor relationship. |
+| 13 | Equal-duration reference/mate chunks for the same playback interval | Example 3 | Example 3, pp. 42–45 | **D.** |
+| 14 | Each paired chunk contains the retained transition at its respective timing | Example 2 read with Example 3 | Examples 2–3 | **CE/G.** The exact chunk-internal boundary geometry is not stated in one passage. |
+| 15 | Blockchain registration/readout | Blockchain passages at PDF pp. 18 and 35 | PCT blockchain passage and claim 13 | **D.** |
+| 16 | Unicast | Provisional claim 7 and method claim 16 | Distribution description | **D.** |
+| 17 | Recipient-associated reference/mate timing choices across plural cuts | Geometric progression, manifest combinations, and ledger passages | Geometric progression and Examples 3–4 | **D/CE/G.** Confirm the exact combination represented by each delivered manifest. |
+| 18 | Additional elements overlaid before segmentation | Provisional claim 1(f) followed by claim 1(g); method claim 10(f)–(g) | Overlay and segmentation passages; claims 5 and 17 | **D** in the provisional claim sequence; **D/C** in PCT. |
 
-Generic scene-change detection, camera-cut timing analysis, time-code derivation, reconstructed-manifest matching, and recipient lookup are direct. The following are not stated with the same specificity:
+## 6. Mandatory gates
 
-1. detecting the identities of both cameras on the respective sides of the suspect transition;
-2. performing that detection at the same region where delivered versions were known to differ;
-3. deriving the proposed ordered-source-pair-plus-time pattern; and
-4. requiring both ordered source pair and timing to match before lookup.
+### 6.1 Claim-as-a-whole plural-cut integration — AF claims 1 and 19–22
 
-This is the most important support gate for both AF independent claims. The limitation may be strategically justified against the art, but patentability value cannot substitute for written-description support. Counsel should consider whether the as-filed disclosure conveys source identity through EDL-referenced camera frames and the Example 5 visual comparison, and should preserve support-safer system and method alternatives keyed to cut timing/version or reconstructed-manifest matching if not.
+The basic production-to-reconstruction loop is express in provisional claims 1 and 10 and in the PCT system/method disclosure. The remaining written-description question is whether each filing conveys the strengthened claim relationship in which:
 
-### 6.3 Examples 2–5 integration — AF claims 1, 20, 7–10, and 13–18
+1. physical source-camera identifiers and order are retained while out/in-point time codes are changed at a plurality of selected director-commanded cuts;
+2. delivered manifest combinations embody reference/mate choices produced by those plural changes; and
+3. plural cut time codes detected in the suspect are used to reconstruct the delivered manifest that identifies the recipient.
 
-The relative combined-example positions are:
+The source files disclose each stage and place the overall loop in single claims. Example 2 supplies the physical-camera boundary; Examples 3–4 connect varied cuts to chunks and manifests; and the detection claims connect plural cut time codes to reconstructed-manifest equality. The exact strengthened relationship is nevertheless a claim-as-a-whole **D/CE/G** determination, not an automatic consequence of direct support for each stage.
 
-| Combined disclosure | Relative support posture | Reason |
+### 6.2 Example 2 resynchronization inconsistency — AF claims 2–3
+
+The provisional mate table restores Cut 4 at `00:00:30:01`, and the explanatory sentence states that the synchronization is restored at the next cut. The same provisional paragraph also contains a stray `00:00:30:11` “mistake” sentence. PCT Example 2 uses `00:00:30:01` and omits the stray value. Counsel must determine written description, enablement, benefit entitlement, and whether the PCT text is a permissible clarification before AF claims 2–3 are filed or used materially.
+
+### 6.3 Production-boundary generalization
+
+Example 2 directly shows Camera 2 followed by Camera 3, the corresponding out/in-point fields, retention of their order, extension of Camera 2, and delayed commencement of Camera 3. Claims and description authorize variation of the time codes of camera cuts generally and at plural cuts. Counsel must determine whether the filing conveys the claimed first/second-source-camera formulation for each of a plurality of selected director-commanded cuts and the exact paired out-point/in-point modification.
+
+### 6.4 Examples 2→3→4 and dependent relationships
+
+| Relationship | Posture | Required determination |
 |---|---|---|
-| Example 2 → Examples 3–4: moved boundary to manifest/chunk selection | Stronger **CE**, still gated | Example 3 expressly says a different mate chunk reflects the delayed third cut; Example 4 applies EDL cut variations before generating and assigning manifests. The exact `tR`/`tM` preservation language is not verbatim. |
-| Example 2 → Example 5: moved boundary to same-region source-pair detection | Materially weaker **CE** | Example 5 compares reference/mate frames and discusses timing and characteristics of altered cuts, but never expressly recovers camera identifiers on both sides or defines the joint source/time match. |
-| Example 2 → Example 3: each paired same-interval chunk straddles its own transition | Weakest manifest **CE** | Equal duration and different corresponding chunks are direct; the claimed internal boundary geometry of both chunks is not. |
+| Retained physical-camera boundary → reference/mate chunks → manifest combinations | **D/CE/G** | Whether the examples convey the claimed complete production-to-manifest relationship across plural selected cuts |
+| Equal-duration same-interval chunks | **D** | Ordinary breadth and antecedent review |
+| Each paired chunk straddles the retained transition at its own timing | **CE/G** | AF claim 14's exact chunk geometry |
+| Recipient-associated timing choices across plural cuts | **D/CE/G** | AF claim 17's manifest representation and ledger association |
+| Delivered mate-containing recipient combination → reconstructed same detected timing-choice combination | **D/CE/G** | AF claim 20's inherited integrated-method fallback and AF claim 23's independent monitor-side causal nexus |
+| Manifest sequence as probabilistic collusion input | **C/CE/G** | AF claim 11's exact input and respective-contribution output |
 
-Counsel must evaluate each claimed integration as a whole for both PCT support and provisional priority. Do not infer that because Examples 2–5 appear in one specification every recombination is automatically disclosed.
+### 6.5 Monitor-side method — AF claim 23
 
-### 6.4 Collusion wording — AF claims 11–12
+AF claim 23 is a detector-only subset of the disclosed complete method chain, but the subset observation does not assign an effective date. The individual suspect-acquisition, cut-time detection, reconstruction, equality, and search-to-identify operations are direct. The method-form delivered-manifest environment and the mate-containing delivered-combination-to-reconstructed-same-combination nexus are **D/CE/G**, and the claim as a whole is **D/CE/G; mode unassigned**. Counsel must determine whether each filing conveys possession and enablement of the affirmative method together with that passive environment, whether the environment receives limiting effect, and whether one monitoring entity performs every affirmative operation or another performer's conduct is legally attributable to that entity under the applicable method-claim standard. AF claim 23 inherits neither NA claim 16's system-format Mode A assignment nor AF claim 19's integrated-method mode.
 
-The filings expressly discuss colluders mixing copies or segments, probabilistic/Tardos fingerprinting, segmented Tardos codes, tracing individual portions, and identifying implicated source accounts. AF claims 11–12 therefore preserve positive contributor identification and a segmented Tardos implementation. Counsel should still confirm applying the algorithm to AF claim 1's newly formulated recipient-associated candidate source-transition patterns and the exact respective-portion relationship as integrated operations.
+### 6.6 DW-05A modes and B10
 
-An earlier attribution-score formulation was not carried into this AF set because this review located no express score computation in either as-filed source. Do not reintroduce score language without identifying and recording an adequate support basis.
+Counsel must assign AF claims 1, 19, and 23 separately; AF claims 20–22 inherit claim 19's effective-date mode and add the separately graded limitations stated above:
 
-### 6.5 Pre-counsel support-safer contingency paths
-
-The preferred AF proposal remains the structural chain recited by AF claims 1 and 20. The following paths are prepared now so that the initial package gives counsel concrete alternatives if a combined-example or generalization position is rejected. They are drafting directions, not claims approved for filing, and none is represented as equally strong against the reviewed art.
-
-| Trigger in the support review | Prepared support-safer direction | Patentability, coverage, and control consequence |
+| Mode | Required conclusion | Consequence |
 |---|---|---|
-| The candidate/detected source-transition object or the same-region joint source/time match is not adequately conveyed | Retain the multi-camera production structure and delivered-version/recipient association, but replace suspect-side source-identity recovery with the directly disclosed route: derive a cut time code, build or identify a reconstructed manifest or delivered version, match that object, and search the recipient ledger. Provisional claims 1(m)–(n) and 10(j)–(k), and PCT claim 15/Method 200, are the principal starting sources. | Loses the two-field ordered-source identity distinction and requires fresh scoring, especially against A4, A6, B6, B8, and B9. Do not present generic timing or reconstructed-manifest recovery as the existing AF novelty center. |
-| The Examples 2→3→4 integration is not adequately conveyed | Separate the concrete production-boundary, manifest/distribution, and detection/lookup operations into the applicable NA actor-focused families rather than deleting connective limitations while continuing to label the result an integrated AF claim. | Preserves claim-specific direct relationships and actor coverage but changes the allowance and infringement architecture. Re-map support and art claim by claim. |
-| The Examples 2→5 route does not support recovery of both camera identities | Retain the same ordered camera transition, noncoincident reference/mate timings, and intervening different-camera frames on the production side; use direct cut-time/version or reconstructed-manifest recovery on the suspect side, or select the supportable NA production/distribution families. | Keeps the strongest disclosed production structure but weakens the recovery-side distinction. Generic timing recovery cannot carry patentability by itself. |
-| AF claim 14's paired-chunk geometry is not adequately conveyed | Omit AF claim 14 rather than rely on equal duration and a common playback interval alone. | A4, B9, and C8 give those packaging features little independent patentability value. |
-| AF claim 19's before-segmentation order is not adequately conveyed | Remove that ordering or retain a sequence-neutral overlay fallback, then recheck dependency, support, and art. | Preserves overlay coverage without overstating pipeline order; overlay remains an implementation feature, not the novelty center. |
+| **A** | PCT and provisional each satisfy written description and enablement for the claim as a whole | Subject to other requirements, the claim may rely on 26.02.2024; B10's 02.12.2024 publication is not prior art merely by that date. |
+| **B** | PCT satisfies both requirements, but the provisional fails at least one requirement for benefit entitlement | The effective date is no earlier than 19.02.2025 absent another valid benefit claim; B10 becomes potentially citable under § 102(a)(1), subject to complete statutory and exception analysis. |
+| **C** | PCT fails written description, enablement, or both | The formulation has a current-disclosure defect independent of priority; it must not be relied on as drafted. |
 
-Any path that removes the same ordered source pair, noncoincident reference/mate timings, intervening different-camera frames, or operationally linked recipient recovery is a new claim strategy—not a harmless AF wording change. Assign a new version, perform a limitation-level support review, and rescore both matrices before treating it as a filing candidate.
+B10 remains assessed as low-materiality and cumulative-or-weaker: it lacks plural cameras, a source-camera edit list, plural moved cut boundaries, manifest reconstruction from detected cut time codes, and the complete ledger-equality chain. Its chronology matters principally in Mode B; its present substance does not control the art assessment.
 
 ## 7. Claim-level filing posture
 
-This is a drafting triage, not a legal conclusion.
-
-| AF claims | Present support posture before counsel review | Filing treatment |
+| AF claims | Present support posture | Filing treatment |
 |---|---|---|
-| 1 | Direct overall closed-loop architecture; CE/G for source-pair pattern generation, same-region source-identity detection, and joint source/time match | Preserve as the allowance-first patentability candidate, but prepare a support-safer alternative and obtain a claim-as-a-whole opinion |
-| 20 | Direct overall method loop in provisional method claim 10 and PCT method 200/claims 16–17; the same CE/G refinements as AF claim 1 | Include as the complementary method independent in the complete proposal; obtain a separate claim-as-a-whole opinion and permit counsel to omit it at filing if a one-independent posture is selected. No AF claim as drafted depends from AF claim 20. Counsel may narrow or amend it or add supported method dependents in the parent under the applicable controls; the continuation reservation separately carries broader and intermediate candidates. |
-| 2–3 | Direct concrete Example 2 mechanics with an internal provisional inconsistency | Dependent only; written priority/support determination required |
-| 4–5 | Direct | Ordinary wording/antecedent review |
-| 6 | Direct plural variation; CE/G for AF claim 1 pattern structure at every region | Retain with combined-example warning |
-| 7–8 | Direct comparison algorithms; CE/G for using them to recover the full AF claim 1 source/timing structure | Retain as implementation fallbacks, not independent novelty propositions |
-| 9–10 | Direct manifest reconstruction and ledger lookup; CE/G only where tied to AF claim 1's new pattern object | Strong narrow implementation fallbacks subject to inherited AF claim 1 gate |
-| 11 | Functional-result support for mixed-copy tracing and positive account identification; CE/G for applying the algorithm to AF claim 1's recipient-associated candidate source-transition patterns | Retain; confirm the combined-example pattern-input and delivered-version/portion formulation |
-| 12 | Segmented Tardos implementation and positive identification are express; exact portion-to-contributor relationship merits wording review | Retain as a known implementation fallback, not an independent novelty proposition |
-| 13 | Direct distribution machinery; CE/G for preserving the specific ordered transition at `tR`/`tM` | Retain as a combined Examples 2–4 fallback |
-| 14 | CE/G; exact boundary-spanning geometry not express in one passage | Keep only as an expressly gated, narrow fallback |
-| 15–17 | Direct added limitations | Ordinary wording/antecedent review; inherited AF claim 1/AF claim 13 gates remain |
-| 18 | CE/G for the ordered-pair/timing relationship across plural regions | Retain only with generalization review |
-| 19 | Overlay direct; exact before-segmentation sequence strongest in provisional claim order | Retain; preserve a sequence-neutral alternative if needed |
+| 1 | Direct closed loop; **D/CE/G** for plural retained-camera-boundary-to-reconstructed-manifest integration | Principal AF system candidate; obtain a written claim-as-a-whole PCT/provisional opinion |
+| 19 | Direct method loop; same **D/CE/G** integration | Complementary method candidate; obtain a separate opinion and § 101/performance review |
+| 20 | Disclosed components; **D/CE/G** for the affirmative mate-containing delivered combination and reconstruction of the same detected combination | Principal causal-nexus method fallback; obtain a written relationship-specific support determination and inherit AF claim 19's review |
+| 21–22 | Direct perceptual-hash and sliding-window method limitations; inherit AF claim 19 without AF claim 20 | Support-safe detection branch; ordinary wording and antecedent review plus inherited claim-as-a-whole, eligibility, performance, and art review |
+| 23 | Direct individual recovery operations; **D/CE/G; mode unassigned** for the method-form delivered-manifest environment and mate-containing delivered-combination-to-reconstructed-same-combination nexus as a whole | Monitor-side independent candidate; obtain a separate claim-as-a-whole PCT/provisional written-description and enablement determination, effective-date mode, equality construction, actor, eligibility, restriction, proof, and art review |
+| 2–3 | Direct mechanics with provisional inconsistency | Use only after written counsel determination |
+| 4–5, 7–10, 13, 15–16 | Added limitations direct | Ordinary wording, breadth, antecedent, and inherited-parent review |
+| 6, 11–12, 14, 17–18 | Added relationship direct/contextual/combined-example as specified above | Retain as expressly gated dependents; do not describe the added relationship as unqualified direct support |
 
-## 8. Pending counsel determinations after initial transmission
+## 8. Pending counsel determinations
 
-These requested determinations are intentionally pending. Their absence does not make this initial decision package incomplete or prevent its controlled transmission for advice. They must be resolved, to the extent implicated, before counsel approves filed language, makes a material support or priority representation, or recommends broader wording.
-
-1. Verify that the provisional ADS, filing receipt, specification, and drawings in Patent Center match the repository copy and that benefit is timely and correctly claimed for the selected route.
-2. Verify the PCT application text and drawings against the official WIPO as-filed record; do not rely solely on the converted Markdown.
-3. Provide a written claim-as-a-whole § 112(a) analysis for AF claim 1, separately identifying direct architecture support and the combined-example source-pair/same-region/joint-match formulation.
-4. Provide a separate written claim-as-a-whole § 112(a) and priority analysis for AF claim 20 against provisional method claim 10, the PCT method 200 disclosure, PCT claims 16–17, and the combined examples; do not infer the conclusion solely from AF claim 1's system analysis.
-5. Decide whether “temporally corresponding frames” is conveyed by synchronized multicamera feeds and Example 2, and whether the proposed first/second-camera generalization is commensurate with the concrete Camera 2→Camera 3 example.
-6. Resolve the provisional Example 2 inconsistency before filing or materially relying on AF claims 2–3, and do not insert resynchronization into AF claim 20 without the same written determination.
-7. Determine whether Example 5 supports detection of camera-source identity on both sides of a transition or only visually similar frames, altered-cut characteristics, and timing.
-8. Determine whether the candidate and detected pattern objects in AF claims 1 and 20 have an adequate operational basis, or substitute support-safer version/timing/reconstructed-manifest language.
-9. Confirm the Examples 2→3→4 integration for AF claims 13 and 18 and the more specific paired-chunk geometry of AF claim 14.
-10. Confirm AF claims 11–12's recipient-associated candidate-pattern input and portion-to-contributor wording; do not add attribution-score language absent an identified support basis.
-11. Confirm the overlay/segmentation sequence in AF claim 19 or preserve a sequence-neutral version.
-12. Review processor/instruction language, algorithm disclosure, § 112(f), definiteness, eligibility, and enablement independently of this written-description map; separately analyze AF claim 20's eligibility, restriction, divided-infringement, and method-step attribution consequences.
-13. Preserve the NA actor-focused claims as a portfolio option; adequate AF support would not resolve divided-infringement or proof concerns.
+1. Verify the provisional and PCT repository copies against the official records.
+2. For AF claims 1, 19, and 23 separately, conclude PCT written description, PCT enablement, provisional written description and enablement for benefit entitlement, effective date, and DW-05A mode; apply AF claim 19's result to dependent AF claims 20–22 while separately confirming their added limitations. Do not transfer a system-format or integrated-method mode to AF claim 23.
+3. Decide the claim-as-a-whole plural retained-boundary/manifest/reconstruction relationship.
+4. Decide the first/second-source-camera and plural selected-cut generalization.
+5. Resolve the provisional Example 2 inconsistency for AF claims 2–3.
+6. Confirm AF claim 6's respective single-cut mate relationship.
+7. Confirm AF claims 11–12's manifest-sequence and segmented-Tardos contribution relationships.
+8. Confirm AF claim 14's paired-chunk geometry, AF claim 17's plural manifest choices, and AF claim 18's pipeline order.
+9. Decide AF claim 20's affirmative mate-containing delivered-combination-to-reconstructed-combination relationship and confirm that AF claims 21–22 remain independent of that gate.
+10. Determine AF claim 23's method-form delivered-manifest environment, mate-containing delivered-combination-to-reconstructed-same-combination nexus, equality construction, full-scope reconstruction enablement, and affirmative-operation performer or legally attributable performance.
+11. Review § 112(f), definiteness, restriction, divided infringement, territorial performance, and proof independently of this map; AF claims 20–22 do not cure AF claim 19's performance-attribution risk, and AF claim 23 targets only the production/delivery actor split where one entity performs the complete recovery method or the remaining conduct is legally attributable to that entity under the applicable method-claim standard.
+12. For AF claim 23, identify the asserted exception under Step 2A Prong One, analyze practical application under Step 2A Prong Two, analyze the additional elements individually and as an ordered combination under Step 2B, and identify specification support and evidence for any asserted technical improvement. The passive manifest/ledger environment and mate-timing nexus do not alone resolve eligibility.
+13. Preserve the NA actor-focused claims as a portfolio option; adequate AF support does not resolve actor or proof limitations.
 
 ## 9. Intervening-information trigger
 
-This limited support review is not a clearance search and does not establish that no potentially material information exists between the provisional and PCT filing dates. **One window reference is on record: B10 (KR 2024-0168593 A), §102(a)(1) art as of its 02.12.2024 laid-open publication — LOW-materiality on full-text review; label corrected from an erroneous §102(a)(2) posture on 21.07.2026; escalation recorded in the shared deferred-work memo §4.**
-
-If information is identified with a potentially relevant effective prior-art date after 26 February 2024 and before 19 February 2025—including a later-published patent document with an earlier effective filing date—or if any Office questions priority, counsel must promptly reassess:
-
-1. claim-by-claim entitlement to the provisional date;
-2. whether the Example 2 or combined-example gates become outcome-determinative;
-3. applicable disclosure duties and any IDS or other filing action; and
-4. every representation concerning priority or support.
-
-Activation of this trigger does not itself dictate public disclosure of attorney analysis. Counsel must decide the correct disclosure and prosecution response based on the material information then known.
-
-## 10. Revision record
-
-- **AF-2026-07-17-v2 (17 July 2026):** added an independent limitation-level map for method AF claim 20 against provisional method claim 10 and the PCT method disclosure; carried the same-region, source-identity, joint-match, combined-example, and priority gates into that analysis; updated the filing posture and counsel checklist; and conformed the AF claim 1 ordered-transition wording repair. The presence of an exact substantive method twin does not substitute for a separate claim-as-a-whole support and priority determination.
-- **Initial-contact defensibility pass (17 July 2026):** identified the map as complete for controlled initial counsel transmission while leaving legal conclusions pending; pinned the candidate source to `AF-2026-07-17-v2`; aligned the structured-list terminology; added prepared support-safer contingency paths and their art costs; and recorded AF claim 20's lack of a dependent fallback tier. No claim text or support classification changed.
+B10 (KR 2024-0168593 A) has a 2 December 2024 laid-open publication inside the provisional-to-PCT interval. If any information with a potentially relevant effective date after 26 February 2024 and before 19 February 2025 is identified, or if an Office questions priority, counsel must reassess claim-specific benefit entitlement, applicable disclosure duties, the art set, and every material priority or support representation.

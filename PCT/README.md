@@ -1,6 +1,6 @@
 # AA11393US — PCT Source and Publication Provenance
 
-This directory contains the applicant's PCT filing and examination records. It is separate from the `US/prior-art/` source store; adding or linking an applicant publication here does not change that store's 32-document checksum manifest.
+This directory contains the applicant's PCT filing and examination records. It is separate from the `US/prior-art/` source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.
 
 ## Local as-filed record
 
