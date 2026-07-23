@@ -130,6 +130,8 @@ DW-08C controls the evidence program: lawfully obtained multi-recipient captures
 
 The parent is directed to ordinary § 371 national-stage filing. Counsel must confirm the national-stage claim format, § 119(e) benefit data, declarations, inventorship, applicant, assignment, entity status, fees, restriction, unity, double patenting, and continuation timing.
 
+No restriction election is predetermined. If a restriction requirement issues, counsel must map the examiner's groups to the NA claim 1, 9, 16, and 22 families; decide election, traversal, and rejoinder on the actual record; and record every nonelected commercially valuable family and its continuation or divisional treatment under [`CONT-03`](../common/AA11393US-continuation-preservation_MEMO.md), including any § 121 consequence.
+
 If NA supplies the parent claims, identify supported AF, AF-CONT, or other commercially valuable reservations under [`CONT-03`](../common/AA11393US-continuation-preservation_MEMO.md). Continuation practice cannot cure missing disclosure.
 
 ## 7. Shared disclosure and public positions

@@ -6,7 +6,7 @@
 
 ## 1. Purpose and controlling texts
 
-This document maps the `AF-2026-07-22-v6` tree against the actor-focused `NA-2026-07-22-v4` tree. The exact wording in [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md) and [`../normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md`](../normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md) controls.
+This document maps the `AF-2026-07-22-v6` tree against the actor-focused `NA-2026-07-22-v4` tree and records `AF-CONT-2026-07-22-v2` formulation boundaries relevant to successor placement. The exact wording in [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md), [`../normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md`](../normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md), and [`AA11393US-AF-CONT-US_claim-set_DRAFT.md`](AA11393US-AF-CONT-US_claim-set_DRAFT.md) controls.
 
 Both strategies place physical-camera identity on the production side and use plural detected camera-cut time codes, reconstructed manifests, equality to a delivered manifest, and ledger lookup on the suspect side. AF claims 1 and 19 integrate those operations in complete system and method chains. AF claim 23 separately recites the affirmative monitor-side method with a mate-containing reconstructed-same-combination nexus. NA supplies standalone production, distribution, and detection systems and an end-to-end method. Neither formulation defines or construes the other.
 
@@ -52,6 +52,11 @@ Selecting AF for the initial case does not supply the following as standalone cl
 
 ## 4. Support and art transfer rules
 
+| Formulation boundary | NA posture | AF-CONT posture | Operative control |
+|---|---|---|---|
+| Reference production | NA claim 1 receives captured video and a structured list describing edits that produce the reference but does not require the claimed system to produce the reference. | AF-CONT claim 1 requires the claimed system to produce the reference from the captured video according to the structured list. | NA records the mate-generation formulation without reference production as a claimed operation; AF-CONT records the integrated-production formulation. Counsel must determine support, breadth, actor, and parent-versus-successor placement separately and must not transfer a support conclusion between them. |
+| Overlay source and output | NA claims 8 and 30 require an element absent from the video received from the cameras and overlay onto at least one of the reference or mate; NA claim 30 also requires overlay before segmentation. | AF-CONT claim 5 requires an element absent from the reference and overlay onto both the reference and mate. | NA records alternate-source and one-or-both-output coverage; AF-CONT records the reference-absence and both-output formulation. Counsel must determine support and strategic placement separately and must not transfer a support conclusion between them. |
+
 1. AF claims 1 and 19 require claim-as-a-whole support analysis for the plural production-to-reconstruction relationship.
 2. NA claims 16 and 22 are assigned DW-05A Mode A. NA claim 16 has direct support for the delivered reference/mate chunk-combination ledger with a mate cut-timing difference, suspect acquisition, plural cut-time derivation, reconstructed-manifest building, equality, ledger search, and recipient identification; provisional method claim 10 and PCT Method 200/claims 16–17 support NA claim 22's complete chain. NA claim 19 retains a combined-example gate for the equal matched manifest's mate chunk and physical-camera geometry; NA claim 20 inherits that gate and retains its plural timing-reconstruction gate.
 3. The provisional Example 2 issue follows AF claims 2–3 and NA claims 2–3 and 23.
@@ -81,4 +86,4 @@ The shared [`continuation-preservation memo`](../common/AA11393US-continuation-p
 
 ## 6. Operative package control
 
-This crosswalk applies to `AF-2026-07-22-v6` and `NA-2026-07-22-v4`. Any amendment, renumbering, omission, cancellation, restriction election, or support-driven formulation requires a dependency/count review, limitation-level crosswalk review, updated support and art matrices, and a continuation-reservation decision.
+This crosswalk applies to `AF-2026-07-22-v6`, `NA-2026-07-22-v4`, and `AF-CONT-2026-07-22-v2`. Any amendment, renumbering, omission, cancellation, restriction election, or support-driven formulation requires a dependency/count review, limitation-level crosswalk review, updated support and art matrices, and a continuation-reservation decision.
