@@ -5,8 +5,8 @@
 > Single live specification for the interactive HTML5 navigators linking the AA11393US
 > candidate claim sets to the PCT application as filed (PCT/IB2025/051755, published as
 > WO 2025/181623 A1). One shared technical contract, **two current editions** built from it:
-> the **NA edition** (normal-allowance claim set, NA-2026-07-21-v2) and the **AF edition**
-> (allowance-first claim set, AF-2026-07-17-v2). The editions are alternative counsel-review
+> the **NA edition** (normal-allowance claim set, NA-2026-07-22-v4) and the **AF edition**
+> (allowance-first claim set, AF-2026-07-22-v6). The editions are alternative counsel-review
 > strategies, never cumulative layers. This document always describes the current intended
 > state; superseded content is removed, not annotated. Implementation follows only from this
 > document.
@@ -16,6 +16,11 @@
 > required behavior; the implementation lives under `navigator/` and is verified against
 > §14 by its acceptance suite (`navigator/tests/`). Where implementation and specification
 > disagree, the specification governs and the implementation is defective.
+>
+> `navigator/RUNBOOK-content-sync-and-regeneration.md` is the non-normative operating
+> procedure for this contract. It may make the required commands easier to execute but may
+> not relax, extend, or reinterpret this specification; this specification controls every
+> conflict.
 
 ## 1. Purpose and audience
 
@@ -45,8 +50,8 @@ adds a “not for QA or delivery” watermark and never authorizes delivery.
 > Manual cross-platform and assistive-technology QA is deferred for the initial
 > technical-preview release.
 
-- **Primary user:** US prosecution counsel reviewing claim-set versions NA-2026-07-21-v2
-  and/or AF-2026-07-17-v2.
+- **Primary user:** US prosecution counsel reviewing claim-set versions NA-2026-07-22-v4
+  and/or AF-2026-07-22-v6.
 - **Secondary user:** the internal reviewer (Antonio) validating claim-support work product.
 
 ### 1.1 Legal and functional boundary
@@ -89,10 +94,10 @@ It provides no editing, collaboration, access control, encryption, or secure doc
 management. **Provisional boundary:** an artifact may display a source-derived external
 priority caution originating from its own claim-set document's text (e.g., the AF Example 2
 priority gate); it does not display or evaluate provisional mappings, and it never renders
-content from a priority-support map (§2). **AF claim 20 rule:** the AF edition always shows
-all 20 AF claims; omission of AF claim 20 is a counsel filing choice recorded nowhere in the
-navigator, per the claim-set's own instruction that no separate claim-set document be
-created for it.
+content from a priority-support map (§2). **Complete-AF-set rule:** the AF edition always
+shows all 23 AF claims. AF claims 19–22 are one integrated-method family and AF claim 23 is
+the separately standing monitor-side method; any filing subset is a counsel filing choice
+recorded nowhere in the navigator, and no separate AF claim-set document is created for it.
 
 ## 2. Sources and authority
 
@@ -113,7 +118,7 @@ not convention.
 | `pct-pdf` | `PCT/AA11393US-PCT_RAPPORTO DEPOSITO.pdf` (60 pp.) | `authoritative` | `internal` (identity/hash may appear as authority metadata in embedded provenance, §13) | As-filed authority of record; never rendered |
 | `pct-disclosure` | `PCT/AA11393US-PCT_RAPPORTO_DEPOSITO_markdown/` (markdown + `figures/Fig-1..4.png`, each file pinned) | `derivative` | `rendered` | The as-filed disclosure package: title, description, Examples 1–5, PCT claims 1–18, abstract, four drawing sheets |
 | `na-claims` | `US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable`; rest excluded | NA claims 1–30 verbatim; guidance blocks as caution/gate sources |
-| `af-claims` | `US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable` (including the §3 Example 2 priority-gate blockquote, excluded from the unit census); rest excluded | AF claims 1–20 verbatim; guidance blocks as caution/gate sources |
+| `af-claims` | `US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md` | `fragment-source` | §3 claims `rendered`; profile-designated guidance blocks `quotable` (including the §3 Example 2 priority-gate blockquote, excluded from the unit census); rest excluded | AF claims 1–23 verbatim; guidance blocks as caution/gate sources |
 | `na-priority-map` | `US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md` | `qa-source` | `internal` | QA cross-check of the NA mapping (§9); never rendered, never quoted, never identified in an artifact |
 | `af-priority-map` | `US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md` | `qa-source` | `internal` | QA cross-check of the AF mapping (§9); never rendered, never quoted, never identified in an artifact |
 | `af-na-crosswalk` | `US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md` | `qa-source` | `internal` | Non-conflation QA; **review context and a non-transfer warning for cross-edition reuse proposals (§10) — never evidence that reuse is substantively correct**; never rendered, never quoted, never identified in an artifact |
@@ -150,13 +155,13 @@ edition-specific is declared in the edition config, whose normative parameters a
 
 | Parameter | NA edition | AF edition |
 |---|---|---|
-| Claim corpus | `na-claims` (NA-2026-07-21-v2) | `af-claims` (AF-2026-07-17-v2) |
+| Claim corpus | `na-claims` (NA-2026-07-22-v4) | `af-claims` (AF-2026-07-22-v6) |
 | Authority corpus (read and pin-verified) | `pct-pdf` | `pct-pdf` |
-| Claims | 30 | 20 |
-| Limitation units (census, test-enforced) | 68 | 60 |
-| Independent claims | 1, 9, 16, 22 | 1, 20 |
-| §3 group headings | 4 actor groups | 7 structural groups |
-| Largest decompositions | claims 9, 16, 22 = 9 units each | claims 1, 20 = 15 units each |
+| Claims | 30 | 23 |
+| Limitation units (census, test-enforced) | 77 | 61 |
+| Independent claims | 1, 9, 16, 22 | 1, 19, 23 |
+| §3 group headings | 4 actor groups | 10 structural groups |
+| Largest decompositions | claim 22 = 14 units; claim 9 = 9 units | claims 1 and 19 = 14 units; claim 23 = 8 units |
 | Display prefix (mandatory) | `NA claim N` | `AF claim N` |
 | Relation set | `relations/na__pct.json` | `relations/af__pct.json` |
 | Gate inventory | `profiles/gates_na-claims.json` | `profiles/gates_af-claims.json` |
@@ -168,7 +173,7 @@ edition-specific is declared in the edition config, whose normative parameters a
 | QA cross-check source | `na-priority-map` | `af-priority-map` |
 | QA crosswalk binding | `null` | `af-na-crosswalk` |
 | Forbidden terms in authored user-visible text | — (NA claims legitimately use both pattern terms, with distinct claim functions) | `camera-cut timing pattern` (crosswalk non-conflation boundary) |
-| Artifact (default name, §17) | `AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html` | `AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html` |
+| Artifact (default name, §17) | `AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html` | `AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html` |
 
 Edition rules:
 
@@ -238,9 +243,9 @@ over the left pane).
 ### 5.2 Clickable units — two-tier granularity
 
 Every claim is decomposed into **limitation units** — its markdown paragraphs: preamble plus
-each clause. The census is normative per edition (§3): NA 30 claims / 68 units (claim 1 = 7 units;
-claims 9, 16, and 22 = 9 units each); AF 20 claims / 60 units (claims 1 and 20 = 15 units
-each). The extraction test asserts the census exactly.
+each clause. The census is normative per edition (§3): NA 30 claims / 77 units (claim 22 =
+14 units and claim 9 = 9 units); AF 23 claims / 61 units (claims 1 and 19 = 14 units each,
+and claim 23 = 8 units). The extraction test asserts the census exactly.
 
 - **Tier 1 — limitation unit.** One activation region per unit. Activating it opens the
   unit's recorded candidates, or its status notice (§5.3).
@@ -493,7 +498,9 @@ Outside a relation file, fragment identity is always the scoped triple
 One shared canonicalization module is the only hashing path for all digests — text, object,
 and composite alike; a test asserts no digest is computed outside it. The rule set carries a
 **canonVersion**, recorded with every stored digest (`sha256/c1:…`). Changing any rule bumps
-the version; a version mismatch is ordinary staleness resolved through migration (§10).
+the version and requires same-commit re-authoring under the new current schema. A command
+encountering another canonVersion rejects it before any write; cross-canon comparison or
+automatic migration is forbidden.
 **canonVersion c1 pins Unicode 15.1.0**: NFC normalization uses vendored Unicode 15.1
 tables and the White_Space property is a vendored constant. Neither is taken from the
 interpreter's Unicode database, so supported interpreters canonicalize the same text even
@@ -574,22 +581,22 @@ NA fixture (excerpt of `relations/na__pct.json`):
   "claimGates": {
     "c9": [
       {
-        "gateId": "na-gate-combined-example",
+        "gateId": "na-gate-production-relationship",
         "type": "source-gate",
-        "code": "combined-example",
-        "claimHash": "sha256/c1:8aef…",
+        "code": "production-relationship",
+        "claimHash": "sha256/c1:38f2…",
         "reviewState": "internally-reviewed",
         "migrationState": "current",
         "review": {
-          "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+          "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
           "operatorKind": "model",
-          "date": "2026-07-22",
-          "contentHash": "sha256/c1:5e43…"
+          "date": "2026-07-23",
+          "contentHash": "sha256/c1:64e4…"
         },
         "source": {
           "corpus": "na-claims",
-          "block": "S020",
-          "textHash": "sha256/c1:597e…"
+          "block": "S011",
+          "textHash": "sha256/c1:eccf…"
         }
       }
     ]
@@ -597,15 +604,6 @@ NA fixture (excerpt of `relations/na__pct.json`):
   "fragments": {
     "c9u6": {
       "status": "mapped",
-      "reviewState": "internally-reviewed",
-      "migrationState": "current",
-      "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-        "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:cbb9…"
-      },
-      "fragmentTextHash": "sha256/c1:19c6…",
       "targets": [
         {
           "block": "S081",
@@ -620,93 +618,64 @@ NA fixture (excerpt of `relations/na__pct.json`):
           "note": "Manifests for reference and mate differ in how they reference chunks where edits were made"
         }
       ],
-      "phrases": [
-        {
-          "id": "c9u6p1",
-          "text": "camera-cut timing pattern",
-          "occurrence": 1,
-          "status": "mapped",
-          "reviewState": "internally-reviewed",
-          "migrationState": "current",
-          "review": {
-            "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-            "operatorKind": "model",
-            "date": "2026-07-22",
-            "contentHash": "sha256/c1:b3b4…"
-          },
-          "targets": [
-            {
-              "block": "S064",
-              "textHash": "sha256/c1:0e4c…",
-              "role": "specific",
-              "note": "Timing of camera cuts altered per the structured list acts as the distinguishing fingerprint",
-              "caution": {
-                "type": "generalization-note",
-                "code": "beyond-literal-example"
-              }
-            }
-          ]
-        }
-      ]
+      "reviewState": "internally-reviewed",
+      "migrationState": "current",
+      "review": {
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+        "operatorKind": "model",
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:fdc4…"
+      },
+      "fragmentTextHash": "sha256/c1:9de8…"
     },
-    "c16u6": {
+    "c20u0": {
       "status": "counsel-review-required",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
       "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
         "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:11f9…"
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:f09e…"
       },
-      "fragmentTextHash": "sha256/c1:5f35…",
-      "caution": {
-        "gateId": "na-gate-detection-support",
-        "type": "source-gate",
-        "code": "detection-support",
-        "source": {
-          "corpus": "na-claims",
-          "block": "S025",
-          "textHash": "sha256/c1:15d9…"
-        }
-      }
+      "fragmentTextHash": "sha256/c1:b6aa…"
     }
   },
   "dispositions": [
     {
-      "gateId": "na-gate-combined-example",
+      "gateId": "na-gate-production-relationship",
       "subject": {
         "kind": "claim",
         "id": "c9"
       },
       "disposition": "carried-at-required-scope",
-      "gateEntryHash": "sha256/c1:9352…",
-      "subjectHash": "sha256/c1:8aef…",
+      "gateEntryHash": "sha256/c1:00f2…",
+      "subjectHash": "sha256/c1:38f2…",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
       "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
         "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:35ce…"
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:0848…"
       }
     },
     {
-      "gateId": "na-gate-detection-support",
+      "gateId": "na-gate-distribution-integration",
       "subject": {
-        "kind": "fragment",
-        "id": "c16u6"
+        "kind": "claim",
+        "id": "c9"
       },
       "disposition": "carried-at-required-scope",
-      "gateEntryHash": "sha256/c1:8d3b…",
-      "subjectHash": "sha256/c1:5f35…",
+      "gateEntryHash": "sha256/c1:2aa2…",
+      "subjectHash": "sha256/c1:38f2…",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
       "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
         "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:2542…"
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:af65…"
       }
     }
   ]
@@ -729,19 +698,19 @@ AF fixture (excerpt of `relations/af__pct.json`):
         "gateId": "af-gate-claim-as-a-whole",
         "type": "source-gate",
         "code": "claim-as-a-whole",
-        "claimHash": "sha256/c1:e572…",
+        "claimHash": "sha256/c1:be97…",
         "reviewState": "internally-reviewed",
         "migrationState": "current",
         "review": {
-          "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+          "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
           "operatorKind": "model",
-          "date": "2026-07-22",
-          "contentHash": "sha256/c1:c762…"
+          "date": "2026-07-23",
+          "contentHash": "sha256/c1:55c2…"
         },
         "source": {
           "corpus": "af-claims",
-          "block": "S018",
-          "textHash": "sha256/c1:b1ef…"
+          "block": "S019",
+          "textHash": "sha256/c1:f6aa…"
         }
       }
     ],
@@ -749,20 +718,20 @@ AF fixture (excerpt of `relations/af__pct.json`):
       {
         "gateId": "af-gate-example2-priority",
         "type": "source-gate",
-        "code": "example2-priority-gate",
-        "claimHash": "sha256/c1:76eb…",
+        "code": "example2-priority",
+        "claimHash": "sha256/c1:c88b…",
         "reviewState": "internally-reviewed",
         "migrationState": "current",
         "review": {
-          "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+          "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
           "operatorKind": "model",
-          "date": "2026-07-22",
-          "contentHash": "sha256/c1:7c23…"
+          "date": "2026-07-23",
+          "contentHash": "sha256/c1:ca06…"
         },
         "source": {
           "corpus": "af-claims",
-          "block": "S013",
-          "textHash": "sha256/c1:11e3…"
+          "block": "S024",
+          "textHash": "sha256/c1:830e…"
         }
       }
     ]
@@ -770,65 +739,67 @@ AF fixture (excerpt of `relations/af__pct.json`):
   "fragments": {
     "c1u8": {
       "status": "mapped",
+      "targets": [
+        {
+          "block": "S085",
+          "textHash": "sha256/c1:dfee…",
+          "role": "specific",
+          "note": "Delivery of streams assembled from manifest-listed chunks"
+        },
+        {
+          "block": "S149",
+          "textHash": "sha256/c1:bf24…",
+          "role": "context",
+          "note": "Distribution step 260"
+        }
+      ],
       "reviewState": "internally-reviewed",
       "migrationState": "current",
       "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
         "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:c650…"
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:07c9…"
       },
-      "fragmentTextHash": "sha256/c1:80d5…",
+      "fragmentTextHash": "sha256/c1:ad3e…"
+    },
+    "c1u11": {
+      "status": "mapped",
       "targets": [
         {
-          "block": "S166",
-          "textHash": "sha256/c1:102b…",
-          "role": "combination",
-          "note": "EDL rows hold the source-camera identifiers and time codes a candidate record draws on",
-          "caution": {
-            "type": "generalization-note",
-            "code": "beyond-literal-example"
-          }
+          "block": "S083",
+          "textHash": "sha256/c1:dd0e…",
+          "role": "specific",
+          "note": "Algorithm analyzes camera-cut timings in the suspect and devises time codes"
+        },
+        {
+          "block": "S071",
+          "textHash": "sha256/c1:b05d…",
+          "role": "context",
+          "note": "Detecting camera-switch timings in the suspected distribution"
         }
       ],
-      "phrases": [
-        {
-          "id": "c1u8p1",
-          "text": "camera-source-transition pattern",
-          "occurrence": 1,
-          "status": "counsel-review-required",
-          "reviewState": "internally-reviewed",
-          "migrationState": "current",
-          "review": {
-            "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-            "operatorKind": "model",
-            "date": "2026-07-22",
-            "contentHash": "sha256/c1:803d…"
-          }
-        }
-      ]
+      "reviewState": "internally-reviewed",
+      "migrationState": "current",
+      "review": {
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+        "operatorKind": "model",
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:65b1…"
+      },
+      "fragmentTextHash": "sha256/c1:2acd…"
     },
-    "c1u12": {
+    "c23u7": {
       "status": "counsel-review-required",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
       "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
         "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:366f…"
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:3ecd…"
       },
-      "fragmentTextHash": "sha256/c1:5f35…",
-      "caution": {
-        "gateId": "af-gate-source-identity",
-        "type": "source-gate",
-        "code": "source-identity-detection",
-        "source": {
-          "corpus": "af-claims",
-          "block": "S019",
-          "textHash": "sha256/c1:98f1…"
-        }
-      }
+      "fragmentTextHash": "sha256/c1:21b1…"
     }
   },
   "dispositions": [
@@ -839,15 +810,33 @@ AF fixture (excerpt of `relations/af__pct.json`):
         "id": "c1"
       },
       "disposition": "carried-at-required-scope",
-      "gateEntryHash": "sha256/c1:27f8…",
-      "subjectHash": "sha256/c1:e572…",
+      "gateEntryHash": "sha256/c1:a61a…",
+      "subjectHash": "sha256/c1:be97…",
       "reviewState": "internally-reviewed",
       "migrationState": "current",
       "review": {
-        "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
         "operatorKind": "model",
-        "date": "2026-07-22",
-        "contentHash": "sha256/c1:d931…"
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:174f…"
+      }
+    },
+    {
+      "gateId": "af-gate-production-boundary",
+      "subject": {
+        "kind": "claim",
+        "id": "c1"
+      },
+      "disposition": "carried-at-required-scope",
+      "gateEntryHash": "sha256/c1:57ad…",
+      "subjectHash": "sha256/c1:be97…",
+      "reviewState": "internally-reviewed",
+      "migrationState": "current",
+      "review": {
+        "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+        "operatorKind": "model",
+        "date": "2026-07-23",
+        "contentHash": "sha256/c1:27a9…"
       }
     }
   ]
@@ -900,7 +889,10 @@ rather than silently absorbing a child owner's lifecycle and content.
 - `status: mapped | counsel-review-required` — recording state only (§5.3). `targets` may
   exist only when `mapped`; a `mapped` fragment must have ≥ 1 target.
 - `reviewState: pending | internally-reviewed` — internal authoring progress.
-  `review` is the closed required object `{by, operatorKind, date, contentHash}`;
+  `review` is the closed required object `{by, operatorKind, date, contentHash}`. A new
+  migration proposal carries the exact non-authoritative placeholder
+  `{by: migrate, operatorKind: tool, date: "", contentHash: ""}` while it is `pending`;
+  every `internally-reviewed` owner instead requires the complete metadata below;
   `operatorKind` is exactly `human | model | tool`, `by` names the operator, and `date` is a
   real calendar date in canonical `YYYY-MM-DD` form. Human and model operators are
   release-authoritative only when `by` is an explicit NFC identity with no surrounding
@@ -915,7 +907,7 @@ rather than silently absorbing a child owner's lifecycle and content.
   and **the owner claim's dependency-chain hash** (§8.2). Consequences, all intended: any
   reviewed content or endpoint change — visible or hidden — invalidates
   `internally-reviewed`; transplanting a reviewed entry to a textually identical fragment
-  in another claim or edition invalidates it (AF claims 1 and 20 contain verbatim-identical
+  in another claim or edition invalidates it (AF claims 1 and 19 contain verbatim-identical
   units, and NA claim 16's detect/derive units are byte-identical to AF claim 1's — the
   case is real both within and across editions); **amending a parent claim invalidates the reviews of all
   its dependents** — deliberate churn; and **mechanical re-anchoring does not** (target,
@@ -1086,6 +1078,16 @@ exceptions are typed and justified; structural graphs are dual-sourced; attestat
 digests on their exact declared sides; every guarantee names its enforcer; the kernel is edition-blind and
 separation between editions is enforced, not assumed.**
 
+**Hard live-state boundary.** The checked-out tree supports exactly the schema, registry,
+record, canon, claim-set, and artifact versions declared by its current normative data. There
+are no compatibility aliases, legacy loaders, dual readers/writers, implicit upgrades, or
+version-specific transition branches. Unsupported versions fail before writes. General
+`migrate` behavior remains available only for content drift inside the current schema and
+canon law. Current authored documents, configs, fixtures, bundle inputs, and distribution
+artifacts state only the live baseline; Git is their sole history. Same-schema superseded
+verification records may persist in the append-only store, but exact current-side matching
+makes them incapable of authorizing current bytes.
+
 ```
 navigator/
   corpora.json            # shared PCT registry: role, visibility, per-file sha256
@@ -1111,8 +1113,9 @@ navigator/
                           #   + neutral wording (digest-bound approval)
   build.py                # content plane: authoring `preview` / `candidate` / `migrate`;
                           #   verification plane: profile-explicit `release` / `bundle` / `attest` /
-                          #   `record-qa`; `bundle-plan` / `status` (read-only
-                          #   proposal and digest-chain report);
+                          #   `record-qa`; `bundle-plan` / `status` /
+                          #   `verify-current` (read-only proposal, report,
+                          #   and hard current-state gate);
                           #   `propose-reuse` (deferred)
   tools/                  # authoring aids (action class d, outside the pipeline):
                           #   stamp (explicit selected-owner authorized review; separate
@@ -1144,10 +1147,6 @@ resulting instances against their schemas, and aborts the entire write transacti
 unclassified change. The only accepted deltas are existing locator replacements, exact
 pre-migration `previousTargets` snapshots on stale owners, stale-state/reason updates, and
 the exact pending-new-fragment proposal shape whose digest equals the current unit digest.
-For the one declared canon-version-mismatch row, a migration-only loader admits an otherwise
-current relation and schema-validates it with only that unchanged legacy sentinel normalized
-in a throw-away copy; ordinary builds still reject the old version, and migration performs
-no cross-version digest comparison.
 **No tool ever modifies the semantic content of a reviewed entry.**
 `stamp` records, but does not infer, an authorized-operator decision: relation writes require
 explicit owner selectors, identity, kind, and date; the separate inventory operation cannot
@@ -1186,6 +1185,7 @@ and exercises both directions of the disjointness rule.
 | `bundle-plan` | `content` + `sealed` + `artifact-checksum` + `attestation` + `qa-record` + `release-record` | — |
 | `bundle` | `content` + `sealed` + `artifact-checksum` + `attestation` + `qa-record` + `release-record` | `bundle-manifest`, `bundle`, `bundle-checksum`, `bundle-record` |
 | `status` | `content` + `candidate` + `sealed` + `artifact-checksum` + `bundle` + `bundle-checksum` + `qa-record` + `attestation` + `release-record` + `bundle-record` | — |
+| `verify-current` | `content` + `candidate` + `sealed` + `artifact-checksum` + `bundle` + `bundle-manifest` + `bundle-checksum` + `qa-record` + `attestation` + `release-record` + `bundle-record` | — |
 
 Every cell above is an exact set, not a minimum or an illustrative subset; `content` is the
 single content-plane kind narrowed by the row's declared scope, and an omitted kind is
@@ -1197,6 +1197,12 @@ invoked as `release <edition> --profile=<technical-preview|validated-release>` w
 implicit profile.
 `bundle-plan` has the same read boundary needed to evaluate current release chains but no
 write privilege; its stdout is a proposal, not a content, artifact, or evidence write.
+`verify-current` is the hard, read-only cutover gate: it exits nonzero unless pin plans,
+candidate bytes, current-only version references, classified navigator sources, release and
+attestation chains, the bundle config, deterministic ZIP, detached checksums, canonical
+current-format record inventory, exact distribution inventory, Git whitespace, and the complete discovered
+software suite all agree on one current baseline. `status` remains diagnostic and may report
+partial state; it never substitutes for `verify-current`.
 
 The `bundle-manifest` is counsel-facing and carries no verification-plane references; the
 chain from bundle to its authorizing release records lives in the `bundle-record`.
@@ -1466,7 +1472,7 @@ Guardrails, each tied to the failure it prevents:
    | Caution-source block removed or text changed | Owning fragment or gate assignment `stale` / `source-changed` |
    | Claim text changed (aggregate hash mismatch), ancestor claim changed (dependency-chain mismatch), or gate endpoints changed | Affected owners `stale` / `endpoint-changed` |
    | New fragment appears | Entry created as `counsel-review-required` + `pending` |
-   | canonVersion mismatch on the relation binding | Every owner `stale` / `unclassified` — no digest comparison is meaningful across canon versions |
+   | canonVersion mismatch on the relation binding | Reject before loading or writing; re-author the relation under the current canon law |
    | Splits, merges, anything not listed above | Owner `stale` / `unclassified` |
 
    Sequential locators make removal observable only where the locator itself
@@ -1854,7 +1860,13 @@ never hand-maintained.
   shares interpreter state — notably hash seeds — and cannot detect seed-dependent
   ordering); candidate/release lock reproduction and byte comparison; deterministic
   STORE bundle with golden fixture.
-- **Normative update procedure (per edition):** (1) amend source(s), gate inventory,
+- **Normative update procedure (per edition):** every registered content input is a regular
+  file inside the same repository checkout as `navigator/build.py`. When an integration
+  branch is behind the selected content baseline, first merge the exact source commit so the
+  merge parents record both checkpoints. Live cross-worktree reads, symlinks, external
+  content roots, selective unrecorded copying, and mutable filesystem aliases are forbidden.
+  The runbook supplies the operational preflight and recovery commands but changes none of
+  these requirements. Then (1) amend source(s), gate inventory,
   dependency map, relations, or builder code — the builder tree is a pinned content input,
   so tooling changes re-enter this procedure like any other amendment; (2) when gate-
   inventory endpoint pins need mechanical refresh, run the separate operation
@@ -1899,12 +1911,13 @@ never hand-maintained.
   writes/reads back the version-2 structured profile-labelled manifest, ZIP, and checksum, passes
   the AC-20 `bundle-postcondition` through its registry-named fresh-interpreter callback,
   then appends the identified authorized human/model `bundle-record` with its
-  non-authoritative tool-run receipt last; (13) commit sources +
-  relations and bundle config, then artifacts with
-  checksums and records.
+  non-authoritative tool-run receipt last; (13) remove superseded files from the live
+  distribution directory, run `python3 navigator/build.py verify-current`, and commit sources
+  + relations and bundle config, then current artifacts with checksums and records.
   (Write-statements in this procedure are validated against `planes.json`, §10.)
-- Each file name and header embeds its claim-set version; a stale-claim-set navigator is
-  immediately identifiable.
+- Each file name and header embeds its claim-set version. The live distribution directory
+  contains only current-version products; superseded products remain identifiable in Git and
+  cannot be selected by current bundle configuration or exact-side evidence resolution.
 
 ## 14. Acceptance criteria (definition of done)
 
@@ -1949,8 +1962,11 @@ authority.**
 6. **AC-06** The edition's fixtures (including the disposition fixture) validate against
    schemas and pinned corpora; this document's examples match the fixture projections.
 7. **AC-07** Registry-access, artifact-kind/path, edition-blindness, writer-set, diff-classifier,
-   single-digest-path, single-JSON-input-parser, and procedure-vs-matrix tests pass; the NA-scoped migration case-table
-   scenario test passes against a locked synthetic NA snapshot rather than live NA inputs,
+   single-digest-path, single-JSON-input-parser, procedure-vs-matrix, and hard current-state
+   boundary tests pass; the hard boundary rejects obsolete primary-strategy versions, extra
+   or missing inventory files, legacy-format verification records, stale pin plans, and
+   write privilege; the NA-scoped migration
+   case-table scenario test passes against a locked synthetic NA snapshot rather than live NA inputs,
    asserts the runtime classifier accepts every intended delta and rejects semantic/review
    mutations before any source write,
    while other edition releases neither execute nor bind it; the registered canonical

@@ -4,11 +4,11 @@
   "na-claims": {
    "role": "fragment-source",
    "visibility": "rendered",
-   "version": "NA-2026-07-21-v2",
+   "version": "NA-2026-07-22-v4",
    "primary": "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md",
    "profile": "navigator/profiles/seg_na-claims.json",
    "files": {
-    "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md": "sha256/c1:c3120fd5bb3d553818cebb84e72c5b0c3940d1cc9f9307fe7e7cbcc36228f9c6"
+    "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md": "sha256/c1:8016adc2c528bb114c24061fd928711769efff4f56fdfeb9ca9c2ebb1b5606ba"
    }
   }
  }

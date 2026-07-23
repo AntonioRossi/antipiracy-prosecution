@@ -67,6 +67,13 @@
              "bundle-record"],
    "writes": [],
    "actionClasses": ["read"]
+  },
+  "verify-current": {
+   "reads": ["content", "candidate", "sealed", "artifact-checksum", "bundle",
+             "bundle-manifest", "bundle-checksum", "qa-record", "attestation",
+             "release-record", "bundle-record"],
+   "writes": [],
+   "actionClasses": ["read"]
   }
  }
 }

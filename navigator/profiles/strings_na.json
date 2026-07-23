@@ -2,9 +2,15 @@
  "stringsVersion": "1",
  "namespace": "na",
  "sourceGateCodes": {
-  "example2-priority": "Example 2 priority gate",
-  "combined-example": "Combined-example support gate",
-  "detection-support": "Detection-support gate",
-  "collusion-output": "Collusion-output gate"
+  "production-relationship": "Production-relationship gate",
+  "example2-resynchronization": "Example 2 resynchronization gate",
+  "distribution-integration": "Distribution-integration gate",
+  "detection-mode-a": "Detection Mode A gate",
+  "end-to-end-mode-a": "End-to-end Mode A gate",
+  "collusion-output": "Collusion-output gate",
+  "overlay-sequencing": "Overlay-sequencing gate",
+  "per-filing-support": "Per-filing support gate",
+  "reconstruction-equality": "Reconstruction and equality gate",
+  "claim-boundary": "Claim-boundary clarity gate"
  }
 }

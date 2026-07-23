@@ -1,8 +1,8 @@
 {
  "inventoryVersion": "1",
  "corpusId": "af-claims",
- "profileDigest": "sha256/c1:653da0f58c0b06a907c7bb37a3fe51614eabeefb68256a013f3cf7b391b74ace",
- "comment": "Gate inventory for AF-2026-07-17-v2 (TDD §8.1): reviewed interpretation of the claim-set document's §5 support/filing gates and the §3 Example 2 priority-gate blockquote, hash-pinned to quotable source blocks. Endpoint hashes stamped by tools/stamp.py; null fails validation. Completeness is a digest-bound authorized operator attestation (§9).",
+ "profileDigest": "sha256/c1:2a0804ea69d635d97ea462f8c1e49882c4eee9eee2eb0e196540ef2d86e8a3b7",
+ "comment": "Current gate inventory for AF-2026-07-22-v6 (TDD §8.1), re-authored from the live support and filing gates and pinned to current claim and source endpoints.",
  "gates": [
   {
    "gateId": "af-gate-claim-as-a-whole",
@@ -10,174 +10,146 @@
    "requiredScope": "claim",
    "requirement": "mandatory",
    "source": {
-    "block": "S018",
-    "textHash": "sha256/c1:b1efc67560e0c239ed4e784ecba7adba39c004fabb0c577fcadd02123add516b"
+    "block": "S019",
+    "textHash": "sha256/c1:f6aa355085a2d6c4d18dd5108705f769c4c11459d16630276c912e054548e413"
    },
    "appliesTo": {
     "claims": [
      {
       "claim": 1,
-      "claimHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca"
+      "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99"
      },
      {
-      "claim": 20,
-      "claimHash": "sha256/c1:2b84c116ede71ba992c1569f82761de815e08b63cbf61724cde8ccb9878c94c9"
+      "claim": 19,
+      "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88"
      }
     ]
    }
   },
   {
-   "gateId": "af-gate-source-identity",
-   "code": "source-identity-detection",
-   "requiredScope": "fragment",
-   "requirement": "mandatory",
-   "source": {
-    "block": "S019",
-    "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-   },
-   "appliesTo": {
-    "fragments": [
-     {
-      "id": "c1u11",
-      "hash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb"
-     },
-     {
-      "id": "c1u12",
-      "hash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c"
-     },
-     {
-      "id": "c1u13",
-      "hash": "sha256/c1:3b39100e98687312032720c00b8e8e3f4c9ed4fecc0f6e71cec6b2f4cac3ccdf"
-     },
-     {
-      "id": "c20u11",
-      "hash": "sha256/c1:b3fc0c29044d8f30e7380bbb610cca6802a969866c84e0123a42aba3eb9f3898"
-     },
-     {
-      "id": "c20u12",
-      "hash": "sha256/c1:d34f8b26f9362b1e28f0bff42c2585df0256b6953381af02399983818e6511b1"
-     },
-     {
-      "id": "c20u13",
-      "hash": "sha256/c1:2ff20c299d514eccb1b9562523052e63d6afddebaece0246e23407e76a0a06e5"
-     },
-     {
-      "id": "c7u0",
-      "hash": "sha256/c1:26451a33eed82a44b2457d64581567f9614bdfe45cb71cca7abf01f818697f94"
-     },
-     {
-      "id": "c8u0",
-      "hash": "sha256/c1:774acbfee7dbc94ce5a0495ef5c779e01b02c0d71179c63706ddfb65e97dd0c7"
-     },
-     {
-      "id": "c9u3",
-      "hash": "sha256/c1:e0e5719710b8cb3cb0dba3982bd49674c2d9887d4c477d348fbb273d53ab8e61"
-     },
-     {
-      "id": "c10u0",
-      "hash": "sha256/c1:7ba4354de96c3f2d093d755e4d05dfc19c9be6d71aec720c8f45d7d77e252798"
-     }
-    ]
-   }
-  },
-  {
-   "gateId": "af-gate-examples-integration",
-   "code": "examples-integration",
+   "gateId": "af-gate-production-boundary",
+   "code": "production-boundary-generalization",
    "requiredScope": "claim",
    "requirement": "mandatory",
    "source": {
     "block": "S020",
-    "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
+    "textHash": "sha256/c1:9f08bdc197664e572835b8299509a84cbbe942026ebb16855991d05b7b2bbb10"
    },
    "appliesTo": {
     "claims": [
      {
       "claim": 1,
-      "claimHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca"
+      "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99"
      },
      {
-      "claim": 7,
-      "claimHash": "sha256/c1:5421089fd97a2694fac249d0d91204772fad17531e15f0dd825bbac79cb8bf1c"
+      "claim": 19,
+      "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "af-gate-per-filing-support",
+   "code": "per-filing-support",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S021",
+    "textHash": "sha256/c1:d8c48fcdeb2b8ca6dd6df5992949c9e384ce3d2912e2420693acb0c463a5ad54"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 1,
+      "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99"
      },
      {
-      "claim": 8,
-      "claimHash": "sha256/c1:8e8b92389552e43f53223698f0940ed138b16b1d86938b4f29484e0477469f09"
-     },
+      "claim": 19,
+      "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "af-gate-plural-cut-integration",
+   "code": "plural-cut-integration",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S022",
+    "textHash": "sha256/c1:64b0b6fca25584af3eba7dbf454fd9bb230454d808a93e51fa9ae9db21637f56"
+   },
+   "appliesTo": {
+    "claims": [
      {
-      "claim": 9,
-      "claimHash": "sha256/c1:2054fb2d7ca50ccd0b1c18a7612f6b62eb90a8b8c2589c5bde61ae4676082d7d"
-     },
-     {
-      "claim": 10,
-      "claimHash": "sha256/c1:e3552085b4ddfdc9b11305467eed1fc175fc0bcc7d7fc93f86bc6b783876f86c"
-     },
-     {
-      "claim": 13,
-      "claimHash": "sha256/c1:99d78be0db5bac288109c8eb87ab9e4164142a8cc02d89948a9954c33b3bc9ed"
-     },
-     {
-      "claim": 14,
-      "claimHash": "sha256/c1:19bd147dc18c72d437c61d58a5ca2e5473f2412bf12b82223c05e007fb780877"
-     },
-     {
-      "claim": 15,
-      "claimHash": "sha256/c1:7d6ccdb83ae942f2ee6f707cadb37f8f54cd9a09abc64803933340bf326e3c6f"
-     },
-     {
-      "claim": 16,
-      "claimHash": "sha256/c1:38f73c45ef5b1a836dfa405db9d80df74d44ae33bec44e437e27248685edd9a1"
+      "claim": 1,
+      "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99"
      },
      {
       "claim": 17,
-      "claimHash": "sha256/c1:58bad93b8ca463d087eabdfe8c68ea691f07542842b9c5bbed8328bcd40b2c80"
+      "claimHash": "sha256/c1:c790db32c8024a92f788ab5c96b47924bfde2fbe34af0d1414dfff5b4d425329"
      },
      {
-      "claim": 18,
-      "claimHash": "sha256/c1:4b16914de6f0b26c88d24e062407b765519f7ecd3c50ac7f3ca71e70bcbf7e3b"
-     },
+      "claim": 19,
+      "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "af-gate-claim6-respective-mate",
+   "code": "claim6-respective-mate",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S023",
+    "textHash": "sha256/c1:b234dd556fb6362681b6cd3e218f3c0da06245e46778726e38c95f187552ba3e"
+   },
+   "appliesTo": {
+    "claims": [
      {
-      "claim": 20,
-      "claimHash": "sha256/c1:2b84c116ede71ba992c1569f82761de815e08b63cbf61724cde8ccb9878c94c9"
+      "claim": 6,
+      "claimHash": "sha256/c1:ffd8c378cc9d709852d98c266251799a70c499e5c7601be9ffe5b76427e970b2"
      }
     ]
    }
   },
   {
    "gateId": "af-gate-example2-priority",
-   "code": "example2-priority-gate",
+   "code": "example2-priority",
    "requiredScope": "claim",
    "requirement": "mandatory",
    "source": {
-    "block": "S013",
-    "textHash": "sha256/c1:11e3bd8079f41262f448ec6a944df2afcf9a6da4cf0b825358c1f9332608dd4c"
+    "block": "S024",
+    "textHash": "sha256/c1:830eaed92676513f5cb6fd1e0f8da64f35a25f2090141cb79082e88fb3d2322c"
    },
    "appliesTo": {
     "claims": [
      {
       "claim": 2,
-      "claimHash": "sha256/c1:76ebfcf764d69d566ddb3129230b33dc94d5a428c5c45ac961e1bb45f8459826"
+      "claimHash": "sha256/c1:c88bf7ed77398d6d2a4172ae5047db043934514a3b2e819890f2f7b04f5e599d"
      },
      {
       "claim": 3,
-      "claimHash": "sha256/c1:baa3306bbd564936d9dc771ab1044d5ae5e7d77fd87edf3857c4a6d2c2ca6bd4"
+      "claimHash": "sha256/c1:d983d0748526acbc5c342f9c5ae91886437c1fd4020ec13dabe2da4a1951a70b"
      }
     ]
    }
   },
   {
    "gateId": "af-gate-claim14-combined",
-   "code": "combined-example",
+   "code": "claim14-combined",
    "requiredScope": "claim",
    "requirement": "mandatory",
    "source": {
-    "block": "S022",
-    "textHash": "sha256/c1:1780911715bc3e8535745ce10ea797a8b8cbeda9795d34d70418e72e52c35593"
+    "block": "S025",
+    "textHash": "sha256/c1:df4fce256682f92d58d3ebd2ac74a248635823fb69dcaf3fe2e983e5757b8006"
    },
    "appliesTo": {
     "claims": [
      {
       "claim": 14,
-      "claimHash": "sha256/c1:19bd147dc18c72d437c61d58a5ca2e5473f2412bf12b82223c05e007fb780877"
+      "claimHash": "sha256/c1:2bee2897918f216ba8a8063f0d27dcd677fcbae23d62f5e11b149bb5d0857a1c"
      }
     ]
    }
@@ -188,14 +160,14 @@
    "requiredScope": "fragment",
    "requirement": "mandatory",
    "source": {
-    "block": "S023",
-    "textHash": "sha256/c1:47c6257280ebfe71f92d0243bdbc092de0757941c42ee1c92f6248add6eab11b"
+    "block": "S026",
+    "textHash": "sha256/c1:d51bdbaa34755a724dcf1839e5f4c66b7b106070e7a0f28fcd136f37c9739478"
    },
    "appliesTo": {
     "fragments": [
      {
       "id": "c11u0",
-      "hash": "sha256/c1:64d1af8ccdedf7c46775dfc76238024bf4f7cce9a4914702611e952c84d8666f"
+      "hash": "sha256/c1:6c37fd34cf56386c469a14c1fdeb13f45318ce7ff6a04fac4ab54686383f9725"
      },
      {
       "id": "c12u0",
@@ -210,14 +182,58 @@
    "requiredScope": "fragment",
    "requirement": "mandatory",
    "source": {
-    "block": "S024",
-    "textHash": "sha256/c1:870e311fe3b5eb6167f0f3bd75de0ae743ffbc9a7515a41227ff5177874617ca"
+    "block": "S027",
+    "textHash": "sha256/c1:5d6ab5343fdcd2b6f33f0cee48845e1f171e438df79a8694e870b00daa18dd4f"
    },
    "appliesTo": {
     "fragments": [
      {
-      "id": "c19u0",
-      "hash": "sha256/c1:286720eac62d5a860a7ad9954aed54e1eda19d99c15ffea7d9ec92b5e3077e01"
+      "id": "c18u0",
+      "hash": "sha256/c1:26450603a78d5ede1aa5343fe0e45af1f1c9209da78c6b69fa09acec24edb32e"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "af-gate-method-fallback",
+   "code": "method-fallback",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S028",
+    "textHash": "sha256/c1:28ceac18327e5182198661f51fe5ac4bb1db8a96b3f478193124be89bcb0c09e"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 20,
+      "claimHash": "sha256/c1:8da8aa338daf4f9f1f2e462e775df1b2b8868605cf102c890ff6e8afad13d9d6"
+     },
+     {
+      "claim": 21,
+      "claimHash": "sha256/c1:ffe11ffc61e350b88ae70db5892c6dfc262db038572e79051a1e2a276f87c12c"
+     },
+     {
+      "claim": 22,
+      "claimHash": "sha256/c1:54e33e30d46b8333e4d256b7946144bb5c22b6ef58a9019216e63cca19220345"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "af-gate-monitor-method",
+   "code": "monitor-method",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S029",
+    "textHash": "sha256/c1:de51d4100e9c54e746c2bcba42609b7b38793c57f9f144b11b9b3592930a2ecb"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 23,
+      "claimHash": "sha256/c1:77346d15a9ba673ca229a03657243311afc3f1a69daf7034733ba50df02a0039"
      }
     ]
    }

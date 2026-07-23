@@ -11,36 +11,40 @@
   "navigator/corpora.json",
   "navigator/profiles/corpora_af.json"
  ],
- "claimSetVersion": "AF-2026-07-17-v2",
+ "claimSetVersion": "AF-2026-07-22-v6",
  "relationSet": "navigator/relations/af__pct.json",
  "gateInventory": "navigator/profiles/gates_af-claims.json",
  "dependencyMap": "navigator/profiles/deps_af-claims.json",
- "independentClaims": [1, 20],
+ "independentClaims": [1, 19, 23],
  "census": {
-  "claims": 20,
-  "units": 60,
+  "claims": 23,
+  "units": 61,
   "perClaim": {
-   "1": 15, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1,
-   "9": 4, "10": 1, "11": 1, "12": 1, "13": 5, "14": 6, "15": 1,
-   "16": 1, "17": 1, "18": 1, "19": 1, "20": 15
+   "1": 14, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1,
+   "9": 1, "10": 1, "11": 1, "12": 1, "13": 1, "14": 3, "15": 1,
+   "16": 1, "17": 1, "18": 1, "19": 14, "20": 4, "21": 1,
+   "22": 1, "23": 8
   }
  },
  "groups": [
   "Integrated allowance-first system",
   "Priority-gated production fallbacks",
-  "Production-record and repeated-region fallbacks",
+  "Production-record fallbacks",
   "Detection fallbacks",
+  "Delivery fallbacks",
   "Collusion fallbacks",
-  "Manifest/chunk distribution fallbacks",
-  "Integrated allowance-first method"
+  "Manifest/chunk fallbacks",
+  "Integrated allowance-first method",
+  "Integrated-method fallback ladder",
+  "Monitor-side reconstructed-manifest method"
  ],
  "forbiddenTerms": ["camera-cut timing pattern"],
  "qaSources": {"priorityMap": "af-priority-map", "crosswalk": "af-na-crosswalk"},
  "qaRegistry": "navigator/profiles/qa_af.json",
  "stringsNamespace": "af",
  "stringsResource": "navigator/profiles/strings_af.json",
- "artifactName": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html",
- "declaredReleaseTimestamp": "2026-07-21T00:00:00Z",
+ "artifactName": "AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html",
+ "declaredReleaseTimestamp": "2026-07-23T00:00:00Z",
  "declaredTransitiveInputs": [
   "navigator/corpora.json",
   "navigator/profiles/corpora_af.json",

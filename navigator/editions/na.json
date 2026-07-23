@@ -11,19 +11,19 @@
   "navigator/corpora.json",
   "navigator/profiles/corpora_na.json"
  ],
- "claimSetVersion": "NA-2026-07-21-v2",
+ "claimSetVersion": "NA-2026-07-22-v4",
  "relationSet": "navigator/relations/na__pct.json",
  "gateInventory": "navigator/profiles/gates_na-claims.json",
  "dependencyMap": "navigator/profiles/deps_na-claims.json",
  "independentClaims": [1, 9, 16, 22],
  "census": {
   "claims": 30,
-  "units": 68,
+  "units": 77,
   "perClaim": {
    "1": 7, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1,
    "9": 9, "10": 1, "11": 1, "12": 1, "13": 6, "14": 1, "15": 1,
-   "16": 9, "17": 1, "18": 1, "19": 1, "20": 1, "21": 1,
-   "22": 9, "23": 1, "24": 4, "25": 1, "26": 1, "27": 1, "28": 1,
+   "16": 7, "17": 1, "18": 1, "19": 5, "20": 1, "21": 1,
+   "22": 14, "23": 1, "24": 1, "25": 6, "26": 1, "27": 1, "28": 1,
    "29": 1, "30": 1
   }
  },
@@ -38,8 +38,8 @@
  "qaRegistry": "navigator/profiles/qa_na.json",
  "stringsNamespace": "na",
  "stringsResource": "navigator/profiles/strings_na.json",
- "artifactName": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html",
- "declaredReleaseTimestamp": "2026-07-21T00:00:00Z",
+ "artifactName": "AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html",
+ "declaredReleaseTimestamp": "2026-07-23T00:00:00Z",
  "declaredTransitiveInputs": [
   "navigator/corpora.json",
   "navigator/profiles/corpora_na.json",

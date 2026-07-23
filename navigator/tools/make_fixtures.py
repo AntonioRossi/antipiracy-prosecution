@@ -181,19 +181,22 @@ def main():
     dump("migration_na_snapshot.json", migration_snapshot(na_m))
 
     dump("na_excerpt.json", reviewed_excerpt(
-        na_m, ["c9u6", "c16u6"], ["c9"]))
+        na_m, ["c9u6", "c20u0"], ["c9"]))
     dump("af_excerpt.json",
          reviewed_excerpt(
-             af_m, ["c1u8", "c1u11", "c1u12"], ["c1", "c2"]))
+             af_m, ["c1u8", "c1u11", "c23u7"], ["c1", "c2"]))
 
     # Five disposition fixtures (§8.1): synthetic gate compositions pinned
     # to real corpora hashes; the wrong-scope case is expected-invalid.
     unit_mapped = "c2u0"          # NA: mapped, carries example2-priority
-    unit_crr = "c16u6"            # NA: honest no-candidate fragment
+    unit_crr = "c20u0"            # NA: honest no-candidate fragment
+    live_target_gate = next(
+        gate for gate in na_m.gates["gates"]
+        if gate["requiredScope"] == "target")
     gate_target = {
-        "gateId": "fx-gate-target", "code": "example2-priority",
+        "gateId": "fx-gate-target", "code": live_target_gate["code"],
         "requiredScope": "target", "requirement": "mandatory",
-        "source": dict(na_m.gates["gates"][0]["source"]),
+        "source": dict(live_target_gate["source"]),
         "appliesTo": {
             "fragments": [
                 {"id": unit_mapped, "hash": na_m.units[unit_mapped].digest},
@@ -202,10 +205,11 @@ def main():
             "cardinality": {"minTargetsPerFragment": 1},
         },
     }
+    live_claim_gate = na_m.gates_by_id["na-gate-production-relationship"]
     gate_claim = {
-        "gateId": "fx-gate-claim", "code": "combined-example",
+        "gateId": "fx-gate-claim", "code": live_claim_gate["code"],
         "requiredScope": "claim", "requirement": "mandatory",
-        "source": dict(na_m.gates_by_id["na-gate-combined-example"]["source"]),
+        "source": dict(live_claim_gate["source"]),
         "appliesTo": {"claims": [
             {"claim": 9, "claimHash": na_m.agg_hashes[9]},
         ]},

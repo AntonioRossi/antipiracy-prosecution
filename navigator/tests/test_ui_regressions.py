@@ -250,7 +250,7 @@ process.stdout.write(JSON.stringify({mode:state.mode, prevented:prevented}));
         label = '<img src=x onerror="label">'
         block = 'S1"><script>alert("block")</script>'
         role = '<img src=x onerror="role">'
-        unit = SimpleNamespace(id="c1u0", label="limitation 1")
+        unit = SimpleNamespace(id="c1u0", index=0, label="limitation 1")
         claim = SimpleNamespace(number=1, units=[unit])
         m = SimpleNamespace(
             edition={"strategyPrefix": "NA", "stringsNamespace": "test"},

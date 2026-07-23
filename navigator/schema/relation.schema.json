@@ -101,7 +101,7 @@
    "properties": {
     "by": {"type": "string", "minLength": 1, "x-ship": "never", "x-review": "exclude"},
     "operatorKind": {"type": "string", "enum": ["human", "model", "tool"], "x-ship": "never", "x-review": "exclude"},
-    "date": {"type": "string", "minLength": 1, "x-ship": "never", "x-review": "exclude"},
+    "date": {"type": "string", "x-ship": "never", "x-review": "exclude"},
     "contentHash": {"type": "string", "x-ship": "never", "x-review": "exclude"}
    }
   },

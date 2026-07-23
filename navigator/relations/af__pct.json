@@ -11,307 +11,76 @@
     "gateId": "af-gate-claim-as-a-whole",
     "type": "source-gate",
     "code": "claim-as-a-whole",
-    "claimHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+    "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:c762026d44ab90bf89c3338300b153ec20efc267a594122f481f29a383be5a8c"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:55c2cda7bc6b2a0c74a1b2495a0db3c36d8fbc3d9f3979bc3e1abcdfd8300680"
     },
     "source": {
      "corpus": "af-claims",
-     "block": "S018",
-     "textHash": "sha256/c1:b1efc67560e0c239ed4e784ecba7adba39c004fabb0c577fcadd02123add516b"
+     "block": "S019",
+     "textHash": "sha256/c1:f6aa355085a2d6c4d18dd5108705f769c4c11459d16630276c912e054548e413"
     }
    },
    {
-    "gateId": "af-gate-examples-integration",
+    "gateId": "af-gate-production-boundary",
     "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+    "code": "production-boundary-generalization",
+    "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:08b21578983a5630c5fbbd9705d137aa95284b9bc9ce116ef50e03283b656bff"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:32957f878b63aede270e2da527b6fa45300bb62d95afa2492309827f4c746784"
     },
     "source": {
      "corpus": "af-claims",
      "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c20": [
-   {
-    "gateId": "af-gate-claim-as-a-whole",
-    "type": "source-gate",
-    "code": "claim-as-a-whole",
-    "claimHash": "sha256/c1:2b84c116ede71ba992c1569f82761de815e08b63cbf61724cde8ccb9878c94c9",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:c445b8df3bed31a668655fbd265e6f24aae886eb96adb83db6906b03d520623d"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S018",
-     "textHash": "sha256/c1:b1efc67560e0c239ed4e784ecba7adba39c004fabb0c577fcadd02123add516b"
+     "textHash": "sha256/c1:9f08bdc197664e572835b8299509a84cbbe942026ebb16855991d05b7b2bbb10"
     }
    },
    {
-    "gateId": "af-gate-examples-integration",
+    "gateId": "af-gate-per-filing-support",
     "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:2b84c116ede71ba992c1569f82761de815e08b63cbf61724cde8ccb9878c94c9",
+    "code": "per-filing-support",
+    "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:5f3545e9f8861fc463895f1230faf6079be99a2f111496119e6bdab7e0733a72"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:e176fdb407026f829ed062cf9cac626af6ba17a7467501b1212fcf3560017001"
     },
     "source": {
      "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c7": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:5421089fd97a2694fac249d0d91204772fad17531e15f0dd825bbac79cb8bf1c",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:dc1a9ea51649a4be7419470c88a0b75c9649bf80c472488b0079e4262394daa9"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c8": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:8e8b92389552e43f53223698f0940ed138b16b1d86938b4f29484e0477469f09",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:5bc6a8b4ed9d280cecba1b2950fe82ccad348b21915a0ef8bc61170c53ef0c79"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c9": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:2054fb2d7ca50ccd0b1c18a7612f6b62eb90a8b8c2589c5bde61ae4676082d7d",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:5a71debdbae4da9b8dfba6d8be7b26db0b5d2ab6068bec76597c696021e53292"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c10": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:e3552085b4ddfdc9b11305467eed1fc175fc0bcc7d7fc93f86bc6b783876f86c",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:66953afadfd9dbbf72e7339bd36c1b625d5aca97efa059503f053fc80a313d57"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c13": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:99d78be0db5bac288109c8eb87ab9e4164142a8cc02d89948a9954c33b3bc9ed",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:8730b9b48e5e8f62d1dee665e7b6451fdc71abf0e2158022b9ff9d13c4dc5e9f"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c14": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:19bd147dc18c72d437c61d58a5ca2e5473f2412bf12b82223c05e007fb780877",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:9ba0b2a35af93a75640c39b3aaf4e3ba145e51e9ba9e6539494eaf4b1afcdf65"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
+     "block": "S021",
+     "textHash": "sha256/c1:d8c48fcdeb2b8ca6dd6df5992949c9e384ce3d2912e2420693acb0c463a5ad54"
     }
    },
    {
-    "gateId": "af-gate-claim14-combined",
+    "gateId": "af-gate-plural-cut-integration",
     "type": "source-gate",
-    "code": "combined-example",
-    "claimHash": "sha256/c1:19bd147dc18c72d437c61d58a5ca2e5473f2412bf12b82223c05e007fb780877",
+    "code": "plural-cut-integration",
+    "claimHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:8bd7f39aaa2f393181292caafd95231b6ca69b8b9a7c9855cdc9ba6de8960a75"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:fa1352502ec58d345f4e61704c9a0f423c4e8757b58d8ca239b3a712c4ad4297"
     },
     "source": {
      "corpus": "af-claims",
      "block": "S022",
-     "textHash": "sha256/c1:1780911715bc3e8535745ce10ea797a8b8cbeda9795d34d70418e72e52c35593"
-    }
-   }
-  ],
-  "c15": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:7d6ccdb83ae942f2ee6f707cadb37f8f54cd9a09abc64803933340bf326e3c6f",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:18a8c503631f73f1fe56641a73c90d1910759efe3991a2a4ca424e3ea503eb6b"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c16": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:38f73c45ef5b1a836dfa405db9d80df74d44ae33bec44e437e27248685edd9a1",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:51e63e7e442c1233c4bf7ec75d26b0ef5d57bc12f780ead8ce12a4518ea0f547"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c17": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:58bad93b8ca463d087eabdfe8c68ea691f07542842b9c5bbed8328bcd40b2c80",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:cdd72b9a70fe94770ed006018c6c0895b1d0f89647b699be1c88605c561dbf4d"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
-    }
-   }
-  ],
-  "c18": [
-   {
-    "gateId": "af-gate-examples-integration",
-    "type": "source-gate",
-    "code": "examples-integration",
-    "claimHash": "sha256/c1:4b16914de6f0b26c88d24e062407b765519f7ecd3c50ac7f3ca71e70bcbf7e3b",
-    "reviewState": "internally-reviewed",
-    "migrationState": "current",
-    "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-     "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:c4b8f10e91ba65b93394b2e53f109bb9237c82917d3bc4817c145887d4e540f6"
-    },
-    "source": {
-     "corpus": "af-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:288eb990fe6eb8f4159ca7fc9021e62a9e7610d382d4d774cb1f0702811c705a"
+     "textHash": "sha256/c1:64b0b6fca25584af3eba7dbf454fd9bb230454d808a93e51fa9ae9db21637f56"
     }
    }
   ],
@@ -319,20 +88,20 @@
    {
     "gateId": "af-gate-example2-priority",
     "type": "source-gate",
-    "code": "example2-priority-gate",
-    "claimHash": "sha256/c1:76ebfcf764d69d566ddb3129230b33dc94d5a428c5c45ac961e1bb45f8459826",
+    "code": "example2-priority",
+    "claimHash": "sha256/c1:c88bf7ed77398d6d2a4172ae5047db043934514a3b2e819890f2f7b04f5e599d",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:7c2307e7f3de9fcf66aa8d30cc3bcd70e6fcab991667163a274a1e538657da56"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:ca060d42fa844728d35a8b7784988059f566dc11972d8410289c961ca7bebdd0"
     },
     "source": {
      "corpus": "af-claims",
-     "block": "S013",
-     "textHash": "sha256/c1:11e3bd8079f41262f448ec6a944df2afcf9a6da4cf0b825358c1f9332608dd4c"
+     "block": "S024",
+     "textHash": "sha256/c1:830eaed92676513f5cb6fd1e0f8da64f35a25f2090141cb79082e88fb3d2322c"
     }
    }
   ],
@@ -340,36 +109,1096 @@
    {
     "gateId": "af-gate-example2-priority",
     "type": "source-gate",
-    "code": "example2-priority-gate",
-    "claimHash": "sha256/c1:baa3306bbd564936d9dc771ab1044d5ae5e7d77fd87edf3857c4a6d2c2ca6bd4",
+    "code": "example2-priority",
+    "claimHash": "sha256/c1:d983d0748526acbc5c342f9c5ae91886437c1fd4020ec13dabe2da4a1951a70b",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:1dbf6f8ba65040a1f6e6a00422872729fb244af5f2a74c40949713ff056bf677"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:41ebfed411e46d240c0708b7f9e237da51ce7d98034eca825e1656c21510f9e7"
     },
     "source": {
      "corpus": "af-claims",
-     "block": "S013",
-     "textHash": "sha256/c1:11e3bd8079f41262f448ec6a944df2afcf9a6da4cf0b825358c1f9332608dd4c"
+     "block": "S024",
+     "textHash": "sha256/c1:830eaed92676513f5cb6fd1e0f8da64f35a25f2090141cb79082e88fb3d2322c"
+    }
+   }
+  ],
+  "c6": [
+   {
+    "gateId": "af-gate-claim6-respective-mate",
+    "type": "source-gate",
+    "code": "claim6-respective-mate",
+    "claimHash": "sha256/c1:ffd8c378cc9d709852d98c266251799a70c499e5c7601be9ffe5b76427e970b2",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:c3a47811c35b3a74d2a40011504b793ea5d38e101f10fcdfc21231493227a35f"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S023",
+     "textHash": "sha256/c1:b234dd556fb6362681b6cd3e218f3c0da06245e46778726e38c95f187552ba3e"
+    }
+   }
+  ],
+  "c14": [
+   {
+    "gateId": "af-gate-claim14-combined",
+    "type": "source-gate",
+    "code": "claim14-combined",
+    "claimHash": "sha256/c1:2bee2897918f216ba8a8063f0d27dcd677fcbae23d62f5e11b149bb5d0857a1c",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:2e0577ac0be5cd8946a34f7f8505ac749f195b8ca894211a632eadcb5b807ed9"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S025",
+     "textHash": "sha256/c1:df4fce256682f92d58d3ebd2ac74a248635823fb69dcaf3fe2e983e5757b8006"
+    }
+   }
+  ],
+  "c17": [
+   {
+    "gateId": "af-gate-plural-cut-integration",
+    "type": "source-gate",
+    "code": "plural-cut-integration",
+    "claimHash": "sha256/c1:c790db32c8024a92f788ab5c96b47924bfde2fbe34af0d1414dfff5b4d425329",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:5fe97753b7741f7c4eff2147dbc600beb1a398bd0ae42a55a4bbf032d05ed794"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S022",
+     "textHash": "sha256/c1:64b0b6fca25584af3eba7dbf454fd9bb230454d808a93e51fa9ae9db21637f56"
+    }
+   }
+  ],
+  "c19": [
+   {
+    "gateId": "af-gate-claim-as-a-whole",
+    "type": "source-gate",
+    "code": "claim-as-a-whole",
+    "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:e918d8f792bbb7878345dbc5be5c114649cf4dd6add7a2ae38d714b2ff0734fb"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S019",
+     "textHash": "sha256/c1:f6aa355085a2d6c4d18dd5108705f769c4c11459d16630276c912e054548e413"
+    }
+   },
+   {
+    "gateId": "af-gate-production-boundary",
+    "type": "source-gate",
+    "code": "production-boundary-generalization",
+    "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:31f7bb95f679984fb9bf372d32236babc0f5618b1def7e553becc86da4d8a0d4"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S020",
+     "textHash": "sha256/c1:9f08bdc197664e572835b8299509a84cbbe942026ebb16855991d05b7b2bbb10"
+    }
+   },
+   {
+    "gateId": "af-gate-per-filing-support",
+    "type": "source-gate",
+    "code": "per-filing-support",
+    "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:416428db99a36dd8f678716e26003f60070359643c2346d7167e06ed07110bf7"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S021",
+     "textHash": "sha256/c1:d8c48fcdeb2b8ca6dd6df5992949c9e384ce3d2912e2420693acb0c463a5ad54"
+    }
+   },
+   {
+    "gateId": "af-gate-plural-cut-integration",
+    "type": "source-gate",
+    "code": "plural-cut-integration",
+    "claimHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:9a4303dd39d262bfcb94bdc226795ec6b62ca2571a92f865d4e8cb9d46f50a3e"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S022",
+     "textHash": "sha256/c1:64b0b6fca25584af3eba7dbf454fd9bb230454d808a93e51fa9ae9db21637f56"
+    }
+   }
+  ],
+  "c20": [
+   {
+    "gateId": "af-gate-method-fallback",
+    "type": "source-gate",
+    "code": "method-fallback",
+    "claimHash": "sha256/c1:8da8aa338daf4f9f1f2e462e775df1b2b8868605cf102c890ff6e8afad13d9d6",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:20e7cc3306f319d405a61d97af1c43d3cf9a718cc9bca9d2d70734a3006f0763"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S028",
+     "textHash": "sha256/c1:28ceac18327e5182198661f51fe5ac4bb1db8a96b3f478193124be89bcb0c09e"
+    }
+   }
+  ],
+  "c21": [
+   {
+    "gateId": "af-gate-method-fallback",
+    "type": "source-gate",
+    "code": "method-fallback",
+    "claimHash": "sha256/c1:ffe11ffc61e350b88ae70db5892c6dfc262db038572e79051a1e2a276f87c12c",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:f8c8672ba97bfc5bcf22fad81a030178c0c358d5d263ba9dba924052da823aa5"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S028",
+     "textHash": "sha256/c1:28ceac18327e5182198661f51fe5ac4bb1db8a96b3f478193124be89bcb0c09e"
+    }
+   }
+  ],
+  "c22": [
+   {
+    "gateId": "af-gate-method-fallback",
+    "type": "source-gate",
+    "code": "method-fallback",
+    "claimHash": "sha256/c1:54e33e30d46b8333e4d256b7946144bb5c22b6ef58a9019216e63cca19220345",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:f8a3d3c0471b6a4314538aab4291877a46762eaa5a30fbab8517df5bdef10d52"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S028",
+     "textHash": "sha256/c1:28ceac18327e5182198661f51fe5ac4bb1db8a96b3f478193124be89bcb0c09e"
+    }
+   }
+  ],
+  "c23": [
+   {
+    "gateId": "af-gate-monitor-method",
+    "type": "source-gate",
+    "code": "monitor-method",
+    "claimHash": "sha256/c1:77346d15a9ba673ca229a03657243311afc3f1a69daf7034733ba50df02a0039",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:0f521b0ab07ba444b8cd8b913edb9d154b0677ecb6ca50dd970bde691753eb61"
+    },
+    "source": {
+     "corpus": "af-claims",
+     "block": "S029",
+     "textHash": "sha256/c1:de51d4100e9c54e746c2bcba42609b7b38793c57f9f144b11b9b3592930a2ecb"
     }
    }
   ]
  },
  "fragments": {
-  "c1u0": {
+  "c10u0": {
    "status": "mapped",
+   "targets": [
+    {
+     "block": "S099",
+     "textHash": "sha256/c1:8feecb1dedd8fb0846ebb32149a5d7ceed0c8bc37ccce1da16717007df6deaaa",
+     "role": "specific",
+     "note": "Mixing component integrates reference and mate chunks, progressively assigning distinct manifests"
+    },
+    {
+     "block": "S200",
+     "textHash": "sha256/c1:920547e26f29cbda321cedf1262d94dcf8822f49e89f05f7187c6cdedfb066fb",
+     "role": "context",
+     "note": "Associations updated as variations accumulate"
+    },
+    {
+     "block": "PC12",
+     "textHash": "sha256/c1:f9f41c696c7985e31f7d9ad4f258e43d28c76dba35445f4e36634bab49347529",
+     "role": "context",
+     "note": "PCT claim 12: mixing component"
+    }
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:5fd0ae3879fd7f963494aa36801762384765ba692e6eb3b3abb678fa549dabb0"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:f7d213a3e28220788efcd10a8d078553a573559b4db41e2d1e557be6e7841535"
    },
-   "fragmentTextHash": "sha256/c1:c4930910bcf6e938db8727b646261f7a7bee4c8a971b17c0a552ac88814bc430",
+   "fragmentTextHash": "sha256/c1:8223985944e29a9b258f89d3f5fbed692d3b17f7705d9bcec9726f9b26a968e3"
+  },
+  "c11u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S113",
+     "textHash": "sha256/c1:f357b8e5cf45c3c5d25c57dda5096821c22c2189e3eba9d5dcc5a6dd5bb8603d",
+     "role": "specific",
+     "note": "Mixed-copy collusion: each segment traced back; accounts identified via the ledger"
+    },
+    {
+     "block": "S116",
+     "textHash": "sha256/c1:77f28f1dd04dc3915e8d559049f26060413e82a30d69395ceb52e5d3d77cf67d",
+     "role": "context",
+     "note": "Probabilistic (Tardos) fingerprinting in the detection component"
+    },
+    {
+     "block": "S117",
+     "textHash": "sha256/c1:069effea919bff95b0d4d55593baa0311a141075ae3e59a4b2dfc85b92db86a8",
+     "role": "context",
+     "note": "Collusion-secure tracing back to the contributing users"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:290c3b1fda9c4f0702271696433f8bd25fa0fab7247e337a07a9d16a78b3f5c6"
+   },
+   "fragmentTextHash": "sha256/c1:6c37fd34cf56386c469a14c1fdeb13f45318ce7ff6a04fac4ab54686383f9725",
+   "caution": {
+    "gateId": "af-gate-collusion-output",
+    "type": "source-gate",
+    "code": "collusion-output",
+    "source": {
+     "corpus": "af-claims",
+     "block": "S026",
+     "textHash": "sha256/c1:d51bdbaa34755a724dcf1839e5f4c66b7b106070e7a0f28fcd136f37c9739478"
+    }
+   }
+  },
+  "c12u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S120",
+     "textHash": "sha256/c1:3e5cd246e260e2367fd89a0c81605608ac83332587c96ef01ed15815a096c5b6",
+     "role": "specific",
+     "note": "Segmented Tardos: unique fingerprints per segment localize pirated segments and colluders"
+    },
+    {
+     "block": "S117",
+     "textHash": "sha256/c1:069effea919bff95b0d4d55593baa0311a141075ae3e59a4b2dfc85b92db86a8",
+     "role": "context",
+     "note": "Tardos accusation foundations"
+    },
+    {
+     "block": "S113",
+     "textHash": "sha256/c1:f357b8e5cf45c3c5d25c57dda5096821c22c2189e3eba9d5dcc5a6dd5bb8603d",
+     "role": "context",
+     "note": "Per-segment tracing under collusion"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:5f7dd77b2168394a3fc956436bd2fab2a398a431bf0af0e114ac1dc2004d568a"
+   },
+   "fragmentTextHash": "sha256/c1:1a8d10d6ebc5a1cb28c5118f73bdb7542580f3b49be3ea9d3755e2e5018dde9f",
+   "phrases": [
+    {
+     "id": "c12u0p1",
+     "text": "segmented Tardos fingerprinting algorithm",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+      "operatorKind": "model",
+      "date": "2026-07-23",
+      "contentHash": "sha256/c1:3f1a0d582701d55f09dd846a03db4498b2a4ab512e9201bb01f2be06a6a994c1"
+     },
+     "targets": [
+      {
+       "block": "S120",
+       "textHash": "sha256/c1:3e5cd246e260e2367fd89a0c81605608ac83332587c96ef01ed15815a096c5b6",
+       "role": "specific",
+       "note": "Segmented Tardos algorithms applying fingerprints per content segment"
+      }
+     ]
+    }
+   ],
+   "caution": {
+    "gateId": "af-gate-collusion-output",
+    "type": "source-gate",
+    "code": "collusion-output",
+    "source": {
+     "corpus": "af-claims",
+     "block": "S026",
+     "textHash": "sha256/c1:d51bdbaa34755a724dcf1839e5f4c66b7b106070e7a0f28fcd136f37c9739478"
+    }
+   }
+  },
+  "c13u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S176",
+     "textHash": "sha256/c1:85d472f46376907963e6efec4fcb01c1e431165533806ca76832c35eab910fb1",
+     "role": "specific",
+     "note": "Reference manifest lists reference chunks"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "context",
+     "note": "Manifest chunk selection"
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Different manifest selects the mate's variant chunk"
+    },
+    {
+     "block": "S175",
+     "textHash": "sha256/c1:145a26beb31ceffe15661d1f9c7f4d89832b54da14eb6186f635d9effba92366",
+     "role": "context",
+     "note": "Equal-duration chunks in Example 3"
+    },
+    {
+     "block": "S180",
+     "textHash": "sha256/c1:5f18470e4338eaf7522409baced9102f2af31d1a5661638e5ba3b8d03fee1e8d",
+     "role": "context",
+     "note": "Equal-duration compatibility statement"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:34aa2bcee3f270fb6033b61e3dfbc5914bd48ee99c81062e2b032190012902e8"
+   },
+   "fragmentTextHash": "sha256/c1:2f8e40864b39c1dcb9a1f6e802722811272fda77378449abfda3b46e625c1d1e"
+  },
+  "c14u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "context",
+     "note": "Reference/mate manifests and their chunk references"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:c484c926c04a0191e9f71f805abc8e607442634c70beb4da4b9571a1dbc7d97b"
+   },
+   "fragmentTextHash": "sha256/c1:8e354d08319cfc9237be930afda8b37a2f4d14223f0a83e8eb8fe061ca58b343"
+  },
+  "c14u1": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference boundary inside the paired chunk interval",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S176",
+     "textHash": "sha256/c1:85d472f46376907963e6efec4fcb01c1e431165533806ca76832c35eab910fb1",
+     "role": "combination",
+     "note": "Reference manifest lists reference_segment3_000 spanning the third-cut interval"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:91f880c3bd81b6cebcb0be8a8d0e0eefb7b87d32583b8ea0691a2d344db967e5"
+   },
+   "fragmentTextHash": "sha256/c1:4b7f53d575447e21919d248e35c7ba9f827450fb8c8729a8be35abdc0b5db922"
+  },
+  "c14u2": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate boundary at the moved time code inside the same interval",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "combination",
+     "note": "Variant chunk reflecting the delay"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:8c442031a0b82c2dcfb83ae2d1ea2f689c744825c1750071b2ed337cd3089ce4"
+   },
+   "fragmentTextHash": "sha256/c1:8bc93353abecbc87e2294feb8298d5702b5c526f30ccbf74314a17f2857dafc6"
+  },
+  "c15u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S104",
+     "textHash": "sha256/c1:b3a7a9dfae02de05a7838d68352c407b88867ad883b8cf998311570dddf22e63",
+     "role": "specific",
+     "note": "Blockchain component records and retrieves manifest-recipient associations."
+    },
+    {
+     "block": "PC13",
+     "textHash": "sha256/c1:adcb432ac791311cd15c797f0d06aff7e2602045313527cbff6a5f8af365d790",
+     "role": "specific",
+     "note": "PCT claim 13 expressly recites blockchain registration and ledger reading."
+    },
+    {
+     "block": "S055",
+     "textHash": "sha256/c1:1809bc018625901b7d78377df6642de62fe24f9478ae9db9242d63043fdba348",
+     "role": "context",
+     "note": "Distribution architecture permits blockchain-backed manifest association records."
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:745610eee541fed29cc896a6fb159103e802b1b5e537cc442970f9307c21c631"
+   },
+   "fragmentTextHash": "sha256/c1:bfb2f5eefbaee3dbfc34107cdd21bdfeeaa56777f03a8aae87b5d46049ea236b"
+  },
+  "c16u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S127",
+     "textHash": "sha256/c1:8d27b854f75e37897dcfa2848dfaea7760871177539efe9b77fe5634783fc277",
+     "role": "specific",
+     "note": "Unicast distribution of the chunks"
+    },
+    {
+     "block": "S155",
+     "textHash": "sha256/c1:f9f9e17475ae6a642a5255f35b10fb1f19df055e794ac0d72feb997ddbe6f0ab",
+     "role": "specific",
+     "note": "Unicasting gives each spectator a unique stream"
+    },
+    {
+     "block": "PC6",
+     "textHash": "sha256/c1:37020aa1a6591cd3258415208cea6ba11edf2e256c48318a9ac829dee03f9c82",
+     "role": "context",
+     "note": "PCT claim 6: unicasting"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:a86a81446ff5a277db1e57cf501bdc5fad1dc69acae20604f4df9e4036b58497"
+   },
+   "fragmentTextHash": "sha256/c1:0d905e3db998478b9d502af33d0e605b3bf5c1d03273111b93c68965ac7927cb"
+  },
+  "c17u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Mate manifest selects the variant chunk reflecting the moved boundary"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Manifest chunk references differ exactly where the timing was altered",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "context",
+     "note": "Interleaved chunk combinations per manifest"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:fa7fcfe959bb5f429bfc6f66621002081641a50dda75dc28d70b56475c7305a6"
+   },
+   "fragmentTextHash": "sha256/c1:c604954bc6cf008106df5d4d0d1ca64786326979c993d92224ccc68b63ba6b3b"
+  },
+  "c18u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S114",
+     "textHash": "sha256/c1:b82af3c5e23e5077ab87a6bce46296191bfa0c3f40e98888ca6c35b93212496a",
+     "role": "specific",
+     "note": "Overlay of additional audio/video elements nonexistent in the reference content"
+    },
+    {
+     "block": "S153",
+     "textHash": "sha256/c1:e0a47d1de6b030d867e50985e8d48dd0d8ba7bfc078fd8330b03b5dbb4b863c2",
+     "role": "specific",
+     "note": "Overlay applied in the programming step, before segmenting step 240 in the method order"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:b7d250e84951db801b57d9d1b433038d659924145e385c92aac1609a724176ce"
+   },
+   "fragmentTextHash": "sha256/c1:26450603a78d5ede1aa5343fe0e45af1f1c9209da78c6b69fa09acec24edb32e",
+   "caution": {
+    "gateId": "af-gate-overlay-sequencing",
+    "type": "source-gate",
+    "code": "overlay-sequencing",
+    "source": {
+     "corpus": "af-claims",
+     "block": "S027",
+     "textHash": "sha256/c1:5d6ab5343fdcd2b6f33f0cee48845e1f171e438df79a8694e870b00daa18dd4f"
+    }
+   }
+  },
+  "c19u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S132",
+     "textHash": "sha256/c1:f336ff6af72948a7261fa491d213a8e1276fe8cbf42b6c78e5c5d7087f6aa56e",
+     "role": "specific",
+     "note": "Method 200 of identification and protection using the system"
+    },
+    {
+     "block": "PC16",
+     "textHash": "sha256/c1:63bf04cf36f2a28dfb8ffccdbae648df91109b3eea97d153d4bb4c5948b65030",
+     "role": "context",
+     "note": "PCT claim 16: the method"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:c5da6f3ad5a79ea0d3320ae766e6f39bdca58cab1cca23a77c189d2fdfe413f0"
+   },
+   "fragmentTextHash": "sha256/c1:8f3d723c152f046cf438e16b6add5a136bfa501159ffc9f896f3d1748b9ec1d4"
+  },
+  "c19u1": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S067",
+     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
+     "role": "specific",
+     "note": "Pipeline receives video captured from cameras 101"
+    },
+    {
+     "block": "S079",
+     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
+     "role": "combination",
+     "note": "Pipeline records cut timings and transitions as time codes in list 103"
+    },
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "context",
+     "note": "EDL entries: source reference plus time code"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:e546262196ca247199a0bc2f546e6b2ce56f5b23bd57177dfee3cf99322fb1a0"
+   },
+   "fragmentTextHash": "sha256/c1:70449f85bca7bd792e3d734b321844940838f4b13b423ab1862dcd95357a5014"
+  },
+  "c19u10": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Detection component receives/detects the pirate webcasting"
+    },
+    {
+     "block": "S139",
+     "textHash": "sha256/c1:c706299cf80d1ebce5aa51da68cb4528a5212c88ee8a9f45251e29f27fa9a3f7",
+     "role": "context",
+     "note": "Monitoring step 280"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:cfc5e31aedc89c1d521c8070e2a0a8276e1293bee808cbaff23d1c242e430a4d"
+   },
+   "fragmentTextHash": "sha256/c1:ffe956bbd67d8b114135e5103a49d25710ecbbe5fd2c8a84619f38f207076860"
+  },
+  "c19u11": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Algorithm analyzes camera-cut timings in the suspect and devises time codes"
+    },
+    {
+     "block": "S071",
+     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+     "role": "context",
+     "note": "Detecting camera-switch timings in the suspected distribution"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Scene-change comparison against the reference"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:1d5e37089478b9814a3de07f8cf3c6ed6b485d8067b82338ff7fe32c34bb4913"
+   },
+   "fragmentTextHash": "sha256/c1:52e195f6a948b538484629f43705f3ffce8630e1043829073b1bd0292e279712"
+  },
+  "c19u12": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "combination",
+     "note": "Comparison identifies the specific manifest fingerprint of the delivered version"
+    },
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "combination",
+     "note": "Reconstructed manifests from devised time codes select the candidate"
+    },
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "context",
+     "note": "Delivered manifests matched against the reconstruction"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:5623f4c44996a9e79f9674e9ba30bbd5886233f49c10872ddc7c08a8519ea40b"
+   },
+   "fragmentTextHash": "sha256/c1:24312674f515132e63a73262b0832d0fc22937e4b2594d5ccff61fb15dd77d64"
+  },
+  "c19u13": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "specific",
+     "note": "Retrieval component searches the ledger and identifies the account(s)"
+    },
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "context",
+     "note": "Record of associations searched"
+    },
+    {
+     "block": "S232",
+     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
+     "role": "context",
+     "note": "PCT claim 15: retrieval element"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:13c2b3def0f1e890f921539ad26ee4d2828858b4ae6698a370b4aef88771b1a1"
+   },
+   "fragmentTextHash": "sha256/c1:68c77b23b72fea79a9e95a4e103bb87daef7de37a96316c2b89b18120ea4fe23"
+  },
+  "c19u2": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S067",
+     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
+     "role": "combination",
+     "note": "Pipeline creates the reference audio-video content 1"
+    },
+    {
+     "block": "S079",
+     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
+     "role": "context",
+     "note": "Director-driven production through pipeline 102"
+    },
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "combination",
+     "note": "The EDL guides reconstruction of the sequence: production according to the structured list"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:8708a4a3232bb74b2159ad1c8dce8676c4ec49acd5eca780da56d1d55555adf0"
+   },
+   "fragmentTextHash": "sha256/c1:21401c5489e200e20cd3b09b29e5cb6adc8332943ebd538f7c8b57c7c63bab1d"
+  },
+  "c19u3": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S080",
+     "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
+     "role": "specific",
+     "note": "Automatic variation of a recorded cut time code originates unique mates"
+    },
+    {
+     "block": "S068",
+     "textHash": "sha256/c1:9fb662b4840382bb373855d9cfb9f40144ca0fb519ff595c3d06e7bc75a045f5",
+     "role": "context",
+     "note": "Mate as a distinguishable version of the same content"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL keeps the Camera 2/Camera 3 order at a moved time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:f99cf93d9aa52199592a0b020a638018ffc787f8668a4157e303725491bd4b13"
+   },
+   "fragmentTextHash": "sha256/c1:8ff96dabb992337b735767f1d55b98b50953e69aafc2c1f7fdf4d41513b23adb"
+  },
+  "c19u4": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference EDL boundary at the recorded time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL boundary ten frames later"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Explanation of the moved boundary"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:4d9f71a586ba1f3dbe55717368443c5e64d7455b6ed37c953604218d20a2e4a9"
+   },
+   "fragmentTextHash": "sha256/c1:bc74509b79f46736193b886dc56997ace2ac3226a749dba7364ed92a7d7b1660"
+  },
+  "c19u5": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "combination",
+     "note": "Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval frames come from different cameras",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Adjusted cut durations around the interval"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL rows identify the cameras on each side of the moved boundary"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:88b3693e6955da340c375986dc9e6d3bc117fba5ed17a8fd8dadda67f9346510"
+   },
+   "fragmentTextHash": "sha256/c1:c3c0d07782189ef9f413ae0009501eead11e233f3bd354ae6a84ab511731fa2e"
+  },
+  "c19u6": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Ensemble of reference and mates segmented into chunks 113"
+    },
+    {
+     "block": "S146",
+     "textHash": "sha256/c1:83dc843db69b2c88409e29d2939d13749929362683ccc8d11e1ffc35ebf5b907",
+     "role": "context",
+     "note": "Segmenting step 240"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:b5fc64d04bf65194fc5cdf85e80c438d99658b2f73afaf8245db4dd274e642b0"
+   },
+   "fragmentTextHash": "sha256/c1:086c695cef91dd916fd8ac41fc2e776f5ab6a507cd2d6a0c0a3464b137279ce7"
+  },
+  "c19u7": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Manifests point to unique interleaved combinations of reference and mate chunks"
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Mate manifest selects the variant chunk at the altered cut"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Chunk references differ exactly where the timing was moved",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:1b377d4b4860a66c9f5f6222c4ab3e33883378194608a7a0f4bfb6442d984d88"
+   },
+   "fragmentTextHash": "sha256/c1:356003c64f55f1e14dd1616bb06cf8c8b6bbadfa8c55f64c67f16bcc20dee9e8"
+  },
+  "c19u8": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "specific",
+     "note": "Delivery of streams assembled from manifest-listed chunks"
+    },
+    {
+     "block": "S149",
+     "textHash": "sha256/c1:bf241b703bf322a1d44076cac2f1605eef01953686dcbaa4463ecd7fea5b64b2",
+     "role": "context",
+     "note": "Distribution step 260"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:a590963cec2041601e9c8e386b74b1d50a93659785b4025302198776a464bfcb"
+   },
+   "fragmentTextHash": "sha256/c1:f42b33c70ac5f98c4e610639ff45f047ca807ade5712b55c8524954b2e394aff"
+  },
+  "c19u9": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger records which recipient received which delivered version/manifest"
+    },
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "specific",
+     "note": "Record of associations between versions and recipients"
+    },
+    {
+     "block": "S101",
+     "textHash": "sha256/c1:fe32bf070acf20f625dec87a6c81b108d0fbbbd3feb374d0bec57ca6c7a7674a",
+     "role": "context",
+     "note": "Archived manifests associated with spectators",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:d234a9eb387edb7b7366ed65878201dbe041ea49e4c0dbb46c47b1a0e2f74df2"
+   },
+   "fragmentTextHash": "sha256/c1:f4360b593561892b8024284e984db2253423ac5130afbbdf3f5633a9f244d656"
+  },
+  "c1u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S077",
@@ -389,19 +1218,461 @@
      "role": "context",
      "note": "Processor/memory computing environment"
     }
-   ]
-  },
-  "c20u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:a46e926bba722a207a86e7112878ad3138fd489de7249db563e6d3077485df8e"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:1ca40a09a857ba844b4c48c35a16dae91eb415c063d6a745922f8dc592f9ebf2"
    },
-   "fragmentTextHash": "sha256/c1:247705521cd31762d61f5e0af159a7116fafa4c376c7dda6a8a1c385971f313d",
+   "fragmentTextHash": "sha256/c1:cc657cd5a97a1f07a880a0160a7bd1d838934ada9542e6e8f1021899b7ca14de"
+  },
+  "c1u1": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S067",
+     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
+     "role": "specific",
+     "note": "Pipeline receives video captured from cameras 101"
+    },
+    {
+     "block": "S079",
+     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
+     "role": "combination",
+     "note": "Pipeline records cut timings and transitions as time codes in list 103"
+    },
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "context",
+     "note": "EDL entries: source reference plus time code"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:0525dbdf95c3175fa52e4deec60721ee979c69abf5c5f5616b34f2f97d76bb78"
+   },
+   "fragmentTextHash": "sha256/c1:9ba66e266d6d2425531b710ded62d4b9fde5e1a079c1955935ac10079327b09d",
+   "phrases": [
+    {
+     "id": "c1u1p1",
+     "text": "structured list of edit instructions",
+     "occurrence": 1,
+     "status": "mapped",
+     "reviewState": "internally-reviewed",
+     "migrationState": "current",
+     "review": {
+      "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+      "operatorKind": "model",
+      "date": "2026-07-23",
+      "contentHash": "sha256/c1:e1829a7c94bb1b8c78ff5f20f42d5965435d5bee63fa38387567e284400b4fbc"
+     },
+     "targets": [
+      {
+       "block": "S089",
+       "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+       "role": "specific",
+       "note": "Structured list 103 as an Edit Decision List"
+      }
+     ]
+    }
+   ]
+  },
+  "c1u10": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Detection component receives/detects the pirate webcasting"
+    },
+    {
+     "block": "S139",
+     "textHash": "sha256/c1:c706299cf80d1ebce5aa51da68cb4528a5212c88ee8a9f45251e29f27fa9a3f7",
+     "role": "context",
+     "note": "Monitoring step 280"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:eda8947723f4c6ccb6fe446f880bbdbbabddf596d41be551d0aa326fea263dcc"
+   },
+   "fragmentTextHash": "sha256/c1:51d20e866a7d2576a18bdbc79ec8ead86ae0c6be5bdd8936cd23a5fc08d3de97"
+  },
+  "c1u11": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Algorithm analyzes camera-cut timings in the suspect and devises time codes"
+    },
+    {
+     "block": "S071",
+     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+     "role": "context",
+     "note": "Detecting camera-switch timings in the suspected distribution"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Scene-change comparison against the reference"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:65b1ab9a9bcddf9fd1e5753a9436ccfecd37474f6bac29aceb3b3d81170c0362"
+   },
+   "fragmentTextHash": "sha256/c1:2acd96953bffb57f9bae424c73e66c3f8ba989488f10ded74a59d12e74aa34b1"
+  },
+  "c1u12": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "combination",
+     "note": "Comparison identifies the specific manifest fingerprint of the delivered version"
+    },
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "combination",
+     "note": "Reconstructed manifests from devised time codes select the candidate"
+    },
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "context",
+     "note": "Delivered manifests matched against the reconstruction"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:3f73714f1102290959c1b73b59e9bd15dc4e996b9cc55cda09c5a335d7e4d94c"
+   },
+   "fragmentTextHash": "sha256/c1:55c077393f4024987ef3453df40d9b3d556cf1e31d658a32c70b538843f2235f"
+  },
+  "c1u13": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "specific",
+     "note": "Retrieval component searches the ledger and identifies the account(s)"
+    },
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "context",
+     "note": "Record of associations searched"
+    },
+    {
+     "block": "S232",
+     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
+     "role": "context",
+     "note": "PCT claim 15: retrieval element"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:921db9701926d8f3b6fddddb60570f5bf47e56cbd664ddeaa252ebbf162f1a9e"
+   },
+   "fragmentTextHash": "sha256/c1:84174f52bf1f92d47c2edfdd816a14783a9c77854ad5d587aafa13613239d5df"
+  },
+  "c1u2": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S067",
+     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
+     "role": "combination",
+     "note": "Pipeline creates the reference audio-video content 1"
+    },
+    {
+     "block": "S079",
+     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
+     "role": "context",
+     "note": "Director-driven production through pipeline 102"
+    },
+    {
+     "block": "S089",
+     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
+     "role": "combination",
+     "note": "The EDL guides reconstruction of the sequence: production according to the structured list"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:fcb0c436ce39860d460bb9d085ad49bcacccca877d9419fbb74dcb4408a01f44"
+   },
+   "fragmentTextHash": "sha256/c1:cf4d0b0cea3fa291362b708d50c50cf54adf70865a9ec11ec71a824f6e17d251"
+  },
+  "c1u3": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S080",
+     "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
+     "role": "specific",
+     "note": "Automatic variation of a recorded cut time code originates unique mates"
+    },
+    {
+     "block": "S068",
+     "textHash": "sha256/c1:9fb662b4840382bb373855d9cfb9f40144ca0fb519ff595c3d06e7bc75a045f5",
+     "role": "context",
+     "note": "Mate as a distinguishable version of the same content"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL keeps the Camera 2/Camera 3 order at a moved time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:44b71499bfb1c4173f7affd8f16b7a0204d2a762e6e8e6a238dd87f28779e323"
+   },
+   "fragmentTextHash": "sha256/c1:759db1f4c3e9ecb33ac882c1fd262a982ac738a69d1499e13d2c44ab2b33bb89"
+  },
+  "c1u4": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference EDL boundary at the recorded time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL boundary ten frames later"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Explanation of the moved boundary"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:0668ca05423f02b17e4c714055d18aeae07843cb030051c69c323c53e59e171c"
+   },
+   "fragmentTextHash": "sha256/c1:bc74509b79f46736193b886dc56997ace2ac3226a749dba7364ed92a7d7b1660"
+  },
+  "c1u5": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S167",
+     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
+     "role": "combination",
+     "note": "Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval frames come from different cameras",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Adjusted cut durations around the interval"
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL rows identify the cameras on each side of the moved boundary"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:817f086b6040a95908af726df70d1a5585ae111f0cfe1fc75a81f6062d8160bd"
+   },
+   "fragmentTextHash": "sha256/c1:c3c0d07782189ef9f413ae0009501eead11e233f3bd354ae6a84ab511731fa2e"
+  },
+  "c1u6": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Ensemble of reference and mates segmented into chunks 113"
+    },
+    {
+     "block": "S146",
+     "textHash": "sha256/c1:83dc843db69b2c88409e29d2939d13749929362683ccc8d11e1ffc35ebf5b907",
+     "role": "context",
+     "note": "Segmenting step 240"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:41c54c673aaa7983c7a2b2ffd78d4de016aca90166cd3fe3a0b07934497589e5"
+   },
+   "fragmentTextHash": "sha256/c1:04b18fcea831246be00744506eaa29aaded292ef08dc5294f71c898c17d17580"
+  },
+  "c1u7": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Manifests point to unique interleaved combinations of reference and mate chunks"
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Mate manifest selects the variant chunk at the altered cut"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Chunk references differ exactly where the timing was moved",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:da3f10d1cfb05055321cad994c752f29ee36d1f73360f98b894893064ac365fb"
+   },
+   "fragmentTextHash": "sha256/c1:049233504f049b000e352cc2a8b4cdbb98d02cf31273c82e832626e9089b5d2b"
+  },
+  "c1u8": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "specific",
+     "note": "Delivery of streams assembled from manifest-listed chunks"
+    },
+    {
+     "block": "S149",
+     "textHash": "sha256/c1:bf241b703bf322a1d44076cac2f1605eef01953686dcbaa4463ecd7fea5b64b2",
+     "role": "context",
+     "note": "Distribution step 260"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:07c9b34042e8f7ee7e6f2598b497b0e152a46505eab4d2d393552368b4f78451"
+   },
+   "fragmentTextHash": "sha256/c1:ad3e4fdc79574aecdb5f83d94ef2b713e83a7823bb92821ac7d43b83e1e7ea1a"
+  },
+  "c1u9": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger records which recipient received which delivered version/manifest"
+    },
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "specific",
+     "note": "Record of associations between versions and recipients"
+    },
+    {
+     "block": "S101",
+     "textHash": "sha256/c1:fe32bf070acf20f625dec87a6c81b108d0fbbbd3feb374d0bec57ca6c7a7674a",
+     "role": "context",
+     "note": "Archived manifests associated with spectators",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:a3c8241f90bdf9835e06ba665876d3032e8c366d5c4bc2f6ec663ff2d8390020"
+   },
+   "fragmentTextHash": "sha256/c1:c464670db1cdb6dcb094daa7d314380469e2d1c1cd92597ca014133271d30761"
+  },
+  "c20u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S132",
@@ -415,657 +1686,19 @@
      "role": "context",
      "note": "PCT claim 16: the method"
     }
-   ]
-  },
-  "c1u1": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:77742d506ff4255de45f2637031d1336ea38f45d17cb917670fa9f7de4761e35"
-   },
-   "fragmentTextHash": "sha256/c1:24fcda6953db6929bcb8162d90698c27e17f1fc269ecfca65cac0d702c248995",
-   "targets": [
-    {
-     "block": "S067",
-     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
-     "role": "specific",
-     "note": "Pipeline receives video captured from cameras 101"
-    },
-    {
-     "block": "S079",
-     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
-     "role": "combination",
-     "note": "Pipeline records cut timings and transitions as time codes in list 103"
-    },
-    {
-     "block": "S089",
-     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
-     "role": "context",
-     "note": "EDL entries: source reference plus time code"
-    }
    ],
-   "phrases": [
-    {
-     "id": "c1u1p1",
-     "text": "structured list of edit instructions",
-     "occurrence": 1,
-     "status": "mapped",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:d5ca2e63a55ca1bd4373014120f89da1d3e66638a1131d25f29faff52ab65af6"
-     },
-     "targets": [
-      {
-       "block": "S089",
-       "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
-       "role": "specific",
-       "note": "Structured list 103 as an Edit Decision List"
-      }
-     ]
-    }
-   ]
-  },
-  "c1u2": {
-   "status": "mapped",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:ed5fbccd8e681e5b5b64a4f9e0ec8fd98a763e074a87521dfd8aa7e11a034fb4"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:23cd4893728011d08d52f77cf0ba1ef8eefe14bd1d59b6f00f68d26d5c582710"
    },
-   "fragmentTextHash": "sha256/c1:cf4d0b0cea3fa291362b708d50c50cf54adf70865a9ec11ec71a824f6e17d251",
-   "targets": [
-    {
-     "block": "S067",
-     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
-     "role": "combination",
-     "note": "Pipeline creates the reference audio-video content 1"
-    },
-    {
-     "block": "S079",
-     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
-     "role": "context",
-     "note": "Director-driven production through pipeline 102"
-    },
-    {
-     "block": "S089",
-     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
-     "role": "combination",
-     "note": "The EDL guides reconstruction of the sequence: production according to the structured list"
-    }
-   ]
-  },
-  "c1u3": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:64637e8c2a9351b3200f53e037463f171c42eaed62bf776437a30782bf85b972"
-   },
-   "fragmentTextHash": "sha256/c1:33c484e76ae3e9564868d5d6444d393c15033d5a189b947bfef30fd9ec3c101c",
-   "targets": [
-    {
-     "block": "S080",
-     "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
-     "role": "specific",
-     "note": "Automatic variation of a recorded cut time code originates unique mates"
-    },
-    {
-     "block": "S068",
-     "textHash": "sha256/c1:9fb662b4840382bb373855d9cfb9f40144ca0fb519ff595c3d06e7bc75a045f5",
-     "role": "context",
-     "note": "Mate as a distinguishable version of the same content"
-    },
-    {
-     "block": "S168",
-     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
-     "role": "combination",
-     "note": "Mate EDL keeps the Camera 2/Camera 3 order at a moved time code",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    }
-   ]
-  },
-  "c1u4": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:d9fdb25337bfd30de49aa728938808fa8926227f456c7f0269ee4d8be0ef1e70"
-   },
-   "fragmentTextHash": "sha256/c1:b663ba07749f4453c586dacd16ba4f3b09aa504541dc95b666240c33979a50fe",
-   "targets": [
-    {
-     "block": "S166",
-     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
-     "role": "combination",
-     "note": "Reference EDL boundary at the recorded time code",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S168",
-     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
-     "role": "combination",
-     "note": "Mate EDL boundary ten frames later"
-    },
-    {
-     "block": "S169",
-     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
-     "role": "context",
-     "note": "Explanation of the moved boundary"
-    }
-   ]
-  },
-  "c1u5": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:42140c6b149cab7990d287b07ca73464e72c8f0835009c928e9db42fab93a265"
-   },
-   "fragmentTextHash": "sha256/c1:9c63d020f48d84ec192fa355ff8cbeeb2dc4af4a44d3459e893ea13e6a3f6227",
-   "targets": [
-    {
-     "block": "S167",
-     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
-     "role": "combination",
-     "note": "Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval frames come from different cameras",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S169",
-     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
-     "role": "context",
-     "note": "Adjusted cut durations around the interval"
-    },
-    {
-     "block": "S168",
-     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
-     "role": "combination",
-     "note": "Mate EDL rows identify the cameras on each side of the moved boundary"
-    }
-   ]
-  },
-  "c1u6": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:9ce41a8dcf42e417474417198703170970886e3df98d5481d1ac865fad852c19"
-   },
-   "fragmentTextHash": "sha256/c1:c038493117bd9c4fbccba643427723412eeb883ae952e7c3b7dca8248837352b",
-   "targets": [
-    {
-     "block": "S167",
-     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
-     "role": "combination",
-     "note": "Example 2 boundary interval as the distinguishing region",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    }
-   ],
-   "phrases": [
-    {
-     "id": "c1u6p1",
-     "text": "candidate-distinguishing temporal region",
-     "occurrence": 1,
-     "status": "counsel-review-required",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:8fda1de9c59c414df57ee32ff6ba6b46c890766ccb5b59a641966f8e97376d6b"
-     }
-    }
-   ]
-  },
-  "c1u7": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:66e8977a4d3ce81f8b1d12c3c72cd509257ad044966419bcd3ac65287d40b6a2"
-   },
-   "fragmentTextHash": "sha256/c1:0c17ae634ecbe2ecd719c6370e4290420a2c3c32af74c4b9a7dbca73e04ddba7",
-   "targets": [
-    {
-     "block": "S069",
-     "textHash": "sha256/c1:26d2c2bd57b2871b2cd8b9814e1f7df3a9ecc1b744720b3c341d6ab7c90c9f0a",
-     "role": "specific",
-     "note": "Distribution apparatus delivers distinguishable versions to recipients"
-    },
-    {
-     "block": "S055",
-     "textHash": "sha256/c1:1809bc018625901b7d78377df6642de62fe24f9478ae9db9242d63043fdba348",
-     "role": "context",
-     "note": "Mates transmitted onward for delivery to viewers"
-    },
-    {
-     "block": "S137",
-     "textHash": "sha256/c1:e92cd4109a5f73a95523e5d0a85b8eecd1e11ec308dd0a92d103218d9fe98b89",
-     "role": "context",
-     "note": "Distribution step 260"
-    }
-   ]
-  },
-  "c1u8": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c6507f8dc50e37f742db3da33d92e93edf1ee6bd4915f0f21bac20a8cdca089b"
-   },
-   "fragmentTextHash": "sha256/c1:80d5c2bb3e31dc880a968a11431b80c07beb47f976e6ec0740bb2734516545cb",
-   "targets": [
-    {
-     "block": "S166",
-     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
-     "role": "combination",
-     "note": "EDL rows hold the source-camera identifiers and time codes a candidate record draws on",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S082",
-     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
-     "role": "combination",
-     "note": "Delivered-version associations recorded per recipient"
-    }
-   ],
-   "phrases": [
-    {
-     "id": "c1u8p1",
-     "text": "camera-source-transition pattern",
-     "occurrence": 1,
-     "status": "counsel-review-required",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:803d0ac351cc431e25384cf4217c00948207a0a8ff386e7e70519bdef989d5c0"
-     }
-    }
-   ]
-  },
-  "c1u9": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:44b77768c2c41ecc642fa1d9fc4f91f0de3e8daa55e1d072fcc770e85dcfce73"
-   },
-   "fragmentTextHash": "sha256/c1:3e61507e3b3d8c54a008adba0fbdf15005c2daa69d1a2dc6a3d132c888ec2905",
-   "targets": [
-    {
-     "block": "S082",
-     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
-     "role": "specific",
-     "note": "Ledger records which recipient received which delivered version/manifest"
-    },
-    {
-     "block": "S070",
-     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
-     "role": "specific",
-     "note": "Record of associations between versions and recipients"
-    },
-    {
-     "block": "S101",
-     "textHash": "sha256/c1:fe32bf070acf20f625dec87a6c81b108d0fbbbd3feb374d0bec57ca6c7a7674a",
-     "role": "context",
-     "note": "Archived manifests associated with spectators",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    }
-   ]
-  },
-  "c1u10": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:933d4af2f2e010c2d51cee915b65bd5b91d3f961be4110e8361cb1e6a1027cf8"
-   },
-   "fragmentTextHash": "sha256/c1:51d20e866a7d2576a18bdbc79ec8ead86ae0c6be5bdd8936cd23a5fc08d3de97",
-   "targets": [
-    {
-     "block": "S083",
-     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
-     "role": "specific",
-     "note": "Detection component receives/detects the pirate webcasting"
-    },
-    {
-     "block": "S139",
-     "textHash": "sha256/c1:c706299cf80d1ebce5aa51da68cb4528a5212c88ee8a9f45251e29f27fa9a3f7",
-     "role": "context",
-     "note": "Monitoring step 280"
-    }
-   ]
-  },
-  "c1u11": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:819e298eac60fd80a126acdef64b1a5178190b7a49ef1203a4ba50e4729b2269"
-   },
-   "fragmentTextHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
-   "targets": [
-    {
-     "block": "S083",
-     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
-     "role": "specific",
-     "note": "Algorithm analyzes camera-cut timings in the suspect and devises time codes"
-    },
-    {
-     "block": "S071",
-     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
-     "role": "context",
-     "note": "Detecting camera-switch timings in the suspected distribution"
-    },
-    {
-     "block": "S107",
-     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
-     "role": "context",
-     "note": "Scene-change comparison against the reference"
-    }
-   ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   },
-   "phrases": [
-    {
-     "id": "c1u11p1",
-     "text": "camera-switch timing",
-     "occurrence": 1,
-     "status": "mapped",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:7c523bb197386a5919e99be86489780802f59f2055c5d9ea6cc73b9c7cc1dfbd"
-     },
-     "targets": [
-      {
-       "block": "S071",
-       "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
-       "role": "specific",
-       "note": "Camera-switch timings detected in the suspect"
-      }
-     ]
-    }
-   ]
-  },
-  "c1u12": {
-   "status": "counsel-review-required",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:366f113c6e83791f53c8d22d5dc951d79ca5783a85074bf99ccdbff8aaa4bf0b"
-   },
-   "fragmentTextHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c1u13": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:bf8c1debc6ac1a69c0e9d50c9a2d84788a8f9f7948b0a543480e82c9e16f0c5b"
-   },
-   "fragmentTextHash": "sha256/c1:3b39100e98687312032720c00b8e8e3f4c9ed4fecc0f6e71cec6b2f4cac3ccdf",
-   "targets": [
-    {
-     "block": "S107",
-     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
-     "role": "combination",
-     "note": "Comparison identifies the specific manifest fingerprint of the delivered version"
-    },
-    {
-     "block": "S083",
-     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
-     "role": "combination",
-     "note": "Reconstructed manifests from devised time codes select the candidate"
-    },
-    {
-     "block": "S084",
-     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
-     "role": "context",
-     "note": "Delivered manifests matched against the reconstruction"
-    }
-   ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c1u14": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:47c4e1974d7d7b5bb683ef18cea310c5a47944a5e044863f95c8ca9a92f36787"
-   },
-   "fragmentTextHash": "sha256/c1:3aa4249233c5055c0f58596fa11c2866908cfdfe083f049a0076b5ac8cd39ac7",
-   "targets": [
-    {
-     "block": "S084",
-     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
-     "role": "specific",
-     "note": "Retrieval component searches the ledger and identifies the account(s)"
-    },
-    {
-     "block": "S070",
-     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
-     "role": "context",
-     "note": "Record of associations searched"
-    },
-    {
-     "block": "S232",
-     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
-     "role": "context",
-     "note": "PCT claim 15: retrieval element"
-    }
-   ]
+   "fragmentTextHash": "sha256/c1:d847c5e2b33bdd0ba395511d94bfe3ea0067be5aa399d0582c7a3c3c2d8fc343"
   },
   "c20u1": {
    "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:cab7203577f6f07475287c287e1deb8571d1b09716031edf33434973476288e5"
-   },
-   "fragmentTextHash": "sha256/c1:3fd921a1079082accec046e045b9132a22a9cd3da5cc84167f2982f45fa0738f",
-   "targets": [
-    {
-     "block": "S067",
-     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
-     "role": "specific",
-     "note": "Pipeline receives video captured from cameras 101"
-    },
-    {
-     "block": "S079",
-     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
-     "role": "combination",
-     "note": "Pipeline records cut timings and transitions as time codes in list 103"
-    },
-    {
-     "block": "S089",
-     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
-     "role": "context",
-     "note": "EDL entries: source reference plus time code"
-    }
-   ]
-  },
-  "c20u2": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:ae1e381a2254301bb942159e1e0ec782d3ddf766046a3d7a84f70f62ba34d8e2"
-   },
-   "fragmentTextHash": "sha256/c1:21401c5489e200e20cd3b09b29e5cb6adc8332943ebd538f7c8b57c7c63bab1d",
-   "targets": [
-    {
-     "block": "S067",
-     "textHash": "sha256/c1:96b463ba404b692b4f7b06c8be9c58a865c419b8665b49bd81dbcbd4770f3e91",
-     "role": "combination",
-     "note": "Pipeline creates the reference audio-video content 1"
-    },
-    {
-     "block": "S079",
-     "textHash": "sha256/c1:97fee7224fcfe655af0e4ea17698a64f6ac4fbaa8b4b32b3e2a0b07b13f4582f",
-     "role": "context",
-     "note": "Director-driven production through pipeline 102"
-    },
-    {
-     "block": "S089",
-     "textHash": "sha256/c1:243af16fde8ff10ef9358d59b7f0c9172999b8d31a57d99af7ba8135c8bddd95",
-     "role": "combination",
-     "note": "The EDL guides reconstruction of the sequence: production according to the structured list"
-    }
-   ]
-  },
-  "c20u3": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:99bf2fd7843aa47bda74a96cca50daacb092b567b75c38372a3da6885cb31fb9"
-   },
-   "fragmentTextHash": "sha256/c1:0c044fe157ab5bbbcfc946128d55a918a63a9485eb62eaa298783cb57613677e",
-   "targets": [
-    {
-     "block": "S080",
-     "textHash": "sha256/c1:847285bd00ddd6da4dce2ed55c275c7897fae17f4d448dd29d68d3e944f7b013",
-     "role": "specific",
-     "note": "Automatic variation of a recorded cut time code originates unique mates"
-    },
-    {
-     "block": "S068",
-     "textHash": "sha256/c1:9fb662b4840382bb373855d9cfb9f40144ca0fb519ff595c3d06e7bc75a045f5",
-     "role": "context",
-     "note": "Mate as a distinguishable version of the same content"
-    },
-    {
-     "block": "S168",
-     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
-     "role": "combination",
-     "note": "Mate EDL keeps the Camera 2/Camera 3 order at a moved time code",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    }
-   ]
-  },
-  "c20u4": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c0fd2a0748e488dd3b2265ac725f7c2ae93a7e11a168dcf922a940dd922f3b77"
-   },
-   "fragmentTextHash": "sha256/c1:b663ba07749f4453c586dacd16ba4f3b09aa504541dc95b666240c33979a50fe",
    "targets": [
     {
      "block": "S166",
@@ -1088,143 +1721,7 @@
      "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
      "role": "context",
      "note": "Explanation of the moved boundary"
-    }
-   ]
-  },
-  "c20u5": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:05018a443ac10e39ea8f474b28c02ebc4102d344f3fe0d056abeee40bf407e1e"
-   },
-   "fragmentTextHash": "sha256/c1:9c63d020f48d84ec192fa355ff8cbeeb2dc4af4a44d3459e893ea13e6a3f6227",
-   "targets": [
-    {
-     "block": "S167",
-     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
-     "role": "combination",
-     "note": "Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval frames come from different cameras",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
     },
-    {
-     "block": "S169",
-     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
-     "role": "context",
-     "note": "Adjusted cut durations around the interval"
-    },
-    {
-     "block": "S168",
-     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
-     "role": "combination",
-     "note": "Mate EDL rows identify the cameras on each side of the moved boundary"
-    }
-   ]
-  },
-  "c20u6": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:7eaff3e20d221a8bde1cfa6bade0146bfe265a0cc8446334420139ab62057b56"
-   },
-   "fragmentTextHash": "sha256/c1:2c31839e65566cf970f70a5f833921c6725b8e9270c8a4a6eff00702f981905d",
-   "targets": [
-    {
-     "block": "S167",
-     "textHash": "sha256/c1:7c5eeaae5ed1b9def8411eefbfdf95229951a5e43d1e0a78d4b5d2c6f9f5bc37",
-     "role": "combination",
-     "note": "Example 2 boundary interval as the distinguishing region",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    }
-   ]
-  },
-  "c20u7": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:9ef40a45dcddf2c54868b5a6ab7c1ceb95b643b52a0a0f67a5c86900de6f9329"
-   },
-   "fragmentTextHash": "sha256/c1:6d9363351b44206c815fbd49aa4fb557e1b73f1650ba9b78325807bd35bd377d",
-   "targets": [
-    {
-     "block": "S069",
-     "textHash": "sha256/c1:26d2c2bd57b2871b2cd8b9814e1f7df3a9ecc1b744720b3c341d6ab7c90c9f0a",
-     "role": "specific",
-     "note": "Distribution apparatus delivers distinguishable versions to recipients"
-    },
-    {
-     "block": "S055",
-     "textHash": "sha256/c1:1809bc018625901b7d78377df6642de62fe24f9478ae9db9242d63043fdba348",
-     "role": "context",
-     "note": "Mates transmitted onward for delivery to viewers"
-    },
-    {
-     "block": "S137",
-     "textHash": "sha256/c1:e92cd4109a5f73a95523e5d0a85b8eecd1e11ec308dd0a92d103218d9fe98b89",
-     "role": "context",
-     "note": "Distribution step 260"
-    }
-   ]
-  },
-  "c20u8": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:59b01ac9c0008e73b966e633d5938a030fd76935e513e66d8440a1c718e25ad4"
-   },
-   "fragmentTextHash": "sha256/c1:4d78e9d1c172bcef625a18bc4df0bbabb720477f7921db19e907d5c6c89768bf",
-   "targets": [
-    {
-     "block": "S166",
-     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
-     "role": "combination",
-     "note": "EDL rows hold the source-camera identifiers and time codes a candidate record draws on",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S082",
-     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
-     "role": "combination",
-     "note": "Delivered-version associations recorded per recipient"
-    }
-   ]
-  },
-  "c20u9": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:148ba77f002500aae772d7eaeeba541144396e0a6183923c1ea32d7d73098c15"
-   },
-   "fragmentTextHash": "sha256/c1:e071ec2f3b369392545a9dc2812a7ad7200dc03aa89617c6a0f9ddd2a2064a65",
-   "targets": [
     {
      "block": "S082",
      "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
@@ -1247,19 +1744,201 @@
       "code": "beyond-literal-example"
      }
     }
-   ]
-  },
-  "c20u10": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:70fb7e64487a80fd254b67cc064a61691b3fbbc572fbee96ceb82948f6d7bbb6"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:5aac0e039afdcabc964d9ddaec4e3c9f75dca7de6d99d8b39a568aa250958306"
    },
-   "fragmentTextHash": "sha256/c1:ffe956bbd67d8b114135e5103a49d25710ecbbe5fd2c8a84619f38f207076860",
+   "fragmentTextHash": "sha256/c1:f2ff341b3838234a68e18342d0ebbc5701e7746ec0baffe77e6a585950f3f2b5"
+  },
+  "c20u2": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S083",
+     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
+     "role": "specific",
+     "note": "Algorithm analyzes camera-cut timings in the suspect and devises time codes"
+    },
+    {
+     "block": "S071",
+     "textHash": "sha256/c1:b05d6f0f7aaf294e0ac8b92ed12dddc8e4488ec72f26d514bfaa959208ff04dd",
+     "role": "context",
+     "note": "Detecting camera-switch timings in the suspected distribution"
+    },
+    {
+     "block": "S107",
+     "textHash": "sha256/c1:4177113552e72642bea73a553638b6fdfffcc84858e01c286070a9763751ae7f",
+     "role": "context",
+     "note": "Scene-change comparison against the reference"
+    },
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "context",
+     "note": "Delivered manifests matched against the reconstruction"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:215e0dbe8eae67a6bf246aa2fa681b8709e4457b9bc54de096977fd0c241bc88"
+   },
+   "fragmentTextHash": "sha256/c1:caf996b878e225b5d920266d6d8b15665c0effc1e1e31a2d4aac9cc3ae295a05"
+  },
+  "c20u3": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S084",
+     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
+     "role": "specific",
+     "note": "Retrieval component searches the ledger and identifies the account(s)"
+    },
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "context",
+     "note": "Record of associations searched"
+    },
+    {
+     "block": "S232",
+     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
+     "role": "context",
+     "note": "PCT claim 15: retrieval element"
+    },
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference EDL boundary at the recorded time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL boundary ten frames later"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Explanation of the moved boundary"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:0c4c423dd7a2c905aee64b074a0e99a4f15fab6351b6454987f308a04705b948"
+   },
+   "fragmentTextHash": "sha256/c1:698916ddcdc10971c79539cdc7f9489ab5b081ea6252574ca37a02bb699e4cab"
+  },
+  "c21u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S109",
+     "textHash": "sha256/c1:34d559925424465f607aebd37015bf7c070edd885ad94eee6688674eb441ce55",
+     "role": "specific",
+     "note": "Perceptual-hash comparison of the reference content with the pirate webcast"
+    },
+    {
+     "block": "S205",
+     "textHash": "sha256/c1:41776f37a1d2e215991ca4a560449fae23aa9fea4509bd6c04f1e4e4cde06a2b",
+     "role": "specific",
+     "note": "Example 5 perceptual hashing across corresponding frames"
+    },
+    {
+     "block": "S203",
+     "textHash": "sha256/c1:657392e487765c7ac6ae72d832f43ee219d09ab62025a0bd4f1e7969bdd5d380",
+     "role": "context",
+     "note": "Frame regions extracted from both reference and mate stream for comparison"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:40c308cc852e2d81a9703717734fec82b4ce89feb18424f54237d671a45f921d"
+   },
+   "fragmentTextHash": "sha256/c1:f7f17d7f0a0e5c10050e284ac24f104daba9898fabd142667f44231cc9f6abd1"
+  },
+  "c22u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S205",
+     "textHash": "sha256/c1:41776f37a1d2e215991ca4a560449fae23aa9fea4509bd6c04f1e4e4cde06a2b",
+     "role": "specific",
+     "note": "Sliding-window fuzzy matching over perceptual hashes of frame groups"
+    },
+    {
+     "block": "S206",
+     "textHash": "sha256/c1:1b797a64526399c4a768e63409c810459aba60f9b6d0a7912e771c384c84e0b4",
+     "role": "combination",
+     "note": "Example 5 fuzzy_matching code"
+    },
+    {
+     "block": "S157",
+     "textHash": "sha256/c1:52c683cb240d850cd9967018c98a937bf70a079c24f046aa92af042af31bfa3e",
+     "role": "context",
+     "note": "Fuzzy matching in the monitoring step"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:f2e2215fd5991c1ec40cc2c93ec6819487d69e89a5a257b1559b3a055c4e7210"
+   },
+   "fragmentTextHash": "sha256/c1:98df752731010067336e67208b22a159cea2846ddc1f63af166faf1bfbc0320c"
+  },
+  "c23u0": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S132",
+     "textHash": "sha256/c1:f336ff6af72948a7261fa491d213a8e1276fe8cbf42b6c78e5c5d7087f6aa56e",
+     "role": "specific",
+     "note": "Method 200 of identification and protection using the system"
+    },
+    {
+     "block": "PC16",
+     "textHash": "sha256/c1:63bf04cf36f2a28dfb8ffccdbae648df91109b3eea97d153d4bb4c5948b65030",
+     "role": "context",
+     "note": "PCT claim 16: the method"
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:dc9d1661718a958942612fc3dda6c6e7e193f7e25e2a57c66e4f8e75fe215717"
+   },
+   "fragmentTextHash": "sha256/c1:f638d029e39c71f16391348e1d89dfde303e3c5f9f25778a9707c5b618bf4313"
+  },
+  "c23u1": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S083",
@@ -1273,19 +1952,19 @@
      "role": "context",
      "note": "Monitoring step 280"
     }
-   ]
-  },
-  "c20u11": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:3ef5d23c0845c2f891b51da90b60438a6b897051a909602a008a0875b17ae2c5"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:a433a490b78662ca97695624b2baa444e6a3c3ba6eb532be2eef67f94e9653b5"
    },
-   "fragmentTextHash": "sha256/c1:b3fc0c29044d8f30e7380bbb610cca6802a969866c84e0123a42aba3eb9f3898",
+   "fragmentTextHash": "sha256/c1:ffe956bbd67d8b114135e5103a49d25710ecbbe5fd2c8a84619f38f207076860"
+  },
+  "c23u2": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S083",
@@ -1306,50 +1985,18 @@
      "note": "Scene-change comparison against the reference"
     }
    ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c20u12": {
-   "status": "counsel-review-required",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:bcd503ae205233115a2751a2b7ad7b6b54bd917090470db16f63ec0e21361c1f"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:92703372315ff1b57ab3af1af4fa43a289453d72a087a9022195e132d27e1890"
    },
-   "fragmentTextHash": "sha256/c1:d34f8b26f9362b1e28f0bff42c2585df0256b6953381af02399983818e6511b1",
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
+   "fragmentTextHash": "sha256/c1:52e195f6a948b538484629f43705f3ffce8630e1043829073b1bd0292e279712"
   },
-  "c20u13": {
+  "c23u3": {
    "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:8b02ed99d2d4de4ab1a2d4972fa84a850b98d3ee4c08eec3b9473abddcbedba2"
-   },
-   "fragmentTextHash": "sha256/c1:2ff20c299d514eccb1b9562523052e63d6afddebaece0246e23407e76a0a06e5",
    "targets": [
     {
      "block": "S107",
@@ -1370,28 +2017,18 @@
      "note": "Delivered manifests matched against the reconstruction"
     }
    ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c20u14": {
-   "status": "mapped",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:e5d02b74de2e54e8c7e8f059cee37d7938eab9fd7a85b079d7d0beaf042d2f4e"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:34e6534cc797b8877d2a76e8671f82ac97470b7aa0d5bd0740f7cf7e277545d8"
    },
-   "fragmentTextHash": "sha256/c1:d10bae5a56381542b5ef5b4e3750d145a26044ba9f1f2ea5610900a27a445806",
+   "fragmentTextHash": "sha256/c1:97914dcfdd3c952b61e5db007681903468789256932b1fa700663e812ae9d9a5"
+  },
+  "c23u4": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S084",
@@ -1411,19 +2048,131 @@
      "role": "context",
      "note": "PCT claim 15: retrieval element"
     }
-   ]
-  },
-  "c2u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:b9d5c66cf4f092c1a4c09c8622a6e0c762e195407d6b30a0736aa40b7eca25f6"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:801e1e4764c52819857776b3850c4fb6b07988a6d65bb01357d02652b5624bca"
    },
-   "fragmentTextHash": "sha256/c1:375271e98703a4c326e2cdbc72e0116c07d4336cf1d68ae43c23987254806bbe",
+   "fragmentTextHash": "sha256/c1:02774805fdde45177b472bd0aa11c48d2c70bd165d7aa74b887086199158bca0"
+  },
+  "c23u5": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S081",
+     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
+     "role": "specific",
+     "note": "Ensemble of reference and mates segmented into chunks 113"
+    },
+    {
+     "block": "S146",
+     "textHash": "sha256/c1:83dc843db69b2c88409e29d2939d13749929362683ccc8d11e1ffc35ebf5b907",
+     "role": "context",
+     "note": "Segmenting step 240"
+    },
+    {
+     "block": "S178",
+     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
+     "role": "specific",
+     "note": "Mate manifest selects the variant chunk at the altered cut"
+    },
+    {
+     "block": "S085",
+     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
+     "role": "combination",
+     "note": "Chunk references differ exactly where the timing was moved",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:c901349e3b8198fd22f38d5137183f1e3da0a6d949a69a685082087b016a721b"
+   },
+   "fragmentTextHash": "sha256/c1:cc3c2c8c919266127e808ce686453d2262a4c015abd11eba3ac8d9daf77a7f45"
+  },
+  "c23u6": {
+   "status": "mapped",
+   "targets": [
+    {
+     "block": "S166",
+     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
+     "role": "combination",
+     "note": "Reference EDL boundary at the recorded time code",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    },
+    {
+     "block": "S168",
+     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
+     "role": "combination",
+     "note": "Mate EDL boundary ten frames later"
+    },
+    {
+     "block": "S169",
+     "textHash": "sha256/c1:cc9b17ac00303e3aa1b5d7511cee5ac744a6b1ff07c08182ae95842b88d10108",
+     "role": "context",
+     "note": "Explanation of the moved boundary"
+    },
+    {
+     "block": "S082",
+     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
+     "role": "specific",
+     "note": "Ledger records which recipient received which delivered version/manifest"
+    },
+    {
+     "block": "S070",
+     "textHash": "sha256/c1:b911e3690e3d8dfa8d9027402d06c073d81a1946ef24c23695af3a4d540f1de7",
+     "role": "specific",
+     "note": "Record of associations between versions and recipients"
+    },
+    {
+     "block": "S101",
+     "textHash": "sha256/c1:fe32bf070acf20f625dec87a6c81b108d0fbbbd3feb374d0bec57ca6c7a7674a",
+     "role": "context",
+     "note": "Archived manifests associated with spectators",
+     "caution": {
+      "type": "generalization-note",
+      "code": "beyond-literal-example"
+     }
+    }
+   ],
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:3725f020387af47db43c5ae1ea2493900b39910f229a3832411fbdf3f11216ce"
+   },
+   "fragmentTextHash": "sha256/c1:e954bd7b2487fa171f6de586b4e9a54e2f6fbcc6ce336bba093d1403ae03b2e1"
+  },
+  "c23u7": {
+   "status": "counsel-review-required",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:3ecdfe9a64173c0e3973727aa0b7fa6e6609e2b31af2ecd21e60b2b81b60b14a"
+   },
+   "fragmentTextHash": "sha256/c1:21b17a70dca657e3102ab0bc50bb74bd3241c9ff036effdd6b285b4396d9af1d"
+  },
+  "c2u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S167",
@@ -1443,19 +2192,19 @@
      "role": "context",
      "note": "Realignment explanation"
     }
-   ]
-  },
-  "c3u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:4b5ce769cf3fd66549635388e19822349528934336ebac674158604010ea2f7a"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:911bd370014f21655b6967ffadc55a2f71f91569a36016971550c1ab86e1e1a2"
    },
-   "fragmentTextHash": "sha256/c1:51719f6684a315d417293b61e72fd13d9fe22a6cd8f6976743010095af4f99e8",
+   "fragmentTextHash": "sha256/c1:a20f59ffb44a01d7de6f95298010745c15a3feb962f58ba1ebabba49bdf1cc51"
+  },
+  "c3u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S167",
@@ -1481,19 +2230,19 @@
      "role": "context",
      "note": "Ten-frame boundary move explained"
     }
-   ]
-  },
-  "c4u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:10ed3f1b569c0f29005f8e064254e2e3630166913e030da73e944ff90c8576b8"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:27d1ace361be29226b7656cf9c169b69e00a72d09bc6da3a5875d118231e1382"
    },
-   "fragmentTextHash": "sha256/c1:87980ef6691a230ed683f611141f1b3d181c83162ad040c72e82d2187eb3eaff",
+   "fragmentTextHash": "sha256/c1:7529a0a6e5c2e20b6c611703a7045a16516646fdda0f1f1e5347b6827092d7f5"
+  },
+  "c4u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S089",
@@ -1513,19 +2262,19 @@
      "role": "context",
      "note": "Reference EDL table"
     }
-   ]
-  },
-  "c5u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c7e8915082bde76548b40d9b592629f0a17e3eb21c218253bfab31891587e74c"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:1aef82c6b5ad5483acefc9487b2c45d184cda632d03dbde46f540a9d216b9930"
    },
-   "fragmentTextHash": "sha256/c1:2425507345bdba15a867bafabf06ed0c4223b891b71f0ff0c7cceff4f8017e1d",
+   "fragmentTextHash": "sha256/c1:48306afba494312fb647897f782561124b9779dc25e96ed8b5aca557548c1dad"
+  },
+  "c5u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S078",
@@ -1545,19 +2294,19 @@
      "role": "context",
      "note": "Live-switched production"
     }
-   ]
-  },
-  "c6u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:21bd6863214f45c25de8244a0df288fbf96cd155dd208e0b38ba8d785a0bde97"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:53255f6a95418400f146e6d7e925ac20de1f4e496940c0f84fb0a5319e4362e0"
    },
-   "fragmentTextHash": "sha256/c1:be2d709509de769b8dec9edd305995dce490d77223c9becb22d99a5302db3a42",
+   "fragmentTextHash": "sha256/c1:e9e875765cc6c17b0733d8234ef9600653bfcebb45a17e5975dbf1ceb98a869f"
+  },
+  "c6u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S108",
@@ -1597,19 +2346,19 @@
      "role": "combination",
      "note": "Delivered-version associations recorded per recipient"
     }
-   ]
-  },
-  "c7u0": {
-   "status": "mapped",
+   ],
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:5c7db64f989495f5253aea51cc3a287b27e1afe76f62676ddabdf4c90243e01b"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:587a8b0f1629e5f5945093d3e682cebf284cf2b1eeaa9202b1d5d66c8e0b6177"
    },
-   "fragmentTextHash": "sha256/c1:26451a33eed82a44b2457d64581567f9614bdfe45cb71cca7abf01f818697f94",
+   "fragmentTextHash": "sha256/c1:462ec4130bc977a87e4f0b0ea1419b66d4356fb19fc6ee934df81d68f5264652"
+  },
+  "c7u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S109",
@@ -1630,28 +2379,18 @@
      "note": "Frame regions extracted from both reference and mate stream for comparison"
     }
    ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c8u0": {
-   "status": "mapped",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:062e649200e438b441fcc68af58db9da9c7c93b12b564d01689f94c410506603"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:6363028e8e25b0f17cab8a8260587308bf45bc9df5ef8b5503ca0b25ca67d767"
    },
-   "fragmentTextHash": "sha256/c1:774acbfee7dbc94ce5a0495ef5c779e01b02c0d71179c63706ddfb65e97dd0c7",
+   "fragmentTextHash": "sha256/c1:e07382a989c1667fed8cc4d36e45a178aa1701fecf08efff5d42434c6ccf9468"
+  },
+  "c8u0": {
+   "status": "mapped",
    "targets": [
     {
      "block": "S205",
@@ -1672,622 +2411,18 @@
      "note": "Fuzzy matching in the monitoring step"
     }
    ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:3922848da68f89e812116bc4870a5cc7926e25693587d7d5885b6a208f4d206e"
+   },
+   "fragmentTextHash": "sha256/c1:774acbfee7dbc94ce5a0495ef5c779e01b02c0d71179c63706ddfb65e97dd0c7"
   },
   "c9u0": {
    "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c2ac1af70c5aee244329ef1b2cd603771ff1976409d8ce32a826561666f30919"
-   },
-   "fragmentTextHash": "sha256/c1:d696a7d278c6bee9f9f892d2ef1e69a804983aeb9779982a7f85ad74cdd5da29",
-   "targets": [
-    {
-     "block": "S073",
-     "textHash": "sha256/c1:be96f9540350acf3b07310b0795b166821347f8aaabf317d57f18a48e62a0de3",
-     "role": "context",
-     "note": "Distribution apparatus with transcoding components generating manifests"
-    }
-   ]
-  },
-  "c9u1": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:be50832505a293a6d9d4460101bbd2e819f486af6014878aae70852dd22c807d"
-   },
-   "fragmentTextHash": "sha256/c1:087ef16c42d3670698e830ca5feb77f2198fcf318d90a2b335a85bf677253304",
-   "targets": [
-    {
-     "block": "S085",
-     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-     "role": "specific",
-     "note": "Players stream the chunk sequence listed in the delivered manifest"
-    },
-    {
-     "block": "S081",
-     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
-     "role": "context",
-     "note": "Manifest-guided adaptive delivery"
-    }
-   ]
-  },
-  "c9u2": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:2fcd36944cafc39694b62fe5487ec1287c0bf77d3b05b94e06c84702c3498740"
-   },
-   "fragmentTextHash": "sha256/c1:d9ff1caa123e445ae2984974ceb35565959fe3d01c8bf709b4cc13738ef20845",
-   "targets": [
-    {
-     "block": "S082",
-     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
-     "role": "combination",
-     "note": "Ledger ties manifest files to the delivered versions and recipients",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S101",
-     "textHash": "sha256/c1:fe32bf070acf20f625dec87a6c81b108d0fbbbd3feb374d0bec57ca6c7a7674a",
-     "role": "context",
-     "note": "Manifest archive links content received to viewers"
-    },
-    {
-     "block": "S081",
-     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
-     "role": "combination",
-     "note": "Manifests point to unique interleaved chunk combinations: the manifest-to-version-makeup bridge"
-    }
-   ]
-  },
-  "c9u3": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:b48bc27c72a602483c13f8c760d3492bdbdd573800dba1ad51ddc384d053d7a3"
-   },
-   "fragmentTextHash": "sha256/c1:e0e5719710b8cb3cb0dba3982bd49674c2d9887d4c477d348fbb273d53ab8e61",
-   "targets": [
-    {
-     "block": "S083",
-     "textHash": "sha256/c1:dd0e415cb39d51f1d2ba70c0f269ef67c14ac9dbeedc974695540fa2ddb66054",
-     "role": "specific",
-     "note": "Time codes devised from the detected timings; reconstructed manifests built from them"
-    },
-    {
-     "block": "S231",
-     "textHash": "sha256/c1:ae667460937d9314f724de9f81d28d5eed0e05a57d8010e5715e1854fb863788",
-     "role": "specific",
-     "note": "PCT claim 15: reconstruction from devised time codes"
-    },
-    {
-     "block": "S151",
-     "textHash": "sha256/c1:8c258830147d043f42f4c6fb04f60e44f0dbe5d25ceac08718b0a23a36c83c5d",
-     "role": "context",
-     "note": "Monitoring step reconstruction"
-    }
-   ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c10u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:bcd7afa4dcd25ea7d33385aea352f2bfae62c7e661a102106bf006f26d08dd6f"
-   },
-   "fragmentTextHash": "sha256/c1:7ba4354de96c3f2d093d755e4d05dfc19c9be6d71aec720c8f45d7d77e252798",
-   "targets": [
-    {
-     "block": "S084",
-     "textHash": "sha256/c1:c3c8129165b629171b3f4356644d24a8943948a55ef915a7ab5ef251b7f3f539",
-     "role": "specific",
-     "note": "Ledger searched for delivered manifests equal to the reconstruction; accounts identified"
-    },
-    {
-     "block": "S082",
-     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
-     "role": "specific",
-     "note": "Ledger associates manifests with end-user accounts"
-    },
-    {
-     "block": "S232",
-     "textHash": "sha256/c1:0b53ba28f0d139bcd2b6f1e0b4c7112aa27ba9465b406ec658a565853f952c05",
-     "role": "context",
-     "note": "PCT claim 15: retrieval element"
-    }
-   ],
-   "caution": {
-    "gateId": "af-gate-source-identity",
-    "type": "source-gate",
-    "code": "source-identity-detection",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S019",
-     "textHash": "sha256/c1:98f122656dddf2df6fe557932121730ed7b894843827ed40a57f2ab0c76acfc0"
-    }
-   }
-  },
-  "c11u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:eb5cf23409a400686c9966d4f8d7b6bf01047003fb23427b76d3baf90d4a3b79"
-   },
-   "fragmentTextHash": "sha256/c1:64d1af8ccdedf7c46775dfc76238024bf4f7cce9a4914702611e952c84d8666f",
-   "targets": [
-    {
-     "block": "S113",
-     "textHash": "sha256/c1:f357b8e5cf45c3c5d25c57dda5096821c22c2189e3eba9d5dcc5a6dd5bb8603d",
-     "role": "specific",
-     "note": "Mixed-copy collusion: each segment traced back; accounts identified via the ledger"
-    },
-    {
-     "block": "S116",
-     "textHash": "sha256/c1:77f28f1dd04dc3915e8d559049f26060413e82a30d69395ceb52e5d3d77cf67d",
-     "role": "context",
-     "note": "Probabilistic (Tardos) fingerprinting in the detection component"
-    },
-    {
-     "block": "S117",
-     "textHash": "sha256/c1:069effea919bff95b0d4d55593baa0311a141075ae3e59a4b2dfc85b92db86a8",
-     "role": "context",
-     "note": "Collusion-secure tracing back to the contributing users"
-    }
-   ],
-   "caution": {
-    "gateId": "af-gate-collusion-output",
-    "type": "source-gate",
-    "code": "collusion-output",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S023",
-     "textHash": "sha256/c1:47c6257280ebfe71f92d0243bdbc092de0757941c42ee1c92f6248add6eab11b"
-    }
-   }
-  },
-  "c12u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:53f6c24a149bcfb50b4763ff4f2c3113a6fd415906bb293e132ae1b58aca572c"
-   },
-   "fragmentTextHash": "sha256/c1:1a8d10d6ebc5a1cb28c5118f73bdb7542580f3b49be3ea9d3755e2e5018dde9f",
-   "targets": [
-    {
-     "block": "S120",
-     "textHash": "sha256/c1:3e5cd246e260e2367fd89a0c81605608ac83332587c96ef01ed15815a096c5b6",
-     "role": "specific",
-     "note": "Segmented Tardos: unique fingerprints per segment localize pirated segments and colluders"
-    },
-    {
-     "block": "S117",
-     "textHash": "sha256/c1:069effea919bff95b0d4d55593baa0311a141075ae3e59a4b2dfc85b92db86a8",
-     "role": "context",
-     "note": "Tardos accusation foundations"
-    },
-    {
-     "block": "S113",
-     "textHash": "sha256/c1:f357b8e5cf45c3c5d25c57dda5096821c22c2189e3eba9d5dcc5a6dd5bb8603d",
-     "role": "context",
-     "note": "Per-segment tracing under collusion"
-    }
-   ],
-   "caution": {
-    "gateId": "af-gate-collusion-output",
-    "type": "source-gate",
-    "code": "collusion-output",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S023",
-     "textHash": "sha256/c1:47c6257280ebfe71f92d0243bdbc092de0757941c42ee1c92f6248add6eab11b"
-    }
-   },
-   "phrases": [
-    {
-     "id": "c12u0p1",
-     "text": "segmented Tardos fingerprinting algorithm",
-     "occurrence": 1,
-     "status": "mapped",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:ea27553aa82af0cd5494ceb9532595b586c06dedfa5f774fad61918592b87564"
-     },
-     "targets": [
-      {
-       "block": "S120",
-       "textHash": "sha256/c1:3e5cd246e260e2367fd89a0c81605608ac83332587c96ef01ed15815a096c5b6",
-       "role": "specific",
-       "note": "Segmented Tardos algorithms applying fingerprints per content segment"
-      }
-     ]
-    }
-   ]
-  },
-  "c13u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:6ab00ff3340fd5f5ffe34a45eb9cf7346164dbdeeb554eb0863770f7cc3c0288"
-   },
-   "fragmentTextHash": "sha256/c1:0deb2a7a331b163d617dbfa772548d1e470535406b534eba2dc455752695c1ff",
-   "targets": [
-    {
-     "block": "S081",
-     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
-     "role": "context",
-     "note": "Transcoding, chunking, and manifest machinery"
-    }
-   ]
-  },
-  "c13u1": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:bd405ef702bcc485bf40c63b002ab02781f5bc3dc71b78c0bb89fb22daba6295"
-   },
-   "fragmentTextHash": "sha256/c1:d44a0a8bf89be2a14952505f6c54423551a968e9e481201b481eb566d3557ad1",
-   "targets": [
-    {
-     "block": "S081",
-     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
-     "role": "specific",
-     "note": "Ensemble of reference and mates segmented into chunks 113"
-    },
-    {
-     "block": "S146",
-     "textHash": "sha256/c1:83dc843db69b2c88409e29d2939d13749929362683ccc8d11e1ffc35ebf5b907",
-     "role": "context",
-     "note": "Segmenting step 240"
-    }
-   ]
-  },
-  "c13u2": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:52b1e26e16cc9a6d06fcd16ff3369af12499a6c3317c445eede2f4af6e2b224c"
-   },
-   "fragmentTextHash": "sha256/c1:57df51021e56a75e461b463919516bdba22baeca02147d795d0592cd690635ca",
-   "targets": [
-    {
-     "block": "S081",
-     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
-     "role": "specific",
-     "note": "Manifests point to unique interleaved combinations of reference and mate chunks"
-    },
-    {
-     "block": "S178",
-     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
-     "role": "specific",
-     "note": "Mate manifest selects the variant chunk at the altered cut"
-    },
-    {
-     "block": "S085",
-     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-     "role": "combination",
-     "note": "Chunk references differ exactly where the timing was moved",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    }
-   ],
-   "phrases": [
-    {
-     "id": "c13u2p1",
-     "text": "assembled audio-video stream",
-     "occurrence": 1,
-     "status": "mapped",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:9a6d1ccdb5df7274ff5e634dc8d4130f951bee183a46ce36719524964863063e"
-     },
-     "targets": [
-      {
-       "block": "S085",
-       "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-       "role": "specific",
-       "note": "Continuous stream assembled from the chunks the manifest lists"
-      }
-     ]
-    }
-   ]
-  },
-  "c13u3": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:344fe408fec239861f7bfdb9b1b4e8dfb96eff2b8967900ab68e8e34e9622026"
-   },
-   "fragmentTextHash": "sha256/c1:67f5dc16cfd6cc840d99cd88860c70a83f67947f132ca6f6bb9154869e7282dc",
-   "targets": [
-    {
-     "block": "S085",
-     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-     "role": "specific",
-     "note": "Delivery of streams assembled from manifest-listed chunks"
-    },
-    {
-     "block": "S149",
-     "textHash": "sha256/c1:bf241b703bf322a1d44076cac2f1605eef01953686dcbaa4463ecd7fea5b64b2",
-     "role": "context",
-     "note": "Distribution step 260"
-    }
-   ]
-  },
-  "c13u4": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:74761337fe33549c6411c14163884ac2c2542233780a938544f90c0e62e6a61d"
-   },
-   "fragmentTextHash": "sha256/c1:994a0a4912820c9ef06d69f33a41db4bfb64104a7b06c3ac21b73b73d9a1295d",
-   "targets": [
-    {
-     "block": "S082",
-     "textHash": "sha256/c1:0dc623bbd28d4bb174dbed33c6124d265ca38c5c026c75c044724639b278ae4d",
-     "role": "specific",
-     "note": "Ledger records manifest, delivered version, and recipient",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S150",
-     "textHash": "sha256/c1:1feea6538a050a1be2737c834e134ef168e38e04b1edd3906fe90f832206c0e7",
-     "role": "context",
-     "note": "Ledger recording step"
-    }
-   ]
-  },
-  "c14u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:767fec7c087cd92676146c4c7a9c85b173e5e2ab2147b29e1a003ff5b4e483f7"
-   },
-   "fragmentTextHash": "sha256/c1:522cbc512dfc1b7f89fcf80b95893bc08c2a1e2882e596963cf7b17fee2075d7",
-   "targets": [
-    {
-     "block": "S085",
-     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-     "role": "context",
-     "note": "Reference/mate manifests and their chunk references"
-    }
-   ]
-  },
-  "c14u1": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:bdd9f10fc8fa0571f2c0922abf6cd3367193d4f9bf65bc5150539a47c4d1441f"
-   },
-   "fragmentTextHash": "sha256/c1:424ae80ede255727966d1dc457b68a8a953fa5d1bfde0f4ee24dad52c8a1452b",
-   "targets": [
-    {
-     "block": "S176",
-     "textHash": "sha256/c1:85d472f46376907963e6efec4fcb01c1e431165533806ca76832c35eab910fb1",
-     "role": "specific",
-     "note": "Reference manifest lists reference chunks"
-    },
-    {
-     "block": "S085",
-     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-     "role": "context",
-     "note": "Manifest chunk selection"
-    }
-   ]
-  },
-  "c14u2": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:e62224c4bce992cc4995d8d833542e5bf16ce3ecf27fe31f4f0a526162af10d5"
-   },
-   "fragmentTextHash": "sha256/c1:a89ae60f5723237029e656088791e3ad9732e503d6fdb99db6094e4b34d1cbb1",
-   "targets": [
-    {
-     "block": "S178",
-     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
-     "role": "specific",
-     "note": "Different manifest selects the mate's variant chunk"
-    }
-   ]
-  },
-  "c14u3": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:d6feb61b914832b584b8009d5d4369a5aaac6e21dc05ea0c23b4bb9a6c721cdb"
-   },
-   "fragmentTextHash": "sha256/c1:6131ea0bfed2f1a5f0357983102ab89c028246ee000bc76dc9b88b7fa1a3079c",
-   "targets": [
-    {
-     "block": "S085",
-     "textHash": "sha256/c1:dfee6ad50df172862f4d904bf84b74602f0847e159d1f28340fa439bdb422a89",
-     "role": "specific",
-     "note": "Reference and mate manifests point to chunk sets of equal duration"
-    },
-    {
-     "block": "S175",
-     "textHash": "sha256/c1:145a26beb31ceffe15661d1f9c7f4d89832b54da14eb6186f635d9effba92366",
-     "role": "context",
-     "note": "Equal-duration chunks in Example 3"
-    },
-    {
-     "block": "S180",
-     "textHash": "sha256/c1:5f18470e4338eaf7522409baced9102f2af31d1a5661638e5ba3b8d03fee1e8d",
-     "role": "context",
-     "note": "Equal-duration compatibility statement"
-    }
-   ]
-  },
-  "c14u4": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:5532fe833cd9ca4d9e3e0dceee563ceb8f8ed1cd6ebed2ea548f745894fcdf0c"
-   },
-   "fragmentTextHash": "sha256/c1:fc36c91b18fa89a1f50a66ff493b0acccc07a58559706c8acf2d5c5ed8296dd5",
-   "targets": [
-    {
-     "block": "S166",
-     "textHash": "sha256/c1:102b9e0e429294081e1f56ec1e92560bb02dfa579379b1998d147ae2e841775c",
-     "role": "combination",
-     "note": "Reference boundary inside the paired chunk interval",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S176",
-     "textHash": "sha256/c1:85d472f46376907963e6efec4fcb01c1e431165533806ca76832c35eab910fb1",
-     "role": "combination",
-     "note": "Reference manifest lists reference_segment3_000 spanning the third-cut interval"
-    }
-   ]
-  },
-  "c14u5": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:119bace233c9a0911685e0f16b96d1349b26f004967da10540b444d116c83a3e"
-   },
-   "fragmentTextHash": "sha256/c1:9521c8893391601d1829d10e4e7dfb4d47afff8cdaa522851c1b6016bfe62b29",
-   "targets": [
-    {
-     "block": "S168",
-     "textHash": "sha256/c1:b8deb92aae8f36eda818e3afb6b0427f57b5d0ec0c9728b889cf651946cf0825",
-     "role": "combination",
-     "note": "Mate boundary at the moved time code inside the same interval",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S178",
-     "textHash": "sha256/c1:aa855a4fa3c67f1281eafc1174b04a29b4ab509be7dc233198199d7e39254634",
-     "role": "combination",
-     "note": "Variant chunk reflecting the delay"
-    }
-   ]
-  },
-  "c15u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:66a44d037756ffc8ecfe1b7fd8cbd787b8060b2de94c57b434c97cba8d4eacfa"
-   },
-   "fragmentTextHash": "sha256/c1:43785323a61776522a7b2ae85f41f7ebb08f50c87e0fee7e0950717a89c5fa3c",
    "targets": [
     {
      "block": "S081",
@@ -2307,143 +2442,16 @@
      "role": "context",
      "note": "PCT claim 11: CDN and tailored manifests"
     }
-   ]
-  },
-  "c16u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c43de1a416f3a72f7913891b09c91ab682ddc80d5cf58d28dbe31ca4b607061b"
-   },
-   "fragmentTextHash": "sha256/c1:20da2fd74ea4b4ce4f8c7203b14edacb9286b285f3f5c5de1189dcb660a46f31",
-   "targets": [
-    {
-     "block": "S099",
-     "textHash": "sha256/c1:8feecb1dedd8fb0846ebb32149a5d7ceed0c8bc37ccce1da16717007df6deaaa",
-     "role": "specific",
-     "note": "Mixing component integrates reference and mate chunks, progressively assigning distinct manifests"
-    },
-    {
-     "block": "S200",
-     "textHash": "sha256/c1:920547e26f29cbda321cedf1262d94dcf8822f49e89f05f7187c6cdedfb066fb",
-     "role": "context",
-     "note": "Associations updated as variations accumulate"
-    },
-    {
-     "block": "PC12",
-     "textHash": "sha256/c1:f9f41c696c7985e31f7d9ad4f258e43d28c76dba35445f4e36634bab49347529",
-     "role": "context",
-     "note": "PCT claim 12: mixing component"
-    }
-   ]
-  },
-  "c17u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:e14e966a98471140c294369ace500aae1fa9587edf6151d3ca93e16c24d32393"
-   },
-   "fragmentTextHash": "sha256/c1:c4b2a0f7f2545fa02628bd7dd3835fe894d4c408433e88fc72d0643e341752c6",
-   "targets": [
-    {
-     "block": "S127",
-     "textHash": "sha256/c1:8d27b854f75e37897dcfa2848dfaea7760871177539efe9b77fe5634783fc277",
-     "role": "specific",
-     "note": "Unicast distribution of the chunks"
-    },
-    {
-     "block": "S155",
-     "textHash": "sha256/c1:f9f9e17475ae6a642a5255f35b10fb1f19df055e794ac0d72feb997ddbe6f0ab",
-     "role": "specific",
-     "note": "Unicasting gives each spectator a unique stream"
-    },
-    {
-     "block": "PC6",
-     "textHash": "sha256/c1:37020aa1a6591cd3258415208cea6ba11edf2e256c48318a9ac829dee03f9c82",
-     "role": "context",
-     "note": "PCT claim 6: unicasting"
-    }
-   ]
-  },
-  "c18u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:e955340730581bdc0e4090a137e61f7df6e385ea1f9796458d6ba42fc0a47fa5"
-   },
-   "fragmentTextHash": "sha256/c1:cb311c236b7db379930684dbeae396e24fe3826766a869774df08fc23c539b6a",
-   "targets": [
-    {
-     "block": "S081",
-     "textHash": "sha256/c1:df14c8914a44c34d07c4cd1b1e58e6503df438fbe4ff6b64d849e7ce95ccd024",
-     "role": "specific",
-     "note": "Unique interleaved chunk combinations per manifest"
-    },
-    {
-     "block": "S088",
-     "textHash": "sha256/c1:7e5ccccfaff70c4a3215d38c7b808f78792df15d0d7343a901f21acd38975168",
-     "role": "combination",
-     "note": "Per-cut reference/mate choice repeated across camera cuts",
-     "caution": {
-      "type": "generalization-note",
-      "code": "beyond-literal-example"
-     }
-    },
-    {
-     "block": "S172",
-     "textHash": "sha256/c1:8945e4696548e7529fe3a76de9fd9de4ff01642c128125763d0ff129d5773ffb",
-     "role": "context",
-     "note": "Version count multiplies at every varied cut"
-    }
-   ]
-  },
-  "c19u0": {
-   "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:1c499e56b8fbf001d87b3662ec94bd22eabe74510e958b0201062c2b12e462c8"
-   },
-   "fragmentTextHash": "sha256/c1:286720eac62d5a860a7ad9954aed54e1eda19d99c15ffea7d9ec92b5e3077e01",
-   "targets": [
-    {
-     "block": "S114",
-     "textHash": "sha256/c1:b82af3c5e23e5077ab87a6bce46296191bfa0c3f40e98888ca6c35b93212496a",
-     "role": "specific",
-     "note": "Overlay of additional audio/video elements nonexistent in the reference content"
-    },
-    {
-     "block": "S153",
-     "textHash": "sha256/c1:e0a47d1de6b030d867e50985e8d48dd0d8ba7bfc078fd8330b03b5dbb4b863c2",
-     "role": "specific",
-     "note": "Overlay applied in the programming step, before segmenting step 240 in the method order"
-    }
    ],
-   "caution": {
-    "gateId": "af-gate-overlay-sequencing",
-    "type": "source-gate",
-    "code": "overlay-sequencing",
-    "source": {
-     "corpus": "af-claims",
-     "block": "S024",
-     "textHash": "sha256/c1:870e311fe3b5eb6167f0f3bd75de0ae743ffbc9a7515a41227ff5177874617ca"
-    }
-   }
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:20cbe4d9b7f428f9372e052b02ef2d7cd808ba87cfeb53a5ee0ad26e7bd0de59"
+   },
+   "fragmentTextHash": "sha256/c1:711a80aa3cca3992e2acdee5c86a23b4af7adc6a96ca254ac70ae83ccc0f1805"
   }
  },
  "dispositions": [
@@ -2454,249 +2462,177 @@
     "id": "c1"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:27f8c121ecc8ada9794bdab01954fb096be9c92c60c800c62db7532dc35fb213",
-   "subjectHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+   "gateEntryHash": "sha256/c1:a61aa971bc7e6b9bee402745b895d4d6cc4d060019d8554cc7f84a72efa344ce",
+   "subjectHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:d9310653e3b9c4e217d2f38dd161b12f768612446f21407fd102735915b38bcb"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:174f6d0635dc07aa010892a094b5f7015eb9c454d01ab4022da3e4dd76762b9c"
    }
   },
   {
    "gateId": "af-gate-claim-as-a-whole",
    "subject": {
     "kind": "claim",
-    "id": "c20"
+    "id": "c19"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:27f8c121ecc8ada9794bdab01954fb096be9c92c60c800c62db7532dc35fb213",
-   "subjectHash": "sha256/c1:2b84c116ede71ba992c1569f82761de815e08b63cbf61724cde8ccb9878c94c9",
+   "gateEntryHash": "sha256/c1:a61aa971bc7e6b9bee402745b895d4d6cc4d060019d8554cc7f84a72efa344ce",
+   "subjectHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:fec8fda84d17f1c5ab49108583bfe7e7581de8af7b29f2da08e430e54a02ffb3"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:05351788f472465a26d3bf8b6fc6e492ac22c7080c678a1b98f958da5e3770ed"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-production-boundary",
    "subject": {
     "kind": "claim",
     "id": "c1"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:e5722a2ac33996113bc71e1f78093a143a8354910fa9393037a92c48bf1d91ca",
+   "gateEntryHash": "sha256/c1:57ada0f931f9d465545eddab3ee30be5c5b2dc416103eb0ea7bd7a34b94f4321",
+   "subjectHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:12fa0cd796982ac883c2a2f6151c50a23dae2bfce6d870a3cc50e8595be56173"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:27a9d5a4696b5253e1f5b619f52d4dc643ccb11f78f99ad689cc0bfb84e985f8"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-production-boundary",
    "subject": {
     "kind": "claim",
-    "id": "c7"
+    "id": "c19"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:5421089fd97a2694fac249d0d91204772fad17531e15f0dd825bbac79cb8bf1c",
+   "gateEntryHash": "sha256/c1:57ada0f931f9d465545eddab3ee30be5c5b2dc416103eb0ea7bd7a34b94f4321",
+   "subjectHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:a3f6950ae5448d716e925a4faef822f660a349e6ee325d6c69d429bd77bd0882"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:249349970e373039504fb8ea477262b2c39074fe13038e23b1edadf9ca03da7a"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-per-filing-support",
    "subject": {
     "kind": "claim",
-    "id": "c8"
+    "id": "c1"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:8e8b92389552e43f53223698f0940ed138b16b1d86938b4f29484e0477469f09",
+   "gateEntryHash": "sha256/c1:e674391f9524bac182831dd6e837fcccb9622f4947e4799611fc6cb99e014585",
+   "subjectHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:6f4bf2e6f38706329bac444cf20074c645833a52f91df0418eb624cb0829bae3"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:aa27b1e8c15a4755d58ca406b42d2624e98bc1f4b42a39643ff104c89958f7ed"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-per-filing-support",
    "subject": {
     "kind": "claim",
-    "id": "c9"
+    "id": "c19"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:2054fb2d7ca50ccd0b1c18a7612f6b62eb90a8b8c2589c5bde61ae4676082d7d",
+   "gateEntryHash": "sha256/c1:e674391f9524bac182831dd6e837fcccb9622f4947e4799611fc6cb99e014585",
+   "subjectHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:2565da0abc25ac08debfce01fc9dcbea15d67e6f836f635688baa5c0cf3f82f7"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:81896ca3356fcada97e26c92f19c85cc685c8b880d39073aeb745dc40bd880ce"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-plural-cut-integration",
    "subject": {
     "kind": "claim",
-    "id": "c10"
+    "id": "c1"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:e3552085b4ddfdc9b11305467eed1fc175fc0bcc7d7fc93f86bc6b783876f86c",
+   "gateEntryHash": "sha256/c1:d809beb276c36d76d04beb862415f9859ff5fb01cd0f3f0fe4f8e3e234d684aa",
+   "subjectHash": "sha256/c1:be97540bc7efae70b50d363ab8ee40ae2acc7d1e2a859df1a4bfef57552c5f99",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:666859b367697c9cd459b81868b853115a5f571fa3097723dd2b81d4229ffd28"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:279ac88168e8d69e2876bd40d9c789455a60094954ca14c94b9c3f29bbe140e8"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
-   "subject": {
-    "kind": "claim",
-    "id": "c13"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:99d78be0db5bac288109c8eb87ab9e4164142a8cc02d89948a9954c33b3bc9ed",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:a90d5f372a5dc74cb0361ee5da512cec0df1684b34df3249387bffce0fea818e"
-   }
-  },
-  {
-   "gateId": "af-gate-examples-integration",
-   "subject": {
-    "kind": "claim",
-    "id": "c14"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:19bd147dc18c72d437c61d58a5ca2e5473f2412bf12b82223c05e007fb780877",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:0b813880c7313ae80d9208c8d09ebdbf8374aa191976fc393e95502d5a9d1ee8"
-   }
-  },
-  {
-   "gateId": "af-gate-examples-integration",
-   "subject": {
-    "kind": "claim",
-    "id": "c15"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:7d6ccdb83ae942f2ee6f707cadb37f8f54cd9a09abc64803933340bf326e3c6f",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:55d4be60a1e21dd54cad7f2f6dca8d0409be858c967d524e26f51a917ac711d5"
-   }
-  },
-  {
-   "gateId": "af-gate-examples-integration",
-   "subject": {
-    "kind": "claim",
-    "id": "c16"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:38f73c45ef5b1a836dfa405db9d80df74d44ae33bec44e437e27248685edd9a1",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:3778e34619b0c5e52c08cb9a029b31b93d34d8be6ad0c32123d347bc625aa7ae"
-   }
-  },
-  {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-plural-cut-integration",
    "subject": {
     "kind": "claim",
     "id": "c17"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:58bad93b8ca463d087eabdfe8c68ea691f07542842b9c5bbed8328bcd40b2c80",
+   "gateEntryHash": "sha256/c1:d809beb276c36d76d04beb862415f9859ff5fb01cd0f3f0fe4f8e3e234d684aa",
+   "subjectHash": "sha256/c1:c790db32c8024a92f788ab5c96b47924bfde2fbe34af0d1414dfff5b4d425329",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c838657bb79913035655981ba09815783365a271addc4a9c19c62fd9ec014c8c"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:f9bf48d7e5f866fa529a8e3f6e43bd52f49500bf6d3c8eaaf335bf0fe62f6977"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-plural-cut-integration",
    "subject": {
     "kind": "claim",
-    "id": "c18"
+    "id": "c19"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:4b16914de6f0b26c88d24e062407b765519f7ecd3c50ac7f3ca71e70bcbf7e3b",
+   "gateEntryHash": "sha256/c1:d809beb276c36d76d04beb862415f9859ff5fb01cd0f3f0fe4f8e3e234d684aa",
+   "subjectHash": "sha256/c1:cd649c87d7a9264d58c1e8c6c8e4703db40ce2a7dd2a865df2dca01ce10b8e88",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:5ccb1a30d29e11086506161be5c4d4aa1c7f9e61bd05eaf8bafe75177b72530f"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:72f0517893b728558f7260145c43e52c4f8d579242e692ee7b7026ebcb852361"
    }
   },
   {
-   "gateId": "af-gate-examples-integration",
+   "gateId": "af-gate-claim6-respective-mate",
    "subject": {
     "kind": "claim",
-    "id": "c20"
+    "id": "c6"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:b904377a56173c808717b76a4372e723639ac4a1edd9e534a03c3ad30f8991c7",
-   "subjectHash": "sha256/c1:2b84c116ede71ba992c1569f82761de815e08b63cbf61724cde8ccb9878c94c9",
+   "gateEntryHash": "sha256/c1:f9e71d430573e7ea0cb3a5d4c46781c801a8514e9fae93edf60118d6e4bc8caa",
+   "subjectHash": "sha256/c1:ffd8c378cc9d709852d98c266251799a70c499e5c7601be9ffe5b76427e970b2",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:fa61350ccea97a140e0ba37ca0550cb32c87d24f711926971c7dabd876b1df51"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:19de4db49ba16cde1b72404021323faf35dee2f44946be246fc4f6d812e8504d"
    }
   },
   {
@@ -2706,15 +2642,15 @@
     "id": "c2"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:375e680abbbbca8184cdb33828c3442d2c249b392fc119015739e563d0be042e",
-   "subjectHash": "sha256/c1:76ebfcf764d69d566ddb3129230b33dc94d5a428c5c45ac961e1bb45f8459826",
+   "gateEntryHash": "sha256/c1:43b5ca1e75491b5d38055975ebe329f3a7bf23228e008c0b7c24d615cc067b9b",
+   "subjectHash": "sha256/c1:c88bf7ed77398d6d2a4172ae5047db043934514a3b2e819890f2f7b04f5e599d",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:ec8f94b7f7d4f8f225b58a66da76b43b5f7a38d79bbe3c4099b119e47c03f130"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:8e112ea9aaf6b059782d79770ebac771fa5165ce532cd5c2cc12cdb3c38a81d7"
    }
   },
   {
@@ -2724,15 +2660,15 @@
     "id": "c3"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:375e680abbbbca8184cdb33828c3442d2c249b392fc119015739e563d0be042e",
-   "subjectHash": "sha256/c1:baa3306bbd564936d9dc771ab1044d5ae5e7d77fd87edf3857c4a6d2c2ca6bd4",
+   "gateEntryHash": "sha256/c1:43b5ca1e75491b5d38055975ebe329f3a7bf23228e008c0b7c24d615cc067b9b",
+   "subjectHash": "sha256/c1:d983d0748526acbc5c342f9c5ae91886437c1fd4020ec13dabe2da4a1951a70b",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:956bc82ff2ce76765e00bdeb949fb7c1e8be8310a08e5b91bd8f9beae9908264"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:4cbde47af44fc991ef6557475f0fcac9bd94825fb59c31726b069bf944186811"
    }
   },
   {
@@ -2742,195 +2678,15 @@
     "id": "c14"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:c196a5ee9bd042bc1971be0ed764cfb7fd2e43c2e2d7753495bc6b283003c627",
-   "subjectHash": "sha256/c1:19bd147dc18c72d437c61d58a5ca2e5473f2412bf12b82223c05e007fb780877",
+   "gateEntryHash": "sha256/c1:b2df010b1fedd288b29a31dbaa5c6cde72881f6353bc2dc3a029db5fb8b0a3cb",
+   "subjectHash": "sha256/c1:2bee2897918f216ba8a8063f0d27dcd677fcbae23d62f5e11b149bb5d0857a1c",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:c792f69ea072dedd2126c13536c5792ad86a9cd43fe78aed2393176d4cdb711f"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c1u11"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:8eeba9d6219b4a3e1864424b0dab74595103748e6c0b51feb5427f34808a32d4"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c1u12"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:61bef91c255cdd6c41ed232e3fa91be99b9bb4c11f011e596c700b586a3c3736"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c1u13"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:3b39100e98687312032720c00b8e8e3f4c9ed4fecc0f6e71cec6b2f4cac3ccdf",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:48e6b9b385326888527983c15f08802c401a011b3b2de9c7678ff2cd3155093c"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c20u11"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:b3fc0c29044d8f30e7380bbb610cca6802a969866c84e0123a42aba3eb9f3898",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:1f18eb564d1554455e830ed7e23c62f10853cb2b08eb64fc593f0fe554f712c5"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c20u12"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:d34f8b26f9362b1e28f0bff42c2585df0256b6953381af02399983818e6511b1",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:053b252b50d2cb958ef1d63f8be55c76c39286ebe6ac667a1ff1224df864c89c"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c20u13"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:2ff20c299d514eccb1b9562523052e63d6afddebaece0246e23407e76a0a06e5",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:6a48515b61b2ef2cd59162c74914d8af56eca5bda1ad0b8e5efe55e3f15a4a80"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c7u0"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:26451a33eed82a44b2457d64581567f9614bdfe45cb71cca7abf01f818697f94",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:db79c9698f4405cc316c0e99c8c229c2ea902db2f3051fb3c9fd9bd723e940d4"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c8u0"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:774acbfee7dbc94ce5a0495ef5c779e01b02c0d71179c63706ddfb65e97dd0c7",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:8f40144726b50d08a6b653b0f79ceb90f9fe63dc28188abea02c8675a492e6c5"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c9u3"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:e0e5719710b8cb3cb0dba3982bd49674c2d9887d4c477d348fbb273d53ab8e61",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:1354083718d9093c5b8a1224d6cfe04a07839e019e7c351c9accda9585b588b5"
-   }
-  },
-  {
-   "gateId": "af-gate-source-identity",
-   "subject": {
-    "kind": "fragment",
-    "id": "c10u0"
-   },
-   "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:85b1970327918431abf726e7dbbd82834ec0400eda5e5ee2cc8af074adf76355",
-   "subjectHash": "sha256/c1:7ba4354de96c3f2d093d755e4d05dfc19c9be6d71aec720c8f45d7d77e252798",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:58b944d0dcbde69f9dda897a0dfd69372bf1a5e31e9fca282cc11d29d0946d65"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:800191e0622384bd0828fd4a836cd7c4767e133f2c7b2ff64f12bf05edc16051"
    }
   },
   {
@@ -2940,15 +2696,15 @@
     "id": "c11u0"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:46eca8a2ec398d039cecc45b4c33d22fe6ac3715a0cfc59b2e732f399171ddf7",
-   "subjectHash": "sha256/c1:64d1af8ccdedf7c46775dfc76238024bf4f7cce9a4914702611e952c84d8666f",
+   "gateEntryHash": "sha256/c1:efa0de1cac1295becbf0136c2521b18aa758c124bce62b407fd7190a3470cfd2",
+   "subjectHash": "sha256/c1:6c37fd34cf56386c469a14c1fdeb13f45318ce7ff6a04fac4ab54686383f9725",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:a1bf11e8b0eda3d0df7f1ede0f20903ac59fc1221d6e2327e50bfcf8b6d838f8"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:40d406e2965d4b90a7cec27fb9970f2ee652ec22163089317f3d09315c139bb5"
    }
   },
   {
@@ -2958,33 +2714,105 @@
     "id": "c12u0"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:46eca8a2ec398d039cecc45b4c33d22fe6ac3715a0cfc59b2e732f399171ddf7",
+   "gateEntryHash": "sha256/c1:efa0de1cac1295becbf0136c2521b18aa758c124bce62b407fd7190a3470cfd2",
    "subjectHash": "sha256/c1:1a8d10d6ebc5a1cb28c5118f73bdb7542580f3b49be3ea9d3755e2e5018dde9f",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:902ad1190479be9873b77be84fcd137093dbd8d685ab3f026bfc04ca82015295"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:b326b34d6ff9630fcddd483184af538bf4f9c1ee7dcc1122ffa40103016b48cc"
    }
   },
   {
    "gateId": "af-gate-overlay-sequencing",
    "subject": {
     "kind": "fragment",
-    "id": "c19u0"
+    "id": "c18u0"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:db84a7e528328bbf9351de9fc12581a502df3de90ad7fc1a68d4aa680c2cc357",
-   "subjectHash": "sha256/c1:286720eac62d5a860a7ad9954aed54e1eda19d99c15ffea7d9ec92b5e3077e01",
+   "gateEntryHash": "sha256/c1:7a482faf3a4694bad03a3a044230feeacb2b69a9ff5398ab7984fd3411528742",
+   "subjectHash": "sha256/c1:26450603a78d5ede1aa5343fe0e45af1f1c9209da78c6b69fa09acec24edb32e",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:062fc062630c0ca245c11103d849f1fe0eadf535080ebdcf93af4f0ef5397f60"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:b9457959263a15e49e9c8ce7721658c84d69ffca19a5dacbb162ad4cb12c1fce"
+   }
+  },
+  {
+   "gateId": "af-gate-method-fallback",
+   "subject": {
+    "kind": "claim",
+    "id": "c20"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:bca1f2de149e822beacfec6f5fe6f5899c5ee5ff7c4c6c85ed72f0c5e8949583",
+   "subjectHash": "sha256/c1:8da8aa338daf4f9f1f2e462e775df1b2b8868605cf102c890ff6e8afad13d9d6",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:042b33333c82f5f04da25cc4a08619a73e791880fa75800ec28dda7c2aa8de3e"
+   }
+  },
+  {
+   "gateId": "af-gate-method-fallback",
+   "subject": {
+    "kind": "claim",
+    "id": "c21"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:bca1f2de149e822beacfec6f5fe6f5899c5ee5ff7c4c6c85ed72f0c5e8949583",
+   "subjectHash": "sha256/c1:ffe11ffc61e350b88ae70db5892c6dfc262db038572e79051a1e2a276f87c12c",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:742af7c3877973eb862a1ee439f900196e4e303c52b40a002cdeeb52ba141ce8"
+   }
+  },
+  {
+   "gateId": "af-gate-method-fallback",
+   "subject": {
+    "kind": "claim",
+    "id": "c22"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:bca1f2de149e822beacfec6f5fe6f5899c5ee5ff7c4c6c85ed72f0c5e8949583",
+   "subjectHash": "sha256/c1:54e33e30d46b8333e4d256b7946144bb5c22b6ef58a9019216e63cca19220345",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:4778e3ec2dbc6171bcbadf4ff8ee79c0e0d2ff226de1e618704f15b60efed4c9"
+   }
+  },
+  {
+   "gateId": "af-gate-monitor-method",
+   "subject": {
+    "kind": "claim",
+    "id": "c23"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:9c08f3463eccad4ae60ba208e1c07c757f58ec99c6cef906f46bbb92fcc0e220",
+   "subjectHash": "sha256/c1:77346d15a9ba673ca229a03657243311afc3f1a69daf7034733ba50df02a0039",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:60127273a081d34869e4db67c81d81c46d9ea980949941a91815b58b94ec2c94"
    }
   }
  ]

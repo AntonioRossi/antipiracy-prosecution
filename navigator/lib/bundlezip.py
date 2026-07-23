@@ -29,22 +29,9 @@ class BundleError(ValueError):
     """A bundle plan or ZIP member is unsafe, ambiguous, or stale."""
 
 
-_RELEASE_FIELDS = frozenset((
-    "recordVersion", "releaseProfile", "compatibilityAuthorization",
-    "deferredObservations", "artifactLabel", "edition", "sealed", "sealedDigest",
-    "lockDigest", "qaRecord", "attestations", "declaredReleaseTimestamp",
-    "approvalStatus", "operator", "operatorKind", "acceptanceReceipt",
-))
-_QA_FIELDS = frozenset((
-    "releaseProfile", "edition", "candidateDigest", "lockDigest", "contentLock",
-    "qaInputLock", "reproductionDiagnostics", "attestations",
-    "supportMatrix", "legendApproval", "manualEvidenceVersion",
-    "manualChecks", "approvalStatus", "operator", "operatorKind",
-))
-_ATTESTATION_FIELDS = frozenset((
-    "type", "edition", "sides", "note", "approvalStatus", "operator",
-    "operatorKind", "producerCommand",
-))
+_RELEASE_FIELDS = recordprovenance.RELEASE_RECORD_FIELDS
+_QA_FIELDS = recordprovenance.QA_RECORD_FIELDS
+_ATTESTATION_FIELDS = recordprovenance.ATTESTATION_RECORD_FIELDS
 _ATTESTATION_SIDES = {
     "inventory-completeness": frozenset(("claimSet", "gateInventory")),
     "qa-priority-map": frozenset(("relationSet", "priorityMap")),
@@ -1000,15 +987,8 @@ def bundle_record_problems(record, cfg, bundle_digest,
     validate_bundle_config(cfg, expected_edition_count)
     if not isinstance(record, dict):
         return ["bundle record is not an object"]
-    expected_fields = {
-        "recordVersion", "releaseProfile", "compatibilityAuthorization",
-        "deferredObservations", "artifactLabel", "bundle", "bundleDigest",
-        "members", "releaseRecords",
-        "manifestWording", "manifestApproval", "bundleConfigDigest",
-        "approvalStatus", "operator", "operatorKind", "acceptanceReceipt",
-    }
     problems = []
-    if set(record) != expected_fields:
+    if set(record) != recordprovenance.BUNDLE_RECORD_FIELDS:
         problems.append("bundle record has the wrong fields")
     if record.get("recordVersion") != "2":
         problems.append("bundle record has the wrong version")

@@ -9,7 +9,6 @@ sets, and the per-owner review projections whose composite digest is
 ``review.contentHash`` (TDD §8.2, §8.4, §13).
 """
 
-import copy
 import re
 
 from . import canon, claims as claims_mod, depgraph, gateway
@@ -101,7 +100,7 @@ def _anchor_index(blocks):
 
 
 class EditionModel:
-    def __init__(self, gw, edition_path, allow_legacy_canon=False):
+    def __init__(self, gw, edition_path):
         self.gw = gw
         self.edition = canon.parse_json(gw.read_text(edition_path))
         # The edition object selects every subsequent path.  Validate its
@@ -312,22 +311,6 @@ class EditionModel:
             self.edition["relationSet"]))
         relation_errors = schema_validate.validate(
             self.relation, self.schemas["relation"])
-        if relation_errors and allow_legacy_canon:
-            # `migrate` alone admits an otherwise-current relation carrying
-            # an old canonicalization version.  Digest comparisons are then
-            # forbidden and every owner is marked stale/unclassified.  No
-            # other schema defect is waived: normalize just this sentinel and
-            # validate the complete copy against the current closed schema.
-            normalized = copy.deepcopy(self.relation)
-            binding = normalized.get("binding") \
-                if isinstance(normalized, dict) else None
-            original = binding.get("canonVersion") \
-                if isinstance(binding, dict) else None
-            if isinstance(original, str) and original and \
-                    original != canon.CANON_VERSION:
-                binding["canonVersion"] = canon.CANON_VERSION
-                relation_errors = schema_validate.validate(
-                    normalized, self.schemas["relation"])
         if relation_errors:
             raise ModelError("invalid relation set: %s" %
                              "; ".join(relation_errors))

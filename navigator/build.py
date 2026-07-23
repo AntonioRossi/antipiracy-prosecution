@@ -15,12 +15,16 @@ environments; ``--private-runner`` is the logged override.
 import copy
 import json
 import os
+import re
 import subprocess
 import sys
+import tempfile
 
+sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from lib import authority, canon, gateway, model, qaevidence, render  # noqa: E402
+from lib import claims as claims_mod, registry as registry_mod  # noqa: E402
 from lib import recordprovenance  # noqa: E402
 from lib import schema_validate, validate  # noqa: E402
 from lib import migrate as migrate_mod, projections, release as release_mod  # noqa: E402
@@ -34,6 +38,14 @@ BUNDLE_MANIFEST_RESOURCE = "navigator/bundle-manifest.json"
 CI_MARKERS = ("CI", "GITHUB_ACTIONS", "GITLAB_CI", "JENKINS_URL",
               "BUILDKITE", "CIRCLECI", "TRAVIS", "TEAMCITY_VERSION")
 DELIVERY_EDITION_COUNT = 2
+VERIFICATION_RECORD_KINDS = (
+    "attestation", "qa-record", "release-record", "bundle-record",
+)
+LIVE_VERSION_PATTERN = re.compile(
+    r"\b(?P<strategy>NA|AF)-[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*\b")
+LIVE_TEXT_SUFFIXES = frozenset((
+    ".json", ".md", ".py", ".sh", ".txt", ".yaml", ".yml",
+))
 
 
 def ci_guard(argv):
@@ -51,6 +63,22 @@ def ci_guard(argv):
 def load_planes():
     return canon.parse_json(
         gateway.ContentGateway(ROOT).read_text("navigator/schema/planes.json"))
+
+
+def delivery_edition_ids(content=None):
+    """Return the bundle-declared edition IDs after path-safe validation."""
+    content = content or gateway.ContentGateway(ROOT)
+    cfg = canon.parse_json(content.read_text(BUNDLE_CONFIG))
+    editions = cfg.get("editions") if isinstance(cfg, dict) else None
+    if not isinstance(editions, list) or \
+            len(editions) != DELIVERY_EDITION_COUNT or \
+            len(editions) != len(set(editions)):
+        raise SystemExit(
+            "delivery bundle must declare exactly %d unique editions" %
+            DELIVERY_EDITION_COUNT)
+    for edition_id in editions:
+        edition_path(edition_id)
+    return tuple(editions)
 
 
 def bundle_manifest_input(content):
@@ -100,14 +128,12 @@ def edition_path(edition_id):
     return "navigator/editions/%s.json" % edition_id
 
 
-def build_model(edition_id, planes=None, allow_legacy_canon=False):
+def build_model(edition_id, planes=None):
     boot = gateway.ContentGateway(ROOT)
     allow = canon.parse_json(
         boot.read_text(edition_path(edition_id)))["declaredTransitiveInputs"]
     gw = gateway.ContentGateway(ROOT, allowlist=allow)
-    m = model.EditionModel(
-        gw, edition_path(edition_id),
-        allow_legacy_canon=allow_legacy_canon)
+    m = model.EditionModel(gw, edition_path(edition_id))
     return gw, m
 
 
@@ -152,8 +178,152 @@ def cmd_candidate(edition_id, argv):
     print("  lockDigest %s" % lock["lockDigest"])
 
 
+def _claim_document_version(text, strategy_prefix):
+    pattern = re.compile(
+        r"CLAIM-SET VERSION (" + re.escape(strategy_prefix) +
+        r"-[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*)")
+    matches = pattern.findall(text)
+    if len(set(matches)) != 1:
+        raise SystemExit(
+            "claim document must declare exactly one %s claim-set version" %
+            strategy_prefix)
+    return matches[0]
+
+
+def current_pin_plan(edition_id):
+    """Return a deterministic, read-only current-pin plan.
+
+    Unlike ``build_model``, this command deliberately reads registered source
+    bytes without accepting their digest pins: its purpose is to expose drift
+    before those pins are changed. Closed schemas and canonical paths are
+    still enforced before any edition-selected path is dereferenced.
+    """
+    boot = gateway.ContentGateway(ROOT)
+    epath = edition_path(edition_id)
+    edition = canon.parse_json(boot.read_text(epath))
+    edition_schema = canon.parse_json(
+        boot.read_text("navigator/schema/edition.schema.json"))
+    problems = schema_validate.validate(edition, edition_schema)
+    if problems:
+        raise SystemExit("invalid edition config: %s" % "; ".join(problems))
+
+    declared = edition["declaredTransitiveInputs"]
+    content = gateway.ContentGateway(ROOT, allowlist=declared)
+    reg = registry_mod.Registry(
+        content, registry_paths=edition["corpusRegistries"],
+        allowed_corpora={edition["claimCorpus"], edition["targetCorpus"],
+                         edition["authorityCorpus"]}, require_exact=True)
+    claim_entry = reg.entry(edition["claimCorpus"])
+    claim_path = claim_entry["primary"]
+    claim_bytes = content.read_bytes(claim_path)
+    try:
+        claim_text = claim_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise SystemExit("claim document is not UTF-8: %s" % exc)
+    profile = canon.parse_json(content.read_text(claim_entry["profile"]))
+    parsed = claims_mod.parse_claims(
+        claim_text, profile.get("claimsHeading", "Candidate claims"))
+    count, units, per_claim = claims_mod.census(parsed)
+    dependencies = {}
+    for claim in parsed:
+        if len(claim.parsed_refs) > 1:
+            raise SystemExit(
+                "claim %d has multiple dependency references" % claim.number)
+        dependencies[str(claim.number)] = (
+            claim.parsed_refs[0] if claim.parsed_refs else None)
+    groups = list(dict.fromkeys(claim.group for claim in parsed))
+    dependency_document = canon.parse_json(
+        content.read_text(edition["dependencyMap"]))
+    configured_dependencies = dependency_document.get("claims") \
+        if isinstance(dependency_document, dict) else None
+    document_version = _claim_document_version(
+        claim_text, edition["strategyPrefix"])
+    expected_artifact = (
+        "AA11393US-%s-claims-spec-navigator_%s.html" %
+        (edition["strategyPrefix"], document_version))
+
+    qa_ids = {value for value in edition["qaSources"].values()
+              if value is not None}
+    qa_allow = [edition["qaRegistry"]]
+    qa_boot = gateway.ContentGateway(ROOT)
+    qa_doc = canon.parse_json(qa_boot.read_text(edition["qaRegistry"]))
+    if not isinstance(qa_doc, dict) or not isinstance(
+            qa_doc.get("corpora"), dict):
+        raise SystemExit("QA registry is malformed")
+    for entry in qa_doc["corpora"].values():
+        if isinstance(entry, dict):
+            qa_allow.extend(entry.get("files", {}).keys())
+    qa_gateway = gateway.ContentGateway(ROOT, allowlist=qa_allow)
+    qa_registry = registry_mod.Registry(
+        qa_gateway, registry_path=edition["qaRegistry"],
+        allowed_corpora=qa_ids, require_exact=True)
+    qa_sources = {}
+    for role, corpus_id in sorted(edition["qaSources"].items()):
+        if corpus_id is None:
+            qa_sources[role] = None
+            continue
+        entry = qa_registry.entry(corpus_id)
+        path = entry["primary"]
+        actual = canon.bytes_digest(qa_gateway.read_bytes(path))
+        qa_sources[role] = {
+            "corpusId": corpus_id,
+            "path": path,
+            "configuredVersion": entry["version"],
+            "pinnedDigest": entry["files"][path],
+            "actualDigest": actual,
+            "pinCurrent": entry["files"][path] == actual,
+        }
+
+    actual_claim_digest = canon.bytes_digest(claim_bytes)
+    census = {
+        "claims": count, "units": units,
+        "perClaim": {str(number): value
+                     for number, value in per_claim.items()},
+    }
+    plan = {
+        "planVersion": "1",
+        "edition": edition_id,
+        "claimSource": {
+            "corpusId": edition["claimCorpus"],
+            "path": claim_path,
+            "documentVersion": document_version,
+            "configuredCorpusVersion": claim_entry["version"],
+            "configuredEditionVersion": edition["claimSetVersion"],
+            "pinnedDigest": claim_entry["files"][claim_path],
+            "actualDigest": actual_claim_digest,
+            "pinCurrent": claim_entry["files"][claim_path] ==
+                actual_claim_digest,
+        },
+        "census": census,
+        "configuredCensus": edition["census"],
+        "censusCurrent": census == edition["census"],
+        "groups": groups,
+        "configuredGroups": edition["groups"],
+        "groupsCurrent": groups == edition["groups"],
+        "dependencies": dependencies,
+        "configuredDependencies": configured_dependencies,
+        "dependenciesCurrent": dependencies == configured_dependencies,
+        "independentClaims": [int(number) for number, parent in
+                              dependencies.items() if parent is None],
+        "configuredIndependentClaims": edition["independentClaims"],
+        "independentClaimsCurrent": [
+            int(number) for number, parent in dependencies.items()
+            if parent is None] == edition["independentClaims"],
+        "artifactName": expected_artifact,
+        "configuredArtifactName": edition["artifactName"],
+        "artifactNameCurrent": expected_artifact == edition["artifactName"],
+        "qaSources": qa_sources,
+    }
+    return plan
+
+
+def cmd_pin_plan(edition_id, argv):
+    """Print the canonical representation of :func:`current_pin_plan`."""
+    print(canon.canonical_json(current_pin_plan(edition_id)).decode("utf-8"))
+
+
 def cmd_migrate(edition_id, argv):
-    gw, m = build_model(edition_id, allow_legacy_canon=True)
+    gw, m = build_model(edition_id)
     before_relation = copy.deepcopy(m.relation)
     before_inventory = copy.deepcopy(m.gates)
     log = []
@@ -163,21 +333,7 @@ def cmd_migrate(edition_id, argv):
         before_relation, m.relation, before_inventory, m.gates,
         fragment_hashes={fid: unit.digest for fid, unit in m.units.items()})
     schema_problems = []
-    relation_for_schema = m.relation
-    before_canon = before_relation.get("binding", {}).get("canonVersion") \
-        if isinstance(before_relation, dict) else None
-    after_canon = m.relation.get("binding", {}).get("canonVersion") \
-        if isinstance(m.relation, dict) else None
-    if before_canon == after_canon and isinstance(after_canon, str) and \
-            after_canon and after_canon != canon.CANON_VERSION:
-        # The migration-only loader admits exactly this legacy sentinel so
-        # owners can be made stale without comparing incompatible digests.
-        # Validate every other field by substituting the current sentinel in
-        # a throw-away copy; the authored binding stays untouched for the
-        # authorized-operator resolving commit.
-        relation_for_schema = copy.deepcopy(m.relation)
-        relation_for_schema["binding"]["canonVersion"] = canon.CANON_VERSION
-    for name, instance in (("relation", relation_for_schema),
+    for name, instance in (("relation", m.relation),
                            ("gates", m.gates)):
         schema_problems.extend(
             "%s: %s" % (name, problem)
@@ -231,16 +387,8 @@ ATTESTATION_SIDES = {
     "support-matrix-approval": frozenset(("supportMatrix",)),
 }
 
-ATTESTATION_RECORD_FIELDS = frozenset((
-    "type", "edition", "sides", "note", "approvalStatus", "operator",
-    "operatorKind", "producerCommand",
-))
-QA_RECORD_FIELDS = frozenset((
-    "releaseProfile", "edition", "candidateDigest", "lockDigest", "contentLock",
-    "qaInputLock", "reproductionDiagnostics", "attestations",
-    "supportMatrix", "legendApproval", "manualEvidenceVersion",
-    "manualChecks", "approvalStatus", "operator", "operatorKind",
-))
+ATTESTATION_RECORD_FIELDS = recordprovenance.ATTESTATION_RECORD_FIELDS
+QA_RECORD_FIELDS = recordprovenance.QA_RECORD_FIELDS
 
 EXPECTED_ACCEPTANCE_IDS = tuple("AC-%02d" % number
                                 for number in range(1, 21))
@@ -321,31 +469,18 @@ def _support_matrix_operator_binding_problems(operator, approver):
 
 
 def _qa_corpora(m):
-    """Return the edition-scoped QA registry.
-
-    The fallback keeps narrow unit-test doubles compatible; production
-    ``EditionModel`` instances always provide the isolated lazy registry.
-    """
-    loader = getattr(m, "qa_registry", None)
-    return loader().corpora if callable(loader) else m.registry.corpora
+    """Return the edition-scoped QA registry through its sole live API."""
+    return m.qa_registry().corpora
 
 
 def _qa_registry_read(m):
     """Return the raw selected QA-registry read bound by ``qaInputLock``."""
-    loader = getattr(m, "qa_registry", None)
-    if callable(loader):
-        qa_registry = loader()
-        path = m.edition["qaRegistry"]
-        if set(qa_registry.gw.read_log) != {path}:
-            raise SystemExit(
-                "QA registry gateway read set is not exactly %r" % path)
-        return {"path": path, "digest": qa_registry.gw.read_log[path]}
-    # Narrow test doubles predating the model boundary get a deterministic
-    # synthetic registry read. Production models always take the branch above.
-    return {
-        "path": "test/qa-registry.json",
-        "digest": canon.bytes_digest(canon.canonical_json(_qa_corpora(m))),
-    }
+    qa_registry = m.qa_registry()
+    path = m.edition["qaRegistry"]
+    if set(qa_registry.gw.read_log) != {path}:
+        raise SystemExit(
+            "QA registry gateway read set is not exactly %r" % path)
+    return {"path": path, "digest": qa_registry.gw.read_log[path]}
 
 
 def _verified_qa_source_files(m):
@@ -1389,31 +1524,61 @@ def release_artifact_status(artifact_gateway, sealed_name, sealed_digest):
     return sealed_ok, checksum_ok
 
 
-def cmd_bundle_plan(argv):
-    """Print a verified proposed bundle config; never write source/evidence."""
+def _current_bundle_plan_state(command):
+    """Derive the one current bundle proposal through a read-only command.
+
+    ``bundle-plan`` and ``verify-current`` share this boundary so status
+    verification cannot quietly implement a weaker release-chain resolver.
+    """
     planes = load_planes()
     boot = gateway.ContentGateway(ROOT)
     cfg = canon.parse_json(boot.read_text(BUNDLE_CONFIG))
-    records = gateway.VerificationGateway(RECORDS, "bundle-plan", planes)
-    artifacts = gateway.ArtifactGateway(DIST, "bundle-plan", planes)
-    unused_manifest, manifest_bytes, manifest_wording = \
-        bundle_manifest_input(boot)
+    records = gateway.VerificationGateway(RECORDS, command, planes)
+    artifacts = gateway.ArtifactGateway(DIST, command, planes)
+    manifest, manifest_bytes, manifest_wording = bundle_manifest_input(boot)
+    bundlezip.validate_bundle_config(
+        cfg, expected_edition_count=DELIVERY_EDITION_COUNT)
+    attestation_policy, current_attestation_sides = \
+        bundle_attestation_context(cfg)
+    acceptance_contexts, bundle_runner_inputs = \
+        bundle_acceptance_context(cfg)
+    bindings = current_release_bindings(cfg)
+    qa_authorization_contexts = bundle_qa_authorization_context(
+        cfg, bindings)
+    release_records = records.read_all("release-record")
+    qa_records = records.read_all("qa-record")
+    attestations = records.read_all("attestation")
+    proposed = _propose_current_bundle_config(
+        cfg, release_records, qa_records, attestations, artifacts.read,
+        manifest_bytes, manifest_wording, attestation_policy,
+        current_attestation_sides, acceptance_contexts, bindings,
+        qa_authorization_contexts)
+    return {
+        "planes": planes,
+        "content": boot,
+        "config": cfg,
+        "recordsGateway": records,
+        "artifactGateway": artifacts,
+        "manifest": manifest,
+        "manifestBytes": manifest_bytes,
+        "manifestWording": manifest_wording,
+        "attestationPolicy": attestation_policy,
+        "currentAttestationSides": current_attestation_sides,
+        "acceptanceContexts": acceptance_contexts,
+        "bundleRunnerInputs": bundle_runner_inputs,
+        "bindings": bindings,
+        "qaAuthorizationContexts": qa_authorization_contexts,
+        "releaseRecords": release_records,
+        "qaRecords": qa_records,
+        "attestations": attestations,
+        "proposed": proposed,
+    }
+
+
+def cmd_bundle_plan(argv):
+    """Print a verified proposed bundle config; never write source/evidence."""
     try:
-        bundlezip.validate_bundle_config(
-            cfg, expected_edition_count=DELIVERY_EDITION_COUNT)
-        attestation_policy, current_attestation_sides = \
-            bundle_attestation_context(cfg)
-        acceptance_contexts, unused_runner_inputs = \
-            bundle_acceptance_context(cfg)
-        bindings = current_release_bindings(cfg)
-        qa_authorization_contexts = bundle_qa_authorization_context(
-            cfg, bindings)
-        proposed = _propose_current_bundle_config(
-            cfg, records.read_all("release-record"),
-            records.read_all("qa-record"), records.read_all("attestation"),
-            artifacts.read, manifest_bytes, manifest_wording,
-            attestation_policy, current_attestation_sides,
-            acceptance_contexts, bindings, qa_authorization_contexts)
+        state = _current_bundle_plan_state("bundle-plan")
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
             release_mod.AcceptanceError, OSError, SystemExit) as exc:
         raise SystemExit("bundle-plan refused: %s" % exc)
@@ -1421,7 +1586,7 @@ def cmd_bundle_plan(argv):
     # canonical JSON encoding used by digest-bearing structures so repeated
     # plans have one byte representation independent of mapping insertion
     # order or interpreter formatting choices.
-    encoded = canon.canonical_json(proposed) + b"\n"
+    encoded = canon.canonical_json(state["proposed"]) + b"\n"
     stdout_buffer = getattr(sys.stdout, "buffer", None)
     if stdout_buffer is None:  # e.g. an in-process StringIO test harness
         sys.stdout.write(encoded.decode("utf-8"))
@@ -1586,6 +1751,396 @@ def cmd_bundle(argv):
 
     digest, rname = vgw.append("bundle-record", record)
     print("bundle -> dist/%s\n  bundle-record %s" % (cfg["name"], digest))
+
+
+def _pin_plan_problems(plan):
+    """Return every stale authored value exposed by one pin plan."""
+    problems = []
+    edition_id = plan.get("edition", "unknown") \
+        if isinstance(plan, dict) else "unknown"
+    if not isinstance(plan, dict):
+        return ["%s pin plan is not an object" % edition_id]
+    claim = plan.get("claimSource")
+    if not isinstance(claim, dict):
+        return ["%s pin plan has no claimSource" % edition_id]
+    if claim.get("configuredCorpusVersion") != claim.get(
+            "documentVersion"):
+        problems.append("%s corpus version is not the document version"
+                        % edition_id)
+    if claim.get("configuredEditionVersion") != claim.get(
+            "documentVersion"):
+        problems.append("%s edition version is not the document version"
+                        % edition_id)
+    if claim.get("pinCurrent") is not True:
+        problems.append("%s claim-source digest pin is stale" % edition_id)
+    for field in ("censusCurrent", "groupsCurrent",
+                  "dependenciesCurrent", "independentClaimsCurrent",
+                  "artifactNameCurrent"):
+        if plan.get(field) is not True:
+            problems.append("%s %s is false" % (edition_id, field))
+    qa_sources = plan.get("qaSources")
+    if not isinstance(qa_sources, dict):
+        problems.append("%s QA source plan is malformed" % edition_id)
+    else:
+        for role, source in sorted(qa_sources.items()):
+            if source is not None and (
+                    not isinstance(source, dict) or
+                    source.get("pinCurrent") is not True):
+                problems.append("%s %s QA-source digest pin is stale"
+                                % (edition_id, role))
+    return problems
+
+
+def _walk_repository_files(start, excluded_directory_names=(),
+                           excluded_repository_paths=()):
+    """Return regular repository-relative files and symlink/non-file defects."""
+    files = set()
+    problems = []
+    excluded_names = set(excluded_directory_names)
+    excluded_paths = set(excluded_repository_paths)
+    for directory, dirnames, filenames in os.walk(start, followlinks=False):
+        kept = []
+        for name in dirnames:
+            path = os.path.join(directory, name)
+            rel = os.path.relpath(path, ROOT).replace(os.sep, "/")
+            if name in excluded_names or rel in excluded_paths:
+                continue
+            if os.path.islink(path):
+                problems.append("unclassified symlink directory %s" % rel)
+                continue
+            kept.append(name)
+        dirnames[:] = kept
+        for name in filenames:
+            path = os.path.join(directory, name)
+            rel = os.path.relpath(path, ROOT).replace(os.sep, "/")
+            if os.path.islink(path):
+                problems.append("unclassified symlink file %s" % rel)
+                continue
+            if not os.path.isfile(path):
+                problems.append("unclassified non-regular path %s" % rel)
+                continue
+            files.add(rel)
+    return files, problems
+
+
+def _classified_navigator_source_problems(content, edition_ids):
+    """Close the nonterminal navigator tree over executable declarations."""
+    expected = {
+        "navigator/RUNBOOK-content-sync-and-regeneration.md",
+        "navigator/build.py",
+        BUNDLE_CONFIG,
+        BUNDLE_MANIFEST_RESOURCE,
+        "navigator/schema/acceptance.json",
+        "navigator/tools/pre-commit-check.sh",
+    }
+    for edition_id in edition_ids:
+        path = edition_path(edition_id)
+        edition = canon.parse_json(content.read_text(path))
+        expected.add(path)
+        expected.update(edition["declaredTransitiveInputs"])
+        qa_path = edition["qaRegistry"]
+        qa_registry = canon.parse_json(content.read_text(qa_path))
+        expected.add(qa_path)
+        for entry in qa_registry["corpora"].values():
+            expected.update(entry["files"])
+    acceptance = canon.parse_json(content.read_text(
+        "navigator/schema/acceptance.json"))
+    runner = acceptance["runner"]
+    expected.update(entry["path"] for entry in runner["testModules"])
+    expected.update(entry["path"] for entry in runner["fixtures"])
+    expected.update(runner["supportFiles"])
+
+    actual, problems = _walk_repository_files(
+        os.path.join(ROOT, "navigator"),
+        excluded_directory_names=("__pycache__",),
+        excluded_repository_paths=("navigator/dist", "navigator/records"))
+    # Every conventional discovery test is executable by verify-current and
+    # therefore classified even when it is outside the release callback set.
+    expected.update(
+        path for path in actual
+        if path.startswith("navigator/tests/test_") and
+        path.endswith(".py"))
+    expected = {path for path in expected if path.startswith("navigator/")}
+    extras = sorted(actual - expected)
+    missing = sorted(expected - actual)
+    if extras:
+        problems.append("unclassified navigator files: %s" % extras)
+    if missing:
+        problems.append("declared navigator files are missing: %s" % missing)
+    return problems
+
+
+def _live_version_problems(content, current_versions):
+    """Reject obsolete NA/AF version tokens in every live textual source."""
+    files, problems = _walk_repository_files(
+        ROOT, excluded_directory_names=(".git", "__pycache__"),
+        excluded_repository_paths=("navigator/dist", "navigator/records"))
+    seen_current = set()
+    for path in sorted(files):
+        frozen_migration = path.startswith(
+            "navigator/tests/fixtures/migration_") and path.endswith(
+                "_snapshot.json")
+        if frozen_migration or os.path.splitext(path)[1].lower() not in \
+                LIVE_TEXT_SUFFIXES:
+            continue
+        try:
+            text = content.read_text(path)
+        except (OSError, UnicodeDecodeError, gateway.GatewayError) as exc:
+            problems.append("live text %s is unreadable: %s" % (path, exc))
+            continue
+        for match in LIVE_VERSION_PATTERN.finditer(text):
+            strategy = match.group("strategy")
+            token = match.group(0)
+            expected = current_versions.get(strategy)
+            if token == expected:
+                seen_current.add(strategy)
+            else:
+                problems.append(
+                    "%s contains obsolete %s version %s (current %s)" %
+                    (path, strategy, token, expected))
+    for strategy in sorted(current_versions):
+        if strategy not in seen_current:
+            problems.append("current %s version is absent from live text"
+                            % strategy)
+    return problems
+
+
+def _flat_inventory(root, label):
+    """Return a flat regular-file inventory and structural defects."""
+    if not os.path.isdir(root):
+        return set(), ["%s directory is missing" % label]
+    names = set()
+    problems = []
+    for name in sorted(os.listdir(root)):
+        path = os.path.join(root, name)
+        if os.path.islink(path) or not os.path.isfile(path):
+            problems.append("%s contains non-regular entry %s" %
+                            (label, name))
+        else:
+            names.add(name)
+    return names, problems
+
+
+def _exact_inventory_problems(actual, expected, label):
+    problems = []
+    extras = sorted(actual - expected)
+    missing = sorted(expected - actual)
+    if extras:
+        problems.append("%s has unclassified/superseded files: %s" %
+                        (label, extras))
+    if missing:
+        problems.append("%s is missing current files: %s" %
+                        (label, missing))
+    return problems
+
+
+def _record_inventory_problems(records_by_kind):
+    expected = set()
+    problems = []
+    for kind in VERIFICATION_RECORD_KINDS:
+        for envelope in records_by_kind[kind]:
+            digest = envelope["digest"].rsplit(":", 1)[1]
+            expected.add("%s_%s.json" % (kind, digest))
+            problems.extend(
+                "%s: %s" % (envelope["digest"], problem)
+                for problem in
+                recordprovenance.current_record_format_problems(
+                    kind, envelope.get("record")))
+    actual, structural_problems = _flat_inventory(RECORDS, "records")
+    problems.extend(structural_problems)
+    problems.extend(_exact_inventory_problems(actual, expected, "records"))
+    return problems
+
+
+def _run_full_test_suite():
+    """Run every discovered test without creating repository bytecode."""
+    environment = dict(os.environ)
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    try:
+        with tempfile.TemporaryDirectory(
+                prefix="aa11393-verify-pycache-") as pycache:
+            result = subprocess.run(
+                [sys.executable, "-B", "-X", "pycache_prefix=" + pycache,
+                 "-m", "unittest", "discover", "-s", "navigator/tests",
+                 "-p", "test_*.py"],
+                cwd=ROOT, capture_output=True, text=True, timeout=1800,
+                env=environment)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise RuntimeError("full test suite could not complete: %s" % exc)
+    output = "\n".join(
+        part.strip() for part in (result.stdout, result.stderr)
+        if part.strip())
+    if result.returncode != 0:
+        raise RuntimeError("full test suite failed: %s" %
+                           (output[-8000:] or "no diagnostic"))
+    ran = re.search(r"Ran [0-9]+ tests? in [^\n]+", output)
+    return ran.group(0) if ran else "full discovered suite passed"
+
+
+def _git_whitespace_problems():
+    try:
+        result = subprocess.run(
+            ["git", "diff", "--check", "HEAD"], cwd=ROOT,
+            capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return ["git whitespace check could not complete: %s" % exc]
+    if result.returncode:
+        detail = "\n".join(
+            part.strip() for part in (result.stdout, result.stderr)
+            if part.strip())
+        return ["git whitespace check failed: %s" %
+                (detail[-4000:] or "no diagnostic")]
+    return []
+
+
+def verify_current_state(run_tests=True):
+    """Prove one exact live source/evidence/artifact closure or refuse."""
+    content = gateway.ContentGateway(ROOT)
+    edition_ids = delivery_edition_ids(content)
+    pin_plans = {edition: current_pin_plan(edition)
+                 for edition in edition_ids}
+    problems = []
+    for plan in pin_plans.values():
+        problems.extend(_pin_plan_problems(plan))
+
+    planes = load_planes()
+    artifacts = gateway.ArtifactGateway(DIST, "verify-current", planes)
+    candidate_state = {}
+    expected_dist = set()
+    current_versions = {}
+    for edition_id in edition_ids:
+        edition_model, html, lock = derive(edition_id, "candidate")
+        name = "candidate_" + edition_model.edition["artifactName"]
+        try:
+            stored = artifacts.read("candidate", name)
+        except (OSError, gateway.GatewayError) as exc:
+            problems.append("%s current candidate is unavailable: %s" %
+                            (edition_id, exc))
+        else:
+            if stored != html:
+                problems.append("%s stored candidate bytes are stale"
+                                % edition_id)
+        expected_dist.add(name)
+        candidate_state[edition_id] = {
+            "version": edition_model.edition["claimSetVersion"],
+            "candidate": name,
+            "candidateDigest": canon.bytes_digest(html),
+            "lockDigest": lock["lockDigest"],
+        }
+        current_versions[edition_model.edition["strategyPrefix"]] = \
+            edition_model.edition["claimSetVersion"]
+
+    problems.extend(_classified_navigator_source_problems(
+        content, edition_ids))
+    problems.extend(_live_version_problems(content, current_versions))
+    problems.extend(_git_whitespace_problems())
+    if problems:
+        raise RuntimeError("; ".join(problems))
+
+    state = _current_bundle_plan_state("verify-current")
+    cfg = state["config"]
+    if cfg["editions"] != list(edition_ids):
+        raise RuntimeError(
+            "bundle edition identities changed during verification")
+    if state["proposed"] != cfg:
+        raise RuntimeError(
+            "bundle config is stale; apply the exact bundle-plan proposal")
+    for edition_id, binding in state["bindings"].items():
+        candidate = candidate_state[edition_id]
+        if (binding["sealedDigest"], binding["lockDigest"]) != (
+                candidate["candidateDigest"], candidate["lockDigest"]):
+            raise RuntimeError(
+                "%s bundle binding changed during verification" % edition_id)
+
+    plan = bundlezip.resolve_bundle_members(
+        cfg, state["releaseRecords"], state["qaRecords"],
+        state["attestations"], state["artifactGateway"].read,
+        state["manifestBytes"], state["manifestWording"],
+        approval_evidence_problems, state["attestationPolicy"],
+        state["currentAttestationSides"],
+        expected_edition_count=DELIVERY_EDITION_COUNT,
+        acceptance_context_by_edition=state["acceptanceContexts"],
+        qa_authorization_context_by_edition=
+            state["qaAuthorizationContexts"])
+    expected_zip = bundlezip.build_zip(
+        plan["members"], cfg["declaredTimestamp"])
+    stored_zip = state["artifactGateway"].read("bundle", cfg["name"])
+    if stored_zip != expected_zip or \
+            bundlezip.read_zip_members(stored_zip) != plan["members"]:
+        raise RuntimeError("stored bundle is not the deterministic current ZIP")
+    bundle_digest = canon.bytes_digest(stored_zip)
+    checksum_name = cfg["name"] + ".sha256"
+    checksum = state["artifactGateway"].read(
+        "bundle-checksum", checksum_name)
+    bundlezip.verify_detached_checksum(
+        checksum, cfg["name"], bundle_digest)
+    manifest_member = next(
+        member for member in cfg["members"]
+        if member["kind"] == "bundle-manifest")
+    if state["artifactGateway"].read(
+            "bundle-manifest", manifest_member["name"]) != \
+            state["manifestBytes"]:
+        raise RuntimeError("stored bundle manifest bytes are stale")
+
+    bundle_records = state["recordsGateway"].read_all("bundle-record")
+    bundle_receipt_context = release_mod.combine_acceptance_contexts(
+        state["acceptanceContexts"], cfg["editions"])
+    current_bundle_records = [
+        envelope for envelope in bundle_records
+        if not bundlezip.bundle_record_problems(
+            envelope["record"], cfg, bundle_digest,
+            state["content"].read_log[BUNDLE_CONFIG],
+            expected_edition_count=DELIVERY_EDITION_COUNT,
+            current_acceptance_context=bundle_receipt_context)]
+    if not current_bundle_records:
+        raise RuntimeError("no current fully authorized bundle record")
+
+    expected_dist.update(member["name"] for member in cfg["members"])
+    expected_dist.update((cfg["name"], checksum_name))
+    actual_dist, inventory_problems = _flat_inventory(DIST, "dist")
+    inventory_problems.extend(_exact_inventory_problems(
+        actual_dist, expected_dist, "dist"))
+    records_by_kind = {
+        "attestation": state["attestations"],
+        "qa-record": state["qaRecords"],
+        "release-record": state["releaseRecords"],
+        "bundle-record": bundle_records,
+    }
+    inventory_problems.extend(_record_inventory_problems(records_by_kind))
+    if inventory_problems:
+        raise RuntimeError("; ".join(inventory_problems))
+
+    test_result = _run_full_test_suite() if run_tests else "not requested"
+    return {
+        "status": "current",
+        "releaseProfile": cfg["releaseProfile"],
+        "editions": candidate_state,
+        "bundle": {
+            "name": cfg["name"],
+            "digest": bundle_digest,
+            "record": min(current_bundle_records,
+                          key=_approval_selection_key)["digest"],
+        },
+        "checks": {
+            "pinPlans": "current",
+            "liveVersions": "current-only",
+            "navigatorSources": "classified",
+            "distInventory": "exact",
+            "recordInventory": "canonical",
+            "deterministicBundle": "exact",
+            "softwareTests": test_result,
+        },
+    }
+
+
+def cmd_verify_current(argv):
+    try:
+        report = verify_current_state(run_tests=True)
+    except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
+            release_mod.AcceptanceError, OSError, RuntimeError,
+            SystemExit, KeyError, TypeError, ValueError) as exc:
+        raise SystemExit("verify-current refused: %s" % exc)
+    print(canon.canonical_json(report).decode("utf-8"))
 
 
 def cmd_status(argv):
@@ -1786,14 +2341,15 @@ def main(argv):
     argv = [a for a in argv if a != "--private-runner"]
     if not argv:
         raise SystemExit(
-            "usage: build.py preview|candidate|migrate|record-qa|release "
+            "usage: build.py preview|candidate|migrate|pin-plan|record-qa|release "
             "<edition> | attest <type> [edition] | bundle-plan | bundle | "
-            "status")
+            "status | verify-current")
     cmd, rest = argv[0], argv[1:]
     single_edition = {
         "preview": cmd_preview,
         "candidate": cmd_candidate,
         "migrate": cmd_migrate,
+        "pin-plan": cmd_pin_plan,
     }
     if cmd in single_edition:
         if len(rest) != 1 or rest[0].startswith("--"):
@@ -1821,6 +2377,10 @@ def main(argv):
         if rest:
             raise SystemExit("usage: build.py status")
         cmd_status(rest)
+    elif cmd == "verify-current":
+        if rest:
+            raise SystemExit("usage: build.py verify-current")
+        cmd_verify_current(rest)
     elif cmd == "propose-reuse":
         raise SystemExit("propose-reuse is deferred (TDD §10.7)")
     else:

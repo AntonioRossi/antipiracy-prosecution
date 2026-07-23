@@ -11,16 +11,16 @@
  "gates": {
   "inventoryVersion": "1",
   "corpusId": "na-claims",
-  "profileDigest": "sha256/c1:9f9b80d2b666e063f5d8bb165ba25b0d60c2c72f848bd0abd98b458e9e84c38a",
+  "profileDigest": "sha256/c1:f44d0e222fa78a961ed4dbd15a0237fccebbe498878bebc82bb574cd8bb8a09c",
   "gates": [
    {
     "gateId": "fx-gate-target",
-    "code": "example2-priority",
+    "code": "example2-resynchronization",
     "requiredScope": "target",
     "requirement": "mandatory",
     "source": {
-     "block": "S007",
-     "textHash": "sha256/c1:3880ad8f845fb1f44b35fb6bca7953cb057a5c065646a36cf40a0e69a8c29c1d"
+     "block": "S012",
+     "textHash": "sha256/c1:fa2830603f8cf2022308a585d48b4b12ae1849213b04d55bf653dcef75170bfb"
     },
     "appliesTo": {
      "fragments": [
@@ -29,8 +29,8 @@
        "hash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c"
       },
       {
-       "id": "c16u6",
-       "hash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c"
+       "id": "c20u0",
+       "hash": "sha256/c1:b6aa873bbcaa47b1a98d0e9c6a478014c0c2b037cc0f836ed97a4f3291f2e1ea"
       }
      ],
      "cardinality": {
@@ -40,18 +40,18 @@
    },
    {
     "gateId": "fx-gate-claim",
-    "code": "combined-example",
+    "code": "production-relationship",
     "requiredScope": "claim",
     "requirement": "mandatory",
     "source": {
-     "block": "S020",
-     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+     "block": "S011",
+     "textHash": "sha256/c1:eccf39ac71a4f9c9ffa633cc1c1ba662b6bd81475633ccd6374d252dc950b95c"
     },
     "appliesTo": {
      "claims": [
       {
        "claim": 9,
-       "claimHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4"
+       "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60"
       }
      ]
     }
@@ -71,8 +71,8 @@
      "id": "c9"
     },
     "disposition": "carried-at-required-scope",
-    "gateEntryHash": "sha256/c1:edaf27d5e8d68bbda3e7bade2cedf53c658dd3a3ca850ecca0d9a84f02861c2c",
-    "subjectHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+    "gateEntryHash": "sha256/c1:040e9a25ad8892f528ac6583e542bef8de2da4eb567045e475fb7b7937f3f5c7",
+    "subjectHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
     "identity": {
      "binding": {
       "fragmentCorpus": "na-claims",
@@ -87,7 +87,7 @@
       "id": "c9"
      }
     },
-    "dependencyChainHash": "sha256/c1:4c7121f0698e060614317c029b704f0be338d8cd9bfd8a0069574e5000a256a9"
+    "dependencyChainHash": "sha256/c1:06697b7c9b15eada726449edc8eab3a6ed72c856f9af5796462c3104c3e7553b"
    },
    "disposition": {
     "gateId": "fx-gate-claim",
@@ -96,15 +96,15 @@
      "id": "c9"
     },
     "disposition": "carried-at-required-scope",
-    "gateEntryHash": "sha256/c1:edaf27d5e8d68bbda3e7bade2cedf53c658dd3a3ca850ecca0d9a84f02861c2c",
-    "subjectHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+    "gateEntryHash": "sha256/c1:040e9a25ad8892f528ac6583e542bef8de2da4eb567045e475fb7b7937f3f5c7",
+    "subjectHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
      "by": "fixture-generator",
      "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:1231c61fc236b838136423474a6497afe6ab796c3eb7b753ac93d98670504026"
+     "contentHash": "sha256/c1:28af26b077c0b178bf29aa5a699a2b3e8e13ff903d89bb60d73a8138748db670"
     }
    }
   },
@@ -120,7 +120,7 @@
      "id": "c2u0"
     },
     "disposition": "carried-at-required-scope",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
     "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
     "identity": {
      "binding": {
@@ -145,7 +145,7 @@
      "id": "c2u0"
     },
     "disposition": "carried-at-required-scope",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
     "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
@@ -153,7 +153,7 @@
      "by": "fixture-generator",
      "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:7e87898ad6e2ad8031f9514ff37749b3987c996d76d33e0cf3377849422884cf"
+     "contentHash": "sha256/c1:bbf4c41b4cfed415cda5c7272ca435088c5f192f486ec3e937b2deeab4db3a43"
     }
    }
   },
@@ -166,11 +166,11 @@
     "gateId": "fx-gate-target",
     "subject": {
      "kind": "fragment",
-     "id": "c16u6"
+     "id": "c20u0"
     },
     "disposition": "carried-at-fragment-fallback",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
-    "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
+    "subjectHash": "sha256/c1:b6aa873bbcaa47b1a98d0e9c6a478014c0c2b037cc0f836ed97a4f3291f2e1ea",
     "identity": {
      "binding": {
       "fragmentCorpus": "na-claims",
@@ -182,27 +182,27 @@
      "gateId": "fx-gate-target",
      "subject": {
       "kind": "fragment",
-      "id": "c16u6"
+      "id": "c20u0"
      }
     },
-    "dependencyChainHash": "sha256/c1:c364aeaeb16a724fbcb1f880e4d34558352d16c5befabe52a80a0fedd416e35a"
+    "dependencyChainHash": "sha256/c1:a4cb2d6328ffe213bb8c3478ac807ddc2e5bd27d22399a6d46803949aff81cad"
    },
    "disposition": {
     "gateId": "fx-gate-target",
     "subject": {
      "kind": "fragment",
-     "id": "c16u6"
+     "id": "c20u0"
     },
     "disposition": "carried-at-fragment-fallback",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
-    "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
+    "subjectHash": "sha256/c1:b6aa873bbcaa47b1a98d0e9c6a478014c0c2b037cc0f836ed97a4f3291f2e1ea",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
      "by": "fixture-generator",
      "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:a2082b90eedf7b119cd0b8ec9b3e7b94b5c92a8c70867fa26cbbcca78519d3b7"
+     "contentHash": "sha256/c1:aff8c08ffb0ede15db35a549569ada59fb00413020e358fa42f1d2add5718ca4"
     }
    }
   },
@@ -215,11 +215,11 @@
     "gateId": "fx-gate-target",
     "subject": {
      "kind": "fragment",
-     "id": "c16u6"
+     "id": "c20u0"
     },
     "disposition": "no-target-recorded",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
-    "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
+    "subjectHash": "sha256/c1:b6aa873bbcaa47b1a98d0e9c6a478014c0c2b037cc0f836ed97a4f3291f2e1ea",
     "identity": {
      "binding": {
       "fragmentCorpus": "na-claims",
@@ -231,27 +231,27 @@
      "gateId": "fx-gate-target",
      "subject": {
       "kind": "fragment",
-      "id": "c16u6"
+      "id": "c20u0"
      }
     },
-    "dependencyChainHash": "sha256/c1:c364aeaeb16a724fbcb1f880e4d34558352d16c5befabe52a80a0fedd416e35a"
+    "dependencyChainHash": "sha256/c1:a4cb2d6328ffe213bb8c3478ac807ddc2e5bd27d22399a6d46803949aff81cad"
    },
    "disposition": {
     "gateId": "fx-gate-target",
     "subject": {
      "kind": "fragment",
-     "id": "c16u6"
+     "id": "c20u0"
     },
     "disposition": "no-target-recorded",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
-    "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
+    "subjectHash": "sha256/c1:b6aa873bbcaa47b1a98d0e9c6a478014c0c2b037cc0f836ed97a4f3291f2e1ea",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
      "by": "fixture-generator",
      "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:72422659f6f06bd11adbbdb6f8609579028d0760b5eeb1cf59ae7be4b8333f1f"
+     "contentHash": "sha256/c1:75c2cbaca48de2cf71dd54bff123de733e5bc0ea45fec9fa429b0b5bd4f8bf93"
     }
    }
   },
@@ -267,7 +267,7 @@
      "id": "c2u0"
     },
     "disposition": "no-target-recorded",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
     "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
     "identity": {
      "binding": {
@@ -292,7 +292,7 @@
      "id": "c2u0"
     },
     "disposition": "no-target-recorded",
-    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "gateEntryHash": "sha256/c1:1b1dc06d9047857d53ed4dafd630de51b7e887e4c433774aac7a48a4588fcf93",
     "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
@@ -300,7 +300,7 @@
      "by": "fixture-generator",
      "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:21c35a4e05658c28d4bda76b0a7b8b03b2fb6c83d629167e17693499c8ea310d"
+     "contentHash": "sha256/c1:ceb2c7e5d511524262cdfa36baabebdbabca42fd676d745d750efe2add8a0bee"
     }
    }
   }

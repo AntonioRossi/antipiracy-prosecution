@@ -8,9 +8,9 @@ owning reviewed object) or a new ``pending`` proposal entry. Semantic
 content and review state are never touched by re-anchoring — locators are
 outside the review projection.
 
-A canonVersion mismatch on the relation binding is ordinary staleness
-(TDD §8.2) surfacing as ``stale / unclassified`` on every owner: no digest
-comparison is meaningful across canon versions.
+A canonVersion mismatch is rejected by the model before migration begins.
+Cross-canon digest comparison and compatibility loading are intentionally
+unrepresentable; the relation must be re-authored under the current canon law.
 """
 
 import copy
@@ -188,12 +188,6 @@ def migrate_relation(m, log):
     """Apply the case table to the relation set in place. Returns log of
     (action, owner, detail) tuples."""
     rel = m.relation
-
-    if rel.get("binding", {}).get("canonVersion") != canon.CANON_VERSION:
-        # no digest comparison is meaningful across canon versions
-        for _, key, fields, _ in m.iter_owners(with_projection=False):
-            _stale(fields, "unclassified", log, key, force=True)
-        return log
 
     def retarget(owner, key, targets):
         snapshot = copy.deepcopy(list(targets))

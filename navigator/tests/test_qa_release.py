@@ -1731,11 +1731,18 @@ class TestQaInputLock(unittest.TestCase):
                 },
             },
         }
+        registry_path = "qa/registry.json"
+        registry_digest = canon.bytes_digest(
+            canon.canonical_json({"registryVersion": "1",
+                                  "corpora": corpora}))
+        qa_registry = SimpleNamespace(
+            corpora=corpora,
+            gw=SimpleNamespace(read_log={registry_path: registry_digest}))
         return SimpleNamespace(
             gw=gateway.ContentGateway(root),
-            edition={"qaSources": {
+            edition={"qaRegistry": registry_path, "qaSources": {
                 "priorityMap": "qa-priority", "crosswalk": None}},
-            registry=SimpleNamespace(corpora=corpora),
+            qa_registry=lambda: qa_registry,
         )
 
     def test_lock_reads_all_pins_and_binds_candidate(self):

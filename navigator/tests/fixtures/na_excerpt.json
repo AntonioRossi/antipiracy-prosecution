@@ -8,22 +8,60 @@
  "claimGates": {
   "c9": [
    {
-    "gateId": "na-gate-combined-example",
+    "gateId": "na-gate-production-relationship",
     "type": "source-gate",
-    "code": "combined-example",
-    "claimHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+    "code": "production-relationship",
+    "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
      "operatorKind": "model",
-     "date": "2026-07-22",
-     "contentHash": "sha256/c1:5e439921aa05c0434bdcfa272f1802cd7aad9f6d9579217cc0799563d36e6472"
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:64e414df08839fefab736a47a787129c28458f10c08b90282efdca5a4637460b"
     },
     "source": {
      "corpus": "na-claims",
-     "block": "S020",
-     "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+     "block": "S011",
+     "textHash": "sha256/c1:eccf39ac71a4f9c9ffa633cc1c1ba662b6bd81475633ccd6374d252dc950b95c"
+    }
+   },
+   {
+    "gateId": "na-gate-distribution-integration",
+    "type": "source-gate",
+    "code": "distribution-integration",
+    "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:baf607cc2d25b18ae586af5afaa7f2991cd0cbc3b3d6c9c5e22133372a778700"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S013",
+     "textHash": "sha256/c1:0149435b226b49bc2b6c4232f42e15db3cf3b7ffbe5404f9d5d614191b02af18"
+    }
+   },
+   {
+    "gateId": "na-gate-per-filing-support",
+    "type": "source-gate",
+    "code": "per-filing-support",
+    "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
+    "reviewState": "internally-reviewed",
+    "migrationState": "current",
+    "review": {
+     "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+     "operatorKind": "model",
+     "date": "2026-07-23",
+     "contentHash": "sha256/c1:c0b04e7961a0b742c26db15bdb037fd52216308e04a5c70e04e2e980be4e2779"
+    },
+    "source": {
+     "corpus": "na-claims",
+     "block": "S018",
+     "textHash": "sha256/c1:030e3cc3431b6f194219a99242a86a241374a7696674c1ac0099e966084bcf7f"
     }
    }
   ]
@@ -31,15 +69,6 @@
  "fragments": {
   "c9u6": {
    "status": "mapped",
-   "reviewState": "internally-reviewed",
-   "migrationState": "current",
-   "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-    "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:cbb9d9abae402224849d33304e4bd7f5942dbdcb2e9b48114e4d03fa7e0b4463"
-   },
-   "fragmentTextHash": "sha256/c1:19c65fd607af3c80cf5d3269c2074b0a40214c118e94a9a0998f0ffcb9d6b05a",
    "targets": [
     {
      "block": "S081",
@@ -66,93 +95,82 @@
      "note": "PCT claim 11: manifest generation by transcoding components"
     }
    ],
-   "phrases": [
-    {
-     "id": "c9u6p1",
-     "text": "camera-cut timing pattern",
-     "occurrence": 1,
-     "status": "mapped",
-     "reviewState": "internally-reviewed",
-     "migrationState": "current",
-     "review": {
-      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
-      "operatorKind": "model",
-      "date": "2026-07-22",
-      "contentHash": "sha256/c1:b3b44fb1dd6c0ccc16ba3002fdaa754339535ec0469bf554e3aed2bb94d99936"
-     },
-     "targets": [
-      {
-       "block": "S064",
-       "textHash": "sha256/c1:0e4c3061bf3c5b7207271370ba1cb3d5160782d34cb7cd2080dc3851106c4ff7",
-       "role": "specific",
-       "note": "Timing of camera cuts altered per the structured list acts as the distinguishing fingerprint",
-       "caution": {
-        "type": "generalization-note",
-        "code": "beyond-literal-example"
-       }
-      }
-     ]
-    }
-   ]
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:fdc4a751de27ac0cbe90b8599eb2e2f3daa7c89428af47d9599b9f866d47697c"
+   },
+   "fragmentTextHash": "sha256/c1:9de844a2cc10a648cb6732903a160149b23581188bba546d3baa0c4015d64a7b"
   },
-  "c16u6": {
+  "c20u0": {
    "status": "counsel-review-required",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:11f9c40a7b162ffc25c9b6b64c9aae47ecf418283715be1a5a5097205e737212"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:f09ebdcdf01c5558b9de150347ea5a9fa8a84744bf64275e20c505c3432c3786"
    },
-   "fragmentTextHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
-   "caution": {
-    "gateId": "na-gate-detection-support",
-    "type": "source-gate",
-    "code": "detection-support",
-    "source": {
-     "corpus": "na-claims",
-     "block": "S025",
-     "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
-    }
-   }
+   "fragmentTextHash": "sha256/c1:b6aa873bbcaa47b1a98d0e9c6a478014c0c2b037cc0f836ed97a4f3291f2e1ea"
   }
  },
  "dispositions": [
   {
-   "gateId": "na-gate-combined-example",
+   "gateId": "na-gate-production-relationship",
    "subject": {
     "kind": "claim",
     "id": "c9"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:93523222e4a44e4f44dc1369eb544a19cd89361d114223e20ef2337e74b5ecd7",
-   "subjectHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+   "gateEntryHash": "sha256/c1:00f2f71d302b11f40cc512e09e37c32321033272574d607db27cfaca568e2254",
+   "subjectHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:35ce8ef736a811b6650bb7387bc4caff1ec83cd18d1816e58dc802d0a2d8c313"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:08482365db9370974cd2e700724b9ad9350197dc2e93b97977d96f88bf9b90a1"
    }
   },
   {
-   "gateId": "na-gate-detection-support",
+   "gateId": "na-gate-distribution-integration",
    "subject": {
-    "kind": "fragment",
-    "id": "c16u6"
+    "kind": "claim",
+    "id": "c9"
    },
    "disposition": "carried-at-required-scope",
-   "gateEntryHash": "sha256/c1:8d3b535b2ef3d11a42233b1b6ca504b5901eb1354cea0b047bab5ee8e7e26e2d",
-   "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+   "gateEntryHash": "sha256/c1:2aa25fb187fdd84844cc423ed2266cdd70e55cd2b8322baffbb5e07b2be9141b",
+   "subjectHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
     "operatorKind": "model",
-    "date": "2026-07-22",
-    "contentHash": "sha256/c1:25423c3217050f412e2d1836d03ff6bd928ab3eaec94b27023f4da05140fff7f"
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:af65d50816f8f5dffb2518018a452b638386e9bf0098e265ecc97550b257369b"
+   }
+  },
+  {
+   "gateId": "na-gate-per-filing-support",
+   "subject": {
+    "kind": "claim",
+    "id": "c9"
+   },
+   "disposition": "carried-at-required-scope",
+   "gateEntryHash": "sha256/c1:96e5a9dfaf50ca514928b172261a5b0782581eec1e8995db7585ce7aeeec5daa",
+   "subjectHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60",
+   "reviewState": "internally-reviewed",
+   "migrationState": "current",
+   "review": {
+    "by": "codex:gpt-5.6:019f8e90-cb24-7e33-a61b-5d867ebfa690",
+    "operatorKind": "model",
+    "date": "2026-07-23",
+    "contentHash": "sha256/c1:98c89c599cd5ad5c5a86f2fb2cd1089586a89ead14763c24d7dcf435476818f8"
    }
   }
  ]

@@ -36,6 +36,44 @@ def sync(doc, real):
     return real
 
 
+def _abbreviate(value):
+    """Return a reviewable documentation projection with short digests."""
+    if isinstance(value, str) and DIGEST_RE.match(value):
+        return value[:14] + "…"
+    if isinstance(value, dict):
+        return {key: _abbreviate(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_abbreviate(item) for item in value]
+    return value
+
+
+def relation_example(fixture):
+    """Project a compact example from a current relation excerpt.
+
+    Owners and optional fields may legitimately disappear during a structural
+    claim migration.  Rebuilding the small example from the selected fixture
+    avoids retaining an orphan owner merely because an older documentation
+    block happened to name it.
+    """
+    projected = {
+        "binding": fixture["binding"],
+        "claimGates": {
+            key: values[:1]
+            for key, values in fixture["claimGates"].items()
+        },
+        "fragments": {},
+        "dispositions": fixture["dispositions"][:2],
+    }
+    for key, fragment in fixture["fragments"].items():
+        owner = dict(fragment)
+        if "targets" in owner:
+            owner["targets"] = owner["targets"][:2]
+        if "phrases" in owner:
+            owner["phrases"] = owner["phrases"][:1]
+        projected["fragments"][key] = owner
+    return _abbreviate(projected)
+
+
 def main():
     with open(TDD, encoding="utf-8") as fh:
         s = fh.read()
@@ -46,7 +84,10 @@ def main():
     for block, fxname in zip(blocks, ("na_excerpt.json", "af_excerpt.json")):
         with open(os.path.join(FIX, fxname), "rb") as fh:
             fx = canon.parse_json(fh.read())
-        synced = sync(canon.parse_json(block), fx)
+        parsed = canon.parse_json(block)
+        synced = relation_example(fx) if isinstance(fx, dict) and \
+            set(("binding", "claimGates", "fragments", "dispositions")) \
+            <= set(fx) else sync(parsed, fx)
         s = s.replace(block,
                       json.dumps(synced, indent=2, ensure_ascii=False) + "\n", 1)
     with open(TDD, "w", encoding="utf-8") as fh:

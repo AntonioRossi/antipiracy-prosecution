@@ -4,7 +4,7 @@
 >
 > Repository status date: **23 July 2026**. This corpus supports ordinary US national-stage prosecution under 35 U.S.C. § 371 of PCT/IB2025/051755 (published as WO 2025/181623 A1, with a priority claim to US 63/557,868). The § 119(e) benefit claim remains subject to official-record and claim-specific support verification. No document in this repository is counsel-approved or filing-ready; retained US counsel must confirm every legal conclusion, claim wording, and filing decision. Directory names and draft labels do not establish privilege or work-product protection.
 
-This repository is a document corpus, not software. There is no build or test suite; integrity checks are listed under [Validation](#validation). Contribution, naming, and live-status conventions are in [`AGENTS.md`](AGENTS.md).
+This repository combines the prosecution document corpus with the local, confidentiality-controlled HTML5 claims navigator that consumes its pinned current claim and PCT sources. Navigator builds and tests run only in this checkout or an approved private runner; integrity checks are listed under [Validation](#validation). Contribution, naming, and hard live-status conventions are in [`AGENTS.md`](AGENTS.md).
 
 ## Purpose
 
@@ -19,6 +19,8 @@ This corpus supports the prosecution of the invention with one organizing discip
 | [`PPA2/`](PPA2/) | Provisional 63/557,868 filing record and assignment papers |
 | [`ITA/`](ITA/) | Related Italian filing record |
 | [`office action response/`](office%20action%20response/) | Prepared PCT office-action response drafts |
+| [`navigator/`](navigator/) | Edition-blind HTML5 navigator source, closed schemas, reviewed NA/AF mappings, verification records, tests, runbook, and committed current artifacts |
+| [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) | Normative navigator contract; controls over the non-normative runbook |
 
 ## Artifact taxonomy
 
@@ -38,6 +40,7 @@ Two cross-cutting classifiers apply to every artifact: the strategy ID (`NA`, `A
 | Review aid | `US/prior-art/markdown/`, `US/prior-art/searchable/` | Transcription and OCR convenience copies; never authoritative over the source PDF |
 | Router / README | `README.md` per directory | Live index and routing for its directory |
 | Controlled vocabulary | `GLOSSARY.md` (root) | Current operative meanings of identifiers and terms, each pointing to its controlling document |
+| Navigator artifact | `navigator/dist/AA11393US-<edition>-claims-spec-navigator_<version>.html` | Deterministic current-edition counsel-review navigation aid with detached checksum and exact-side release evidence |
 
 ## Claim-set generation workflow
 
@@ -52,9 +55,12 @@ The NA and AF-CONT claim sets (and any successor claim set) are produced and mai
 
 ## Validation
 
-After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Document-integrity checks:
+After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. Current-state, software, generated-product, and document-integrity checks are:
 
 ```sh
+python3 navigator/build.py verify-current
+python3 navigator/tools/pre-commit-check.sh
+python3 -m unittest discover -s navigator/tests -p 'test_*.py'
 git diff --check
 git diff --name-only -z -- '*.md' | xargs -0 -n 1 pandoc --from=gfm --to=html -o /dev/null
 cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256
@@ -64,4 +70,4 @@ Regenerate prior-art transcriptions only deliberately: `cd US/prior-art && pytho
 
 ## Status discipline
 
-Package documents are live-state artifacts: state only the current version, status, conclusion, supporting evidence, open action, owner, deadline, or re-evaluation trigger. Git is the sole drafting history; do not add revision records, dated maintenance histories, or wording-evolution narratives. Retain legally operative filing, publication, priority, and prosecution facts and source provenance as current evidence. Every strategy document states its strategy ID, version, status, and review date.
+Package documents and live navigator configuration are live-state artifacts: state only the current version, status, conclusion, supporting evidence, open action, owner, deadline, trigger, schema, or content binding. Git is the sole drafting and implementation history; do not add revision records, dated maintenance histories, wording-evolution narratives, compatibility aliases, or implicit upgrades. Digest-addressed same-schema records may persist as append-only verification evidence but authorize nothing unless every current exact-side binding matches. Retain legally operative filing, publication, priority, and prosecution facts and source provenance as current evidence. Every strategy document states its strategy ID, version, status, and review date.

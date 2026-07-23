@@ -20,7 +20,8 @@ from html.parser import HTMLParser
 from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from lib import authority, bundlezip, canon, gateway, model, projections  # noqa: E402
+from lib import (authority, bundlezip, canon, gateway, model, projections,
+                 recordprovenance)  # noqa: E402
 from lib import release as release_mod, render, schema_validate, validate  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -1192,39 +1193,50 @@ class Acceptance(unittest.TestCase):
                 if item["expect"] == "valid" and
                 item["disposition"]["gateId"] == fixture_gate["gateId"]
             ]
+            mapped_subject = next(
+                item["disposition"]["subject"]["id"]
+                for item in valid_target_cases
+                if item["evidence"] == "mapped")
+            no_candidate_subject = next(
+                item["disposition"]["subject"]["id"]
+                for item in valid_target_cases
+                if item["evidence"] == "counsel-review-required")
             carried = copy.deepcopy(next(
                 item["disposition"] for item in valid_target_cases
-                if item["disposition"]["subject"]["id"] == "c2u0"))
+                if item["disposition"]["subject"]["id"] == mapped_subject))
             no_target = copy.deepcopy(next(
                 item["disposition"] for item in valid_target_cases
-                if item["disposition"]["subject"]["id"] == "c16u6" and
+                if item["disposition"]["subject"]["id"] ==
+                no_candidate_subject and
                 item["disposition"]["disposition"] == "no-target-recorded"))
             additions = ([selected, no_target]
-                         if selected["subject"]["id"] == "c2u0"
+                         if selected["subject"]["id"] == mapped_subject
                          else [selected, carried])
 
+            displaced_gate = None
             if selected["disposition"] == \
                     "carried-at-fragment-fallback":
                 # The fixture fallback must occupy the fragment caution slot.
                 # Remove this one subject from its live fragment-scope gate,
                 # then re-pin and re-authorize every affected live disposition.
-                original_gate = next(
-                    gate for gate in synthetic.gates["gates"]
-                    if gate["gateId"] == "na-gate-detection-support")
-                original_gate["appliesTo"]["fragments"] = [
-                    item for item in
-                    original_gate["appliesTo"]["fragments"]
-                    if item["id"] != "c16u6"
-                ]
-                synthetic.relation["dispositions"] = [
-                    disposition for disposition in
-                    synthetic.relation["dispositions"]
-                    if not (
-                        disposition["gateId"] ==
-                        "na-gate-detection-support" and
-                        disposition["subject"]["id"] == "c16u6")
-                ]
-                fallback = synthetic.relation["fragments"]["c16u6"]
+                fallback = synthetic.relation["fragments"][
+                    no_candidate_subject]
+                displaced_gate = fallback.get("caution", {}).get("gateId")
+                if displaced_gate is not None:
+                    original_gate = synthetic.gates_by_id[displaced_gate]
+                    original_gate["appliesTo"]["fragments"] = [
+                        item for item in
+                        original_gate["appliesTo"]["fragments"]
+                        if item["id"] != no_candidate_subject
+                    ]
+                    synthetic.relation["dispositions"] = [
+                        disposition for disposition in
+                        synthetic.relation["dispositions"]
+                        if not (
+                            disposition["gateId"] == displaced_gate and
+                            disposition["subject"]["id"] ==
+                            no_candidate_subject)
+                    ]
                 fallback["caution"] = {
                     "gateId": fixture_gate["gateId"],
                     "type": "source-gate",
@@ -1238,22 +1250,23 @@ class Acceptance(unittest.TestCase):
                     gate["gateId"]: gate
                     for gate in synthetic.gates["gates"]
                 }
-                changed_gate_hash = synthetic.gate_entry_hash(
-                    "na-gate-detection-support")
-                for disposition in synthetic.relation["dispositions"]:
-                    if disposition["gateId"] == \
-                            "na-gate-detection-support":
-                        disposition["gateEntryHash"] = changed_gate_hash
+                if displaced_gate is not None:
+                    changed_gate_hash = synthetic.gate_entry_hash(
+                        displaced_gate)
+                    for disposition in synthetic.relation["dispositions"]:
+                        if disposition["gateId"] == displaced_gate:
+                            disposition["gateEntryHash"] = changed_gate_hash
                 authorize(
                     fallback,
-                    synthetic.unit_projection("c16u6", fallback))
+                    synthetic.unit_projection(no_candidate_subject, fallback))
 
         synthetic.relation["dispositions"].extend(additions)
         for disposition in synthetic.relation["dispositions"]:
             changed_live_gate = (
                 selected["disposition"] ==
                 "carried-at-fragment-fallback" and
-                disposition["gateId"] == "na-gate-detection-support")
+                displaced_gate is not None and
+                disposition["gateId"] == displaced_gate)
             if disposition["gateId"].startswith("fx-") or changed_live_gate:
                 authorize(
                     disposition,
@@ -1844,7 +1857,7 @@ class Acceptance(unittest.TestCase):
         matrix = matrix.split("\n\n")[0] + "\n"
         rows = re.findall(r"\| `([a-z-]+)`( \(deferred\))? \| (.*?) \| (.*?) \|\n",
                           matrix)
-        self.assertEqual(len(rows), 10)
+        self.assertEqual(len(rows), 11)
         for cmd, deferred, reads, writes in rows:
             self.assertIn(cmd, planes["commands"], cmd)
             command = planes["commands"][cmd]
@@ -1863,7 +1876,7 @@ class Acceptance(unittest.TestCase):
         proc = tdd[tdd.index("Normative update procedure"):]
         proc = proc[:proc.index("## 14.")]
         for cmd in ("candidate", "migrate", "record-qa", "release",
-                    "bundle-plan", "bundle"):
+                    "bundle-plan", "bundle", "verify-current"):
             self.assertIn(cmd, proc)
         self.assertIn("release-record",
                       planes["commands"]["release"]["writes"])
@@ -2274,7 +2287,7 @@ class Acceptance(unittest.TestCase):
             self.assertEqual((c22u0["migrationState"],
                               c22u0.get("migrationReason")),
                              ("stale", "target-removed"))
-        # ---- scenario 3: canonVersion mismatch -> unclassified, totally --
+        # ---- scenario 3: canonVersion mismatch fails before any write ----
         with tempfile.TemporaryDirectory() as tmp:
             self._migration_tree(tmp)
             from lib import migrate as migrate_mod
@@ -2287,19 +2300,78 @@ class Acceptance(unittest.TestCase):
             with self.assertRaises(model.ModelError):
                 model.EditionModel(
                     gateway.ContentGateway(tmp), edition_path)
+            with open(rpath, "rb") as fh:
+                before_relation_bytes = fh.read()
+            with open(os.path.join(tmp, gate_path), "rb") as fh:
+                before_gate_bytes = fh.read()
             child = subprocess.run(
                 [sys.executable, os.path.join(tmp, "navigator", "build.py"),
                  "migrate", "na", "--private-runner"],
                 cwd=tmp, capture_output=True, text=True, timeout=300)
-            self.assertEqual(child.returncode, 0, child.stderr)
-            self.assertIn("migrate na:", child.stdout)
-            m = model.EditionModel(
-                gateway.ContentGateway(tmp), edition_path,
-                allow_legacy_canon=True)
-            owners = list(m.iter_owners())
-            for _, _, fields, _ in owners:
-                self.assertEqual(fields["migrationState"], "stale")
-                self.assertEqual(fields["migrationReason"], "unclassified")
+            self.assertNotEqual(child.returncode, 0)
+            self.assertIn("invalid relation set", child.stderr)
+            with open(rpath, "rb") as fh:
+                self.assertEqual(fh.read(), before_relation_bytes)
+            with open(os.path.join(tmp, gate_path), "rb") as fh:
+                self.assertEqual(fh.read(), before_gate_bytes)
+
+    def test_ac07_hard_current_boundary(self):
+        import build as build_mod
+
+        # Obsolete primary-strategy versions fail, while the distinct
+        # continuation strategy namespace cannot be mistaken for AF.
+        with tempfile.TemporaryDirectory() as root:
+            os.makedirs(os.path.join(root, "docs"))
+            with open(os.path.join(root, "docs", "versions.md"), "w",
+                      encoding="utf-8") as fh:
+                fh.write(
+                    "NA-2026-07-22-v4 " + "AF-" + "2026-07-21-v5 "
+                    "AF-CONT-2026-07-20-v2\n")
+            content = gateway.ContentGateway(root)
+            with mock.patch.object(build_mod, "ROOT", root):
+                version_problems = build_mod._live_version_problems(
+                    content, {
+                        "NA": "NA-2026-07-22-v4",
+                        "AF": "AF-2026-07-22-v6",
+                    })
+        self.assertTrue(any("obsolete AF version" in problem
+                            for problem in version_problems),
+                        version_problems)
+        self.assertFalse(any("AF-CONT" in problem
+                             for problem in version_problems),
+                         version_problems)
+
+        inventory_problems = build_mod._exact_inventory_problems(
+            {"current", "orphan"}, {"current", "required"}, "dist")
+        self.assertTrue(any("orphan" in problem
+                            for problem in inventory_problems))
+        self.assertTrue(any("required" in problem
+                            for problem in inventory_problems))
+        self.assertTrue(recordprovenance.current_record_format_problems(
+            "release-record", {
+                "edition": EDITIONS[0], "sealed": "retired.html"}))
+
+        for edition in EDITIONS:
+            with self.subTest(edition=edition):
+                self.assertEqual(build_mod._pin_plan_problems(
+                    build_mod.current_pin_plan(edition)), [])
+
+        command = get_model(EDITIONS[0]).planes["commands"][
+            "verify-current"]
+        self.assertEqual(command["writes"], [])
+        self.assertEqual(set(command["reads"]), {
+            "content", "candidate", "sealed", "artifact-checksum",
+            "bundle", "bundle-manifest", "bundle-checksum", "qa-record",
+            "attestation", "release-record", "bundle-record",
+        })
+
+        # Full-repository and bundle acceptance runs select both editions;
+        # standalone releases select one and must not read the inactive side.
+        if len(EDITIONS) == build_mod.DELIVERY_EDITION_COUNT:
+            content = gateway.ContentGateway(ROOT)
+            self.assertEqual(
+                build_mod._classified_navigator_source_problems(
+                    content, build_mod.delivery_edition_ids()), [])
 
     def test_ac08_projections(self):
         for ed in EDITIONS:

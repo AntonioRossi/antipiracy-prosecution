@@ -72,17 +72,10 @@ def _claim_reference(prefix, number, strings):
 
 
 def _unit_label(unit, strings):
-    """Present a unit through the central microcopy registry.
-
-    ``Unit.label`` remains useful parser metadata, but it is not an approved
-    presentation surface.  The small fallback keeps renderer-focused fixtures
-    with lightweight stand-ins usable.
-    """
-    if hasattr(unit, "index"):
-        if unit.index == 0:
-            return strings["ui"]["preambleLabel"]
-        return microcopy(strings["ui"]["limitationLabel"], n=unit.index)
-    return unit.label
+    """Present a parsed unit through the central microcopy registry."""
+    if unit.index == 0:
+        return strings["ui"]["preambleLabel"]
+    return microcopy(strings["ui"]["limitationLabel"], n=unit.index)
 
 
 def _unit_context(prefix, claim_number, unit, strings):

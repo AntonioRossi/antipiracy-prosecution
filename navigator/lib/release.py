@@ -106,7 +106,7 @@ _EXECUTABLE_FLOOR_DIGESTS = {
     "support files":
         "sha256/c1:1921d431ddad8f569963232f3a8af70a4320233d250aacd97ead40c583fb6d69",
     "criterion enforcement":
-        "sha256/c1:a3d3ca6aeab609b91ee587c8a041531d566e273b225d7164b3a5ad971c92dd0b",
+        "sha256/c1:98358b743aade21520cbfc27782061f8166f1b245023075a275fbeef7a760e79",
     "release profiles":
         "sha256/c1:e24c7708bcd272b3fe53f9aa5bb9f76ba3b75937d1d1e9e6013f96bddafbda7f",
 }

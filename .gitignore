@@ -269,7 +269,7 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,visualstudiocode,python
 
 ### AA11393US claims navigator ###
-# The navigator tree is source plus committed build products (TDD §13 step 9);
+# The navigator tree is source plus committed current build products (TDD §13 step 13);
 # override the generic Python template patterns (lib/, dist/, build/) above.
 !navigator/lib/
 !navigator/lib/**
@@ -290,3 +290,7 @@ navigator/lib/**/__pycache__/
 # Generated navigator artifacts
 navigator/.build/
 navigator/tmp/
+
+# Browser-controller accessibility snapshots are transient diagnostics, not
+# registered navigator QA evidence or release inputs.
+.playwright-mcp/

@@ -2,19 +2,22 @@
 
 ## Project Structure & Module Organization
 
-This repository is a patent-prosecution document corpus maintained under the maximum-honest-defensibility discipline stated in the root `README.md` under "Purpose"; read every rule below against that purpose. `US/normal-allowance/` and `US/allowance-first/` contain the two claim strategies. Shared IDS, filing-control, and public-comment materials belong in `US/common/`; do not fork them into strategy directories. `US/prior-art/` stores canonical source PDFs, `markdown/` review transcriptions, `searchable/` OCR convenience copies, and `.pipeline/` conversion utilities. `PCT/`, `PPA2/`, and `ITA/` hold filing and prosecution records. Keep response drafts in their existing response directory.
+This repository is a patent-prosecution document corpus maintained under the maximum-honest-defensibility discipline stated in the root `README.md` under "Purpose"; read every rule below against that purpose. `US/normal-allowance/` and `US/allowance-first/` contain the two claim strategies. Shared IDS, filing-control, and public-comment materials belong in `US/common/`; do not fork them into strategy directories. `US/prior-art/` stores canonical source PDFs, `markdown/` review transcriptions, `searchable/` OCR convenience copies, and `.pipeline/` conversion utilities. `PCT/`, `PPA2/`, and `ITA/` hold filing and prosecution records. `navigator/` contains the edition-blind HTML5 navigator pipeline, closed schemas, reviewed mappings, verification records, tests, and committed current build products. Keep response drafts in their existing response directory.
 
 ## Build, Test, and Development Commands
 
-There is no software build or unit-test suite. Use document-integrity checks:
+Use the navigator's strict current-state and test gates together with the document-integrity checks:
 
 ```sh
+python3 navigator/build.py verify-current
+python3 navigator/tools/pre-commit-check.sh
+python3 -m unittest discover -s navigator/tests -p 'test_*.py'
 git diff --check
 git diff --name-only -z -- '*.md' | xargs -0 -n 1 pandoc --from=gfm --to=html -o /dev/null
 cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256
 ```
 
-These validate whitespace, changed Markdown rendering, and source checksums. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
+These validate the live navigator state, deterministic checked-in candidates, full software behavior, whitespace, changed Markdown rendering, and source checksums. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
 
 ## Documentation Style & Naming Conventions
 
@@ -24,11 +27,11 @@ Never edit canonical prior-art PDFs or silently treat OCR text as authoritative.
 
 ## Hard Live-Status-Only Requirement
 
-All authored package documents **must state only the current operative state**: conclusions, evidence, actions, owners, deadlines, and triggers. Never retain revision histories, maintenance logs, superseded wording, correction or activation narratives, commit narratives, or explanations of wording or score evolution. Git is the sole drafting history. Retain legally operative filing, publication, priority, and prosecution facts and source provenance only as current evidence.
+All authored package documents and live navigator configuration **must state only the current operative state**: conclusions, evidence, actions, owners, deadlines, triggers, active schemas, and active content versions. Never retain revision histories, maintenance logs, superseded wording, correction or activation narratives, commit narratives, explanations of wording or score evolution, compatibility aliases, or implicit upgrade paths. Git is the sole drafting and implementation history. Digest-addressed same-schema verification records may persist only as append-only evidence and cannot authorize content unless every current exact-side binding matches. Retain legally operative filing, publication, priority, and prosecution facts and source provenance only as current evidence.
 
 ## Testing Guidelines
 
-After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row. Re-score art when claim wording changes. Check quotations against the source PDF, especially OCR material. Confirm local links and render any changed complex table before review.
+After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row. Re-score art when claim wording changes. Check quotations against the source PDF, especially OCR material. Confirm local links and render any changed complex table before review. Navigator changes must leave zero stale or pending owners, pass the full test suite, and reproduce candidates byte-for-byte through the pre-commit check. Unsupported schema, canon, registry, or record formats must fail closed before writes; do not add backward-compatibility branches.
 
 ## Commit & Pull Request Guidelines
 

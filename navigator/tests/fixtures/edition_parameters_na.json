@@ -4,7 +4,7 @@
  "edition": {
   "editionConfig": "navigator/editions/na.json",
   "claimCorpus": "na-claims",
-  "claimSetVersion": "NA-2026-07-21-v2",
+  "claimSetVersion": "NA-2026-07-22-v4",
   "targetCorpus": "pct-disclosure",
   "authorityCorpus": "pct-pdf",
   "corpusRegistries": [
@@ -13,7 +13,7 @@
   ],
   "census": {
    "claims": 30,
-   "units": 68,
+   "units": 77,
    "perClaim": {
     "1": 7,
     "2": 1,
@@ -30,16 +30,16 @@
     "13": 6,
     "14": 1,
     "15": 1,
-    "16": 9,
+    "16": 7,
     "17": 1,
     "18": 1,
-    "19": 1,
+    "19": 5,
     "20": 1,
     "21": 1,
-    "22": 9,
+    "22": 14,
     "23": 1,
-    "24": 4,
-    "25": 1,
+    "24": 1,
+    "25": 6,
     "26": 1,
     "27": 1,
     "28": 1,
@@ -70,6 +70,6 @@
   "qaRegistry": "navigator/profiles/qa_na.json",
   "stringsResource": "navigator/profiles/strings_na.json",
   "forbiddenTerms": [],
-  "artifactName": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html"
+  "artifactName": "AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html"
  }
 }

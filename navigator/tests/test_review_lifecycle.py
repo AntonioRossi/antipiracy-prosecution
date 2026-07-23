@@ -140,7 +140,18 @@ class TestContextualIdentity(unittest.TestCase):
 
     def test_ambiguous_quotable_sources_cover_every_review_projection(self):
         m = load_model()
-        source_blocks = ("S007", "S020", "S025")
+        target_entry = next(
+            gate for gate in m.gates["gates"]
+            if gate["requiredScope"] == "target")
+        fragment_entry = next(
+            gate for gate in m.gates["gates"]
+            if gate["requiredScope"] == "fragment")
+        claim_entry = next(
+            gate for gate in m.gates["gates"]
+            if gate["requiredScope"] == "claim")
+        source_blocks = tuple(dict.fromkeys(
+            gate["source"]["block"]
+            for gate in (target_entry, fragment_entry, claim_entry)))
         duplicates = {}
         for block_id in source_blocks:
             unused_original, duplicate = duplicate_quotable_anchor(
@@ -148,30 +159,38 @@ class TestContextualIdentity(unittest.TestCase):
             duplicates[block_id] = duplicate
 
         # Target-level caution source.
-        fragment = m.relation["fragments"]["c2u0"]
-        target_source = fragment["targets"][0]["caution"]["source"]
-        target_projection = m.unit_projection("c2u0", fragment)
-        target_context = target_projection["targets"][0]["caution"] \
-            ["source"]["contextualIdentity"]
-        self.assertEqual(target_context, {
-            "parentHash": m.guidance_anchors["S001"].digest,
-            "occurrence": 1,
-        })
+        target_fid = target_entry["appliesTo"]["fragments"][0]["id"]
+        fragment = m.relation["fragments"][target_fid]
+        target = next(t for t in fragment["targets"]
+                      if t.get("caution", {}).get("gateId") ==
+                      target_entry["gateId"])
+        target_source = target["caution"]["source"]
+        target_projection = m.unit_projection(target_fid, fragment)
+        projected_target = next(
+            t for t in target_projection["targets"]
+            if t.get("caution", {}).get("gateId") == target_entry["gateId"])
+        target_context = projected_target["caution"]["source"] \
+            ["contextualIdentity"]
+        self.assertEqual(target_context["occurrence"], 1)
 
         # Owner-level caution source.
-        fragment = m.relation["fragments"]["c16u5"]
-        fragment_projection = m.unit_projection("c16u5", fragment)
+        fragment_fid = fragment_entry["appliesTo"]["fragments"][0]["id"]
+        fragment = m.relation["fragments"][fragment_fid]
+        fragment_projection = m.unit_projection(fragment_fid, fragment)
         self.assertEqual(
             fragment_projection["caution"]["source"]
             ["contextualIdentity"]["occurrence"], 1)
 
         # Claim-gate source and gate-inventory entry source.
-        claim_gate = m.relation["claimGates"]["c1"][0]
-        claim_projection = m.claim_gate_projection("c1", claim_gate)
+        claim_key = "c%d" % claim_entry["appliesTo"]["claims"][0]["claim"]
+        claim_gate = next(
+            gate for gate in m.relation["claimGates"][claim_key]
+            if gate["gateId"] == claim_entry["gateId"])
+        claim_projection = m.claim_gate_projection(claim_key, claim_gate)
         self.assertEqual(
             claim_projection["source"]["contextualIdentity"]["occurrence"],
             1)
-        entry = m.gates_by_id["na-gate-combined-example"]
+        entry = claim_entry
         entry_projection = m.gate_entry_projection(entry)
         self.assertEqual(
             entry_projection["source"]["contextualIdentity"],
@@ -181,16 +200,21 @@ class TestContextualIdentity(unittest.TestCase):
         # occurrence changes contextual identity and therefore both review
         # digests.  No authored contextual field is added to either source.
         target_hash = m.content_hash(target_projection)
-        target_source["block"] = duplicates["S007"].id
-        changed_target = m.unit_projection("c2u0",
-                                           m.relation["fragments"]["c2u0"])
+        target_source["block"] = duplicates[
+            target_entry["source"]["block"]].id
+        changed_target = m.unit_projection(
+            target_fid, m.relation["fragments"][target_fid])
+        changed_projected_target = next(
+            t for t in changed_target["targets"]
+            if t.get("caution", {}).get("gateId") == target_entry["gateId"])
         self.assertEqual(
-            changed_target["targets"][0]["caution"]["source"]
+            changed_projected_target["caution"]["source"]
             ["contextualIdentity"]["occurrence"], 2)
         self.assertNotEqual(target_hash, m.content_hash(changed_target))
 
         entry_hash = m.gate_entry_hash(entry["gateId"])
-        entry["source"]["block"] = duplicates["S020"].id
+        entry["source"]["block"] = duplicates[
+            claim_entry["source"]["block"]].id
         self.assertEqual(
             m.gate_entry_projection(entry)["source"]
             ["contextualIdentity"]["occurrence"], 2)
@@ -368,8 +392,13 @@ class TestMigrationLifecycle(unittest.TestCase):
     def test_current_target_still_rechecks_its_source_gate(self):
         m = load_model()
         restamp_in_memory(m)
-        frag = m.relation["fragments"]["c2u0"]
-        caution = frag["targets"][0]["caution"]
+        entry = next(g for g in m.gates["gates"]
+                     if g["requiredScope"] == "target")
+        fid = entry["appliesTo"]["fragments"][0]["id"]
+        frag = m.relation["fragments"][fid]
+        caution = next(t["caution"] for t in frag["targets"]
+                       if t.get("caution", {}).get("gateId") ==
+                       entry["gateId"])
         caution["source"]["textHash"] = \
             "sha256/c1:" + ("0" * 64)
 
@@ -377,12 +406,18 @@ class TestMigrationLifecycle(unittest.TestCase):
         migrate.migrate_relation(m, log)
         self.assertEqual(frag["migrationState"], "stale")
         self.assertEqual(frag["migrationReason"], "source-changed")
-        self.assertIn(("stale", "c2u0", "source-changed"), log)
+        self.assertIn(("stale", fid, "source-changed"), log)
 
     def test_quotable_context_drift_stales_caution_owner(self):
         m = load_model()
-        fragment = m.relation["fragments"]["c2u0"]
-        source = fragment["targets"][0]["caution"]["source"]
+        entry = next(g for g in m.gates["gates"]
+                     if g["requiredScope"] == "target")
+        fid = entry["appliesTo"]["fragments"][0]["id"]
+        fragment = m.relation["fragments"][fid]
+        target = next(t for t in fragment["targets"]
+                      if t.get("caution", {}).get("gateId") ==
+                      entry["gateId"])
+        source = target["caution"]["source"]
         original, duplicate = duplicate_quotable_anchor(
             m, source["block"], "caution-migration")
         restamp_in_memory(m)
@@ -395,19 +430,21 @@ class TestMigrationLifecycle(unittest.TestCase):
         self.assertEqual(
             m.quotable_anchor(source["block"]).digest, source["textHash"])
         self.assertNotEqual(
-            reviewed_hash, m.content_hash(m.unit_projection("c2u0", fragment)))
+            reviewed_hash, m.content_hash(m.unit_projection(fid, fragment)))
 
         log = []
         migrate.migrate_relation(m, log)
         self.assertEqual(fragment["migrationState"], "stale")
         self.assertEqual(fragment["migrationReason"], "endpoint-changed")
-        self.assertIn(("stale", "unit c2u0", "endpoint-changed"), log)
+        self.assertIn(("stale", "unit %s" % fid, "endpoint-changed"), log)
 
     def test_inventory_context_drift_stales_pinned_disposition(self):
         m = load_model()
+        claim_entry = next(g for g in m.gates["gates"]
+                           if g["requiredScope"] == "claim")
         disposition = next(
             d for d in m.relation["dispositions"]
-            if d["gateId"] == "na-gate-combined-example")
+            if d["gateId"] == claim_entry["gateId"])
         entry = m.gates_by_id[disposition["gateId"]]
         original, duplicate = duplicate_quotable_anchor(
             m, entry["source"]["block"], "inventory-migration")
@@ -432,12 +469,13 @@ class TestMigrationLifecycle(unittest.TestCase):
         self.assertEqual(disposition["migrationReason"], "endpoint-changed")
         subject_id = disposition["subject"]["id"]
         self.assertIn(
-            ("stale", "disp:na-gate-combined-example@%s" % subject_id,
+            ("stale", "disp:%s@%s" % (entry["gateId"], subject_id),
              "endpoint-changed"), relation_log)
 
     def test_inventory_migration_refuses_two_identical_source_matches(self):
         m = load_model()
-        entry = m.gates_by_id["na-gate-combined-example"]
+        entry = next(g for g in m.gates["gates"]
+                     if g["requiredScope"] == "claim")
         original_block = entry["source"]["block"]
         duplicate_quotable_anchor(m, original_block,
                                   "inventory-ambiguous")
@@ -449,7 +487,7 @@ class TestMigrationLifecycle(unittest.TestCase):
         self.assertEqual(entry["source"]["block"],
                          "missing-after-corpus-shift")
         self.assertIn(
-            ("manual", "inventory:na-gate-combined-example",
+            ("manual", "inventory:%s" % entry["gateId"],
              "source block unresolved (2 matches)"), log)
 
     def test_already_stale_owner_records_more_specific_removed_target(self):

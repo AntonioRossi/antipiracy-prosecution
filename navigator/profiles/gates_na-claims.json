@@ -1,17 +1,67 @@
 {
  "inventoryVersion": "1",
  "corpusId": "na-claims",
- "profileDigest": "sha256/c1:9f9b80d2b666e063f5d8bb165ba25b0d60c2c72f848bd0abd98b458e9e84c38a",
- "comment": "Gate inventory for NA-2026-07-21-v2 (TDD §8.1): reviewed interpretation of the claim-set document's prose gates, hash-pinned to its quotable source blocks. Endpoint hashes (source textHash, claim/fragment hashes, profileDigest) are stamped mechanically from the pinned corpora by tools/stamp.py; null means not yet stamped and fails validation. Inventory completeness is a digest-bound authorized operator attestation (§9).",
+ "profileDigest": "sha256/c1:f44d0e222fa78a961ed4dbd15a0237fccebbe498878bebc82bb574cd8bb8a09c",
+ "comment": "Current gate inventory for NA-2026-07-22-v4 (TDD §8.1), re-authored from the live support and filing gates and pinned to current claim and source endpoints.",
  "gates": [
   {
-   "gateId": "na-gate-example2-priority",
-   "code": "example2-priority",
+   "gateId": "na-gate-production-relationship",
+   "code": "production-relationship",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S011",
+    "textHash": "sha256/c1:eccf39ac71a4f9c9ffa633cc1c1ba662b6bd81475633ccd6374d252dc950b95c"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 1,
+      "claimHash": "sha256/c1:506f16237a6aff35e0defe60b68a6e205e314ba0080381b22bee28129ceaea64"
+     },
+     {
+      "claim": 7,
+      "claimHash": "sha256/c1:552246ff341adbaf9c58b3acd6fe83b010df0ac1d007634776c470fe7d393d97"
+     },
+     {
+      "claim": 9,
+      "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60"
+     },
+     {
+      "claim": 13,
+      "claimHash": "sha256/c1:588d999f1f42451f08968b569c7cc3d8a92fd2e2997c79b86368ebd644996282"
+     },
+     {
+      "claim": 15,
+      "claimHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e"
+     },
+     {
+      "claim": 22,
+      "claimHash": "sha256/c1:42bcadba1abbfcf42c1e622cc428a46415b803742eb78a894adfde99f8427d25"
+     },
+     {
+      "claim": 24,
+      "claimHash": "sha256/c1:ba2222fc21b47e26c7ed8eca9eb62048c8099221aecc18718d00b899b621c1b1"
+     },
+     {
+      "claim": 25,
+      "claimHash": "sha256/c1:5d9d860393839401924efe404e41420550c1bb60cfbb7c06374ad65c069e1f1d"
+     },
+     {
+      "claim": 29,
+      "claimHash": "sha256/c1:2ce38d5e308a3c6d919375ad7d1b94334876817b8be80870dbd20d358e49188b"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-example2-resynchronization",
+   "code": "example2-resynchronization",
    "requiredScope": "target",
    "requirement": "mandatory",
    "source": {
-    "block": "S007",
-    "textHash": "sha256/c1:3880ad8f845fb1f44b35fb6bca7953cb057a5c065646a36cf40a0e69a8c29c1d"
+    "block": "S012",
+    "textHash": "sha256/c1:fa2830603f8cf2022308a585d48b4b12ae1849213b04d55bf653dcef75170bfb"
    },
    "appliesTo": {
     "fragments": [
@@ -34,27 +84,19 @@
    }
   },
   {
-   "gateId": "na-gate-combined-example",
-   "code": "combined-example",
+   "gateId": "na-gate-distribution-integration",
+   "code": "distribution-integration",
    "requiredScope": "claim",
    "requirement": "mandatory",
    "source": {
-    "block": "S020",
-    "textHash": "sha256/c1:597ee7dfe10ddc3e10a9eecaf41817608d2246a07cea18a53ef48627df402ba3"
+    "block": "S013",
+    "textHash": "sha256/c1:0149435b226b49bc2b6c4232f42e15db3cf3b7ffbe5404f9d5d614191b02af18"
    },
    "appliesTo": {
     "claims": [
      {
-      "claim": 1,
-      "claimHash": "sha256/c1:506f16237a6aff35e0defe60b68a6e205e314ba0080381b22bee28129ceaea64"
-     },
-     {
-      "claim": 7,
-      "claimHash": "sha256/c1:552246ff341adbaf9c58b3acd6fe83b010df0ac1d007634776c470fe7d393d97"
-     },
-     {
       "claim": 9,
-      "claimHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4"
+      "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60"
      },
      {
       "claim": 13,
@@ -65,54 +107,64 @@
       "claimHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e"
      },
      {
-      "claim": 16,
-      "claimHash": "sha256/c1:048667b5256e52201f22d8617807bbe739448e319d3f6b6a23ef2735b4d333c0"
+      "claim": 22,
+      "claimHash": "sha256/c1:42bcadba1abbfcf42c1e622cc428a46415b803742eb78a894adfde99f8427d25"
      },
      {
-      "claim": 22,
-      "claimHash": "sha256/c1:78b36fa95710fe4775fe9a189f125e65e0ef433881f571bedd5d85d1d2c939bc"
+      "claim": 24,
+      "claimHash": "sha256/c1:ba2222fc21b47e26c7ed8eca9eb62048c8099221aecc18718d00b899b621c1b1"
+     },
+     {
+      "claim": 25,
+      "claimHash": "sha256/c1:5d9d860393839401924efe404e41420550c1bb60cfbb7c06374ad65c069e1f1d"
      },
      {
       "claim": 29,
-      "claimHash": "sha256/c1:93b55459fa1065c8d4a840848767b8e0a5a8418acbd9669e74596619b2a2dfc1"
+      "claimHash": "sha256/c1:2ce38d5e308a3c6d919375ad7d1b94334876817b8be80870dbd20d358e49188b"
      }
     ]
    }
   },
   {
-   "gateId": "na-gate-detection-support",
-   "code": "detection-support",
-   "requiredScope": "fragment",
+   "gateId": "na-gate-detection-mode-a",
+   "code": "detection-mode-a",
+   "requiredScope": "claim",
    "requirement": "mandatory",
    "source": {
-    "block": "S025",
-    "textHash": "sha256/c1:15d9b58fbf91bb6f2d3244d061009fb6909012a3d2c84d3a0cca1aeb13422bf3"
+    "block": "S014",
+    "textHash": "sha256/c1:d74a2f23c0fe43804826fad7c9a46842cea7f26202c0f713ae758dd6fe237be9"
    },
    "appliesTo": {
-    "fragments": [
+    "claims": [
      {
-      "id": "c16u5",
-      "hash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb"
+      "claim": 16,
+      "claimHash": "sha256/c1:f3a028081a22bd0c617ea5f6a3cb688b240d607d76cbed138cf2f8a6463ace0f"
      },
      {
-      "id": "c16u6",
-      "hash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c"
+      "claim": 19,
+      "claimHash": "sha256/c1:56cfccc326ddb7b6a6cba42581a25dc251aef945b8fd099712afca6a8f1bf426"
      },
      {
-      "id": "c16u7",
-      "hash": "sha256/c1:08fc431aebb952cd67d7649195da78e5ed45d107fed03f921da55f9722847f2c"
-     },
+      "claim": 20,
+      "claimHash": "sha256/c1:acaf9834d0f4ba259d017181dfb4e86fb903700c195b057d1a2425a36dd7eec9"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-end-to-end-mode-a",
+   "code": "end-to-end-mode-a",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S015",
+    "textHash": "sha256/c1:31629a44e86ff59c004e3c0c3fb128e7a814d75d72d348f96301ca08650cafbf"
+   },
+   "appliesTo": {
+    "claims": [
      {
-      "id": "c22u5",
-      "hash": "sha256/c1:5c58b37ddf207d31992fbe80998a4e7799489c0d0627a35a95b93004b7b17ef1"
-     },
-     {
-      "id": "c22u6",
-      "hash": "sha256/c1:b1c8f33dc7370bbe87212ea519926c84fb968158a2a4f49c5b6d20c77238bc20"
-     },
-     {
-      "id": "c22u7",
-      "hash": "sha256/c1:f7437d32ff00d57d1430e564095f98afcb96bee703b3c6a0792e0a36f92d7f47"
+      "claim": 22,
+      "claimHash": "sha256/c1:42bcadba1abbfcf42c1e622cc428a46415b803742eb78a894adfde99f8427d25"
      }
     ]
    }
@@ -123,18 +175,222 @@
    "requiredScope": "fragment",
    "requirement": "mandatory",
    "source": {
-    "block": "S026",
-    "textHash": "sha256/c1:5c5715f84b978d586639d2256b25b15dd6af07da6bce4cb096541e47d6343cde"
+    "block": "S016",
+    "textHash": "sha256/c1:1fc516fd061b13b46d7b953804af1871865984a13bda2dbf244bd718d5b8f9bf"
    },
    "appliesTo": {
     "fragments": [
      {
       "id": "c21u0",
-      "hash": "sha256/c1:90221ff2fa0caa47cb76fda0b86041eb92e3fdb537f0da2512542b9d67b9bb41"
+      "hash": "sha256/c1:ed134e8203c0b1f2a7ae111cd87bf0dcf58f43a5c497f6f5fc961b14935a074b"
      },
      {
       "id": "c28u0",
-      "hash": "sha256/c1:ced9d3c48b21fe77467a099520688c7aa090b7723acd87321885d1a0e6fe89fa"
+      "hash": "sha256/c1:6bdd3d0343e6a8baf9c06cc44e0cccf9203a891335c9de22c728ee47142ca660"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-overlay-sequencing",
+   "code": "overlay-sequencing",
+   "requiredScope": "fragment",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S017",
+    "textHash": "sha256/c1:c2c5457f42d4641ce49a1e896d1bdec8874e8e43d9132da8c8870aa6d6e31287"
+   },
+   "appliesTo": {
+    "fragments": [
+     {
+      "id": "c30u0",
+      "hash": "sha256/c1:9332e736cc5c7d3a2c243952f2c6f6cca82c4454618f8ff51d9bc8c75d48da3c"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-per-filing-support",
+   "code": "per-filing-support",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S018",
+    "textHash": "sha256/c1:030e3cc3431b6f194219a99242a86a241374a7696674c1ac0099e966084bcf7f"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 1,
+      "claimHash": "sha256/c1:506f16237a6aff35e0defe60b68a6e205e314ba0080381b22bee28129ceaea64"
+     },
+     {
+      "claim": 2,
+      "claimHash": "sha256/c1:cd5845e1b968d898c17ea838377a0aad62dbe04b7c1913a5a2b6647d11b5c309"
+     },
+     {
+      "claim": 3,
+      "claimHash": "sha256/c1:1589b89523d5e61e85e467429f3eb14c757a9295c5bc4fff647ceb7a7555d352"
+     },
+     {
+      "claim": 7,
+      "claimHash": "sha256/c1:552246ff341adbaf9c58b3acd6fe83b010df0ac1d007634776c470fe7d393d97"
+     },
+     {
+      "claim": 9,
+      "claimHash": "sha256/c1:38f23fe185737719661f1aabef11b63dc99ea094df1a2d823200804a555a6a60"
+     },
+     {
+      "claim": 13,
+      "claimHash": "sha256/c1:588d999f1f42451f08968b569c7cc3d8a92fd2e2997c79b86368ebd644996282"
+     },
+     {
+      "claim": 15,
+      "claimHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e"
+     },
+     {
+      "claim": 19,
+      "claimHash": "sha256/c1:56cfccc326ddb7b6a6cba42581a25dc251aef945b8fd099712afca6a8f1bf426"
+     },
+     {
+      "claim": 20,
+      "claimHash": "sha256/c1:acaf9834d0f4ba259d017181dfb4e86fb903700c195b057d1a2425a36dd7eec9"
+     },
+     {
+      "claim": 21,
+      "claimHash": "sha256/c1:737724bab6c7858c6df066a0e3e19c1f23b109d48a9282e136caed9a31c49e6c"
+     },
+     {
+      "claim": 23,
+      "claimHash": "sha256/c1:6f00560e8398693802842f85e26b95245860b17d1c7ef725e0e87f8fde1a0153"
+     },
+     {
+      "claim": 24,
+      "claimHash": "sha256/c1:ba2222fc21b47e26c7ed8eca9eb62048c8099221aecc18718d00b899b621c1b1"
+     },
+     {
+      "claim": 25,
+      "claimHash": "sha256/c1:5d9d860393839401924efe404e41420550c1bb60cfbb7c06374ad65c069e1f1d"
+     },
+     {
+      "claim": 28,
+      "claimHash": "sha256/c1:f929a451677fde43e9e1423dfc896c2b8b49641438d25e8c90fd97f466aebdf4"
+     },
+     {
+      "claim": 29,
+      "claimHash": "sha256/c1:2ce38d5e308a3c6d919375ad7d1b94334876817b8be80870dbd20d358e49188b"
+     },
+     {
+      "claim": 30,
+      "claimHash": "sha256/c1:7604cac740506e2160cbacffda99149ffc23ff53c85331032fdd14f7206035de"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-reconstruction-equality",
+   "code": "reconstruction-equality",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S019",
+    "textHash": "sha256/c1:bb562ff976fbc2dff478c15b0f1406d5e63b1f7c284f26eca8be6232d3e45d24"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 16,
+      "claimHash": "sha256/c1:f3a028081a22bd0c617ea5f6a3cb688b240d607d76cbed138cf2f8a6463ace0f"
+     },
+     {
+      "claim": 17,
+      "claimHash": "sha256/c1:920de6efa08f82055b9ef39240a24220e2824e7520d72fbc32ba172e62812aa3"
+     },
+     {
+      "claim": 18,
+      "claimHash": "sha256/c1:b6aa3a4be1dcd1f2e33196a7033cd74190f36b2696a031ed00f96fbccc9b171a"
+     },
+     {
+      "claim": 19,
+      "claimHash": "sha256/c1:56cfccc326ddb7b6a6cba42581a25dc251aef945b8fd099712afca6a8f1bf426"
+     },
+     {
+      "claim": 20,
+      "claimHash": "sha256/c1:acaf9834d0f4ba259d017181dfb4e86fb903700c195b057d1a2425a36dd7eec9"
+     },
+     {
+      "claim": 21,
+      "claimHash": "sha256/c1:737724bab6c7858c6df066a0e3e19c1f23b109d48a9282e136caed9a31c49e6c"
+     },
+     {
+      "claim": 22,
+      "claimHash": "sha256/c1:42bcadba1abbfcf42c1e622cc428a46415b803742eb78a894adfde99f8427d25"
+     },
+     {
+      "claim": 23,
+      "claimHash": "sha256/c1:6f00560e8398693802842f85e26b95245860b17d1c7ef725e0e87f8fde1a0153"
+     },
+     {
+      "claim": 24,
+      "claimHash": "sha256/c1:ba2222fc21b47e26c7ed8eca9eb62048c8099221aecc18718d00b899b621c1b1"
+     },
+     {
+      "claim": 25,
+      "claimHash": "sha256/c1:5d9d860393839401924efe404e41420550c1bb60cfbb7c06374ad65c069e1f1d"
+     },
+     {
+      "claim": 26,
+      "claimHash": "sha256/c1:27223ddc1d6698ff31286005f984ab5b29c80d6d1ba4af367ecef5435d4cd794"
+     },
+     {
+      "claim": 27,
+      "claimHash": "sha256/c1:863ea637d5910dbd47cf0ee71702e607eafdb00c0b2285fbebaa920f7e825d28"
+     },
+     {
+      "claim": 28,
+      "claimHash": "sha256/c1:f929a451677fde43e9e1423dfc896c2b8b49641438d25e8c90fd97f466aebdf4"
+     },
+     {
+      "claim": 29,
+      "claimHash": "sha256/c1:2ce38d5e308a3c6d919375ad7d1b94334876817b8be80870dbd20d358e49188b"
+     },
+     {
+      "claim": 30,
+      "claimHash": "sha256/c1:7604cac740506e2160cbacffda99149ffc23ff53c85331032fdd14f7206035de"
+     }
+    ]
+   }
+  },
+  {
+   "gateId": "na-gate-claim-boundary",
+   "code": "claim-boundary",
+   "requiredScope": "claim",
+   "requirement": "mandatory",
+   "source": {
+    "block": "S020",
+    "textHash": "sha256/c1:72f03696eb38a5c07021c8862fe0628f3735fb0d2b0f30d375913212b3172d74"
+   },
+   "appliesTo": {
+    "claims": [
+     {
+      "claim": 13,
+      "claimHash": "sha256/c1:588d999f1f42451f08968b569c7cc3d8a92fd2e2997c79b86368ebd644996282"
+     },
+     {
+      "claim": 15,
+      "claimHash": "sha256/c1:21bb29c93ffb8a0fa248c1b266fd9d34bd4233a0020b4527d975eb295d59638e"
+     },
+     {
+      "claim": 24,
+      "claimHash": "sha256/c1:ba2222fc21b47e26c7ed8eca9eb62048c8099221aecc18718d00b899b621c1b1"
+     },
+     {
+      "claim": 25,
+      "claimHash": "sha256/c1:5d9d860393839401924efe404e41420550c1bb60cfbb7c06374ad65c069e1f1d"
+     },
+     {
+      "claim": 29,
+      "claimHash": "sha256/c1:2ce38d5e308a3c6d919375ad7d1b94334876817b8be80870dbd20d358e49188b"
      }
     ]
    }
