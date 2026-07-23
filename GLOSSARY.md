@@ -99,6 +99,17 @@ Canonical PDFs in [`US/prior-art/`](US/prior-art/) are checksum-controlled and n
 | **Scene-change detection / perceptual hash / fuzzy matching** | The disclosed cut-time identification implementations: frame comparison by perceptual hashes, sliding-window fuzzy matching over frame groups | The claim sets (NA claims 17–18, 26; AF-CONT claims 12–13, 15–16) |
 | **Causal nexus** | The claimed relationship tying a delivered mate-timing combination to the reconstructed same detected combination (AF claims 20–22, AF-CONT claims 17–19) | [`US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md`](US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md) |
 
+## Navigator pipeline terms
+
+| Term | Current meaning | Controlling document |
+|---|---|---|
+| **Repository snapshot** | Immutable capture of the complete repository tree (paths, digests, modes, sizes) with retained bytes; planning and read-only verification commands consume exactly the captured bytes through gateway byte sources, never live re-reads | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §10 |
+| **Release profile** | Closed artifact-facing release-governance selection — `technical-preview` (active: manual cross-platform and assistive-technology QA deferred, compatibility not authorized) or `validated-release` (declared: full seven-row structured QA required) — always selected explicitly via `release --profile=` | same, §1 and §10 |
+| **Record resolver** | The single typed per-kind discrimination of verification records into current authorizations, superseded evidence, invalid records, and rejected authorizations; release and bundle consume only current authorizations, and unknown kinds fail closed | same, §10 |
+| **Render/control inventories** | The two disjoint closed Python source inventories: renderer sources bind candidate provenance, control sources bind acceptance receipts; their union closes the production source family, and an unclassified or doubly classified source fails | same, §10 |
+| **Acceptance control / receipt** | An atomic check derived from the acceptance registry as `<id>.automated` or `<id>.observed`, executed in a derived phase and recorded in the version-3 acceptance receipt as `{control, phase, status}` — passed or policy-deferred | same, §10 and §14 |
+| **Closure planner** | The `pin-plan` planner's closed planVersion-3 output: one generic per-corpus closure over every registry and QA corpus (per-file pinned and actual digests, per-file and aggregate currency, version bindings) plus edition-level census, group, dependency, and artifact-name currency | same, §8.1 and §10 |
+
 ## Status suffixes and outcome labels
 
 | Label | Current meaning |

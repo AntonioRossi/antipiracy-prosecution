@@ -436,9 +436,18 @@ canonical `<STRATEGY>-YYYY-MM-DD-vN` grammar and whose embedded strategy equals 
 selected edition supplies the exact expected current strategy/version set for each QA role;
 free-form labels, missing or extra strategies, and well-formed obsolete versions fail
 currency validation. Every pinned primary and auxiliary file is read and digest-checked.
-`pin-plan` reports the complete sorted file closure with each pinned and actual digest, plus
-configured and expected version maps, so no primary designation can hide an auxiliary pin
-replacement.
+`pin-plan` emits a closed `planVersion` `"3"` plan, validated against
+`schema/plan.schema.json`, whose `corpora` map — keyed by corpus id, with `qaSources`
+carrying the role→corpus-id bindings — covers every corpus the edition depends on through
+one generic closure: the claim corpus (`fragment-source`), the target corpus
+(`pct-disclosure`, all five pinned files), the authority corpus (`pct-pdf`), and every QA
+source. Each closure reports the complete sorted file set with per-file pinned and actual
+digests and per-file plus aggregate currency, so no primary designation can hide an
+auxiliary pin replacement. Registry corpora carry an opaque version label; QA corpora
+carry structured configured/expected version maps; and the plan's edition-level fields
+prove the claim corpus current by three-way version equality (document-declared version =
+corpus-registry version = edition-config version) and report census, groups, dependencies,
+independent claims, and artifact-name currency.
 
 Each fragment corpus has a **gate inventory** (`profiles/gates_<corpusId>.json`) — authored,
 reviewed data enumerating every guidance gate of that claim-set document. Exact entry shape:
@@ -1116,6 +1125,9 @@ navigator/
   schema/                 # versioned, closed JSON Schemas with per-axis tags + declared
                           #   locator exceptions + applicability matrices + invariants
                           #   module; planes.json (command×kind privilege matrix);
+                          #   commands.json (command metadata registry: canonical
+                          #   summary/usage per dispatched command); plan.schema.json
+                          #   (closed current-pin plan shape);
                           #   acceptance.json (criteria registry); api-policy.json
                           #   (probed/CSP-governed/procedural API sets);
                           #   support-matrix.json (validated-release browser/OS/AT target policy)
@@ -1123,16 +1135,21 @@ navigator/
   strings.json            # shared artifact microcopy + counsel legend
   bundle-manifest.json    # version-3 bundle-only structured profile/status/control data
                           #   + neutral wording (digest-bound approval)
-  build.py                # content plane: authoring `preview` / `candidate` / `migrate`;
-                          #   verification plane: profile-explicit `release` / `bundle` / `attest` /
-                          #   `record-qa`; `bundle-plan` / `status` /
-                          #   `verify-current` (read-only proposal, report,
-                          #   and hard current-state gate);
+  build.py                # dispatch-only command surface; command logic lives in the
+                          #   control plane (lib/currentstate.py and its control-inventory
+                          #   siblings). Content plane: authoring `preview` / `candidate` /
+                          #   `migrate`; read-only `pin-plan`; verification plane:
+                          #   profile-explicit `release` / `bundle` / `attest` /
+                          #   `record-qa`; read-only `bundle-plan` / `status` /
+                          #   `verify-current` / `validate-current`;
                           #   `propose-reuse` (deferred)
+  __main__.py             # module entry (`python3 -m navigator`): the same single
+                          #   dispatch after an identical path bootstrap; `validate-current`
+                          #   is the canonical command for this entry
   tools/                  # authoring aids (action class d, outside the pipeline):
                           #   stamp (explicit selected-owner authorized review; separate
                           #   inventory pin operation), make_fixtures,
-                          #   sync_tdd_examples, pre-commit-check
+                          #   sync_tdd_examples
   tests/                  # golden parser + canon() + serialization vectors + property-
                           #   based canon tests, invariant + acceptance tests, registry-
                           #   access, edition-blindness, writer-set, diff-classifier,
@@ -1174,7 +1191,12 @@ membership, cells enumerate exact kind sets, and an omitted privilege is a denie
 Kind → plane: content plane — registered sources and policy data; artifact outputs —
 `preview`, `candidate`, `sealed`, `bundle`, `bundle-manifest`, `artifact-checksum`,
 `bundle-checksum`; verification records (append-only) — `qa-record`, `attestation`,
-`release-record`, `bundle-record`.
+`release-record`, `bundle-record`. The command vocabulary itself is closed and three-way
+bound: `schema/commands.json` (`commandsVersion` `"1"`) registers one canonical summary and
+usage per command, `schema/planes.json` declares the same command set's privileges, and
+`build.py main` dispatches exactly that set; a test closes the registry, the matrix, and
+the dispatch set against each other, and the command usage text carries every registered
+usage string.
 
 Artifact-plane access additionally passes a central, closed kind/path check at the gateway:
 all artifact paths are NFC root basenames, and the disjoint families are
@@ -1190,6 +1212,7 @@ and exercises both directions of the disjointness rule.
 | `preview` | `content` (edition allowlist) | `preview` |
 | `candidate` | `content` (edition allowlist) | `candidate` |
 | `migrate` | `content` (edition allowlist) | `source:relation-set` + `source:gate-inventory-locators` (action classes b + c only) |
+| `pin-plan` | `content` (edition allowlist) | — |
 | `propose-reuse` (deferred) | `content` (pair-scoped grant) | `source:relation-set-destination` (class c only) |
 | `attest` | `content` + `attestation` | `attestation` |
 | `record-qa` | `content` + `candidate` + `attestation` + `qa-record` | `qa-record` |
@@ -1198,6 +1221,7 @@ and exercises both directions of the disjointness rule.
 | `bundle` | `content` + `sealed` + `artifact-checksum` + `attestation` + `qa-record` + `release-record` | `bundle-manifest`, `bundle`, `bundle-checksum`, `bundle-record` |
 | `status` | `content` + `candidate` + `sealed` + `artifact-checksum` + `bundle` + `bundle-checksum` + `qa-record` + `attestation` + `release-record` + `bundle-record` | — |
 | `verify-current` | `content` + `candidate` + `sealed` + `artifact-checksum` + `bundle` + `bundle-manifest` + `bundle-checksum` + `qa-record` + `attestation` + `release-record` + `bundle-record` | — |
+| `validate-current` | `content` + `candidate` + `sealed` + `artifact-checksum` + `bundle` + `bundle-manifest` + `bundle-checksum` + `qa-record` + `attestation` + `release-record` + `bundle-record` | — |
 
 Every cell above is an exact set, not a minimum or an illustrative subset; `content` is the
 single content-plane kind narrowed by the row's declared scope, and an omitted kind is
@@ -1207,19 +1231,31 @@ mere presence of a release record is not authority.
 `record-qa` produces evidence only while validated-release is active, and `release` is
 invoked as `release <edition> --profile=<technical-preview|validated-release>` with no
 implicit profile.
-`bundle-plan` has the same read boundary needed to evaluate current release chains but no
-write privilege; its stdout is a proposal, not a content, artifact, or evidence write.
-`verify-current` is the hard, read-only cutover gate: it exits nonzero unless pin plans,
-candidate bytes, current-only version references, classified navigator sources, release and
-attestation chains, the bundle config, deterministic ZIP, detached checksums, canonical
-current-format record inventory, exact distribution inventory, Git whitespace, and the
-complete discovered software suite all agree on one current baseline. It captures the
-complete repository before the first closure check, materializes those exact bytes into a
-temporary repository for test discovery, rejects any mutation of that sandbox, rejects any
-live-tree delta from the initial snapshot, re-runs the complete live closure, and compares a
-final live snapshot immediately before success. Tests therefore cannot stale an artifact
-that the same invocation already verified. `status` remains diagnostic and may report
-partial state; it never substitutes for `verify-current`.
+`pin-plan` and `bundle-plan` are class (a) only: `pin-plan` exposes corpus digest and
+version drift before any pin changes (§8.1), and `bundle-plan` has the read boundary needed
+to evaluate current release chains; their stdout is a proposal, not a content, artifact, or
+evidence write.
+`validate-current` — invoked as `python3 -m navigator validate-current` — is the canonical
+hard, read-only cutover gate; `verify-current` is the same current-state proof without the
+document-integrity legs and remains the navigator-internal gate. `validate-current` exits
+nonzero unless pin plans, candidate bytes, current-only version references, classified
+navigator sources, release and attestation chains, the bundle config, deterministic ZIP,
+detached checksums, canonical current-format record inventory, exact distribution
+inventory, Git whitespace, the changed-Markdown and prior-art-checksum document checks,
+and the complete discovered software suite all agree on one current baseline. One
+invocation executes, in order: (1) capture the complete repository snapshot, retaining its
+bytes; (2) prove the full current-state closure against exactly those captured bytes; (3)
+run the document-integrity legs on the live checkout — the pandoc render check over the
+`git diff --name-only -z -- '*.md'` set and the `US/prior-art` source-checksum verification
+— each fail-closed, inside the snapshot brackets; (4) materialize the captured bytes into a
+temporary repository, run the complete discovered test suite only there, and reject any
+mutation of that sandbox; (5) re-capture the live repository and reject any delta from the
+initial snapshot; (6) re-run the complete closure against the re-captured bytes; and (7)
+compare a final live snapshot immediately before success, so the report certifies only the
+final state. Tests therefore cannot stale an artifact that the same invocation already
+verified, and a document check that fails at any point fails the run before a report
+exists. `status` remains diagnostic and may report
+partial state; it never substitutes for `validate-current`.
 
 The `bundle-manifest` is counsel-facing and carries no verification-plane references; the
 chain from bundle to its authorizing release records lives in the `bundle-record`.
@@ -1234,11 +1270,12 @@ records without claiming the deferred compatibility observations.
   edition configs, schemas, strings projection, renderer source inventory, and declared
   timestamp. The renderer inventory is the exact closed set of Python sources capable of
   changing artifact bytes and is compared bidirectionally with every edition's declared
-  transitive Python inputs. Promotion, evidence resolution, QA planning, repository
+  transitive Python inputs. Promotion, typed record resolution, QA planning, repository
   snapshotting, and command orchestration live in the disjoint control-source inventory and
   bind acceptance receipts instead of candidate provenance. The union of the renderer and
-  control inventories must equal the production `build.py`, `schema/invariants.py`, and
-  direct `lib/*.py` family, with an empty intersection. A `.py` suffix cannot appoint a new
+  control inventories must equal the production `build.py`, `__main__.py`,
+  `schema/invariants.py`, and direct `lib/*.py` family, with an empty intersection. A `.py`
+  suffix cannot appoint a new
   trusted implementation input, and an unclassified or doubly classified source fails the
   executable meta-test.
   Every gateway
@@ -1258,7 +1295,11 @@ records without claiming the deferred compatibility observations.
   so a later read can never silently replace the digest of bytes already consumed. The
   **exact-set check** compares the read log against the edition config's declared
   transitive input set **in both directions**: an undeclared read fails, and a declared
-  input that was never read fails.
+  input that was never read fails. Planning and read-only verification commands capture one
+  byte-retaining `RepositorySnapshot` per invocation and hand every gateway its
+  `byte_source`, so each consumed byte is exactly the captured byte and a repeated or
+  inconsistent live read is structurally impossible within the invocation; write commands
+  use live gateways.
 - **Verification plane — append-only, forward-chaining.** Records are digest-addressed and
   immutable; every record filename carries its kind plus the complete 64-hex digest (never
   an abbreviated storage address), and an overwrite attempt is a gateway error; each record references its
@@ -1266,8 +1307,15 @@ records without claiming the deferred compatibility observations.
   record **before** release and `release` reads and references it. Under technical-preview,
   release has no QA predecessor. Both branches write the sealed artifact, its checksum, and a
   **`release-record`** (what was sealed, when, on which authorizations); the
-  `bundle-record` references the release records of the bundle's members. Consumers
-  resolve records by **explicit digest equality, never recency or record-store ordering**:
+  `bundle-record` references the release records of the bundle's members. Every record
+  kind resolves through the single typed resolver: a closed per-kind adapter table
+  discriminates each envelope on format, then currency against the exact current binding,
+  then authorization, sorting the store into **current authorizations**, **superseded
+  evidence** (well-formed same-schema records whose exact bindings no longer match),
+  **invalid records** (malformed, explicit failures), and **rejected authorizations**
+  (current-binding records whose authorization predicate fails). Consumers
+  resolve records by **explicit digest equality, never recency or record-store ordering**,
+  release and bundle consume only current authorizations, and an unknown kind fails closed:
   validated-release considers only `qa-record`s whose candidate digest *and* content-lock
   digest match the derivation being sealed (a policy change can move the lock without moving
   the artifact bytes); technical-preview rejects any claimed QA predecessor. Every profile
@@ -1617,9 +1665,12 @@ Guardrails, each tied to the failure it prevents:
     applicability matrices (§8.4, §8.5) are schema-enforced.
 14. **Edition-blindness.** Shared modules contain no edition tokens — AST/grep-test
     enforced.
-15. **Generated-file discipline.** `GENERATED` banner + detached SHA-256 + local pre-commit
-    rebuild-and-compare; repository ignore rules must not exclude the committed generated
-    artifacts (stock ignore templates match `dist/` and `lib/` at any depth).
+15. **Generated-file discipline.** `GENERATED` banner + detached SHA-256 + the canonical
+    gate's rebuild-and-compare: `python3 -m navigator validate-current` re-derives the
+    complete live closure inside immutable snapshot brackets and byte-compares every stored
+    candidate, sealed artifact, checksum, manifest, and bundle against a fresh derivation;
+    repository ignore rules must not exclude the committed generated artifacts (stock
+    ignore templates match `dist/` and `lib/` at any depth).
 16. **Confidentiality guardrail.** Build aborts in CI environments; `--private-runner` is
     the logged override. An accidental-disclosure guardrail, not proof of runner trust.
 17. **Documentation that cannot lie.** The §8.3 examples, the §14 criteria list, and the
@@ -1659,7 +1710,7 @@ cite a row of the guarantee → enforcement map or carry an explicit scope.
 | Attestations cannot outlive any declared side or masquerade as output from another producer contract | Exact-side digest binding + typed passed identified-authorized-operator append-only records + exact `producerCommand: navigator/build.py attest/v1` validation + envelope verification; the marker is digest-bound repository/Git audit metadata, not a signature |
 | Evidence that authorized a release survives it unchanged; release outcomes are themselves recorded | Append-only verification plane + forward-chaining records incl. `release-record`; output readback before the outer record is appended last; overwrite is a gateway error |
 | A release or bundle cannot claim an unexecuted, stale, or differently profiled acceptance suite | Required closed version-3 `acceptanceReceipt` + independently digested release policy + derived exact release-profile contract and atomic control plan + registry-byte digest + explicit runner-edition set + closed control-source and registry-declared shared/edition-scoped module/fixture/support-file lock + fresh-interpreter before-import/after-run context equality + exact per-control results + typed profile/subject bindings |
-| A passing discovered test cannot make `verify-current` certify artifacts that the same invocation no longer derives | Complete initial repository snapshot + exact sandbox materialization + full discovery only in the sandbox + sandbox mutation rejection + live-tree equality before final derivation + complete second live-closure proof + final live snapshot equality immediately before success |
+| A passing discovered test or a late document-check failure cannot make the canonical gate certify artifacts that the same invocation no longer derives | Complete initial byte-retaining repository snapshot + exact sandbox materialization + full discovery only in the sandbox + sandbox mutation rejection + document-integrity boundary checks inside the snapshot brackets + live-tree equality before final derivation + complete second live-closure proof + final live snapshot equality immediately before success |
 | Provenance cannot be self-referential | Plane separation: verification artifacts are never content inputs (privilege matrix); receipts omit their enclosing record digest and typed predecessor subjects point only backward |
 | Exactly the required inputs were read | Content read log + two-sided exact-set check against the edition config's declared transitive inputs (undeclared reads and unread declarations both fail) |
 | Composite digests are implementation-independent | Completed canonical serialization law (vendored interpreter-independent Unicode 15.1 NFC/White_Space data, raw and post-NFC duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms) + NUL-framed domain tags incl. per-record-kind tags + single-digest-path test + golden vectors + property-based canon tests |
@@ -1693,6 +1744,64 @@ enum-exhaustiveness discipline.
 *Non-normative implementation order:* parser/canonicalization → schemas + inventories +
 dependency maps → NA candidate → AF candidate + claim gates → sealing → bundle;
 `propose-reuse` deferred.
+
+**Adding X — the registered extension points.** Each recipe names its single registry of
+record and the test that fails when a registration step is omitted.
+
+1. **New corpus or auxiliary file (registry data only).** Add the corpus entry — or the
+   new file pin inside an existing entry's `files` map — to the corpus registry
+   (`corpora.json` shared or `profiles/corpora_<edition>.json`; closed entries under
+   `registryVersion` `"1"`), and wire the corpus id and its files into the edition config
+   and its declared transitive inputs. Omission failures: registry shape and closure —
+   `test_registry.py` (`test_top_level_shape_and_version_are_closed`,
+   `test_role_visibility_and_profile_contracts_are_enforced`); exact-set and pin currency —
+   `test_ac07_hard_current_boundary` (`test_acceptance.py`).
+2. **New QA corpus, including multi-strategy.** Add it to the edition QA registry
+   (`profiles/qa_<edition>.json`; `qaRegistryVersion` `"1"`; exactly `{role: "qa-source",
+   visibility: "internal", versionBindings, files, primary}`), with `versionBindings` the
+   sorted strategy→claim-version map — one strategy for an edition-scoped source, every
+   delivery strategy for a cross-edition source — and bind the corpus id to a QA role in
+   the edition config's `qaSources`. Omission failures:
+   `test_qa_versions_are_structured_and_tied_to_current_claim_versions`
+   (`test_qa_release.py`); an id colliding with an artifact corpus —
+   `test_lazy_qa_registry_cannot_duplicate_artifact_corpus_id` (`test_registry.py`).
+3. **New atomic control (acceptance registry + test registration).** Add the criterion to
+   `schema/acceptance.json` (acceptanceVersion `"3"`) with the next canonical AC id, its
+   applicability, text, and owning `test_acNN_…` callback names, and register the test
+   module, fixture scopes, and any support files in the runner data; the runner derives
+   `AC-NN.automated` (and `.observed` only from a typed QA field), never an authored phase
+   list. Omission failures: `test_ac19_traceability_meta` (`test_acceptance.py`) closes
+   registry↔tests in both directions;
+   `test_registry_declares_and_locks_every_test_module_and_fixture` (`test_qa_release.py`).
+4. **New profile (release-policy data, monotonicity limits).** Add it to
+   `schema/release-policy.json` (`releasePolicyVersion` `"1"`): canonically sorted profile
+   ids, exactly `{id, observedControls, artifactLabel}` per profile, every profile covering
+   the same complete registry-derived observed-control set with one `required | deferred`
+   state per control. The AC-01…AC-20 baseline cannot shrink or be reassigned; additions
+   are admitted, and an inactive profile cannot be selected. Omission failures:
+   `test_release_profile_is_explicit_and_closed` and
+   `test_registry_semantics_prevent_shrinking_without_blocking_additions`
+   (`test_qa_release.py`).
+5. **New CLI command (commands.json + planes.json + dispatch + inventory).** Register its
+   `{summary, usage}` in `schema/commands.json` (`commandsVersion` `"1"`), declare its
+   exact read/write kinds in `schema/planes.json`, add the dispatch branch in `build.py
+   main` with command logic in the appropriate plane module, carry its usage line in the
+   usage text, and classify every new source file in the renderer or control inventory.
+   Omission failures: `test_registry_planes_and_dispatch_are_one_command_set` and
+   `test_main_usage_text_carries_every_registry_usage` (`test_validation_hardening.py`);
+   the §10 capability-table comparison (`test_ac07_meta_tests`, `test_acceptance.py`).
+6. **New record kind (resolver adapter).** Add one closed adapter to the per-kind table in
+   `lib/recordresolver.py` — context type plus format, currency, and authorization
+   predicates — with the kind's plane membership in `planes.json`, its record format in
+   `recordprovenance`, and its composite digest tag registered in the canon module; unknown
+   kinds fail closed by construction. Omission failures: `TestRecordResolver`
+   (`test_provenance.py`) and `test_tag_registry` (`test_canon.py`).
+7. **New gate check (boundary_checks registration).** Register one `(label, check)` pair
+   in the `boundary_checks` tuple of `validate_current_state` (`lib/currentstate.py`); the
+   check runs on the live checkout inside the snapshot brackets, returns problem strings,
+   and reaches the report's `checks` only as `current`. Omission failure:
+   `TestValidateCurrentDocuments` (`test_qa_release.py`) — a document check runs inside the
+   brackets or no status-current report exists.
 
 ## 11. Build output, security, and delivery
 
@@ -1936,8 +2045,10 @@ never hand-maintained.
   the AC-20 `bundle-postcondition` through its registry-named fresh-interpreter callback,
   then appends the identified authorized human/model `bundle-record` with its
   non-authoritative tool-run receipt last; (13) remove superseded files from the live
-  distribution directory, run `python3 navigator/build.py verify-current`, and commit sources
-  + relations and bundle config, then current artifacts with checksums and records.
+  distribution directory, run the canonical cutover gate
+  `python3 -m navigator validate-current` — the complete verify-current closure plus the
+  document-integrity legs — and commit sources + relations and bundle config, then current
+  artifacts with checksums and records.
   (Write-statements in this procedure are validated against `planes.json`, §10.)
 - Each file name and header embeds its claim-set version. The live distribution directory
   contains only current-version products; superseded products remain identifiable in Git and
@@ -2059,6 +2170,24 @@ evidence, never authority.**
 | Guarantees | Every hard claim names its enforcer; procedural-only claims say so; universal claims cite the table or carry a scope; new mechanisms pass collision review |
 | Infrastructure | Local or firm-approved private only; CI-environment guard with logged override |
 | Hosting | None — standalone local files, deterministic bundled delivery, checksums via separate channel |
+
+### 16.1 Acceptance-contract design decisions
+
+Three closed-world choices keep the acceptance contract minimal; each names the condition
+that reopens it.
+
+- **Control ordering is expressed by execution phases.** Every atomic control runs in
+  exactly one derived phase (`release-preflight`, `release-postcondition`, or
+  `bundle-postcondition`); no control declares finer inter-control ordering. A `dependsOn`
+  field is added only if a control legitimately requires ordering finer than its phase, and
+  the addition bumps the acceptance schema version.
+- **Acceptance results have one uniform shape.** Every receipt result is exactly
+  `{control, phase, status}`; no control emits a richer or variant payload. A `resultType`
+  discriminator is added only when a second result shape genuinely exists.
+- **Control inapplicability is expressed by scoping, never by a receipt status.** A
+  control that does not apply to an edition or run is absent from the derived plan through
+  its declared criterion `applicability` and the runner's `testScopes`; no receipt carries
+  an inapplicable or skipped status.
 
 ## 17. Open points
 

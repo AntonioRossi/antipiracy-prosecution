@@ -60,10 +60,14 @@ python3 navigator/build.py pin-plan af
 ```
 
 Apply the reported current versions and raw-byte digests to the edition-selected corpus and
-QA registries. For every object under `qaSources`, require `configuredVersions` to equal
-`expectedVersions` exactly and inspect every sorted entry in `files`, not only the entry
-marked `primary`. If any `pinCurrent` is false, use that entry's `actualDigest` as the
-replacement pin for its exact path. A missing auxiliary entry, a free-form version label, or
+QA registries. The plan's `corpora` map covers every corpus the edition depends on — the
+claim corpus, the target corpus (every pinned disclosure file), the authority corpus, and
+each QA source named by `qaSources` — keyed by corpus id. For every corpus closure, inspect
+every sorted entry in `files`, not only the entry marked `primary`. If any `pinCurrent` is
+false, use that entry's `actualDigest` as the replacement pin for its exact path. For QA
+corpora, require `configuredVersions` to equal `expectedVersions` exactly; for registry
+corpora, require the version label current, with the plan's document, corpus, and edition
+versions in agreement. A missing auxiliary entry, a free-form version label, or
 a version binding not equal to the selected current claim version is a stop condition.
 Update the edition census, independent claims, groups, artifact name, release timestamp,
 dependency map, segmentation policy, gates, fixtures, bundle wording, and every other
@@ -147,17 +151,17 @@ as non-current evidence. Remove transient browser snapshots, caches, migration s
 and every unclassified tracked file.
 
 ```sh
-sh navigator/tools/pre-commit-check.sh
-python3 -m unittest discover -s navigator/tests -p 'test_*.py'
-git diff --check
 git status --short --branch
-python3 navigator/build.py verify-current
+python3 -m navigator validate-current
 ```
 
-`verify-current` must report one coherent current baseline, current candidates and sealed
-artifacts, a current configured bundle and authorization chain, no obsolete live version,
-no compatibility path, and no unclassified file. It captures the complete live repository,
-runs discovered tests only in a materialized snapshot, rejects mutation of that snapshot or
+`validate-current` is the canonical cutover gate. It must report one coherent current
+baseline, current candidates and sealed artifacts, a current configured bundle and
+authorization chain, no obsolete live version, no compatibility path, and no unclassified
+file. It captures the complete live repository, proves the full closure against the
+captured bytes, runs the document-integrity legs (the changed-Markdown render check and the
+prior-art source checksums) and the discovered tests only in a materialized snapshot,
+rejects mutation of that snapshot or
 the live tree, re-derives the full live closure, and compares a final snapshot immediately
 before reporting success. Run it last; stop on any warning or nonzero result.
 
@@ -172,7 +176,7 @@ evidence.
 - Before an integration commit exists, abort an unsuccessful merge with `git merge --abort`.
 - After a merge commit exists, correct forward on the integration branch; do not rewrite or
   disguise reviewed history.
-- A failed `candidate`, `verify-current`, release, or bundle command is a stop condition, not
+- A failed `candidate`, `validate-current`, release, or bundle command is a stop condition, not
   permission to bypass a validator.
 - Within the current format, verification records are append-only. A defective or
   superseded record is left non-current and replaced with a new digest-addressed record; it

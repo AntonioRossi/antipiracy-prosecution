@@ -55,20 +55,13 @@ The NA and AF-CONT claim sets (and any successor claim set) are produced and mai
 
 ## Validation
 
-After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. Current-state, software, generated-product, and document-integrity checks are:
+After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. The canonical current-state and document-integrity gate is:
 
 ```sh
-sh navigator/tools/pre-commit-check.sh
-python3 -m unittest discover -s navigator/tests -p 'test_*.py'
-git diff --check
-git diff --name-only -z -- '*.md' | xargs -0 -n 1 pandoc --from=gfm --to=html -o /dev/null
-(cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256)
-python3 navigator/build.py verify-current
+python3 -m navigator validate-current
 ```
 
-Run `verify-current` last. It executes discovered tests in an isolated repository snapshot,
-rejects sandbox or live-tree mutation, re-derives the complete current closure, and certifies
-the final live snapshot rather than a state that existed before the checks ran.
+One command proves the complete live navigator closure inside immutable repository snapshots — pin plans, candidate and sealed bytes, bundle and authorization chains, record and distribution inventories, `git diff --check` whitespace — runs the full discovered test suite in a materialized sandbox, renders every changed Markdown file through pandoc, verifies the `US/prior-art` source checksums, and certifies only the final unchanged snapshot. The runbook's [current-state and cutover gate](navigator/RUNBOOK-content-sync-and-regeneration.md#7-current-state-and-cutover-gate) section places this gate in the full content-integration workflow.
 
 Regenerate prior-art transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
 

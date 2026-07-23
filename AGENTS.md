@@ -6,18 +6,13 @@ This repository is a patent-prosecution document corpus maintained under the max
 
 ## Build, Test, and Development Commands
 
-Use the navigator's strict current-state and test gates together with the document-integrity checks:
+Use the canonical current-state and document-integrity gate:
 
 ```sh
-sh navigator/tools/pre-commit-check.sh
-python3 -m unittest discover -s navigator/tests -p 'test_*.py'
-git diff --check
-git diff --name-only -z -- '*.md' | xargs -0 -n 1 pandoc --from=gfm --to=html -o /dev/null
-(cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256)
-python3 navigator/build.py verify-current
+python3 -m navigator validate-current
 ```
 
-These validate deterministic checked-in candidates, full software behavior, whitespace, changed Markdown rendering, source checksums, and finally the immutable live navigator state. `verify-current` is the last command because it isolates discovered tests, revalidates the full closure, and certifies the final repository snapshot. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
+One command covers snapshot-bracketed verification of the immutable live navigator state (pin plans, deterministic checked-in candidates, bundle and authorization chains, exact record and distribution inventories), the full discovered test suite in a materialized sandbox, `git diff --check` whitespace, changed-Markdown pandoc rendering, and `US/prior-art` source checksums; it certifies only the final unchanged repository snapshot. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
 
 ## Documentation Style & Naming Conventions
 
@@ -31,7 +26,7 @@ All authored package documents and live navigator configuration **must state onl
 
 ## Testing Guidelines
 
-After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row. Re-score art when claim wording changes. Check quotations against the source PDF, especially OCR material. Confirm local links and render any changed complex table before review. Navigator changes must leave zero stale or pending owners, pass the full test suite, and reproduce candidates byte-for-byte through the pre-commit check. Unsupported schema, canon, registry, or record formats must fail closed before writes; do not add backward-compatibility branches.
+After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row. Re-score art when claim wording changes. Check quotations against the source PDF, especially OCR material. Confirm local links and render any changed complex table before review. Navigator changes must leave zero stale or pending owners, pass the full test suite, and reproduce candidates byte-for-byte between candidate and release. Unsupported schema, canon, registry, or record formats must fail closed before writes; do not add backward-compatibility branches.
 
 ## Commit & Pull Request Guidelines
 

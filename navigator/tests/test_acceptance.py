@@ -1900,7 +1900,7 @@ class Acceptance(unittest.TestCase):
         matrix = matrix.split("\n\n")[0] + "\n"
         rows = re.findall(r"\| `([a-z-]+)`( \(deferred\))? \| (.*?) \| (.*?) \|\n",
                           matrix)
-        self.assertEqual(len(rows), 11)
+        self.assertEqual(len(rows), 13)
         for cmd, deferred, reads, writes in rows:
             self.assertIn(cmd, planes["commands"], cmd)
             command = planes["commands"][cmd]
