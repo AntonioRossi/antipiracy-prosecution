@@ -11,8 +11,9 @@ from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import build as build_mod  # noqa: E402
-from lib import bundlezip, canon, gateway, qaevidence, release, render  # noqa: E402
-from lib import recordprovenance  # noqa: E402
+from lib import acceptance, bundlezip, canon, gateway, qaevidence  # noqa: E402
+from lib import recordprovenance, release, render  # noqa: E402
+from tests import acceptance_support  # noqa: E402
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -33,53 +34,12 @@ FIXTURE_SIDE_DIGESTS = {
     "supportMatrix": canon.bytes_digest(b"support matrix"),
 }
 FIXTURE_CURRENT_SIDES = {"na": FIXTURE_SIDE_DIGESTS}
-TECHNICAL_PREVIEW_PROFILE = {
-    "id": "technical-preview",
-    "manualQaEvidence": "deferred",
-    "compatibilityAuthorization": "not-authorized",
-    "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
-    "requiredQaRecordFields": [],
-    "artifactLabel": (
-        "TECHNICAL PREVIEW — Manual cross-platform and "
-        "assistive-technology QA is deferred; browser and "
-        "assistive-technology compatibility is not validated."
-    ),
-}
-VALIDATED_RELEASE_PROFILE = {
-    "id": "validated-release",
-    "manualQaEvidence": "required",
-    "compatibilityAuthorization": "support-matrix-authorized",
-    "deferredObservations": [],
-    "requiredQaRecordFields": ["ac11", "ac12", "ac13", "ac15"],
-    "artifactLabel": (
-        "VALIDATED-RELEASE PROFILE — Delivery requires current full "
-        "seven-row cross-platform and assistive-technology QA."
-    ),
-}
+TECHNICAL_PREVIEW_PROFILE = acceptance_support.TECHNICAL_PREVIEW_PROFILE
+VALIDATED_RELEASE_PROFILE = acceptance_support.VALIDATED_RELEASE_PROFILE
 
 
 def _acceptance_context(profile=VALIDATED_RELEASE_PROFILE):
-    context = {
-        "registryDigest": canon.bytes_digest(b"acceptance registry"),
-        "runnerEditions": ["na"],
-        "runnerInputs": [{
-            "path": "navigator/lib/release.py",
-            "digest": canon.bytes_digest(b"fixture runner input"),
-        }],
-        "receiptPhases": {
-            "release-preflight": [
-                "AC-%02d" % number for number in range(1, 20)],
-            "release-postcondition": ["AC-16"],
-            "bundle-postcondition": ["AC-20"],
-        },
-        "releaseProfile": profile["id"],
-        "releaseProfileContract": copy.deepcopy(profile),
-    }
-    context["runnerDigest"] = release._runner_digest(
-        context["registryDigest"], context["runnerInputs"],
-        context["receiptPhases"], context["runnerEditions"],
-        context["releaseProfile"], context["releaseProfileContract"])
-    return context
+    return acceptance_support.context(profile)
 
 
 FIXTURE_ACCEPTANCE_CONTEXT = _acceptance_context()
@@ -166,31 +126,7 @@ def _envelope(kind, record):
 
 
 def _acceptance_receipt(kind, subjects, context=FIXTURE_ACCEPTANCE_CONTEXT):
-    results = ([
-        {"phase": "release-preflight",
-         "criteria": ["AC-%02d" % number for number in range(1, 20)],
-         "status": "passed"},
-        {"phase": "release-postcondition", "criteria": ["AC-16"],
-         "status": "passed"},
-    ] if kind == "release" else [{
-        "phase": "bundle-postcondition", "criteria": ["AC-20"],
-        "status": "passed",
-    }])
-    return {
-        "receiptVersion": "2",
-        "registryDigest": context["registryDigest"],
-        "runnerDigest": context["runnerDigest"],
-        "runnerInputs": copy.deepcopy(
-            context["runnerInputs"]),
-        "runnerEditions": copy.deepcopy(
-            context["runnerEditions"]),
-        "runnerKind": "tool",
-        "releaseProfile": context["releaseProfile"],
-        "releaseProfileContract": copy.deepcopy(
-            context["releaseProfileContract"]),
-        "results": results,
-        "subjects": copy.deepcopy(subjects),
-    }
+    return acceptance_support.receipt(kind, subjects, context)
 
 
 def _fixture(operator_kind="human", support_approver=None,
@@ -304,8 +240,8 @@ def _fixture(operator_kind="human", support_approver=None,
         "operator": qa_operator, "operatorKind": operator_kind,
     })
     release_record = {
-        "recordVersion": "2",
-        **release.profile_record_fields(profile),
+        "recordVersion": "3",
+        **acceptance.profile_record_fields(profile),
         "edition": "na", "sealed": artifact_name,
         "sealedDigest": artifact_digest, "lockDigest": lock_digest,
         "qaRecord": (qa["digest"] if profile["manualQaEvidence"] ==
@@ -316,7 +252,7 @@ def _fixture(operator_kind="human", support_approver=None,
         "operatorKind": operator_kind,
     }
     release_record["acceptanceReceipt"] = _acceptance_receipt(
-        "release", release.release_subjects(
+        "release", acceptance.release_subjects(
             "na", artifact_digest, lock_digest,
             qa["digest"] if profile["manualQaEvidence"] == "required"
             else None,
@@ -338,7 +274,7 @@ def _fixture(operator_kind="human", support_approver=None,
         "releaseProfile": profile["id"],
         "name": ("bundle-TECHNICAL-PREVIEW.zip"
                  if profile["id"] == "technical-preview"
-                 else "bundle.zip"),
+                 else "bundle-VALIDATED-RELEASE.zip"),
         "comment": "test fixture",
         "editions": ["na"],
         "declaredTimestamp": "2026-07-22T00:00:00Z",
@@ -481,8 +417,8 @@ class BundleLifecycleTests(unittest.TestCase):
         bundle_digest = canon.bytes_digest(zip_bytes)
         config_digest = canon.bytes_digest(b"model chain config")
         record = {
-            "recordVersion": "2",
-            **release.profile_record_fields(VALIDATED_RELEASE_PROFILE),
+            "recordVersion": "3",
+            **acceptance.profile_record_fields(VALIDATED_RELEASE_PROFILE),
             "bundle": config["name"], "bundleDigest": bundle_digest,
             "members": [{"name": member["name"],
                          "digest": member["digest"]}
@@ -496,7 +432,7 @@ class BundleLifecycleTests(unittest.TestCase):
             "operatorKind": "model",
         }
         record["acceptanceReceipt"] = _acceptance_receipt(
-            "bundle", release.bundle_subjects(
+            "bundle", acceptance.bundle_subjects(
                 config_digest, bundle_digest, record["releaseRecords"],
                 record["members"], record["manifestApproval"],
                 VALIDATED_RELEASE_PROFILE))
@@ -523,12 +459,12 @@ class BundleLifecycleTests(unittest.TestCase):
             envelope for envelope in releases
             if envelope["digest"] == plan["releaseRecords"][0])
         record = release_envelope["record"]
-        self.assertEqual(record["recordVersion"], "2")
+        self.assertEqual(record["recordVersion"], "3")
         self.assertEqual(record["releaseProfile"], "technical-preview")
         self.assertEqual(record["compatibilityAuthorization"],
                          "not-authorized")
-        self.assertEqual(record["deferredObservations"],
-                         ["AC-11", "AC-12", "AC-13", "AC-15"])
+        self.assertEqual(record["deferredControls"],
+                         TECHNICAL_PREVIEW_PROFILE["deferredControls"])
         self.assertIsNone(record["qaRecord"])
         self.assertEqual(bundlezip.release_chain_problems(
             release_envelope, qas, attestations,
@@ -546,8 +482,9 @@ class BundleLifecycleTests(unittest.TestCase):
             changed, validated_qas, attestations,
             BASE_REQUIRED_ATTESTATIONS, FIXTURE_SIDE_DIGESTS,
             build_mod.approval_evidence_problems, context, None)
-        self.assertIn("technical-preview release qaRecord must be null",
-                      problems)
+        self.assertTrue(any(
+            "deferred observations must have null qaRecord" in problem
+            for problem in problems), problems)
 
     def test_resolver_never_regenerates_a_stale_stored_checksum(self):
         config, releases, qas, attestations, stored, manifest, wording = \
@@ -645,12 +582,12 @@ class BundleLifecycleTests(unittest.TestCase):
         with open(os.path.join(NAV, "bundle-manifest.json"),
                   encoding="utf-8") as fh:
             manifest = json.load(fh)
-        self.assertEqual(manifest["manifestVersion"], "2")
+        self.assertEqual(manifest["manifestVersion"], "3")
         self.assertEqual(manifest["releaseProfile"], "technical-preview")
         self.assertEqual(manifest["compatibilityAuthorization"],
                          "not-authorized")
-        self.assertEqual(manifest["deferredObservations"],
-                         ["AC-11", "AC-12", "AC-13", "AC-15"])
+        self.assertEqual(manifest["deferredControls"],
+                         TECHNICAL_PREVIEW_PROFILE["deferredControls"])
         self.assertTrue(manifest["bundleManifestText"].startswith(
             TECHNICAL_PREVIEW_PROFILE["artifactLabel"]))
         self.assertIn("does not claim compatibility authorization",
@@ -912,7 +849,7 @@ class BundleLifecycleTests(unittest.TestCase):
                 changed_release_record["qaRecord"] = changed_qa["digest"]
                 changed_release_record["acceptanceReceipt"] = \
                     _acceptance_receipt(
-                        "release", release.release_subjects(
+                        "release", acceptance.release_subjects(
                             changed_release_record["edition"],
                             changed_release_record["sealedDigest"],
                             changed_release_record["lockDigest"],
@@ -968,7 +905,7 @@ class BundleLifecycleTests(unittest.TestCase):
         changed_release_record["attestations"] = \
             changed_qa_record["attestations"]
         changed_release_record["acceptanceReceipt"] = _acceptance_receipt(
-            "release", release.release_subjects(
+            "release", acceptance.release_subjects(
                 "na", changed_release_record["sealedDigest"],
                 changed_release_record["lockDigest"], changed_qa["digest"],
                 changed_qa_record["qaInputLock"]["lockDigest"],
@@ -1013,7 +950,7 @@ class BundleLifecycleTests(unittest.TestCase):
                     build_mod.approval_evidence_problems,
                     FIXTURE_ACCEPTANCE_CONTEXT,
                     _qa_authorization_context(qas))
-                self.assertTrue(any("acceptance receipt" in problem
+                self.assertTrue(any("acceptance" in problem
                                     for problem in problems), problems)
 
     def test_rehashed_release_chain_cannot_replace_a_current_side_digest(self):
@@ -1105,7 +1042,10 @@ class BundleLifecycleTests(unittest.TestCase):
                         qa_authorization_contexts)
 
     def test_config_rejects_bundle_output_and_checksum_member_collisions(self):
-        for collision in ("BUNDLE.ZIP", "Bundle.Zip.SHA256"):
+        base, unused_releases, unused_qas, unused_attestations, \
+            unused_stored, unused_manifest, unused_wording = _fixture()
+        for collision in (base["name"].upper(),
+                          (base["name"] + ".sha256").upper()):
             with self.subTest(collision=collision):
                 config, unused_releases, unused_qas, unused_attestations, \
                     unused_stored, unused_manifest, unused_wording = _fixture()
@@ -1217,8 +1157,8 @@ class BundleLifecycleTests(unittest.TestCase):
         bundle_digest = canon.bytes_digest(bundlezip.build_zip(
             members, config["declaredTimestamp"]))
         record = {
-            "recordVersion": "2",
-            **release.profile_record_fields(VALIDATED_RELEASE_PROFILE),
+            "recordVersion": "3",
+            **acceptance.profile_record_fields(VALIDATED_RELEASE_PROFILE),
             "bundle": config["name"], "bundleDigest": bundle_digest,
             "members": [{"name": m["name"], "digest": m["digest"]}
                         for m in config["members"]],
@@ -1231,7 +1171,7 @@ class BundleLifecycleTests(unittest.TestCase):
             "operatorKind": "human",
         }
         record["acceptanceReceipt"] = _acceptance_receipt(
-            "bundle", release.bundle_subjects(
+            "bundle", acceptance.bundle_subjects(
                 record["bundleConfigDigest"], bundle_digest,
                 record["releaseRecords"], record["members"],
                 record["manifestApproval"], VALIDATED_RELEASE_PROFILE))
@@ -1289,7 +1229,7 @@ class BundleLifecycleTests(unittest.TestCase):
             malformed_subjects, config, bundle_digest,
             canon.bytes_digest(b"config"), expected_edition_count=1,
             current_acceptance_context=FIXTURE_ACCEPTANCE_CONTEXT)
-        self.assertTrue(any("duplicates" in problem
+        self.assertTrue(any("unique digest list" in problem
                             for problem in malformed_problems),
                         malformed_problems)
 
@@ -1310,9 +1250,11 @@ class BundleLifecycleTests(unittest.TestCase):
             dist = os.path.join(tmp, "navigator", "dist")
             records = os.path.join(tmp, "navigator", "records")
             bundles = os.path.join(tmp, "navigator", "bundles")
+            schema = os.path.join(tmp, "navigator", "schema")
             os.makedirs(dist)
             os.makedirs(records)
             os.makedirs(bundles)
+            os.makedirs(schema)
 
             release_envelope = next(
                 envelope for envelope in releases
@@ -1352,17 +1294,22 @@ class BundleLifecycleTests(unittest.TestCase):
             with open(os.path.join(tmp, "navigator", "bundle-manifest.json"),
                       "w", encoding="utf-8") as fh:
                 json.dump({
-                    "manifestVersion": "2",
+                    "manifestVersion": "3",
                     "releaseProfile": "technical-preview",
                     "compatibilityAuthorization": "not-authorized",
-                    "deferredObservations":
-                        ["AC-11", "AC-12", "AC-13", "AC-15"],
+                    "deferredControls":
+                        TECHNICAL_PREVIEW_PROFILE["deferredControls"],
                     "bundleManifestText":
                         manifest.decode("utf-8").rstrip("\n"),
                 }, fh)
+            with open(os.path.join(NAV, "schema", "release-policy.json"),
+                      "rb") as source, \
+                    open(os.path.join(schema, "release-policy.json"),
+                         "wb") as target:
+                target.write(source.read())
 
             def acceptance_transaction(
-                    unused_root, unused_declared, current_cfg, config_digest,
+                    unused_root, current_cfg, config_digest,
                     plan, zip_bytes, checksum_bytes, manifest_bytes, output):
                 manifest_member = next(
                     member for member in current_cfg["members"]
@@ -1376,7 +1323,7 @@ class BundleLifecycleTests(unittest.TestCase):
                     {"name": name, "digest": canon.bytes_digest(data)}
                     for name, data in plan["members"]]
                 return _acceptance_receipt(
-                    "bundle", release.bundle_subjects(
+                    "bundle", acceptance.bundle_subjects(
                         config_digest, canon.bytes_digest(zip_bytes),
                         plan["releaseRecords"], member_subjects,
                         plan["manifestApproval"],
@@ -1401,8 +1348,7 @@ class BundleLifecycleTests(unittest.TestCase):
                                       FIXTURE_CURRENT_SIDES)), \
                     mock.patch.object(
                         build_mod, "bundle_acceptance_context",
-                        return_value=(preview_contexts,
-                                      ["navigator/build.py"])), \
+                        return_value=preview_contexts), \
                     mock.patch.object(
                         build_mod, "current_release_bindings",
                         return_value=current_bindings), \
@@ -1433,12 +1379,12 @@ class BundleLifecycleTests(unittest.TestCase):
                 records, "status", planes).read_all("bundle-record")
             self.assertEqual(len(envelopes), 1)
             record = envelopes[0]["record"]
-            self.assertEqual(record["recordVersion"], "2")
+            self.assertEqual(record["recordVersion"], "3")
             self.assertEqual(record["releaseProfile"], "technical-preview")
             self.assertEqual(record["compatibilityAuthorization"],
                              "not-authorized")
-            self.assertEqual(record["deferredObservations"],
-                             ["AC-11", "AC-12", "AC-13", "AC-15"])
+            self.assertEqual(record["deferredControls"],
+                             TECHNICAL_PREVIEW_PROFILE["deferredControls"])
             self.assertEqual(record["manifestApproval"], approval_digest)
             self.assertEqual(record["releaseRecords"], [release_digest])
             self.assertEqual(record["approvalStatus"], "passed")
@@ -1463,8 +1409,7 @@ class BundleLifecycleTests(unittest.TestCase):
                                       FIXTURE_CURRENT_SIDES)), \
                     mock.patch.object(
                         build_mod, "bundle_acceptance_context",
-                        return_value=(preview_contexts,
-                                      ["navigator/build.py"])), \
+                        return_value=preview_contexts), \
                     mock.patch.object(
                         build_mod, "current_release_bindings",
                         return_value=current_bindings), \

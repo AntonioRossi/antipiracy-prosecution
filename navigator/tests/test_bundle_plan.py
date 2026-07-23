@@ -10,8 +10,9 @@ from unittest import mock
 
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from lib import authority, bundleplan, bundlezip, canon, qaevidence  # noqa: E402
-from lib import recordprovenance, release, render  # noqa: E402
+from lib import acceptance, authority, bundleplan, bundlezip, canon  # noqa: E402
+from lib import qaevidence, recordprovenance, release, render  # noqa: E402
+from tests import acceptance_support  # noqa: E402
 import build as build_mod  # noqa: E402
 
 
@@ -19,53 +20,12 @@ REQUIRED = frozenset((
     "inventory-completeness", "qa-priority-map", "legend-approval",
     "support-matrix-approval",
 ))
-TECHNICAL_PREVIEW_PROFILE = {
-    "id": "technical-preview",
-    "manualQaEvidence": "deferred",
-    "compatibilityAuthorization": "not-authorized",
-    "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
-    "requiredQaRecordFields": [],
-    "artifactLabel": (
-        "TECHNICAL PREVIEW — Manual cross-platform and "
-        "assistive-technology QA is deferred; browser and "
-        "assistive-technology compatibility is not validated."
-    ),
-}
-VALIDATED_RELEASE_PROFILE = {
-    "id": "validated-release",
-    "manualQaEvidence": "required",
-    "compatibilityAuthorization": "support-matrix-authorized",
-    "deferredObservations": [],
-    "requiredQaRecordFields": ["ac11", "ac12", "ac13", "ac15"],
-    "artifactLabel": (
-        "VALIDATED-RELEASE PROFILE — Delivery requires current full "
-        "seven-row cross-platform and assistive-technology QA."
-    ),
-}
+TECHNICAL_PREVIEW_PROFILE = acceptance_support.TECHNICAL_PREVIEW_PROFILE
+VALIDATED_RELEASE_PROFILE = acceptance_support.VALIDATED_RELEASE_PROFILE
 
 
 def _acceptance_context(profile=VALIDATED_RELEASE_PROFILE):
-    context = {
-        "registryDigest": canon.bytes_digest(b"planner acceptance registry"),
-        "runnerEditions": ["na"],
-        "runnerInputs": [{
-            "path": "navigator/lib/release.py",
-            "digest": canon.bytes_digest(b"planner runner input"),
-        }],
-        "receiptPhases": {
-            "release-preflight": [
-                "AC-%02d" % number for number in range(1, 20)],
-            "release-postcondition": ["AC-16"],
-            "bundle-postcondition": ["AC-20"],
-        },
-        "releaseProfile": profile["id"],
-        "releaseProfileContract": copy.deepcopy(profile),
-    }
-    context["runnerDigest"] = release._runner_digest(
-        context["registryDigest"], context["runnerInputs"],
-        context["receiptPhases"], context["runnerEditions"],
-        context["releaseProfile"], context["releaseProfileContract"])
-    return context
+    return acceptance_support.context(profile)
 
 
 ACCEPTANCE_CONTEXT = _acceptance_context()
@@ -155,26 +115,7 @@ def _envelope(kind, record):
 
 
 def _release_receipt(subjects, context=ACCEPTANCE_CONTEXT):
-    return {
-        "receiptVersion": "2",
-        "registryDigest": context["registryDigest"],
-        "runnerDigest": context["runnerDigest"],
-        "runnerInputs": copy.deepcopy(context["runnerInputs"]),
-        "runnerEditions": copy.deepcopy(
-            context["runnerEditions"]),
-        "runnerKind": "tool",
-        "releaseProfile": context["releaseProfile"],
-        "releaseProfileContract": copy.deepcopy(
-            context["releaseProfileContract"]),
-        "results": [
-            {"phase": "release-preflight",
-             "criteria": ["AC-%02d" % number for number in range(1, 20)],
-             "status": "passed"},
-            {"phase": "release-postcondition", "criteria": ["AC-16"],
-             "status": "passed"},
-        ],
-        "subjects": subjects,
-    }
+    return acceptance_support.receipt("release", subjects, context)
 
 
 def _approval_problems(record):
@@ -293,8 +234,8 @@ def _fixture(profile=VALIDATED_RELEASE_PROFILE):
         "operatorKind": "human",
     })
     release_record = {
-        "recordVersion": "2",
-        **release.profile_record_fields(profile),
+        "recordVersion": "3",
+        **acceptance.profile_record_fields(profile),
         "edition": "na", "sealed": artifact_name,
         "sealedDigest": artifact_digest, "lockDigest": lock_digest,
         "qaRecord": (qa["digest"] if profile["manualQaEvidence"] ==
@@ -305,7 +246,7 @@ def _fixture(profile=VALIDATED_RELEASE_PROFILE):
         "operatorKind": "human",
     }
     release_record["acceptanceReceipt"] = _release_receipt(
-        release.release_subjects(
+        acceptance.release_subjects(
             "na", artifact_digest, lock_digest,
             qa["digest"] if profile["manualQaEvidence"] == "required"
             else None,
@@ -327,7 +268,7 @@ def _fixture(profile=VALIDATED_RELEASE_PROFILE):
         "releaseProfile": profile["id"],
         "name": ("delivery-TECHNICAL-PREVIEW.zip"
                  if profile["id"] == "technical-preview"
-                 else "delivery.zip"),
+                 else "delivery-VALIDATED-RELEASE.zip"),
         "comment": "planner fixture", "editions": ["na"],
         "declaredTimestamp": "2026-07-22T00:00:00Z",
         "manifestApproval": manifest_approval["digest"],
@@ -454,7 +395,7 @@ class BundlePlanTests(unittest.TestCase):
         # exact-profile model release selected for this preview bundle.
         wrong_profile_record = copy.deepcopy(model_record)
         wrong_profile_record.update(
-            release.profile_record_fields(VALIDATED_RELEASE_PROFILE))
+            acceptance.profile_record_fields(VALIDATED_RELEASE_PROFILE))
         wrong_profile_record.update({
             "operator": "release@example.test",
             "operatorKind": "human",
@@ -471,8 +412,8 @@ class BundlePlanTests(unittest.TestCase):
         self.assertIsNone(model_record["qaRecord"])
         self.assertEqual(model_record["compatibilityAuthorization"],
                          "not-authorized")
-        self.assertEqual(model_record["deferredObservations"],
-                         ["AC-11", "AC-12", "AC-13", "AC-15"])
+        self.assertEqual(model_record["deferredControls"],
+                         TECHNICAL_PREVIEW_PROFILE["deferredControls"])
         self.assertEqual(model_record["operator"],
                          "codex:gpt-5.6-sol:run-preview-plan")
 
@@ -646,16 +587,31 @@ class BundlePlanTests(unittest.TestCase):
                     return json.dumps(fixture["cfg"])
                 if path == build_mod.BUNDLE_MANIFEST_RESOURCE:
                     return json.dumps({
-                        "manifestVersion": "2",
+                        "manifestVersion": "3",
                         "releaseProfile": fixture["cfg"][
                             "releaseProfile"],
                         "compatibilityAuthorization":
                             VALIDATED_RELEASE_PROFILE[
                                 "compatibilityAuthorization"],
-                        "deferredObservations": [],
+                        "deferredControls": [],
                         "bundleManifestText":
                             fixture["manifest_bytes"].decode("utf-8").rstrip(
                                 "\n"),
+                    })
+                if path == acceptance.RELEASE_POLICY_PATH:
+                    return json.dumps({
+                        "releasePolicyVersion": "1",
+                        "activeReleaseProfile": "validated-release",
+                        "profiles": [{
+                            "id": "validated-release",
+                            "observedControls": {
+                                identifier: "required"
+                                for identifier in
+                                acceptance_support.OBSERVED
+                            },
+                            "artifactLabel": VALIDATED_RELEASE_PROFILE[
+                                "artifactLabel"],
+                        }],
                     })
                 raise AssertionError("unexpected content read %r" % path)
 
@@ -684,7 +640,7 @@ class BundlePlanTests(unittest.TestCase):
                     return_value=(fixture["required"], fixture["sides"])), \
                 mock.patch.object(
                     build_mod, "bundle_acceptance_context",
-                    return_value=(fixture["acceptance"], ["unused"])), \
+                    return_value=fixture["acceptance"]), \
                 mock.patch.object(
                     build_mod, "current_release_bindings",
                     return_value=fixture["bindings"]), \

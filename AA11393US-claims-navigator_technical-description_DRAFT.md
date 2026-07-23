@@ -410,8 +410,8 @@ validated-release, bound by raw path/digest inside `qaInputLock`. Technical-prev
 create or claim a QA input lock. Registry resources are closed and versioned; their
 merged artifact corpus set must exactly equal the three corpus ids named by the edition.
 Every entry has a globally unique id (§2), role
-(`authoritative` | `derivative` | `fragment-source` | `qa-source`), visibility (`rendered` |
-`quotable` | `internal`), per-file SHA-256 (a multi-file corpus pins every file
+(`authoritative` | `derivative` | `fragment-source`), visibility (`rendered` | `quotable` |
+`internal`), per-file SHA-256 (a multi-file corpus pins every file
 individually), version label, and a **segmentation profile** (declarative file listing which
 sections are targetable, editorial, quotable, or excluded — policy lives in reviewable data,
 not parser code; quotability and targetability are profile-designated, never hardcoded;
@@ -425,8 +425,20 @@ Each registry object has exactly `{registryVersion, corpora}` with version `"1"`
 are closed: nonempty version, nonempty pinned file map, a pinned primary, full canonical
 `sha256/c1` digests, and canonical repository-relative file/profile paths. Rendered
 `derivative` and `fragment-source` entries require a profile; `authoritative` and
-`qa-source` entries are `internal` and forbid one. Other role/visibility combinations fail
-before any corpus bytes are consumed.
+entries are `internal` and forbid one. Other role/visibility combinations fail before any
+corpus bytes are consumed.
+
+A QA registry is a distinct closed type with exactly `{qaRegistryVersion, corpora}` and
+version `"1"`; it cannot be consumed through the artifact corpus accessor. Each QA corpus
+has exactly `{role: "qa-source", visibility: "internal", versionBindings, files, primary}`.
+`versionBindings` is a nonempty, sorted strategy→claim-version map whose values have the
+canonical `<STRATEGY>-YYYY-MM-DD-vN` grammar and whose embedded strategy equals the key. The
+selected edition supplies the exact expected current strategy/version set for each QA role;
+free-form labels, missing or extra strategies, and well-formed obsolete versions fail
+currency validation. Every pinned primary and auxiliary file is read and digest-checked.
+`pin-plan` reports the complete sorted file closure with each pinned and actual digest, plus
+configured and expected version maps, so no primary designation can hide an auxiliary pin
+replacement.
 
 Each fragment corpus has a **gate inventory** (`profiles/gates_<corpusId>.json`) — authored,
 reviewed data enumerating every guidance gate of that claim-set document. Exact entry shape:
@@ -1109,7 +1121,7 @@ navigator/
                           #   support-matrix.json (validated-release browser/OS/AT target policy)
                           #   + support-matrix.schema.json (closed matrix shape)
   strings.json            # shared artifact microcopy + counsel legend
-  bundle-manifest.json    # version-2 bundle-only structured profile/status/deferred data
+  bundle-manifest.json    # version-3 bundle-only structured profile/status/control data
                           #   + neutral wording (digest-bound approval)
   build.py                # content plane: authoring `preview` / `candidate` / `migrate`;
                           #   verification plane: profile-explicit `release` / `bundle` / `attest` /
@@ -1200,8 +1212,13 @@ write privilege; its stdout is a proposal, not a content, artifact, or evidence 
 `verify-current` is the hard, read-only cutover gate: it exits nonzero unless pin plans,
 candidate bytes, current-only version references, classified navigator sources, release and
 attestation chains, the bundle config, deterministic ZIP, detached checksums, canonical
-current-format record inventory, exact distribution inventory, Git whitespace, and the complete discovered
-software suite all agree on one current baseline. `status` remains diagnostic and may report
+current-format record inventory, exact distribution inventory, Git whitespace, and the
+complete discovered software suite all agree on one current baseline. It captures the
+complete repository before the first closure check, materializes those exact bytes into a
+temporary repository for test discovery, rejects any mutation of that sandbox, rejects any
+live-tree delta from the initial snapshot, re-runs the complete live closure, and compares a
+final live snapshot immediately before success. Tests therefore cannot stale an artifact
+that the same invocation already verified. `status` remains diagnostic and may report
 partial state; it never substitutes for `verify-current`.
 
 The `bundle-manifest` is counsel-facing and carries no verification-plane references; the
@@ -1213,14 +1230,17 @@ It writes a watermarked file that is neither QA evidence nor delivery. Conversel
 --profile=technical-preview`; it produces sealed, checksum-verified bytes and profile-labelled
 records without claiming the deferred compatibility observations.
 
-- **Content plane** — sources, relations, inventories, dependency maps, profiles, edition
-  configs, schemas, strings projection, builder tree, declared timestamp. The builder tree
-  is exactly `navigator/build.py`, `navigator/schema/invariants.py`, and the direct Python
-  modules in `navigator/lib/`, enumerated as an explicit code-side 22-path inventory and
-  compared bidirectionally with both edition declarations and the filesystem family. A
-  declared Python path outside that inventory is rejected before either artifact provenance
-  or the executable acceptance runner can read or hash-bind it; a `.py` suffix cannot appoint
-  a new trusted implementation input.
+- **Content plane** — sources, relations, inventories, dependency maps, release policy,
+  edition configs, schemas, strings projection, renderer source inventory, and declared
+  timestamp. The renderer inventory is the exact closed set of Python sources capable of
+  changing artifact bytes and is compared bidirectionally with every edition's declared
+  transitive Python inputs. Promotion, evidence resolution, QA planning, repository
+  snapshotting, and command orchestration live in the disjoint control-source inventory and
+  bind acceptance receipts instead of candidate provenance. The union of the renderer and
+  control inventories must equal the production `build.py`, `schema/invariants.py`, and
+  direct `lib/*.py` family, with an empty intersection. A `.py` suffix cannot appoint a new
+  trusted implementation input, and an unclassified or doubly classified source fails the
+  executable meta-test.
   Every gateway
   path is one NFC, platform-neutral, canonical POSIX-relative identity: empty/dot/dot-dot
   components, normalization aliases, backslashes, controls, drive/stream separators,
@@ -1283,18 +1303,27 @@ visible character. Every authorizing record has `approvalStatus: passed`, an ide
 operator, and its truthful `operatorKind`; authorizing evidence text must be non-empty and
 final, and failure, rejection, skipped, pending, or do-not-release language invalidates it.
 
-Acceptance version 2 / runner version 2 declares one explicit `activeReleaseProfile` and an
-exact ordered two-entry `releaseProfiles` list. Each profile has exactly `{id,
-manualQaEvidence, compatibilityAuthorization, deferredObservations,
-requiredQaRecordFields, artifactLabel}`. The active profile is `technical-preview`, whose
-manual QA is `deferred`, compatibility authorization is `not-authorized`, deferred set is
-exactly `[AC-11, AC-12, AC-13, AC-15]`, required QA fields are exactly empty, and artifact
-label is the exact sentence in §1. `validated-release` has manual QA `required`,
-`support-matrix-authorized`, no deferred observations, required fields exactly `[ac11, ac12,
-ac13, ac15]`, and label **“VALIDATED-RELEASE PROFILE — Delivery requires current full
-seven-row cross-platform and assistive-technology QA.”** AC-14 is deliberately absent from
-both the deferred set and the manual field set: its static no-JS completeness proof is
-automated under both profiles.
+Acceptance version 3 and release-policy version 1 are independent current contracts.
+`schema/acceptance.json` is the sole criterion-to-evidence map. It declares criteria,
+callback ownership, runner modules, selected-edition fixture scopes, and support inputs; it
+does not declare artifact-facing profiles or duplicate a receipt-phase plan.
+`schema/release-policy.json` declares one `activeReleaseProfile` and a canonically ordered,
+non-empty profile list. Each policy profile has exactly `{id, observedControls,
+artifactLabel}` and must cover the same complete registry-derived observed-control set with
+one `required | deferred` state per control. The validators admit additional canonical
+criteria and profiles without a code change, but reject deletion or reassignment of the
+mandatory AC-01 through AC-20 baseline, incomplete observed-control partitions, and attempts
+to select an inactive profile.
+
+The current active profile is `technical-preview`. Its `AC-11.observed`, `AC-12.observed`,
+`AC-13.observed`, and `AC-15.observed` controls are `deferred`, its compatibility
+authorization is derived as `not-authorized`, its required QA fields are empty, and its
+artifact label is the exact sentence in §1. The declared `validated-release` profile marks
+those same controls `required`; its derived compatibility authorization is
+`support-matrix-authorized`, its required fields are exactly `[ac11, ac12, ac13, ac15]`, and
+its label is **“VALIDATED-RELEASE PROFILE — Delivery requires current full seven-row
+cross-platform and assistive-technology QA.”** AC-14 has no observed control: its static
+no-JS completeness proof is automated for every profile.
 
 Every attestation carries the exact closed producer marker
 `producerCommand: "navigator/build.py attest/v1"`; a missing or unknown marker is rejected.
@@ -1311,11 +1340,11 @@ The `technical-preview` chain has **no QA record prerequisite and creates no QA 
 The release command still runs every automated acceptance callback and requires current
 content, lifecycle, attestation, determinism, security, privacy/offline, and output-integrity
 evidence. Its release record carries the exact `releaseProfile`,
-`compatibilityAuthorization`, `deferredObservations`, and `artifactLabel`; none of those
+`compatibilityAuthorization`, `deferredControls`, and `artifactLabel`; none of those
 fields may be omitted, inferred, or relabelled as compatibility authorization. The eventual
 bundle record carries those same four exact selected-profile values; the bundle config adds
 only `releaseProfile`, while the structured manifest exposes the profile, compatibility
-status, deferred set, and exact label to recipients.
+status, deferred-control set, and exact label to recipients.
 
 A `qa-record` exists only for `validated-release`. It is candidate-bound, explicitly carries
 `releaseProfile: "validated-release"`, declares `manualEvidenceVersion: "3"`, and contains
@@ -1356,75 +1385,64 @@ than a new record kind.** Every `release-record` and `bundle-record` has a requi
 `acceptanceReceipt`; the outer record remains identified human/model authorization, while the
 receipt truthfully identifies its executable runner as `runnerKind: tool`. A tool runner
 supplies executable evidence but is never authoritative. The receipt's exact closed fields
-are `{receiptVersion, registryDigest, runnerDigest, runnerInputs, runnerEditions, runnerKind,
-releaseProfileContract, results, subjects}`. `releaseProfileContract` is the complete exact
-selected entry copied from the version-2 registry, so the receipt itself binds the profile
-id, compatibility status, deferred set, manual-evidence policy, required fields, and artifact
-label:
+are `{receiptVersion, registryDigest, policyDigest, runnerDigest, runnerInputs,
+runnerEditions, runnerKind, releaseProfile, releaseProfileContract, results, subjects}`.
+`releaseProfileContract` is the derived complete active contract, so the receipt itself binds
+the profile id, compatibility status, deferred and required observed controls,
+manual-evidence policy, required QA fields, and artifact label:
 
-- `receiptVersion` is `"2"`; `registryDigest` is the ordinary raw-byte SHA-256 digest of
-  the exact `navigator/schema/acceptance.json` bytes, including its closed
-  `receiptPhases` map.
+- `receiptVersion` is `"3"`; `registryDigest` and `policyDigest` are ordinary raw-byte
+  SHA-256 digests of the exact acceptance-registry and release-policy bytes.
 - `runnerEditions` is the exact sorted selected edition set: one edition for a standalone
-  release and both configured editions for the bundle. `runnerInputs` is the exact
-  path-sorted `{path, digest}` lock over every Python input in the selected edition builder
-  input set(s), plus every registry-declared test module and support file, every shared
-  fixture, and only the fixtures scoped to a selected edition. The registry's closed
-  `runner` object declares `runnerVersion: "2"`, `manualQaEvidenceVersion: "3"`, the exact
-  active/two-profile policy, its supported editions,
-  fixture edition scopes, and callback edition scopes as data, together with the live acceptance and canonicalization modules,
-  the TDD, excerpt/disposition/escaping/golden/edition-parameter/migration fixtures,
-  canonical vectors, package initializer, and the fixture-generation, TDD-sync, and
-  review-stamp tools. An independent exact
-  floor of field-specific c1 lock commitments inside the already content-locked
-  edition-blind `lib/release.py` fixes the complete
-  supported-edition, module path, fixture path→scope, callback-scope, support-file,
-  active/two-profile policy, manual-QA-evidence-version, and per-criterion
-  callback/validated-release-QA-field inventories before any registry-selected callback is
-  imported; callback ownership is unique. Thus deleting or redirecting the AC-19 callback
-  cannot remove the auditor, and a registry entry cannot shrink its own lock. The floor
-  compares inactive-edition metadata but does not open or hash inactive-edition fixture
-  bytes.
+  release and every configured edition for a bundle. `runnerInputs` is the exact path-sorted
+  `{path, digest}` lock over the closed control-source inventory, every registry-declared
+  test module and support file, every shared fixture, and only the fixtures scoped to a
+  selected edition. Renderer sources are deliberately absent from that inventory because
+  they are independently and exactly bound by each receipt subject's candidate and
+  content-input-lock digests. The disjoint renderer/control inventories close the production
+  Python source family in both directions; an unclassified module or a module assigned to
+  both trust boundaries fails the meta-test.
+- The registry's closed runner object declares `runnerVersion: "3"`, supported editions,
+  test module paths, fixture edition scopes, callback edition scopes, and support files.
+  Each criterion owns a non-empty unique callback set and at most one typed QA field. From
+  that single mapping the runner derives `AC-NN.automated`, any `AC-NN.observed`,
+  `AC-16.release-preflight`, `AC-16.release-postcondition`, and
+  `AC-20.bundle-postcondition`; no separately authored `receiptPhases` list exists.
   `runnerDigest` is the c1 object-composite digest with tag `aa11393:lock:c1` and payload
-  `{runnerVersion: "2", runnerEditions, registryDigest, runnerInputs,
-  releaseProfileContract, plans: receiptPhases}`. The selected-edition/profile context is
-  snapshotted before execution,
-  recomputed in an isolated fresh interpreter with an empty bytecode-cache location before
-  any registered test module is imported, and recomputed again after execution; any
-  registry, runner-edition, release-profile, or active runner-input change aborts the transaction. An
-  inactive edition's fixture is neither opened nor bound by a standalone run.
-- Release `results` is exactly
-  `[{phase: "release-preflight", criteria: ["AC-01" … "AC-19"], status: "passed"},
-  {phase: "release-postcondition", criteria: ["AC-16"], status: "passed"}]`.
-  Registered fresh-interpreter callbacks execute AC-01–AC-15 and AC-17–AC-19, filtered by
-  their declared edition scopes, including the individually registered canonical
-  golden/property tests. Every `test_acceptance` method name begins with its owning
-  criterion's `test_acNN_` identity; only AC-07 may own `test_canon` callbacks, preventing a
-  set-preserving criterion swap. The synthetic migration callback and fixture are NA-scoped. The
-  split AC-16 checks prove both pre-write reproducibility and post-write sealed/checksum
-  readback.
-  Release `subjects` always bind `{edition, candidateDigest, contentLockDigest,
-  releaseProfile, compatibilityAuthorization, deferredObservations, artifactLabel}`.
-  `technical-preview` has no QA predecessor. `validated-release` additionally binds the
-  exact `qaRecord` and `qaInputLockDigest`.
-- Bundle `results` is exactly
-  `[{phase: "bundle-postcondition", criteria: ["AC-20"], status: "passed"}]`; it is
-  produced only after manifest, ZIP, and checksum write/readback and deterministic member
-  verification, followed by execution of the registry-named AC-20 callback in the same
-  isolated fresh-interpreter runner. The callback consumes a closed transaction context
-  containing the exact evidence collections and independently derived current per-edition
-  acceptance, profile, attestation-side, and candidate/content-lock bindings. For
-  `technical-preview` it proves that no QA predecessor is claimed; for `validated-release`
-  it additionally consumes the exact QA, support-approver, target/viewport, API-probe, and
-  manual-evidence bindings and re-resolves every release→QA→attestation chain. Both profiles
-  independently re-resolve the identified authorized-operator manifest approval rather than
-  trusting the previously resolved plan.
-  It also reads back
-  the just-written outputs and rechecks exact configured members, STORE and deterministic
-  ZIP form, detached checksum, neutral manifest, release references, and the golden bundle
-  fixture; callback failure prevents receipt creation. Bundle `subjects` binds
+  `{runnerVersion: "3", runnerEditions, registryDigest, policyDigest, runnerInputs,
+  controlPlan, releaseProfile, releaseProfileContract}`. The selected-edition/profile
+  context is captured before execution, recomputed in an isolated fresh interpreter with an
+  empty bytecode-cache location before any registered test module is imported, and
+  recomputed again after execution. Any registry, policy, runner-edition, profile,
+  control-plan, or active runner-input change aborts the transaction. An inactive edition's
+  fixture is neither opened nor bound by a standalone run.
+- Release `results` is the complete ordered sequence of `{control, phase, status}` objects
+  for the derived `release-preflight` and `release-postcondition` plans. Automated and
+  required observed controls are `passed`; only controls explicitly deferred by the active
+  policy are `deferred`. Registered fresh-interpreter callbacks execute every applicable
+  preflight `.automated` control, filtered by declared edition scope, including the
+  individually registered canonical golden/property tests. Every `test_acceptance` method
+  name begins with its owning criterion's `test_acNN_` identity; only AC-07 may own
+  `test_canon` callbacks. The synthetic migration callback and fixture are NA-scoped.
+  Built-in AC-16 controls prove pre-write reproducibility and post-write sealed/checksum
+  readback. Release `subjects` always bind `{edition, candidateDigest, contentLockDigest,
+  qaRecord, qaInputLockDigest, releaseProfile, compatibilityAuthorization,
+  deferredControls, artifactLabel}`; the two QA subjects are null for a profile with no
+  required observation and exact predecessor digests otherwise.
+- Bundle `results` is the complete ordered sequence for the derived
+  `bundle-postcondition` plan; the current plan is exactly `AC-20.automated` and
+  `AC-20.bundle-postcondition`, both `passed`. It is produced only after manifest, ZIP, and
+  checksum write/readback and deterministic member verification, followed by execution of
+  every registry-derived bundle callback in the same isolated fresh-interpreter runner. The
+  callback consumes a closed transaction context containing the exact evidence collections
+  and independently derived current per-edition acceptance, profile, attestation-side, and
+  candidate/content-lock bindings. It proves the policy-appropriate presence or absence of
+  QA predecessors, re-resolves every release and attestation chain and the identified
+  authorized-operator manifest approval, and rechecks exact configured members, STORE ZIP
+  form, detached checksum, neutral manifest, release references, and the golden bundle
+  fixture. Callback failure prevents receipt creation. Bundle `subjects` binds
   `{bundleConfigDigest, bundleDigest, releaseRecords, members: [{name, digest}],
-  manifestApproval, releaseProfile, compatibilityAuthorization, deferredObservations,
+  manifestApproval, releaseProfile, compatibilityAuthorization, deferredControls,
   artifactLabel}`.
 
 No receipt contains its enclosing record's digest. Typed predecessor authorization digests
@@ -1495,7 +1513,7 @@ Guardrails, each tied to the failure it prevents:
    `proposedFrom` regardless of otherwise-current local review metadata.
 8. **Profile-explicit release by verification (candidate → sealed), per edition.** `release
    <edition> --profile=<technical-preview|validated-release>` has no implicit profile and
-   refuses a selection that is not the registry's explicit active profile. It re-derives,
+   refuses a selection that is not the release policy's explicit active profile. It re-derives,
    verifies the content-input lock byte-identically, byte-compares the candidate, verifies
    every exact-side content/policy attestation in the verification envelope, and executes
    the registered `release-preflight` acceptance plan. `technical-preview` has no QA-record
@@ -1517,7 +1535,7 @@ Guardrails, each tied to the failure it prevents:
    targets/viewport, current API probe set, and locked manual-evidence version from live
    inputs; it does not accept QA-record copies as self-authenticating currency evidence. A
    technical-preview chain must have no QA predecessor and must carry the exact deferred
-   observation set and not-authorized compatibility status. It likewise resolves only a
+   observed-control set and not-authorized compatibility status. It likewise resolves only a
    current identified authorized human/model manifest approval, then validates the proposed config through
    the same final member resolver used by `bundle`. If multiple release records (or manifest
    approvals) authorize the same current subject, selection is deterministic: prefer valid
@@ -1537,8 +1555,8 @@ Guardrails, each tied to the failure it prevents:
    exact ordered edition/member set; every member's kind, name, and byte digest; the exact
    stored detached-checksum bytes and their sealed artifact; each sealed member's
    digest-addressed release record; the manifest's byte and wording digests; and the exact
-   identified authorized human/model manifest-approval attestation. The version-2 manifest
-   carries structured profile, compatibility-status, deferred-observation, and exact
+   identified authorized human/model manifest-approval attestation. The version-3 manifest
+   carries structured profile, compatibility-status, deferred-control, and exact
    artifact-label fields together with its neutral text. Member names are safe
    NFC root basenames,
    unique case-insensitively, conform to their central artifact-kind path families (the
@@ -1554,12 +1572,12 @@ Guardrails, each tied to the failure it prevents:
    targets/viewport, API probe set, and manual-evidence version, then independently
    revalidates every typed AC-11/12/13/15 result. Copied QA-record values are not their own
    currency proof.
-   Pending/legacy evidence is not authority. It then emits and reads
+   Invalid or retired-format evidence is not authority. It then emits and reads
    back the manifest, deterministic ZIP, and detached ZIP checksum, runs the AC-20
    `bundle-postcondition`, and appends the identified authorized human/model bundle record
    with its non-authoritative tool-run receipt last.
 10. **Content lock, optional validated-QA lock, and verification envelope** (plane separation
-    above). Both profiles carry a `contentLock`: the exact sorted content-gateway read set and
+    above). Every profile carries a `contentLock`: the exact sorted content-gateway read set and
     its digest. A validated-release private QA record separately carries a candidate-bound
     `qaInputLock`: the raw selected QA-registry
     path/digest, verified internal QA-source reads, candidate digest, and `contentLock`
@@ -1568,7 +1586,7 @@ Guardrails, each tied to the failure it prevents:
     `reproductionDiagnostics` section — outside both lock digests and the candidate↔release
     equality check** (interpreter version, locale, platform settings; non-normative;
     byte-identity remains the authority). Safe subset
-    (relation/edition/inventory/strings-projection digests, builder source-tree hash) in
+    (relation/edition/inventory/strings-projection digests, renderer source-tree hash) in
     embedded provenance. **Honest limit:** the locks make policy drift visible,
     attributable, and attestation-invalidating — it cannot make modification impossible;
     the reviewed git commit remains the trust root.
@@ -1612,10 +1630,12 @@ Guardrails, each tied to the failure it prevents:
 18. **Traceability closure, self-binding.** Criteria carry stable IDs in
     `schema/acceptance.json`; the traceability matrix maps registry IDs to named tests or
     validated-release QA-record fields; the meta-test closes both directions over the
-    registry, itself included, including the exact active/two-profile policy and the
-    technical-preview deferred set. The same registry declares the exact `receiptPhases`
-    sets, and its byte digest, selected profile contract, and locked runner inputs are embedded
-    in every acceptance receipt.
+    registry, itself included. The mandatory baseline cannot shrink, but canonically ordered
+    additions use the same ownership rules. The independent release policy must completely
+    partition the registry-derived observed controls for every profile. Atomic receipt
+    controls are derived from the criterion map rather than authored a second time, and the
+    registry digest, policy digest, selected profile contract, control plan, and locked runner
+    inputs are embedded in every acceptance receipt.
 19. **Collision review (procedural).** Every new mechanism folded into this document is
     checked against the guarantee → enforcement map for conflicts with existing mechanisms
     before adoption — at this density, the table's second function is collision detection.
@@ -1638,7 +1658,8 @@ cite a row of the guarantee → enforcement map or carry an explicit scope.
 | Dependency-chain hashes rest on a validated graph | Authored dependency map cross-validated against parsed claim references (AF three-way against its document table); totality/acyclicity/root checks; mismatch fails the build |
 | Attestations cannot outlive any declared side or masquerade as output from another producer contract | Exact-side digest binding + typed passed identified-authorized-operator append-only records + exact `producerCommand: navigator/build.py attest/v1` validation + envelope verification; the marker is digest-bound repository/Git audit metadata, not a signature |
 | Evidence that authorized a release survives it unchanged; release outcomes are themselves recorded | Append-only verification plane + forward-chaining records incl. `release-record`; output readback before the outer record is appended last; overwrite is a gateway error |
-| A release or bundle cannot claim an unexecuted, stale, or differently profiled acceptance suite | Required closed version-2 `acceptanceReceipt` + exact copied release-profile contract + registry-byte digest + explicit runner-edition set + registry-declared shared/edition-scoped test-module/fixture/support-file lock + fresh-interpreter before-import/after-run context equality + closed phase/result sets + typed profile/subject bindings |
+| A release or bundle cannot claim an unexecuted, stale, or differently profiled acceptance suite | Required closed version-3 `acceptanceReceipt` + independently digested release policy + derived exact release-profile contract and atomic control plan + registry-byte digest + explicit runner-edition set + closed control-source and registry-declared shared/edition-scoped module/fixture/support-file lock + fresh-interpreter before-import/after-run context equality + exact per-control results + typed profile/subject bindings |
+| A passing discovered test cannot make `verify-current` certify artifacts that the same invocation no longer derives | Complete initial repository snapshot + exact sandbox materialization + full discovery only in the sandbox + sandbox mutation rejection + live-tree equality before final derivation + complete second live-closure proof + final live snapshot equality immediately before success |
 | Provenance cannot be self-referential | Plane separation: verification artifacts are never content inputs (privilege matrix); receipts omit their enclosing record digest and typed predecessor subjects point only backward |
 | Exactly the required inputs were read | Content read log + two-sided exact-set check against the edition config's declared transitive inputs (undeclared reads and unread declarations both fail) |
 | Composite digests are implementation-independent | Completed canonical serialization law (vendored interpreter-independent Unicode 15.1 NFC/White_Space data, raw and post-NFC duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms) + NUL-framed domain tags incl. per-record-kind tags + single-digest-path test + golden vectors + property-based canon tests |
@@ -1652,7 +1673,7 @@ cite a row of the guarantee → enforcement map or carry an explicit scope.
 | Editorial / `internal` content never rendered or quoted; internal QA identifiers never ship; only public configured authority metadata may identify the non-rendered authority corpus | Visibility rules (schema) + provenance projection + projection test |
 | Authoring-lifecycle fields never ship, in any artifact kind including previews | Ship-axis-derived projection (schema) + projection test |
 | Bundle-config refresh cannot silently mutate source, switch profiles, or arbitrarily choose among current authorizations | Read-only `bundle-plan` + independently derived current candidate/content-lock/profile bindings + exact current attestation sides and receipt-chain validation; validated-release additionally verifies QA-input lock, support approver/targets/viewport, API probe set, and manual-evidence version; deterministic human-over-model, then digest, precedence; an existing pin survives only when it is the selected winner |
-| A bundle contains exactly its enumerated members and only releases authorized for its explicit profile | Closed version-3 exact-member/checksum/manifest-approval/profile config + version-2 structured labelled manifest + deterministic STORE ZIP + golden bundle fixture + complete profile-specific release chain and current release-receipt verification + AC-20 postcondition receipt |
+| A bundle contains exactly its enumerated members and only releases authorized for its explicit profile | Closed version-3 exact-member/checksum/manifest-approval/profile config + structured labelled manifest + deterministic STORE ZIP + golden bundle fixture + complete profile-specific release chain and current release-receipt verification + atomic AC-20 automated and bundle-postcondition results |
 | AF/NA terminology non-conflation in authored text | Forbidden-terms check (heuristic, crosswalk-sourced) |
 | Examples, criteria, and procedure statements in this TDD match their registered data | Fixture validation + TDD-comparison tests (fixtures; acceptance registry; privilege matrix) |
 | Every registered acceptance criterion is carried by a live test, and every acceptance test maps to a criterion | Criteria registry + traceability matrix + bidirectional meta-test |
@@ -1689,10 +1710,11 @@ dependency maps → NA candidate → AF candidate + claim gates → sealing → 
   synonyms (§10.8).
 - **Technical-preview delivery bundle:** a deterministic STORE ZIP containing exactly: both
   sealed, exact-profile-labelled artifacts, their detached checksums, and the **neutral
-  version-2 structured manifest** (`bundle-manifest` output kind; microcopy-registry text,
+  version-3 structured manifest** (`bundle-manifest` output kind; microcopy-registry text,
   counsel-approvable) identifying them as *alternative counsel-review editions* and carrying
-  the exact profile id, `not-authorized` compatibility status, `[AC-11, AC-12, AC-13, AC-15]`
-  deferred set, and technical-preview artifact label; the bundle ships with its own detached
+  the exact profile id, `not-authorized` compatibility status, the
+  `[AC-11.observed, AC-12.observed, AC-13.observed, AC-15.observed]` deferred-control set,
+  and technical-preview artifact label; the bundle ships with its own detached
   checksum. Either
   artifact remains releasable alone. The ordered names and exact bytes are digest-pinned by
   the version-3 bundle config, whose `releaseProfile` is exact; each sealed member names one
@@ -1830,7 +1852,7 @@ never hand-maintained.
   `quotable` corpora with versions and per-file SHA-256, public authority metadata for
   the configured and byte-verified `authorityCorpus` (`pct-pdf`), relation-set,
   gate-inventory, dependency-map, edition, schema, canonVersion,
-  and strings-projection digests, the builder source-tree hash, the declared release
+  and strings-projection digests, the renderer source-tree hash, the declared release
   timestamp, and counts. **Internal QA-source identifiers, paths, and hashes never appear
   in an artifact.**
 - **Validated-release private QA record only** (`qa-record` kind; append-only): no QA record
@@ -1848,12 +1870,13 @@ never hand-maintained.
   matrix together with its named approver and exact approval-attestation digest; the four
   structured passed operator-performed checks bound to those candidate bytes; and the
   identified authorized human/model operator with explicit kind and identity.
-- **Version-2 acceptance receipt** (required inside each `release-record` / `bundle-record`): the
-  exact acceptance-registry byte digest, closed sorted executable-runner input lock and
-  composite runner digest, tool runner kind, exact copied `releaseProfileContract`, exact
-  passed phase/criterion set, and typed release or bundle subjects (§10). It is separate from
-  content and optional validated-QA locks: it proves which executable acceptance contract and
-  profile ran against which subjects, while the outer record remains
+- **Version-3 acceptance receipt** (required inside each `release-record` / `bundle-record`):
+  the exact acceptance-registry and release-policy byte digests, closed sorted
+  executable-runner input lock and composite runner digest, derived atomic control plan,
+  tool runner kind, exact derived `releaseProfileContract`, exact per-control results, and
+  typed release or bundle subjects (§10). It is separate from content and optional
+  validated-QA locks: it proves which executable acceptance contract and profile ran against
+  which subjects, while the outer record remains
   the identified human/model operator's authorization; the tool runner is never authority.
 - **Deterministic build:** declared release timestamp; stable ordering; double-build
   byte-identity **across separate interpreter processes** (an in-process double build
@@ -1867,8 +1890,9 @@ never hand-maintained.
   content roots, selective unrecorded copying, and mutable filesystem aliases are forbidden.
   The runbook supplies the operational preflight and recovery commands but changes none of
   these requirements. Then (1) amend source(s), gate inventory,
-  dependency map, relations, or builder code — the builder tree is a pinned content input,
-  so tooling changes re-enter this procedure like any other amendment; (2) when gate-
+  dependency map, relations, renderer code, or control code — renderer sources are pinned
+  content inputs and control sources are pinned runner inputs, so either change re-enters the
+  applicable candidate and authorization gates; (2) when gate-
   inventory endpoint pins need mechanical refresh, run the separate operation
   `python3 navigator/tools/stamp.py navigator/editions/<edition>.json --stamp-inventory`;
   it writes only the gate inventory and never relation review state; (3) `build.py candidate
@@ -1895,7 +1919,7 @@ never hand-maintained.
   (immutable, candidate-bound validated-release authorization record); technical-preview
   skips this step and neither requires nor creates a QA record; (10) run `build.py release
   <edition> --profile=<technical-preview|validated-release>` with an explicit profile equal to
-  the registry's active profile — reproduces the content lock (and the validated-QA lock only
+  the release policy's active profile — reproduces the content lock (and the validated-QA lock only
   for validated-release), byte-compares the candidate, verifies the envelope,
   executes the registry-bound `release-preflight`, writes and reads back the sealed artifact
   and checksum, passes the AC-16 `release-postcondition`, then appends the identified
@@ -1908,7 +1932,7 @@ never hand-maintained.
   evidence; (12) run
   `build.py bundle` when the applied version-3 config's exact profile, complete
   profile-specific authorization chains, and current release receipts validate; it
-  writes/reads back the version-2 structured profile-labelled manifest, ZIP, and checksum, passes
+  writes/reads back the version-3 structured profile-labelled manifest, ZIP, and checksum, passes
   the AC-20 `bundle-postcondition` through its registry-named fresh-interpreter callback,
   then appends the identified authorized human/model `bundle-record` with its
   non-authoritative tool-run receipt last; (13) remove superseded files from the live
@@ -1921,20 +1945,22 @@ never hand-maintained.
 
 ## 14. Acceptance criteria (definition of done)
 
-Acceptance version 2 carries stable criterion IDs and the exact active/two-profile policy in
-the criteria registry (`schema/acceptance.json`); this section
-must match the registry (comparison test, §10.17); the traceability matrix and meta-test
-close both directions over the registry, **including AC-19 and AC-20 themselves**.
-The registry's closed `receiptPhases` map is also normative: `release-preflight` covers
-AC-01–AC-19, `release-postcondition` covers AC-16 after output write/readback, and
-`bundle-postcondition` covers AC-20 after bundle output write/readback.
-**Applicability: a standalone edition release requires AC-01 – AC-19 under its explicit
-profile; bundle creation additionally requires AC-20 under that same profile. Automated
-checks always remain required. Only the technical-preview observations enumerated exactly as
-AC-11/12/13/15 are deferred; AC-14 has no deferred manual observation. A claim of passage is
-valid only in the current, profile-and-subject-bound version-2 acceptance receipt carried by
-an identified authorized human/model outer record; its tool runner is evidence, never
-authority.**
+Acceptance version 3 carries stable criterion IDs and their sole evidence mappings in
+`schema/acceptance.json`; the independent `schema/release-policy.json` carries the active
+artifact-facing profile and complete observed-control partitions. This section must match
+the criterion registry (comparison test, §10.17); the traceability matrix and meta-test close
+both directions over the registry, **including AC-19 and AC-20 themselves**. The runner
+derives the atomic `release-preflight`, `release-postcondition`, and `bundle-postcondition`
+control plans from those mappings and fixed postconditions; no second authored phase list is
+normative.
+**Applicability: a standalone edition release requires every applicable edition/shared
+automated control, every required observed control, and the release postconditions under the
+active explicit profile; bundle creation additionally requires every bundle control under
+that same profile. Automated checks always remain required. The active technical-preview
+policy defers exactly AC-11/12/13/15 observed controls; AC-14 has no observed control. A
+claim of passage is valid only in the current, profile-and-subject-bound version-3 acceptance
+receipt carried by an identified authorized human/model outer record; its tool runner is
+evidence, never authority.**
 
 **Per edition (AC-01 … AC-18)** — all pass (automated except where noted):
 
@@ -1961,17 +1987,7 @@ authority.**
 5. **AC-05** All schema and invariant validations pass: axis tags present with inter-axis invariants and declared locator exceptions satisfied; applicability matrices; relation-binding conformity; phrase rules; no duplicate targets, gate instances, or dispositions; note and rationale bounds; caution type×scope matrix and code closure; caution sources resolve into `quotable` blocks only; zero targets on editorial, excluded, or `internal` blocks; the support matrix has its closed structural shape; enum ↔ presentation coverage; forbidden-terms check clean; the centralized authority matrix admits only explicit human/model kinds paired with an NFC identity having no surrounding whitespace or control/format characters and at least one visible character, and rejects tool, missing, blank, invisible-only, unknown, and malformed kinds or identities.
 6. **AC-06** The edition's fixtures (including the disposition fixture) validate against
    schemas and pinned corpora; this document's examples match the fixture projections.
-7. **AC-07** Registry-access, artifact-kind/path, edition-blindness, writer-set, diff-classifier,
-   single-digest-path, single-JSON-input-parser, procedure-vs-matrix, and hard current-state
-   boundary tests pass; the hard boundary rejects obsolete primary-strategy versions, extra
-   or missing inventory files, legacy-format verification records, stale pin plans, and
-   write privilege; the NA-scoped migration
-   case-table scenario test passes against a locked synthetic NA snapshot rather than live NA inputs,
-   asserts the runtime classifier accepts every intended delta and rejects semantic/review
-   mutations before any source write,
-   while other edition releases neither execute nor bind it; the registered canonical
-   serialization golden-vector and generated-input property tests pass (idempotence, NFC
-   duplicate-key rejection, escaping exactness, and integer edge rules).
+7. **AC-07** Registry-access, artifact-kind/path, edition-blindness, writer-set, diff-classifier, single-digest-path, single-JSON-input-parser, procedure-vs-matrix, and hard current-state boundary tests pass; the hard boundary rejects obsolete primary-strategy versions, malformed or non-current structured QA version bindings, incomplete QA corpus inventories, drift in any primary or auxiliary pinned QA file, extra or missing inventory files, retired-format verification records, stale pin plans, and write privilege. Every pin plan reports the complete sorted QA corpus file set, each pinned and actual digest, and every replacement digest needed to restore currency. The NA-scoped migration case-table scenario test passes against a locked synthetic NA snapshot rather than live NA inputs, asserts the runtime classifier accepts every intended delta and rejects semantic/review mutations before any source write, while other edition releases neither execute nor bind it; the registered canonical serialization golden-vector and generated-input property tests pass (idempotence, NFC duplicate-key rejection, escaping exactness, and integer edge rules).
 8. **AC-08** Projection tests pass: no `never`-tagged field and no internal QA-source
    identifier appears in any artifact kind, previews included.
 9. **AC-09** Adversarial escaping fixtures render safely through every authored and quoted
@@ -1983,19 +1999,19 @@ authority.**
 13. **AC-13** Automated candidate-byte checks always verify the local-file architecture, exact support-matrix viewport policy, derived responsive breakpoint, below-minimum stacking rule, and viewport notice. Under technical-preview, actual local-file launches and layout observations across the support matrix are explicitly deferred and no browser/OS layout compatibility is authorized. Under validated-release, versioned structured QA evidence must copy every atomic support-matrix row in exact order, record actual browser/OS/AT versions, the exact minimum and a below-minimum viewport, and typed passed local-file, minimum-layout, and stacked-layout results, by the same identified authorized human/model operator; tool is never authority.
 14. **AC-14** Automated script-stripped candidate parsing always proves that the §11 claims, disclosure, schedule, provenance, disclaimer, legend, and noscript content remain present in readable document order. AC-14 has no deferred manual observation and no QA-record field under either release profile.
 15. **AC-15** Automated candidate-byte checks always verify that self-auditing attempted-use instrumentation per `schema/api-policy.json` exposes the exact registered probe set, wires every required hook, records attempted use, and fails closed unless every hook reports installed with null error/detail; page code contains no registered forbidden use. Under technical-preview, actual browser/OS runtime and ledger observations are explicitly deferred and no runtime compatibility is authorized. Under validated-release, versioned structured candidate-bound QA evidence must record the actual browser/OS versions, ready=true, the exact installed hook map, and exact empty attempted-use, resource, external-request, cookie-write, Web Storage, IndexedDB, and navigation-mutation ledgers; it is authorized by an identified human/model operator, never tool.
-16. **AC-16** Double build is byte-identical across separate interpreter processes; the content-input lock reproduces byte-identically between candidate and release (diagnostics excluded); the exact-set check passes in both directions; release byte-compares and seals the same current candidate bytes; lock, envelope, release-profile label, and release-record are written append-only; checksums are emitted and match. These determinism and output-integrity checks do not depend on manual cross-platform QA. Technical-preview has no QA-record prerequisite; validated-release additionally reproduces the candidate-bound `qaInputLock` over pin-verified internal QA inputs and binds the current validated QA record. The release record is appended last only after sealed/checksum readback, is authorized by an identified human/model operator, carries the exact releaseProfile, compatibilityAuthorization, deferredObservations, and artifactLabel contract, and carries a current registry/runner/profile/subject-bound acceptance receipt whose exact release-preflight result covers AC-01–AC-19 and whose post-write release-postcondition covers AC-16; the tool runner supplies evidence but is never authority.
+16. **AC-16** Double build is byte-identical across separate interpreter processes; the content-input lock reproduces byte-identically between candidate and release (diagnostics excluded); the exact-set check passes in both directions; release byte-compares and seals the same current candidate bytes; lock, envelope, release-profile label, and release-record are written append-only; checksums are emitted and match. The hard current-state gate captures the complete repository, proves the live closure, runs every discovered test in a materialized isolated snapshot, rejects any sandbox or live-tree mutation, proves that the live tree still equals the initial snapshot, re-derives the complete live closure, and compares the final snapshot before reporting current. These determinism and final-state checks do not depend on manual cross-platform QA. A profile with deferred observed controls has no QA-record prerequisite; a profile with required observed controls additionally reproduces the candidate-bound `qaInputLock` over pin-verified internal QA inputs and binds the current QA record. Same-schema QA records remain append-only and become superseded evidence when a profile or exact current binding changes; they are never made invalid merely because they are not selected by the active profile. The release record is appended last only after sealed/checksum readback, is authorized by an identified human/model operator, carries the exact releaseProfile, compatibilityAuthorization, deferredControls, and artifactLabel contract, and carries a current version-3 registry/policy/runner/profile/subject-bound acceptance receipt whose results enumerate every derived release-preflight atomic control and AC-16.release-postcondition with its exact passed or policy-deferred status; the tool runner supplies evidence but is never authority.
 17. **AC-17** The exact selected-profile artifact label, §9.1 disclaimer, and approved legend are present on screen, in print, and no-JS; the legend approval by an identified authorized human/model operator matches the shipped wording digest, and tool evidence is rejected. The technical-preview label explicitly states that manual cross-platform and assistive-technology QA is deferred and compatibility is not validated.
 18. **AC-18** Double-sided content-QA attestations by identified authorized human/model operators are current and carry producerCommand: navigator/build.py attest/v1, the exact typed attest-command output contract: priority-map cross-check and, for AF, the crosswalk non-conflation check; missing or unknown producer metadata and tool evidence are rejected. These attestations remain required for both release profiles and do not represent deferred browser/OS/assistive-technology observations. The producer marker is digest-bound audit metadata under the repository/Git trust root, not a cryptographic signature.
 
-**Shared** — **AC-19** Before importing any registry-selected callback, the production runner rejects drift from an independent locked executable floor: the supported-edition set, module path specifications, fixture path→scope map, callback test scopes, support-file inventory, manual-QA-evidence version, exact active/two-profile policy, and exact per-criterion callback/validated-release-QA-field map are deletion- and redirection-resistant, with unique callback ownership. The traceability meta-test then proves every registered criterion (AC-01 through AC-20, including this one) maps to its named live tests with criterion-matching `test_acNN_` identity or validated-release QA-record fields, the technical-preview deferred-observation set is exactly AC-11/12/13/15 while AC-14 is never deferred, only AC-07 owns canonicalization callbacks, every acceptance-designated test maps back to a registered criterion, and every floored support input and every shared or active-edition fixture exists and is locked without opening inactive-edition fixture bytes.
+**Shared** — **AC-19** Acceptance version 3 is the sole criterion-to-evidence map: the runner derives one automated atomic control per criterion, at most one observed atomic control from its typed QA field, and the built-in release and bundle postconditions, so no authored phase or receipt list can drift from criterion ownership. The mandatory AC-01 through AC-20 baseline cannot shrink or be reassigned, while additional canonically ordered criteria and profiles are admitted through the same closed validation. Every callback has one owner, every declared test module is used, every acceptance-designated test maps back to a criterion, test_acceptance callback names match their criterion IDs, and only AC-07 may own canonicalization callbacks. The independently versioned release policy declares the active profile and a complete common observed-control partition for every profile; policy additions do not change renderer or runner code, and a command cannot select an inactive profile. Renderer and control source inventories are disjoint and together close the production Python source family: renderer sources alone bind candidate provenance, while control sources, the registry-declared modules, scoped fixtures, support files, registry digest, and policy digest bind the acceptance runner before callback import and again after execution. The traceability meta-test proves these rules bidirectionally, locks every shared and selected-edition runner input without opening an inactive-edition fixture, and proves the derived atomic control plan contains the required release and bundle postconditions.
 
-**Bundle** — **AC-20** Automated bundle integrity checks always require the bundle to match its config exactly (enumerated members only, including the bundle-manifest), verify every member digest, produce a deterministic STORE ZIP conforming to the golden bundle fixture with its own detached checksum, and match the neutral manifest's approved wording digest. Every configured release-record must resolve by explicit digest to a current release→exact-attestation chain with exact typed producer metadata and authorization by identified human/model operators, independently current candidate/content-lock bindings, and the same explicit release profile in the config, records, artifact labels, and receipts. Under technical-preview, no QA record or manualChecks is required or created; the manifest carries the profile, compatibility status, deferred-observation set, and exact technical-preview label, and neither the bundle nor its records claim browser or assistive-technology compatibility. Under validated-release, every release additionally resolves a current QA record with exact qaInputLock, support-matrix approver/targets/viewport, API probe set, and locked manual-evidence version, and bundle verification independently revalidates the complete typed AC-11/12/13/15 version-3 evidence rather than trusting QA-copied context. The manifest approval is current identified authorized human/model evidence. Every resolved release receipt is current, and the bundle record is appended last only after manifest/ZIP/checksum readback by an identified human/model operator with a current registry/runner/profile/subject-bound bundle-postcondition receipt covering AC-20; tool records and the tool runner are never authority.
+**Bundle** — **AC-20** Automated bundle integrity checks always require the bundle to match its config exactly (enumerated members only, including the bundle-manifest), verify every member digest, produce a deterministic STORE ZIP conforming to the golden bundle fixture with its own detached checksum, and match the neutral manifest's approved wording digest. Every configured release-record must resolve by explicit digest to a current release→exact-attestation chain with exact typed producer metadata and authorization by identified human/model operators, independently current candidate/content-lock bindings, and the same active release profile in the policy, config, records, artifact labels, and receipts. A profile with deferred observed controls requires and claims no QA predecessor; the manifest carries the profile, compatibility status, deferredControls, and exact profile label. A profile with required observed controls additionally resolves a current QA record with exact qaInputLock, support-matrix approver/targets/viewport, API probe set, and locked manual-evidence version, and bundle verification independently revalidates the complete typed evidence rather than trusting QA-copied context. The manifest approval is current identified authorized human/model evidence. Every resolved release receipt is current, and the bundle record is appended last only after manifest/ZIP/checksum readback by an identified human/model operator with a current version-3 registry/policy/runner/profile/subject-bound receipt whose exact atomic result set is AC-20.automated and AC-20.bundle-postcondition, both passed; tool records and the tool runner are never authority.
 
 ## 15. Roadmap (not in the current deliverable)
 
 - Activate `validated-release` only after current full version-3 AC-11/12/13/15 evidence has
   been performed across the preserved seven-row target policy; switch the explicit active
-  profile and executable-floor commitment deliberately, then regenerate all affected records
+  release-policy profile deliberately, then regenerate all affected records
   and artifacts. VoiceOver remains out of scope.
 - `propose-reuse` cross-edition proposal tooling (optional hardening; boundary specified in
   §10.7).
@@ -2016,11 +2032,11 @@ authority.**
 |---|---|
 | Editions | Two current editions (NA, AF) of one shared contract; alternatives, never layers; one single-edition artifact each |
 | Edition knowledge | Kernel edition-blind (AST-test-enforced); edition configs are the complete parameter set incl. declared transitive inputs; censuses, gate inventories, and dependency maps are normative data |
-| Requirements as data | Coverage proven by bidirectional referential integrity over instances and dispositions; **policies are total over evidence states — honest absence is a releasable, reviewed disposition**; inventory completeness is a digest-bound identified-authorized-operator attestation; acceptance criteria, exact active/two-profile release policy, API policy, and validated-release support matrix live in registries |
+| Requirements as data | Coverage proven by bidirectional referential integrity over instances and dispositions; **policies are total over evidence states — honest absence is a releasable, reviewed disposition**; inventory completeness is a digest-bound identified-authorized-operator attestation; acceptance criteria, independently versioned extensible release-profile policy, API policy, and validated-release support matrix live in closed registries |
 | Associations | Every association pins both endpoints by digest and carries lifecycle where reviewed; `gateId` required on every source-gate instance; declared uniqueness keys on every collection |
 | Lifecycle | Ownership model with schema-declared applicability matrices and per-owner identity tuples; sub-object changes roll up; closed staleness-reason enum |
 | Reviews & attestations | Exact-declared-side digest binding; required owner review provenance `{by, operatorKind, date, contentHash}` with closed `human | model | tool` kinds and release authority only for an NFC identified human/model operator with no surrounding whitespace or control/format characters, at least one visible character, and a real canonical date; reviewer identity/date/kind excluded from `review.contentHash`, which covers the schema-derived review projection — content, hidden endpoints, identity tuples, and dependency-chain hash, stopping at declared nested-owner boundaries; **declared locators excluded, so mechanical re-anchoring never invalidates review**; parent-claim amendments deliberately cascade re-review to dependents; model/tool authorship stays truthful; tool never authorizes; typed passed identified-authorized-operator append-only authorization records; exact typed attest-producer marker is digest-bound Git-root metadata, not a signature |
-| Trust root & planes | `contentLock` derived from the exact gateway read log under both profiles; validated-release additionally carries a candidate-bound `qaInputLock` over pin-verified internal QA bytes, **diagnostics excluded from applicable lock digests**; current registry-byte + exact profile + runner-input acceptance lock; forward-chaining verification records incl. `release-record`; exact command×kind privilege matrix; procedure prose validated against the matrix; reviewed git commit is the trust root |
+| Trust root & planes | `contentLock` derived from the exact gateway read log under every profile; a profile with required observations additionally carries a candidate-bound `qaInputLock` over pin-verified internal QA bytes, **diagnostics excluded from applicable lock digests**; current acceptance-registry byte + release-policy byte + derived atomic control plan + exact profile + runner-input acceptance lock; forward-chaining verification records incl. `release-record`; exact command×kind privilege matrix; procedure prose validated against the matrix; reviewed git commit is the trust root |
 | Enumerations & boundaries | All projections derived from schema axis tags with declared, justified locator and nested-owner-boundary rules; gateway-enforced output-kind registry with plane membership; derived content never stored |
 | Serialization | Completed canonical law (vendored interpreter-independent Unicode 15.1 NFC/White_Space data, raw and post-NFC duplicate-key rejection, exact escapes, integer edge rules, two declared payload forms — digest-list vs canonical-JSON) + NUL-framed domain tags incl. `figure` and per-record-kind tags, versioned under canonVersion; single-digest-path test; golden vectors + property-based tests confirm |
 | Structural graphs | Dual-sourced: authored dependency maps cross-validated against parsed claim references (AF three-way against its document table); totality/acyclicity/root checks; mismatch fails the build |
@@ -2032,7 +2048,7 @@ authority.**
 | Identity | Positional IDs as declared locators; semantic identity pinned by full SHA-256 canonical hashes (incl. aggregate claim and dependency-chain hashes); corpus/edition ids stable and version-neutral — claim-set versions update pins in place via migrate |
 | Tool behavior | Closed action taxonomy; commands declare classes; diff-classifier enforces; reviewed semantic content is never tool-modified |
 | Migration | Closed case table with roll-up staleness and complete reason enum; auto-re-anchoring only on unique canonical-hash match |
-| Release lifecycle | Explicit `release --profile=<technical-preview\|validated-release>` promotion by passed identified-human/model operator, candidate-bound verification per edition; technical-preview has no QA predecessor and explicitly defers AC-11/12/13/15 observations without compatibility authorization; validated-release retains the full seven-row version-3 QA gate; required version-2 nested tool receipt binds exact registry, selected profile contract, runner inputs, phase results, and subjects but is never authority; release-preflight = AC-01–AC-19, post-write release-postcondition = AC-16, post-write bundle-postcondition = AC-20; outer authorized-operator record appended last after output readback; read-only `bundle-plan` derives current profile bindings/chains and proposes fail-closed config refresh for authorized-operator application; bundle resolves exact configured release digests and their full current profile-specific receipt/attestation chains (plus QA only for validated-release), including exact typed attestation-producer metadata, before deterministic STORE packaging; authoring previews pass the same projection but never authorize delivery |
+| Release lifecycle | Explicit `release --profile=<active-profile>` promotion by passed identified-human/model operator, candidate-bound verification per edition; the current technical-preview profile has no QA predecessor and explicitly defers AC-11/12/13/15 observed controls without compatibility authorization; the declared validated-release profile retains the full seven-row version-3 QA gate; required version-3 nested tool receipt binds exact registry and policy digests, the derived selected-profile contract and atomic control plan, runner inputs, per-control results, and subjects but is never authority; outer authorized-operator record appended last after output readback; read-only `bundle-plan` derives current profile bindings/chains and proposes fail-closed config refresh for authorized-operator application; bundle resolves exact configured release digests and their full current profile-specific receipt/attestation chains, plus QA whenever the policy requires observed controls, before deterministic STORE packaging; authoring previews pass the same projection but never authorize delivery |
 | Traceability | Guarantee table (claims→enforcers, and collision detection between mechanisms) + fixture/registry/procedure comparisons + bidirectional traceability meta-test: checked loops that include themselves |
 | Environment | Negative guarantees are always instrumented and tested per the enumerated API policy; actual-browser runtime observations are deferred under technical-preview and required under validated-release; runtime determinants are non-normative diagnostics outside applicable lock digests; the seven-row support matrix is validated-release normative target-policy data with a pinned digest, named approver, and exact policy-approval attestation; VoiceOver is outside both profiles |
 | Multi-candidate behavior | Jump to first + cycle; all candidates kept; display cap presentation-only |

@@ -8,8 +8,7 @@ import base64
 import json
 import re
 
-from . import projections
-from . import release as release_mod
+from . import profilepolicy, projections
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;")
@@ -35,8 +34,8 @@ def md_inline(s):
 def script_json(obj):
     """JSON for embedding inside <script> — escapes </script sequences."""
     return json.dumps(obj, ensure_ascii=False, separators=(",", ":")) \
-        .replace("<", "\\u003c").replace(" ", "\\u2028") \
-        .replace(" ", "\\u2029")
+        .replace("<", "\\u003c").replace(chr(0x2028), "\\u2028") \
+        .replace(chr(0x2029), "\\u2029")
 
 
 def microcopy(template, **values):
@@ -595,7 +594,7 @@ def _provenance_html(prov, strings, support_matrix):
         for k in ("relationSetDigest", "gateInventoryDigest",
                   "dependencyMapDigest", "editionConfigDigest",
                   "schemaDigest", "stringsProjectionDigest",
-                  "builderTreeHash") if prov.get(k))
+                  "renderTreeHash") if prov.get(k))
     return (
         '<section id="about"><h2>%s</h2>'
         '<h3 id="provenance-title">%s</h3>%s'
@@ -629,14 +628,14 @@ def render(m, mode="candidate"):
     (additive only — identical shipping projection)."""
     strings = m.strings
     release_profile, profile_contract = \
-        release_mod.release_profile_contract(m.acceptance)
+        profilepolicy.profile_contract(m.release_policy)
     profile_label = profile_contract["artifactLabel"]
     ship = projections.ship_relation(m, "artifact")
     ship_schedule = projections.ship_relation(m, "schedule")
     reverse = projections.reverse_index(ship)
     quotes = projections.quotable_texts(m, ship)
     prov = projections.provenance(m)
-    prov["builderTreeHash"] = projections.builder_tree_hash(
+    prov["renderTreeHash"] = projections.render_tree_hash(
         m.gw, m.edition["declaredTransitiveInputs"])
 
     figures_b64 = {}
@@ -671,8 +670,7 @@ def render(m, mode="candidate"):
             "releaseProfile": release_profile,
             "compatibilityAuthorization":
                 profile_contract["compatibilityAuthorization"],
-            "deferredObservations":
-                profile_contract["deferredObservations"],
+            "deferredControls": profile_contract["deferredControls"],
         },
         "strings": {
             "ui": strings["ui"], "status": strings["status"],

@@ -9,7 +9,7 @@ import importlib.util
 import posixpath
 import re
 
-from . import authority, bundlezip, projections, render, schema_validate
+from . import authority, projections, render, schema_validate, timepolicy
 from .model import FRAG_ID_RE, PHRASE_ID_RE
 
 
@@ -125,10 +125,10 @@ def validate_edition(m, for_release=False):
         seen_normalized.add(normalized)
 
     try:
-        bundlezip.parse_utc_second(
+        timepolicy.parse_utc_second(
             m.edition.get("declaredReleaseTimestamp"),
             "edition declaredReleaseTimestamp")
-    except bundlezip.BundleError as exc:
+    except timepolicy.TimestampError as exc:
         err("edition", str(exc))
 
     # ---- census (AC-01) -------------------------------------------------

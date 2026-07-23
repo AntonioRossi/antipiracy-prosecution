@@ -5,6 +5,8 @@ record.  They are audit metadata, not a signature or a claim that record
 contents are cryptographically unforgeable.
 """
 
+from . import profilepolicy
+
 
 ATTESTATION_PRODUCER_COMMAND = "navigator/build.py attest/v1"
 
@@ -21,14 +23,14 @@ QA_RECORD_FIELDS = frozenset((
 ))
 RELEASE_RECORD_FIELDS = frozenset((
     "recordVersion", "releaseProfile", "compatibilityAuthorization",
-    "deferredObservations", "artifactLabel", "edition", "sealed",
+    "deferredControls", "artifactLabel", "edition", "sealed",
     "sealedDigest", "lockDigest", "qaRecord", "attestations",
     "declaredReleaseTimestamp", "approvalStatus", "operator",
     "operatorKind", "acceptanceReceipt",
 ))
 BUNDLE_RECORD_FIELDS = frozenset((
     "recordVersion", "releaseProfile", "compatibilityAuthorization",
-    "deferredObservations", "artifactLabel", "bundle", "bundleDigest",
+    "deferredControls", "artifactLabel", "bundle", "bundleDigest",
     "members", "releaseRecords", "manifestWording", "manifestApproval",
     "bundleConfigDigest", "approvalStatus", "operator", "operatorKind",
     "acceptanceReceipt",
@@ -71,10 +73,11 @@ def current_record_format_problems(kind, record):
     if kind == "attestation":
         problems.extend(attestation_producer_problems(record))
     elif kind == "qa-record":
-        if record.get("releaseProfile") != "validated-release":
-            problems.append("QA record has the wrong release profile")
+        profile = record.get("releaseProfile")
+        if not profilepolicy.is_profile_id(profile):
+            problems.append("QA record has no canonical release profile")
         if record.get("manualEvidenceVersion") != "3":
             problems.append("QA record has the wrong evidence version")
-    elif record.get("recordVersion") != "2":
+    elif record.get("recordVersion") != "3":
         problems.append("%s has the wrong recordVersion" % kind)
     return problems

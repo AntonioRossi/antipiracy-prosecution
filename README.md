@@ -58,13 +58,17 @@ The NA and AF-CONT claim sets (and any successor claim set) are produced and mai
 After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. Current-state, software, generated-product, and document-integrity checks are:
 
 ```sh
-python3 navigator/build.py verify-current
-python3 navigator/tools/pre-commit-check.sh
+sh navigator/tools/pre-commit-check.sh
 python3 -m unittest discover -s navigator/tests -p 'test_*.py'
 git diff --check
 git diff --name-only -z -- '*.md' | xargs -0 -n 1 pandoc --from=gfm --to=html -o /dev/null
-cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256
+(cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256)
+python3 navigator/build.py verify-current
 ```
+
+Run `verify-current` last. It executes discovered tests in an isolated repository snapshot,
+rejects sandbox or live-tree mutation, re-derives the complete current closure, and certifies
+the final live snapshot rather than a state that existed before the checks ran.
 
 Regenerate prior-art transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
 

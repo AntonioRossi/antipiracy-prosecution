@@ -10,7 +10,7 @@ from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lib import (bundlezip, canon, gateway, model, projections,
-                 recordprovenance, release)  # noqa: E402
+                 profilepolicy, recordprovenance, release)  # noqa: E402
 
 
 PLANES = {
@@ -259,21 +259,21 @@ class TestVerificationRecords(unittest.TestCase):
             planes = json.load(fh)
         records = os.path.join(nav, "records")
         reader = gateway.VerificationGateway(records, "status", planes)
-        with open(os.path.join(nav, "schema", "acceptance.json"),
+        with open(os.path.join(nav, "schema", "release-policy.json"),
                   encoding="utf-8") as fh:
-            acceptance = json.load(fh)
-        active = acceptance["runner"]["activeReleaseProfile"]
-        profile = next(
-            item for item in acceptance["runner"]["releaseProfiles"]
-            if item["id"] == active)
+            policy = json.load(fh)
+        active, profile = profilepolicy.profile_contract(policy)
+        self.assertEqual(active, policy["activeReleaseProfile"])
         for kind in ("attestation", "qa-record", "release-record",
                      "bundle-record"):
             envelopes = reader.read_all(kind)
+            if kind != "qa-record":
+                self.assertTrue(envelopes, kind)
             if kind == "qa-record" and \
                     profile["manualQaEvidence"] == "deferred":
-                self.assertEqual(envelopes, [], kind)
-            else:
-                self.assertTrue(envelopes, kind)
+                # Same-schema QA evidence is append-only across profile
+                # switches; it simply carries no current authorization.
+                self.assertIsInstance(envelopes, list)
             for envelope in envelopes:
                 self.assertEqual(
                     recordprovenance.current_record_format_problems(

@@ -15,35 +15,17 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
 import build  # noqa: E402
-from lib import authority, bundlezip, canon, gateway, projections  # noqa: E402
-from lib import qaevidence  # noqa: E402
-from lib import recordprovenance, release, render  # noqa: E402
+from lib import acceptance, authority, bundlezip, canon  # noqa: E402
+from lib import control_inventory, gateway  # noqa: E402
+from lib import pinplan, profilepolicy  # noqa: E402
+from lib import qaevidence, qaregistry  # noqa: E402
+from lib import recordprovenance, release, render, snapshot  # noqa: E402
+from tests import acceptance_support  # noqa: E402
 
 
 MANUAL_FIELDS = ("ac11", "ac12", "ac13", "ac15")
-TECHNICAL_PREVIEW_PROFILE = {
-    "id": "technical-preview",
-    "manualQaEvidence": "deferred",
-    "compatibilityAuthorization": "not-authorized",
-    "deferredObservations": ["AC-11", "AC-12", "AC-13", "AC-15"],
-    "requiredQaRecordFields": [],
-    "artifactLabel": (
-        "TECHNICAL PREVIEW — Manual cross-platform and "
-        "assistive-technology QA is deferred; browser and "
-        "assistive-technology compatibility is not validated."
-    ),
-}
-VALIDATED_RELEASE_PROFILE = {
-    "id": "validated-release",
-    "manualQaEvidence": "required",
-    "compatibilityAuthorization": "support-matrix-authorized",
-    "deferredObservations": [],
-    "requiredQaRecordFields": list(MANUAL_FIELDS),
-    "artifactLabel": (
-        "VALIDATED-RELEASE PROFILE — Delivery requires current full "
-        "seven-row cross-platform and assistive-technology QA."
-    ),
-}
+TECHNICAL_PREVIEW_PROFILE = acceptance_support.TECHNICAL_PREVIEW_PROFILE
+VALIDATED_RELEASE_PROFILE = acceptance_support.VALIDATED_RELEASE_PROFILE
 
 with open(os.path.join(ROOT, "navigator", "schema", "support-matrix.json"),
           encoding="utf-8") as _support_fh:
@@ -139,49 +121,11 @@ def _manual_checks(operator="QA Reviewer", operator_kind="human"):
 
 
 def _receipt_context(profile=VALIDATED_RELEASE_PROFILE):
-    context = {
-        "registryDigest": canon.bytes_digest(b"receipt registry"),
-        "runnerInputs": [{
-            "path": "navigator/lib/release.py",
-            "digest": canon.bytes_digest(b"receipt runner source"),
-        }],
-        "runnerEditions": ["na"],
-        "receiptPhases": {
-            "release-preflight": [
-                "AC-%02d" % number for number in range(1, 20)],
-            "release-postcondition": ["AC-16"],
-            "bundle-postcondition": ["AC-20"],
-        },
-        "releaseProfile": profile["id"],
-        "releaseProfileContract": copy.deepcopy(profile),
-    }
-    context["runnerDigest"] = release._runner_digest(
-        context["registryDigest"], context["runnerInputs"],
-        context["receiptPhases"], context["runnerEditions"],
-        context["releaseProfile"], context["releaseProfileContract"])
-    return context
+    return acceptance_support.context(profile)
 
 
 def _release_receipt(context, subjects):
-    return {
-        "receiptVersion": "2",
-        "registryDigest": context["registryDigest"],
-        "runnerDigest": context["runnerDigest"],
-        "runnerInputs": copy.deepcopy(context["runnerInputs"]),
-        "runnerEditions": copy.deepcopy(context["runnerEditions"]),
-        "runnerKind": "tool",
-        "releaseProfile": context["releaseProfile"],
-        "releaseProfileContract": copy.deepcopy(
-            context["releaseProfileContract"]),
-        "results": [
-            {"phase": "release-preflight",
-             "criteria": ["AC-%02d" % number for number in range(1, 20)],
-             "status": "passed"},
-            {"phase": "release-postcondition", "criteria": ["AC-16"],
-             "status": "passed"},
-        ],
-        "subjects": copy.deepcopy(subjects),
-    }
+    return acceptance_support.receipt("release", subjects, context)
 
 
 class TestAuthorizedOperator(unittest.TestCase):
@@ -260,7 +204,8 @@ class TestCliArity(unittest.TestCase):
             build.main(["record-qa"])
 
     def test_release_profile_is_explicit_and_closed(self):
-        for argv in ([], ["--profile="], ["--profile=preview"],
+        for argv in ([], ["--profile="], ["--profile=UPPER"],
+                     ["--profile=bad/profile"],
                      ["--profile=technical-preview", "unexpected"]):
             with self.subTest(argv=argv), self.assertRaises(SystemExit):
                 build._release_profile_arg(argv)
@@ -268,6 +213,8 @@ class TestCliArity(unittest.TestCase):
             ["--profile=technical-preview"]), "technical-preview")
         self.assertEqual(build._release_profile_arg(
             ["--profile=validated-release"]), "validated-release")
+        self.assertEqual(build._release_profile_arg(
+            ["--profile=future-profile"]), "future-profile")
         with self.assertRaisesRegex(SystemExit, "--profile="):
             build.main(["release", "na"])
 
@@ -275,7 +222,7 @@ class TestCliArity(unittest.TestCase):
 class TestAcceptanceReceipts(unittest.TestCase):
     def setUp(self):
         self.context = _receipt_context()
-        self.subjects = release.release_subjects(
+        self.subjects = acceptance.release_subjects(
             "na", canon.bytes_digest(b"candidate"),
             canon.bytes_digest(b"content lock"),
             canon.bytes_digest(b"qa record"),
@@ -284,7 +231,7 @@ class TestAcceptanceReceipts(unittest.TestCase):
         self.receipt = _release_receipt(self.context, self.subjects)
 
     def problems(self, receipt=None, context=None, subjects=None):
-        return release.acceptance_receipt_problems(
+        return acceptance.acceptance_receipt_problems(
             self.receipt if receipt is None else receipt, "release",
             self.context if context is None else context,
             self.subjects if subjects is None else subjects)
@@ -293,6 +240,7 @@ class TestAcceptanceReceipts(unittest.TestCase):
         self.assertEqual(self.problems(), [])
         mutations = (
             ("registryDigest", canon.bytes_digest(b"other registry")),
+            ("policyDigest", canon.bytes_digest(b"other policy")),
             ("runnerDigest", canon.bytes_digest(b"other runner")),
             ("runnerEditions", ["af"]),
             ("runnerKind", "human"),
@@ -305,8 +253,8 @@ class TestAcceptanceReceipts(unittest.TestCase):
                 changed[field] = value
                 self.assertTrue(self.problems(changed))
         changed = copy.deepcopy(self.receipt)
-        changed["results"][0]["criteria"].remove("AC-07")
-        self.assertTrue(any("phase/criterion" in problem
+        changed["results"].pop(0)
+        self.assertTrue(any("atomic result" in problem
                             for problem in self.problems(changed)))
         for field in self.subjects:
             with self.subTest(subject=field):
@@ -318,15 +266,20 @@ class TestAcceptanceReceipts(unittest.TestCase):
                                     for problem in self.problems(changed)))
         af_context = copy.deepcopy(self.context)
         af_context["runnerEditions"] = ["af"]
-        af_context["runnerDigest"] = release._runner_digest(
-            af_context["registryDigest"], af_context["runnerInputs"],
-            af_context["receiptPhases"], af_context["runnerEditions"],
+        af_context["runnerDigest"] = acceptance.runner_digest(
+            af_context["registryDigest"], af_context["policyDigest"],
+            af_context["runnerInputs"], af_context["controlPlan"],
+            af_context["runnerEditions"],
             af_context["releaseProfile"],
             af_context["releaseProfileContract"])
-        af_receipt = _release_receipt(af_context, self.subjects)
+        af_subjects = copy.deepcopy(self.subjects)
+        af_subjects["edition"] = "af"
+        af_receipt = _release_receipt(af_context, af_subjects)
+        af_receipt["subjects"]["edition"] = "na"
         self.assertTrue(any(
-            "runner edition does not match" in problem
-            for problem in self.problems(af_receipt, af_context)))
+            "receipt edition does not match" in problem
+            for problem in self.problems(
+                af_receipt, af_context, af_subjects)))
 
     def test_receipt_fails_closed_on_missing_context_and_malformed_subjects(self):
         self.assertTrue(any("context" in problem
@@ -343,14 +296,14 @@ class TestAcceptanceReceipts(unittest.TestCase):
 
     def test_preview_receipt_has_explicit_deferred_profile_and_no_qa_subject(self):
         context = _receipt_context(TECHNICAL_PREVIEW_PROFILE)
-        subjects = release.release_subjects(
+        subjects = acceptance.release_subjects(
             "na", canon.bytes_digest(b"candidate"),
             canon.bytes_digest(b"content lock"), None, None,
             TECHNICAL_PREVIEW_PROFILE)
         receipt = _release_receipt(context, subjects)
-        self.assertEqual(release.acceptance_receipt_problems(
+        self.assertEqual(acceptance.acceptance_receipt_problems(
             receipt, "release", context, subjects), [])
-        self.assertEqual(receipt["receiptVersion"], "2")
+        self.assertEqual(receipt["receiptVersion"], "3")
         self.assertEqual(receipt["releaseProfile"], "technical-preview")
         self.assertEqual(receipt["releaseProfileContract"],
                          TECHNICAL_PREVIEW_PROFILE)
@@ -358,13 +311,19 @@ class TestAcceptanceReceipts(unittest.TestCase):
         self.assertIsNone(receipt["subjects"]["qaInputLockDigest"])
         self.assertEqual(receipt["subjects"]["compatibilityAuthorization"],
                          "not-authorized")
-        self.assertEqual(receipt["subjects"]["deferredObservations"],
-                         ["AC-11", "AC-12", "AC-13", "AC-15"])
+        self.assertEqual(receipt["subjects"]["deferredControls"],
+                         TECHNICAL_PREVIEW_PROFILE["deferredControls"])
+        deferred = [result["control"] for result in receipt["results"]
+                    if result["status"] == "deferred"]
+        self.assertEqual(deferred,
+                         TECHNICAL_PREVIEW_PROFILE["deferredControls"])
 
         claimed = copy.deepcopy(subjects)
         claimed["qaRecord"] = canon.bytes_digest(b"inapplicable QA")
-        problems = release.acceptance_receipt_problems(
-            _release_receipt(context, claimed), "release", context, claimed)
+        claimed_receipt = copy.deepcopy(receipt)
+        claimed_receipt["subjects"] = copy.deepcopy(claimed)
+        problems = acceptance.acceptance_receipt_problems(
+            claimed_receipt, "release", context, claimed)
         self.assertTrue(any("must be null" in problem for problem in problems),
                         problems)
 
@@ -391,12 +350,12 @@ class TestAcceptanceReceipts(unittest.TestCase):
                 ROOT, model, candidate, candidate, content_lock, None,
                 TECHNICAL_PREVIEW_PROFILE)
             with self.assertRaisesRegex(
-                    release.AcceptanceError, "must not claim"):
+                    acceptance.AcceptanceError, "must not claim"):
                 release._verify_release_preflight(
                     ROOT, model, candidate, candidate, content_lock,
                     {"record": {}}, TECHNICAL_PREVIEW_PROFILE)
             with self.assertRaisesRegex(
-                    release.AcceptanceError, "QA authorization"):
+                    acceptance.AcceptanceError, "QA authorization"):
                 release._verify_release_preflight(
                     ROOT, model, candidate, candidate, content_lock, None,
                     VALIDATED_RELEASE_PROFILE)
@@ -413,9 +372,9 @@ class TestAcceptanceReceipts(unittest.TestCase):
         })
         output = mock.Mock()
         with mock.patch.object(
-                release, "acceptance_context",
+                acceptance, "acceptance_context",
                 side_effect=[context, copy.deepcopy(context)]), \
-                mock.patch.object(release, "_run_registered_callbacks"), \
+                mock.patch.object(acceptance, "run_registered_callbacks"), \
                 mock.patch.object(release, "_verify_release_preflight") \
                 as preflight, \
                 mock.patch.object(release, "_verify_release_postcondition"):
@@ -451,24 +410,19 @@ class TestAcceptanceReceipts(unittest.TestCase):
         second["runnerEditions"] = ["af"]
         second["runnerInputs"][0]["digest"] = canon.bytes_digest(
             b"changed runner source")
-        second["runnerDigest"] = release._runner_digest(
-            second["registryDigest"], second["runnerInputs"],
-            second["receiptPhases"], second["runnerEditions"],
+        second["runnerDigest"] = acceptance.runner_digest(
+            second["registryDigest"], second["policyDigest"],
+            second["runnerInputs"], second["controlPlan"],
+            second["runnerEditions"],
             second["releaseProfile"],
             second["releaseProfileContract"])
-        models = [
-            (None, SimpleNamespace(edition={
-                "declaredTransitiveInputs": ["one.py"]})),
-            (None, SimpleNamespace(edition={
-                "declaredTransitiveInputs": ["two.py"]})),
-        ]
-        with mock.patch.object(build, "build_model", side_effect=models), \
-                mock.patch.object(release, "acceptance_context",
+        with mock.patch.object(acceptance, "acceptance_context",
                                   side_effect=[first, second]):
-            contexts, bundle_inputs = build.bundle_acceptance_context(
-                {"editions": ["one", "two"]})
+            contexts = build.bundle_acceptance_context({
+                "editions": ["one", "two"],
+                "releaseProfile": "validated-release",
+            })
         self.assertEqual(contexts, {"one": first, "two": second})
-        self.assertEqual(bundle_inputs, ["one.py", "two.py"])
 
     def test_registry_declares_and_locks_every_test_module_and_fixture(self):
         with open(os.path.join(
@@ -477,26 +431,24 @@ class TestAcceptanceReceipts(unittest.TestCase):
             registry = json.load(fh)
         with tempfile.TemporaryDirectory() as tmp:
             registry_path = "navigator/schema/acceptance.json"
-            declared = list(projections.BUILDER_SOURCE_PATHS)
             fixture_paths = [entry["path"]
                              for entry in registry["runner"]["fixtures"]]
-            paths = (declared +
+            paths = (list(control_inventory.CONTROL_SOURCE_PATHS) +
                      [entry["path"]
                       for entry in registry["runner"]["testModules"]] +
                      fixture_paths +
-                     registry["runner"]["supportFiles"])
+                     registry["runner"]["supportFiles"] +
+                     [acceptance.RELEASE_POLICY_PATH])
             for path in [registry_path] + paths:
                 dst = os.path.join(tmp, path)
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 shutil.copy(os.path.join(ROOT, path), dst)
-            na_before = release.acceptance_context(
-                tmp, declared, ("na",))
-            af_before = release.acceptance_context(
-                tmp, declared, ("af",))
-            bundle_before = release.acceptance_context(
-                tmp, declared, ("na", "af"))
+            na_before = acceptance.acceptance_context(tmp, ("na",))
+            af_before = acceptance.acceptance_context(tmp, ("af",))
+            bundle_before = acceptance.acceptance_context(
+                tmp, ("na", "af"))
             self.assertEqual(
-                release.combine_acceptance_contexts(
+                acceptance.combine_acceptance_contexts(
                     {"na": na_before, "af": af_before}, ("na", "af")),
                 bundle_before)
             self.assertEqual(bundle_before["runnerEditions"], ["af", "na"])
@@ -516,10 +468,10 @@ class TestAcceptanceReceipts(unittest.TestCase):
                 entry["path"] for entry in na_before["runnerInputs"]})
             with open(os.path.join(tmp, na_fixture), "ab") as fh:
                 fh.write(b" ")
-            na_after = release.acceptance_context(tmp, declared, ("na",))
-            af_after = release.acceptance_context(tmp, declared, ("af",))
-            bundle_after = release.acceptance_context(
-                tmp, declared, ("na", "af"))
+            na_after = acceptance.acceptance_context(tmp, ("na",))
+            af_after = acceptance.acceptance_context(tmp, ("af",))
+            bundle_after = acceptance.acceptance_context(
+                tmp, ("na", "af"))
             self.assertNotEqual(na_before["runnerDigest"],
                                 na_after["runnerDigest"])
             self.assertEqual(af_before["runnerDigest"],
@@ -528,25 +480,23 @@ class TestAcceptanceReceipts(unittest.TestCase):
                                 bundle_after["runnerDigest"])
             os.unlink(os.path.join(tmp, na_fixture))
             self.assertEqual(
-                release.acceptance_context(tmp, declared, ("af",)),
+                acceptance.acceptance_context(tmp, ("af",)),
                 af_after,
                 "AF context must not stat or read an inactive NA fixture")
 
     def test_registered_callbacks_use_a_fresh_selected_edition_process(self):
         import tests.test_acceptance as acceptance_tests
-        with open(os.path.join(ROOT, "navigator", "editions", "af.json"),
-                  encoding="utf-8") as fh:
-            declared = json.load(fh)["declaredTransitiveInputs"]
-        context = release.acceptance_context(ROOT, declared, ("af",))
+        context = acceptance.acceptance_context(ROOT, ("af",))
         self.assertNotIn(
             "navigator/tests/fixtures/migration_na_snapshot.json",
             {entry["path"] for entry in context["runnerInputs"]})
-        release._run_registered_callbacks(
-            ROOT, ("AC-07", "AC-19"), ("af",), declared, context)
+        acceptance.run_registered_callbacks(
+            ROOT, ("AC-07.automated", "AC-19.automated"), ("af",),
+            context)
         with self.assertRaisesRegex(
-                release.AcceptanceError, "fresh-process"):
-            release._run_registered_callbacks(
-                ROOT, ("AC-07",), ("not_an_edition",), declared, context)
+                acceptance.AcceptanceError, "fresh-process"):
+            acceptance.run_registered_callbacks(
+                ROOT, ("AC-07.automated",), ("not_an_edition",), context)
         self.assertEqual(acceptance_tests.EDITIONS, ("na", "af"))
 
     def test_registry_shape_version_applicability_and_text_are_closed(self):
@@ -591,103 +541,83 @@ class TestAcceptanceReceipts(unittest.TestCase):
         mutations.append(canon_owned_by_wrong_criterion)
         for index, mutated in enumerate(mutations):
             with self.subTest(mutation=index):
-                with self.assertRaises(release.AcceptanceError):
-                    release._validate_registry(mutated)
+                with self.assertRaises(acceptance.AcceptanceError):
+                    acceptance.validate_registry(mutated)
 
-    def test_registry_declares_exact_active_and_future_release_profiles(self):
+    def test_release_policy_is_separate_current_and_extensible(self):
         with open(os.path.join(
                 ROOT, "navigator", "schema", "acceptance.json"),
                 encoding="utf-8") as fh:
             registry = json.load(fh)
-        self.assertEqual(registry["acceptanceVersion"], "2")
-        self.assertEqual(registry["runner"]["runnerVersion"], "2")
-        self.assertEqual(registry["runner"]["activeReleaseProfile"],
+        with open(os.path.join(
+                ROOT, "navigator", "schema", "release-policy.json"),
+                encoding="utf-8") as fh:
+            policy = json.load(fh)
+        self.assertEqual(registry["acceptanceVersion"], "3")
+        self.assertEqual(registry["runner"]["runnerVersion"], "3")
+        self.assertNotIn("activeReleaseProfile", registry["runner"])
+        self.assertNotIn("releaseProfiles", registry["runner"])
+        self.assertEqual(policy["activeReleaseProfile"],
                          "technical-preview")
-        self.assertEqual(registry["runner"]["releaseProfiles"], [
-            TECHNICAL_PREVIEW_PROFILE, VALIDATED_RELEASE_PROFILE])
-        selected, contract = release.release_profile_contract(
-            registry, "technical-preview")
+        selected, contract = acceptance.release_profile_contract(
+            policy, registry, "technical-preview")
         self.assertEqual(selected, "technical-preview")
         self.assertEqual(contract, TECHNICAL_PREVIEW_PROFILE)
         with self.assertRaisesRegex(
-                release.AcceptanceError, "not the active release profile"):
-            release.release_profile_contract(registry, "validated-release")
+                acceptance.AcceptanceError,
+                "not the active release profile"):
+            acceptance.release_profile_contract(
+                policy, registry, "validated-release")
 
-        mutations = []
-        swapped = copy.deepcopy(registry)
-        swapped["runner"]["releaseProfiles"].reverse()
-        mutations.append(swapped)
-        unknown_active = copy.deepcopy(registry)
-        unknown_active["runner"]["activeReleaseProfile"] = "preview"
-        mutations.append(unknown_active)
-        weakened_preview = copy.deepcopy(registry)
-        weakened_preview["runner"]["releaseProfiles"][0][
-            "deferredObservations"] = []
-        mutations.append(weakened_preview)
-        weakened_validated = copy.deepcopy(registry)
-        weakened_validated["runner"]["releaseProfiles"][1][
-            "requiredQaRecordFields"] = []
-        mutations.append(weakened_validated)
-        for mutated in mutations:
-            with self.subTest(mutated=mutated["runner"].get(
-                    "activeReleaseProfile")):
-                with self.assertRaises(release.AcceptanceError):
-                    release._validate_registry(mutated)
+        extended = copy.deepcopy(policy)
+        extended["profiles"].insert(0, {
+            "id": "review-only",
+            "observedControls": {
+                identifier: "deferred"
+                for identifier in acceptance_support.OBSERVED
+            },
+            "artifactLabel": "REVIEW ONLY — Compatibility is not authorized.",
+        })
+        self.assertEqual(profilepolicy.validate_policy(extended), extended)
+        malformed = copy.deepcopy(policy)
+        malformed["profiles"][0]["observedControls"].pop(
+            "AC-15.observed")
+        with self.assertRaises(profilepolicy.ProfilePolicyError):
+            profilepolicy.validate_policy(malformed)
 
-    def test_registry_executable_floor_rejects_redirects_and_self_shrinking(self):
+    def test_registry_semantics_prevent_shrinking_without_blocking_additions(self):
         with open(os.path.join(
                 ROOT, "navigator", "schema", "acceptance.json"),
                 encoding="utf-8") as fh:
             registry = json.load(fh)
-        mutations = []
-
-        wholesale = copy.deepcopy(registry)
-        wholesale["runner"]["testModules"] = [{
-            "module": "test_bundle_plan",
-            "path": "navigator/tests/test_bundle_plan.py",
-        }]
-        wholesale["runner"]["testScopes"] = []
-        unrelated = (
-            "test_bundle_plan.BundlePlanTests."
-            "test_current_binding_timestamp_must_be_canonical")
-        for criterion in wholesale["criteria"]:
-            criterion["enforcedBy"] = {
-                "tests": [unrelated], "qaRecordFields": []}
-        mutations.append(("wholesale callback redirect", wholesale))
-
-        same_prefix = copy.deepcopy(registry)
-        same_prefix["criteria"][1]["enforcedBy"]["tests"] = [
-            "test_acceptance.Acceptance.test_ac02_substitute"]
-        mutations.append(("same-prefix substitution", same_prefix))
-
-        missing_canon = copy.deepcopy(registry)
-        ac07_tests = missing_canon["criteria"][6]["enforcedBy"]["tests"]
-        ac07_tests.remove(next(
-            name for name in ac07_tests if name.startswith("test_canon.")))
-        mutations.append(("canonical callback deletion", missing_canon))
-
-        deleted_fixture = copy.deepcopy(registry)
-        deleted_fixture["runner"]["fixtures"].pop(0)
-        mutations.append(("fixture deletion", deleted_fixture))
-
-        rescoped_fixture = copy.deepcopy(registry)
-        rescoped_fixture["runner"]["fixtures"][0]["editions"] = ["na"]
-        mutations.append(("fixture rescope", rescoped_fixture))
-
-        added_support = copy.deepcopy(registry)
-        added_support["runner"]["supportFiles"].append(
-            "navigator/tools/unreviewed.py")
-        mutations.append(("support-file addition", added_support))
-
+        missing_baseline = copy.deepcopy(registry)
+        missing_baseline["criteria"].pop(0)
+        weakened_observation = copy.deepcopy(registry)
+        weakened_observation["criteria"][10]["enforcedBy"][
+            "qaRecordFields"] = []
         reused = copy.deepcopy(registry)
         reused["criteria"][2]["enforcedBy"]["tests"] = \
             reused["criteria"][1]["enforcedBy"]["tests"][:]
-        mutations.append(("callback reuse", reused))
-
-        for label, mutated in mutations:
+        for label, mutated in (
+                ("mandatory criterion deletion", missing_baseline),
+                ("observed control deletion", weakened_observation),
+                ("callback reuse", reused)):
             with self.subTest(label=label):
-                with self.assertRaises(release.AcceptanceError):
-                    release._validate_registry(mutated)
+                with self.assertRaises(acceptance.AcceptanceError):
+                    acceptance.validate_registry(mutated)
+
+        extended = copy.deepcopy(registry)
+        extended["criteria"].append({
+            "id": "AC-21",
+            "applicability": "edition",
+            "text": "A future feature has an explicit executable owner.",
+            "enforcedBy": {
+                "tests": [
+                    "test_acceptance.Acceptance.test_ac21_future_feature"],
+                "qaRecordFields": [],
+            },
+        })
+        self.assertEqual(acceptance.validate_registry(extended), extended)
 
     def test_bundle_transaction_runs_registered_ac20_and_failure_blocks(self):
         from tests import test_bundle_lifecycle as lifecycle
@@ -744,11 +674,6 @@ class TestAcceptanceReceipts(unittest.TestCase):
                 ROOT, "navigator", "schema", "planes.json"),
                 encoding="utf-8") as fh:
             planes = json.load(fh)
-        with open(os.path.join(
-                ROOT, "navigator", "editions", "na.json"),
-                encoding="utf-8") as fh:
-            declared_inputs = json.load(fh)["declaredTransitiveInputs"]
-
         def populate_inputs(root):
             for unused_kind, name in (
                     (member["kind"], member["name"])
@@ -763,31 +688,32 @@ class TestAcceptanceReceipts(unittest.TestCase):
             populate_inputs(root)
             output = gateway.OutputGateway(root, "bundle", planes)
             return release.run_bundle_acceptance_transaction(
-                ROOT, declared_inputs, current_cfg, config_digest,
-                current_plan, zip_bytes, checksum_bytes, manifest_bytes,
-                output)
+                ROOT, current_cfg, config_digest, current_plan, zip_bytes,
+                checksum_bytes, manifest_bytes, output)
 
         with tempfile.TemporaryDirectory() as tmp:
             receipt = transact(cfg, plan, tmp)
             self.assertEqual(receipt["runnerEditions"], ["na"])
-            self.assertEqual(receipt["results"], [{
-                "phase": "bundle-postcondition", "criteria": ["AC-20"],
-                "status": "passed",
-            }])
+            self.assertEqual(receipt["results"], [
+                {"control": "AC-20.automated",
+                 "phase": "bundle-postcondition", "status": "passed"},
+                {"control": "AC-20.bundle-postcondition",
+                 "phase": "bundle-postcondition", "status": "passed"},
+            ])
 
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
-                release, "_run_registered_callbacks",
-                side_effect=release.AcceptanceError(
+                acceptance, "run_registered_callbacks",
+                side_effect=acceptance.AcceptanceError(
                     "injected registered AC-20 failure")) as callback:
             with self.assertRaisesRegex(
-                    release.AcceptanceError,
+                    acceptance.AcceptanceError,
                     "injected registered AC-20 failure"):
                 transact(cfg, plan, tmp)
             callback.assert_called_once()
             args = callback.call_args.args
-            self.assertEqual(args[1], ("AC-20",))
+            self.assertEqual(args[1], ("AC-20.automated",))
             self.assertEqual(args[2], cfg["editions"])
-            self.assertEqual(args[5]["kind"], "bundle-postcondition")
+            self.assertEqual(args[4]["kind"], "bundle-postcondition")
 
         bad_plans = {}
         stale_release = copy.deepcopy(plan)
@@ -821,9 +747,175 @@ class TestAcceptanceReceipts(unittest.TestCase):
             with self.subTest(stale_evidence=label), \
                     tempfile.TemporaryDirectory() as tmp:
                 with self.assertRaisesRegex(
-                        release.AcceptanceError,
+                        acceptance.AcceptanceError,
                         "fresh-process acceptance callbacks failed"):
                     transact(bad_cfg, bad_plan, tmp)
+
+
+class TestVerifyCurrentFinalState(unittest.TestCase):
+    def _closure_report(self):
+        return {"status": "current", "checks": {}}
+
+    def test_discovered_test_mutation_cannot_certify_current(self):
+        with tempfile.TemporaryDirectory() as root:
+            verified = os.path.join(root, "verified-source.txt")
+            with open(verified, "wb") as fh:
+                fh.write(b"verified\n")
+
+            def mutate_sandbox(sandbox_root):
+                with open(os.path.join(sandbox_root, "verified-source.txt"),
+                          "wb") as fh:
+                    fh.write(b"mutated by last test\n")
+                return "Ran 1 test"
+
+            with mock.patch.object(build, "ROOT", root), \
+                    mock.patch.object(
+                        build, "_verify_current_closure",
+                        side_effect=lambda: self._closure_report()), \
+                    mock.patch.object(
+                        build, "_run_full_test_suite",
+                        side_effect=mutate_sandbox), \
+                    self.assertRaisesRegex(
+                        RuntimeError, "tests mutated the verified snapshot"):
+                build.verify_current_state(run_tests=True)
+            with open(verified, "rb") as fh:
+                self.assertEqual(fh.read(), b"verified\n")
+
+    def test_absolute_live_mutation_cannot_escape_test_isolation(self):
+        with tempfile.TemporaryDirectory() as root:
+            verified = os.path.join(root, "verified-source.txt")
+            with open(verified, "wb") as fh:
+                fh.write(b"verified\n")
+
+            def mutate_live(unused_sandbox_root):
+                with open(verified, "wb") as fh:
+                    fh.write(b"mutated live\n")
+                return "Ran 1 test"
+
+            with mock.patch.object(build, "ROOT", root), \
+                    mock.patch.object(
+                        build, "_verify_current_closure",
+                        side_effect=lambda: self._closure_report()), \
+                    mock.patch.object(
+                        build, "_run_full_test_suite",
+                        side_effect=mutate_live), \
+                    self.assertRaisesRegex(
+                        RuntimeError, "live repository changed"):
+                build.verify_current_state(run_tests=True)
+
+    def test_snapshot_capture_rejects_a_file_changed_while_reading(self):
+        with tempfile.TemporaryDirectory() as root:
+            target = os.path.join(root, "source.txt")
+            with open(target, "wb") as fh:
+                fh.write(b"stable bytes\n")
+            os.chmod(target, 0o644)
+            ordinary_open = open
+
+            class MutatingHandle:
+                def __init__(self, handle):
+                    self.handle = handle
+
+                def __enter__(self):
+                    return self
+
+                def __exit__(self, *args):
+                    return self.handle.__exit__(*args)
+
+                def fileno(self):
+                    return self.handle.fileno()
+
+                def read(self):
+                    data = self.handle.read()
+                    os.chmod(target, 0o600)
+                    return data
+
+            def changing_open(path, *args, **kwargs):
+                handle = ordinary_open(path, *args, **kwargs)
+                if os.path.abspath(os.fspath(path)) == target:
+                    return MutatingHandle(handle)
+                return handle
+
+            with mock.patch("builtins.open", side_effect=changing_open), \
+                    self.assertRaisesRegex(
+                        snapshot.SnapshotError, "changed during snapshot"):
+                snapshot.RepositorySnapshot.capture(root)
+
+
+class TestQaPinPlanning(unittest.TestCase):
+    def test_auxiliary_drift_is_reported_with_a_replacement_digest(self):
+        primary = b"primary\n"
+        auxiliary = b"auxiliary current bytes\n"
+        entry = {
+            "role": "qa-source",
+            "visibility": "internal",
+            "versionBindings": {"NA": "NA-2026-07-22-v4"},
+            "primary": "qa/primary.md",
+            "files": {
+                "qa/auxiliary.md": canon.bytes_digest(b"stale auxiliary"),
+                "qa/primary.md": canon.bytes_digest(primary),
+            },
+        }
+        content = mock.Mock()
+        content.read_bytes.side_effect = lambda path: {
+            "qa/auxiliary.md": auxiliary,
+            "qa/primary.md": primary,
+        }[path]
+        plan = pinplan.corpus_closure(
+            "qa-priority", entry, content,
+            {"NA": "NA-2026-07-22-v4"})
+        self.assertEqual(
+            [item["path"] for item in plan["files"]],
+            ["qa/auxiliary.md", "qa/primary.md"])
+        auxiliary_plan = plan["files"][0]
+        self.assertFalse(auxiliary_plan["pinCurrent"])
+        self.assertEqual(
+            auxiliary_plan["actualDigest"], canon.bytes_digest(auxiliary))
+        self.assertFalse(plan["pinCurrent"])
+        self.assertTrue(any(
+            "qa/auxiliary.md" in problem
+            for problem in pinplan.closure_problems(plan, "priorityMap")))
+
+    def test_qa_versions_are_structured_and_tied_to_current_claim_versions(self):
+        with tempfile.TemporaryDirectory() as root:
+            os.makedirs(os.path.join(root, "qa"))
+            source = os.path.join(root, "qa", "primary.md")
+            with open(source, "wb") as fh:
+                fh.write(b"source\n")
+            registry_path = os.path.join(root, "qa", "registry.json")
+            malformed = {
+                "qaRegistryVersion": "1",
+                "corpora": {
+                    "qa-priority": {
+                        "role": "qa-source", "visibility": "internal",
+                        "versionBindings": {"NA": "obsolete-label"},
+                        "primary": "qa/primary.md",
+                        "files": {
+                            "qa/primary.md": canon.bytes_digest(b"source\n"),
+                        },
+                    },
+                },
+            }
+            with open(registry_path, "w", encoding="utf-8") as fh:
+                json.dump(malformed, fh)
+            with self.assertRaisesRegex(
+                    qaregistry.QaRegistryError, "version binding"):
+                qaregistry.QaRegistry(
+                    gateway.ContentGateway(root), "qa/registry.json",
+                    {"qa-priority"})
+
+        obsolete = copy.deepcopy(malformed["corpora"]["qa-priority"])
+        obsolete_version = "NA-" + "2025-01-01-v1"
+        obsolete["versionBindings"] = {"NA": obsolete_version}
+        content = mock.Mock()
+        content.read_bytes.return_value = b"source\n"
+        plan = pinplan.corpus_closure(
+            "qa-priority", obsolete, content,
+            {"NA": "NA-2026-07-22-v4"})
+        self.assertFalse(plan["versionCurrent"])
+        self.assertEqual(plan["configuredVersions"], {
+            "NA": obsolete_version})
+        self.assertEqual(plan["expectedVersions"], {
+            "NA": "NA-2026-07-22-v4"})
 
 
 class TestAttestationEvidence(unittest.TestCase):
@@ -939,17 +1031,24 @@ class TestAttestationEvidence(unittest.TestCase):
             with self.subTest(kind=kind), tempfile.TemporaryDirectory() as tmp:
                 navigator = os.path.join(tmp, "navigator")
                 records = os.path.join(navigator, "records")
+                schema_dir = os.path.join(navigator, "schema")
                 os.makedirs(records)
+                os.makedirs(schema_dir)
                 with open(os.path.join(navigator, "bundle-manifest.json"),
                           "w", encoding="utf-8") as fh:
                     json.dump({
-                        "manifestVersion": "2",
+                        "manifestVersion": "3",
                         "releaseProfile": "technical-preview",
                         "compatibilityAuthorization": "not-authorized",
-                        "deferredObservations":
-                            ["AC-11", "AC-12", "AC-13", "AC-15"],
+                        "deferredControls": [
+                            "AC-11.observed", "AC-12.observed",
+                            "AC-13.observed", "AC-15.observed"],
                         "bundleManifestText": manifest_text,
                     }, fh)
+                shutil.copyfile(
+                    os.path.join(ROOT, "navigator", "schema",
+                                 "release-policy.json"),
+                    os.path.join(schema_dir, "release-policy.json"))
                 with mock.patch.object(build, "ROOT", tmp), \
                         mock.patch.object(build, "RECORDS", records), \
                         mock.patch.object(build, "load_planes",
@@ -1167,16 +1266,16 @@ class TestManualEvidence(unittest.TestCase):
 
     def test_template_command_is_identity_free_and_read_only(self):
         model = SimpleNamespace(
-            acceptance={}, support_matrix=QA_SUPPORT_MATRIX,
+            release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             api_policy={})
         with mock.patch.object(build, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
                 mock.patch.object(
-                    build.release_mod, "release_profile_contract",
+                    build.acceptance, "release_profile_contract",
                     return_value=("technical-preview",
                                   TECHNICAL_PREVIEW_PROFILE)), \
-                mock.patch.object(build, "registry_manual_fields",
-                                  return_value=MANUAL_FIELDS), \
+                mock.patch.object(build.acceptance, "load_registry",
+                                  return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
                                   return_value={api: None
                                                 for api in QA_API_PROBES}), \
@@ -1255,16 +1354,16 @@ class TestManualEvidence(unittest.TestCase):
 
     def test_empty_record_qa_evidence_fails_closed(self):
         model = SimpleNamespace(
-            acceptance={}, support_matrix=QA_SUPPORT_MATRIX,
+            release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             api_policy={})
         with mock.patch.object(build, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
                 mock.patch.object(
-                    build.release_mod, "release_profile_contract",
+                    build.acceptance, "release_profile_contract",
                     return_value=("validated-release",
                                   VALIDATED_RELEASE_PROFILE)), \
-                mock.patch.object(build, "registry_manual_fields",
-                                  return_value=MANUAL_FIELDS), \
+                mock.patch.object(build.acceptance, "load_registry",
+                                  return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
                                   return_value={api: None
                                                 for api in QA_API_PROBES}), \
@@ -1277,16 +1376,16 @@ class TestManualEvidence(unittest.TestCase):
 
     def test_record_qa_is_deferred_for_the_technical_preview(self):
         model = SimpleNamespace(
-            acceptance={}, support_matrix=QA_SUPPORT_MATRIX,
+            release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             api_policy={})
         with mock.patch.object(build, "derive", return_value=(
                 model, b"", {"reads": [], "lockDigest": "unused"})), \
                 mock.patch.object(
-                    build.release_mod, "release_profile_contract",
+                    build.acceptance, "release_profile_contract",
                     return_value=("technical-preview",
                                   TECHNICAL_PREVIEW_PROFILE)), \
-                mock.patch.object(build, "registry_manual_fields",
-                                  return_value=MANUAL_FIELDS), \
+                mock.patch.object(build.acceptance, "load_registry",
+                                  return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
                                   return_value={api: None
                                                 for api in QA_API_PROBES}), \
@@ -1316,7 +1415,7 @@ class TestManualEvidence(unittest.TestCase):
             "lockDigest": canon.bytes_digest(b"qa input lock"),
         }
         model = SimpleNamespace(
-            acceptance={}, support_matrix=QA_SUPPORT_MATRIX,
+            release_policy={}, support_matrix=QA_SUPPORT_MATRIX,
             support_matrix_bytes=matrix_bytes, api_policy={},
             edition={"editionId": "na", "artifactName": "artifact.html"},
             strings={"counselLegend": "Approved legend"})
@@ -1338,11 +1437,11 @@ class TestManualEvidence(unittest.TestCase):
                     mock.patch.object(build, "derive", return_value=(
                         model, candidate, lock)), \
                     mock.patch.object(
-                        build.release_mod, "release_profile_contract",
+                        build.acceptance, "release_profile_contract",
                         return_value=("validated-release",
                                       VALIDATED_RELEASE_PROFILE)), \
-                    mock.patch.object(build, "registry_manual_fields",
-                                      return_value=MANUAL_FIELDS), \
+                    mock.patch.object(build.acceptance, "load_registry",
+                                      return_value={}), \
                     mock.patch.object(build.render, "api_probe_instruments",
                                       return_value={api: None
                                                     for api in QA_API_PROBES}), \
@@ -1398,7 +1497,7 @@ class TestManualEvidence(unittest.TestCase):
         with open(os.path.join(ROOT, "navigator", "schema", "acceptance.json"),
                   encoding="utf-8") as fh:
             registry = json.load(fh)
-        self.assertEqual(build.registry_manual_fields(registry), MANUAL_FIELDS)
+        self.assertEqual(acceptance.manual_qa_fields(registry), MANUAL_FIELDS)
 
     def test_registry_cannot_delete_criteria_or_manual_requirements(self):
         with open(os.path.join(ROOT, "navigator", "schema", "acceptance.json"),
@@ -1406,18 +1505,21 @@ class TestManualEvidence(unittest.TestCase):
             registry = json.load(fh)
         missing = copy.deepcopy(registry)
         missing["criteria"] = []
-        with self.assertRaisesRegex(SystemExit, "exactly"):
-            build.registry_manual_fields(missing)
+        with self.assertRaisesRegex(acceptance.AcceptanceError,
+                                    "criterion set"):
+            acceptance.manual_qa_fields(missing)
 
         weakened = copy.deepcopy(registry)
         weakened["criteria"][10]["enforcedBy"]["qaRecordFields"] = []
-        with self.assertRaisesRegex(SystemExit, "AC-11"):
-            build.registry_manual_fields(weakened)
+        with self.assertRaisesRegex(acceptance.AcceptanceError,
+                                    "QA grammar"):
+            acceptance.manual_qa_fields(weakened)
 
         drifted_version = copy.deepcopy(registry)
-        drifted_version["runner"]["manualQaEvidenceVersion"] = "2"
-        with self.assertRaisesRegex(SystemExit, "manualQaEvidenceVersion"):
-            build.registry_manual_fields(drifted_version)
+        drifted_version["runner"]["runnerVersion"] = "2"
+        with self.assertRaisesRegex(acceptance.AcceptanceError,
+                                    "runner is malformed"):
+            acceptance.manual_qa_fields(drifted_version)
 
     def test_parser_records_explicit_operator_identity_and_kind(self):
         checks = self._parse(
@@ -1724,6 +1826,7 @@ class TestQaInputLock(unittest.TestCase):
             "qa-priority": {
                 "role": "qa-source",
                 "visibility": "internal",
+                "versionBindings": {"NA": "NA-2026-07-22-v4"},
                 "primary": "qa/priority.txt",
                 "files": {
                     "qa/priority.txt": canon.bytes_digest(first),
@@ -1740,8 +1843,12 @@ class TestQaInputLock(unittest.TestCase):
             gw=SimpleNamespace(read_log={registry_path: registry_digest}))
         return SimpleNamespace(
             gw=gateway.ContentGateway(root),
-            edition={"qaRegistry": registry_path, "qaSources": {
-                "priorityMap": "qa-priority", "crosswalk": None}},
+            edition={
+                "qaRegistry": registry_path,
+                "strategyPrefix": "NA",
+                "claimSetVersion": "NA-2026-07-22-v4",
+                "qaSources": {
+                    "priorityMap": "qa-priority", "crosswalk": None}},
             qa_registry=lambda: qa_registry,
         )
 
@@ -1916,7 +2023,7 @@ class TestReleaseEvidence(unittest.TestCase):
             "legend", atts, sides, "na",
             ("inventory-completeness", "qa-priority-map",
              "legend-approval", "support-matrix-approval"),
-            MANUAL_FIELDS)
+            MANUAL_FIELDS, "validated-release")
 
     def test_complete_human_evidence_authorizes_release(self):
         fixture = self._fixture()
@@ -1935,21 +2042,22 @@ class TestReleaseEvidence(unittest.TestCase):
                     qa["record"]["releaseProfile"] = bad_profile
                 problems = self._problems(qa, *fixture[1:])
                 self.assertTrue(any(
-                    "validated-release profile" in problem
+                    "current profile" in problem
                     for problem in problems), problems)
 
     def test_current_qa_selection_prefers_human_then_digest(self):
         content_lock = {"lockDigest": "current-lock", "reads": []}
         edition = SimpleNamespace(
-            edition={"editionId": "na"}, acceptance={},
+            edition={"editionId": "na"}, release_policy={},
             support_matrix_bytes=b"{}",
             api_policy={},
             strings={"counselLegend": "legend"})
 
         def qa(digest, kind):
-            return {"digest": digest, "record": {
+            return {"kind": "qa-record", "digest": digest, "record": {
                 "edition": "na", "candidateDigest": "candidate",
                 "lockDigest": "current-lock", "operatorKind": kind,
+                "releaseProfile": "validated-release",
             }}
 
         records = [qa("000-model", "model"),
@@ -1957,8 +2065,15 @@ class TestReleaseEvidence(unittest.TestCase):
                    qa("aaa-human", "human")]
         with mock.patch.object(build, "current_side_digests",
                                return_value={}), \
-                mock.patch.object(build, "registry_manual_fields",
-                                  return_value=()), \
+                mock.patch.object(build.acceptance, "load_registry",
+                                  return_value={}), \
+                mock.patch.object(
+                    build.acceptance, "release_profile_contract",
+                    return_value=("validated-release",
+                                  VALIDATED_RELEASE_PROFILE)), \
+                mock.patch.object(
+                    build.recordprovenance,
+                    "current_record_format_problems", return_value=[]), \
                 mock.patch.object(build, "qa_input_lock", return_value={}), \
                 mock.patch.object(build.canon, "parse_json", return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
@@ -1975,17 +2090,25 @@ class TestReleaseEvidence(unittest.TestCase):
     def test_current_qa_selection_reports_absent_current_binding(self):
         content_lock = {"lockDigest": "current-lock", "reads": []}
         edition = SimpleNamespace(
-            edition={"editionId": "na"}, acceptance={},
+            edition={"editionId": "na"}, release_policy={},
             support_matrix_bytes=b"{}", api_policy={},
             strings={"counselLegend": "legend"})
-        stale = [{"digest": "old-qa", "record": {
+        stale = [{"kind": "qa-record", "digest": "old-qa", "record": {
             "edition": "na", "candidateDigest": "old-candidate",
             "lockDigest": "old-lock", "operatorKind": "model",
+            "releaseProfile": "validated-release",
         }}]
         with mock.patch.object(build, "current_side_digests",
                                return_value={}), \
-                mock.patch.object(build, "registry_manual_fields",
-                                  return_value=()), \
+                mock.patch.object(build.acceptance, "load_registry",
+                                  return_value={}), \
+                mock.patch.object(
+                    build.acceptance, "release_profile_contract",
+                    return_value=("validated-release",
+                                  VALIDATED_RELEASE_PROFILE)), \
+                mock.patch.object(
+                    build.recordprovenance,
+                    "current_record_format_problems", return_value=[]), \
                 mock.patch.object(build, "qa_input_lock", return_value={}), \
                 mock.patch.object(build.canon, "parse_json", return_value={}), \
                 mock.patch.object(build.render, "api_probe_instruments",
@@ -1994,8 +2117,49 @@ class TestReleaseEvidence(unittest.TestCase):
                 edition, "candidate", content_lock, stale, [])
         self.assertEqual(valid, [])
         self.assertEqual(rejected, [("<current-binding>", [
-            "no qa-record matches the current edition, candidate digest, "
-            "and content-input lock"
+            "no qa-record matches and authorizes the current edition, "
+            "profile, candidate digest, and content-input lock"
+        ])])
+
+    def test_profile_switch_preserves_same_schema_qa_as_superseded_evidence(self):
+        content_lock = {"lockDigest": "current-lock", "reads": []}
+        edition = SimpleNamespace(
+            edition={"editionId": "na"}, release_policy={},
+            support_matrix_bytes=b"{}", api_policy={},
+            strings={"counselLegend": "legend"})
+        prior_profile = [{
+            "kind": "qa-record", "digest": "validated-evidence",
+            "record": {
+                "edition": "na", "candidateDigest": "candidate",
+                "lockDigest": "current-lock", "operatorKind": "human",
+                "releaseProfile": "validated-release",
+            },
+        }]
+        with mock.patch.object(build, "current_side_digests",
+                               return_value={}), \
+                mock.patch.object(build.acceptance, "load_registry",
+                                  return_value={}), \
+                mock.patch.object(
+                    build.acceptance, "release_profile_contract",
+                    return_value=("technical-preview",
+                                  TECHNICAL_PREVIEW_PROFILE)), \
+                mock.patch.object(
+                    build.recordprovenance,
+                    "current_record_format_problems", return_value=[]), \
+                mock.patch.object(build, "qa_input_lock", return_value={}), \
+                mock.patch.object(build.canon, "parse_json", return_value={}), \
+                mock.patch.object(build.render, "api_probe_instruments",
+                                  return_value={}), \
+                mock.patch.object(
+                    build, "qa_authorization_problems",
+                    side_effect=AssertionError(
+                        "superseded evidence was re-authorized")):
+            valid, rejected = build.current_authorized_qa_records(
+                edition, "candidate", content_lock, prior_profile, [])
+        self.assertEqual(valid, [])
+        self.assertEqual(rejected, [("<current-binding>", [
+            "no qa-record matches and authorizes the current edition, "
+            "profile, candidate digest, and content-input lock"
         ])])
 
     def test_complete_identified_model_evidence_authorizes_release(self):

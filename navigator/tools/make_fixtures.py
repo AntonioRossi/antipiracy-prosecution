@@ -310,7 +310,8 @@ def main():
             "<img src=x onerror=alert(4)>",
             "&lt;already-escaped&gt; & <b>bold</b>",
             "`code`**bold**<i>i</i>",
-            "line sep  para </ScRiPt >",
+            "line" + chr(0x2028) + "sep " + chr(0x2029) +
+            "para </ScRiPt >",
         ],
     })
 

@@ -12,13 +12,12 @@ import posixpath
 
 from . import canon
 
-ROLES = ("authoritative", "derivative", "fragment-source", "qa-source")
+ROLES = ("authoritative", "derivative", "fragment-source")
 VISIBILITIES = ("rendered", "quotable", "internal")
 ROLE_VISIBILITY = {
     "authoritative": "internal",
     "derivative": "rendered",
     "fragment-source": "rendered",
-    "qa-source": "internal",
 }
 BASE_ENTRY_FIELDS = frozenset((
     "role", "visibility", "version", "files", "primary",

@@ -9,15 +9,15 @@ This repository is a patent-prosecution document corpus maintained under the max
 Use the navigator's strict current-state and test gates together with the document-integrity checks:
 
 ```sh
-python3 navigator/build.py verify-current
-python3 navigator/tools/pre-commit-check.sh
+sh navigator/tools/pre-commit-check.sh
 python3 -m unittest discover -s navigator/tests -p 'test_*.py'
 git diff --check
 git diff --name-only -z -- '*.md' | xargs -0 -n 1 pandoc --from=gfm --to=html -o /dev/null
-cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256
+(cd US/prior-art && shasum -a 256 -c .pipeline/pdf-source-checksums.sha256)
+python3 navigator/build.py verify-current
 ```
 
-These validate the live navigator state, deterministic checked-in candidates, full software behavior, whitespace, changed Markdown rendering, and source checksums. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
+These validate deterministic checked-in candidates, full software behavior, whitespace, changed Markdown rendering, source checksums, and finally the immutable live navigator state. `verify-current` is the last command because it isolates discovered tests, revalidates the full closure, and certifies the final repository snapshot. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
 
 ## Documentation Style & Naming Conventions
 

@@ -425,7 +425,6 @@ class VerificationGateway:
         out = []
         if not os.path.isdir(self.root):
             return out
-        import json
         for name in sorted(os.listdir(self.root)):
             if name.startswith(kind + "_") and name.endswith(".json"):
                 _, path = _safe_path(self.root, name)

@@ -1,0 +1,26 @@
+{
+ "releasePolicyVersion": "1",
+ "activeReleaseProfile": "technical-preview",
+ "profiles": [
+  {
+   "id": "technical-preview",
+   "observedControls": {
+    "AC-11.observed": "deferred",
+    "AC-12.observed": "deferred",
+    "AC-13.observed": "deferred",
+    "AC-15.observed": "deferred"
+   },
+   "artifactLabel": "TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA is deferred; browser and assistive-technology compatibility is not validated."
+  },
+  {
+   "id": "validated-release",
+   "observedControls": {
+    "AC-11.observed": "required",
+    "AC-12.observed": "required",
+    "AC-13.observed": "required",
+    "AC-15.observed": "required"
+   },
+   "artifactLabel": "VALIDATED-RELEASE PROFILE — Delivery requires current full seven-row cross-platform and assistive-technology QA."
+  }
+ ]
+}

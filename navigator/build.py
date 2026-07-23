@@ -23,11 +23,14 @@ import tempfile
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from lib import authority, canon, gateway, model, qaevidence, render  # noqa: E402
+from lib import acceptance, authority, canon, gateway, model  # noqa: E402
+from lib import pinplan, profilepolicy, qaevidence, qaregistry  # noqa: E402
+from lib import render, snapshot  # noqa: E402
 from lib import claims as claims_mod, registry as registry_mod  # noqa: E402
-from lib import recordprovenance  # noqa: E402
+from lib import control_inventory, inputlock  # noqa: E402
+from lib import recordprovenance, recordresolver  # noqa: E402
 from lib import schema_validate, validate  # noqa: E402
-from lib import migrate as migrate_mod, projections, release as release_mod  # noqa: E402
+from lib import migrate as migrate_mod, release as release_mod  # noqa: E402
 from lib import bundleplan, bundlezip  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -87,26 +90,29 @@ def bundle_manifest_input(content):
     release_profile = value.get("releaseProfile") \
         if isinstance(value, dict) else None
     try:
-        profile_contract = release_mod.expected_release_profile_contract(
-            release_profile)
-        expected_profile = release_mod.profile_record_fields(profile_contract)
-    except release_mod.AcceptanceError:
+        policy = canon.parse_json(content.read_text(
+            acceptance.RELEASE_POLICY_PATH))
+        unused_profile, profile_contract = profilepolicy.profile_contract(
+            policy, release_profile)
+        expected_profile = profilepolicy.record_fields(profile_contract)
+    except profilepolicy.ProfilePolicyError:
         expected_profile = None
     if not isinstance(value, dict) or \
             set(value) != {"manifestVersion", "releaseProfile",
                            "compatibilityAuthorization",
-                           "deferredObservations", "bundleManifestText"} or \
-            value.get("manifestVersion") != "2" or \
+                           "deferredControls", "bundleManifestText"} or \
+            value.get("manifestVersion") != "3" or \
             expected_profile is None or \
             value.get("compatibilityAuthorization") != \
                 expected_profile["compatibilityAuthorization"] or \
-            value.get("deferredObservations") != \
-                expected_profile["deferredObservations"] or \
+            value.get("deferredControls") != \
+                expected_profile["deferredControls"] or \
             not isinstance(value.get("bundleManifestText"), str) or \
             not value["bundleManifestText"] or \
             not value["bundleManifestText"].startswith(
                 expected_profile["artifactLabel"]) or \
-            release_profile == "technical-preview" and \
+            expected_profile["compatibilityAuthorization"] == \
+                "not-authorized" and \
                 "does not claim compatibility authorization" not in \
                     value["bundleManifestText"]:
         raise SystemExit("bundle manifest resource is malformed")
@@ -149,7 +155,7 @@ def derive(edition_id, mode):
                          % (edition_id, len(errors)))
     html = render.render(m, mode="preview" if mode == "preview" else "candidate")
     lock = gw.lock()
-    problems = release_mod.exact_set_check(
+    problems = inputlock.exact_set_problems(
         lock, m.edition["declaredTransitiveInputs"])
     if problems:
         for p in problems:
@@ -254,25 +260,27 @@ def current_pin_plan(edition_id):
         if isinstance(entry, dict):
             qa_allow.extend(entry.get("files", {}).keys())
     qa_gateway = gateway.ContentGateway(ROOT, allowlist=qa_allow)
-    qa_registry = registry_mod.Registry(
-        qa_gateway, registry_path=edition["qaRegistry"],
-        allowed_corpora=qa_ids, require_exact=True)
+    qa_registry = qaregistry.QaRegistry(
+        qa_gateway, edition["qaRegistry"], qa_ids)
+    delivery_cfg = canon.parse_json(qa_boot.read_text(BUNDLE_CONFIG))
+    delivery_versions = {}
+    for delivery_edition_id in delivery_cfg.get("editions", []):
+        delivery_edition = canon.parse_json(qa_boot.read_text(
+            edition_path(delivery_edition_id)))
+        delivery_versions[delivery_edition["strategyPrefix"]] = \
+            delivery_edition["claimSetVersion"]
     qa_sources = {}
     for role, corpus_id in sorted(edition["qaSources"].items()):
         if corpus_id is None:
             qa_sources[role] = None
             continue
         entry = qa_registry.entry(corpus_id)
-        path = entry["primary"]
-        actual = canon.bytes_digest(qa_gateway.read_bytes(path))
-        qa_sources[role] = {
-            "corpusId": corpus_id,
-            "path": path,
-            "configuredVersion": entry["version"],
-            "pinnedDigest": entry["files"][path],
-            "actualDigest": actual,
-            "pinCurrent": entry["files"][path] == actual,
-        }
+        expected_versions = (
+            delivery_versions if role == "crosswalk" else {
+                edition["strategyPrefix"]: edition["claimSetVersion"]})
+        qa_sources[role] = pinplan.corpus_closure(
+            corpus_id, entry, qa_gateway,
+            expected_versions=expected_versions)
 
     actual_claim_digest = canon.bytes_digest(claim_bytes)
     census = {
@@ -281,7 +289,7 @@ def current_pin_plan(edition_id):
                      for number, value in per_claim.items()},
     }
     plan = {
-        "planVersion": "1",
+        "planVersion": pinplan.PLAN_VERSION,
         "edition": edition_id,
         "claimSource": {
             "corpusId": edition["claimCorpus"],
@@ -390,16 +398,6 @@ ATTESTATION_SIDES = {
 ATTESTATION_RECORD_FIELDS = recordprovenance.ATTESTATION_RECORD_FIELDS
 QA_RECORD_FIELDS = recordprovenance.QA_RECORD_FIELDS
 
-EXPECTED_ACCEPTANCE_IDS = tuple("AC-%02d" % number
-                                for number in range(1, 21))
-REQUIRED_MANUAL_QA_FIELDS = {
-    "AC-11": ("ac11",),
-    "AC-12": ("ac12",),
-    "AC-13": ("ac13",),
-    "AC-15": ("ac15",),
-}
-
-
 def operator_id():
     """Return the explicitly declared authoritative ``(operator, kind)``.
 
@@ -483,6 +481,39 @@ def _qa_registry_read(m):
     return {"path": path, "digest": qa_registry.gw.read_log[path]}
 
 
+def _delivery_version_bindings(root=ROOT):
+    """Return the sole live strategy-to-claim-version map."""
+    content = gateway.ContentGateway(root)
+    cfg = canon.parse_json(content.read_text(BUNDLE_CONFIG))
+    editions = cfg.get("editions") if isinstance(cfg, dict) else None
+    if not isinstance(editions, list) or not editions or \
+            len(editions) != len(set(editions)):
+        raise SystemExit("delivery edition set is malformed")
+    bindings = {}
+    for edition_id in editions:
+        edition = canon.parse_json(content.read_text(edition_path(edition_id)))
+        strategy = edition.get("strategyPrefix") \
+            if isinstance(edition, dict) else None
+        version = edition.get("claimSetVersion") \
+            if isinstance(edition, dict) else None
+        if not isinstance(strategy, str) or not strategy or \
+                not isinstance(version, str) or not version or \
+                strategy in bindings:
+            raise SystemExit("delivery version binding is malformed")
+        bindings[strategy] = version
+    return {strategy: bindings[strategy] for strategy in sorted(bindings)}
+
+
+def _expected_qa_version_bindings(m, role):
+    if role == "priorityMap":
+        return {
+            m.edition["strategyPrefix"]: m.edition["claimSetVersion"],
+        }
+    if role == "crosswalk":
+        return _delivery_version_bindings(m.gw.root)
+    raise SystemExit("unknown QA source role %r" % role)
+
+
 def _verified_qa_source_files(m):
     """Read every declared internal QA file and verify its registry pin.
 
@@ -505,6 +536,13 @@ def _verified_qa_source_files(m):
             raise SystemExit(
                 "QA source %r must be an internal qa-source corpus"
                 % corpus_id)
+        expected_versions = _expected_qa_version_bindings(m, role)
+        if entry.get("versionBindings") != expected_versions:
+            raise SystemExit(
+                "QA source %r version bindings are stale: configured %r, "
+                "expected %r" %
+                (corpus_id, entry.get("versionBindings"),
+                 expected_versions))
         primary = entry.get("primary")
         pins = entry.get("files")
         if not isinstance(pins, dict) or not pins or primary not in pins:
@@ -726,54 +764,6 @@ def cmd_attest(argv):
     print("attestation %s -> records/%s\n  %s" % (atype, name, digest))
 
 
-def registry_manual_fields(acceptance):
-    """Validate the acceptance registry floor and return manual QA fields.
-
-    The registry is content-plane input, not authority to delete release
-    requirements.  The executable floor therefore fixes the complete AC
-    identifier set and the four criteria that require operator QA evidence.
-    """
-    if not isinstance(acceptance, dict) or \
-            not isinstance(acceptance.get("criteria"), list):
-        raise SystemExit("acceptance registry has no criteria array")
-    runner = acceptance.get("runner")
-    if not isinstance(runner, dict) or runner.get(
-            "manualQaEvidenceVersion") != qaevidence.MANUAL_EVIDENCE_VERSION:
-        raise SystemExit(
-            "acceptance registry manualQaEvidenceVersion must be %r"
-            % qaevidence.MANUAL_EVIDENCE_VERSION)
-    criteria = acceptance["criteria"]
-    if not all(isinstance(criterion, dict) for criterion in criteria):
-        raise SystemExit("acceptance registry criteria must be objects")
-    ids = [criterion.get("id") for criterion in criteria]
-    if tuple(ids) != EXPECTED_ACCEPTANCE_IDS:
-        raise SystemExit(
-            "acceptance registry criteria must be exactly %s in order"
-            % (list(EXPECTED_ACCEPTANCE_IDS),))
-    fields = []
-    for criterion in criteria:
-        enforced = criterion.get("enforcedBy")
-        if not isinstance(enforced, dict) or \
-                not isinstance(enforced.get("qaRecordFields"), list):
-            raise SystemExit("acceptance registry criterion %s has no "
-                             "qaRecordFields array" % criterion["id"])
-        actual = tuple(enforced["qaRecordFields"])
-        expected = REQUIRED_MANUAL_QA_FIELDS.get(criterion["id"], ())
-        if actual != expected:
-            raise SystemExit(
-                "acceptance registry criterion %s must require exactly %s"
-                % (criterion["id"], list(expected)))
-        for field in actual:
-            if not isinstance(field, str) or not field:
-                raise SystemExit("acceptance registry has an invalid manual "
-                                 "QA field")
-            if field in fields:
-                raise SystemExit("acceptance registry repeats manual QA field "
-                                 "%r" % field)
-            fields.append(field)
-    return tuple(sorted(fields))
-
-
 RECORD_QA_USAGE = (
     "usage: build.py record-qa <edition> "
     "[--template | [--check-only] "
@@ -906,16 +896,16 @@ def qa_authorization_problems(qa, candidate_digest, content_lock,
                               qa_lock, support_matrix, api_probe_apis,
                               legend_digest,
                               attestations, side_digests, edition_id,
-                              required_types, manual_fields):
+                              required_types, manual_fields,
+                              expected_release_profile):
     """Return every defect that prevents a QA record authorizing release."""
     raw_record = qa.get("record") if isinstance(qa, dict) else None
     problems = approval_evidence_problems(raw_record, require_note=False)
     if not isinstance(raw_record, dict) or set(raw_record) != QA_RECORD_FIELDS:
         problems.append("QA record has the wrong fields")
     record = raw_record if isinstance(raw_record, dict) else {}
-    if record.get("releaseProfile") != "validated-release":
-        problems.append(
-            "QA record is not scoped to the validated-release profile")
+    if record.get("releaseProfile") != expected_release_profile:
+        problems.append("QA record is not scoped to the current profile")
     operator = record.get("operator")
     operator_kind = record.get("operatorKind")
     problems.extend(qaevidence.manual_check_problems(
@@ -1022,48 +1012,66 @@ def current_authorized_qa_records(m, candidate_digest, content_lock,
     """
     side_digests = current_side_digests(m)
     required = _required_attestation_types(m)
-    manual_fields = registry_manual_fields(m.acceptance)
+    acceptance_registry = acceptance.load_registry(ROOT)
+    release_profile, profile_contract = \
+        acceptance.release_profile_contract(
+            m.release_policy, acceptance_registry)
+    manual_fields = tuple(profile_contract["requiredQaRecordFields"])
     expected_qa_lock = qa_input_lock(
         m, candidate_digest, content_lock["lockDigest"])
     support_matrix = canon.parse_json(m.support_matrix_bytes)
     api_probe_apis = sorted(render.api_probe_instruments(m.api_policy))
     legend_digest = canon.text_digest(
         canon.canon_prose(m.strings["counselLegend"]))
-    candidates = [
-        record for record in qa_records
-        if isinstance(record, dict) and
-        isinstance(record.get("record"), dict) and
-        record["record"].get("edition") == m.edition["editionId"] and
-        record["record"].get("candidateDigest") == candidate_digest and
-        record["record"].get("lockDigest") == content_lock["lockDigest"]
-    ]
-    if not candidates:
-        return [], [("<current-binding>", [
-            "no qa-record matches the current edition, candidate digest, "
-            "and content-input lock"
-        ])]
-    valid = []
-    rejected = []
-    for candidate_qa in candidates:
-        problems = qa_authorization_problems(
-            candidate_qa, candidate_digest, content_lock, expected_qa_lock,
+    def format_problems(envelope):
+        if not isinstance(envelope, dict) or \
+                envelope.get("kind") != "qa-record":
+            return ["QA envelope has the wrong kind or shape"]
+        return recordprovenance.current_record_format_problems(
+            "qa-record", envelope.get("record"))
+
+    def currency_problems(envelope):
+        record = envelope["record"]
+        if record.get("edition") != m.edition["editionId"] or \
+                record.get("candidateDigest") != candidate_digest or \
+                record.get("lockDigest") != content_lock["lockDigest"] or \
+                record.get("releaseProfile") != release_profile:
+            return ["QA record is valid same-schema superseded evidence"]
+        return []
+
+    def authorization_problems(envelope):
+        return qa_authorization_problems(
+            envelope, candidate_digest, content_lock, expected_qa_lock,
             support_matrix, api_probe_apis, legend_digest, attestations,
-            side_digests,
-            m.edition["editionId"], required, manual_fields)
-        if problems:
-            rejected.append((candidate_qa.get("digest", "<unknown>"),
-                             problems))
-        else:
-            valid.append(candidate_qa)
-    return sorted(valid, key=_approval_selection_key), rejected
+            side_digests, m.edition["editionId"], required, manual_fields,
+            release_profile)
+
+    resolution = recordresolver.classify(
+        qa_records, format_problems, currency_problems,
+        authorization_problems)
+    rejected = [
+        (item.digest, list(item.problems))
+        for item in resolution.invalid_records +
+        resolution.rejected_authorizations
+    ]
+    current = sorted(
+        resolution.current_authorizations, key=_approval_selection_key)
+    if not current:
+        rejected.append(("<current-binding>", [
+            "no qa-record matches and authorizes the current edition, "
+            "profile, candidate digest, and content-input lock"
+        ]))
+    return current, rejected
 
 
 def cmd_record_qa(edition_id, argv):
     options = parse_record_qa_options(argv)
     m, html, lock = derive(edition_id, "candidate")
+    acceptance_registry = acceptance.load_registry(ROOT)
     release_profile, profile_contract = \
-        release_mod.release_profile_contract(m.acceptance)
-    manual_fields = registry_manual_fields(m.acceptance)
+        acceptance.release_profile_contract(
+            m.release_policy, acceptance_registry)
+    manual_fields = tuple(profile_contract["requiredQaRecordFields"])
     api_probe_apis = sorted(render.api_probe_instruments(m.api_policy))
     if options["template"]:
         template = qaevidence.pending_manual_checks_template(
@@ -1150,7 +1158,7 @@ def cmd_record_qa(edition_id, argv):
     authorization_problems = qa_authorization_problems(
         envelope, candidate_digest, lock, internal_lock, support_matrix,
         api_probe_apis, legend_digest, all_attestations, side_digests,
-        edition_id, required, manual_fields)
+        edition_id, required, manual_fields, release_profile)
     if authorization_problems:
         for problem in authorization_problems:
             sys.stderr.write("  [record-qa self-check] %s\n" % problem)
@@ -1170,7 +1178,7 @@ def cmd_record_qa(edition_id, argv):
 
 RELEASE_USAGE = (
     "usage: build.py release <edition> "
-    "--profile=technical-preview|validated-release"
+    "--profile=<active-release-profile>"
 )
 
 
@@ -1179,10 +1187,11 @@ def _release_profile_arg(argv):
             not argv[0].startswith("--profile="):
         raise SystemExit(RELEASE_USAGE)
     release_profile = argv[0].split("=", 1)[1]
-    if release_profile not in ("technical-preview", "validated-release"):
-        raise SystemExit(
-            "unknown release profile %r; expected technical-preview or "
-            "validated-release" % release_profile)
+    if not release_profile or not release_profile.isascii() or \
+            not all(character.islower() or character.isdigit() or
+                    character == "-" for character in release_profile) or \
+            release_profile.startswith("-") or release_profile.endswith("-"):
+        raise SystemExit("release profile id is malformed")
     return release_profile
 
 
@@ -1190,9 +1199,10 @@ def cmd_release(edition_id, argv):
     requested_profile = _release_profile_arg(argv)
     planes = load_planes()
     m, html, lock = derive(edition_id, "release")
+    acceptance_registry = acceptance.load_registry(ROOT)
     release_profile, profile_contract = \
-        release_mod.release_profile_contract(
-            m.acceptance, requested_profile)
+        acceptance.release_profile_contract(
+            m.release_policy, acceptance_registry, requested_profile)
     manual_qa_required = profile_contract["manualQaEvidence"] == "required"
     name = "candidate_" + m.edition["artifactName"]
     if not os.path.exists(os.path.join(DIST, name)):
@@ -1247,13 +1257,13 @@ def cmd_release(edition_id, argv):
         acceptance_receipt = release_mod.run_release_acceptance_transaction(
             ROOT, m, html, candidate_bytes, lock, qa, out,
             release_profile=release_profile)
-    except (release_mod.AcceptanceError, gateway.GatewayError,
+    except (acceptance.AcceptanceError, gateway.GatewayError,
             bundlezip.BundleError, OSError, subprocess.SubprocessError) as exc:
         raise SystemExit("release refused: acceptance transaction failed: %s"
                          % exc)
     record = {
-        "recordVersion": "2",
-        **release_mod.profile_record_fields(profile_contract),
+        "recordVersion": "3",
+        **acceptance.profile_record_fields(profile_contract),
         "edition": edition_id,
         "sealed": sealed_name,
         "sealedDigest": candidate_digest,
@@ -1288,9 +1298,11 @@ def cmd_release(edition_id, argv):
 
         fresh_qas = vgw.read_all("qa-record")
         fresh_attestations = vgw.read_all("attestation")
+        fresh_acceptance_registry = acceptance.load_registry(ROOT)
         fresh_profile, fresh_profile_contract = \
-            release_mod.release_profile_contract(
-                fresh_m.acceptance, requested_profile)
+            acceptance.release_profile_contract(
+                fresh_m.release_policy, fresh_acceptance_registry,
+                requested_profile)
         if fresh_profile != release_profile or \
                 fresh_profile_contract != profile_contract:
             raise bundlezip.BundleError(
@@ -1313,9 +1325,8 @@ def cmd_release(edition_id, argv):
             if fresh_attestation_problems or fresh_refs != attestation_refs:
                 raise bundlezip.BundleError(
                     "selected preview attestations changed during promotion")
-        fresh_context = release_mod.acceptance_context(
-            ROOT, fresh_m.edition["declaredTransitiveInputs"],
-            (edition_id,), release_profile=release_profile)
+        fresh_context = acceptance.acceptance_context(
+            ROOT, (edition_id,), release_profile=release_profile)
         envelope = {
             "kind": "release-record",
             "digest": canon.composite_digest(
@@ -1341,7 +1352,7 @@ def cmd_release(edition_id, argv):
         if chain_problems:
             raise bundlezip.BundleError("; ".join(chain_problems))
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
-            release_mod.AcceptanceError, OSError, SystemExit) as exc:
+            acceptance.AcceptanceError, OSError, SystemExit) as exc:
         raise SystemExit("release refused after output readback: %s" % exc)
     digest, rname = vgw.append("release-record", record)
     print("release %s -> dist/%s sealed\n  release-record %s"
@@ -1401,23 +1412,17 @@ def bundle_attestation_policy(cfg):
 
 
 def bundle_acceptance_context(cfg):
-    """Return edition-scoped release contexts and the bundle input union.
+    """Return edition-scoped acceptance contexts.
 
-    Each release context binds shared runner inputs plus only that edition's
-    declared fixtures.  The bundle transaction deliberately selects every
-    configured edition and locks the union, without making one edition's
-    fixture currency a precondition for the other's standalone release.
+    Each context binds shared control inputs plus only that edition's declared
+    fixtures.  Bundle composition verifies agreement and locks their union.
     """
     contexts = {}
-    bundle_inputs = set()
     for edition_id in cfg.get("editions", []):
-        _, edition_model = build_model(edition_id)
-        declared = edition_model.edition["declaredTransitiveInputs"]
-        contexts[edition_id] = release_mod.acceptance_context(
-            ROOT, declared, (edition_id,),
+        contexts[edition_id] = acceptance.acceptance_context(
+            ROOT, (edition_id,),
             release_profile=cfg.get("releaseProfile"))
-        bundle_inputs.update(declared)
-    return contexts, sorted(bundle_inputs)
+    return contexts
 
 
 def current_release_bindings(cfg):
@@ -1540,8 +1545,7 @@ def _current_bundle_plan_state(command):
         cfg, expected_edition_count=DELIVERY_EDITION_COUNT)
     attestation_policy, current_attestation_sides = \
         bundle_attestation_context(cfg)
-    acceptance_contexts, bundle_runner_inputs = \
-        bundle_acceptance_context(cfg)
+    acceptance_contexts = bundle_acceptance_context(cfg)
     bindings = current_release_bindings(cfg)
     qa_authorization_contexts = bundle_qa_authorization_context(
         cfg, bindings)
@@ -1565,7 +1569,6 @@ def _current_bundle_plan_state(command):
         "attestationPolicy": attestation_policy,
         "currentAttestationSides": current_attestation_sides,
         "acceptanceContexts": acceptance_contexts,
-        "bundleRunnerInputs": bundle_runner_inputs,
         "bindings": bindings,
         "qaAuthorizationContexts": qa_authorization_contexts,
         "releaseRecords": release_records,
@@ -1580,7 +1583,7 @@ def cmd_bundle_plan(argv):
     try:
         state = _current_bundle_plan_state("bundle-plan")
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
-            release_mod.AcceptanceError, OSError, SystemExit) as exc:
+            acceptance.AcceptanceError, OSError, SystemExit) as exc:
         raise SystemExit("bundle-plan refused: %s" % exc)
     # Stdout is the sole output of this read-only command.  Emit the same
     # canonical JSON encoding used by digest-bearing structures so repeated
@@ -1610,9 +1613,8 @@ def cmd_bundle(argv):
             cfg, expected_edition_count=DELIVERY_EDITION_COUNT)
         attestation_policy, current_attestation_sides = \
             bundle_attestation_context(cfg)
-        acceptance_contexts, bundle_runner_inputs = \
-            bundle_acceptance_context(cfg)
-        bundle_receipt_context = release_mod.combine_acceptance_contexts(
+        acceptance_contexts = bundle_acceptance_context(cfg)
+        bundle_receipt_context = acceptance.combine_acceptance_contexts(
             acceptance_contexts, cfg["editions"])
         bindings = current_release_bindings(cfg)
         qa_authorization_contexts = bundle_qa_authorization_context(
@@ -1650,7 +1652,7 @@ def cmd_bundle(argv):
             "currentReleaseBindingsByEdition": bindings,
         }
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
-            release_mod.AcceptanceError, OSError, SystemExit) as exc:
+            acceptance.AcceptanceError, OSError, SystemExit) as exc:
         raise SystemExit("bundle refused: %s" % exc)
 
     # Resolve every input and the operator approval before writing any output.
@@ -1668,9 +1670,9 @@ def cmd_bundle(argv):
     out = gateway.OutputGateway(DIST, "bundle", planes)
     try:
         acceptance_receipt = release_mod.run_bundle_acceptance_transaction(
-            ROOT, bundle_runner_inputs, cfg, boot.read_log[config_path], plan,
+            ROOT, cfg, boot.read_log[config_path], plan,
             zip_bytes, checksum_bytes, manifest_bytes, out)
-    except (release_mod.AcceptanceError, bundlezip.BundleError,
+    except (acceptance.AcceptanceError, bundlezip.BundleError,
             gateway.GatewayError, OSError) as exc:
         raise SystemExit("bundle refused: acceptance transaction failed: %s"
                          % exc)
@@ -1688,10 +1690,9 @@ def cmd_bundle(argv):
         fresh_qa_records = vgw.read_all("qa-record")
         fresh_attestations = vgw.read_all("attestation")
         fresh_policy, fresh_sides = bundle_attestation_context(fresh_cfg)
-        fresh_contexts, fresh_runner_inputs = \
-            bundle_acceptance_context(fresh_cfg)
+        fresh_contexts = bundle_acceptance_context(fresh_cfg)
         fresh_bundle_receipt_context = \
-            release_mod.combine_acceptance_contexts(
+            acceptance.combine_acceptance_contexts(
                 fresh_contexts, fresh_cfg["editions"])
         fresh_bindings = current_release_bindings(fresh_cfg)
         fresh_qa_authorization_contexts = bundle_qa_authorization_context(
@@ -1722,8 +1723,8 @@ def cmd_bundle(argv):
         bundlezip.verify_detached_checksum(
             checksum_bytes, cfg["name"], canon.bytes_digest(zip_bytes))
         record = {
-            "recordVersion": "2",
-            **release_mod.profile_record_fields(
+            "recordVersion": "3",
+            **acceptance.profile_record_fields(
                 fresh_bundle_receipt_context["releaseProfileContract"]),
             "bundle": cfg["name"],
             "bundleDigest": canon.bytes_digest(zip_bytes),
@@ -1746,7 +1747,7 @@ def cmd_bundle(argv):
         if record_problems:
             raise bundlezip.BundleError("; ".join(record_problems))
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
-            release_mod.AcceptanceError, OSError, SystemExit) as exc:
+            acceptance.AcceptanceError, OSError, SystemExit) as exc:
         raise SystemExit("bundle refused after output readback: %s" % exc)
 
     digest, rname = vgw.append("bundle-record", record)
@@ -1783,11 +1784,9 @@ def _pin_plan_problems(plan):
         problems.append("%s QA source plan is malformed" % edition_id)
     else:
         for role, source in sorted(qa_sources.items()):
-            if source is not None and (
-                    not isinstance(source, dict) or
-                    source.get("pinCurrent") is not True):
-                problems.append("%s %s QA-source digest pin is stale"
-                                % (edition_id, role))
+            if source is not None:
+                problems.extend(pinplan.closure_problems(
+                    source, "%s %s QA source" % (edition_id, role)))
     return problems
 
 
@@ -1833,6 +1832,7 @@ def _classified_navigator_source_problems(content, edition_ids):
         "navigator/schema/acceptance.json",
         "navigator/tools/pre-commit-check.sh",
     }
+    expected.update(control_inventory.CONTROL_SOURCE_PATHS)
     for edition_id in edition_ids:
         path = edition_path(edition_id)
         edition = canon.parse_json(content.read_text(path))
@@ -1952,8 +1952,8 @@ def _record_inventory_problems(records_by_kind):
     return problems
 
 
-def _run_full_test_suite():
-    """Run every discovered test without creating repository bytecode."""
+def _run_full_test_suite(root):
+    """Run every discovered test in the supplied repository snapshot."""
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     try:
@@ -1963,7 +1963,7 @@ def _run_full_test_suite():
                 [sys.executable, "-B", "-X", "pycache_prefix=" + pycache,
                  "-m", "unittest", "discover", "-s", "navigator/tests",
                  "-p", "test_*.py"],
-                cwd=ROOT, capture_output=True, text=True, timeout=1800,
+                cwd=root, capture_output=True, text=True, timeout=1800,
                 env=environment)
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise RuntimeError("full test suite could not complete: %s" % exc)
@@ -1993,7 +1993,7 @@ def _git_whitespace_problems():
     return []
 
 
-def verify_current_state(run_tests=True):
+def _verify_current_closure():
     """Prove one exact live source/evidence/artifact closure or refuse."""
     content = gateway.ContentGateway(ROOT)
     edition_ids = delivery_edition_ids(content)
@@ -2083,7 +2083,7 @@ def verify_current_state(run_tests=True):
         raise RuntimeError("stored bundle manifest bytes are stale")
 
     bundle_records = state["recordsGateway"].read_all("bundle-record")
-    bundle_receipt_context = release_mod.combine_acceptance_contexts(
+    bundle_receipt_context = acceptance.combine_acceptance_contexts(
         state["acceptanceContexts"], cfg["editions"])
     current_bundle_records = [
         envelope for envelope in bundle_records
@@ -2110,7 +2110,6 @@ def verify_current_state(run_tests=True):
     if inventory_problems:
         raise RuntimeError("; ".join(inventory_problems))
 
-    test_result = _run_full_test_suite() if run_tests else "not requested"
     return {
         "status": "current",
         "releaseProfile": cfg["releaseProfile"],
@@ -2128,17 +2127,69 @@ def verify_current_state(run_tests=True):
             "distInventory": "exact",
             "recordInventory": "canonical",
             "deterministicBundle": "exact",
-            "softwareTests": test_result,
         },
     }
+
+
+def verify_current_state(run_tests=True):
+    """Prove the final state, with tests isolated from authoritative bytes.
+
+    The complete repository is snapshotted before verification.  Discovered
+    tests run only in a materialized copy and must leave that copy unchanged.
+    The live closure is then re-derived and the live snapshot is compared
+    again immediately before success is returned.  A passing test can
+    therefore neither mutate nor stale an already-verified source, record, or
+    artifact.
+    """
+    try:
+        initial = snapshot.RepositorySnapshot.capture(ROOT)
+    except snapshot.SnapshotError as exc:
+        raise RuntimeError("cannot snapshot current repository: %s" % exc)
+    _verify_current_closure()
+    test_result = "not requested"
+    if run_tests:
+        try:
+            with tempfile.TemporaryDirectory(
+                    prefix="aa11393-verify-snapshot-") as sandbox_root:
+                initial.materialize(sandbox_root)
+                sandbox_before = snapshot.RepositorySnapshot.capture(
+                    sandbox_root)
+                test_result = _run_full_test_suite(sandbox_root)
+                sandbox_after = snapshot.RepositorySnapshot.capture(
+                    sandbox_root)
+                mutations = sandbox_before.differences(sandbox_after)
+                if mutations:
+                    raise RuntimeError(
+                        "discovered tests mutated the verified snapshot: %s" %
+                        "; ".join(mutations))
+        except snapshot.SnapshotError as exc:
+            raise RuntimeError("isolated test snapshot failed: %s" % exc)
+
+    before_final = snapshot.RepositorySnapshot.capture(ROOT)
+    live_changes = initial.differences(before_final)
+    if live_changes:
+        raise RuntimeError(
+            "live repository changed during verification: %s" %
+            "; ".join(live_changes))
+    report = _verify_current_closure()
+    final = snapshot.RepositorySnapshot.capture(ROOT)
+    live_changes = initial.differences(final)
+    if live_changes:
+        raise RuntimeError(
+            "live repository changed before final-state certification: %s" %
+            "; ".join(live_changes))
+    report["checks"]["softwareTests"] = test_result
+    report["checks"]["repositorySnapshot"] = final.digest
+    return report
 
 
 def cmd_verify_current(argv):
     try:
         report = verify_current_state(run_tests=True)
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
-            release_mod.AcceptanceError, OSError, RuntimeError,
-            SystemExit, KeyError, TypeError, ValueError) as exc:
+            acceptance.AcceptanceError, OSError, RuntimeError,
+            snapshot.SnapshotError, SystemExit, KeyError, TypeError,
+            ValueError) as exc:
         raise SystemExit("verify-current refused: %s" % exc)
     print(canon.canonical_json(report).decode("utf-8"))
 
@@ -2165,12 +2216,11 @@ def cmd_status(argv):
     try:
         attestation_policy, current_attestation_sides = \
             bundle_attestation_context(cfg)
-        acceptance_contexts, bundle_runner_inputs = \
-            bundle_acceptance_context(cfg)
-        bundle_receipt_context = release_mod.combine_acceptance_contexts(
+        acceptance_contexts = bundle_acceptance_context(cfg)
+        bundle_receipt_context = acceptance.combine_acceptance_contexts(
             acceptance_contexts, cfg["editions"])
     except (gateway.GatewayError, model.ModelError,
-            release_mod.AcceptanceError, OSError, SystemExit) as exc:
+            acceptance.AcceptanceError, OSError, SystemExit) as exc:
         print("bundle: invalid edition policy (%s)" % exc)
         return
     release_bindings = {}
@@ -2289,7 +2339,7 @@ def cmd_status(argv):
                 release_bindings, qa_authorization_contexts)
             config_current = proposed == cfg
         except (bundlezip.BundleError, gateway.GatewayError,
-                model.ModelError, release_mod.AcceptanceError, OSError,
+                model.ModelError, acceptance.AcceptanceError, OSError,
                 KeyError, TypeError, ValueError):
             pass
     print("bundle config: %s"

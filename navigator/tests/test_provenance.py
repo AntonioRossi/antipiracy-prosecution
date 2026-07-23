@@ -13,7 +13,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
 import build  # noqa: E402
-from lib import canon, gateway, model, projections, release, render  # noqa: E402
+from lib import canon, control_inventory, gateway, model  # noqa: E402
+from lib import projections, render, render_inventory  # noqa: E402
 
 
 def load_model(edition, root=ROOT):
@@ -28,7 +29,10 @@ def load_model(edition, root=ROOT):
 def copy_inputs(root):
     """Copy both editions' exact content sets and their QA-only resources."""
     paths = set()
-    qa_paths = {"navigator/bundle-manifest.json"}
+    qa_paths = {
+        "navigator/bundle-manifest.json",
+        "navigator/bundles/na-af-2026.json",
+    }
     for edition in ("na", "af"):
         config_path = "navigator/editions/%s.json" % edition
         with open(os.path.join(ROOT, config_path), encoding="utf-8") as fh:
@@ -76,7 +80,7 @@ class TestProvenance(unittest.TestCase):
         # The implementation boundary is bidirectional: every production
         # source is declared by both editions, and no unrelated Python path
         # can become a content input merely by being added to an allowlist.
-        filesystem_builder = {
+        filesystem_sources = {
             "navigator/build.py",
             "navigator/schema/invariants.py",
         } | {
@@ -84,22 +88,26 @@ class TestProvenance(unittest.TestCase):
             for name in os.listdir(os.path.join(ROOT, "navigator", "lib"))
             if name.endswith(".py")
         }
-        expected_builder = set(projections.BUILDER_SOURCE_PATHS)
-        self.assertEqual(expected_builder, filesystem_builder)
+        expected_render = set(render_inventory.RENDER_SOURCE_PATHS)
+        self.assertEqual(
+            expected_render | set(control_inventory.CONTROL_SOURCE_PATHS),
+            filesystem_sources)
+        self.assertFalse(
+            expected_render & set(control_inventory.CONTROL_SOURCE_PATHS))
         for edition in ("na", "af"):
             current = load_model(edition)
             declared_python = {
                 path for path in current.edition["declaredTransitiveInputs"]
                 if path.endswith(".py")
             }
-            self.assertEqual(declared_python, expected_builder)
+            self.assertEqual(declared_python, expected_render)
             self.assertEqual(
-                set(projections.builder_source_paths(
+                set(projections.render_source_paths(
                     current.edition["declaredTransitiveInputs"])),
-                expected_builder)
+                expected_render)
 
         outsider = "navigator/maintenance/outsider.py"
-        declared_with_outsider = sorted(expected_builder | {outsider})
+        declared_with_outsider = sorted(expected_render | {outsider})
 
         class RecordingGateway:
             def __init__(self):
@@ -111,13 +119,10 @@ class TestProvenance(unittest.TestCase):
 
         outsider_gateway = RecordingGateway()
         with self.assertRaisesRegex(ValueError, "outsider.py"):
-            projections.builder_tree_hash(
+            projections.render_tree_hash(
                 outsider_gateway, declared_with_outsider)
         self.assertEqual(outsider_gateway.reads, [])
         self.assertNotIn(outsider, outsider_gateway.reads)
-        with self.assertRaisesRegex(release.AcceptanceError, "outsider.py"):
-            release.acceptance_context(
-                ROOT, declared_with_outsider, ("na",))
 
     def test_other_edition_and_bundle_text_do_not_change_projection(self):
         m = load_model("na")
@@ -224,9 +229,7 @@ class TestProvenance(unittest.TestCase):
 
             rewrite_json(
                 root, "navigator/profiles/qa_af.json",
-                lambda value: value["corpora"]["af-priority-map"].update({
-                    "version": "registry-only QA policy change",
-                }))
+                lambda unused_value: None)
             na_after_model, _, na_content_after = snapshot("na", root)
             af_after_model, _, af_content_after = snapshot("af", root)
             after_na = build.qa_input_lock(

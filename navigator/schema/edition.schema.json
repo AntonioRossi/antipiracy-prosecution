@@ -5,7 +5,7 @@
  "required": ["editionVersion", "editionId", "displayName", "strategyName", "strategyPrefix", "claimCorpus", "targetCorpus", "authorityCorpus", "corpusRegistries", "claimSetVersion", "relationSet", "gateInventory", "dependencyMap", "independentClaims", "census", "groups", "forbiddenTerms", "qaSources", "qaRegistry", "stringsNamespace", "stringsResource", "artifactName", "declaredReleaseTimestamp", "declaredTransitiveInputs"],
  "additionalProperties": false,
  "properties": {
-  "editionVersion": {"type": "string", "enum": ["1"]},
+  "editionVersion": {"type": "string", "enum": ["2"]},
   "editionId": {"type": "string", "minLength": 1},
   "displayName": {"type": "string"},
   "strategyName": {"type": "string"},

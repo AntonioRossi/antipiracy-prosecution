@@ -130,8 +130,8 @@ class TestProperties(unittest.TestCase):
         self.rng = random.Random(11393)
 
     def _rand_text(self, n):
-        pool = ("abcxyzé́ \t\n\r 　  "
-                "\"\\`*<>&")
+        pool = ("abcxyzé́ \t\n\r 　" + chr(0x2028) + chr(0x2029) +
+                chr(0x1f) + chr(0x1e) + "\"\\`*<>&")
         return "".join(self.rng.choice(pool) for _ in range(n))
 
     def test_prose_idempotent(self):

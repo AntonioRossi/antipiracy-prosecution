@@ -60,10 +60,15 @@ python3 navigator/build.py pin-plan af
 ```
 
 Apply the reported current versions and raw-byte digests to the edition-selected corpus and
-QA registries. Update the edition census, independent claims, groups, artifact name, release
-timestamp, dependency map, segmentation policy, gates, fixtures, bundle wording, and every
-other reported exact-set dependency. Do not calculate a digest through an alternate helper
-or edit generated output.
+QA registries. For every object under `qaSources`, require `configuredVersions` to equal
+`expectedVersions` exactly and inspect every sorted entry in `files`, not only the entry
+marked `primary`. If any `pinCurrent` is false, use that entry's `actualDigest` as the
+replacement pin for its exact path. A missing auxiliary entry, a free-form version label, or
+a version binding not equal to the selected current claim version is a stop condition.
+Update the edition census, independent claims, groups, artifact name, release timestamp,
+dependency map, segmentation policy, gates, fixtures, bundle wording, and every other
+reported exact-set dependency. Do not calculate a digest through an alternate helper or edit
+generated output.
 
 Run `pin-plan` again. Stop unless it reports that every proposed version, digest, census,
 group, dependency, and artifact-name value is already represented by the current sources or
@@ -131,7 +136,9 @@ python3 navigator/build.py bundle
 ```
 
 No old attestation, QA record, release record, bundle record, filename, or checksum may be
-relabelled or reused for new bytes.
+relabelled or reused for new bytes. A profile switch does not authorize deletion of a valid
+same-schema QA record: leave it immutable as superseded evidence. Current authorization is
+resolved from exact profile and predecessor bindings, never from record-store membership.
 
 ## 7. Current-state and cutover gate
 
@@ -140,16 +147,19 @@ as non-current evidence. Remove transient browser snapshots, caches, migration s
 and every unclassified tracked file.
 
 ```sh
-python3 navigator/build.py verify-current
-python3 navigator/tools/pre-commit-check.sh
+sh navigator/tools/pre-commit-check.sh
 python3 -m unittest discover -s navigator/tests -p 'test_*.py'
 git diff --check
 git status --short --branch
+python3 navigator/build.py verify-current
 ```
 
 `verify-current` must report one coherent current baseline, current candidates and sealed
 artifacts, a current configured bundle and authorization chain, no obsolete live version,
-no compatibility path, and no unclassified file. Stop on any warning or nonzero result.
+no compatibility path, and no unclassified file. It captures the complete live repository,
+runs discovered tests only in a materialized snapshot, rejects mutation of that snapshot or
+the live tree, re-derives the full live closure, and compares a final snapshot immediately
+before reporting success. Run it last; stop on any warning or nonzero result.
 
 When the selected source branch has not advanced, integrate the accepted navigator branch
 with a fast-forward-only merge. If it has advanced, merge the new exact source commit into

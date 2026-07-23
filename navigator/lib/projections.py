@@ -3,40 +3,9 @@
 (derived content is never stored).
 """
 
-from . import canon, schema_validate
+from . import canon, render_inventory, schema_validate
 
 ROLE_RANK = {"specific": 0, "combination": 1, "context": 2}
-
-# Closed production implementation inventory.  This is deliberately an
-# explicit code-side commitment rather than a suffix or directory scan: an
-# allowlist entry cannot appoint itself as trusted executable input merely by
-# ending in ``.py``.  AC-07 compares this tuple bidirectionally with both the
-# filesystem family and every edition declaration.
-BUILDER_SOURCE_PATHS = (
-    "navigator/build.py",
-    "navigator/lib/__init__.py",
-    "navigator/lib/authority.py",
-    "navigator/lib/qaevidence.py",
-    "navigator/lib/recordprovenance.py",
-    "navigator/lib/bundleplan.py",
-    "navigator/lib/bundlezip.py",
-    "navigator/lib/canon.py",
-    "navigator/lib/claims.py",
-    "navigator/lib/depgraph.py",
-    "navigator/lib/gateway.py",
-    "navigator/lib/migrate.py",
-    "navigator/lib/model.py",
-    "navigator/lib/projections.py",
-    "navigator/lib/registry.py",
-    "navigator/lib/release.py",
-    "navigator/lib/render.py",
-    "navigator/lib/schema_validate.py",
-    "navigator/lib/segmenter.py",
-    "navigator/lib/unicode15_1.py",
-    "navigator/lib/validate.py",
-    "navigator/schema/invariants.py",
-)
-
 
 def artifact_strings(m):
     """Return the exact strings projection capable of affecting an edition.
@@ -194,8 +163,8 @@ def provenance(m):
     }
 
 
-def builder_source_paths(inputs):
-    """Validate and return the exact production builder-source inventory.
+def render_source_paths(inputs):
+    """Validate and return the exact artifact-renderer source inventory.
 
     Python is also used for tests and maintenance tools, so ``*.py`` is not
     itself an implementation boundary.  Missing implementation sources and
@@ -206,23 +175,23 @@ def builder_source_paths(inputs):
         path for path in inputs
         if isinstance(path, str) and path.endswith(".py")
     }
-    expected = set(BUILDER_SOURCE_PATHS)
+    expected = set(render_inventory.RENDER_SOURCE_PATHS)
     if declared != expected:
         raise ValueError(
-            "declared Python source inventory is not exact "
+            "declared render source inventory is not exact "
             "(missing=%r, extra=%r)" %
             (sorted(expected - declared), sorted(declared - expected)))
-    return BUILDER_SOURCE_PATHS
+    return render_inventory.RENDER_SOURCE_PATHS
 
 
-def builder_tree_hash(gw, inputs):
-    """Digest over the exact builder family (embedded provenance).
+def render_tree_hash(gw, inputs):
+    """Digest over the exact renderer family (embedded provenance).
 
     Reads cross the content gateway so the private lock covers every selected
     source byte.  Out-of-family declarations are rejected, never absorbed
     into this hash.
     """
     digests = []
-    for path in builder_source_paths(inputs):
+    for path in render_source_paths(inputs):
         digests.append(canon.bytes_digest(gw.read_bytes(path)))
-    return canon.composite_digest("aa11393:lock:c1", {"builderTree": digests})
+    return canon.composite_digest("aa11393:lock:c1", {"renderTree": digests})

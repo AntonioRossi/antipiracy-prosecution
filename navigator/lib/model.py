@@ -232,8 +232,8 @@ class EditionModel:
         if support_errors:
             raise ModelError("invalid support matrix: %s" %
                              "; ".join(support_errors))
-        self.acceptance = canon.parse_json(gw.read_text(
-            "navigator/schema/acceptance.json"))
+        self.release_policy = canon.parse_json(gw.read_text(
+            "navigator/schema/release-policy.json"))
 
         # target corpus segmentation
         tc = self.edition["targetCorpus"]
@@ -336,15 +336,16 @@ class EditionModel:
         reads QA pins, and another edition's QA registry is not reachable.
         """
         if self._qa_registry is None:
+            from . import qaregistry
+
             allowed = {
                 corpus_id
                 for corpus_id in self.edition.get("qaSources", {}).values()
                 if corpus_id is not None
             }
-            selected = registry_mod.Registry(
+            selected = qaregistry.QaRegistry(
                 gateway.ContentGateway(self.gw.root),
-                registry_paths=(self.edition["qaRegistry"],),
-                allowed_corpora=allowed, require_exact=True)
+                self.edition["qaRegistry"], allowed)
             overlap = set(selected.corpora) & set(self.registry.corpora)
             if overlap:
                 raise ModelError(

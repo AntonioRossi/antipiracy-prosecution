@@ -117,7 +117,7 @@ class TestRegistryStructure(unittest.TestCase):
             entry["role"] = "qa-source"
             entry["profile"] = "profiles/qa.json"
 
-        self.assert_rejected(forbidden_profile, "fields")
+        self.assert_rejected(forbidden_profile, "unknown role")
 
     def test_merged_and_allowed_corpus_sets_are_exact(self):
         with self.assertRaisesRegex(registry.RegistryError, "not exact"):
@@ -154,9 +154,23 @@ class TestRegistryStructure(unittest.TestCase):
     def test_lazy_qa_registry_cannot_duplicate_artifact_corpus_id(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
-        qa = authoritative_registry()
-        entry = qa["corpora"]["authority"]
-        entry["role"] = "qa-source"
+        qa = {
+            "qaRegistryVersion": "1",
+            "corpora": {
+                "authority": {
+                    "role": "qa-source",
+                    "visibility": "internal",
+                    "versionBindings": {
+                        "NA": "NA-2026-07-22-v4",
+                    },
+                    "primary": "sources/authority.pdf",
+                    "files": {
+                        "sources/authority.pdf":
+                            canon.bytes_digest(b"source"),
+                    },
+                },
+            },
+        }
         with open(os.path.join(temporary.name, "qa.json"), "w",
                   encoding="utf-8") as fh:
             json.dump(qa, fh)
