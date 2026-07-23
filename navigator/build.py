@@ -201,13 +201,26 @@ def _claim_document_version(text, strategy_prefix):
     return matches[0]
 
 
+def _plan_schema():
+    """Load and meta-validate the closed current-pin plan schema."""
+    schema = canon.parse_json(gateway.ContentGateway(ROOT).read_text(
+        "navigator/schema/plan.schema.json"))
+    try:
+        schema_validate.check_schema(schema)
+    except schema_validate.SchemaError as exc:
+        raise SystemExit("invalid plan schema: %s" % exc)
+    return schema
+
+
 def current_pin_plan(edition_id):
     """Return a deterministic, read-only current-pin plan.
 
     Unlike ``build_model``, this command deliberately reads registered source
     bytes without accepting their digest pins: its purpose is to expose drift
     before those pins are changed. Closed schemas and canonical paths are
-    still enforced before any edition-selected path is dereferenced.
+    still enforced before any edition-selected path is dereferenced. Every
+    registry and QA corpus the edition depends on is planned by the same
+    generic closure, so integrity currency never narrows to a primary file.
     """
     boot = gateway.ContentGateway(ROOT)
     epath = edition_path(edition_id)
@@ -274,20 +287,25 @@ def current_pin_plan(edition_id):
             edition_path(delivery_edition_id)))
         delivery_versions[delivery_edition["strategyPrefix"]] = \
             delivery_edition["claimSetVersion"]
-    qa_sources = {}
+    corpora = {}
+    for corpus_id in (edition["claimCorpus"], edition["targetCorpus"],
+                      edition["authorityCorpus"]):
+        corpora[corpus_id] = pinplan.corpus_closure(
+            corpus_id, reg.entry(corpus_id), content)
     for role, corpus_id in sorted(edition["qaSources"].items()):
         if corpus_id is None:
-            qa_sources[role] = None
             continue
+        if corpus_id in corpora:
+            raise SystemExit(
+                "QA corpus id %r collides with a registry corpus" % corpus_id)
         entry = qa_registry.entry(corpus_id)
         expected_versions = (
             delivery_versions if role == "crosswalk" else {
                 edition["strategyPrefix"]: edition["claimSetVersion"]})
-        qa_sources[role] = pinplan.corpus_closure(
+        corpora[corpus_id] = pinplan.corpus_closure(
             corpus_id, entry, qa_gateway,
             expected_versions=expected_versions)
 
-    actual_claim_digest = canon.bytes_digest(claim_bytes)
     census = {
         "claims": count, "units": units,
         "perClaim": {str(number): value
@@ -296,17 +314,15 @@ def current_pin_plan(edition_id):
     plan = {
         "planVersion": pinplan.PLAN_VERSION,
         "edition": edition_id,
-        "claimSource": {
-            "corpusId": edition["claimCorpus"],
-            "path": claim_path,
-            "documentVersion": document_version,
-            "configuredCorpusVersion": claim_entry["version"],
-            "configuredEditionVersion": edition["claimSetVersion"],
-            "pinnedDigest": claim_entry["files"][claim_path],
-            "actualDigest": actual_claim_digest,
-            "pinCurrent": claim_entry["files"][claim_path] ==
-                actual_claim_digest,
-        },
+        "claimCorpus": edition["claimCorpus"],
+        "targetCorpus": edition["targetCorpus"],
+        "authorityCorpus": edition["authorityCorpus"],
+        "qaSources": {role: edition["qaSources"][role]
+                      for role in sorted(edition["qaSources"])},
+        "corpora": corpora,
+        "documentVersion": document_version,
+        "configuredCorpusVersion": claim_entry["version"],
+        "configuredEditionVersion": edition["claimSetVersion"],
         "census": census,
         "configuredCensus": edition["census"],
         "censusCurrent": census == edition["census"],
@@ -325,8 +341,11 @@ def current_pin_plan(edition_id):
         "artifactName": expected_artifact,
         "configuredArtifactName": edition["artifactName"],
         "artifactNameCurrent": expected_artifact == edition["artifactName"],
-        "qaSources": qa_sources,
     }
+    schema_problems = schema_validate.validate(plan, _plan_schema())
+    if schema_problems:
+        raise SystemExit("%s pin plan violates the closed plan schema: %s"
+                         % (edition_id, "; ".join(schema_problems)))
     return plan
 
 
@@ -1770,32 +1789,38 @@ def _pin_plan_problems(plan):
         "%s %s" % (edition_id, problem)
         for problem in canon.require_version(
             plan, "planVersion", pinplan.PLAN_VERSION))
-    claim = plan.get("claimSource")
-    if not isinstance(claim, dict):
-        return ["%s pin plan has no claimSource" % edition_id]
-    if claim.get("configuredCorpusVersion") != claim.get(
-            "documentVersion"):
+    problems.extend(
+        "%s pin plan schema: %s" % (edition_id, problem)
+        for problem in schema_validate.validate(plan, _plan_schema()))
+    corpora = plan.get("corpora")
+    if not isinstance(corpora, dict):
+        problems.append("%s pin plan has no corpus closure" % edition_id)
+        return problems
+    declared_corpora = {
+        plan.get("claimCorpus"), plan.get("targetCorpus"),
+        plan.get("authorityCorpus")}
+    qa_sources = plan.get("qaSources")
+    if isinstance(qa_sources, dict):
+        declared_corpora.update(
+            corpus_id for corpus_id in qa_sources.values()
+            if corpus_id is not None)
+    if set(corpora) != declared_corpora:
+        problems.append(
+            "%s pin plan corpus inventory is not exact" % edition_id)
+    for corpus_id, closure in sorted(corpora.items()):
+        problems.extend(pinplan.closure_problems(
+            closure, "%s corpus %s" % (edition_id, corpus_id)))
+    if plan.get("configuredCorpusVersion") != plan.get("documentVersion"):
         problems.append("%s corpus version is not the document version"
                         % edition_id)
-    if claim.get("configuredEditionVersion") != claim.get(
-            "documentVersion"):
+    if plan.get("configuredEditionVersion") != plan.get("documentVersion"):
         problems.append("%s edition version is not the document version"
                         % edition_id)
-    if claim.get("pinCurrent") is not True:
-        problems.append("%s claim-source digest pin is stale" % edition_id)
     for field in ("censusCurrent", "groupsCurrent",
                   "dependenciesCurrent", "independentClaimsCurrent",
                   "artifactNameCurrent"):
         if plan.get(field) is not True:
             problems.append("%s %s is false" % (edition_id, field))
-    qa_sources = plan.get("qaSources")
-    if not isinstance(qa_sources, dict):
-        problems.append("%s QA source plan is malformed" % edition_id)
-    else:
-        for role, source in sorted(qa_sources.items()):
-            if source is not None:
-                problems.extend(pinplan.closure_problems(
-                    source, "%s %s QA source" % (edition_id, role)))
     return problems
 
 
@@ -1839,6 +1864,7 @@ def _classified_navigator_source_problems(content, edition_ids):
         BUNDLE_CONFIG,
         BUNDLE_MANIFEST_RESOURCE,
         "navigator/schema/acceptance.json",
+        "navigator/schema/plan.schema.json",
         "navigator/tools/pre-commit-check.sh",
     }
     expected.update(control_inventory.CONTROL_SOURCE_PATHS)

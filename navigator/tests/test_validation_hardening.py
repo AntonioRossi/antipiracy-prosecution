@@ -978,28 +978,79 @@ class VersionRegistryWalk(unittest.TestCase):
                             build_mod.load_planes()
 
     @staticmethod
-    def _current_pin_plan():
+    def _closure(corpus_id, role, paths, version_fields):
+        files = []
+        for index, path in enumerate(paths):
+            digest = canon.bytes_digest(path.encode("utf-8"))
+            files.append({
+                "path": path,
+                "primary": index == 0,
+                "pinnedDigest": digest,
+                "actualDigest": digest,
+                "pinCurrent": True,
+            })
+        closure = {
+            "corpusId": corpus_id,
+            "role": role,
+            "primary": paths[0],
+            "files": files,
+            "pinCurrent": True,
+            "versionCurrent": True,
+        }
+        closure.update(version_fields)
+        return closure
+
+    @classmethod
+    def _current_pin_plan(cls):
+        opaque = {"configuredVersion": "v1", "expectedVersion": "v1"}
         return {
             "planVersion": pinplan.PLAN_VERSION,
             "edition": "na",
-            "claimSource": {
-                "documentVersion": "v1",
-                "configuredCorpusVersion": "v1",
-                "configuredEditionVersion": "v1",
-                "pinCurrent": True,
+            "claimCorpus": "na-claims",
+            "targetCorpus": "pct-disclosure",
+            "authorityCorpus": "pct-pdf",
+            "qaSources": {"priorityMap": "na-priority-map", "crosswalk": None},
+            "corpora": {
+                "na-claims": cls._closure(
+                    "na-claims", "fragment-source", ["claims/na.md"],
+                    dict(opaque)),
+                "pct-disclosure": cls._closure(
+                    "pct-disclosure", "derivative",
+                    ["pct/disclosure.md", "pct/figures/fig-1.png"],
+                    dict(opaque)),
+                "pct-pdf": cls._closure(
+                    "pct-pdf", "authoritative", ["pct/rapporto.pdf"],
+                    dict(opaque)),
+                "na-priority-map": cls._closure(
+                    "na-priority-map", "qa-source", ["qa/priority.md"],
+                    {"configuredVersions": {"NA": "v1"},
+                     "expectedVersions": {"NA": "v1"}}),
             },
+            "documentVersion": "v1",
+            "configuredCorpusVersion": "v1",
+            "configuredEditionVersion": "v1",
+            "census": {"claims": 1, "units": 1, "perClaim": {"1": 1}},
+            "configuredCensus": {"claims": 1, "units": 1,
+                                 "perClaim": {"1": 1}},
             "censusCurrent": True,
+            "groups": ["g"],
+            "configuredGroups": ["g"],
             "groupsCurrent": True,
+            "dependencies": {"1": None},
+            "configuredDependencies": {"1": None},
             "dependenciesCurrent": True,
+            "independentClaims": [1],
+            "configuredIndependentClaims": [1],
             "independentClaimsCurrent": True,
+            "artifactName": "a.html",
+            "configuredArtifactName": "a.html",
             "artifactNameCurrent": True,
-            "qaSources": {},
         }
 
     def test_pin_plan_enforces_plan_version(self):
         self.assertEqual(
             build_mod._pin_plan_problems(self._current_pin_plan()), [])
-        for bad in (None, "1", "3"):
+        for bad in (None, "1", "2"):
             with self.subTest(planVersion=bad):
                 plan = self._current_pin_plan()
                 if bad is None:
@@ -1010,6 +1061,40 @@ class VersionRegistryWalk(unittest.TestCase):
                 self.assertTrue(
                     any("planVersion" in problem for problem in problems),
                     problems)
+
+    def test_pin_plan_schema_is_closed_and_current(self):
+        with open(os.path.join(ROOT, "navigator", "schema",
+                               "plan.schema.json"), encoding="utf-8") as fh:
+            schema = json.load(fh)
+        schema_validate.check_schema(schema)
+        self.assertEqual(schema["schemaVersion"], "1")
+        self.assertEqual(
+            schema["properties"]["planVersion"]["enum"],
+            [pinplan.PLAN_VERSION])
+        self.assertEqual(
+            schema_validate.validate(self._current_pin_plan(), schema), [])
+        for edition in ("na", "af"):
+            with self.subTest(edition=edition):
+                self.assertEqual(
+                    schema_validate.validate(
+                        build_mod.current_pin_plan(edition), schema), [])
+
+    def test_pin_plan_missing_declared_corpus_fails(self):
+        plan = self._current_pin_plan()
+        del plan["corpora"]["pct-disclosure"]
+        problems = build_mod._pin_plan_problems(plan)
+        self.assertTrue(
+            any("corpus inventory is not exact" in problem
+                for problem in problems), problems)
+
+    def test_pin_plan_missing_declared_corpus_file_fails(self):
+        plan = self._current_pin_plan()
+        plan["corpora"]["pct-pdf"]["files"] = []
+        problems = build_mod._pin_plan_problems(plan)
+        self.assertTrue(
+            any("schema" in problem for problem in problems), problems)
+        self.assertTrue(
+            any("has no files" in problem for problem in problems), problems)
 
 
 if __name__ == "__main__":

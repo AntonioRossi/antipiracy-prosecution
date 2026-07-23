@@ -3,7 +3,7 @@
 from . import canon
 
 
-PLAN_VERSION = "2"
+PLAN_VERSION = "3"
 
 
 class PinPlanError(ValueError):

@@ -1,0 +1,112 @@
+{
+ "schemaVersion": "1",
+ "comment": "Closed schema for current-pin plans (TDD §10). One generic corpus closure per registry and QA corpus the edition depends on: every declared file with pinned vs actual digest, per-file and aggregate currency, and either an opaque version string (registry corpora) or structured version bindings (QA corpora). Edition-level fields carry the claim-document census, dependency, group, version, and artifact-name currency.",
+ "type": "object",
+ "required": ["planVersion", "edition", "claimCorpus", "targetCorpus", "authorityCorpus", "qaSources", "corpora", "documentVersion", "configuredCorpusVersion", "configuredEditionVersion", "census", "configuredCensus", "censusCurrent", "groups", "configuredGroups", "groupsCurrent", "dependencies", "configuredDependencies", "dependenciesCurrent", "independentClaims", "configuredIndependentClaims", "independentClaimsCurrent", "artifactName", "configuredArtifactName", "artifactNameCurrent"],
+ "additionalProperties": false,
+ "properties": {
+  "planVersion": {"type": "string", "enum": ["3"]},
+  "edition": {"type": "string", "minLength": 1},
+  "claimCorpus": {"type": "string", "minLength": 1},
+  "targetCorpus": {"type": "string", "minLength": 1},
+  "authorityCorpus": {"type": "string", "minLength": 1},
+  "qaSources": {
+   "type": "object",
+   "required": ["priorityMap", "crosswalk"],
+   "additionalProperties": false,
+   "properties": {
+    "priorityMap": {"type": "string", "minLength": 1},
+    "crosswalk": {"type": ["string", "null"], "minLength": 1}
+   }
+  },
+  "corpora": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {
+    "^[a-z0-9][a-z0-9-]*$": {"$ref": "#/definitions/corpusClosure"}
+   }
+  },
+  "documentVersion": {"type": "string", "minLength": 1},
+  "configuredCorpusVersion": {"type": "string", "minLength": 1},
+  "configuredEditionVersion": {"type": "string", "minLength": 1},
+  "census": {"$ref": "#/definitions/census"},
+  "configuredCensus": {"$ref": "#/definitions/census"},
+  "censusCurrent": {"type": "boolean"},
+  "groups": {"type": "array", "items": {"type": "string"}},
+  "configuredGroups": {"type": "array", "items": {"type": "string"}},
+  "groupsCurrent": {"type": "boolean"},
+  "dependencies": {"$ref": "#/definitions/dependencyMap"},
+  "configuredDependencies": {
+   "type": ["object", "null"],
+   "additionalProperties": false,
+   "patternProperties": {"^[1-9][0-9]*$": {"type": ["integer", "null"]}}
+  },
+  "dependenciesCurrent": {"type": "boolean"},
+  "independentClaims": {"type": "array", "items": {"type": "integer"}},
+  "configuredIndependentClaims": {"type": "array", "items": {"type": "integer"}},
+  "independentClaimsCurrent": {"type": "boolean"},
+  "artifactName": {"type": "string", "minLength": 1},
+  "configuredArtifactName": {"type": "string", "minLength": 1},
+  "artifactNameCurrent": {"type": "boolean"}
+ },
+ "definitions": {
+  "corpusClosure": {
+   "type": "object",
+   "required": ["corpusId", "role", "primary", "files", "pinCurrent", "versionCurrent"],
+   "additionalProperties": false,
+   "properties": {
+    "corpusId": {"type": "string", "minLength": 1},
+    "role": {"type": "string", "enum": ["authoritative", "derivative", "fragment-source", "qa-source"]},
+    "primary": {"type": "string", "minLength": 1},
+    "files": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "required": ["path", "primary", "pinnedDigest", "actualDigest", "pinCurrent"],
+      "additionalProperties": false,
+      "properties": {
+       "path": {"type": "string", "minLength": 1},
+       "primary": {"type": "boolean"},
+       "pinnedDigest": {"type": "string", "minLength": 1},
+       "actualDigest": {"type": "string", "minLength": 1},
+       "pinCurrent": {"type": "boolean"}
+      }
+     }
+    },
+    "pinCurrent": {"type": "boolean"},
+    "versionCurrent": {"type": "boolean"},
+    "configuredVersion": {"type": "string", "minLength": 1},
+    "expectedVersion": {"type": "string", "minLength": 1},
+    "configuredVersions": {"$ref": "#/definitions/versionMap"},
+    "expectedVersions": {"$ref": "#/definitions/versionMap"}
+   }
+  },
+  "versionMap": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {
+    "^[A-Z][A-Z0-9]*$": {"type": "string", "minLength": 1}
+   }
+  },
+  "census": {
+   "type": "object",
+   "required": ["claims", "units", "perClaim"],
+   "additionalProperties": false,
+   "properties": {
+    "claims": {"type": "integer"},
+    "units": {"type": "integer"},
+    "perClaim": {
+     "type": "object",
+     "additionalProperties": false,
+     "patternProperties": {"^[0-9]+$": {"type": "integer"}}
+    }
+   }
+  },
+  "dependencyMap": {
+   "type": "object",
+   "additionalProperties": false,
+   "patternProperties": {"^[1-9][0-9]*$": {"type": ["integer", "null"]}}
+  }
+ }
+}

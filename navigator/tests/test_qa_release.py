@@ -918,6 +918,79 @@ class TestQaPinPlanning(unittest.TestCase):
             "NA": "NA-2026-07-22-v4"})
 
 
+class TestRegistryCorpusClosure(unittest.TestCase):
+    def test_target_corpus_figure_drift_fails_aggregate_currency(self):
+        markdown = b"disclosure\n"
+        figure = b"figure current bytes\n"
+        entry = {
+            "role": "derivative",
+            "visibility": "rendered",
+            "version": "transcription of PCT/IB2025/051755 as filed (pinned)",
+            "primary": "pct/disclosure.md",
+            "files": {
+                "pct/disclosure.md": canon.bytes_digest(markdown),
+                "pct/figures/Fig-1.png": canon.bytes_digest(b"stale figure"),
+            },
+        }
+        content = mock.Mock()
+        content.read_bytes.side_effect = lambda path: {
+            "pct/disclosure.md": markdown,
+            "pct/figures/Fig-1.png": figure,
+        }[path]
+        plan = pinplan.corpus_closure("pct-disclosure", entry, content)
+        figure_plan = next(
+            item for item in plan["files"] if item["path"].endswith(".png"))
+        self.assertFalse(figure_plan["pinCurrent"])
+        self.assertEqual(
+            figure_plan["actualDigest"], canon.bytes_digest(figure))
+        self.assertFalse(plan["pinCurrent"])
+        # The external filing identity stays an opaque string: no structured
+        # bindings are invented for a registry corpus.
+        self.assertEqual(
+            plan["configuredVersion"],
+            "transcription of PCT/IB2025/051755 as filed (pinned)")
+        self.assertEqual(plan["expectedVersion"], plan["configuredVersion"])
+        self.assertTrue(plan["versionCurrent"])
+        self.assertTrue(any(
+            "pct/figures/Fig-1.png" in problem
+            for problem in pinplan.closure_problems(plan, "pct-disclosure")))
+
+    def test_claim_corpus_currency_covers_every_declared_file(self):
+        primary = b"claims\n"
+        auxiliary = b"claim notes\n"
+        entry = {
+            "role": "fragment-source",
+            "visibility": "rendered",
+            "version": "NA-2026-07-22-v4",
+            "profile": "profiles/seg_claims.json",
+            "primary": "claims/na.md",
+            "files": {
+                "claims/na.md": canon.bytes_digest(primary),
+                "claims/notes.md": canon.bytes_digest(b"stale notes"),
+            },
+        }
+        content = mock.Mock()
+        content.read_bytes.side_effect = lambda path: {
+            "claims/na.md": primary,
+            "claims/notes.md": auxiliary,
+        }[path]
+        plan = pinplan.corpus_closure("na-claims", entry, content)
+        # Drift in a non-primary declared file still fails aggregate
+        # currency: the primary designation never narrows integrity currency.
+        self.assertEqual(
+            [item["path"] for item in plan["files"]],
+            ["claims/na.md", "claims/notes.md"])
+        auxiliary_plan = plan["files"][1]
+        self.assertFalse(auxiliary_plan["primary"])
+        self.assertFalse(auxiliary_plan["pinCurrent"])
+        self.assertEqual(
+            auxiliary_plan["actualDigest"], canon.bytes_digest(auxiliary))
+        self.assertFalse(plan["pinCurrent"])
+        self.assertTrue(any(
+            "claims/notes.md" in problem
+            for problem in pinplan.closure_problems(plan, "na-claims")))
+
+
 class TestAttestationEvidence(unittest.TestCase):
     def _attestation(self):
         return {
