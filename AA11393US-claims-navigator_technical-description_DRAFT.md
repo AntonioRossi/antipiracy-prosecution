@@ -2187,7 +2187,9 @@ that reopens it.
 - **Control inapplicability is expressed by scoping, never by a receipt status.** A
   control that does not apply to an edition or run is absent from the derived plan through
   its declared criterion `applicability` and the runner's `testScopes`; no receipt carries
-  an inapplicable or skipped status.
+  an inapplicable or skipped status. A `not-applicable` receipt status is added only if a
+  control legitimately becomes inapplicable mid-run after its plan position was fixed, and
+  the addition bumps the receipt schema version.
 
 ## 17. Open points
 
