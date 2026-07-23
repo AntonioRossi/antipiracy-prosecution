@@ -8,7 +8,7 @@ and becoming authoritative at a later stage.
 import copy
 import re
 
-from . import authority
+from . import authority, canon
 
 
 MANUAL_EVIDENCE_VERSION = "3"
@@ -495,9 +495,9 @@ def manual_check_problems(checks, required_fields, *, support_matrix,
                           manual_evidence_version=None):
     """Validate the complete versioned manual-QA authorization contract."""
     problems = []
-    if manual_evidence_version != MANUAL_EVIDENCE_VERSION:
-        problems.append("manualEvidenceVersion must be %r" %
-                        MANUAL_EVIDENCE_VERSION)
+    problems.extend(canon.require_version(
+        {"manualEvidenceVersion": manual_evidence_version},
+        "manualEvidenceVersion", MANUAL_EVIDENCE_VERSION))
     if not isinstance(checks, dict):
         return problems + ["manualChecks is not an object"]
 

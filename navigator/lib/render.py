@@ -8,7 +8,7 @@ import base64
 import json
 import re
 
-from . import profilepolicy, projections
+from . import canon, profilepolicy, projections
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;")
@@ -139,8 +139,7 @@ def api_policy_problems(api_policy, require_normative_csp=True):
     if set(api_policy) != expected_top:
         problems.append("API policy fields must be exactly %s" %
                         sorted(expected_top))
-    if api_policy.get("apiPolicyVersion") != "1":
-        problems.append("API policy version is not '1'")
+    problems.extend(canon.require_version(api_policy, "apiPolicyVersion", "1"))
     for field in ("comment", "csp"):
         if not isinstance(api_policy.get(field), str) or \
                 not api_policy.get(field, "").strip():

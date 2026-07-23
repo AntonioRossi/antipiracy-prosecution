@@ -5,7 +5,7 @@ record.  They are audit metadata, not a signature or a claim that record
 contents are cryptographically unforgeable.
 """
 
-from . import profilepolicy
+from . import canon, profilepolicy
 
 
 ATTESTATION_PRODUCER_COMMAND = "navigator/build.py attest/v1"
@@ -76,8 +76,8 @@ def current_record_format_problems(kind, record):
         profile = record.get("releaseProfile")
         if not profilepolicy.is_profile_id(profile):
             problems.append("QA record has no canonical release profile")
-        if record.get("manualEvidenceVersion") != "3":
-            problems.append("QA record has the wrong evidence version")
-    elif record.get("recordVersion") != "3":
-        problems.append("%s has the wrong recordVersion" % kind)
+        problems.extend(canon.require_version(
+            record, "manualEvidenceVersion", "3"))
+    else:
+        problems.extend(canon.require_version(record, "recordVersion", "3"))
     return problems

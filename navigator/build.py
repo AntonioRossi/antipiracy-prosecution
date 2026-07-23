@@ -64,8 +64,13 @@ def ci_guard(argv):
 
 
 def load_planes():
-    return canon.parse_json(
+    planes = canon.parse_json(
         gateway.ContentGateway(ROOT).read_text("navigator/schema/planes.json"))
+    version_problems = canon.require_version(planes, "planesVersion", "1")
+    if version_problems:
+        raise SystemExit(
+            "navigator/schema/planes.json: %s" % version_problems[0])
+    return planes
 
 
 def delivery_edition_ids(content=None):
@@ -101,7 +106,7 @@ def bundle_manifest_input(content):
             set(value) != {"manifestVersion", "releaseProfile",
                            "compatibilityAuthorization",
                            "deferredControls", "bundleManifestText"} or \
-            value.get("manifestVersion") != "3" or \
+            canon.require_version(value, "manifestVersion", "3") or \
             expected_profile is None or \
             value.get("compatibilityAuthorization") != \
                 expected_profile["compatibilityAuthorization"] or \
@@ -1761,6 +1766,10 @@ def _pin_plan_problems(plan):
         if isinstance(plan, dict) else "unknown"
     if not isinstance(plan, dict):
         return ["%s pin plan is not an object" % edition_id]
+    problems.extend(
+        "%s %s" % (edition_id, problem)
+        for problem in canon.require_version(
+            plan, "planVersion", pinplan.PLAN_VERSION))
     claim = plan.get("claimSource")
     if not isinstance(claim, dict):
         return ["%s pin plan has no claimSource" % edition_id]

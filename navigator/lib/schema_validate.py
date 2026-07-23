@@ -15,6 +15,8 @@ review-included sibling covering digest, and be block locators only.
 
 import re
 
+from . import canon
+
 SHIP = ("artifact", "schedule-only", "never")
 REVIEW = ("include", "exclude")
 
@@ -63,9 +65,11 @@ def check_schema(schema):
                 raise SchemaError("%s has an unresolved $ref %r" %
                                   (path, node.get("$ref")))
             return
-        if "schemaVersion" in node and node["schemaVersion"] != "1":
-            raise SchemaError("%s has unsupported schemaVersion %r" %
-                              (path, node["schemaVersion"]))
+        if "schemaVersion" in node:
+            version_problems = canon.require_version(
+                node, "schemaVersion", "1")
+            if version_problems:
+                raise SchemaError("%s: %s" % (path, version_problems[0]))
         if "comment" in node and (not isinstance(node["comment"], str) or
                                   not node["comment"].strip()):
             raise SchemaError("%s has an empty schema comment" % path)

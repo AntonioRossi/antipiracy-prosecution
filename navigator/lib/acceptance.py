@@ -154,7 +154,7 @@ def _registry_controls_by_id(registry):
 def validate_registry(value):
     """Validate the extensible registry and its closed current baseline."""
     if not isinstance(value, dict) or set(value) != _REGISTRY_FIELDS or \
-            value.get("acceptanceVersion") != "3" or \
+            canon.require_version(value, "acceptanceVersion", "3") or \
             not isinstance(value.get("comment"), str) or \
             not value.get("comment", "").strip():
         raise AcceptanceError(
@@ -181,7 +181,7 @@ def validate_registry(value):
 
     runner = value.get("runner")
     if not isinstance(runner, dict) or set(runner) != _RUNNER_FIELDS or \
-            runner.get("runnerVersion") != "3":
+            canon.require_version(runner, "runnerVersion", "3"):
         raise AcceptanceError("acceptance registry runner is malformed")
     editions = runner.get("editions")
     if not isinstance(editions, list) or not editions or \
@@ -725,8 +725,9 @@ def acceptance_receipt_problems(receipt, kind, current_context,
     problems = []
     if set(receipt) != _RECEIPT_FIELDS:
         problems.append("%s acceptance receipt has the wrong fields" % kind)
-    if receipt.get("receiptVersion") != "3":
-        problems.append("%s acceptance receipt has the wrong version" % kind)
+    problems.extend(
+        "%s acceptance receipt: %s" % (kind, problem)
+        for problem in canon.require_version(receipt, "receiptVersion", "3"))
     if receipt.get("runnerKind") != "tool":
         problems.append("%s acceptance runnerKind is not 'tool'" % kind)
     problems.extend(_context_problems(current_context))

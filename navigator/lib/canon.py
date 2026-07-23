@@ -115,6 +115,19 @@ def parse_json(data):
     return parsed
 
 
+def require_version(document, key, expected):
+    """Fail-closed check of one version sentinel in a parsed document.
+
+    Return ``[]`` only when *document* is an object whose *key* is exactly
+    *expected*; otherwise return one problem string.  Missing, unknown, and
+    malformed values are all rejected — no compatibility path exists for a
+    retired format version.
+    """
+    if not isinstance(document, dict) or document.get(key) != expected:
+        return ["%s must be %r" % (key, expected)]
+    return []
+
+
 # ---------------------------------------------------------------------------
 # Per-type text rules (canonVersion c1)
 # ---------------------------------------------------------------------------

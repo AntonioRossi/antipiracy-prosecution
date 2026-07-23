@@ -29,7 +29,7 @@ def is_profile_id(value):
 def validate_policy(policy):
     if not isinstance(policy, dict) or set(policy) != {
             "releasePolicyVersion", "activeReleaseProfile", "profiles"} or \
-            policy.get("releasePolicyVersion") != "1":
+            canon.require_version(policy, "releasePolicyVersion", "1"):
         raise ProfilePolicyError("release profile policy shape/version is invalid")
     profiles = policy.get("profiles")
     if not isinstance(profiles, list) or not profiles:

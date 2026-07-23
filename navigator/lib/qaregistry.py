@@ -91,7 +91,7 @@ class QaRegistry:
         data = canon.parse_json(self.gw.read_text(self.registry_path))
         if not isinstance(data, dict) or set(data) != {
                 "qaRegistryVersion", "corpora"} or \
-                data.get("qaRegistryVersion") != "1":
+                canon.require_version(data, "qaRegistryVersion", "1"):
             raise QaRegistryError(
                 "QA registry shape/version is not current")
         corpora = data.get("corpora")

@@ -46,8 +46,7 @@ def profile_problems(profile, expected_corpus=None):
     required_top = {"profileVersion", "corpusId", "comment", "rules"}
     if set(profile) - allowed_top or not required_top.issubset(profile):
         problems.append("segmentation profile fields are not closed")
-    if profile.get("profileVersion") != "1":
-        problems.append("segmentation profile version is not '1'")
+    problems.extend(canon.require_version(profile, "profileVersion", "1"))
     if not isinstance(profile.get("corpusId"), str) or \
             not profile.get("corpusId", "").strip():
         problems.append("segmentation profile corpusId is empty")

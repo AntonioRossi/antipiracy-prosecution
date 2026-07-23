@@ -6,15 +6,18 @@ must fail closed.
 """
 
 import copy
+import glob
 import json
 import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from lib import authority, gateway, model, schema_validate, segmenter, \
-    validate  # noqa: E402
+import build as build_mod  # noqa: E402
+from lib import authority, canon, gateway, model, pinplan, \
+    schema_validate, segmenter, validate  # noqa: E402
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -844,6 +847,169 @@ class ValidationHardening(unittest.TestCase):
         self.assertTrue(any(code == "duplicate" and
                             "duplicate target block" in message
                             for code, message in errors))
+
+
+# Registered check for every top-level "*Version" key in the enumerated
+# versioned JSON formats.  "sentinel" entries are enforced fail-closed
+# through canon.require_version by the named consumer; "enum" entries are
+# pinned by the closed schema's enum; "live" entries are edition data values
+# (document versions bound by QA versionBindings), not format versions.
+VERSION_KEY_CHECKS = {
+    "acceptanceVersion": ("sentinel", "3", "acceptance.validate_registry"),
+    "apiPolicyVersion": ("sentinel", "1", "render.api_policy_problems"),
+    "bundleVersion": ("sentinel", "3", "bundlezip.validate_bundle_config"),
+    "depsVersion": ("enum", "1", "navigator/schema/deps.schema.json"),
+    "editionVersion": ("enum", "2", "navigator/schema/edition.schema.json"),
+    "inventoryVersion": ("enum", "1", "navigator/schema/gates.schema.json"),
+    "manifestVersion": ("sentinel", "3", "build.bundle_manifest_input"),
+    "planesVersion": ("sentinel", "1", "build.load_planes"),
+    "profileVersion": ("sentinel", "1", "segmenter.profile_problems"),
+    "qaRegistryVersion": ("sentinel", "1", "qaregistry.QaRegistry"),
+    "registryVersion": ("sentinel", "1", "registry.Registry"),
+    "releasePolicyVersion": ("sentinel", "1", "profilepolicy.validate_policy"),
+    "schemaVersion": ("sentinel", "1", "schema_validate.check_schema"),
+    "stringsVersion": ("sentinel", "1", "model.EditionModel strings"),
+    "supportMatrixVersion": (
+        "enum", "2", "navigator/schema/support-matrix.schema.json"),
+    "claimSetVersion": ("live", None, "edition document version"),
+}
+
+VERSIONED_FORMAT_FILES = (
+    "navigator/corpora.json",
+    "navigator/bundle-manifest.json",
+)
+VERSIONED_FORMAT_GLOBS = (
+    "navigator/schema/*.json",
+    "navigator/profiles/*.json",
+    "navigator/editions/*.json",
+    "navigator/relations/*.json",
+    "navigator/bundles/*.json",
+)
+
+
+class VersionRegistryWalk(unittest.TestCase):
+    """The version-key inventory and its registered checks cannot drift."""
+
+    @staticmethod
+    def _format_paths():
+        paths = [os.path.join(ROOT, path) for path in VERSIONED_FORMAT_FILES]
+        for pattern in VERSIONED_FORMAT_GLOBS:
+            paths.extend(sorted(glob.glob(os.path.join(ROOT, pattern))))
+        return paths
+
+    def test_require_version_fails_closed(self):
+        self.assertEqual(
+            canon.require_version({"fmtVersion": "1"}, "fmtVersion", "1"), [])
+        for document in (
+            {"fmtVersion": "2"},
+            {"fmtVersion": 1},
+            {"fmtVersion": None},
+            {},
+            [],
+            None,
+            "fmtVersion",
+        ):
+            with self.subTest(document=document):
+                self.assertEqual(
+                    canon.require_version(document, "fmtVersion", "1"),
+                    ["fmtVersion must be '1'"])
+
+    def test_every_version_key_has_a_registered_current_check(self):
+        seen = {}
+        for path in self._format_paths():
+            rel = os.path.relpath(path, ROOT).replace(os.sep, "/")
+            with open(path, encoding="utf-8") as fh:
+                document = json.load(fh)
+            self.assertIsInstance(document, dict, rel)
+            for key, value in document.items():
+                if not key.endswith("Version"):
+                    continue
+                self.assertIn(
+                    key, VERSION_KEY_CHECKS,
+                    "%s declares %r with no registered version check"
+                    % (rel, key))
+                kind, expected, _consumer = VERSION_KEY_CHECKS[key]
+                seen.setdefault(key, set()).add(rel)
+                if kind == "live":
+                    self.assertTrue(
+                        isinstance(value, str) and value.strip(),
+                        "%s %s must be a non-empty live version" % (rel, key))
+                else:
+                    self.assertEqual(
+                        value, expected,
+                        "%s %s is not the registered current version"
+                        % (rel, key))
+        self.assertEqual(
+            set(seen), set(VERSION_KEY_CHECKS),
+            "registered version checks drifted from the versioned formats")
+
+    def test_enum_pinned_version_keys_are_closed_in_their_schemas(self):
+        for key, (kind, expected, location) in VERSION_KEY_CHECKS.items():
+            if kind != "enum":
+                continue
+            with self.subTest(key=key):
+                with open(os.path.join(ROOT, location),
+                          encoding="utf-8") as fh:
+                    schema = json.load(fh)
+                self.assertEqual(
+                    schema["properties"][key].get("enum"), [expected], key)
+
+    def test_load_planes_enforces_planes_version(self):
+        self.assertEqual(build_mod.load_planes()["planesVersion"], "1")
+        with open(os.path.join(ROOT, "navigator", "schema", "planes.json"),
+                  encoding="utf-8") as fh:
+            current = json.load(fh)
+        mutations = (
+            ("unknown", lambda doc: doc.update({"planesVersion": "2"})),
+            ("missing", lambda doc: doc.pop("planesVersion")),
+        )
+        for label, mutate in mutations:
+            with self.subTest(mutation=label):
+                document = copy.deepcopy(current)
+                mutate(document)
+                with tempfile.TemporaryDirectory() as root:
+                    schema_dir = os.path.join(root, "navigator", "schema")
+                    os.makedirs(schema_dir)
+                    with open(os.path.join(schema_dir, "planes.json"), "w",
+                              encoding="utf-8") as fh:
+                        json.dump(document, fh)
+                    with mock.patch.object(build_mod, "ROOT", root):
+                        with self.assertRaises(SystemExit):
+                            build_mod.load_planes()
+
+    @staticmethod
+    def _current_pin_plan():
+        return {
+            "planVersion": pinplan.PLAN_VERSION,
+            "edition": "na",
+            "claimSource": {
+                "documentVersion": "v1",
+                "configuredCorpusVersion": "v1",
+                "configuredEditionVersion": "v1",
+                "pinCurrent": True,
+            },
+            "censusCurrent": True,
+            "groupsCurrent": True,
+            "dependenciesCurrent": True,
+            "independentClaimsCurrent": True,
+            "artifactNameCurrent": True,
+            "qaSources": {},
+        }
+
+    def test_pin_plan_enforces_plan_version(self):
+        self.assertEqual(
+            build_mod._pin_plan_problems(self._current_pin_plan()), [])
+        for bad in (None, "1", "3"):
+            with self.subTest(planVersion=bad):
+                plan = self._current_pin_plan()
+                if bad is None:
+                    del plan["planVersion"]
+                else:
+                    plan["planVersion"] = bad
+                problems = build_mod._pin_plan_problems(plan)
+                self.assertTrue(
+                    any("planVersion" in problem for problem in problems),
+                    problems)
 
 
 if __name__ == "__main__":

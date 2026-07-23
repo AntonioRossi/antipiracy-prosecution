@@ -113,11 +113,12 @@ class Registry:
                 raise RegistryError(
                     "registry %r fields must be exactly registryVersion and "
                     "corpora" % path)
-            version = data["registryVersion"]
-            if version != "1":
+            version_problems = canon.require_version(
+                data, "registryVersion", "1")
+            if version_problems:
                 raise RegistryError(
-                    "registry %r has unsupported registryVersion %r"
-                    % (path, version))
+                    "registry %r: %s" % (path, version_problems[0]))
+            version = data["registryVersion"]
             if registry_version is None:
                 registry_version = version
             elif version != registry_version:

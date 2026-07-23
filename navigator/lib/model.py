@@ -156,7 +156,7 @@ class EditionModel:
             "generalizationCodes", "ui",
         }
         if set(shared_strings) != expected_shared_string_fields or \
-                shared_strings.get("stringsVersion") != "1":
+                canon.require_version(shared_strings, "stringsVersion", "1"):
             raise ModelError(
                 "shared strings fields/version do not match the closed "
                 "artifact-microcopy resource")
@@ -222,6 +222,10 @@ class EditionModel:
         }
         self.planes = canon.parse_json(gw.read_text(
             "navigator/schema/planes.json"))
+        planes_errors = canon.require_version(
+            self.planes, "planesVersion", "1")
+        if planes_errors:
+            raise ModelError("invalid planes: %s" % "; ".join(planes_errors))
         self.api_policy = canon.parse_json(gw.read_text(
             "navigator/schema/api-policy.json"))
         self.support_matrix_bytes = gw.read_bytes(

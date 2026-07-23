@@ -196,9 +196,9 @@ def validate_bundle_config(cfg, expected_edition_count=2):
     missing = required - set(cfg)
     if missing:
         raise BundleError("missing bundle config fields: %s" % sorted(missing))
-    if cfg["bundleVersion"] != "3":
-        raise BundleError("unsupported bundleVersion %r"
-                          % cfg["bundleVersion"])
+    version_problems = canon.require_version(cfg, "bundleVersion", "3")
+    if version_problems:
+        raise BundleError(version_problems[0])
     release_profile = cfg.get("releaseProfile")
     if not isinstance(release_profile, str) or not release_profile or \
             not release_profile.isascii() or \
@@ -493,8 +493,7 @@ def release_chain_problems(release_envelope, qa_records, attestations,
     problems = []
     if set(record) != _RELEASE_FIELDS:
         problems.append("release record has the wrong fields")
-    if record.get("recordVersion") != "3":
-        problems.append("release record has the wrong version")
+    problems.extend(canon.require_version(record, "recordVersion", "3"))
     problems.extend(_authorized_record_problems(record, "release record"))
     edition = record.get("edition")
     if not isinstance(edition, str) or not edition:
@@ -640,8 +639,8 @@ def release_chain_problems(release_envelope, qa_records, attestations,
     else:
         if qa_lock.get("lockType") != "internal-qa-inputs":
             problems.append("QA internal-input lock has the wrong type")
-        if qa_lock.get("canonVersion") != canon.CANON_VERSION:
-            problems.append("QA internal-input lock has the wrong canonVersion")
+        problems.extend(canon.require_version(
+            qa_lock, "canonVersion", canon.CANON_VERSION))
         if qa_lock.get("candidateDigest") != record.get("sealedDigest"):
             problems.append("QA internal-input lock does not bind candidate")
         if qa_lock.get("contentLockDigest") != record.get("lockDigest"):
@@ -980,8 +979,7 @@ def bundle_record_problems(record, cfg, bundle_digest,
     problems = []
     if set(record) != recordprovenance.BUNDLE_RECORD_FIELDS:
         problems.append("bundle record has the wrong fields")
-    if record.get("recordVersion") != "3":
-        problems.append("bundle record has the wrong version")
+    problems.extend(canon.require_version(record, "recordVersion", "3"))
     if not authority.is_identified_operator_identity(
             record.get("operator")):
         problems.append("bundle record has no identified operator")
