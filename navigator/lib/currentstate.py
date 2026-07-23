@@ -585,7 +585,30 @@ def _confirmed_current_attestations(attestations, side_digests, edition_id,
                     support_matrix_approver))
             return current
 
-        live = [a for a in applicable if not evidence_problems(a)]
+        def authorization_problems(envelope):
+            current = list(approval_evidence_problems(envelope["record"]))
+            if atype == "support-matrix-approval":
+                current.extend(_support_matrix_operator_binding_problems(
+                    envelope["record"].get("operator"),
+                    support_matrix_approver))
+            return current
+
+        context = recordresolver.AttestationContext(
+            required_type=atype,
+            expected_edition=edition_id
+            if atype in EDITION_ATTEST_TYPES else None,
+            check_scope=edition_id is not None,
+            expected_sides=ATTESTATION_SIDES.get(atype, frozenset()),
+            side_digests=side_digests,
+            authorization_problems=authorization_problems)
+        resolution = recordresolver.classify(
+            "attestation", attestations, context)
+        current_digests = {
+            envelope.get("digest")
+            for envelope in resolution.current_authorizations
+        }
+        live = [a for a in applicable
+                if a.get("digest") in current_digests]
         if not live:
             detail = []
             for att in applicable:
@@ -742,32 +765,18 @@ def current_authorized_qa_records(m, candidate_digest, content_lock,
     api_probe_apis = sorted(render.api_probe_instruments(m.api_policy))
     legend_digest = canon.text_digest(
         canon.canon_prose(m.strings["counselLegend"]))
-    def format_problems(envelope):
-        if not isinstance(envelope, dict) or \
-                envelope.get("kind") != "qa-record":
-            return ["QA envelope has the wrong kind or shape"]
-        return recordprovenance.current_record_format_problems(
-            "qa-record", envelope.get("record"))
-
-    def currency_problems(envelope):
-        record = envelope["record"]
-        if record.get("edition") != m.edition["editionId"] or \
-                record.get("candidateDigest") != candidate_digest or \
-                record.get("lockDigest") != content_lock["lockDigest"] or \
-                record.get("releaseProfile") != release_profile:
-            return ["QA record is valid same-schema superseded evidence"]
-        return []
-
-    def authorization_problems(envelope):
-        return qa_authorization_problems(
+    context = recordresolver.QaRecordContext(
+        edition_id=m.edition["editionId"],
+        candidate_digest=candidate_digest,
+        lock_digest=content_lock["lockDigest"],
+        release_profile=release_profile,
+        authorization_problems=lambda envelope: qa_authorization_problems(
             envelope, candidate_digest, content_lock, expected_qa_lock,
             support_matrix, api_probe_apis, legend_digest, attestations,
             side_digests, m.edition["editionId"], required, manual_fields,
-            release_profile)
+            release_profile))
 
-    resolution = recordresolver.classify(
-        qa_records, format_problems, currency_problems,
-        authorization_problems)
+    resolution = recordresolver.classify("qa-record", qa_records, context)
     rejected = [
         (item.digest, list(item.problems))
         for item in resolution.invalid_records +
@@ -924,6 +933,57 @@ def bundle_qa_authorization_context(cfg, release_bindings, byte_source=None):
                 edition_model.api_policy)),
         }
     return contexts
+
+
+def _bundle_record_context(cfg, bundle_digest, bundle_config_digest,
+                           receipt_context):
+    """Bind the current chain values a bundle record must match.
+
+    The values mirror ``bundlezip.bundle_record_problems``: the current
+    config identity, the independently derived bundle bytes, the current
+    release profile fields, and the acceptance receipt subjects.  The
+    generic resolver then separates stale chain evidence from rejected
+    authorizations without reimplementing the checks.
+    """
+    expected_members = [
+        {"name": member["name"], "digest": member["digest"]}
+        for member in cfg["members"]]
+    expected_releases = [
+        member["releaseRecord"] for member in cfg["members"]
+        if member["kind"] == "sealed"]
+    manifest = next(
+        member for member in cfg["members"]
+        if member["kind"] == "bundle-manifest")
+    profile_contract = receipt_context.get("releaseProfileContract") \
+        if isinstance(receipt_context, dict) else None
+    try:
+        profile_fields = acceptance.profile_record_fields(profile_contract)
+        profile_problem = None
+    except acceptance.AcceptanceError as exc:
+        profile_fields = None
+        profile_problem = \
+            "current bundle release profile is unavailable: %s" % exc
+    receipt_subjects = acceptance.bundle_subjects(
+        bundle_config_digest, bundle_digest, expected_releases,
+        expected_members, cfg.get("manifestApproval"), profile_contract)
+
+    def receipt_problems(record):
+        return acceptance.acceptance_receipt_problems(
+            record.get("acceptanceReceipt"), "bundle", receipt_context,
+            receipt_subjects)
+
+    return recordresolver.BundleRecordContext(
+        release_profile_fields=profile_fields,
+        release_profile_problem=profile_problem,
+        release_profile=cfg.get("releaseProfile"),
+        bundle=cfg["name"],
+        bundle_digest=bundle_digest,
+        members=expected_members,
+        release_records=expected_releases,
+        manifest_wording=manifest["wordingDigest"],
+        manifest_approval=cfg["manifestApproval"],
+        bundle_config_digest=bundle_config_digest,
+        receipt_problems=receipt_problems)
 
 
 def _propose_current_bundle_config(
@@ -1365,13 +1425,12 @@ def _verify_current_closure(byte_source, load_planes=None):
     bundle_records = state["recordsGateway"].read_all("bundle-record")
     bundle_receipt_context = acceptance.combine_acceptance_contexts(
         state["acceptanceContexts"], cfg["editions"])
-    current_bundle_records = [
-        envelope for envelope in bundle_records
-        if not bundlezip.bundle_record_problems(
-            envelope["record"], cfg, bundle_digest,
-            state["content"].read_log[BUNDLE_CONFIG],
-            expected_edition_count=DELIVERY_EDITION_COUNT,
-            current_acceptance_context=bundle_receipt_context)]
+    bundle_context = _bundle_record_context(
+        cfg, bundle_digest, state["content"].read_log[BUNDLE_CONFIG],
+        bundle_receipt_context)
+    current_bundle_records = list(recordresolver.classify(
+        "bundle-record", bundle_records,
+        bundle_context).current_authorizations)
     if not current_bundle_records:
         raise RuntimeError("no current fully authorized bundle record")
 
@@ -1551,34 +1610,30 @@ def _status_report(snap, load_planes=None):
                 "none with complete current authorized operator evidence"))
 
         valid_qa_digests = {record["digest"] for record in valid_qa}
+        release_context = recordresolver.ReleaseRecordContext(
+            edition_id=ed,
+            sealed=m.edition["artifactName"],
+            sealed_digest=cdig,
+            lock_digest=lock["lockDigest"],
+            declared_release_timestamp=
+                m.edition["declaredReleaseTimestamp"],
+            release_profile=cfg["releaseProfile"],
+            authorization_problems=lambda envelope:
+                bundlezip.release_chain_problems(
+                    envelope, qa_records, attestations,
+                    attestation_policy[ed], current_attestation_sides[ed],
+                    approval_evidence_problems, acceptance_contexts[ed],
+                    qa_authorization_contexts[ed]))
+        resolution = recordresolver.classify(
+            "release-record", release_records, release_context)
         releases = []
-        for envelope in release_records:
-            record = envelope.get("record") if isinstance(envelope, dict) \
-                else None
-            if not isinstance(record, dict):
-                continue
-            if (record.get("edition"), record.get("sealed"),
-                    record.get("sealedDigest"), record.get("lockDigest"),
-                    record.get("declaredReleaseTimestamp"),
-                    record.get("releaseProfile")) != (
-                    ed, m.edition["artifactName"], cdig,
-                    lock["lockDigest"],
-                    m.edition["declaredReleaseTimestamp"],
-                    cfg["releaseProfile"]):
-                continue
+        for envelope in resolution.current_authorizations:
+            record = envelope["record"]
             if manual_qa == "deferred" and \
                     record.get("qaRecord") is not None:
                 continue
             if manual_qa == "required" and \
                     record.get("qaRecord") not in valid_qa_digests:
-                continue
-            if bundlezip.release_chain_problems(
-                    envelope, qa_records, attestations,
-                    attestation_policy[ed],
-                    current_attestation_sides[ed],
-                    approval_evidence_problems,
-                    acceptance_contexts[ed],
-                    qa_authorization_contexts[ed]):
                 continue
             releases.append(envelope)
         releases.sort(key=_approval_selection_key)
@@ -1638,12 +1693,11 @@ def _status_report(snap, load_planes=None):
                 snapshot.SnapshotError):
             checksum_current = False
 
-        exact_records = [
-            envelope for envelope in vgw.read_all("bundle-record")
-            if not bundlezip.bundle_record_problems(
-                envelope["record"], cfg, bdig,
-                boot.read_log[config_path],
-                current_acceptance_context=bundle_receipt_context)]
+        bundle_context = _bundle_record_context(
+            cfg, bdig, boot.read_log[config_path], bundle_receipt_context)
+        exact_records = list(recordresolver.classify(
+            "bundle-record", vgw.read_all("bundle-record"),
+            bundle_context).current_authorizations)
         selected_record = min(
             exact_records, key=_approval_selection_key, default=None)
         record_digest = selected_record["digest"] \

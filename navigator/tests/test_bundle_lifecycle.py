@@ -12,7 +12,7 @@ from unittest import mock
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import build as build_mod  # noqa: E402
 from lib import acceptance, bundlezip, canon, gateway, qaevidence  # noqa: E402
-from lib import currentstate  # noqa: E402
+from lib import currentstate, recordresolver  # noqa: E402
 from lib import recordprovenance, release, render  # noqa: E402
 from tests import acceptance_support  # noqa: E402
 
@@ -1238,6 +1238,112 @@ class BundleLifecycleTests(unittest.TestCase):
             "aa11393:bundle-record:c1", record)
         self.assertNotIn(outer_digest.encode("ascii"),
                          canon.canonical_json(record["acceptanceReceipt"]))
+
+    def test_release_resolution_consumes_only_current_authorizations(self):
+        config, releases, qas, attestations, stored, manifest, wording = \
+            _fixture()
+        current = next(
+            envelope for envelope in releases
+            if envelope["digest"] == config["members"][0]["releaseRecord"])
+        context = recordresolver.ReleaseRecordContext(
+            edition_id="na", sealed="a.html",
+            sealed_digest=config["members"][0]["digest"],
+            lock_digest=None, declared_release_timestamp=None,
+            release_profile=config["releaseProfile"],
+            authorization_problems=lambda envelope:
+                bundlezip.release_chain_problems(
+                    envelope, qas, attestations, BASE_REQUIRED_ATTESTATIONS,
+                    FIXTURE_SIDE_DIGESTS,
+                    currentstate.approval_evidence_problems,
+                    FIXTURE_ACCEPTANCE_CONTEXT,
+                    _qa_authorization_context(qas)))
+        resolution = recordresolver.classify(
+            "release-record", releases, context)
+        self.assertEqual(list(resolution.current_authorizations), [current])
+        self.assertEqual(
+            sorted(item.digest for item in resolution.invalid_records),
+            sorted(envelope["digest"] for envelope in releases
+                   if envelope is not current))
+
+        # A rehashed record for older sealed bytes is preserved as
+        # superseded evidence and can never seal the configured member.
+        stale_record = copy.deepcopy(current["record"])
+        stale_record["sealedDigest"] = canon.bytes_digest(b"earlier bytes")
+        stale = _envelope("release-record", stale_record)
+        stale_resolution = recordresolver.classify(
+            "release-record", [stale], context)
+        self.assertEqual(
+            list(stale_resolution.superseded_evidence), [stale])
+        shifted = copy.deepcopy(config)
+        shifted["members"][0]["releaseRecord"] = stale["digest"]
+        with self.assertRaisesRegex(
+                bundlezip.BundleError,
+                "does not bind configured edition/member/digest/profile"):
+            bundlezip.resolve_bundle_members(
+                shifted, [stale], qas, attestations,
+                lambda kind, name: stored[(kind, name)], manifest, wording,
+                currentstate.approval_evidence_problems,
+                FIXTURE_ATTESTATION_POLICY, FIXTURE_CURRENT_SIDES,
+                expected_edition_count=1,
+                acceptance_context_by_edition=FIXTURE_ACCEPTANCE_CONTEXTS,
+                qa_authorization_context_by_edition=
+                    _qa_authorization_contexts(qas))
+
+    def test_bundle_record_resolution_buckets(self):
+        config, unused, unused_qas, attestations, stored, manifest, wording = \
+            _fixture()
+        members = [(m["name"], manifest if m["kind"] == "bundle-manifest"
+                    else stored[(m["kind"], m["name"])])
+                   for m in config["members"]]
+        bundle_digest = canon.bytes_digest(bundlezip.build_zip(
+            members, config["declaredTimestamp"]))
+        config_digest = canon.bytes_digest(b"config")
+        record = {
+            "recordVersion": "3",
+            **acceptance.profile_record_fields(VALIDATED_RELEASE_PROFILE),
+            "bundle": config["name"], "bundleDigest": bundle_digest,
+            "members": [{"name": m["name"], "digest": m["digest"]}
+                        for m in config["members"]],
+            "releaseRecords": [config["members"][0]["releaseRecord"]],
+            "manifestWording": wording,
+            "manifestApproval": attestations[-1]["digest"],
+            "bundleConfigDigest": config_digest,
+            "approvalStatus": "passed",
+            "operator": "Bundle Operator",
+            "operatorKind": "human",
+        }
+        record["acceptanceReceipt"] = _acceptance_receipt(
+            "bundle", acceptance.bundle_subjects(
+                config_digest, bundle_digest, record["releaseRecords"],
+                record["members"], record["manifestApproval"],
+                VALIDATED_RELEASE_PROFILE))
+        envelope = _envelope("bundle-record", record)
+        context = currentstate._bundle_record_context(
+            config, bundle_digest, config_digest, FIXTURE_ACCEPTANCE_CONTEXT)
+        resolution = recordresolver.classify(
+            "bundle-record", [envelope], context)
+        self.assertEqual(list(resolution.current_authorizations), [envelope])
+        self.assertEqual(bundlezip.bundle_record_problems(
+            record, config, bundle_digest, config_digest,
+            expected_edition_count=1,
+            current_acceptance_context=FIXTURE_ACCEPTANCE_CONTEXT), [])
+
+        stale = _envelope("bundle-record", dict(
+            record, bundleDigest=canon.bytes_digest(b"earlier bundle")))
+        stale_resolution = recordresolver.classify(
+            "bundle-record", [stale], context)
+        self.assertEqual(list(stale_resolution.current_authorizations), [])
+        self.assertEqual(list(stale_resolution.superseded_evidence), [stale])
+
+        pending = _envelope("bundle-record", dict(
+            record, approvalStatus="pending"))
+        pending_resolution = recordresolver.classify(
+            "bundle-record", [pending], context)
+        self.assertEqual(list(pending_resolution.superseded_evidence), [])
+        self.assertEqual(
+            [item.digest
+             for item in pending_resolution.rejected_authorizations],
+            [pending["digest"]])
 
     def test_cmd_bundle_records_the_confirmed_manifest_approval(self):
         config, releases, qas, attestations, stored, manifest, unused = \

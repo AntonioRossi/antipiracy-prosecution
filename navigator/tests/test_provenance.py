@@ -13,7 +13,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
 from lib import canon, control_inventory, currentstate, gateway, model  # noqa: E402
-from lib import projections, render, render_inventory  # noqa: E402
+from lib import projections, recordprovenance, recordresolver  # noqa: E402
+from lib import render, render_inventory  # noqa: E402
 
 
 def load_model(edition, root=ROOT):
@@ -257,6 +258,323 @@ class TestProvenance(unittest.TestCase):
         m.api_policy["csp"] = marker
         html = render.render(m).decode("utf-8")
         self.assertIn('content="%s"' % marker, html)
+
+
+def _qa_envelope(digest, **record_updates):
+    record = {
+        "releaseProfile": "validated-release",
+        "edition": "na",
+        "candidateDigest": "candidate-digest",
+        "lockDigest": "lock-digest",
+        "contentLock": [],
+        "qaInputLock": {},
+        "reproductionDiagnostics": {},
+        "attestations": [],
+        "supportMatrix": {},
+        "legendApproval": {},
+        "manualEvidenceVersion": "3",
+        "manualChecks": {},
+        "approvalStatus": "passed",
+        "operator": "QA Reviewer",
+        "operatorKind": "human",
+    }
+    record.update(record_updates)
+    return {"kind": "qa-record", "digest": digest, "record": record}
+
+
+def _qa_context(**updates):
+    values = {
+        "edition_id": "na",
+        "candidate_digest": "candidate-digest",
+        "lock_digest": "lock-digest",
+        "release_profile": "validated-release",
+        "authorization_problems": lambda envelope: [],
+    }
+    values.update(updates)
+    return recordresolver.QaRecordContext(**values)
+
+
+def _release_envelope(**record_updates):
+    record = {
+        "recordVersion": "3",
+        "releaseProfile": "validated-release",
+        "compatibilityAuthorization": "authorized",
+        "deferredControls": [],
+        "artifactLabel": "label",
+        "edition": "na",
+        "sealed": "sealed.html",
+        "sealedDigest": "sealed-digest",
+        "lockDigest": "lock-digest",
+        "qaRecord": None,
+        "attestations": [],
+        "declaredReleaseTimestamp": "2026-07-22T00:00:00Z",
+        "approvalStatus": "passed",
+        "operator": "Release Reviewer",
+        "operatorKind": "human",
+        "acceptanceReceipt": {},
+    }
+    record.update(record_updates)
+    return {
+        "kind": "release-record",
+        "digest": canon.composite_digest(
+            "aa11393:release-record:c1", record),
+        "record": record,
+    }
+
+
+def _release_context(**updates):
+    values = {
+        "edition_id": "na",
+        "sealed": "sealed.html",
+        "sealed_digest": "sealed-digest",
+        "lock_digest": "lock-digest",
+        "declared_release_timestamp": "2026-07-22T00:00:00Z",
+        "release_profile": "validated-release",
+        "authorization_problems": lambda envelope: [],
+    }
+    values.update(updates)
+    return recordresolver.ReleaseRecordContext(**values)
+
+
+def _bundle_envelope(digest, **record_updates):
+    record = {
+        "recordVersion": "3",
+        "releaseProfile": "validated-release",
+        "compatibilityAuthorization": "authorized",
+        "deferredControls": [],
+        "artifactLabel": "label",
+        "bundle": "bundle.zip",
+        "bundleDigest": "bundle-digest",
+        "members": [{"name": "a", "digest": "member-digest"}],
+        "releaseRecords": ["release-digest"],
+        "manifestWording": "wording-digest",
+        "manifestApproval": "approval-digest",
+        "bundleConfigDigest": "config-digest",
+        "approvalStatus": "passed",
+        "operator": "Bundle Reviewer",
+        "operatorKind": "human",
+        "acceptanceReceipt": {},
+    }
+    record.update(record_updates)
+    return {"kind": "bundle-record", "digest": digest, "record": record}
+
+
+def _bundle_context(**updates):
+    values = {
+        "release_profile_fields": {
+            "releaseProfile": "validated-release",
+            "compatibilityAuthorization": "authorized",
+            "deferredControls": [],
+            "artifactLabel": "label",
+        },
+        "release_profile_problem": None,
+        "release_profile": "validated-release",
+        "bundle": "bundle.zip",
+        "bundle_digest": "bundle-digest",
+        "members": [{"name": "a", "digest": "member-digest"}],
+        "release_records": ["release-digest"],
+        "manifest_wording": "wording-digest",
+        "manifest_approval": "approval-digest",
+        "bundle_config_digest": "config-digest",
+        "receipt_problems": lambda record: [],
+    }
+    values.update(updates)
+    return recordresolver.BundleRecordContext(**values)
+
+
+def _attestation_envelope(digest, **record_updates):
+    record = {
+        "type": "legend-approval",
+        "edition": None,
+        "sides": {"legendWording": "legend-digest"},
+        "note": "Counsel review completed",
+        "approvalStatus": "passed",
+        "operator": "Counsel Reviewer",
+        "operatorKind": "human",
+        "producerCommand": recordprovenance.ATTESTATION_PRODUCER_COMMAND,
+    }
+    record.update(record_updates)
+    return {"digest": digest, "record": record}
+
+
+def _attestation_context(**updates):
+    values = {
+        "required_type": "legend-approval",
+        "expected_edition": None,
+        "check_scope": True,
+        "expected_sides": frozenset(("legendWording",)),
+        "side_digests": {"legendWording": "legend-digest"},
+        "authorization_problems": lambda envelope: [],
+    }
+    values.update(updates)
+    return recordresolver.AttestationContext(**values)
+
+
+class TestRecordResolver(unittest.TestCase):
+    """The closed adapter registry preserves per-kind bucket semantics."""
+
+    def test_unknown_record_kind_fails_closed(self):
+        for kind in ("qa-record", "release-record", "bundle-record",
+                     "attestation"):
+            self.assertIsNotNone(recordresolver.adapter_for(kind))
+        with self.assertRaisesRegex(ValueError,
+                                    "unknown verification record kind"):
+            recordresolver.adapter_for("mystery-record")
+        with self.assertRaisesRegex(ValueError,
+                                    "unknown verification record kind"):
+            recordresolver.classify("mystery-record", [], None)
+
+    def test_context_of_the_wrong_type_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, "context"):
+            recordresolver.classify(
+                "qa-record", [], _attestation_context())
+
+    def test_qa_record_resolution_buckets(self):
+        current = _qa_envelope("current-qa")
+        stale = _qa_envelope("stale-qa", releaseProfile="technical-preview")
+        wrong_kind = {"kind": "release-record", "digest": "bad",
+                      "record": {}}
+        denied = _qa_envelope("denied-qa")
+
+        def authorization(envelope):
+            if envelope["digest"] == "denied-qa":
+                return ["QA authorization denied"]
+            return []
+
+        resolution = recordresolver.classify(
+            "qa-record", [current, stale, wrong_kind, denied],
+            _qa_context(authorization_problems=authorization))
+        self.assertEqual(list(resolution.current_authorizations), [current])
+        self.assertEqual(list(resolution.superseded_evidence), [stale])
+        self.assertIs(resolution.superseded_evidence[0], stale)
+        self.assertEqual(
+            [item.digest for item in resolution.invalid_records], ["bad"])
+        self.assertEqual(
+            [item.digest for item in resolution.rejected_authorizations],
+            ["denied-qa"])
+        self.assertEqual(
+            list(resolution.rejected_authorizations[0].problems),
+            ["QA authorization denied"])
+
+    def test_superseded_evidence_never_reaches_authorization(self):
+        def forbidden(envelope):
+            raise AssertionError("superseded evidence was re-authorized")
+
+        stale = _qa_envelope("stale-qa", candidateDigest="old-candidate")
+        resolution = recordresolver.classify(
+            "qa-record", [stale],
+            _qa_context(authorization_problems=forbidden))
+        self.assertEqual(list(resolution.superseded_evidence), [stale])
+        self.assertEqual(list(resolution.current_authorizations), [])
+
+    def test_release_record_resolution_buckets(self):
+        current = _release_envelope()
+        stale = _release_envelope(lockDigest="earlier-lock")
+        inconsistent = _release_envelope()
+        inconsistent["digest"] = canon.bytes_digest(b"not the record")
+        denied = _release_envelope(operator="Second Releaser")
+        shapeless = {"kind": "release-record", "digest": "x", "record": []}
+
+        def authorization(envelope):
+            if envelope["digest"] == denied["digest"]:
+                return ["release chain incomplete"]
+            return []
+
+        resolution = recordresolver.classify(
+            "release-record",
+            [current, stale, inconsistent, denied, shapeless],
+            _release_context(authorization_problems=authorization))
+        self.assertEqual(list(resolution.current_authorizations), [current])
+        self.assertEqual(list(resolution.superseded_evidence), [stale])
+        self.assertEqual(
+            [item.digest for item in resolution.invalid_records],
+            [inconsistent["digest"], "x"])
+        self.assertEqual(
+            [item.digest for item in resolution.rejected_authorizations],
+            [denied["digest"]])
+
+    def test_release_context_may_leave_lock_and_timestamp_unbound(self):
+        promoted = _release_envelope(
+            lockDigest="any-lock",
+            declaredReleaseTimestamp="2026-01-01T00:00:00Z")
+        context = _release_context(
+            lock_digest=None, declared_release_timestamp=None)
+        resolution = recordresolver.classify(
+            "release-record", [promoted], context)
+        self.assertEqual(list(resolution.current_authorizations), [promoted])
+
+    def test_bundle_record_resolution_buckets(self):
+        current = _bundle_envelope("current-bundle-record")
+        stale = _bundle_envelope("stale-bundle-record",
+                                 bundleDigest="earlier-bundle-digest")
+        pending = _bundle_envelope("pending-bundle-record",
+                                   approvalStatus="pending")
+        wrong_kind = {"kind": "release-record", "digest": "bad",
+                      "record": {}}
+        resolution = recordresolver.classify(
+            "bundle-record", [current, stale, pending, wrong_kind],
+            _bundle_context())
+        self.assertEqual(list(resolution.current_authorizations), [current])
+        self.assertEqual(list(resolution.superseded_evidence), [stale])
+        self.assertIs(resolution.superseded_evidence[0], stale)
+        self.assertEqual(
+            [item.digest for item in resolution.rejected_authorizations],
+            ["pending-bundle-record"])
+        self.assertEqual(
+            [item.digest for item in resolution.invalid_records], ["bad"])
+
+    def test_bundle_receipt_defects_are_rejected_not_superseded(self):
+        envelope = _bundle_envelope("current-bundle-record")
+        context = _bundle_context(
+            receipt_problems=lambda record: ["receipt is stale"])
+        resolution = recordresolver.classify(
+            "bundle-record", [envelope], context)
+        self.assertEqual(list(resolution.current_authorizations), [])
+        self.assertEqual(list(resolution.superseded_evidence), [])
+        self.assertEqual(
+            [item.digest for item in resolution.rejected_authorizations],
+            ["current-bundle-record"])
+
+    def test_bundle_profile_unavailability_is_currency(self):
+        envelope = _bundle_envelope("current-bundle-record")
+        context = _bundle_context(
+            release_profile_fields=None,
+            release_profile_problem="profile is unavailable")
+        resolution = recordresolver.classify(
+            "bundle-record", [envelope], context)
+        self.assertEqual(list(resolution.superseded_evidence), [envelope])
+
+    def test_attestation_resolution_buckets(self):
+        current = _attestation_envelope("current-att")
+        stale_side = _attestation_envelope(
+            "stale-att", sides={"legendWording": "old-legend"})
+        other_type = _attestation_envelope(
+            "other-att", type="manifest-approval",
+            sides={"manifestWording": "m"})
+        scoped = _attestation_envelope("scoped-att", edition="na")
+        wrong_fields = _attestation_envelope("fields-att")
+        wrong_fields["record"].pop("note")
+        denied = _attestation_envelope("denied-att")
+
+        def authorization(envelope):
+            if envelope["digest"] == "denied-att":
+                return ["approval is pending"]
+            return []
+
+        resolution = recordresolver.classify(
+            "attestation",
+            [current, stale_side, other_type, scoped, wrong_fields, denied],
+            _attestation_context(authorization_problems=authorization))
+        self.assertEqual(list(resolution.current_authorizations), [current])
+        self.assertEqual(
+            list(resolution.superseded_evidence),
+            [stale_side, other_type, scoped])
+        self.assertEqual(
+            [item.digest for item in resolution.invalid_records],
+            ["fields-att"])
+        self.assertEqual(
+            [item.digest for item in resolution.rejected_authorizations],
+            ["denied-att"])
 
 
 if __name__ == "__main__":

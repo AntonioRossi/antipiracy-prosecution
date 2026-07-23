@@ -13,7 +13,7 @@ import zipfile
 import zlib
 
 from . import acceptance, authority, canon, qaevidence, recordprovenance
-from . import gateway, timepolicy
+from . import gateway, recordresolver, timepolicy
 
 _UTF8_FLAG = 0x0800
 _EXT_ATTRS = (0o100644 << 16)
@@ -856,28 +856,35 @@ def resolve_bundle_members(cfg, release_records, qa_records, attestations,
             set(qa_authorization_context_by_edition) != set(cfg["editions"]):
         raise BundleError("current QA authorization context must cover exactly "
                           "the configured editions")
+    approval_context = recordresolver.AttestationContext(
+        required_type="manifest-approval", expected_edition=None,
+        check_scope=True, expected_sides=frozenset(("manifestWording",)),
+        side_digests={"manifestWording": manifest_wording_digest},
+        authorization_problems=lambda envelope:
+            _attestation_record_problems(
+                envelope["record"], None, approval_evidence_problems))
+    approval_resolution = recordresolver.classify(
+        "attestation", attestations, approval_context)
     approval = _record_by_digest(
         attestations, cfg["manifestApproval"], "manifest approval",
         "attestation")
-    approval_record = approval.get("record")
-    approval_shape_problems = _attestation_record_problems(
-        approval_record, None, approval_evidence_problems)
-    if approval_shape_problems:
-        raise BundleError("manifest approval is malformed: %s"
-                          % "; ".join(approval_shape_problems))
-    if approval_record.get("type") != "manifest-approval" or \
-            approval_record.get("edition") is not None:
-        raise BundleError("configured approval is not a bundle manifest approval")
-    sides = approval_record.get("sides", {})
-    if set(sides) != {"manifestWording"} or \
-            sides.get("manifestWording") != manifest_wording_digest:
+    current_approvals = {
+        envelope["digest"]
+        for envelope in approval_resolution.current_authorizations
+    }
+    if approval["digest"] not in current_approvals:
+        for item in approval_resolution.invalid_records + \
+                approval_resolution.rejected_authorizations:
+            if item.digest == approval["digest"]:
+                raise BundleError(
+                    "manifest approval is malformed: %s"
+                    % "; ".join(item.problems))
+        approval_record = approval["record"]
+        if approval_record.get("type") != "manifest-approval" or \
+                approval_record.get("edition") is not None:
+            raise BundleError(
+                "configured approval is not a bundle manifest approval")
         raise BundleError("configured manifest approval is stale")
-    approval_problems = approval_evidence_problems(approval_record)
-    if approval_problems:
-        raise BundleError(
-            "manifest approval is not confirmed authorized operator "
-            "evidence: %s"
-            % "; ".join(approval_problems))
 
     resolved = []
     sealed_data = {}
@@ -885,30 +892,44 @@ def resolve_bundle_members(cfg, release_records, qa_records, attestations,
     for member in cfg["members"]:
         kind, name = member["kind"], member["name"]
         if kind == "sealed":
+            release_context = recordresolver.ReleaseRecordContext(
+                edition_id=member["edition"], sealed=name,
+                sealed_digest=member["digest"], lock_digest=None,
+                declared_release_timestamp=None,
+                release_profile=cfg["releaseProfile"],
+                authorization_problems=lambda envelope:
+                    release_chain_problems(
+                        envelope, qa_records, attestations,
+                        required_attestations_by_edition.get(
+                            member["edition"]),
+                        current_sides_by_edition.get(member["edition"]),
+                        approval_evidence_problems,
+                        acceptance_context_by_edition.get(member["edition"]),
+                        qa_authorization_context_by_edition.get(
+                            member["edition"])))
+            resolution = recordresolver.classify(
+                "release-record", release_records, release_context)
             release = _record_by_digest(
                 release_records, member["releaseRecord"], "release record",
                 "release-record")
-            record = release.get("record")
-            chain_problems = release_chain_problems(
-                release, qa_records, attestations,
-                required_attestations_by_edition.get(member["edition"]),
-                current_sides_by_edition.get(member["edition"]),
-                approval_evidence_problems,
-                acceptance_context_by_edition.get(member["edition"]),
-                qa_authorization_context_by_edition.get(member["edition"]))
-            if chain_problems:
+            current_releases = {
+                envelope["digest"]
+                for envelope in resolution.current_authorizations
+            }
+            if release["digest"] not in current_releases:
+                for item in resolution.invalid_records:
+                    if item.digest == release["digest"]:
+                        raise BundleError(
+                            "release record %s is malformed: %s"
+                            % (release["digest"], "; ".join(item.problems)))
+                for item in resolution.rejected_authorizations:
+                    if item.digest == release["digest"]:
+                        raise BundleError(
+                            "release record %s is not fully authorized: %s"
+                            % (release["digest"], "; ".join(item.problems)))
                 raise BundleError(
-                    "release record %s is not fully authorized: %s"
-                    % (member["releaseRecord"], "; ".join(chain_problems)))
-            expected = (member["edition"], name, member["digest"],
-                        cfg["releaseProfile"])
-            actual = (record.get("edition"), record.get("sealed"),
-                      record.get("sealedDigest"),
-                      record.get("releaseProfile"))
-            if actual != expected:
-                raise BundleError("release record %s does not bind configured "
-                                  "edition/member/digest/profile"
-                                  % member["releaseRecord"])
+                    "release record %s does not bind configured "
+                    "edition/member/digest/profile" % release["digest"])
             data = read_artifact("sealed", name)
             if canon.bytes_digest(data) != member["digest"]:
                 raise BundleError("sealed member %s does not match config digest"

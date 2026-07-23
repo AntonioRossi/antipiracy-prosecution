@@ -7,7 +7,7 @@ artifacts, records, approvals, or the config itself.
 """
 
 import copy
-from . import authority, bundlezip, canon
+from . import authority, bundlezip, canon, recordresolver
 
 
 _CURRENT_BINDING_FIELDS = frozenset((
@@ -89,31 +89,34 @@ def _read_bytes(read_artifact, kind, name):
 
 def _manifest_approval_candidates(attestations, wording_digest,
                                   approval_evidence_problems):
-    eligible = []
-    rejected = []
+    """Resolve current authorized manifest approvals from the collection."""
     if not isinstance(attestations, list):
         raise bundlezip.BundleError("attestation collection is not a list")
-    for envelope in attestations:
-        record = envelope.get("record") if isinstance(envelope, dict) else None
-        if not isinstance(record, dict) or \
-                record.get("type") != "manifest-approval" or \
-                record.get("edition") is not None or \
-                record.get("sides") != {"manifestWording": wording_digest}:
-            continue
-        digest = envelope.get("digest")
+
+    def authorization_problems(envelope):
         try:
             resolved = _canonical_envelope(
                 attestations, envelope, "attestation", "manifest approval")
-            problems = bundlezip._attestation_record_problems(
-                resolved["record"], None, approval_evidence_problems)
-        except (bundlezip.BundleError, KeyError, TypeError, ValueError) as exc:
-            rejected.append("%s is malformed: %s" % (digest, exc))
-            continue
-        if problems:
-            rejected.append("%s: %s" % (digest, "; ".join(problems)))
-            continue
-        eligible.append(resolved)
-    return eligible, rejected
+        except (bundlezip.BundleError, KeyError, TypeError,
+                ValueError) as exc:
+            return ["%s is malformed: %s" % (envelope.get("digest"), exc)]
+        return list(bundlezip._attestation_record_problems(
+            resolved["record"], None, approval_evidence_problems))
+
+    context = recordresolver.AttestationContext(
+        required_type="manifest-approval", expected_edition=None,
+        check_scope=True, expected_sides=frozenset(("manifestWording",)),
+        side_digests={"manifestWording": wording_digest},
+        authorization_problems=authorization_problems)
+    resolution = recordresolver.classify("attestation", attestations, context)
+    rejected = [
+        "%s is malformed: %s" % (item.digest, "; ".join(item.problems))
+        for item in resolution.invalid_records
+    ]
+    rejected.extend(
+        "%s: %s" % (item.digest, "; ".join(item.problems))
+        for item in resolution.rejected_authorizations)
+    return list(resolution.current_authorizations), rejected
 
 
 def propose_bundle_config(
@@ -211,49 +214,31 @@ def propose_bundle_config(
         artifact_snapshot[("artifact-checksum", checksum_member["name"])] = \
             checksum_bytes
 
-        expected = (
-            edition, binding["sealed"], binding["sealedDigest"],
-            binding["lockDigest"], binding["declaredReleaseTimestamp"],
-            cfg["releaseProfile"],
-        )
-        eligible = []
-        rejected = []
-        for envelope in release_records:
-            record = envelope.get("record") \
-                if isinstance(envelope, dict) else None
-            if not isinstance(record, dict):
-                continue
-            actual = (
-                record.get("edition"), record.get("sealed"),
-                record.get("sealedDigest"), record.get("lockDigest"),
-                record.get("declaredReleaseTimestamp"),
-                record.get("releaseProfile"),
-            )
-            if actual != expected:
-                continue
-            digest = envelope.get("digest")
-            try:
-                resolved = _canonical_envelope(
-                    release_records, envelope, "release-record",
-                    "release record")
-            except (bundlezip.BundleError, KeyError, TypeError,
-                    ValueError) as exc:
-                rejected.append("%s is malformed: %s" % (digest, exc))
-                continue
-            problems = bundlezip.release_chain_problems(
-                resolved, qa_records, attestations,
-                required_attestations_by_edition[edition],
-                current_sides_by_edition[edition],
-                approval_evidence_problems,
-                acceptance_context_by_edition[edition],
-                qa_authorization_context_by_edition[edition])
-            if problems:
-                rejected.append("%s: %s" % (digest, "; ".join(problems)))
-                continue
-            eligible.append(resolved)
-
+        release_context = recordresolver.ReleaseRecordContext(
+            edition_id=edition, sealed=binding["sealed"],
+            sealed_digest=binding["sealedDigest"],
+            lock_digest=binding["lockDigest"],
+            declared_release_timestamp=binding["declaredReleaseTimestamp"],
+            release_profile=cfg["releaseProfile"],
+            authorization_problems=lambda envelope:
+                bundlezip.release_chain_problems(
+                    envelope, qa_records, attestations,
+                    required_attestations_by_edition[edition],
+                    current_sides_by_edition[edition],
+                    approval_evidence_problems,
+                    acceptance_context_by_edition[edition],
+                    qa_authorization_context_by_edition[edition]))
+        resolution = recordresolver.classify(
+            "release-record", release_records, release_context)
+        rejected = [
+            "%s is malformed: %s" % (item.digest, "; ".join(item.problems))
+            for item in resolution.invalid_records
+        ]
+        rejected.extend(
+            "%s: %s" % (item.digest, "; ".join(item.problems))
+            for item in resolution.rejected_authorizations)
         selected = _choose_preferred(
-            eligible,
+            list(resolution.current_authorizations),
             "current fully authorized release for edition %s" % edition,
             rejected)
         sealed_member["digest"] = sealed_digest
