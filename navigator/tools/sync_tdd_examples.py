@@ -13,6 +13,11 @@ import re
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+NAV = os.path.join(ROOT, "navigator")
+sys.path.insert(0, NAV)
+
+from lib import canon  # noqa: E402
+
 TDD = os.path.join(
     ROOT, "AA11393US-claims-navigator_technical-description_DRAFT.md")
 FIX = os.path.join(ROOT, "navigator", "tests", "fixtures")
@@ -39,9 +44,9 @@ def main():
         raise SystemExit("expected exactly 2 json blocks in §8.3, found %d"
                          % len(blocks))
     for block, fxname in zip(blocks, ("na_excerpt.json", "af_excerpt.json")):
-        with open(os.path.join(FIX, fxname), encoding="utf-8") as fh:
-            fx = json.load(fh)
-        synced = sync(json.loads(block), fx)
+        with open(os.path.join(FIX, fxname), "rb") as fh:
+            fx = canon.parse_json(fh.read())
+        synced = sync(canon.parse_json(block), fx)
         s = s.replace(block,
                       json.dumps(synced, indent=2, ensure_ascii=False) + "\n", 1)
     with open(TDD, "w", encoding="utf-8") as fh:

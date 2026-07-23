@@ -6,9 +6,10 @@ release predicate itself lives in schema/invariants.py (defined once).
 """
 
 import importlib.util
+import posixpath
 import re
 
-from . import schema_validate
+from . import authority, bundlezip, projections, render, schema_validate
 from .model import FRAG_ID_RE, PHRASE_ID_RE
 
 
@@ -29,17 +30,106 @@ def validate_edition(m, for_release=False):
         errors.append((code, msg))
 
     # ---- schema conformance + axis discipline ---------------------------
+    relation_schema_valid = True
     for name, instance in (
         ("relation", m.relation), ("gates", m.gates), ("deps", m.deps),
-        ("edition", m.edition),
+        ("edition", m.edition), ("support-matrix", m.support_matrix),
     ):
+        try:
+            schema_validate.check_schema(m.schemas[name])
+        except schema_validate.SchemaError as exc:
+            err("schema:%s" % name, str(exc))
+            if name == "relation":
+                relation_schema_valid = False
+            continue
         for e in schema_validate.validate(instance, m.schemas[name]):
             err("schema:%s" % name, e)
+    if relation_schema_valid:
+        try:
+            schema_validate.check_axes(m.schemas["relation"])
+            schema_validate.check_locator_coverage(m.schemas["relation"])
+        except schema_validate.SchemaError as e:
+            err("schema:axes", str(e))
+
+    for problem in render.api_policy_problems(m.api_policy):
+        err("api-policy", problem)
+
+    # The schema repeats closed enums at each owner shape for fail-closed JSON
+    # validation.  Cross-check those declarations against the one normative
+    # invariant module so a schema edit cannot silently create a second enum
+    # or lifecycle-applicability definition.
+    relation_schema = m.schemas["relation"]
+    owner_schemas = {
+        "unit": next(iter(relation_schema["properties"]["fragments"]
+                          ["patternProperties"].values())),
+        "phrase": relation_schema["definitions"]["phrase"],
+        "claim-gate": next(iter(
+            relation_schema["properties"]["claimGates"]
+            ["patternProperties"].values()))["items"],
+        "disposition": relation_schema["properties"]["dispositions"]
+        ["items"],
+    }
+    lifecycle_names = {"status", "reviewState", "migrationState", "review"}
+    enum_sources = {
+        "status": inv.STATUSES,
+        "reviewState": inv.REVIEW_STATES,
+        "migrationState": inv.MIGRATION_STATES,
+        "migrationReason": inv.MIGRATION_REASONS,
+    }
+    for owner_type, owner_schema in owner_schemas.items():
+        properties = owner_schema["properties"]
+        actual_applicability = lifecycle_names & set(properties)
+        expected_applicability = set(inv.APPLICABILITY[owner_type])
+        if actual_applicability != expected_applicability:
+            err("schema:axes", "%s lifecycle applicability %r != %r" %
+                (owner_type, sorted(actual_applicability),
+                 sorted(expected_applicability)))
+        if not expected_applicability.issubset(set(owner_schema["required"])):
+            err("schema:axes", "%s lifecycle fields are not all required"
+                % owner_type)
+        for field, expected_values in enum_sources.items():
+            if field in properties and \
+                    tuple(properties[field].get("enum", ())) != \
+                    tuple(expected_values):
+                err("schema:axes", "%s.%s enum drifts from invariants" %
+                    (owner_type, field))
+    operator_enum = relation_schema["definitions"]["review"]["properties"] \
+        ["operatorKind"].get("enum", ())
+    if tuple(operator_enum) != tuple(inv.REVIEW_OPERATOR_KINDS):
+        err("schema:axes", "review.operatorKind enum drifts from invariants")
+
+    # Edition input declarations are security boundaries, not just build
+    # metadata.  Reject aliases and platform-dependent spellings before a
+    # gateway normalizes them, and reject both exact and normalized
+    # duplicates so one logical input has exactly one declared identity.
+    declared = m.edition.get("declaredTransitiveInputs", [])
+    seen_inputs = set()
+    seen_normalized = set()
+    for index, path in enumerate(declared):
+        owner = "declaredTransitiveInputs[%d]" % index
+        if not isinstance(path, str) or not path:
+            continue  # schema validation reports the shape/empty value
+        normalized = posixpath.normpath(path)
+        unsafe = (
+            "\x00" in path or "\\" in path or path.startswith("/") or
+            re.match(r"^[A-Za-z]:", path) is not None or
+            normalized in (".", "..") or normalized.startswith("../") or
+            normalized != path or any(
+                part in ("", ".", "..") for part in path.split("/")))
+        if unsafe:
+            err("inputs", "%s: unsafe or non-canonical relative path %r"
+                % (owner, path))
+        if path in seen_inputs or normalized in seen_normalized:
+            err("inputs", "%s: duplicate declared input %r" % (owner, path))
+        seen_inputs.add(path)
+        seen_normalized.add(normalized)
+
     try:
-        schema_validate.check_axes(m.schemas["relation"])
-        schema_validate.check_locator_coverage(m.schemas["relation"])
-    except schema_validate.SchemaError as e:
-        err("schema:axes", str(e))
+        bundlezip.parse_utc_second(
+            m.edition.get("declaredReleaseTimestamp"),
+            "edition declaredReleaseTimestamp")
+    except bundlezip.BundleError as exc:
+        err("edition", str(exc))
 
     # ---- census (AC-01) -------------------------------------------------
     census = m.edition["census"]
@@ -62,8 +152,10 @@ def validate_edition(m, for_release=False):
         err("census", "group headings %r do not match config %r"
             % (groups, m.edition["groups"]))
     pct = [b for b in m.target_blocks if b.kind == "claim-whole"]
-    if len(pct) != 18:
-        err("census", "expected 18 whole PCT claim anchors, found %d" % len(pct))
+    pct_numbers = [b.meta.get("pctClaim") for b in pct]
+    if pct_numbers != list(range(1, 19)):
+        err("census", "whole PCT claim identities must be exactly 1..18; "
+            "found %r" % pct_numbers)
     figures = [b for b in m.target_blocks if b.kind == "figure"]
     if len(figures) != 4:
         err("census", "expected 4 figures, found %d" % len(figures))
@@ -79,22 +171,60 @@ def validate_edition(m, for_release=False):
     if b.get("targetCorpus") != m.edition["targetCorpus"]:
         err("binding", "relation targetCorpus %r != edition target corpus %r"
             % (b.get("targetCorpus"), m.edition["targetCorpus"]))
+    claim_corpus = m.edition["claimCorpus"]
+    target_corpus = m.edition["targetCorpus"]
+    for field, corpus_id, expected_role in (
+            ("claimCorpus", claim_corpus, "fragment-source"),
+            ("targetCorpus", target_corpus, "derivative")):
+        entry = m.registry.entry(corpus_id)
+        if entry.get("role") != expected_role or \
+                entry.get("visibility") != "rendered":
+            err("binding", "%s %r must be role %r with rendered visibility"
+                % (field, corpus_id, expected_role))
+    for profile_name, profile, expected in (
+        ("claim segmentation profile", m.claim_profile, claim_corpus),
+        ("target segmentation profile", m.target_profile, target_corpus),
+        ("gate inventory", m.gates, claim_corpus),
+        ("dependency map", m.deps, claim_corpus),
+    ):
+        if profile.get("corpusId") != expected:
+            err("binding", "%s corpusId %r != edition corpus %r" %
+                (profile_name, profile.get("corpusId"), expected))
 
     # ---- gate inventory endpoint currency -------------------------------
     if m.gates.get("profileDigest") != m.claim_profile_digest:
         err("inventory", "profileDigest stale (profile is %s)"
             % m.claim_profile_digest)
-    for gate in m.gates["gates"]:
-        gid = gate["gateId"]
-        src = m.quotable_anchor(gate["source"]["block"])
+    seen_gate_ids = set()
+    for gate in m.gates.get("gates", []):
+        gid = gate.get("gateId", "<missing-gateId>")
+        if gid in seen_gate_ids:
+            err("duplicate", "inventory gateId %r is duplicated" % gid)
+        seen_gate_ids.add(gid)
+        source = gate.get("source") or {}
+        src = m.quotable_anchor(source.get("block"))
         if src is None:
             err("inventory", "%s: source block %r is not a quotable block"
-                % (gid, gate["source"]["block"]))
-        elif gate["source"]["textHash"] != src.digest:
+                % (gid, source.get("block")))
+        elif source.get("textHash") != src.digest:
             err("inventory", "%s: source textHash stale for block %s"
-                % (gid, gate["source"]["block"]))
-        scope = gate["requiredScope"]
-        applies = gate["appliesTo"]
+                % (gid, source.get("block")))
+        scope = gate.get("requiredScope")
+        applies = gate.get("appliesTo") or {}
+
+        # Applicability arrays have semantic identity keys; JSON object
+        # equality alone cannot detect a repeated id carrying a different
+        # hash.  Check both possible arrays even when the scope shape is
+        # malformed so all duplicate subjects are reported in one pass.
+        for collection, key in (("claims", "claim"), ("fragments", "id")):
+            seen_subjects = set()
+            for subject in applies.get(collection, []):
+                subject_id = subject.get(key)
+                if subject_id in seen_subjects:
+                    err("duplicate", "%s: duplicate applicability subject %r"
+                        % (gid, subject_id))
+                seen_subjects.add(subject_id)
+
         if scope == "claim":
             if "claims" not in applies or "fragments" in applies:
                 err("inventory", "%s: claim-scope gate must list claims only" % gid)
@@ -110,6 +240,13 @@ def validate_edition(m, for_release=False):
                 err("inventory", "%s: %s-scope gate must list fragments" % (gid, scope))
             if scope == "target" and "cardinality" not in applies:
                 err("inventory", "%s: target-scope gate needs a cardinality" % gid)
+            if scope == "target" and "cardinality" in applies:
+                minimum = applies.get("cardinality", {}).get(
+                    "minTargetsPerFragment")
+                if not isinstance(minimum, int) or isinstance(minimum, bool) \
+                        or minimum < 1:
+                    err("inventory", "%s: target cardinality must be an "
+                        "integer >= 1" % gid)
             if scope != "target" and "cardinality" in applies:
                 err("inventory", "%s: cardinality is target-scope only" % gid)
             for f in applies.get("fragments", []):
@@ -135,15 +272,53 @@ def validate_edition(m, for_release=False):
     used_source_codes = set()
     forbidden = m.edition["forbiddenTerms"]
 
-    def check_text_bounds(owner, field, text, limit):
-        if len(text) > limit:
-            err("bounds", "%s: %s exceeds %d chars" % (owner, field, limit))
+    def check_forbidden_text(owner, field, text):
+        if not isinstance(text, str):
+            return
         for term in forbidden:
-            if term.lower() in text.lower():
+            if term.casefold() in text.casefold():
                 err("forbidden-terms", "%s: %s contains forbidden term %r"
                     % (owner, field, term))
 
-    def check_caution(owner, caution, scope, frag_id=None, target_block=None):
+    def authored_strings(value, path):
+        if isinstance(value, str):
+            yield path, value
+        elif isinstance(value, dict):
+            for key in sorted(value):
+                yield from authored_strings(value[key], "%s.%s" % (path, key))
+        elif isinstance(value, (list, tuple)):
+            for index, item in enumerate(value):
+                yield from authored_strings(item, "%s[%d]" % (path, index))
+
+    # Full authored visible surface. Pinned claim/disclosure quotations and
+    # phrase text are deliberately absent: those are verbatim source text.
+    strings_surface = projections.artifact_strings(m)
+    strings_surface["migrationReasons"] = m.strings["migrationReasons"]
+    for path, text in authored_strings(strings_surface, "strings"):
+        check_forbidden_text("microcopy", path, text)
+    for field in ("editionId", "displayName", "strategyName",
+                  "strategyPrefix", "claimSetVersion", "artifactName"):
+        check_forbidden_text("edition", field, m.edition.get(field))
+    for corpus_id in (m.edition["claimCorpus"], m.edition["targetCorpus"],
+                      m.edition["authorityCorpus"]):
+        entry = m.registry.entry(corpus_id)
+        check_forbidden_text("corpus", "%s.id" % corpus_id, corpus_id)
+        for field in ("role", "version"):
+            check_forbidden_text(
+                "corpus", "%s.%s" % (corpus_id, field), entry.get(field))
+        if corpus_id in (m.edition["claimCorpus"],
+                         m.edition["targetCorpus"]):
+            for path in entry.get("files", {}):
+                check_forbidden_text(
+                    "corpus", "%s.files" % corpus_id, path)
+
+    def check_text_bounds(owner, field, text, limit):
+        if len(text) > limit:
+            err("bounds", "%s: %s exceeds %d chars" % (owner, field, limit))
+        check_forbidden_text(owner, field, text)
+
+    def check_caution(owner, caution, scope, frag_id=None, target_block=None,
+                      claim_key=None):
         ctype, code = caution.get("type"), caution.get("code")
         if not inv.CAUTION_MATRIX.get((ctype, scope), False):
             err("caution", "%s: %s at %s scope is unrepresentable"
@@ -179,10 +354,34 @@ def validate_edition(m, for_release=False):
                 elif src["textHash"] != qa.digest:
                     err("drift", "%s: caution source textHash stale" % owner)
             req_scope = entry["requiredScope"]
+
+            # An inventory match is not sufficient: the carried instance's
+            # owner must also be one of the gate's hashed applicability
+            # subjects.  Target and fragment gates are keyed by fragment;
+            # claim gates are keyed by claim.  The only scope exception is
+            # the documented target -> fragment fallback for an honest
+            # no-candidate fragment with its matching reviewed disposition.
+            if req_scope == "claim":
+                listed = {"c%d" % c["claim"] for c in
+                          entry["appliesTo"].get("claims", [])}
+                applicable = claim_key is not None and claim_key in listed
+                subject_label = claim_key or frag_id or "<unknown>"
+            else:
+                listed = {f["id"] for f in
+                          entry["appliesTo"].get("fragments", [])}
+                applicable = frag_id is not None and frag_id in listed
+                subject_label = frag_id or claim_key or "<unknown>"
+            if not applicable:
+                err("caution", "%s: gate %s is not applicable to %s" %
+                    (owner, gid, subject_label))
+
             if scope != req_scope:
+                fragment = m.relation.get("fragments", {}).get(frag_id, {})
                 fallback_ok = (
                     req_scope == "target" and scope == "fragment" and
-                    frag_id is not None and _has_disposition(
+                    applicable and
+                    fragment.get("status") == "counsel-review-required" and
+                    _has_disposition(
                         m, gid, frag_id, "carried-at-fragment-fallback"))
                 if not fallback_ok:
                     err("caution", "%s: gate %s carried at %s scope but "
@@ -196,11 +395,18 @@ def validate_edition(m, for_release=False):
                 err("enum", "%s: generalization code %r unregistered"
                     % (owner, code))
 
-    def check_target(owner, frag_id, target, seen_blocks):
+    def check_target(owner, frag_id, target, seen_blocks, seen_target_gates):
         block = target["block"]
-        if block in seen_blocks:
+        block_key = inv.target_block_key(owner, target)
+        if block_key in seen_blocks:
             err("duplicate", "%s: duplicate target block %s" % (owner, block))
-        seen_blocks.add(block)
+        seen_blocks.add(block_key)
+        gate_key = inv.target_gate_key(owner, target)
+        if gate_key is not None:
+            if gate_key in seen_target_gates:
+                err("duplicate", "%s: duplicate target gate assignment %r"
+                    % (owner, gate_key))
+            seen_target_gates.add(gate_key)
         anchor = m.target_anchor(block)
         if anchor is None:
             err("target", "%s: unknown target block %r" % (owner, block))
@@ -233,8 +439,9 @@ def validate_edition(m, for_release=False):
         if status == "counsel-review-required" and targets:
             err("evidence", "%s: no-candidate fragment carries targets" % fid)
         seen_blocks = set()
+        seen_target_gates = set()
         for t in targets:
-            check_target(fid, fid, t, seen_blocks)
+            check_target(fid, fid, t, seen_blocks, seen_target_gates)
         if "caution" in frag:
             check_caution(fid, frag["caution"], "fragment", frag_id=fid)
         seen_pids = set()
@@ -245,10 +452,14 @@ def validate_edition(m, for_release=False):
             if not pm or not pid.startswith(fid + "p"):
                 err("phrase", "%s: bad phrase id %r" % (fid, pid))
                 continue
-            if pid in seen_pids:
+            phrase_identity = inv.phrase_key(fid, pid)
+            if phrase_identity in seen_pids:
                 err("duplicate", "%s: duplicate phrase id %s" % (fid, pid))
-            seen_pids.add(pid)
+            seen_pids.add(phrase_identity)
             text, occ = ph.get("text", ""), ph.get("occurrence", 0)
+            if not isinstance(text, str) or not text.strip():
+                err("phrase", "%s: phrase text must be non-empty" % pid)
+                continue
             positions = [mm.start() for mm in
                          re.finditer(re.escape(text), unit.text)]
             if occ < 1 or len(positions) < occ:
@@ -264,8 +475,9 @@ def validate_edition(m, for_release=False):
             if p_status == "counsel-review-required" and p_targets:
                 err("evidence", "%s: no-candidate phrase carries targets" % pid)
             pseen = set()
+            pseen_target_gates = set()
             for t in p_targets:
-                check_target(pid, fid, t, pseen)
+                check_target(pid, fid, t, pseen, pseen_target_gates)
             if "caution" in ph:
                 check_caution(pid, ph["caution"], "fragment", frag_id=fid)
         spans.sort(key=lambda s: s[1])
@@ -283,21 +495,21 @@ def validate_edition(m, for_release=False):
         for gate in m.relation["claimGates"][ckey]:
             gid = gate.get("gateId")
             owner = "%s/%s" % (ckey, gid)
-            if gid in seen_gids:
+            gate_identity = inv.owner_gate_key(ckey, gid)
+            if gate_identity in seen_gids:
                 err("duplicate", "%s: duplicate claim-gate" % owner)
-            seen_gids.add(gid)
+            seen_gids.add(gate_identity)
             if gate.get("claimHash") != m.agg_hashes[num]:
                 err("drift", "%s: claimHash stale" % owner)
             check_caution(owner, {
                 "gateId": gid, "type": gate.get("type"),
                 "code": gate.get("code"), "source": gate.get("source"),
-            }, "claim")
+            }, "claim", claim_key=ckey)
 
     # ---- dispositions: totality, honesty, uniqueness, pins --------------
     disp_index = {}
     for disp in m.relation.get("dispositions", []):
-        key = (disp.get("gateId"), disp.get("subject", {}).get("kind"),
-               disp.get("subject", {}).get("id"))
+        key = inv.disposition_key(disp)
         owner = "disposition %s@%s" % (key[0], key[2])
         if key in disp_index:
             err("duplicate", "%s: duplicate disposition" % owner)
@@ -333,6 +545,58 @@ def validate_edition(m, for_release=False):
                 "%s subject" % (owner, disp.get("disposition"),
                                 entry["requiredScope"], evidence))
 
+        # Optional means that the inventory does not require every listed
+        # subject to carry the gate.  It does not license a reviewed
+        # disposition to claim that evidence was carried when no matching
+        # instance exists.  Mandatory gates receive the same reverse check in
+        # direction 2 below; close the optional branch here so affirmative
+        # dispositions are honest in both requirement modes.
+        disposition = disp.get("disposition")
+        if entry.get("requirement") == "optional" and disposition in (
+                "carried-at-required-scope",
+                "carried-at-fragment-fallback"):
+            gid = entry["gateId"]
+            scope = entry["requiredScope"]
+            subject_id = subject["id"]
+            carried = False
+            required_count = 1
+            carried_count = 0
+            if disposition == "carried-at-fragment-fallback":
+                caution = frags.get(subject_id, {}).get("caution") or {}
+                carried = caution.get("gateId") == gid
+            elif scope == "claim":
+                carried = any(
+                    gate.get("gateId") == gid for gate in
+                    m.relation.get("claimGates", {}).get(subject_id, []))
+            elif scope == "fragment":
+                caution = frags.get(subject_id, {}).get("caution") or {}
+                carried = caution.get("gateId") == gid
+            else:  # target scope
+                frag = frags.get(subject_id, {})
+                all_targets = list(frag.get("targets", []))
+                for phrase in frag.get("phrases", []):
+                    all_targets.extend(phrase.get("targets", []))
+                carrying = {
+                    target.get("block") for target in all_targets
+                    if target.get("caution", {}).get("gateId") == gid
+                }
+                minimum = entry.get("appliesTo", {}).get(
+                    "cardinality", {}).get("minTargetsPerFragment")
+                if isinstance(minimum, int) and not isinstance(minimum, bool) \
+                        and minimum >= 1:
+                    required_count = minimum
+                carried_count = len(carrying)
+                carried = carried_count >= required_count
+            if not carried:
+                if scope == "target" and \
+                        disposition == "carried-at-required-scope":
+                    detail = "%d matching target(s), requires at least %d" % (
+                        carried_count, required_count)
+                else:
+                    detail = "no matching gate/caution instance"
+                err("integrity", "%s: optional gate has affirmative %r "
+                    "disposition but %s" % (owner, disposition, detail))
+
     # ---- referential integrity, direction 2 (inventory -> evidence) -----
     for gate in m.gates["gates"]:
         gid = gate["gateId"]
@@ -349,7 +613,7 @@ def validate_edition(m, for_release=False):
                         % (gid, ckey))
                 if (gid, "claim", ckey) not in disp_index:
                     err("integrity", "%s: no disposition for %s" % (gid, ckey))
-        else:
+        elif scope in ("fragment", "target"):
             for f in gate["appliesTo"].get("fragments", []):
                 fid = f["id"]
                 frag = frags.get(fid)
@@ -366,10 +630,18 @@ def validate_edition(m, for_release=False):
                             "%s: mandatory fragment gate not carried on %s"
                             % (gid, fid))
                 else:  # target scope
-                    minimum = gate["appliesTo"]["cardinality"][
-                        "minTargetsPerFragment"]
-                    carrying = [t for t in frag.get("targets", [])
-                                if t.get("caution", {}).get("gateId") == gid]
+                    minimum = gate.get("appliesTo", {}).get(
+                        "cardinality", {}).get("minTargetsPerFragment")
+                    if not isinstance(minimum, int) or \
+                            isinstance(minimum, bool) or minimum < 1:
+                        continue  # inventory/schema defect already reported
+                    all_targets = list(frag.get("targets", []))
+                    for phrase in frag.get("phrases", []):
+                        all_targets.extend(phrase.get("targets", []))
+                    carrying = {
+                        t.get("block") for t in all_targets
+                        if t.get("caution", {}).get("gateId") == gid
+                    }
                     if frag.get("status") == "mapped":
                         if len(carrying) < minimum:
                             err("integrity",
@@ -413,9 +685,46 @@ def validate_edition(m, for_release=False):
 
     # ---- lifecycle: contentHash, pending, stale (AC-02) -----------------
     for otype, key, fields, projection in m.iter_owners():
+        proposal = fields.get("proposedFrom")
+        if isinstance(proposal, dict):
+            source_owner = proposal.get("owner")
+            if isinstance(source_owner, dict):
+                source_kind = source_owner.get("kind")
+                source_id = source_owner.get("id")
+                identity_pattern = {
+                    "unit": FRAG_ID_RE,
+                    "phrase": PHRASE_ID_RE,
+                }.get(source_kind)
+                if identity_pattern is not None and \
+                        (not isinstance(source_id, str) or
+                         identity_pattern.fullmatch(source_id) is None):
+                    err("provenance", "%s %s: proposedFrom owner id %r "
+                        "does not match kind %r" %
+                        (otype, key, source_id, source_kind))
+            if proposal.get("sourceEdition") == m.edition.get("editionId"):
+                err("provenance", "%s %s: proposedFrom sourceEdition must "
+                    "differ from the destination edition" % (otype, key))
         expected = m.content_hash(projection)
         defects = inv.release_ready(fields, expected)
         review = fields.get("review") or {}
+        metadata_defects = inv.review_metadata_defects(review)
+        for defect in metadata_defects:
+            if "operatorKind" in defect:
+                continue
+            err("lifecycle", "%s %s: %s" % (otype, key, defect))
+        if not authority.is_authoritative_operator_kind(
+                review.get("operatorKind")) and not for_release:
+            err("pending", "%s %s: authorized operator review required "
+                "(review.operatorKind is %r)" %
+                (otype, key, review.get("operatorKind")))
+        migration_state = fields.get("migrationState")
+        has_reason = "migrationReason" in fields
+        if migration_state == "stale" and not has_reason:
+            err("lifecycle", "%s %s: stale owner requires migrationReason"
+                % (otype, key))
+        if migration_state == "current" and has_reason:
+            err("lifecycle", "%s %s: current owner forbids migrationReason"
+                % (otype, key))
         if review.get("contentHash") != expected:
             err("content-hash", "%s %s: %s" % (
                 otype, key,
@@ -423,8 +732,10 @@ def validate_edition(m, for_release=False):
                 else "missing review.contentHash"))
         if for_release:
             for d in defects:
-                if "contentHash" not in d:
+                if "contentHash" not in d and d not in metadata_defects:
                     err("release", "%s %s: %s" % (otype, key, d))
+            for d in metadata_defects:
+                err("release", "%s %s: %s" % (otype, key, d))
         else:
             if fields.get("reviewState") == "pending":
                 err("pending", "%s %s: reviewState pending" % (otype, key))

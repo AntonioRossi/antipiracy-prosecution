@@ -2,7 +2,7 @@
  "inventoryVersion": "1",
  "corpusId": "af-claims",
  "profileDigest": "sha256/c1:653da0f58c0b06a907c7bb37a3fe51614eabeefb68256a013f3cf7b391b74ace",
- "comment": "Gate inventory for AF-2026-07-17-v2 (TDD §8.1): reviewed interpretation of the claim-set document's §5 support/filing gates and the §3 Example 2 priority-gate blockquote, hash-pinned to quotable source blocks. Endpoint hashes stamped by tools/stamp.py; null fails validation. Completeness is a digest-bound human attestation (§9).",
+ "comment": "Gate inventory for AF-2026-07-17-v2 (TDD §8.1): reviewed interpretation of the claim-set document's §5 support/filing gates and the §3 Example 2 priority-gate blockquote, hash-pinned to quotable source blocks. Endpoint hashes stamped by tools/stamp.py; null fails validation. Completeness is a digest-bound authorized operator attestation (§9).",
  "gates": [
   {
    "gateId": "af-gate-claim-as-a-whole",

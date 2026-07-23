@@ -1,7 +1,42 @@
 {
- "bundleVersion": "1",
+ "bundleVersion": "2",
  "name": "AA11393US-claims-navigators_NA-2026-07-21-v2_AF-2026-07-17-v2.zip",
- "comment": "Bundle config (TDD §10.9, §11): enumerates exactly the bundle members — both sealed artifacts with their detached checksums plus the neutral bundle-manifest. Either artifact remains releasable alone; the bundle requires both editions sealed.",
+ "comment": "Bundle config (TDD §10.9, §11): ordered member names and bytes are pinned explicitly. Each sealed artifact binds one digest-addressed release record; checksum entries bind the stored detached-checksum bytes; the manifest is an enumerated bundle-manifest output and requires the selected confirmed authorized-operator approval. Either artifact remains releasable alone.",
  "editions": ["na", "af"],
- "declaredTimestamp": "2026-07-21T00:00:00Z"
+ "declaredTimestamp": "2026-07-21T00:00:00Z",
+ "manifestApproval": "sha256/c1:7815d0248c7b3ee45ae57531bd1c079d8dbd49aab2066cdd86d523305fde6910",
+ "members": [
+  {
+   "kind": "sealed",
+   "name": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html",
+   "edition": "na",
+   "digest": "sha256/c1:ad58caf4b60e515aeb071cb2e5f828310a545fa0dbb6b31bf63cea1902ed762d",
+   "releaseRecord": "sha256/c1:51e8f3569d3d29d56679563eb54884ecc60e9bc846c484665e3525cfa4dc635b"
+  },
+  {
+   "kind": "artifact-checksum",
+   "name": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html.sha256",
+   "artifact": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html",
+   "digest": "sha256/c1:516f2a2e2d0810fca8b31eae2d9abfbdf166465fe56b48628c198e85ff014050"
+  },
+  {
+   "kind": "sealed",
+   "name": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html",
+   "edition": "af",
+   "digest": "sha256/c1:34e3618df548fcd7561fe34dbf38a2ddbf9f9618aa1eeb084a4430ef55076770",
+   "releaseRecord": "sha256/c1:057c50f07d0fd8875673a045081f5f06cee1cbb473cf104527062360a070d703"
+  },
+  {
+   "kind": "artifact-checksum",
+   "name": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html.sha256",
+   "artifact": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html",
+   "digest": "sha256/c1:63e03d0254c78b5601ce6038846dacf682951345eea558dddcf30b35496cfc67"
+  },
+  {
+   "kind": "bundle-manifest",
+   "name": "MANIFEST.txt",
+   "digest": "sha256/c1:10c522d875e9f69ea13f6b87c9803860f140d0f935fdda6db3743b4e9de20735",
+   "wordingDigest": "sha256/c1:0f03ba3933fbdb0a62c8b9bb4b8c690d9a44599a796d546a90602ae456cc13d2"
+  }
+ ]
 }

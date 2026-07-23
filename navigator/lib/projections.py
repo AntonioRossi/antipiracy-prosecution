@@ -3,9 +3,62 @@
 (derived content is never stored).
 """
 
-from . import schema_validate
+from . import canon, schema_validate
 
 ROLE_RANK = {"specific": 0, "combination": 1, "context": 2}
+
+# Closed production implementation inventory.  This is deliberately an
+# explicit code-side commitment rather than a suffix or directory scan: an
+# allowlist entry cannot appoint itself as trusted executable input merely by
+# ending in ``.py``.  AC-07 compares this tuple bidirectionally with both the
+# filesystem family and every edition declaration.
+BUILDER_SOURCE_PATHS = (
+    "navigator/build.py",
+    "navigator/lib/__init__.py",
+    "navigator/lib/authority.py",
+    "navigator/lib/qaevidence.py",
+    "navigator/lib/recordprovenance.py",
+    "navigator/lib/bundleplan.py",
+    "navigator/lib/bundlezip.py",
+    "navigator/lib/canon.py",
+    "navigator/lib/claims.py",
+    "navigator/lib/depgraph.py",
+    "navigator/lib/gateway.py",
+    "navigator/lib/migrate.py",
+    "navigator/lib/model.py",
+    "navigator/lib/projections.py",
+    "navigator/lib/registry.py",
+    "navigator/lib/release.py",
+    "navigator/lib/render.py",
+    "navigator/lib/schema_validate.py",
+    "navigator/lib/segmenter.py",
+    "navigator/lib/unicode15_1.py",
+    "navigator/lib/validate.py",
+    "navigator/schema/invariants.py",
+)
+
+
+def artifact_strings(m):
+    """Return the exact strings projection capable of affecting an edition.
+
+    Other-edition vocabulary and bundle-only manifest wording are excluded,
+    so their changes cannot alter this artifact's provenance.
+    """
+    strings = m.strings
+    return {
+        "stringsVersion": strings["stringsVersion"],
+        "counselLegend": strings["counselLegend"],
+        "standingDisclaimer": strings["standingDisclaimer"],
+        "status": strings["status"],
+        "role": strings["role"],
+        "cautionType": strings["cautionType"],
+        "cautionScope": strings["cautionScope"],
+        "dispositions": strings["dispositions"],
+        "generalizationCodes": strings["generalizationCodes"],
+        "ui": strings["ui"],
+        "editionNamespace": strings["editionNamespaces"][
+            m.edition["stringsNamespace"]],
+    }
 
 
 def ship_relation(m, mode="artifact"):
@@ -49,6 +102,9 @@ def reverse_index(ship):
         rest = fid.split("u")[1]
         return int(rest.split("p")[0])
 
+    def phrase_num(fid):
+        return int(fid.rsplit("p", 1)[1]) if "p" in fid else -1
+
     entries = []
     for fid, frag in ship.get("fragments", {}).items():
         for t in frag.get("targets", []):
@@ -63,8 +119,9 @@ def reverse_index(ship):
             index[block].append({"fragment": fid, "kind": kind})
     for block in index:
         index[block].sort(key=lambda e: (
-            claim_num(e["fragment"]), unit_num(e["fragment"]),
-            0 if e["kind"] == "unit" else 1, e["fragment"]))
+            claim_num(e["fragment"]),
+            0 if e["kind"] == "unit" else 1,
+            unit_num(e["fragment"]), phrase_num(e["fragment"])))
     return index
 
 
@@ -86,7 +143,7 @@ def quotable_texts(m, ship):
                 collect(t.get("caution"))
     for gates in ship.get("claimGates", {}).values():
         for g in gates:
-            collect(g.get("source"))
+            collect(g)
     out = {}
     for b in sorted(blocks):  # deterministic: set iteration is seed-dependent
         anchor = m.quotable_anchor(b)
@@ -107,13 +164,13 @@ def provenance(m):
             "id": cid, "role": entry["role"], "version": entry["version"],
             "files": entry["files"],
         })
-    authority = None
-    for cid, entry in m.registry.corpora.items():
-        if entry["role"] == "authoritative":
-            authority = {
-                "id": cid, "version": entry["version"],
-                "digest": next(iter(entry["files"].values())),
-            }
+    authority_id = m.edition["authorityCorpus"]
+    authority_entry = m.registry.entry(authority_id)
+    authority = {
+        "id": authority_id,
+        "version": authority_entry["version"],
+        "digest": m.authority_digest,
+    }
     log = m.gw.read_log
     return {
         "corpora": corpora,
@@ -125,7 +182,9 @@ def provenance(m):
         "dependencyMapDigest": log.get(m.edition["dependencyMap"]),
         "editionConfigDigest": log.get(
             "navigator/editions/%s.json" % m.edition["editionId"]),
-        "stringsDigest": log.get("navigator/strings.json"),
+        "schemaDigest": log.get("navigator/schema/relation.schema.json"),
+        "stringsProjectionDigest": canon.bytes_digest(
+            canon.canonical_json(artifact_strings(m))),
         "declaredReleaseTimestamp": m.edition["declaredReleaseTimestamp"],
         "counts": {
             "claims": m.edition["census"]["claims"],
@@ -135,12 +194,35 @@ def provenance(m):
     }
 
 
+def builder_source_paths(inputs):
+    """Validate and return the exact production builder-source inventory.
+
+    Python is also used for tests and maintenance tools, so ``*.py`` is not
+    itself an implementation boundary.  Missing implementation sources and
+    out-of-family Python declarations both fail before any source is read or
+    hash-bound.
+    """
+    declared = {
+        path for path in inputs
+        if isinstance(path, str) and path.endswith(".py")
+    }
+    expected = set(BUILDER_SOURCE_PATHS)
+    if declared != expected:
+        raise ValueError(
+            "declared Python source inventory is not exact "
+            "(missing=%r, extra=%r)" %
+            (sorted(expected - declared), sorted(declared - expected)))
+    return BUILDER_SOURCE_PATHS
+
+
 def builder_tree_hash(gw, inputs):
-    """Digest over the builder source files (part of embedded provenance).
-    Reads through the gateway so the lock covers the builder tree."""
-    from . import canon
+    """Digest over the exact builder family (embedded provenance).
+
+    Reads cross the content gateway so the private lock covers every selected
+    source byte.  Out-of-family declarations are rejected, never absorbed
+    into this hash.
+    """
     digests = []
-    for path in sorted(p for p in inputs
-                       if p.endswith(".py")):
+    for path in builder_source_paths(inputs):
         digests.append(canon.bytes_digest(gw.read_bytes(path)))
     return canon.composite_digest("aa11393:lock:c1", {"builderTree": digests})

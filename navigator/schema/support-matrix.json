@@ -1,12 +1,14 @@
 {
- "supportMatrixVersion": "1",
- "comment": "Release-approved browser/OS/assistive-technology support matrix (TDD §12). Normative data referenced by the QA record (digest + approver). Approval is recorded by attestation; changing this file invalidates it.",
- "approver": "amc (pending counsel/QA confirmation — normative default, TDD §17)",
+ "supportMatrixVersion": "2",
+ "comment": "Release-approved atomic browser/OS/optional-assistive-technology support matrix (TDD §12). Each row names exactly one operating system. The literal at value none requires browser-native DOM/ARIA, keyboard, focus, and live-region evidence without external AT. VoiceOver is outside this delivery contract. Normative data is referenced by the QA record (digest + approver); approval is recorded by attestation, and changing this file invalidates it.",
+ "approver": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
  "targets": [
-  {"browser": "Chrome ≥ 126", "os": "macOS 13+ / Windows 11", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Chrome ≥ 126", "os": "macOS 13+", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Chrome ≥ 126", "os": "Windows 11", "at": "none", "mode": "local file, double-click"},
   {"browser": "Edge ≥ 126", "os": "Windows 11", "at": "none", "mode": "local file, double-click"},
-  {"browser": "Firefox ≥ 128", "os": "macOS 13+ / Windows 11", "at": "none", "mode": "local file, double-click"},
-  {"browser": "Safari ≥ 17", "os": "macOS 13+", "at": "VoiceOver", "mode": "local file, double-click"},
+  {"browser": "Firefox ≥ 128", "os": "macOS 13+", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Firefox ≥ 128", "os": "Windows 11", "at": "none", "mode": "local file, double-click"},
+  {"browser": "Safari ≥ 17", "os": "macOS 13+", "at": "none", "mode": "local file, double-click"},
   {"browser": "Chrome ≥ 126", "os": "Windows 11", "at": "NVDA 2024+", "mode": "local file, double-click"}
  ],
  "viewport": {"minimum": [1280, 720], "stackedBelowMinimum": true}

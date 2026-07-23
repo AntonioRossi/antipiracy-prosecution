@@ -1,0 +1,43 @@
+{
+ "schemaVersion": "1",
+ "comment": "Closed schema for the release-approved browser, atomic OS, optional-assistive-technology, and viewport support matrix (TDD §12); at is always explicit, the literal none means no external AT, and VoiceOver is outside this contract.",
+ "type": "object",
+ "required": ["supportMatrixVersion", "comment", "approver", "targets", "viewport"],
+ "additionalProperties": false,
+ "properties": {
+  "supportMatrixVersion": {"type": "string", "enum": ["2"]},
+  "comment": {"type": "string", "minLength": 1},
+  "approver": {"type": "string", "minLength": 1},
+  "targets": {
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {
+    "type": "object",
+    "required": ["browser", "os", "at", "mode"],
+    "additionalProperties": false,
+    "properties": {
+     "browser": {"type": "string", "enum": ["Chrome ≥ 126", "Edge ≥ 126", "Firefox ≥ 128", "Safari ≥ 17"]},
+     "os": {"type": "string", "enum": ["macOS 13+", "Windows 11"]},
+     "at": {"type": "string", "enum": ["none", "NVDA 2024+"]},
+     "mode": {"type": "string", "enum": ["local file, double-click"]}
+    }
+   }
+  },
+  "viewport": {
+   "type": "object",
+   "required": ["minimum", "stackedBelowMinimum"],
+   "additionalProperties": false,
+   "properties": {
+    "minimum": {
+     "type": "array",
+     "minItems": 2,
+     "maxItems": 2,
+     "enum": [[1280, 720]],
+     "items": {"type": "integer", "minimum": 1}
+    },
+    "stackedBelowMinimum": {"type": "boolean", "enum": [true]}
+   }
+  }
+ }
+}

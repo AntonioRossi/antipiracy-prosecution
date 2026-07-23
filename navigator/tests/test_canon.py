@@ -24,7 +24,14 @@ class TestVectors(unittest.TestCase):
 
     def test_unicode_pin(self):
         self.assertEqual(canon.UNICODE_VERSION, "15.1.0")
-        self.assertEqual(unicodedata.unidata_version, canon.UNICODE_VERSION)
+        # U+1E08F was assigned after the Python 3.10 / Unicode 13 runtime.
+        # The pinned implementation must still give it CCC=230 and reorder it
+        # after U+0327 (CCC=202), independent of the interpreter tables.
+        source = "a\U0001e08f\u0327"
+        self.assertEqual(canon.normalize_nfc(source),
+                         "a\u0327\U0001e08f")
+        self.assertEqual(canon.normalize_nfc(canon.normalize_nfc(source)),
+                         canon.normalize_nfc(source))
 
     def test_known_sha256(self):
         self.assertEqual(
@@ -75,11 +82,43 @@ class TestVectors(unittest.TestCase):
         with self.assertRaises(canon.CanonError):
             canon.canonical_json({"é": 1, "é": 2})  # NFC collision
         with self.assertRaises(canon.CanonError):
+            canon.canonical_json("\ud800")
+        with self.assertRaises(canon.CanonError):
             canon.composite_digest("aa11393:unregistered:c1", [])
         with self.assertRaises(canon.CanonError):
             canon.parse_digest("sha256/c1:short")
         with self.assertRaises(canon.CanonError):
             canon.parse_digest("sha256/c0:" + "0" * 64)
+        for malformed_hex in (
+                "0" * 31 + "  " + "0" * 31,
+                "0" * 63 + "A",
+                "0" * 63 + "٠"):
+            with self.subTest(malformed_digest_hex=malformed_hex):
+                with self.assertRaises(canon.CanonError):
+                    canon.parse_digest("sha256/c1:" + malformed_hex)
+        for separator in (canon.CELL_SEP, canon.ROW_SEP):
+            with self.subTest(table_separator=ord(separator)):
+                with self.assertRaises(canon.CanonError):
+                    canon.canon_table_row(["a" + separator + "b"])
+                with self.assertRaises(canon.CanonError):
+                    canon.canon_table([["a"]], "caption" + separator)
+
+    def test_json_parser_rejects_information_losing_inputs(self):
+        for raw in (
+            '{"a":1,"a":2}',
+            '{"e\\u0301":1,"\\u00e9":2}',
+            '{"a\U0001e08f\u0327":1,"a\u0327\U0001e08f":2}',
+            '{"fraction":1.5}',
+            '{"large":9007199254740992}',
+            '{"nonfinite":NaN}',
+            '"\\ud800"',
+            '{"\\udfff":1}',
+        ):
+            with self.subTest(raw=raw):
+                with self.assertRaises(canon.CanonError):
+                    canon.parse_json(raw)
+        self.assertEqual(canon.parse_json(b'{"ok":1}'), {"ok": 1})
+        self.assertEqual(canon.parse_json('"\\ud83d\\ude00"'), "😀")
 
 
 class TestProperties(unittest.TestCase):

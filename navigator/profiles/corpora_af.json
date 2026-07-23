@@ -1,0 +1,15 @@
+{
+ "registryVersion": "1",
+ "corpora": {
+  "af-claims": {
+   "role": "fragment-source",
+   "visibility": "rendered",
+   "version": "AF-2026-07-17-v2",
+   "primary": "US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md",
+   "profile": "navigator/profiles/seg_af-claims.json",
+   "files": {
+    "US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md": "sha256/c1:39b8990dc2b302dce50ea78bc34982dd7e1649eea46c2f169a9c4fdfc35693b9"
+   }
+  }
+ }
+}

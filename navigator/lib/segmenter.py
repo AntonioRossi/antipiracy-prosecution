@@ -28,10 +28,99 @@ SUB_RE = re.compile(r"^<sub>(.*)</sub>\s*$", re.S)
 ENUM_PREFIX_RE = re.compile(r"^\d+\.\s+")
 
 CLASSES = ("targetable", "editorial", "quotable", "excluded", "claims")
+KINDS = ("heading", "code", "blockquote", "table", "image", "bullet",
+         "ordered", "footer", "claimhead", "paragraph")
 
 
 class SegmentError(ValueError):
     pass
+
+
+def profile_problems(profile, expected_corpus=None):
+    """Return semantic defects beyond the profile's closed JSON schema."""
+    if not isinstance(profile, dict):
+        return ["segmentation profile is not an object"]
+    problems = []
+    allowed_top = {"profileVersion", "corpusId", "claimsHeading",
+                   "pctClaimsSection", "comment", "rules"}
+    required_top = {"profileVersion", "corpusId", "comment", "rules"}
+    if set(profile) - allowed_top or not required_top.issubset(profile):
+        problems.append("segmentation profile fields are not closed")
+    if profile.get("profileVersion") != "1":
+        problems.append("segmentation profile version is not '1'")
+    if not isinstance(profile.get("corpusId"), str) or \
+            not profile.get("corpusId", "").strip():
+        problems.append("segmentation profile corpusId is empty")
+    if not isinstance(profile.get("comment"), str) or \
+            not profile.get("comment", "").strip():
+        problems.append("segmentation profile comment is empty")
+    if expected_corpus is not None and profile.get("corpusId") != \
+            expected_corpus:
+        problems.append("profile corpusId does not match %r" %
+                        expected_corpus)
+    has_claims = "claimsHeading" in profile
+    has_pct = "pctClaimsSection" in profile
+    if has_claims == has_pct:
+        problems.append(
+            "profile must declare exactly one of claimsHeading or "
+            "pctClaimsSection")
+    if has_claims and (not isinstance(profile["claimsHeading"], str) or
+                       not profile["claimsHeading"].strip()):
+        problems.append("claimsHeading must be a non-empty string")
+    if has_pct and (not isinstance(profile["pctClaimsSection"], list) or
+                    not profile["pctClaimsSection"] or
+                    not all(isinstance(part, str) and part
+                            for part in profile["pctClaimsSection"])):
+        problems.append("pctClaimsSection must be a non-empty string path")
+    rules = profile.get("rules")
+    if not isinstance(rules, list) or not rules:
+        problems.append("segmentation profile rules are empty or malformed")
+        rules = []
+    seen_matches = []
+    for index, rule in enumerate(rules):
+        if not isinstance(rule, dict):
+            problems.append("rule %d is not an object" % index)
+            continue
+        match = rule.get("match")
+        if isinstance(match, dict):
+            if set(match) - {"kind", "path"}:
+                problems.append("rule %d match fields are not closed" % index)
+            if not match:
+                problems.append("rule %d has an empty match" % index)
+            if match in seen_matches:
+                problems.append("rule %d repeats an earlier match" % index)
+            seen_matches.append(match)
+            if "kind" in match and match["kind"] not in KINDS:
+                problems.append("rule %d has unknown kind %r" %
+                                (index, match["kind"]))
+            if "path" in match and (
+                    not isinstance(match["path"], list) or
+                    not match["path"] or
+                    not all(isinstance(part, str) and part
+                            for part in match["path"])):
+                problems.append("rule %d has a malformed path" % index)
+        else:
+            problems.append("rule %d has no match object" % index)
+        policy_class = rule.get("class")
+        expected_rule_fields = {"match", "class"}
+        if policy_class == "editorial":
+            expected_rule_fields.add("editorialLabel")
+        if set(rule) != expected_rule_fields:
+            problems.append("rule %d fields are not exact" % index)
+        if policy_class not in CLASSES:
+            problems.append("rule %d has unknown class %r" %
+                            (index, policy_class))
+        label = rule.get("editorialLabel")
+        if policy_class == "editorial" and not (
+                isinstance(label, str) and label.strip()):
+            problems.append("editorial rule %d has no visible label" % index)
+        if policy_class != "editorial" and "editorialLabel" in rule:
+            problems.append(
+                "non-editorial rule %d carries editorialLabel" % index)
+        if policy_class == "claims" and not has_claims:
+            problems.append(
+                "claims class in rule %d requires claimsHeading" % index)
+    return problems
 
 
 class Block:
@@ -95,6 +184,9 @@ def _match_rule(rule, kind, path):
 def classify(profile, kind, path):
     for rule in profile["rules"]:
         if _match_rule(rule, kind, path):
+            if rule.get("class") not in CLASSES:
+                raise SegmentError("unknown segmentation class %r" %
+                                   rule.get("class"))
             return rule
     return {"class": "excluded"}
 
@@ -207,6 +299,10 @@ def segment(text, profile, read_file):
     ``read_file(relpath) -> bytes`` supplies sibling files (figures) through
     the caller's gateway so every read lands in the content lock.
     """
+    defects = profile_problems(profile)
+    if defects:
+        raise SegmentError("invalid segmentation profile: %s" %
+                           "; ".join(defects))
     lines = text.split("\n")
     path = []           # normalized heading path
     counters = {}       # per-(path, kind) ordinals for labels
@@ -358,6 +454,10 @@ def segment(text, profile, read_file):
             raise SegmentError("unhandled element kind %r" % kind)
 
     close_claim()
+
+    claim_numbers = [number for number, unused_members in pct_claims]
+    if len(claim_numbers) != len(set(claim_numbers)):
+        raise SegmentError("PCT claims section repeats a claim number")
 
     # Assign anchors: sequential S### over emitted blocks in document order.
     for i, b in enumerate(blocks, start=1):

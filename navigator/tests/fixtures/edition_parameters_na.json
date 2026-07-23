@@ -1,0 +1,75 @@
+{
+ "fixtureVersion": "1",
+ "comment": "Locked exact projection of the normative §3 NA edition parameter table.",
+ "edition": {
+  "editionConfig": "navigator/editions/na.json",
+  "claimCorpus": "na-claims",
+  "claimSetVersion": "NA-2026-07-21-v2",
+  "targetCorpus": "pct-disclosure",
+  "authorityCorpus": "pct-pdf",
+  "corpusRegistries": [
+   "navigator/corpora.json",
+   "navigator/profiles/corpora_na.json"
+  ],
+  "census": {
+   "claims": 30,
+   "units": 68,
+   "perClaim": {
+    "1": 7,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 1,
+    "8": 1,
+    "9": 9,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 6,
+    "14": 1,
+    "15": 1,
+    "16": 9,
+    "17": 1,
+    "18": 1,
+    "19": 1,
+    "20": 1,
+    "21": 1,
+    "22": 9,
+    "23": 1,
+    "24": 4,
+    "25": 1,
+    "26": 1,
+    "27": 1,
+    "28": 1,
+    "29": 1,
+    "30": 1
+   }
+  },
+  "independentClaims": [
+   1,
+   9,
+   16,
+   22
+  ],
+  "groups": [
+   "Production / mate-generation system",
+   "Distribution / recipient-association system",
+   "Detection / recipient-resolution system",
+   "End-to-end method"
+  ],
+  "strategyPrefix": "NA",
+  "relationSet": "navigator/relations/na__pct.json",
+  "gateInventory": "navigator/profiles/gates_na-claims.json",
+  "dependencyMap": "navigator/profiles/deps_na-claims.json",
+  "qaSources": {
+   "priorityMap": "na-priority-map",
+   "crosswalk": null
+  },
+  "qaRegistry": "navigator/profiles/qa_na.json",
+  "stringsResource": "navigator/profiles/strings_na.json",
+  "forbiddenTerms": [],
+  "artifactName": "AA11393US-NA-claims-spec-navigator_NA-2026-07-21-v2.html"
+ }
+}

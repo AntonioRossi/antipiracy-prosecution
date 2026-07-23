@@ -15,9 +15,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:5792c81b7b93b5333fb04c8e2ef671e2ac19cd792ba5ebeb5eb4a6cf88f42fbd"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:c762026d44ab90bf89c3338300b153ec20efc267a594122f481f29a383be5a8c"
     },
     "source": {
      "corpus": "af-claims",
@@ -33,9 +34,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:2a6bb8c3465545725659f81c047ce9eb241e5f6f58a79abf8e1cb68e2178d409"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:08b21578983a5630c5fbbd9705d137aa95284b9bc9ce116ef50e03283b656bff"
     },
     "source": {
      "corpus": "af-claims",
@@ -53,9 +55,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:d91aeca77ed7cfe22d81081d6bb48176c3d7072b7dca61598affab21f815b0da"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:c445b8df3bed31a668655fbd265e6f24aae886eb96adb83db6906b03d520623d"
     },
     "source": {
      "corpus": "af-claims",
@@ -71,9 +74,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:e285956ce434260eeb2d9d7ab3e241174447930aa5ce35120d2516c4177438ec"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:5f3545e9f8861fc463895f1230faf6079be99a2f111496119e6bdab7e0733a72"
     },
     "source": {
      "corpus": "af-claims",
@@ -91,9 +95,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:e06adcc7c9cb2615f55abb6da54b63b1c618248d3d88e8ba11520fefab320491"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:dc1a9ea51649a4be7419470c88a0b75c9649bf80c472488b0079e4262394daa9"
     },
     "source": {
      "corpus": "af-claims",
@@ -111,9 +116,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:021ec08e819693c3e4c82283b53af44dd5e7e4de69f405c869c0c333c3d06a3e"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:5bc6a8b4ed9d280cecba1b2950fe82ccad348b21915a0ef8bc61170c53ef0c79"
     },
     "source": {
      "corpus": "af-claims",
@@ -131,9 +137,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:8e35c802beafc3b34261369ca0036c2b5cfb66174c47c81b635a2a45316acf49"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:5a71debdbae4da9b8dfba6d8be7b26db0b5d2ab6068bec76597c696021e53292"
     },
     "source": {
      "corpus": "af-claims",
@@ -151,9 +158,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:9da6c9901b4fe0280abad8cfae03abf62210a7a9b6b26da8b2177236093f1d76"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:66953afadfd9dbbf72e7339bd36c1b625d5aca97efa059503f053fc80a313d57"
     },
     "source": {
      "corpus": "af-claims",
@@ -171,9 +179,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:40a837f24b74d7c9cdd9456ed70b2e95f5b491c0e9c0447d38d785215d3fc1b0"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:8730b9b48e5e8f62d1dee665e7b6451fdc71abf0e2158022b9ff9d13c4dc5e9f"
     },
     "source": {
      "corpus": "af-claims",
@@ -191,9 +200,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:41341067ca332b9649fbef887989e52e2d32bbf98c4c20410045eede5bd53d4b"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:9ba0b2a35af93a75640c39b3aaf4e3ba145e51e9ba9e6539494eaf4b1afcdf65"
     },
     "source": {
      "corpus": "af-claims",
@@ -209,9 +219,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:a84bcff04e4a6deab51b6aa523b45bb8404a7ec8b4b73656ab961ca41812a85a"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:8bd7f39aaa2f393181292caafd95231b6ca69b8b9a7c9855cdc9ba6de8960a75"
     },
     "source": {
      "corpus": "af-claims",
@@ -229,9 +240,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:1b201f93ed42bc7a5fdfa093b6ebc6cce4830032eefc868cc877e3c20aa80d10"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:18a8c503631f73f1fe56641a73c90d1910759efe3991a2a4ca424e3ea503eb6b"
     },
     "source": {
      "corpus": "af-claims",
@@ -249,9 +261,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:fb362d45ede2ccdb19d40c093cab97c05fff62a2f20919228759da33e7b43cc4"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:51e63e7e442c1233c4bf7ec75d26b0ef5d57bc12f780ead8ce12a4518ea0f547"
     },
     "source": {
      "corpus": "af-claims",
@@ -269,9 +282,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:0a9603eef3d6d42fbc59195ffb28f35c1117f4f3399f2b94648498a3328b5043"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:cdd72b9a70fe94770ed006018c6c0895b1d0f89647b699be1c88605c561dbf4d"
     },
     "source": {
      "corpus": "af-claims",
@@ -289,9 +303,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:cee7be1147ea37336cf3abdabca753c53ddd127ffb443ae983df385761e0eaf9"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:c4b8f10e91ba65b93394b2e53f109bb9237c82917d3bc4817c145887d4e540f6"
     },
     "source": {
      "corpus": "af-claims",
@@ -309,9 +324,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:23c1cdb13e8096f8c8e79f94e2a6db75e1258d68e08342b292cd33e05f057ecf"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:7c2307e7f3de9fcf66aa8d30cc3bcd70e6fcab991667163a274a1e538657da56"
     },
     "source": {
      "corpus": "af-claims",
@@ -329,9 +345,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "claude-opus-4.8",
-     "date": "2026-07-21",
-     "contentHash": "sha256/c1:7e349a83ea6ee37867b07bb4195cfbbc49e558bf9427641a5dd712633bc51b30"
+     "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+     "operatorKind": "model",
+     "date": "2026-07-22",
+     "contentHash": "sha256/c1:1dbf6f8ba65040a1f6e6a00422872729fb244af5f2a74c40949713ff056bf677"
     },
     "source": {
      "corpus": "af-claims",
@@ -347,8 +364,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:5fd0ae3879fd7f963494aa36801762384765ba692e6eb3b3abb678fa549dabb0"
    },
    "fragmentTextHash": "sha256/c1:c4930910bcf6e938db8727b646261f7a7bee4c8a971b17c0a552ac88814bc430",
@@ -378,8 +396,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:a46e926bba722a207a86e7112878ad3138fd489de7249db563e6d3077485df8e"
    },
    "fragmentTextHash": "sha256/c1:247705521cd31762d61f5e0af159a7116fafa4c376c7dda6a8a1c385971f313d",
@@ -403,8 +422,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:77742d506ff4255de45f2637031d1336ea38f45d17cb917670fa9f7de4761e35"
    },
    "fragmentTextHash": "sha256/c1:24fcda6953db6929bcb8162d90698c27e17f1fc269ecfca65cac0d702c248995",
@@ -437,9 +457,10 @@
      "reviewState": "internally-reviewed",
      "migrationState": "current",
      "review": {
-      "by": "claude-opus-4.8",
-      "date": "2026-07-21",
-      "contentHash": "sha256/c1:7286050304f3c2fe0878c1fb628f3f30113469310e40274429d7d4be8b612263"
+      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+      "operatorKind": "model",
+      "date": "2026-07-22",
+      "contentHash": "sha256/c1:d5ca2e63a55ca1bd4373014120f89da1d3e66638a1131d25f29faff52ab65af6"
      },
      "targets": [
       {
@@ -457,8 +478,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:ed5fbccd8e681e5b5b64a4f9e0ec8fd98a763e074a87521dfd8aa7e11a034fb4"
    },
    "fragmentTextHash": "sha256/c1:cf4d0b0cea3fa291362b708d50c50cf54adf70865a9ec11ec71a824f6e17d251",
@@ -488,8 +510,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:64637e8c2a9351b3200f53e037463f171c42eaed62bf776437a30782bf85b972"
    },
    "fragmentTextHash": "sha256/c1:33c484e76ae3e9564868d5d6444d393c15033d5a189b947bfef30fd9ec3c101c",
@@ -523,8 +546,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:d9fdb25337bfd30de49aa728938808fa8926227f456c7f0269ee4d8be0ef1e70"
    },
    "fragmentTextHash": "sha256/c1:b663ba07749f4453c586dacd16ba4f3b09aa504541dc95b666240c33979a50fe",
@@ -558,8 +582,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:42140c6b149cab7990d287b07ca73464e72c8f0835009c928e9db42fab93a265"
    },
    "fragmentTextHash": "sha256/c1:9c63d020f48d84ec192fa355ff8cbeeb2dc4af4a44d3459e893ea13e6a3f6227",
@@ -593,8 +618,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:9ce41a8dcf42e417474417198703170970886e3df98d5481d1ac865fad852c19"
    },
    "fragmentTextHash": "sha256/c1:c038493117bd9c4fbccba643427723412eeb883ae952e7c3b7dca8248837352b",
@@ -619,9 +645,10 @@
      "reviewState": "internally-reviewed",
      "migrationState": "current",
      "review": {
-      "by": "claude-opus-4.8",
-      "date": "2026-07-21",
-      "contentHash": "sha256/c1:4dda548274e9b4a1c4dbf61e451784a1d1edfb2c3c5593da5e2ec54d03515466"
+      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+      "operatorKind": "model",
+      "date": "2026-07-22",
+      "contentHash": "sha256/c1:8fda1de9c59c414df57ee32ff6ba6b46c890766ccb5b59a641966f8e97376d6b"
      }
     }
    ]
@@ -631,8 +658,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:66e8977a4d3ce81f8b1d12c3c72cd509257ad044966419bcd3ac65287d40b6a2"
    },
    "fragmentTextHash": "sha256/c1:0c17ae634ecbe2ecd719c6370e4290420a2c3c32af74c4b9a7dbca73e04ddba7",
@@ -662,8 +690,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:c6507f8dc50e37f742db3da33d92e93edf1ee6bd4915f0f21bac20a8cdca089b"
    },
    "fragmentTextHash": "sha256/c1:80d5c2bb3e31dc880a968a11431b80c07beb47f976e6ec0740bb2734516545cb",
@@ -694,9 +723,10 @@
      "reviewState": "internally-reviewed",
      "migrationState": "current",
      "review": {
-      "by": "claude-opus-4.8",
-      "date": "2026-07-21",
-      "contentHash": "sha256/c1:f99d0a9dad66701264f736eff195421483c9297cb6e898ffa21e3e175268b7e6"
+      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+      "operatorKind": "model",
+      "date": "2026-07-22",
+      "contentHash": "sha256/c1:803d0ac351cc431e25384cf4217c00948207a0a8ff386e7e70519bdef989d5c0"
      }
     }
    ]
@@ -706,8 +736,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:44b77768c2c41ecc642fa1d9fc4f91f0de3e8daa55e1d072fcc770e85dcfce73"
    },
    "fragmentTextHash": "sha256/c1:3e61507e3b3d8c54a008adba0fbdf15005c2daa69d1a2dc6a3d132c888ec2905",
@@ -741,8 +772,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:933d4af2f2e010c2d51cee915b65bd5b91d3f961be4110e8361cb1e6a1027cf8"
    },
    "fragmentTextHash": "sha256/c1:51d20e866a7d2576a18bdbc79ec8ead86ae0c6be5bdd8936cd23a5fc08d3de97",
@@ -766,8 +798,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:819e298eac60fd80a126acdef64b1a5178190b7a49ef1203a4ba50e4729b2269"
    },
    "fragmentTextHash": "sha256/c1:c61de42ee9f45541d2ae7754dc6e70b5870da44457f33047b16794d5e3154efb",
@@ -810,9 +843,10 @@
      "reviewState": "internally-reviewed",
      "migrationState": "current",
      "review": {
-      "by": "claude-opus-4.8",
-      "date": "2026-07-21",
-      "contentHash": "sha256/c1:9d6122717464c07f6b6664630564e622dc08d149eaa39508bdd08335e7739e07"
+      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+      "operatorKind": "model",
+      "date": "2026-07-22",
+      "contentHash": "sha256/c1:7c523bb197386a5919e99be86489780802f59f2055c5d9ea6cc73b9c7cc1dfbd"
      },
      "targets": [
       {
@@ -830,8 +864,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:366f113c6e83791f53c8d22d5dc951d79ca5783a85074bf99ccdbff8aaa4bf0b"
    },
    "fragmentTextHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
@@ -851,8 +886,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:bf8c1debc6ac1a69c0e9d50c9a2d84788a8f9f7948b0a543480e82c9e16f0c5b"
    },
    "fragmentTextHash": "sha256/c1:3b39100e98687312032720c00b8e8e3f4c9ed4fecc0f6e71cec6b2f4cac3ccdf",
@@ -892,8 +928,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:47c4e1974d7d7b5bb683ef18cea310c5a47944a5e044863f95c8ca9a92f36787"
    },
    "fragmentTextHash": "sha256/c1:3aa4249233c5055c0f58596fa11c2866908cfdfe083f049a0076b5ac8cd39ac7",
@@ -923,8 +960,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:cab7203577f6f07475287c287e1deb8571d1b09716031edf33434973476288e5"
    },
    "fragmentTextHash": "sha256/c1:3fd921a1079082accec046e045b9132a22a9cd3da5cc84167f2982f45fa0738f",
@@ -954,8 +992,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:ae1e381a2254301bb942159e1e0ec782d3ddf766046a3d7a84f70f62ba34d8e2"
    },
    "fragmentTextHash": "sha256/c1:21401c5489e200e20cd3b09b29e5cb6adc8332943ebd538f7c8b57c7c63bab1d",
@@ -985,8 +1024,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:99bf2fd7843aa47bda74a96cca50daacb092b567b75c38372a3da6885cb31fb9"
    },
    "fragmentTextHash": "sha256/c1:0c044fe157ab5bbbcfc946128d55a918a63a9485eb62eaa298783cb57613677e",
@@ -1020,8 +1060,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:c0fd2a0748e488dd3b2265ac725f7c2ae93a7e11a168dcf922a940dd922f3b77"
    },
    "fragmentTextHash": "sha256/c1:b663ba07749f4453c586dacd16ba4f3b09aa504541dc95b666240c33979a50fe",
@@ -1055,8 +1096,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:05018a443ac10e39ea8f474b28c02ebc4102d344f3fe0d056abeee40bf407e1e"
    },
    "fragmentTextHash": "sha256/c1:9c63d020f48d84ec192fa355ff8cbeeb2dc4af4a44d3459e893ea13e6a3f6227",
@@ -1090,8 +1132,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:7eaff3e20d221a8bde1cfa6bade0146bfe265a0cc8446334420139ab62057b56"
    },
    "fragmentTextHash": "sha256/c1:2c31839e65566cf970f70a5f833921c6725b8e9270c8a4a6eff00702f981905d",
@@ -1113,8 +1156,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:9ef40a45dcddf2c54868b5a6ab7c1ceb95b643b52a0a0f67a5c86900de6f9329"
    },
    "fragmentTextHash": "sha256/c1:6d9363351b44206c815fbd49aa4fb557e1b73f1650ba9b78325807bd35bd377d",
@@ -1144,8 +1188,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:59b01ac9c0008e73b966e633d5938a030fd76935e513e66d8440a1c718e25ad4"
    },
    "fragmentTextHash": "sha256/c1:4d78e9d1c172bcef625a18bc4df0bbabb720477f7921db19e907d5c6c89768bf",
@@ -1173,8 +1218,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:148ba77f002500aae772d7eaeeba541144396e0a6183923c1ea32d7d73098c15"
    },
    "fragmentTextHash": "sha256/c1:e071ec2f3b369392545a9dc2812a7ad7200dc03aa89617c6a0f9ddd2a2064a65",
@@ -1208,8 +1254,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:70fb7e64487a80fd254b67cc064a61691b3fbbc572fbee96ceb82948f6d7bbb6"
    },
    "fragmentTextHash": "sha256/c1:ffe956bbd67d8b114135e5103a49d25710ecbbe5fd2c8a84619f38f207076860",
@@ -1233,8 +1280,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:3ef5d23c0845c2f891b51da90b60438a6b897051a909602a008a0875b17ae2c5"
    },
    "fragmentTextHash": "sha256/c1:b3fc0c29044d8f30e7380bbb610cca6802a969866c84e0123a42aba3eb9f3898",
@@ -1274,8 +1322,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:bcd503ae205233115a2751a2b7ad7b6b54bd917090470db16f63ec0e21361c1f"
    },
    "fragmentTextHash": "sha256/c1:d34f8b26f9362b1e28f0bff42c2585df0256b6953381af02399983818e6511b1",
@@ -1295,8 +1344,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:8b02ed99d2d4de4ab1a2d4972fa84a850b98d3ee4c08eec3b9473abddcbedba2"
    },
    "fragmentTextHash": "sha256/c1:2ff20c299d514eccb1b9562523052e63d6afddebaece0246e23407e76a0a06e5",
@@ -1336,8 +1386,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:e5d02b74de2e54e8c7e8f059cee37d7938eab9fd7a85b079d7d0beaf042d2f4e"
    },
    "fragmentTextHash": "sha256/c1:d10bae5a56381542b5ef5b4e3750d145a26044ba9f1f2ea5610900a27a445806",
@@ -1367,8 +1418,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:b9d5c66cf4f092c1a4c09c8622a6e0c762e195407d6b30a0736aa40b7eca25f6"
    },
    "fragmentTextHash": "sha256/c1:375271e98703a4c326e2cdbc72e0116c07d4336cf1d68ae43c23987254806bbe",
@@ -1398,8 +1450,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:4b5ce769cf3fd66549635388e19822349528934336ebac674158604010ea2f7a"
    },
    "fragmentTextHash": "sha256/c1:51719f6684a315d417293b61e72fd13d9fe22a6cd8f6976743010095af4f99e8",
@@ -1435,8 +1488,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:10ed3f1b569c0f29005f8e064254e2e3630166913e030da73e944ff90c8576b8"
    },
    "fragmentTextHash": "sha256/c1:87980ef6691a230ed683f611141f1b3d181c83162ad040c72e82d2187eb3eaff",
@@ -1466,8 +1520,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:c7e8915082bde76548b40d9b592629f0a17e3eb21c218253bfab31891587e74c"
    },
    "fragmentTextHash": "sha256/c1:2425507345bdba15a867bafabf06ed0c4223b891b71f0ff0c7cceff4f8017e1d",
@@ -1497,8 +1552,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:21bd6863214f45c25de8244a0df288fbf96cd155dd208e0b38ba8d785a0bde97"
    },
    "fragmentTextHash": "sha256/c1:be2d709509de769b8dec9edd305995dce490d77223c9becb22d99a5302db3a42",
@@ -1548,8 +1604,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:5c7db64f989495f5253aea51cc3a287b27e1afe76f62676ddabdf4c90243e01b"
    },
    "fragmentTextHash": "sha256/c1:26451a33eed82a44b2457d64581567f9614bdfe45cb71cca7abf01f818697f94",
@@ -1589,8 +1646,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:062e649200e438b441fcc68af58db9da9c7c93b12b564d01689f94c410506603"
    },
    "fragmentTextHash": "sha256/c1:774acbfee7dbc94ce5a0495ef5c779e01b02c0d71179c63706ddfb65e97dd0c7",
@@ -1630,8 +1688,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:c2ac1af70c5aee244329ef1b2cd603771ff1976409d8ce32a826561666f30919"
    },
    "fragmentTextHash": "sha256/c1:d696a7d278c6bee9f9f892d2ef1e69a804983aeb9779982a7f85ad74cdd5da29",
@@ -1649,8 +1708,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:be50832505a293a6d9d4460101bbd2e819f486af6014878aae70852dd22c807d"
    },
    "fragmentTextHash": "sha256/c1:087ef16c42d3670698e830ca5feb77f2198fcf318d90a2b335a85bf677253304",
@@ -1674,8 +1734,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:2fcd36944cafc39694b62fe5487ec1287c0bf77d3b05b94e06c84702c3498740"
    },
    "fragmentTextHash": "sha256/c1:d9ff1caa123e445ae2984974ceb35565959fe3d01c8bf709b4cc13738ef20845",
@@ -1709,8 +1770,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:b48bc27c72a602483c13f8c760d3492bdbdd573800dba1ad51ddc384d053d7a3"
    },
    "fragmentTextHash": "sha256/c1:e0e5719710b8cb3cb0dba3982bd49674c2d9887d4c477d348fbb273d53ab8e61",
@@ -1750,8 +1812,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:bcd7afa4dcd25ea7d33385aea352f2bfae62c7e661a102106bf006f26d08dd6f"
    },
    "fragmentTextHash": "sha256/c1:7ba4354de96c3f2d093d755e4d05dfc19c9be6d71aec720c8f45d7d77e252798",
@@ -1791,8 +1854,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:eb5cf23409a400686c9966d4f8d7b6bf01047003fb23427b76d3baf90d4a3b79"
    },
    "fragmentTextHash": "sha256/c1:64d1af8ccdedf7c46775dfc76238024bf4f7cce9a4914702611e952c84d8666f",
@@ -1832,8 +1896,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:53f6c24a149bcfb50b4763ff4f2c3113a6fd415906bb293e132ae1b58aca572c"
    },
    "fragmentTextHash": "sha256/c1:1a8d10d6ebc5a1cb28c5118f73bdb7542580f3b49be3ea9d3755e2e5018dde9f",
@@ -1876,9 +1941,10 @@
      "reviewState": "internally-reviewed",
      "migrationState": "current",
      "review": {
-      "by": "claude-opus-4.8",
-      "date": "2026-07-21",
-      "contentHash": "sha256/c1:2508d8c0c59dc78052b9514aed22ce78b7759f4a9cb59677112f39cff4ef30af"
+      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+      "operatorKind": "model",
+      "date": "2026-07-22",
+      "contentHash": "sha256/c1:ea27553aa82af0cd5494ceb9532595b586c06dedfa5f774fad61918592b87564"
      },
      "targets": [
       {
@@ -1896,8 +1962,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:6ab00ff3340fd5f5ffe34a45eb9cf7346164dbdeeb554eb0863770f7cc3c0288"
    },
    "fragmentTextHash": "sha256/c1:0deb2a7a331b163d617dbfa772548d1e470535406b534eba2dc455752695c1ff",
@@ -1915,8 +1982,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:bd405ef702bcc485bf40c63b002ab02781f5bc3dc71b78c0bb89fb22daba6295"
    },
    "fragmentTextHash": "sha256/c1:d44a0a8bf89be2a14952505f6c54423551a968e9e481201b481eb566d3557ad1",
@@ -1940,8 +2008,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:52b1e26e16cc9a6d06fcd16ff3369af12499a6c3317c445eede2f4af6e2b224c"
    },
    "fragmentTextHash": "sha256/c1:57df51021e56a75e461b463919516bdba22baeca02147d795d0592cd690635ca",
@@ -1978,9 +2047,10 @@
      "reviewState": "internally-reviewed",
      "migrationState": "current",
      "review": {
-      "by": "claude-opus-4.8",
-      "date": "2026-07-21",
-      "contentHash": "sha256/c1:7febe4a1d9e60e3ebc9cc0bdb5f26f1feb5cabd9d67735517fa93e0d5586a359"
+      "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+      "operatorKind": "model",
+      "date": "2026-07-22",
+      "contentHash": "sha256/c1:9a6d1ccdb5df7274ff5e634dc8d4130f951bee183a46ce36719524964863063e"
      },
      "targets": [
       {
@@ -1998,8 +2068,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:344fe408fec239861f7bfdb9b1b4e8dfb96eff2b8967900ab68e8e34e9622026"
    },
    "fragmentTextHash": "sha256/c1:67f5dc16cfd6cc840d99cd88860c70a83f67947f132ca6f6bb9154869e7282dc",
@@ -2023,8 +2094,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:74761337fe33549c6411c14163884ac2c2542233780a938544f90c0e62e6a61d"
    },
    "fragmentTextHash": "sha256/c1:994a0a4912820c9ef06d69f33a41db4bfb64104a7b06c3ac21b73b73d9a1295d",
@@ -2052,8 +2124,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:767fec7c087cd92676146c4c7a9c85b173e5e2ab2147b29e1a003ff5b4e483f7"
    },
    "fragmentTextHash": "sha256/c1:522cbc512dfc1b7f89fcf80b95893bc08c2a1e2882e596963cf7b17fee2075d7",
@@ -2071,8 +2144,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:bdd9f10fc8fa0571f2c0922abf6cd3367193d4f9bf65bc5150539a47c4d1441f"
    },
    "fragmentTextHash": "sha256/c1:424ae80ede255727966d1dc457b68a8a953fa5d1bfde0f4ee24dad52c8a1452b",
@@ -2096,8 +2170,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:e62224c4bce992cc4995d8d833542e5bf16ce3ecf27fe31f4f0a526162af10d5"
    },
    "fragmentTextHash": "sha256/c1:a89ae60f5723237029e656088791e3ad9732e503d6fdb99db6094e4b34d1cbb1",
@@ -2115,8 +2190,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:d6feb61b914832b584b8009d5d4369a5aaac6e21dc05ea0c23b4bb9a6c721cdb"
    },
    "fragmentTextHash": "sha256/c1:6131ea0bfed2f1a5f0357983102ab89c028246ee000bc76dc9b88b7fa1a3079c",
@@ -2146,8 +2222,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:5532fe833cd9ca4d9e3e0dceee563ceb8f8ed1cd6ebed2ea548f745894fcdf0c"
    },
    "fragmentTextHash": "sha256/c1:fc36c91b18fa89a1f50a66ff493b0acccc07a58559706c8acf2d5c5ed8296dd5",
@@ -2175,8 +2252,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:119bace233c9a0911685e0f16b96d1349b26f004967da10540b444d116c83a3e"
    },
    "fragmentTextHash": "sha256/c1:9521c8893391601d1829d10e4e7dfb4d47afff8cdaa522851c1b6016bfe62b29",
@@ -2204,9 +2282,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:8c41b993b240fa81be36a8881e441c0dfea287e08514a0016de07948f89bb448"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:66a44d037756ffc8ecfe1b7fd8cbd787b8060b2de94c57b434c97cba8d4eacfa"
    },
    "fragmentTextHash": "sha256/c1:43785323a61776522a7b2ae85f41f7ebb08f50c87e0fee7e0950717a89c5fa3c",
    "targets": [
@@ -2235,9 +2314,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:443d1bc2cc373da8e1d460fe58d8d63c005cf90da68430034f2b5d98bb5ec110"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:c43de1a416f3a72f7913891b09c91ab682ddc80d5cf58d28dbe31ca4b607061b"
    },
    "fragmentTextHash": "sha256/c1:20da2fd74ea4b4ce4f8c7203b14edacb9286b285f3f5c5de1189dcb660a46f31",
    "targets": [
@@ -2266,9 +2346,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:d0709757cc355d44ec620d4415182961d9a6741c49231265a6905b96ab21dc49"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:e14e966a98471140c294369ace500aae1fa9587edf6151d3ca93e16c24d32393"
    },
    "fragmentTextHash": "sha256/c1:c4b2a0f7f2545fa02628bd7dd3835fe894d4c408433e88fc72d0643e341752c6",
    "targets": [
@@ -2297,8 +2378,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:e955340730581bdc0e4090a137e61f7df6e385ea1f9796458d6ba42fc0a47fa5"
    },
    "fragmentTextHash": "sha256/c1:cb311c236b7db379930684dbeae396e24fe3826766a869774df08fc23c539b6a",
@@ -2332,8 +2414,9 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
     "contentHash": "sha256/c1:1c499e56b8fbf001d87b3662ec94bd22eabe74510e958b0201062c2b12e462c8"
    },
    "fragmentTextHash": "sha256/c1:286720eac62d5a860a7ad9954aed54e1eda19d99c15ffea7d9ec92b5e3077e01",
@@ -2376,9 +2459,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:f27e9c9571baaef65edd27d7aaa61290d08bd59b7ef93b0c42fa064bdcb0284e"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:d9310653e3b9c4e217d2f38dd161b12f768612446f21407fd102735915b38bcb"
    }
   },
   {
@@ -2393,9 +2477,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:372ca525e8bb7f6266b29025ca4a1b376673607389c97639f45040314e35a911"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:fec8fda84d17f1c5ab49108583bfe7e7581de8af7b29f2da08e430e54a02ffb3"
    }
   },
   {
@@ -2410,9 +2495,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:ac71bc237a51ba3faf5ad7e3420a3f53d86dc9c222498e0ff5931cc61c10f2b6"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:12fa0cd796982ac883c2a2f6151c50a23dae2bfce6d870a3cc50e8595be56173"
    }
   },
   {
@@ -2427,9 +2513,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:3bcd59610f01499109a2cd2c5a6376304287cd58e1b930743c97b2f0199909c3"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:a3f6950ae5448d716e925a4faef822f660a349e6ee325d6c69d429bd77bd0882"
    }
   },
   {
@@ -2444,9 +2531,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:30ce777cb545c02834b8be5504fa183753798af229bd58104093f56aedea29f3"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:6f4bf2e6f38706329bac444cf20074c645833a52f91df0418eb624cb0829bae3"
    }
   },
   {
@@ -2461,9 +2549,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:58018771fb437fcc487f207037c0491a8c0b5452344d0a35ff27835bde68f506"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:2565da0abc25ac08debfce01fc9dcbea15d67e6f836f635688baa5c0cf3f82f7"
    }
   },
   {
@@ -2478,9 +2567,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:f7d379407937ac3a82ab5e96e5d1fffef838e840596532f5a0f0cb7956de014a"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:666859b367697c9cd459b81868b853115a5f571fa3097723dd2b81d4229ffd28"
    }
   },
   {
@@ -2495,9 +2585,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:dd22956b1f85af0923caa25c7b22dd3381b8af6774b29174a904ec1ce1de8fa7"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:a90d5f372a5dc74cb0361ee5da512cec0df1684b34df3249387bffce0fea818e"
    }
   },
   {
@@ -2512,9 +2603,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:5ccfb858e6ccef68bf93183c37f1b63bddb5c1cbe99170820cb508e2ecc78f2f"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:0b813880c7313ae80d9208c8d09ebdbf8374aa191976fc393e95502d5a9d1ee8"
    }
   },
   {
@@ -2529,9 +2621,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:0bcfa8584f5169b8c3b46fefc38daf93ac92baf99b98078789c2f16019b5232a"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:55d4be60a1e21dd54cad7f2f6dca8d0409be858c967d524e26f51a917ac711d5"
    }
   },
   {
@@ -2546,9 +2639,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:a903014df2f85b792eb379aa21e3f26754f5c877fb27ab058a83003aba0817cd"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:3778e34619b0c5e52c08cb9a029b31b93d34d8be6ad0c32123d347bc625aa7ae"
    }
   },
   {
@@ -2563,9 +2657,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:669b8c78ad47df4662ee9346a5271195804a06f5ce63a0f28fe3a6628cb71cd7"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:c838657bb79913035655981ba09815783365a271addc4a9c19c62fd9ec014c8c"
    }
   },
   {
@@ -2580,9 +2675,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:459a0b6760a1a51bc881c1b39d4385db9bbc6bcaed3daa79bce3e4cfd2edd5ee"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:5ccb1a30d29e11086506161be5c4d4aa1c7f9e61bd05eaf8bafe75177b72530f"
    }
   },
   {
@@ -2597,9 +2693,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:47417112626d136c5b4d6bfe7932d595891891c96ef7e0dbaccd1575c9a3106d"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:fa61350ccea97a140e0ba37ca0550cb32c87d24f711926971c7dabd876b1df51"
    }
   },
   {
@@ -2614,9 +2711,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:1a3a636433cfe47bb63f2d87934b3b647fbe24d3d241d802183039b7c602ecdd"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:ec8f94b7f7d4f8f225b58a66da76b43b5f7a38d79bbe3c4099b119e47c03f130"
    }
   },
   {
@@ -2631,9 +2729,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:963cfc0a6c25af56d83dfb3158bc4c77e2431e40edcac8dbf293083dcad8c519"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:956bc82ff2ce76765e00bdeb949fb7c1e8be8310a08e5b91bd8f9beae9908264"
    }
   },
   {
@@ -2648,9 +2747,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:9bd9a158a582786e65853fa7c7d84efbb203907919c9bd4befcab8052e01997d"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:c792f69ea072dedd2126c13536c5792ad86a9cd43fe78aed2393176d4cdb711f"
    }
   },
   {
@@ -2665,9 +2765,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:890ddcb78354bdb96abcf56ada906ec00a68ea7af3b3a8ab24b63495a32fe0bb"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:8eeba9d6219b4a3e1864424b0dab74595103748e6c0b51feb5427f34808a32d4"
    }
   },
   {
@@ -2682,9 +2783,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:256e9a7d808afb606c6d80a787b8b520a0ea165f3f6cdd664629036a6309b9ac"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:61bef91c255cdd6c41ed232e3fa91be99b9bb4c11f011e596c700b586a3c3736"
    }
   },
   {
@@ -2699,9 +2801,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:c6b4293836149e1205dd14b4f3687bace31e50db36a7b18156c8557c38de8119"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:48e6b9b385326888527983c15f08802c401a011b3b2de9c7678ff2cd3155093c"
    }
   },
   {
@@ -2716,9 +2819,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:c562c287f9d61db7dd9d2c29d7cd9e94836c3c24a3c8daee33409eca57ac1313"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:1f18eb564d1554455e830ed7e23c62f10853cb2b08eb64fc593f0fe554f712c5"
    }
   },
   {
@@ -2733,9 +2837,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:222ec7cf38f31580299b57ed70c6ca7e951c2aa79d042a57be140021d2eeef78"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:053b252b50d2cb958ef1d63f8be55c76c39286ebe6ac667a1ff1224df864c89c"
    }
   },
   {
@@ -2750,9 +2855,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:453e1f2a7671749361c8d450f127f23141932affad9be775a86000a4f1593011"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:6a48515b61b2ef2cd59162c74914d8af56eca5bda1ad0b8e5efe55e3f15a4a80"
    }
   },
   {
@@ -2767,9 +2873,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:25ae0ddf5259dc8cf8ff19a69f829508c4eff87368e73bbde92326247a5c4a5f"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:db79c9698f4405cc316c0e99c8c229c2ea902db2f3051fb3c9fd9bd723e940d4"
    }
   },
   {
@@ -2784,9 +2891,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:0e5386e8a204013ff3869f36de28a6ac8d34b0dbdb03b3053d92ed8f8caaa39a"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:8f40144726b50d08a6b653b0f79ceb90f9fe63dc28188abea02c8675a492e6c5"
    }
   },
   {
@@ -2801,9 +2909,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:e92d03c848f153d6ed909fe7dbf31595850143c6cafdf6b29f662defce20aab6"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:1354083718d9093c5b8a1224d6cfe04a07839e019e7c351c9accda9585b588b5"
    }
   },
   {
@@ -2818,9 +2927,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:82c047e0a1fb3d74aaa403a609bff2b580af014b45f94be9c88afa55351eac50"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:58b944d0dcbde69f9dda897a0dfd69372bf1a5e31e9fca282cc11d29d0946d65"
    }
   },
   {
@@ -2835,9 +2945,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:db9133c9155a2d17da7b2f869669ba1259836540e403c07787b581e1b31b07e2"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:a1bf11e8b0eda3d0df7f1ede0f20903ac59fc1221d6e2327e50bfcf8b6d838f8"
    }
   },
   {
@@ -2852,9 +2963,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:e0714ef6adf835552bd1041af828d80fab32cca7d5b0d47ebb5df6b2f6831c9d"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:902ad1190479be9873b77be84fcd137093dbd8d685ab3f026bfc04ca82015295"
    }
   },
   {
@@ -2869,9 +2981,10 @@
    "reviewState": "internally-reviewed",
    "migrationState": "current",
    "review": {
-    "by": "claude-opus-4.8",
-    "date": "2026-07-21",
-    "contentHash": "sha256/c1:9156e58e1b1e223287b748c9468d26cfe41dac65d4abbe7c0ec8e6e2b14b0564"
+    "by": "codex:gpt-5:019f8954-973e-7e43-a57f-debed821d71b",
+    "operatorKind": "model",
+    "date": "2026-07-22",
+    "contentHash": "sha256/c1:062fc062630c0ca245c11103d849f1fe0eadf535080ebdcf93af4f0ef5397f60"
    }
   }
  ]

@@ -1,0 +1,10 @@
+{
+ "stringsVersion": "1",
+ "namespace": "na",
+ "sourceGateCodes": {
+  "example2-priority": "Example 2 priority gate",
+  "combined-example": "Combined-example support gate",
+  "detection-support": "Detection-support gate",
+  "collusion-output": "Collusion-output gate"
+ }
+}

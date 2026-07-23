@@ -1,0 +1,23 @@
+{
+ "registryVersion": "1",
+ "corpora": {
+  "af-priority-map": {
+   "role": "qa-source",
+   "visibility": "internal",
+   "version": "pinned",
+   "primary": "US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md",
+   "files": {
+    "US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md": "sha256/c1:c3eb0d27a776e13a66bae7dd507ad041786545861cd20580de450c369cb04c65"
+   }
+  },
+  "af-na-crosswalk": {
+   "role": "qa-source",
+   "visibility": "internal",
+   "version": "pinned",
+   "primary": "US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md",
+   "files": {
+    "US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md": "sha256/c1:3252ad8554462dce984f5aa0a713a7c2ab2cd92136388e7b2631ec63907c8d31"
+   }
+  }
+ }
+}

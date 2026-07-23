@@ -1,0 +1,68 @@
+{
+ "fixtureVersion": "1",
+ "comment": "Locked exact projection of the normative §3 AF edition parameter table.",
+ "edition": {
+  "editionConfig": "navigator/editions/af.json",
+  "claimCorpus": "af-claims",
+  "claimSetVersion": "AF-2026-07-17-v2",
+  "targetCorpus": "pct-disclosure",
+  "authorityCorpus": "pct-pdf",
+  "corpusRegistries": [
+   "navigator/corpora.json",
+   "navigator/profiles/corpora_af.json"
+  ],
+  "census": {
+   "claims": 20,
+   "units": 60,
+   "perClaim": {
+    "1": 15,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 1,
+    "8": 1,
+    "9": 4,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 5,
+    "14": 6,
+    "15": 1,
+    "16": 1,
+    "17": 1,
+    "18": 1,
+    "19": 1,
+    "20": 15
+   }
+  },
+  "independentClaims": [
+   1,
+   20
+  ],
+  "groups": [
+   "Integrated allowance-first system",
+   "Priority-gated production fallbacks",
+   "Production-record and repeated-region fallbacks",
+   "Detection fallbacks",
+   "Collusion fallbacks",
+   "Manifest/chunk distribution fallbacks",
+   "Integrated allowance-first method"
+  ],
+  "strategyPrefix": "AF",
+  "relationSet": "navigator/relations/af__pct.json",
+  "gateInventory": "navigator/profiles/gates_af-claims.json",
+  "dependencyMap": "navigator/profiles/deps_af-claims.json",
+  "qaSources": {
+   "priorityMap": "af-priority-map",
+   "crosswalk": "af-na-crosswalk"
+  },
+  "qaRegistry": "navigator/profiles/qa_af.json",
+  "stringsResource": "navigator/profiles/strings_af.json",
+  "forbiddenTerms": [
+   "camera-cut timing pattern"
+  ],
+  "artifactName": "AA11393US-AF-claims-spec-navigator_AF-2026-07-17-v2.html"
+ }
+}

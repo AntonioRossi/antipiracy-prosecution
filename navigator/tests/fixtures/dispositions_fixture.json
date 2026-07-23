@@ -1,5 +1,13 @@
 {
- "comment": "Five disposition fixtures over the requiredScope x evidence-state matrix (TDD §8.1): one per enum value, the honest no-candidate release case, and a rejected wrong-scope case. Pinned to real corpora digests.",
+ "fixtureVersion": "1",
+ "comment": "Five disposition fixtures over the requiredScope x evidence-state matrix (TDD §8.1): one per enum value, the honest no-candidate release case, and a rejected wrong-scope case. Pinned to real corpora digests; tool-authored fixture provenance is not release authorization.",
+ "edition": "na",
+ "binding": {
+  "fragmentCorpus": "na-claims",
+  "targetCorpus": "pct-disclosure",
+  "schemaVersion": "1",
+  "canonVersion": "c1"
+ },
  "gates": {
   "inventoryVersion": "1",
   "corpusId": "na-claims",
@@ -54,6 +62,33 @@
   {
    "name": "carried-at-required-scope (claim scope)",
    "expect": "valid",
+   "evidence": "mapped",
+   "hasTargets": true,
+   "reviewProjection": {
+    "gateId": "fx-gate-claim",
+    "subject": {
+     "kind": "claim",
+     "id": "c9"
+    },
+    "disposition": "carried-at-required-scope",
+    "gateEntryHash": "sha256/c1:edaf27d5e8d68bbda3e7bade2cedf53c658dd3a3ca850ecca0d9a84f02861c2c",
+    "subjectHash": "sha256/c1:8aefd8e73a0887e8b4b26d1a2cb991731010c6f1255ec244a2f485a3625d2db4",
+    "identity": {
+     "binding": {
+      "fragmentCorpus": "na-claims",
+      "targetCorpus": "pct-disclosure",
+      "schemaVersion": "1",
+      "canonVersion": "c1"
+     },
+     "owner": "disposition",
+     "gateId": "fx-gate-claim",
+     "subject": {
+      "kind": "claim",
+      "id": "c9"
+     }
+    },
+    "dependencyChainHash": "sha256/c1:4c7121f0698e060614317c029b704f0be338d8cd9bfd8a0069574e5000a256a9"
+   },
    "disposition": {
     "gateId": "fx-gate-claim",
     "subject": {
@@ -66,15 +101,43 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "fixture",
+     "by": "fixture-generator",
+     "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:0000000000000000000000000000000000000000000000000000000000000000"
+     "contentHash": "sha256/c1:1231c61fc236b838136423474a6497afe6ab796c3eb7b753ac93d98670504026"
     }
    }
   },
   {
    "name": "carried-at-required-scope (target scope, mapped)",
    "expect": "valid",
+   "evidence": "mapped",
+   "hasTargets": true,
+   "reviewProjection": {
+    "gateId": "fx-gate-target",
+    "subject": {
+     "kind": "fragment",
+     "id": "c2u0"
+    },
+    "disposition": "carried-at-required-scope",
+    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
+    "identity": {
+     "binding": {
+      "fragmentCorpus": "na-claims",
+      "targetCorpus": "pct-disclosure",
+      "schemaVersion": "1",
+      "canonVersion": "c1"
+     },
+     "owner": "disposition",
+     "gateId": "fx-gate-target",
+     "subject": {
+      "kind": "fragment",
+      "id": "c2u0"
+     }
+    },
+    "dependencyChainHash": "sha256/c1:d1d24dda1629205258e8283d7efdc23badd099723496cfc472ab888ebdc79689"
+   },
    "disposition": {
     "gateId": "fx-gate-target",
     "subject": {
@@ -87,15 +150,43 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "fixture",
+     "by": "fixture-generator",
+     "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:0000000000000000000000000000000000000000000000000000000000000000"
+     "contentHash": "sha256/c1:7e87898ad6e2ad8031f9514ff37749b3987c996d76d33e0cf3377849422884cf"
     }
    }
   },
   {
    "name": "carried-at-fragment-fallback (no-candidate fragment)",
    "expect": "valid",
+   "evidence": "counsel-review-required",
+   "hasTargets": false,
+   "reviewProjection": {
+    "gateId": "fx-gate-target",
+    "subject": {
+     "kind": "fragment",
+     "id": "c16u6"
+    },
+    "disposition": "carried-at-fragment-fallback",
+    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+    "identity": {
+     "binding": {
+      "fragmentCorpus": "na-claims",
+      "targetCorpus": "pct-disclosure",
+      "schemaVersion": "1",
+      "canonVersion": "c1"
+     },
+     "owner": "disposition",
+     "gateId": "fx-gate-target",
+     "subject": {
+      "kind": "fragment",
+      "id": "c16u6"
+     }
+    },
+    "dependencyChainHash": "sha256/c1:c364aeaeb16a724fbcb1f880e4d34558352d16c5befabe52a80a0fedd416e35a"
+   },
    "disposition": {
     "gateId": "fx-gate-target",
     "subject": {
@@ -108,15 +199,43 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "fixture",
+     "by": "fixture-generator",
+     "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:0000000000000000000000000000000000000000000000000000000000000000"
+     "contentHash": "sha256/c1:a2082b90eedf7b119cd0b8ec9b3e7b94b5c92a8c70867fa26cbbcca78519d3b7"
     }
    }
   },
   {
    "name": "no-target-recorded releases without a fabricated mapping",
    "expect": "valid",
+   "evidence": "counsel-review-required",
+   "hasTargets": false,
+   "reviewProjection": {
+    "gateId": "fx-gate-target",
+    "subject": {
+     "kind": "fragment",
+     "id": "c16u6"
+    },
+    "disposition": "no-target-recorded",
+    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "subjectHash": "sha256/c1:5f35b94fb9a3aae678b797a18f3193da07d3a8dc12dba1ff035e3359111ed47c",
+    "identity": {
+     "binding": {
+      "fragmentCorpus": "na-claims",
+      "targetCorpus": "pct-disclosure",
+      "schemaVersion": "1",
+      "canonVersion": "c1"
+     },
+     "owner": "disposition",
+     "gateId": "fx-gate-target",
+     "subject": {
+      "kind": "fragment",
+      "id": "c16u6"
+     }
+    },
+    "dependencyChainHash": "sha256/c1:c364aeaeb16a724fbcb1f880e4d34558352d16c5befabe52a80a0fedd416e35a"
+   },
    "disposition": {
     "gateId": "fx-gate-target",
     "subject": {
@@ -129,15 +248,43 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "fixture",
+     "by": "fixture-generator",
+     "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:0000000000000000000000000000000000000000000000000000000000000000"
+     "contentHash": "sha256/c1:72422659f6f06bd11adbbdb6f8609579028d0760b5eeb1cf59ae7be4b8333f1f"
     }
    }
   },
   {
    "name": "wrong scope: no-target-recorded over a mapped fragment is rejected",
    "expect": "invalid",
+   "evidence": "mapped",
+   "hasTargets": true,
+   "reviewProjection": {
+    "gateId": "fx-gate-target",
+    "subject": {
+     "kind": "fragment",
+     "id": "c2u0"
+    },
+    "disposition": "no-target-recorded",
+    "gateEntryHash": "sha256/c1:b1d3f83008bc31eb14d1970adcaeb442233921072eaeecd8589bdd380672ee57",
+    "subjectHash": "sha256/c1:4a196c5cf8e58b361fc6ab3f3b31fbe1daefdbe0db173d36ed084994a4d71b4c",
+    "identity": {
+     "binding": {
+      "fragmentCorpus": "na-claims",
+      "targetCorpus": "pct-disclosure",
+      "schemaVersion": "1",
+      "canonVersion": "c1"
+     },
+     "owner": "disposition",
+     "gateId": "fx-gate-target",
+     "subject": {
+      "kind": "fragment",
+      "id": "c2u0"
+     }
+    },
+    "dependencyChainHash": "sha256/c1:d1d24dda1629205258e8283d7efdc23badd099723496cfc472ab888ebdc79689"
+   },
    "disposition": {
     "gateId": "fx-gate-target",
     "subject": {
@@ -150,9 +297,10 @@
     "reviewState": "internally-reviewed",
     "migrationState": "current",
     "review": {
-     "by": "fixture",
+     "by": "fixture-generator",
+     "operatorKind": "tool",
      "date": "2026-07-21",
-     "contentHash": "sha256/c1:0000000000000000000000000000000000000000000000000000000000000000"
+     "contentHash": "sha256/c1:21c35a4e05658c28d4bda76b0a7b8b03b2fb6c83d629167e17693499c8ea310d"
     }
    }
   }

@@ -6,17 +6,17 @@
  "additionalProperties": false,
  "properties": {
   "depsVersion": {"type": "string", "enum": ["1"]},
-  "corpusId": {"type": "string"},
+  "corpusId": {"type": "string", "minLength": 1},
   "comment": {"type": "string"},
   "claims": {
    "type": "object",
    "additionalProperties": false,
-   "patternProperties": {"^[0-9]+$": {"type": ["integer", "null"]}}
+   "patternProperties": {"^[1-9][0-9]*$": {"type": ["integer", "null"]}}
   },
   "documentTable": {
    "type": "object",
    "additionalProperties": false,
-   "patternProperties": {"^[0-9]+$": {"type": ["integer", "null"]}}
+   "patternProperties": {"^[1-9][0-9]*$": {"type": ["integer", "null"]}}
   }
  }
 }

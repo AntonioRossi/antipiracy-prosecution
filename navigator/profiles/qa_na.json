@@ -1,0 +1,14 @@
+{
+ "registryVersion": "1",
+ "corpora": {
+  "na-priority-map": {
+   "role": "qa-source",
+   "visibility": "internal",
+   "version": "pinned",
+   "primary": "US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md",
+   "files": {
+    "US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md": "sha256/c1:4510b01665a618b2223ec2e3b14676ca2aeefa98eb8fe787e2a75bc1377ec66f"
+   }
+  }
+ }
+}

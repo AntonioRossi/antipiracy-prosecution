@@ -1,0 +1,1677 @@
+- generic [ref=f2e1]:
+  - banner [ref=f2e2]:
+    - paragraph [ref=f2e3]: CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED FOR US COUNSEL REVIEW. This navigator presents unfiled draft claim-strategy material relating to PCT/IB2025/051755 (published as WO 2025/181623 A1). Do not distribute outside the engagement.
+    - heading "AA11393US claims-to-specification navigator — NA edition NA — normal-allowance claim strategy" [level=1] [ref=f2e4]
+    - paragraph [ref=f2e5]:
+      - text: Claim set
+      - strong [ref=f2e6]: NA-2026-07-21-v2
+      - text: · PCT/IB2025/051755 · WO 2025/181623 A1
+      - button "About & mapping schedule" [ref=f2e7] [cursor=pointer]
+    - paragraph [ref=f2e8]: Draft navigation aid generated from claim-set NA-2026-07-21-v2 and PCT/IB2025/051755 as filed (WO 2025/181623 A1). Mappings are author-recorded candidate associations for counsel review — not a written-description, priority, or any other legal opinion. Fragments marked "counsel review required" carry no recorded candidate passage. Claim-level gates concern the complete claim and are quoted from the claim-set document. Anchor references are internal navigation labels, not official numbering, and must not be cited. This edition presents one candidate strategy; it does not compare strategies or recommend a filing choice.
+  - main [ref=f2e10]:
+    - region "Candidate claims" [ref=f2e11]:
+      - navigation "Claim index" [ref=f2e12]:
+        - generic [ref=f2e13]:
+          - text: Production / mate-generation system
+          - button "Go to NA claim 1" [active] [ref=f2e14] [cursor=pointer]: "1"
+          - button "Go to NA claim 2" [ref=f2e15] [cursor=pointer]: "2"
+          - button "Go to NA claim 3" [ref=f2e16] [cursor=pointer]: "3"
+          - button "Go to NA claim 4" [ref=f2e17] [cursor=pointer]: "4"
+          - button "Go to NA claim 5" [ref=f2e18] [cursor=pointer]: "5"
+          - button "Go to NA claim 6" [ref=f2e19] [cursor=pointer]: "6"
+          - button "Go to NA claim 7" [ref=f2e20] [cursor=pointer]: "7"
+          - button "Go to NA claim 8" [ref=f2e21] [cursor=pointer]: "8"
+        - generic [ref=f2e22]:
+          - text: Distribution / recipient-association system
+          - button "Go to NA claim 9" [ref=f2e23] [cursor=pointer]: "9"
+          - button "Go to NA claim 10" [ref=f2e24] [cursor=pointer]: "10"
+          - button "Go to NA claim 11" [ref=f2e25] [cursor=pointer]: "11"
+          - button "Go to NA claim 12" [ref=f2e26] [cursor=pointer]: "12"
+          - button "Go to NA claim 13" [ref=f2e27] [cursor=pointer]: "13"
+          - button "Go to NA claim 14" [ref=f2e28] [cursor=pointer]: "14"
+          - button "Go to NA claim 15" [ref=f2e29] [cursor=pointer]: "15"
+        - generic [ref=f2e30]:
+          - text: Detection / recipient-resolution system
+          - button "Go to NA claim 16" [ref=f2e31] [cursor=pointer]: "16"
+          - button "Go to NA claim 17" [ref=f2e32] [cursor=pointer]: "17"
+          - button "Go to NA claim 18" [ref=f2e33] [cursor=pointer]: "18"
+          - button "Go to NA claim 19" [ref=f2e34] [cursor=pointer]: "19"
+          - button "Go to NA claim 20" [ref=f2e35] [cursor=pointer]: "20"
+          - button "Go to NA claim 21" [ref=f2e36] [cursor=pointer]: "21"
+        - generic [ref=f2e37]:
+          - text: End-to-end method
+          - button "Go to NA claim 22" [ref=f2e38] [cursor=pointer]: "22"
+          - button "Go to NA claim 23" [ref=f2e39] [cursor=pointer]: "23"
+          - button "Go to NA claim 24" [ref=f2e40] [cursor=pointer]: "24"
+          - button "Go to NA claim 25" [ref=f2e41] [cursor=pointer]: "25"
+          - button "Go to NA claim 26" [ref=f2e42] [cursor=pointer]: "26"
+          - button "Go to NA claim 27" [ref=f2e43] [cursor=pointer]: "27"
+          - button "Go to NA claim 28" [ref=f2e44] [cursor=pointer]: "28"
+          - button "Go to NA claim 29" [ref=f2e45] [cursor=pointer]: "29"
+          - button "Go to NA claim 30" [ref=f2e46] [cursor=pointer]: "30"
+      - generic [ref=f2e47]:
+        - heading "Production / mate-generation system" [level=2] [ref=f2e48]
+        - article [ref=f2e49]:
+          - generic [ref=f2e50]:
+            - text: NA claim 1
+            - 'button "Claim-level gate on NA claim 1: Combined-example support gate" [ref=f2e51] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e52]:
+            - button "Show recorded candidate passages for NA claim 1 · preamble" [ref=f2e53] [cursor=pointer]
+            - generic [ref=f2e54]:
+              - generic [ref=f2e55]: preamble
+              - generic [ref=f2e56] [cursor=pointer]:
+                - text: A system for generating distinguishable versions of audio-video content, the system comprising
+                - button "Show recorded candidate passages for NA claim 1 · “one or more processors and memory storing instructions”" [ref=f2e57]: one or more processors and memory storing instructions
+                - text: "that, when executed by the one or more processors, cause the system to:"
+          - generic [ref=f2e58]:
+            - button "Show recorded candidate passages for NA claim 1 · limitation 1" [ref=f2e59] [cursor=pointer]
+            - generic [ref=f2e60]:
+              - generic [ref=f2e61]: limitation 1
+              - generic [ref=f2e62] [cursor=pointer]:
+                - text: receive video captured from a plurality of cameras and a
+                - button "Show recorded candidate passages for NA claim 1 · “structured list of instructions describing edits”" [ref=f2e63]: structured list of instructions describing edits
+                - text: that produce reference audio-video content from the captured video, the structured list identifying source cameras and time codes for camera cuts at which selection changes from one camera of the plurality of cameras to another;
+          - generic [ref=f2e64]:
+            - button "Show recorded candidate passages for NA claim 1 · limitation 2" [ref=f2e65] [cursor=pointer]
+            - generic [ref=f2e66]:
+              - generic [ref=f2e67]: limitation 2
+              - generic [ref=f2e68] [cursor=pointer]:
+                - button "Show recorded candidate passages for NA claim 1 · “automatically vary a time code”" [ref=f2e69]: automatically vary a time code
+                - text: of at least one camera cut in the structured list to produce a varied structured list; and
+          - generic [ref=f2e70]:
+            - button "Show recorded candidate passages for NA claim 1 · limitation 3" [ref=f2e71] [cursor=pointer]
+            - generic [ref=f2e72]:
+              - generic [ref=f2e73]: limitation 3
+              - text: "produce a mate of the reference audio-video content according to the varied structured list such that:"
+          - generic [ref=f2e74]:
+            - button "Show recorded candidate passages for NA claim 1 · limitation 4" [ref=f2e75] [cursor=pointer]
+            - generic [ref=f2e76]:
+              - generic [ref=f2e77]: limitation 4
+              - text: the at least one camera cut comprises, in the reference audio-video content, an ordered transition from a first camera to a second camera at a first camera-switch timing;
+          - generic [ref=f2e78]:
+            - button "Show recorded candidate passages for NA claim 1 · limitation 5" [ref=f2e79] [cursor=pointer]
+            - generic [ref=f2e80]:
+              - generic [ref=f2e81]: limitation 5
+              - text: the mate contains the same ordered transition from the first camera to the second camera at a second camera-switch timing different from the first camera-switch timing; and
+          - generic [ref=f2e82]:
+            - button "Show recorded candidate passages for NA claim 1 · limitation 6" [ref=f2e83] [cursor=pointer]
+            - generic [ref=f2e84]:
+              - generic [ref=f2e85]: limitation 6
+              - text: during a temporal interval between the first camera-switch timing and the second camera-switch timing, one of the reference audio-video content and the mate contains frames captured by the first camera and the other of the reference audio-video content and the mate contains temporally corresponding frames captured by the second camera.
+        - article [ref=f2e86]:
+          - generic [ref=f2e87]: NA claim 2
+          - generic [ref=f2e88]:
+            - button "Show recorded candidate passages for NA claim 2 · preamble" [ref=f2e89] [cursor=pointer]
+            - generic [ref=f2e90]:
+              - generic [ref=f2e91]: preamble
+              - text: The system of claim 1, wherein the instructions cause the system to preserve in the mate a timing of a later camera cut from the reference audio-video content, thereby restoring synchronization between the mate and the reference audio-video content from the later camera cut onward.
+        - article [ref=f2e92]:
+          - generic [ref=f2e93]: NA claim 3
+          - generic [ref=f2e94]:
+            - button "Show recorded candidate passages for NA claim 3 · preamble" [ref=f2e95] [cursor=pointer]
+            - generic [ref=f2e96]:
+              - generic [ref=f2e97]: preamble
+              - text: The system of claim 2, wherein varying the time code extends a camera selection in the mate by ten frames, delays a following camera selection by ten frames, and restores synchronization at the later camera cut.
+        - article [ref=f2e98]:
+          - generic [ref=f2e99]: NA claim 4
+          - generic [ref=f2e100]:
+            - button "Show recorded candidate passages for NA claim 4 · preamble" [ref=f2e101] [cursor=pointer]
+            - generic [ref=f2e102]:
+              - generic [ref=f2e103]: preamble
+              - text: The system of claim 1, wherein the structured list of instructions is an edit decision list identifying, for each of a plurality of cuts, a source camera, an in-point time code, and an out-point time code.
+        - article [ref=f2e104]:
+          - generic [ref=f2e105]: NA claim 5
+          - generic [ref=f2e106]:
+            - button "Show recorded candidate passages for NA claim 5 · preamble" [ref=f2e107] [cursor=pointer]
+            - generic [ref=f2e108]:
+              - generic [ref=f2e109]: preamble
+              - text: The system of claim 1, wherein the video is captured live from diverse viewpoints and the structured list records director-commanded real-time camera selections.
+        - article [ref=f2e110]:
+          - generic [ref=f2e111]: NA claim 6
+          - generic [ref=f2e112]:
+            - button "Show recorded candidate passages for NA claim 6 · preamble" [ref=f2e113] [cursor=pointer]
+            - generic [ref=f2e114]:
+              - generic [ref=f2e115]: preamble
+              - text: The system of claim 1, wherein the instructions cause the system to apply a time-code variation at each of a plurality of director-commanded camera cuts.
+        - article [ref=f2e116]:
+          - generic [ref=f2e117]:
+            - text: NA claim 7
+            - 'button "Claim-level gate on NA claim 7: Combined-example support gate" [ref=f2e118] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e119]:
+            - button "Show recorded candidate passages for NA claim 7 · preamble" [ref=f2e120] [cursor=pointer]
+            - generic [ref=f2e121]:
+              - generic [ref=f2e122]: preamble
+              - text: The system of claim 1, wherein the structured list records the ordered transition using an identifier of the first camera, an identifier of the second camera, and a recorded time code corresponding to the first camera-switch timing, and wherein the varied structured list retains the identifiers of the first camera and the second camera on respective sides of the ordered transition and records, in place of the recorded time code, a different recorded time code corresponding to the second camera-switch timing.
+        - article [ref=f2e123]:
+          - generic [ref=f2e124]: NA claim 8
+          - generic [ref=f2e125]:
+            - button "Show recorded candidate passages for NA claim 8 · preamble" [ref=f2e126] [cursor=pointer]
+            - generic [ref=f2e127]:
+              - generic [ref=f2e128]: preamble
+              - text: The system of claim 1, wherein the instructions further cause one or more audio or video elements not present in the video received from the plurality of cameras to be overlaid onto at least one of the reference audio-video content or the mate.
+      - generic [ref=f2e129]:
+        - heading "Distribution / recipient-association system" [level=2] [ref=f2e130]
+        - article [ref=f2e131]:
+          - generic [ref=f2e132]:
+            - text: NA claim 9
+            - 'button "Claim-level gate on NA claim 9: Combined-example support gate" [ref=f2e133] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e134]:
+            - button "Show recorded candidate passages for NA claim 9 · preamble" [ref=f2e135] [cursor=pointer]
+            - generic [ref=f2e136]:
+              - generic [ref=f2e137]: preamble
+              - text: "A content-distribution system comprising one or more servers, the one or more servers comprising one or more processors and memory storing instructions that, when executed by the one or more processors, cause the content-distribution system to:"
+          - generic [ref=f2e138]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 1" [ref=f2e139] [cursor=pointer]
+            - generic [ref=f2e140]:
+              - generic [ref=f2e141]: limitation 1
+              - text: "receive a plurality of versions of audio-video content including a reference version and at least one mate version, wherein, within a defined temporal region:"
+          - generic [ref=f2e142]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 2" [ref=f2e143] [cursor=pointer]
+            - generic [ref=f2e144]:
+              - generic [ref=f2e145]: limitation 2
+              - text: the reference version contains an ordered transition from a first camera source to a second camera source at a first camera-switch timing;
+          - generic [ref=f2e146]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 3" [ref=f2e147] [cursor=pointer]
+            - generic [ref=f2e148]:
+              - generic [ref=f2e149]: limitation 3
+              - text: the at least one mate version contains the same ordered transition from the first camera source to the second camera source at a second camera-switch timing different from the first camera-switch timing; and
+          - generic [ref=f2e150]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 4" [ref=f2e151] [cursor=pointer]
+            - generic [ref=f2e152]:
+              - generic [ref=f2e153]: limitation 4
+              - text: during an interval between the first camera-switch timing and the second camera-switch timing, the reference version and the at least one mate version contain temporally corresponding frames captured by different cameras;
+          - generic [ref=f2e154]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 5" [ref=f2e155] [cursor=pointer]
+            - generic [ref=f2e156]:
+              - generic [ref=f2e157]: limitation 5
+              - text: segment the plurality of versions into chunks;
+          - generic [ref=f2e158]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 6" [ref=f2e159] [cursor=pointer]
+            - generic [ref=f2e160]:
+              - generic [ref=f2e161]: limitation 6
+              - generic [ref=f2e162] [cursor=pointer]:
+                - text: generate a plurality of manifest files pointing to respective combinations of chunks selected from the plurality of versions, each respective combination causing an assembled audio-video stream to preserve, within the defined temporal region, either the first camera-switch timing or the second camera-switch timing of the ordered transition and thereby representing a
+                - button "Show recorded candidate passages for NA claim 9 · “camera-cut timing pattern”" [ref=f2e163]: camera-cut timing pattern
+                - text: ;
+          - generic [ref=f2e164]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 7" [ref=f2e165] [cursor=pointer]
+            - generic [ref=f2e166]:
+              - generic [ref=f2e167]: limitation 7
+              - text: cause delivery, to respective recipients, of audio-video streams assembled according to respective manifest files; and
+          - generic [ref=f2e168]:
+            - button "Show recorded candidate passages for NA claim 9 · limitation 8" [ref=f2e169] [cursor=pointer]
+            - generic [ref=f2e170]:
+              - generic [ref=f2e171]: limitation 8
+              - generic [ref=f2e172] [cursor=pointer]:
+                - text: store, in a
+                - button "Show recorded candidate passages for NA claim 9 · “record of associations”" [ref=f2e173]: record of associations
+                - text: ", associations between the respective recipients and the manifest files or camera-cut timing patterns delivered to the respective recipients, each stored camera-cut timing pattern identifying the first camera source, the second camera source, and the camera-switch timing preserved in the corresponding assembled audio-video stream."
+        - article [ref=f2e174]:
+          - generic [ref=f2e175]: NA claim 10
+          - generic [ref=f2e176]:
+            - button "Show recorded candidate passages for NA claim 10 · preamble" [ref=f2e177] [cursor=pointer]
+            - generic [ref=f2e178]:
+              - generic [ref=f2e179]: preamble
+              - text: The content-distribution system of claim 9, wherein the chunks are distributed through a content delivery network using adaptive streaming and the manifest files are tailored to recipient devices or network conditions.
+        - article [ref=f2e180]:
+          - generic [ref=f2e181]: NA claim 11
+          - generic [ref=f2e182]:
+            - button "Show recorded candidate passages for NA claim 11 · preamble" [ref=f2e183] [cursor=pointer]
+            - generic [ref=f2e184]:
+              - generic [ref=f2e185]: preamble
+              - text: The content-distribution system of claim 9, wherein a mixing process integrates chunks of the reference version with chunks of one or more mate versions and progressively assigns distinguishable manifest files to recipients as additional camera-cut variations become available.
+        - article [ref=f2e186]:
+          - generic [ref=f2e187]: NA claim 12
+          - generic [ref=f2e188]:
+            - button "Show recorded candidate passages for NA claim 12 · preamble" [ref=f2e189] [cursor=pointer]
+            - generic [ref=f2e190]:
+              - generic [ref=f2e191]: preamble
+              - text: The content-distribution system of claim 9, wherein the record of associations is a ledger identifying an end user or group of end users that received each manifest file.
+        - article [ref=f2e192]:
+          - generic [ref=f2e193]:
+            - text: NA claim 13
+            - 'button "Claim-level gate on NA claim 13: Combined-example support gate" [ref=f2e194] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e195]:
+            - button "Show recorded candidate passages for NA claim 13 · preamble" [ref=f2e196] [cursor=pointer]
+            - generic [ref=f2e197]:
+              - generic [ref=f2e198]: preamble
+              - text: "The content-distribution system of claim 9, wherein, for the defined temporal region:"
+          - generic [ref=f2e199]:
+            - button "Show recorded candidate passages for NA claim 13 · limitation 1" [ref=f2e200] [cursor=pointer]
+            - generic [ref=f2e201]:
+              - generic [ref=f2e202]: limitation 1
+              - text: a first manifest file of the plurality of manifest files points to a first chunk selected from the reference version;
+          - generic [ref=f2e203]:
+            - button "Show recorded candidate passages for NA claim 13 · limitation 2" [ref=f2e204] [cursor=pointer]
+            - generic [ref=f2e205]:
+              - generic [ref=f2e206]: limitation 2
+              - text: a second manifest file of the plurality of manifest files, different from the first manifest file, points to a second chunk selected from the at least one mate version;
+          - generic [ref=f2e207]:
+            - button "Show recorded candidate passages for NA claim 13 · limitation 3" [ref=f2e208] [cursor=pointer]
+            - generic [ref=f2e209]:
+              - generic [ref=f2e210]: limitation 3
+              - generic [ref=f2e211] [cursor=pointer]:
+                - text: the first chunk and the second chunk each span the same playback interval and have
+                - button "Show recorded candidate passages for NA claim 13 · “equal playback durations”" [ref=f2e212]: equal playback durations
+                - text: ;
+          - generic [ref=f2e213]:
+            - button "Show recorded candidate passages for NA claim 13 · limitation 4" [ref=f2e214] [cursor=pointer]
+            - generic [ref=f2e215]:
+              - generic [ref=f2e216]: limitation 4
+              - text: the first chunk contains frames from the first camera source before the first camera-switch timing and frames from the second camera source after the first camera-switch timing; and
+          - generic [ref=f2e217]:
+            - button "Show recorded candidate passages for NA claim 13 · limitation 5" [ref=f2e218] [cursor=pointer]
+            - generic [ref=f2e219]:
+              - generic [ref=f2e220]: limitation 5
+              - text: the second chunk contains frames from the first camera source before the second camera-switch timing and frames from the second camera source after the second camera-switch timing.
+        - article [ref=f2e221]:
+          - generic [ref=f2e222]: NA claim 14
+          - generic [ref=f2e223]:
+            - button "Show recorded candidate passages for NA claim 14 · preamble" [ref=f2e224] [cursor=pointer]
+            - generic [ref=f2e225]:
+              - generic [ref=f2e226]: preamble
+              - text: The content-distribution system of claim 9, wherein delivery of the audio-video streams comprises unicasting respective streams to the respective recipients.
+        - article [ref=f2e227]:
+          - generic [ref=f2e228]:
+            - text: NA claim 15
+            - 'button "Claim-level gate on NA claim 15: Combined-example support gate" [ref=f2e229] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e230]:
+            - button "Show recorded candidate passages for NA claim 15 · preamble" [ref=f2e231] [cursor=pointer]
+            - generic [ref=f2e232]:
+              - generic [ref=f2e233]: preamble
+              - text: The content-distribution system of claim 9, wherein the respective combinations encode recipient-associated sequences of choices, at a plurality of defined temporal regions, between a reference camera-switch timing and a different mate camera-switch timing, each defined temporal region containing the same ordered transition between respective first and second camera sources at the reference camera-switch timing in the reference version and at the mate camera-switch timing in the at least one mate version.
+      - generic [ref=f2e234]:
+        - heading "Detection / recipient-resolution system" [level=2] [ref=f2e235]
+        - article [ref=f2e236]:
+          - generic [ref=f2e237]:
+            - text: NA claim 16
+            - 'button "Claim-level gate on NA claim 16: Combined-example support gate" [ref=f2e238] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e239]:
+            - button "Show recorded candidate passages for NA claim 16 · preamble" [ref=f2e240] [cursor=pointer]
+            - generic [ref=f2e241]:
+              - generic [ref=f2e242]: preamble
+              - text: "A system for identifying a source of a suspected unauthorized distribution of audio-video content, the system comprising one or more processors and memory storing:"
+          - generic [ref=f2e243]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 1" [ref=f2e244] [cursor=pointer]
+            - generic [ref=f2e245]:
+              - generic [ref=f2e246]: limitation 1
+              - generic [ref=f2e247] [cursor=pointer]:
+                - text: a plurality of
+                - 'button "Show mapping status for NA claim 16 · “candidate camera-source-transition patterns”: No candidate passage recorded — counsel review required" [ref=f2e248]': candidate camera-source-transition patterns
+                - text: ◇ associated with respective delivered versions of audio-video content, each candidate camera-source-transition pattern identifying, at each of a plurality of temporal regions adjacent to camera cuts defined by a structured list of edit instructions, an ordered transition from a camera source preceding a corresponding camera cut to a camera source following the corresponding camera cut and a camera-switch timing of the ordered transition, wherein at least two of the respective delivered versions contain, at a candidate-distinguishing temporal region, the same ordered transition from a first camera source to a second camera source at different respective camera-switch timings and, during an interval between the different respective camera-switch timings, contain temporally corresponding frames captured by different cameras;
+          - generic [ref=f2e249]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 2" [ref=f2e250] [cursor=pointer]
+            - generic [ref=f2e251]:
+              - generic [ref=f2e252]: limitation 2
+              - text: a record associating the respective delivered versions or candidate camera-source-transition patterns with respective recipients; and
+          - generic [ref=f2e253]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 3" [ref=f2e254] [cursor=pointer]
+            - generic [ref=f2e255]:
+              - generic [ref=f2e256]: limitation 3
+              - text: "instructions that, when executed by the one or more processors, cause the system to:"
+          - generic [ref=f2e257]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 4" [ref=f2e258] [cursor=pointer]
+            - generic [ref=f2e259]:
+              - generic [ref=f2e260]: limitation 4
+              - text: receive the suspected unauthorized distribution;
+          - generic [ref=f2e261]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 5" [ref=f2e262] [cursor=pointer]
+            - generic [ref=f2e263]:
+              - generic [ref=f2e264]: limitation 5
+              - generic [ref=f2e265] [cursor=pointer]:
+                - text: detect, at the candidate-distinguishing temporal region in the suspected unauthorized distribution, an ordered transition between camera sources and a
+                - button "Show recorded candidate passages for NA claim 16 · “camera-switch timing”" [ref=f2e266]: camera-switch timing
+                - text: of the detected ordered transition;
+          - generic [ref=f2e267]:
+            - 'button "Show mapping status for NA claim 16 · limitation 6: No candidate passage recorded — counsel review required" [ref=f2e268] [cursor=pointer]'
+            - generic [ref=f2e269]:
+              - generic [ref=f2e270]: limitation 6
+              - text: derive a detected camera-source-transition pattern identifying the camera sources on respective sides of the detected ordered transition and the camera-switch timing of the detected ordered transition;
+              - note [ref=f2e271]: ◇ No candidate passage recorded — counsel review required
+          - generic [ref=f2e272]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 7" [ref=f2e273] [cursor=pointer]
+            - generic [ref=f2e274]:
+              - generic [ref=f2e275]: limitation 7
+              - text: identify a candidate camera-source-transition pattern for which both the ordered transition between the camera sources and the camera-switch timing at the candidate-distinguishing temporal region match the detected camera-source-transition pattern; and
+          - generic [ref=f2e276]:
+            - button "Show recorded candidate passages for NA claim 16 · limitation 8" [ref=f2e277] [cursor=pointer]
+            - generic [ref=f2e278]:
+              - generic [ref=f2e279]: limitation 8
+              - text: search the record for a recipient associated with the matching candidate camera-source-transition pattern or its respective delivered version.
+        - article [ref=f2e280]:
+          - generic [ref=f2e281]: NA claim 17
+          - generic [ref=f2e282]:
+            - button "Show recorded candidate passages for NA claim 17 · preamble" [ref=f2e283] [cursor=pointer]
+            - generic [ref=f2e284]:
+              - generic [ref=f2e285]: preamble
+              - generic [ref=f2e286] [cursor=pointer]:
+                - text: The system of claim 16, wherein detecting the ordered transition between the camera sources and the camera-switch timing comprises comparing reference audio-video content with the suspected unauthorized distribution using
+                - button "Show recorded candidate passages for NA claim 17 · “perceptual hashes of frames”" [ref=f2e287]: perceptual hashes of frames
+                - text: .
+        - article [ref=f2e288]:
+          - generic [ref=f2e289]: NA claim 18
+          - generic [ref=f2e290]:
+            - button "Show recorded candidate passages for NA claim 18 · preamble" [ref=f2e291] [cursor=pointer]
+            - generic [ref=f2e292]:
+              - generic [ref=f2e293]: preamble
+              - text: The system of claim 17, wherein detecting the ordered transition between the camera sources and the camera-switch timing further comprises fuzzy matching in which perceptual hashes of groups of frames are compared using sliding windows.
+        - article [ref=f2e294]:
+          - generic [ref=f2e295]: NA claim 19
+          - generic [ref=f2e296]:
+            - button "Show recorded candidate passages for NA claim 19 · preamble" [ref=f2e297] [cursor=pointer]
+            - generic [ref=f2e298]:
+              - generic [ref=f2e299]: preamble
+              - text: The system of claim 16, wherein the instructions cause the system to derive a time code from the detected camera-switch timing and build one or more reconstructed manifest files from the derived time code.
+        - article [ref=f2e300]:
+          - generic [ref=f2e301]: NA claim 20
+          - generic [ref=f2e302]:
+            - button "Show recorded candidate passages for NA claim 20 · preamble" [ref=f2e303] [cursor=pointer]
+            - generic [ref=f2e304]:
+              - generic [ref=f2e305]: preamble
+              - text: The system of claim 19, wherein the record is a ledger of manifest files delivered to end-user accounts and the instructions cause the system to search the ledger for an end-user account associated with a manifest file matching the one or more reconstructed manifest files.
+        - article [ref=f2e306]:
+          - generic [ref=f2e307]: NA claim 21
+          - generic [ref=f2e308]:
+            - button "Show recorded candidate passages for NA claim 21 · preamble" [ref=f2e309] [cursor=pointer]
+            - generic [ref=f2e310]:
+              - generic [ref=f2e311]: preamble
+              - generic [ref=f2e312] [cursor=pointer]:
+                - text: The system of claim 16, wherein the suspected unauthorized distribution comprises portions obtained from different delivered versions, and wherein the instructions further cause the system to apply a
+                - button "Show recorded candidate passages for NA claim 21 · “probabilistic fingerprinting algorithm”" [ref=f2e313]: probabilistic fingerprinting algorithm
+                - text: to candidate contributions from a plurality of recipients, compute respective attribution scores for the candidate contributions, and identify, based on the respective attribution scores, one or more recipients that contributed to the suspected unauthorized distribution.
+      - generic [ref=f2e314]:
+        - heading "End-to-end method" [level=2] [ref=f2e315]
+        - article [ref=f2e316]:
+          - generic [ref=f2e317]:
+            - text: NA claim 22
+            - 'button "Claim-level gate on NA claim 22: Combined-example support gate" [ref=f2e318] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e319]:
+            - button "Show recorded candidate passages for NA claim 22 · preamble" [ref=f2e320] [cursor=pointer]
+            - generic [ref=f2e321]:
+              - generic [ref=f2e322]: preamble
+              - text: "A method of identifying a source of an unauthorized distribution of streaming audio-video content, the method comprising:"
+          - generic [ref=f2e323]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 1" [ref=f2e324] [cursor=pointer]
+            - generic [ref=f2e325]:
+              - generic [ref=f2e326]: limitation 1
+              - text: receiving video captured from a plurality of cameras and producing reference audio-video content according to a structured list of instructions that identifies source cameras and time codes for camera cuts;
+          - generic [ref=f2e327]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 2" [ref=f2e328] [cursor=pointer]
+            - generic [ref=f2e329]:
+              - generic [ref=f2e330]: limitation 2
+              - generic [ref=f2e331] [cursor=pointer]:
+                - text: generating a mate by varying a time code of at least one camera cut in the structured list such that an ordered transition from a first camera source to a second camera source occurs at a reference camera-switch timing in the reference audio-video content and at a different, varied camera-switch timing in the mate and, during an interval between the reference camera-switch timing and the varied camera-switch timing, the mate and the reference audio-video content contain
+                - button "Show recorded candidate passages for NA claim 22 · “temporally corresponding frames captured by different cameras”" [ref=f2e332]: temporally corresponding frames captured by different cameras
+                - text: ;
+          - generic [ref=f2e333]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 3" [ref=f2e334] [cursor=pointer]
+            - generic [ref=f2e335]:
+              - generic [ref=f2e336]: limitation 3
+              - text: delivering respective versions selected from the reference audio-video content and at least the mate to respective recipients;
+          - generic [ref=f2e337]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 4" [ref=f2e338] [cursor=pointer]
+            - generic [ref=f2e339]:
+              - generic [ref=f2e340]: limitation 4
+              - text: recording associations between the respective versions or their camera-cut timing patterns and the respective recipients, each recorded camera-cut timing pattern identifying the first camera source, the second camera source, and the reference camera-switch timing or the varied camera-switch timing contained in the corresponding version;
+          - generic [ref=f2e341]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 5" [ref=f2e342] [cursor=pointer]
+            - generic [ref=f2e343]:
+              - generic [ref=f2e344]: limitation 5
+              - text: detecting, in suspected unauthorized audio-video content and within a temporal region adjacent to the varied camera cut, an ordered transition between camera sources and a camera-switch timing of the detected ordered transition;
+          - generic [ref=f2e345]:
+            - 'button "Show mapping status for NA claim 22 · limitation 6: No candidate passage recorded — counsel review required" [ref=f2e346] [cursor=pointer]'
+            - generic [ref=f2e347]:
+              - generic [ref=f2e348]: limitation 6
+              - text: deriving a detected camera-source-transition pattern identifying camera sources on respective sides of the detected ordered transition and the camera-switch timing of the detected ordered transition;
+              - note [ref=f2e349]: ◇ No candidate passage recorded — counsel review required
+          - generic [ref=f2e350]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 7" [ref=f2e351] [cursor=pointer]
+            - generic [ref=f2e352]:
+              - generic [ref=f2e353]: limitation 7
+              - text: identifying a version or camera-cut timing pattern for which both the ordered transition between the camera sources and the camera-switch timing match the detected camera-source-transition pattern; and
+          - generic [ref=f2e354]:
+            - button "Show recorded candidate passages for NA claim 22 · limitation 8" [ref=f2e355] [cursor=pointer]
+            - generic [ref=f2e356]:
+              - generic [ref=f2e357]: limitation 8
+              - text: searching the recorded associations for a recipient associated with the identified version or camera-cut timing pattern.
+        - article [ref=f2e358]:
+          - generic [ref=f2e359]: NA claim 23
+          - generic [ref=f2e360]:
+            - button "Show recorded candidate passages for NA claim 23 · preamble" [ref=f2e361] [cursor=pointer]
+            - generic [ref=f2e362]:
+              - generic [ref=f2e363]: preamble
+              - text: The method of claim 22, wherein generating the mate comprises preserving a timing of a later camera cut from the reference audio-video content, thereby restoring synchronization between the mate and the reference audio-video content from the later camera cut onward.
+        - article [ref=f2e364]:
+          - generic [ref=f2e365]: NA claim 24
+          - generic [ref=f2e366]:
+            - button "Show recorded candidate passages for NA claim 24 · preamble" [ref=f2e367] [cursor=pointer]
+            - generic [ref=f2e368]:
+              - generic [ref=f2e369]: preamble
+              - text: "The method of claim 22, further comprising:"
+          - generic [ref=f2e370]:
+            - button "Show recorded candidate passages for NA claim 24 · limitation 1" [ref=f2e371] [cursor=pointer]
+            - generic [ref=f2e372]:
+              - generic [ref=f2e373]: limitation 1
+              - text: segmenting the respective versions into chunks;
+          - generic [ref=f2e374]:
+            - button "Show recorded candidate passages for NA claim 24 · limitation 2" [ref=f2e375] [cursor=pointer]
+            - generic [ref=f2e376]:
+              - generic [ref=f2e377]: limitation 2
+              - text: generating manifest files pointing to interleaved combinations of the chunks; and
+          - generic [ref=f2e378]:
+            - button "Show recorded candidate passages for NA claim 24 · limitation 3" [ref=f2e379] [cursor=pointer]
+            - generic [ref=f2e380]:
+              - generic [ref=f2e381]: limitation 3
+              - text: recording which recipient or group of recipients received each manifest file.
+        - article [ref=f2e382]:
+          - generic [ref=f2e383]: NA claim 25
+          - generic [ref=f2e384]:
+            - button "Show recorded candidate passages for NA claim 25 · preamble" [ref=f2e385] [cursor=pointer]
+            - generic [ref=f2e386]:
+              - generic [ref=f2e387]: preamble
+              - text: The method of claim 24, wherein identifying the version or camera-cut timing pattern comprises deriving a time code from the camera-switch timing of the detected ordered transition, building a reconstructed manifest file, and searching a ledger for an end-user account associated with a manifest file matching the reconstructed manifest file.
+        - article [ref=f2e388]:
+          - generic [ref=f2e389]: NA claim 26
+          - generic [ref=f2e390]:
+            - button "Show recorded candidate passages for NA claim 26 · preamble" [ref=f2e391] [cursor=pointer]
+            - generic [ref=f2e392]:
+              - generic [ref=f2e393]: preamble
+              - text: The method of claim 22, wherein detecting the ordered transition between the camera sources and the camera-switch timing comprises comparing perceptual hashes of frames from the reference audio-video content and the suspected unauthorized audio-video content using sliding-window fuzzy matching.
+        - article [ref=f2e394]:
+          - generic [ref=f2e395]: NA claim 27
+          - generic [ref=f2e396]:
+            - button "Show recorded candidate passages for NA claim 27 · preamble" [ref=f2e397] [cursor=pointer]
+            - generic [ref=f2e398]:
+              - generic [ref=f2e399]: preamble
+              - text: The method of claim 22, wherein delivering the respective versions comprises unicasting the respective versions to the respective recipients.
+        - article [ref=f2e400]:
+          - generic [ref=f2e401]: NA claim 28
+          - generic [ref=f2e402]:
+            - button "Show recorded candidate passages for NA claim 28 · preamble" [ref=f2e403] [cursor=pointer]
+            - generic [ref=f2e404]:
+              - generic [ref=f2e405]: preamble
+              - text: The method of claim 22, wherein the suspected unauthorized audio-video content comprises portions obtained from different respective versions, the method further comprising applying a probabilistic fingerprinting algorithm to identify one or more contributing recipients.
+        - article [ref=f2e406]:
+          - generic [ref=f2e407]:
+            - text: NA claim 29
+            - 'button "Claim-level gate on NA claim 29: Combined-example support gate" [ref=f2e408] [cursor=pointer]': ⚑ Combined-example support gate
+          - generic [ref=f2e409]:
+            - button "Show recorded candidate passages for NA claim 29 · preamble" [ref=f2e410] [cursor=pointer]
+            - generic [ref=f2e411]:
+              - generic [ref=f2e412]: preamble
+              - text: The method of claim 24, wherein generating each manifest file comprises selecting chunks that cause an audio-video stream assembled according to the manifest file to preserve, within the temporal region adjacent to the varied camera cut, either the reference camera-switch timing or the varied camera-switch timing of the ordered transition from the first camera source to the second camera source.
+        - article [ref=f2e413]:
+          - generic [ref=f2e414]: NA claim 30
+          - generic [ref=f2e415]:
+            - button "Show recorded candidate passages for NA claim 30 · preamble" [ref=f2e416] [cursor=pointer]
+            - generic [ref=f2e417]:
+              - generic [ref=f2e418]: preamble
+              - text: The method of claim 22, further comprising overlaying one or more additional audio or video elements not present in the video received from the plurality of cameras onto at least one of the reference audio-video content or the mate.
+    - region "As-filed disclosure" [ref=f2e419]:
+      - generic [ref=f2e420]:
+        - heading "editorial (not filed text) AA11393US-PCT — Rapporto di Deposito (PCT Filing Report)" [level=1] [ref=f2e421]:
+          - generic [ref=f2e422]: S001
+          - generic [ref=f2e423]: editorial (not filed text)
+          - text: AA11393US-PCT — Rapporto di Deposito (PCT Filing Report)
+        - blockquote [ref=f2e424]:
+          - generic [ref=f2e425]: S002
+          - generic [ref=f2e426]: editorial (not filed text)
+          - strong [ref=f2e427]: High-fidelity Markdown transcription
+          - text: of
+          - code [ref=f2e428]: AA11393US-PCT_RAPPORTO DEPOSITO.pdf
+          - text: "(60 pages). Source: born-digital PDF with a clean embedded text layer; body text extracted via"
+          - code [ref=f2e429]: pdftotext -layout
+          - text: and hand-structured. Drawing pages (57–60) rendered to PNG at 200 dpi and embedded.
+          - strong [ref=f2e430]: Contents of the bundle
+          - text: 1. PRAXI Intellectual Property cover letter (p. 1) 2. PCT Contracting States list (p. 2) 3. WIPO Receipt of Electronic Submission (p. 3) 4. Form PCT/RO/101 — PCT Request (pp. 4–7) 5. International application text — *AI‑Driven System and Method for Content Differentiation and Piracy Traceability in Streaming Media* (Description, Claims, Abstract) (pp. 8–56) 6. Drawings — Figures 1–4 (pp. 57–60)
+        - heading "5. International Application Text" [level=1] [ref=f2e431]:
+          - generic [ref=f2e432]: S003
+          - text: 5. International Application Text
+        - paragraph [ref=f2e433]:
+          - generic [ref=f2e434]: S004
+          - strong [ref=f2e435]: AI – DRIVEN SYSTEM AND METHOD FOR CONTENT DIFFERENTIATION AND PIRACY TRACEABILITY IN STREAMING MEDIA
+        - heading "Description" [level=2] [ref=f2e436]:
+          - generic [ref=f2e437]: S005
+          - text: Description
+        - heading "Field of the invention" [level=3] [ref=f2e438]:
+          - generic [ref=f2e439]: S006
+          - text: Field of the invention
+        - paragraph [ref=f2e440]:
+          - generic [ref=f2e441]: S007
+          - text: The present invention relates to the domain of digital content management, with a specific emphasis on pioneering methods for safeguarding audio-video streaming content against unauthorized dissemination and piracy. This invention describes a system which identifies, manages, and secures both live and pre-recorded streaming content as it navigates through the complexities of contemporary digital distribution networks. Utilizing a holistic approach that spans the capture, processing, and distribution of audio-video content, the system integrates anti-piracy technologies directly into the production and distribution workflow.
+        - heading "Background of the Invention" [level=3] [ref=f2e442]:
+          - generic [ref=f2e443]: S008
+          - text: Background of the Invention
+        - paragraph [ref=f2e444]:
+          - generic [ref=f2e445]: S009
+          - text: In the realm of events broadcasting, the journey from capturing the essence of an event to delivering it into the homes of viewers worldwide, live or recorded, encompasses a meticulously crafted workflow, deeply rooted in both tradition and technological advancement. This process begins in the planning stages, where producers and directors conceptualize the broadcast's coverage strategy, meticulously selecting camera placements to capture the dynamism and pivotal moments of the event. They also outline the integration of unique content elements that might enhance the viewing experience, such as player interviews or behind-the-scenes footage.
+        - paragraph [ref=f2e446]:
+          - generic [ref=f2e447]: S010
+          - text: Following the initial planning phase, the setup stage sees a team of skilled technicians deploying an array of cameras and audio equipment across the venue. This setup is designed to offer a multitude of perspectives, ranging from wide-angle shots that capture the event's scale to close-ups that bring viewers into the heart of the action. This strategic placement is crucial for creating an immersive viewing experience that mirrors the excitement of being present at the event.
+        - paragraph [ref=f2e448]:
+          - generic [ref=f2e449]: S011
+          - text: Once the event is underway, camera operators spring into action, recording live footage that is immediately relayed back to the production team. This raw footage forms the backbone of the live broadcast, with the director playing a pivotal role in deciding which camera feeds are broadcast at any given moment. These real-time decisions are crucial for storytelling, allowing the director to highlight key moments, reactions, and nuances of the event as they unfold.
+        - paragraph [ref=f2e450]:
+          - generic [ref=f2e451]: S012
+          - text: The processing phase adds another layer of complexity to the workflow. Initial edits are made, and additional elements such as graphics, commentary, and instant replays are woven into the broadcast. For events of significant complexity, an Edit Decision List (EDL) is drafted, serving as a blueprint for post-production editing. The EDL outlines the precise timing and sequence of camera cuts, ensuring that the final product is both coherent and captivating.
+        - paragraph [ref=f2e452]:
+          - generic [ref=f2e453]: S013
+          - text: Finally, the distribution phase sees the content being prepared for consumption by a global audience. This involves transcoding the content to ensure compatibility with various platforms, segmenting it for efficient streaming, and distributing it through a content delivery network (CDN). The use of manifest files is critical here, as they guide the streaming player to deliver the best possible viewing experience based on the viewer's device capabilities and internet connection. This adaptive streaming ensures that viewers, regardless of their geographical location or the device they are using, receive a seamless and uninterrupted viewing experience.
+        - paragraph [ref=f2e454]:
+          - generic [ref=f2e455]: S014
+          - text: Contemporary anti-piracy techniques play a vital role throughout this workflow. Watermarking and fingerprinting technologies embed invisible identifiers within the content, enabling rights holders to trace any instance of piracy back to its source.
+        - paragraph [ref=f2e456]:
+          - generic [ref=f2e457]: S015
+          - text: Examples of systems and methods using such technologies are given in patents WO2017017603A1, WO2010044102A2, CN202455480U, CN100583750C and others.
+        - paragraph [ref=f2e458]:
+          - generic [ref=f2e459]: S016
+          - text: Digital Rights Management (DRM) systems further protect content by controlling how it is accessed and used, preventing unauthorized sharing and viewing. Encryption and access control mechanisms safeguard the content behind secure barriers, ensuring that only authorized users can access it. Additionally, sophisticated monitoring tools and software are deployed to detect pirated content across the internet, facilitating the rapid issuance of takedown requests to remove unauthorized copies and mitigate piracy's impact.
+        - paragraph [ref=f2e460]:
+          - generic [ref=f2e461]: S017
+          - text: This comprehensive overview of the prior art, for example in live sports broadcasting, underscores the intricate balance between capturing the thrill of live events, enhancing viewer engagement through innovative production techniques, and safeguarding the content against unauthorized use. As technology evolves, so too does the landscape of content creation, distribution, and protection, highlighting the ongoing challenge of preserving the value of intellectual property in the digital age.
+        - paragraph [ref=f2e462]:
+          - generic [ref=f2e463]: S018
+          - text: In the intricate tapestry of live sports broadcasting and content distribution, the utilization of legacy watermarking and fingerprinting techniques stands out as both a cornerstone and a point of contention in the battle against digital piracy. These techniques, deeply ingrained in the industry's efforts to protect intellectual property, embed invisible markers or unique identifiers within the content. While they have been pivotal in tracing pirated content back to its source, several pitfalls and critical inefficiencies have surfaced, challenging their effectiveness in the modern digital landscape.
+        - paragraph [ref=f2e464]:
+          - generic [ref=f2e465]: S019
+          - text: One of the primary limitations of traditional watermarking techniques lies in their susceptibility to sophisticated removal methods. Pirates have increasingly employed advanced signal processing techniques, such as filtering, compression, and re-encoding, to obliterate or significantly alter these watermarks, rendering them ineffective as a deterrent. This vulnerability exposes a critical gap in the defence against piracy, as the removal or alteration of watermarks not only facilitates unauthorized distribution but also obscures the traceability back to the source of the leak.
+        - paragraph [ref=f2e466]:
+          - generic [ref=f2e467]: S020
+          - text: Fingerprinting technologies, designed to embed unique codes into individual copies of content, face similar challenges. The granularity and specificity of these fingerprints, intended to track the distribution of content to individual users, can be compromised through collusion attacks. In such scenarios, multiple users combine different segments of content, each with its own unique fingerprint, to create a composite version devoid of identifiable markers. This method effectively dilutes the fingerprint's distinctiveness, complicating efforts to pinpoint the origin of the pirated content.
+        - paragraph [ref=f2e468]:
+          - generic [ref=f2e469]: S021
+          - text: Moreover, both watermarking and fingerprinting techniques often struggle to withstand the rigorous conditions of internet broadcasting, including variable bitrates, resolution changes, and adaptive streaming protocols. These conditions can distort or erase the embedded markers, further impeding detection efforts. Additionally, the computational overhead associated with embedding and detecting these markers can introduce latency and degrade the quality of the streaming experience for legitimate users, presenting a trade-off between content protection and user satisfaction.
+        - paragraph [ref=f2e470]:
+          - generic [ref=f2e471]: S022
+          - text: The challenges extend beyond technical limitations, encompassing legal and privacy concerns as well. The implementation of these techniques must navigate the intricate landscape of global copyright laws, which vary significantly across jurisdictions. Furthermore, the collection and analysis of data inherent in fingerprinting technologies raise privacy concerns, necessitating a delicate balance between content protection and user rights.
+        - paragraph [ref=f2e472]:
+          - generic [ref=f2e473]: S023
+          - text: In summary, while legacy watermarking and fingerprinting techniques have provided a foundational layer of protection against content piracy, their efficacy is increasingly undermined by a combination of technological advancements in piracy methods, inherent technical limitations, and evolving legal and ethical considerations. These pitfalls highlight the need for innovative approaches that can adapt to the dynamic nature of digital content distribution and consumption, ensuring robust protection for copyright holders without compromising the viewing experience or privacy of legitimate users.
+        - heading "Summary of the invention" [level=3] [ref=f2e474]:
+          - generic [ref=f2e475]: S024
+          - text: Summary of the invention
+        - paragraph [ref=f2e476]:
+          - generic [ref=f2e477]: S025
+          - text: The present invention relates to an anti-piracy system for identifying and protecting audio-video streaming content. The system of the present invention allows to capture an event from various viewpoints using a set of cameras, to process this content through an audio-video production pipeline, and to manage real-time directorial decisions to switch between camera angles.
+        - heading "Technical Problem" [level=4] [ref=f2e478]:
+          - generic [ref=f2e479]: S026
+          - text: Technical Problem
+        - paragraph [ref=f2e480]:
+          - generic [ref=f2e481]: S027
+          - text: The primary technical problem solved by the invention relates to the limitations of legacy watermarking and fingerprinting techniques used in content protection. These traditional methods are increasingly becoming ineffective against sophisticated piracy methods due to their susceptibility to signal processing techniques such as filtering, compression, and re-encoding, which can obliterate or significantly alter watermarks, thus facilitating unauthorized distribution and obscuring traceability back to the source of the leak. Additionally, these techniques struggle to withstand the conditions of internet broadcasting like variable bitrates, resolution changes, and adaptive streaming protocols, which can distort or erase embedded markers.
+        - paragraph [ref=f2e482]:
+          - generic [ref=f2e483]: S028
+          - text: "Besides currently well-known piracy techniques, it is foreseeable that generative AI could be used to alter or remove watermarks from video content for piracy purposes. Here's how this might unfold:"
+        - list [ref=f2e484]:
+          - listitem [ref=f2e485]:
+            - generic [ref=f2e486]: S029
+            - strong [ref=f2e487]: "Advanced Image and Video Manipulation:"
+            - text: Generative AI, particularly models trained on vast datasets of images and videos, can learn to mimic, alter, or completely remove watermarks. These models could be trained to recognize watermark patterns and then either overlay new content or subtly modify existing frames to make watermarks less noticeable or entirely invisible;
+          - listitem [ref=f2e488]:
+            - generic [ref=f2e489]: S030
+            - strong [ref=f2e490]: "Pattern Recognition and Removal:"
+            - text: AI could be designed and/or trained to specifically detect the patterns or signatures used by watermarking technologies. Once detected, these AI systems could then apply techniques to either mask these patterns or generate new frames where the watermark does not appear, effectively removing the watermark without significantly degrading the video quality;
+          - listitem [ref=f2e491]:
+            - generic [ref=f2e492]: S031
+            - strong [ref=f2e493]: "Real-Time Processing:"
+            - text: With advancements in computational power, AI could process videos in real-time, allowing for immediate watermark removal during streaming or playback. This would make piracy not only more sophisticated but also more efficient, reducing the lag or quality loss that might occur with traditional methods;
+          - listitem [ref=f2e494]:
+            - generic [ref=f2e495]: S032
+            - strong [ref=f2e496]: "Counter-Watermarking Techniques:"
+            - text: As watermarking technologies evolve to become more resilient, generative AI might evolve in parallel to develop counter-measures. For instance, AI could generate 'noise' or slight alterations that disrupt the watermark's detection while maintaining the integrity of the video content for human viewers.
+        - paragraph [ref=f2e497]:
+          - generic [ref=f2e498]: S033
+          - text: The present invention levels the playing field by leveraging AI technologies to prevent described illicit activities where AI technologies are used for piracy purposes.
+        - paragraph [ref=f2e499]:
+          - generic [ref=f2e500]: S034
+          - text: "The present invention further solves the following technical problems:"
+        - list [ref=f2e501]:
+          - listitem [ref=f2e502]:
+            - generic [ref=f2e503]: S035
+            - text: fingerprinting technologies, while designed to embed unique codes into individual copies of content to track distribution, face challenges from collusion attacks where pirated content is combined from different sources, diluting the distinctiveness of fingerprints and complicating efforts to pinpoint the origin of pirates;
+          - listitem [ref=f2e504]:
+            - generic [ref=f2e505]: S036
+            - text: the computational overhead required for embedding and detecting markers can introduce latency and degrade the quality of streaming for legitimate users, highlighting a need for balancing content protection mechanisms with a seamless viewer experience.
+        - paragraph [ref=f2e506]:
+          - generic [ref=f2e507]: S037
+          - text: These problems encapsulate the technical and ethical landscape that the proposed invention aims to navigate, highlighting a pressing need for innovative solutions that can adapt to the dynamic nature of digital content distribution and consumption, protect copyright holders efficiently without compromising the viewing experience, and address privacy concerns of legitimate users.
+        - heading "Solutions and Advantageous effects of the invention" [level=4] [ref=f2e508]:
+          - generic [ref=f2e509]: S038
+          - text: Solutions and Advantageous effects of the invention
+        - paragraph [ref=f2e510]:
+          - generic [ref=f2e511]: S039
+          - text: At the heart of this invention is the creation and application of distinctive content variations called "mates", produced through programmable modifications to camera cuts, and the meticulous management of these variations through an advanced content delivery framework. This framework encompasses an extensive array of components, from camera arrays capturing various angles of events, through sophisticated editing and transcoding operations, to dynamic content distribution methods that guarantee each content piece is uniquely identifiable and traceable to its origin. Additionally, the invention includes powerful detection and recovery systems designed to locate pirated content and trace it back to the initial distribution point, thereby facilitating effective enforcement of copyright protections.
+        - paragraph [ref=f2e512]:
+          - generic [ref=f2e513]: S040
+          - text: Intersecting with key areas within the expansive field of digital content management, such as digital rights management (DRM), content delivery networks (CDN), adaptive streaming technologies, and anti-piracy measures, the present invention focuses on combating digital piracy. The present invention presents a solution that not only bolsters the security of copyrighted material but also preserves the viewing quality for legitimate audiences. The versatility and adaptability of the present system render it suitable for a broad spectrum of content types and distribution channels, ranging from live sports events and music concerts to film releases and television shows, representing a critical advancement in the ongoing endeavour to protect intellectual property in the digital age.
+        - paragraph [ref=f2e514]:
+          - generic [ref=f2e515]: S041
+          - text: A unique aspect of this invention is the mate creation component within the pipeline, which programmatically applies variations to the time codes of camera cuts recorded in the file of the structured list of instructions describing audio video edits, generating one or more unique mates of the reference content. This process is complemented by a flexible set of additional pipeline components that overlay various audio-video elements onto the ensemble of the reference video and its mates, enhancing the content's uniqueness.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Solutions and Advantageous effects of the invention · ¶3" [ref=f2e516] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e517]:
+          - generic [ref=f2e518]: S042
+          - text: In the foregoing description, some embodiments reference the generation of manifest files for adaptive streaming and the use of a Content Delivery Network (CDN) to distribute the reference version and its mates. It will be apparent to the person skilled in the art, however, that these specific streaming configurations are merely illustrative. The inventive system and method of creating multiple distinguishable versions by altering camera-switch timings (and subsequently detecting any unauthorized distribution based on those distinguishable features) remain applicable even if new or different streaming protocols replace traditional manifest-based architectures. For instance, emergent distribution frameworks that utilize advanced edge networks, peer-to-peer protocols, multicast adaptive bitrate streaming (Multicast ABR), or yet-to-be-developed transport layers can be readily adapted by one skilled in the art to incorporate the disclosed mate-creation and detection concepts. The core principle (namely, distributing slightly altered video versions to recipients and identifying illicit copies by comparing detectable edit patterns) does not depend upon any one CDN platform or any specific algorithm/apparatus for segmenting and delivering content. Consequently, future developments in streaming technology, including those that obviate manifest files or substantially alter how segments and metadata are managed, are to be considered within the scope of the present invention. The teachings herein provide a flexible foundation, enabling ready adaptation to evolving content-delivery paradigms without departing from the scope of the claimed invention.
+        - paragraph [ref=f2e519]:
+          - generic [ref=f2e520]: S043
+          - text: The system also features a set of transcoding components that segment the ensemble into optimized chunks for distribution through a content delivery network (CDN), creating different manifest files tailored to individual user devices and network conditions. These manifest files enable video players to deliver the most suitable sequence of chunks for an optimal viewing experience, while unique interleaved combinations of chunks ensure the content's security.
+        - paragraph [ref=f2e521]:
+          - generic [ref=f2e522]: S044
+          - text: An integral part of the system is a ledger that records the different manifest files and their distribution to spectators, facilitating the identification of specific users or groups based on the manifest file they received. A detection component monitors for pirated webcasting of the event, employing a scene change detection algorithm to identify the time codes of camera cuts in the pirated content. This allows for the reconstruction of the manifest file used in the piracy, enabling a retrieval component to search the ledger for matching spectators and identify the user account(s) involved in accessing the pirated content.
+        - paragraph [ref=f2e523]:
+          - generic [ref=f2e524]: S045
+          - text: The system enhances anti-piracy measures by applying single time code variations at director-commanded camera cuts, utilizing perceptual hash and fuzzy matching methods for content comparison, and distributing content via unicasting. Additionally, the introduction of novel elements during camera cuts not existent in the reference video further complicates unauthorized replication.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Solutions and Advantageous effects of the invention · ¶7" [ref=f2e525] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e526]:
+          - generic [ref=f2e527]: S046
+          - text: Focusing on the aspects of live streaming sports events that leverage adaptive streaming technology, there are several key elements within the pipeline that directly contribute to the streaming experience. Adaptive streaming technology, often implemented through protocols like HLS (HTTP Live Streaming) or DASH (Dynamic Adaptive Streaming over HTTP), enables the delivery of live video content to viewers in a way that adjusts in real time to their internet bandwidth and device capabilities. This ensures an optimal viewing experience by minimizing buffering and playback issues.
+        - paragraph [ref=f2e528]:
+          - generic [ref=f2e529]: S047
+          - text: In the context of the present invention, which addresses the sophisticated management of audio-video production pipelines for live streaming of events, including sports events, a strategic approach to distribution between licensors (e.g., Italian Serie A) and licensees (e.g., DAZN, SKY) is delineated. The licensor, holding rights to the content, is responsible for the initial phases of the pipeline, including on-site communication, capture of high-quality video footage using advanced camera equipment, live event direction, and the generation of raw video feeds and audio signals. This stage may also involve the integration of live data, statistics, and the initial application of graphics and on-screen elements to enhance the broadcast. Furthermore, the licensor is tasked with creating said mates through the strategic manipulation of camera cuts as recorded in the structured list of instructions describing audio video edits.
+        - paragraph [ref=f2e530]:
+          - generic [ref=f2e531]: S048
+          - text: "While it is common for major sporting events (or other large-scale events) to have their production handled by the licensor (often referred to as the \"host broadcaster\" in sports contexts) this is by no means the only model. Other configurations include:"
+        - list [ref=f2e532]:
+          - listitem [ref=f2e533]:
+            - generic [ref=f2e534]: S049
+            - strong [ref=f2e535]: "Licensee-Managed Production:"
+            - text: in some cases, the licensee (e.g., a major broadcaster or OTT platform) may assume primary responsibility for the production. This often happens if the licensee has substantial in-house production resources or if the licensor opts for a more hands-off approach. The licensee's production team would handle everything from camera operations to the integration of graphics and commentary;
+          - listitem [ref=f2e536]:
+            - generic [ref=f2e537]: S050
+            - strong [ref=f2e538]: "Third-Party or Independent Production:"
+            - text: there are instances where an independent production company (contracted by either the licensor, the licensee, or jointly) handles the entire production. This third-party is often chosen for its specialized technical expertise or its track record of producing large-scale broadcasts. The third-party model can help ensure a consistent production standard across multiple licensees;
+          - listitem [ref=f2e539]:
+            - generic [ref=f2e540]: S051
+            - strong [ref=f2e541]: "Shared / Hybrid Models:"
+            - text: "in large international sporting events (e.g., Olympics, World Cups, etc.), the organizing body may have a \"host broadcaster\" that provides a baseline \"world feed.\" Licensees can then further customize that feed (adding localized commentary, graphics, and other enhancements) to suit their audience. In these scenarios, production responsibilities are shared: the licensor or organizing body creates a core feed, and licensees' layer on additional elements;"
+          - listitem [ref=f2e542]:
+            - generic [ref=f2e543]: S052
+            - strong [ref=f2e544]: "Local or Regional Network Production:"
+            - text: especially for region-specific events (e.g., local sports leagues, concerts, festivals), a regional network may handle the entire production itself. This typically occurs when the regional network holds exclusive local rights. The network's on-site crew will manage everything from camera setup to on-air talent coordination;
+          - listitem [ref=f2e545]:
+            - generic [ref=f2e546]: S053
+            - strong [ref=f2e547]: "Organizer-Managed Production for Niche Events:"
+            - text: for smaller or niche events (e.g., certain esports tournaments or smaller sporting leagues), the event organizer itself might manage the entire production pipeline, only selling streaming or broadcast rights to distribution partners. As event owners, they can coordinate all the moving parts internally or via a chosen partner, then deliver a feed to any licensee that buys the rights.
+        - paragraph [ref=f2e548]:
+          - generic [ref=f2e549]: S054
+          - text: In short, while having the licensor provide and manage the live feed is a widespread practice (especially for large, high-profile events) there are various other scenarios where the licensee, a third-party production team, or a hybrid approach can take the lead on production. Thus, for the scope of the present invention, the term "licensor" is used to encompass all the different scenarios just described.
+        - paragraph [ref=f2e550]:
+          - generic [ref=f2e551]: S055
+          - text: Upon completion of these preliminary stages, the licensor transmits one or more mates to the licensees. It is at this juncture that the licensees assume responsibility for the further processing and customization of the content. This includes transcoding and adaptive bitrate streaming, content packaging and encryption, digital rights management (DRM), and the final generation of variegated manifest files. Each licensee, leveraging the received mates, generates a multitude of manifest files, ensuring that each viewer or group of viewers is presented with a slightly different version of the event. This customization is critical for embedding traceable, unique identifiers within the content, thereby significantly enhancing the ability to detect and trace pirated versions. Moreover, the licensees manage the association of specific manifest files with individual users or groups of users. This process involves sophisticated data management and distribution mechanisms, necessitating the use of advanced database technologies or blockchain solutions where appropriate, to ensure immutability, security, and efficient retrieval of data for anti-piracy purposes. It is understood by those skilled in the art that the distribution of responsibilities between the licensor and licensees as described herein is designed to optimize the utilization of the core components of the invention across different entities. This distributed approach allows for the leveraging of specialized expertise and infrastructure of each party, facilitating a collaborative effort in the production, secure distribution, and management of live streaming content.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Solutions and Advantageous effects of the invention · ¶12" [ref=f2e552] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e553]:
+          - generic [ref=f2e554]: S056
+          - text: This adaptation of the invention to scenarios involving multiple stakeholders provides a robust framework for ensuring content security and enhancing viewer experience, while also accommodating the complex dynamics of content licensing and distribution in the digital age.
+        - heading "Brief description of Drawings" [level=3] [ref=f2e555]:
+          - generic [ref=f2e556]: S057
+          - text: Brief description of Drawings
+        - paragraph [ref=f2e557]:
+          - generic [ref=f2e558]: S058
+          - text: "The invention will be described hereinafter in at least one preferred embodiment for explanatory and non-limiting purposes with the aid of the attached figures, in which:"
+        - list [ref=f2e559]:
+          - listitem [ref=f2e560]:
+            - generic [ref=f2e561]: S059
+            - strong [ref=f2e562]: FIGURE 1
+            - text: shows a general view of a system 100 according to the present invention
+          - listitem [ref=f2e563]:
+            - generic [ref=f2e564]: S060
+            - strong [ref=f2e565]: FIGURE 2
+            - text: shows a general view of a system 100 according to the present invention;
+          - listitem [ref=f2e566]:
+            - generic [ref=f2e567]: S061
+            - strong [ref=f2e568]: FIGURE 3
+            - text: shows a general view of a system 100 according to the present invention;
+          - listitem [ref=f2e569]:
+            - generic [ref=f2e570]: S062
+            - strong [ref=f2e571]: FIGURE 4
+            - text: shows a diagram representing a method 200 of identification and protection of audio-video streaming according to the present invention.
+        - heading "Detailed description of Preferred Embodiments" [level=3] [ref=f2e572]:
+          - generic [ref=f2e573]: S063
+          - text: Detailed description of Preferred Embodiments
+        - paragraph [ref=f2e574]:
+          - generic [ref=f2e575]: S064
+          - text: The present invention innovative approach to combating Colluding Redistribution (CR) attacks does not (only) involve traditional watermarking but rather employs a sophisticated method of creating unique "mates" or variations of the streamed video content. This uniqueness is achieved by programmatically altering the timing of camera cuts within the video, as recorded in in a structured list 103 of instructions describing edits. Each spectator, therefore, receives a slightly different version of the event, with these differences being subtle enough not to detract from the viewing experience but significant enough to act as a unique identifier or "fingerprint" for each distributed stream.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶1" [ref=f2e576] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e577]:
+          - generic [ref=f2e578]: S065
+          - text: Described advantages will be even clearer in the light of the descriptions that follow. The following description illustrates non limiting examples and embodiments relating to the present invention.
+        - paragraph [ref=f2e579]:
+          - generic [ref=f2e580]: S066
+          - text: "The present invention relates to an anti-piracy system 100 identifying unauthorized distributions of streaming audio-video content; said anti-piracy system 100 comprising:"
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶3" [ref=f2e581] [cursor=pointer]': ◂ 2
+        - list [ref=f2e582]:
+          - listitem [ref=f2e583]:
+            - generic [ref=f2e584]: S067
+            - text: a pipeline receiving live or pre-recorded video captured from one or more cameras 101; said pipeline creating a reference audio-video content 1; switches between said cameras 101 being called camera cuts;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 1" [ref=f2e585] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e586]:
+            - generic [ref=f2e587]: S068
+            - text: a mate creation component 110 generating at least one modified version of the video by automatically altering at least one camera-cut timing relative to the reference audio-video content 1, thereby producing one or more unique mates 111 of the reference audio-video content 1; a mate 111 being a distinguishable version of the same underlying audio-video content 1; an ensemble 112 being a combination of both the reference audio-video content 1 and its mates 111;
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 2" [ref=f2e588] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e589]:
+            - generic [ref=f2e590]: S069
+            - text: a distribution apparatus delivering one or more of said distinguishable versions to at least one recipient. Where "recipient" is referred to a generic destination which can be the account of a user, a web page and/or other destinations;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 3" [ref=f2e591] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e592]:
+            - generic [ref=f2e593]: S070
+            - text: a record of associations, made by said distribution apparatus, between said distinguishable versions and respective recipients;
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 4" [ref=f2e594] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e595]:
+            - generic [ref=f2e596]: S071
+            - text: a detection apparatus applying an artificial intelligence algorithm to analyze a suspected unauthorized distribution by detecting camera-switch timings therein and to identify which of said distinguishable versions matches the suspected unauthorized distribution; said detection apparatus searching said record for a recipient associated to a distinguishable version matching the suspected unauthorized distribution.
+            - 'button "Indexed by 3 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 5" [ref=f2e597] [cursor=pointer]': ◂ 3
+        - paragraph [ref=f2e598]:
+          - generic [ref=f2e599]: S072
+          - text: In some embodiments of the present invention, said pipeline is an audio-video pipeline 102.
+        - paragraph [ref=f2e600]:
+          - generic [ref=f2e601]: S073
+          - text: In some embodiments of the present invention, said distribution apparatus comprises a set of transcoding components 120 generating a set of different manifest files 121.
+        - paragraph [ref=f2e602]:
+          - generic [ref=f2e603]: S074
+          - text: In some embodiments of the present invention, said record is a ledger 122.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶6" [ref=f2e604] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e605]:
+          - generic [ref=f2e606]: S075
+          - text: "In some embodiments of the present invention said artificial intelligence algorithm is a camera cuts detection algorithm 131 which employs AI to determine timing of said camera cuts and said detection apparatus comprises: a detection component 130 running said detection algorithm 131, and a retrieval component 140 which searches said ledger 122."
+        - paragraph [ref=f2e607]:
+          - generic [ref=f2e608]: S076
+          - text: With reference to FIG. 1, a general view of a system 100 according to the present invention is shown. In FIG. 1 as in the description that follows, the best embodiment of the present invention to date is illustrated.
+        - paragraph [ref=f2e609]:
+          - generic [ref=f2e610]: S077
+          - text: "The invention relates to an anti-piracy system 100 identifying audio video streaming content distributed. Said anti-piracy system 100 that alters camera cuts related to one or more reference audio-videos content 1 comprises:"
+        - list [ref=f2e611]:
+          - listitem [ref=f2e612]:
+            - generic [ref=f2e613]: S078
+            - text: said set of cameras 101 capturing a scene/event from diverse viewpoints;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 6" [ref=f2e614] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e615]:
+            - generic [ref=f2e616]: S079
+            - text: said audio-video production pipeline 102 receiving, processing, and managing content from the cameras 101. A director uses said pipeline 102 to command real-time switching between said cameras 101 based on creative or strategic decision-making. Said real time switches are herein called "camera cuts". Said pipeline 102 records all camera cut timings and transitions by inserting corresponding time codes in a list 103 of instructions describing edits. A time code is a sequence of numeric codes that uniquely identify each frame of video or segment of audio within a stream. They are to synchronize, index, and access specific points in an audio-video production, enabling precise editing, playback, traceability, and content management. In the context of the present invention, time codes are embedded alongside camera cuts and transitions to compose a precise list for editing purposes, marking the exact moments when these edits occur within the content;
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 7" [ref=f2e617] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e618]:
+            - generic [ref=f2e619]: S080
+            - text: said mate creation component 110, inside said pipeline 102, which automatically applies variations to the time code of any camera cut recorded in said list 103 originating one or more unique mates 111 of the reference audio-video content 1. In the context of the present invention reference is made to an ensemble 112 which is a combination of both the reference audio-video content 1 and its mates 111. Each mate 111 is characterized by subtle differences in the sequence and timing of camera cuts, rendering each version uniquely distinguishable from others;
+            - 'button "Indexed by 3 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 8" [ref=f2e620] [cursor=pointer]': ◂ 3
+          - listitem [ref=f2e621]:
+            - generic [ref=f2e622]: S081
+            - text: said set of transcoding components 120 which segment said ensemble 112 in chunks 113 for the distribution to end users 2 (also called in the following spectators 2 or users 2) as optimized chunks 113 through a Content Delivery Network - CDN enabling adaptive streaming fruition by the spectators. The transcoding components 120 generate a set of different manifest files 121 tailored to end user devices and network conditions. Manifest files 121 allow spectator's video players to use the most suitable sequence of chunks 113 for the spectator's fruition of the event. Said set of different manifest files 121 points to unique interleaved combinations of said chunks 113 of the ensemble 112;
+            - 'button "Indexed by 9 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 9" [ref=f2e623] [cursor=pointer]': ◂ 9
+          - listitem [ref=f2e624]:
+            - generic [ref=f2e625]: S082
+            - text: said ledger 122 which contains records related to said set of different manifest files 121 and the end users/spectators 2 receiving one manifest file 121. Said ledger 122 identifies which end user 2 or group of end users 2 received a certain and/or a certain set of manifest files 121;
+            - 'button "Indexed by 8 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 10" [ref=f2e626] [cursor=pointer]': ◂ 8
+          - listitem [ref=f2e627]:
+            - generic [ref=f2e628]: S083
+            - text: said detection component 130 detects a pirate (unauthorized) webcasting of the event. Said detection component 130 runs a camera cuts detection algorithm 131 which analyzes the timings of said camera cuts in the pirate webcasting and devises time codes. The detection algorithm 131 proceeds to build one or more reconstructed manifest files 121' from said devised time codes;
+            - 'button "Indexed by 6 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 11" [ref=f2e629] [cursor=pointer]': ◂ 6
+          - listitem [ref=f2e630]:
+            - generic [ref=f2e631]: S084
+            - text: said retrieval component 140 which searches in the ledger 122 which spectator or group of spectators received one or more manifest files 121 that are equal to the reconstructed manifest files 121'. The retrieval component 140 identifies an end user 2 account, or a set of end user 2 accounts, used by the pirate for accessing the audio video content related to the event finding manifest files 121 that are equal to said reconstructed manifest files 121'.
+            - 'button "Indexed by 5 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 12" [ref=f2e632] [cursor=pointer]': ◂ 5
+        - paragraph [ref=f2e633]:
+          - generic [ref=f2e634]: S085
+          - text: Said manifest file 121 is central to the adaptive streaming process. After the video is encoded into various quality levels and segmented, the manifest file 121 is generated to list these segments along with metadata such as bitrate, resolution, and segment duration. A streaming player uses the manifest file 121 to decide which segments to download based on the spectator's current network speed and device resolution. The player continuously requests segments as listed in the manifest file 121, ensuring that the spectator receives a continuous and optimized stream. This adaptive process is dynamic, allowing for real-time adjustments to the stream quality as network conditions change. In adaptive streaming the manifest files 121 for both the reference video content 1 and the video modified with mates 111 will indeed point to sets of chunks 113 of equal duration. The key difference arises in how these manifest files 121 reference specific chunks 113, especially for the parts of the video where edits or modifications have been made in the "mate version" to incorporate anti-piracy measures.
+          - 'button "Indexed by 8 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶10" [ref=f2e635] [cursor=pointer]': ◂ 8
+        - paragraph [ref=f2e636]:
+          - generic [ref=f2e637]: S086
+          - text: The focus of the invention is its ability to trace a specific version of the content 1 distributed to and accessed by each spectator, facilitating an advanced mechanism for piracy detection. This is achieved by creating a multitude of mates 111, each with slight variations, which are then associated with different manifest files 121 distributed to the end users 2.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶11" [ref=f2e638] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e639]:
+          - generic [ref=f2e640]: S087
+          - text: The system 100 in preferred embodiments is used to generate multiple mates 111, each potentially leading to the multiplication of distinct manifest files 121. Such a diversified distribution of content 1 versions substantially enhances the system's 100 capacity to detect and trace the origins of pirated content, enabling the pinpointing of the specific spectator account or group of accounts utilized by pirates for sourcing and illegally replicating the content 1.
+        - paragraph [ref=f2e641]:
+          - generic [ref=f2e642]: S088
+          - text: "Every time a new mate 111 is created from a camera cut, it not only creates a new version of the content 1 but also necessitates the generation of a new manifest file 121 for that version. Starting with a single version of the content 1 (the original), creating a mate 111 for a camera cut results in two distinct versions: the original and the mate version. For each of these versions, a unique manifest file 121 is needed to guide the playback of that specific version, thus doubling the total number of manifest files 121. The process of doubling doesn't stop at the first camera cut. Each subsequent camera cut for which a mate 111 is created repeats this doubling effect. For example, if a mate 111 is created for a second camera cut, the total number of content versions (and by extension, manifest files 121) doubles again. This is because each existing version can spawn a new mate 111, each requiring its own manifest file 121. This exponential increase in the number of unique manifest files 121 significantly enhances the content's 1 protection against piracy. By distributing these unique versions to different viewers or groups, the system can track and identify the source of any pirated content with remarkable precision. Each manifest file 121 serves as a unique identifier, linking pirated content back to its original source among the viewers, thus enabling targeted anti-piracy measures. The invention leverages the inherent complexity of video production and distribution, turning every camera cut into an opportunity to enhance content security through this exponential generation of unique manifest files 121, thereby offering a robust and scalable solution to combating digital piracy."
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶13" [ref=f2e643] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e644]:
+          - generic [ref=f2e645]: S089
+          - text: In some embodiments of the present invention, the structured list 103 of instructions describing edits is an Edit Decision List (EDL). An EDL file contains a structured list of instructions describing edits to be performed on said reference audio-video content 1. The primary function of the EDL file is to guide the reconstruction of a sequence for editing or conforming purposes. Each entry in an EDL file comprises a source material reference which identifies the original media file (e.g., filename, reel name, tape number) and said time code. Said EDLs can be plain text files, with specific formatting and syntax depending on the standard being used (e.g., CMX3600, AAF, XML), or other format files.
+          - 'button "Indexed by 4 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶14" [ref=f2e646] [cursor=pointer]': ◂ 4
+        - paragraph [ref=f2e647]:
+          - generic [ref=f2e648]: S090
+          - text: The EDL file meticulously records all camera cut timings and transitions that occur during the shooting of an event. This includes the specific points in time when the director, operating within the audio-video production pipeline, decides to switch between cameras based on creative or strategic decision-making. Within the framework of the invention, the EDL file functions as a comprehensive record, systematically documenting every camera cut timing and transition. This meticulous recording and standardization process ensures that each piece of content can be uniquely identified and managed, facilitating the creation of mates 111.
+        - paragraph [ref=f2e649]:
+          - generic [ref=f2e650]: S091
+          - text: In the context of live streaming events, the live production is typically switched live, meaning that the director is choosing the shots in real time and there is no recording to edit. However, once the event is over, a recording of the stream can be edited to create a highlights package or other derivative product. This is where an EDL file can be helpful. The editor can use the EDL file to quickly and easily make the edits that were specified by the director or producer. This can save a lot of time and effort, especially if the recording is long or complex.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶16" [ref=f2e651] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e652]:
+          - generic [ref=f2e653]: S092
+          - text: Said structured list 103 such as an EDL used for live event direction and production allows the implementation of automation systems that can use instructions based on timecode or external triggers to perform camera switching. These instructions can be considered similar to a simplified EDL format, focusing mainly on camera selection changes based on timing. This is particularly favorable when used in scenarios where repetitive or predictable switching patterns are required (e.g., following a speaker with pre-determined camera positions). The instructions can further dictate when to activate/deactivate graphics, transitions between them, and other visual elements helping synchronize effects with live camera cuts.
+        - paragraph [ref=f2e654]:
+          - generic [ref=f2e655]: S093
+          - text: "While the similarity between the structured list 103 of instructions describing edits and an EDL file (or a true EDL file if present in the pipeline) is pivotal to the current invention, the system 100 is designed with a degree of flexibility to integrate alternative technologies that offer substantial functionalities akin to those provided by EDL files. These technologies include, in some embodiments of the present invention: advanced metadata frameworks, dynamic content management systems, and/or next generation editing protocols that facilitate the recording, standardization, and manipulation of video content in ways that support the creation of unique content variations for anti-piracy purposes."
+        - paragraph [ref=f2e656]:
+          - generic [ref=f2e657]: S094
+          - text: In some embodiments of the present invention, the system 100 is implemented within a computing environment that encompasses at least a processor, at least a memory, at least a storage hardware. Said computing environment is capable of executing instruction code.
+          - 'button "Indexed by 5 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶19" [ref=f2e658] [cursor=pointer]': ◂ 5
+        - paragraph [ref=f2e659]:
+          - generic [ref=f2e660]: S095
+          - text: In other embodiments, the system 100 can be deployed across one or more server clusters, specifically engineered to manage scalable processing loads efficiently.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶20" [ref=f2e661] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e662]:
+          - generic [ref=f2e663]: S096
+          - text: The precise manner in which the components of the system 100 are implemented and integrated can vary significantly, contingent upon the specific equipment and infrastructural elements already in place within the facility. A person having ordinary skill in the art, equipped with the teachings provided herein, would be capable of devising the optimal implementation strategy for deploying the components of the system 100 such as the mate creation component 110 for the intended purpose within any particular embodiment. Therefore, such precise manners of implementation will not be described in detail.
+        - paragraph [ref=f2e664]:
+          - generic [ref=f2e665]: S097
+          - text: With a typical EDL file (a particular well-known implementation of the general concept of a structured list 103 of instructions describing audio and video edits) serving as a reference for illustrative purposes, the mate creation component 110 within the pipeline 102 programmatically applies variations to the time codes of any camera cut. A non-limiting example of the mate creation component 110 operational framework is provided in Example 1.
+        - paragraph [ref=f2e666]:
+          - generic [ref=f2e667]: S098
+          - text: Unlike conventional systems, where a singular video stream is prepared for distribution, this invention introduces a multi-layered strategy that integrates additional transcoding and mixing components to manage and distribute multiple variations (mates 111) of the original content alongside the reference video content 1.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶23" [ref=f2e668] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e669]:
+          - generic [ref=f2e670]: S099
+          - text: "In some preferred embodiments of the present invention as the one shown in FIG. 3, the transcoding components 120 of the system 100 further comprise a mixing component 123. The mixing component 123 is seamlessly integrated within the digital content management pipeline, specifically following the transcoding phase. The mixing component 123 is architected for deployment in a computing environment that includes a processor, memory, and storage, all capable of executing instruction code, or across one or more server clusters tailored for efficiently managing scalable processing loads. Through this strategic implementation, the mixing component 123 significantly enhances content security and traceability by intelligently amalgamating reference and mate chunks 113 of video content and generating variegated manifest files 121 for content distribution. This not only fosters a novel approach to preventing piracy but also ensures a tailored viewing experience for each user 2, embedding unique identifiers within the content to facilitate the detection and tracing of pirated versions. The mixing component 123 performs two primary functions: the integration of chunks 113 from the reference video with those from one or more \"mate streams\", and the generation of unique manifest files 121, ensuring that each viewer is presented with a slightly different version of the event. Said mixing component 123 dynamically associates groups of users 2 with distinct manifest files 121, progressively assigning individualized manifest files 121 to each user 2 as the system 100 generates a sufficient variety of cuts. The operational mechanics of said mixing component 123, including the strategic interleaving of video chunks 113 to create unique viewer experiences and the subsequent generation of traceable content fingerprints, are elucidated through Example 4."
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶24" [ref=f2e671] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e672]:
+          - generic [ref=f2e673]: S100
+          - text: The inclusion of said mixing component 123 into the content distribution pipeline significantly enhances the system's ability to combat piracy. By distributing variegated versions of the content 1, the system 100 creates a unique "fingerprint" for each spectator or group of spectators. This makes it possible to trace pirated content back to its original source, as the unique combination of chunks 113 can be matched to a specific manifest file 121 distributed to a particular spectator or group. The system 100 dynamically adjusts the content each spectator receives, complicating attempts by pirates to redistribute the content. Since each version is slightly different, matching pirated content with its source becomes a powerful tool in identifying and mitigating unauthorized distribution. The ledger 122 and detection components 130, in conjunction with the varied manifest files 121, enable precise tracking and identification of piracy sources. By reconstructing the manifest file 121 used in pirated webcasting, the system 100 can pinpoint the specific spectator account or group responsible for the unauthorized distribution. The invention's innovation lies not only in the generation of unique content variations through the list 103 (such as EDL file) but also in the strategic management and preservation of the resultant diverse manifest files 121, each corresponding to different content variations distributed to viewers.
+        - paragraph [ref=f2e674]:
+          - generic [ref=f2e675]: S101
+          - text: The process of storing and archiving these manifest files 121 is crucial for enabling the precise tracking and identification of the source of pirated content. By associating each unique manifest file 121 with specific spectators or group distributions, the system establishes a direct link between the content received by viewers and the potential unauthorized redistribution of that content.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶26" [ref=f2e676] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e677]:
+          - generic [ref=f2e678]: S102
+          - text: For the purposes of data persistence, the system 100 is designed to be agnostic with respect to the underlying database technology utilized for storing these critical data elements. Those skilled in the art will appreciate that any contemporary or future database management system (DBMS) could be employed to achieve the objectives of efficient data storage, retrieval, and management. Some preferred embodiments include relational databases, NoSQL databases, or even more advanced distributed database systems, each selected based on criteria such as scalability, performance, security, and the specific requirements of the content distribution and piracy detection framework.
+        - paragraph [ref=f2e679]:
+          - generic [ref=f2e680]: S103
+          - text: Furthermore, in scenarios where immutability and decentralization are paramount, particularly in the context of forensic analysis and the establishment of irrefutable evidence of piracy, blockchain technology presents a compelling solution.
+        - paragraph [ref=f2e681]:
+          - generic [ref=f2e682]: S104
+          - text: In preferred embodiments of the present invention as the one shown in FIG. 3, the system 100 further comprises a blockchain registration component 150. The immutable ledger characteristic of blockchain provides a secure, tamper-evident environment for recording transactions related to the distribution of manifest files 121 and their associated spectator identifications. This decentralized approach not only enhances the security and traceability of the distributed content but also introduces a level of transparency and accountability that is highly beneficial in legal contexts. Said blockchain registration component 150 reads said manifest files 121 and the respective end users 2 in said ledger 122. By leveraging said blockchain registration component 150 for the storage of manifest file 121 distributions and their subsequent retrieval during piracy accusations, the system 100 benefits from the blockchain's inherent properties of immutability, decentralization, and consensus-based verification. This ensures that every transaction related to content distribution is recorded in a manner that is both unalterable and verifiable, providing a strong foundation for legal proceedings against piracy.
+        - paragraph [ref=f2e683]:
+          - generic [ref=f2e684]: S105
+          - text: According to some preferred embodiments of the present invention as the one shown in FIG. 2, the production pipeline 102 further comprises an advanced analytics component 104. Said advanced analytics component 104 comprises machine learning algorithms predicting and preemptively counteracting potential piracy activities by adjusting the time code variations of camera cuts and the configuration of the unique content mates 111, based on historical data patterns and piracy attempt profiles. Said advanced analytics component 104 sends said time code variations and said mates 111 configuration to said mate creation component 110.
+        - paragraph [ref=f2e685]:
+          - generic [ref=f2e686]: S106
+          - text: Said advanced analytics component 104 is used for video comparison and operates within an advanced computing environment. This environment is provisioned with not only a processor, adequate GPU resources specifically tailored for running AI and machine learning tasks, memory, and storage necessary for executing complex instruction code, but also it is designed to be deployed on one or more server clusters. These clusters are adept at managing scalable processing loads, ensuring efficiency and responsiveness. Such a computing infrastructure is meticulously calibrated to handle the intensive computational demands that are characteristic of the video analytics processes, particularly those that involve advanced AI algorithms and machine learning techniques. The adaptability of the advanced analytics component 104 allows it to tackle a variety of workload requirements, making it an integral part of the invention's capability to identify and combat piracy across diverse digital content distribution scenarios.
+        - paragraph [ref=f2e687]:
+          - generic [ref=f2e688]: S107
+          - text: In some embodiments of the present invention, said advanced analytics component 104 uses a well-known automated video comparison process, pertaining to the realm of scene change detection algorithms. This process is specifically designed to compare a "mate streaming video" (basic content 1 which has been modified using mates 111) with a reference video content 1 to accurately identify the specific manifest file 121 or "fingerprint" derived from alterations in camera cuts. A preferred way in which said advanced analytics component 104 carries out said video comparison process is provided in Example 5.
+          - 'button "Indexed by 3 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶32" [ref=f2e689] [cursor=pointer]': ◂ 3
+        - paragraph [ref=f2e690]:
+          - generic [ref=f2e691]: S108
+          - text: In a preferred embodiment of the present invention, a single time code variation is applied at each director-commanded camera cut to ensure each content mate remains unique and traceable.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶33" [ref=f2e692] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e693]:
+          - generic [ref=f2e694]: S109
+          - text: In a preferred embodiment of the present invention, the camera cuts detection algorithm 131 compares the reference audio-video content 1 with the pirate webcasting video using a perceptual hash method. In some preferred embodiment of the present invention, the camera cuts detection algorithm 131 compares the reference audio-video content 1 with the pirate webcasting video further using a fuzzy matching method.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶34" [ref=f2e695] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e696]:
+          - generic [ref=f2e697]: S110
+          - text: Some embodiments of the present inventions employ both the perceptual hash method and the fuzzy marching method as described in Example 5.
+        - paragraph [ref=f2e698]:
+          - generic [ref=f2e699]: S111
+          - text: Specifically, the scope of the invention extends to encompass machine learning algorithms for image and video recognition and advanced signal processing methods for feature extraction and comparison. Machine learning algorithms, especially those leveraging deep learning architectures, are adept at recognizing distinct features or patterns within video content. These algorithms offer powerful capabilities for matching and identifying discrepancies between reference videos and distributed content, even in the presence of alterations such as noise or overlays. Similarly, signal processing techniques can perform detailed analyses of video content, extracting unique features that persist across varied versions of the content, thus enabling precise comparisons.
+        - paragraph [ref=f2e700]:
+          - generic [ref=f2e701]: S112
+          - text: In some embodiments of the present invention, while digital watermarking is recognized as prior art and not the primary focus of this invention, digital watermarking is employed as a complementary technology within the anti-piracy framework. This synergy between the proposed methods and digital watermarking further enhances the robustness and effectiveness of the system in protecting digital content against unauthorized use. This inclusion ensures that the anti-piracy system 100 is not only comprehensive but also adaptable to future technological advancements and methodologies in content comparison and piracy detection. The invention, therefore, remains open to integrating a wide spectrum of technologies deemed appropriate by those skilled in the art for achieving its objectives, both currently and in the future.
+        - paragraph [ref=f2e702]:
+          - generic [ref=f2e703]: S113
+          - text: Two typical piracy attacks are the Naïve Redistribution (NR) and the Colluding Redistribution (CR). The present invention combats NR attacks through its unique mate creation component 110, which introduces slight variations at the time codes of camera cuts. Said variations, although minimal and visually insignificant to preserve quality, are enough to uniquely mark each distributed copy of the content. Should an attacker attempt to redistribute a received copy, even after applying common signal processing operations like scaling, Gaussian noising, or using a median filter, the embedded unique variations would always allow the identification and tracking of the pirated copy back to its source. This capability is further enhanced by the use of perceptual hash and fuzzy matching methods for content comparison, making the detection of altered content feasible. In the case of CR attacks, where several attackers collaborate to mix different copies to evade detection, the system's 100 approach is multifaceted. Firstly, the unique variations applied to each segment of the content (as facilitated by the mate creation component 110) ensure that even when colluders mix different copies, each segment can still be traced back to its original distribution. The ledger 122 and the detailed recording of each unique combination of chunks 113 distributed to end users 2 enable the identification of specific end user 2 accounts involved in the collusion. The system's strategy of distributing content via unicasting and employing adaptive streaming further complicates colluders' ability to mix and match content seamlessly. Each piece of content is tailored to specific end user 2 conditions and devices, making it harder for colluders to create a universally distributable pirated copy without leaving traces that can be detected by the system's monitoring components. While much of the present disclosure focuses on countering collusion attacks (where multiple pirates merge content segments from distinct versions to obscure embedded watermarks or fingerprints) the underlying principles of the invention are equally adaptable to a wide range of other existing or yet-to-emerge piracy tactics. For example, sophisticated signal-processing approaches, AI-based watermark removal, or even future attack vectors that exploit novel compression schemes can all be addressed by leveraging the core mate-creation and distribution mechanism described. By generating multiple subtly distinguishable versions of the same reference audio-video content 1 and systematically associating these versions with end users 2 accounts, the invention provides a versatile infrastructure for pinpointing the source of piracy, regardless of how the pirates attempt to disguise or remix the content 1. Consequently, the person skilled in the art will readily understand how to apply the same technique not only to mitigate collusion-based threats but also other known and unforeseen attacks, simply by adjusting the manner in which variations are introduced, tracked, and detected. These adaptations remain within the spirit and scope of the invention as claimed.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶38" [ref=f2e704] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e705]:
+          - generic [ref=f2e706]: S114
+          - text: According to some embodiments of the present invention, the system 100 further comprises a set of pipeline components in said production pipeline 102 overlaying additional audio and/or video elements to the combination of both the reference audio-video content 1 and its mates 111. In some embodiments of the present invention, said additional elements are nonexistent in the reference audio-video content 1.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶39" [ref=f2e707] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e708]:
+          - generic [ref=f2e709]: S115
+          - text: According to some embodiments of the present invention, said detection apparatus is using a probabilistic fingerprinting algorithm.
+        - paragraph [ref=f2e710]:
+          - generic [ref=f2e711]: S116
+          - text: "According to some embodiments of the present invention, said detection component 130 is using a probabilistic fingerprinting algorithm. Preferably, said probabilistic fingerprinting algorithm is Tardos Fingerprinting algorithm [Tardos, G.: \"Optimal probabilistic fingerprint codes\" In: Proceedings of the 35th Annual ACM Symposium on Theory of Computing (STOC), pp. 116–125 (2003)]."
+          - 'button "Indexed by 3 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶41" [ref=f2e712] [cursor=pointer]': ◂ 3
+        - paragraph [ref=f2e713]:
+          - generic [ref=f2e714]: S117
+          - text: The Tardos fingerprinting algorithm, as well as its derivatives, plays a crucial role in the detection and accusation of piracy. This algorithm is renowned for its theoretical foundations in combating collusion attacks, where multiple users 2 combine their copies to create a pirated version that attempts to obscure the origin of the content. The original Tardos algorithm is a probabilistic fingerprinting algorithm designed to be collusion-secure, meaning it maintains the ability to trace back to the original users 2 even if a group of users 2 collude to create a composite pirated copy.
+        - paragraph [ref=f2e715]:
+          - generic [ref=f2e716]: S118
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise
+          - strong [ref=f2e717]: dynamic Tardos fingerprinting algorithms
+          - text: which adapt the original Tardos algorithm to accommodate dynamic content distribution environments, such as streaming media, where content is not static and changes over time. Said dynamic Tardos fingerprinting algorithms ensure that the fingerprints embedded in the content are robust against collusion while minimizing the impact on content quality.
+        - paragraph [ref=f2e718]:
+          - generic [ref=f2e719]: S119
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise a
+          - strong [ref=f2e720]: binary Tardos fingerprinting algorithm
+          - text: which simplifies the original Tardos algorithm to work with binary codes, making it more suitable for digital content. This approach maintains the collusion resistance of the original Tardos algorithm while simplifying implementation and reducing computational overhead.
+        - paragraph [ref=f2e721]:
+          - generic [ref=f2e722]: S120
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise
+          - strong [ref=f2e723]: segmented Tardos algorithms
+          - text: which segment the content into parts and applying unique Tardos fingerprints to each segment. It enhances the granularity of tracking and identification, allowing for more precise localization of the pirated content segments and, consequently, the colluders.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶45" [ref=f2e724] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e725]:
+          - generic [ref=f2e726]: S121
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise
+          - strong [ref=f2e727]: compressed sensing Tardos fingerprinting algorithms
+          - text: to reduce the size of the fingerprints without compromising the detection and accusation capabilities. Said compressed sensing Tardos fingerprinting algorithms are particularly useful for high-bandwidth content, such as HD video, where embedding large fingerprints could be challenging.
+        - paragraph [ref=f2e728]:
+          - generic [ref=f2e729]: S122
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise
+          - strong [ref=f2e730]: quantum Tardos fingerprinting algorithms
+          - text: which apply the principles of quantum computing to Tardos fingerprinting, significantly enhancing security against collusion and making the scheme resilient against quantum computing attacks.
+        - paragraph [ref=f2e731]:
+          - generic [ref=f2e732]: S123
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise
+          - strong [ref=f2e733]: Machine Learning-Enhanced Tardos fingerprinting algorithms
+          - text: . The employment of machine learning algorithms optimizes the generation and embedding of Tardos codes, improving resilience against sophisticated collusion attacks. By learning from past attacks, this approach dynamically adjusts the fingerprinting strategy to address the evolving piracy tactics.
+        - paragraph [ref=f2e734]:
+          - generic [ref=f2e735]: S124
+          - text: According to some embodiments of the present invention, said probabilistic fingerprinting algorithm comprise
+          - strong [ref=f2e736]: Distributed Tardos fingerprinting algorithms
+          - text: which are specifically designed for decentralized content distribution networks, such as peer-to-peer systems, where traditional centralized fingerprinting approaches are less effective. It allows for the robust tracking of content across distributed networks, enhancing the ability to detect and trace pirated content back to the source.
+        - paragraph [ref=f2e737]:
+          - generic [ref=f2e738]: S125
+          - text: Each of these algorithms derives from the original Tardos fingerprinting scheme, building upon its foundational strengths to address specific challenges in content protection. They highlight the adaptability and ongoing relevance of the Tardos algorithm in the ever-evolving domain of digital content piracy, offering a spectrum of tools for copyright holders to safeguard their intellectual property effectively.
+        - paragraph [ref=f2e739]:
+          - generic [ref=f2e740]: S126
+          - text: Advantageously, in the present invention, a comprehensive array of anti-piracy mechanisms, inclusive of all aforementioned derivatives and innovations based on the Tardos fingerprinting algorithms, can be employed. By integrating dynamic Tardos fingerprinting algorithms, binary Tardos fingerprinting, segmented Tardos codes, compressed sensing Tardos fingerprinting, quantum Tardos fingerprinting, machine learning-enhanced Tardos fingerprinting, and distributed Tardos fingerprinting within its framework, the invention offers a multi-layered defense against collusion and unauthorized distribution. This strategic amalgamation not only capitalizes on the strengths of each method to ensure superior protection of copyrighted material but also underscores the invention's adaptability to diverse digital distribution environments and its readiness to counter advanced piracy tactics. Furthermore, a person skilled in the art could readily adapt and incorporate any other existing methods and algorithms of a similar nature to enhance the identification and tracking capabilities offered by this invention.
+        - paragraph [ref=f2e741]:
+          - generic [ref=f2e742]: S127
+          - text: According to some embodiments of the present invention, the streamed content in the form of said chunks 113 is distributed using unicasting.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶52" [ref=f2e743] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e744]:
+          - generic [ref=f2e745]: S128
+          - text: In other embodiments of the present invention, the elaboration of the key elements pertinent to adaptive streaming, integrates Multicast Adaptive Bitrate Streaming (Multicast ABR) technology. This innovative approach complements the traditional Unicast Adaptive Streaming by enabling the efficient distribution of video content to multiple users 2 over a single network transmission. Multicast ABR works by sending a single stream from the server, which is then accessed by multiple clients or devices simultaneously, significantly reducing the bandwidth requirements compared to individual unicast streams for each viewer. This technology is particularly advantageous in scenarios where bandwidth conservation is crucial, such as in live event streaming or broadcasting over constrained networks. Multicast ABR seamlessly integrates with the existing infrastructure of Adaptive Bitrate Streaming by dynamically adjusting the quality of the video stream to match the varying network conditions and device capabilities of multiple viewers, thereby maintaining the principle of delivering the optimal viewing experience for each user 2.
+        - paragraph [ref=f2e746]:
+          - generic [ref=f2e747]: S129
+          - text: It is an inherent aspect of the present invention that once the source account, or group of source accounts in the case of collusion attacks, is identified through the detection component 130 and the retrieval component 140, the provider responsible for distributing the event possesses the capacity to take immediate remedial action. In some embodiments of the present invention, the provider can exercise the option to disable any accounts implicated as sources of the unauthorized redistribution. This decisive action not only serves as a deterrent against future piracy but also reinforces the integrity of the content distribution framework. The ability to swiftly pinpoint and neutralize the origin of pirated content is a crucial feature of the system, ensuring that the content provider retains full control over the distribution and maintains the exclusivity of the viewing experience for legitimate users 2. In some embodiments of the present invention, said disabling of accounts implicated as sources of unauthorized redistribution is automatically operated by the system 100 which comprises algorithms capable of automatically perform such operations when a confirmed unauthorized redistribution is given by said detection component 130 and the retrieval component 140.
+        - paragraph [ref=f2e748]:
+          - generic [ref=f2e749]: S130
+          - text: Thus, the invention not only detects and identifies the source of piracy with high precision but also provides the content provider with the necessary tools to enforce copyright policies and protect against revenue loss effectively.
+        - paragraph [ref=f2e750]:
+          - generic [ref=f2e751]: S131
+          - text: Enhanced by the system's ability to track pirated copies, pinpoint them utilizing scene change detection algorithms, and correlate them to their initial distribution, a comprehensive, multi-pronged defence against unauthorized content dissemination is established. This pioneering synthesis of dynamic content creation and distribution methodologies with compatibility for traditional protection mechanisms equips copyright owners with an extensive arsenal to deter piracy, all the while preserving the quality of the legitimate viewer's experience.
+        - paragraph [ref=f2e752]:
+          - generic [ref=f2e753]: S132
+          - text: "As already mentioned, the present invention further relates to a method 200 of identification and protection of audio-video streaming content against unauthorized distribution and piracy. The method 200 uses the system 100 according to the following steps:"
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶57" [ref=f2e754] [cursor=pointer]': ◂ 1
+        - list [ref=f2e755]:
+          - listitem [ref=f2e756]:
+            - generic [ref=f2e757]: S133
+            - text: a
+            - strong [ref=f2e758]: capturing step 201
+            - text: in which said video is captured from diverse viewpoints using said set of cameras 101;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 13" [ref=f2e759] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e760]:
+            - generic [ref=f2e761]: S134
+            - text: a
+            - strong [ref=f2e762]: management step 210
+            - text: in which the captured video is received and processed through said pipeline;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 14" [ref=f2e763] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e764]:
+            - generic [ref=f2e765]: S135
+            - text: a
+            - strong [ref=f2e766]: camera cut recording step 220
+            - text: in which camera cut timings and transitions are recorded;
+          - listitem [ref=f2e767]:
+            - generic [ref=f2e768]: S136
+            - text: a
+            - strong [ref=f2e769]: programming step 230
+            - text: ", in which said mate creation component 110 is programmed to automatically apply variations to the time codes of camera cuts recorded in said camera cut recording step 220 to generate said one or more unique mates 111 of the reference audio-video content 1;"
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 16" [ref=f2e770] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e771]:
+            - generic [ref=f2e772]: S137
+            - text: a
+            - strong [ref=f2e773]: distribution step 260
+            - text: ", in which said mates 111 are distributed to said recipients;"
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 17" [ref=f2e774] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e775]:
+            - generic [ref=f2e776]: S138
+            - text: a
+            - strong [ref=f2e777]: recording step 270
+            - text: in which, the distribution of mates 111 to said recipients is recorded in said record;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 18" [ref=f2e778] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e779]:
+            - generic [ref=f2e780]: S139
+            - text: a
+            - strong [ref=f2e781]: monitoring step 280
+            - text: ", in which said detection apparatus monitors for pirate webcasting of the event detecting scene changes;"
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 19" [ref=f2e782] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e783]:
+            - generic [ref=f2e784]: S140
+            - text: a
+            - strong [ref=f2e785]: searching step 290
+            - text: in which the record is searched employing said detection apparatus to identify one or more recipients associated with a manifest file 121 having said detected scene changes, thereby identifying the source of pirated content.
+            - 'button "Indexed by 3 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 20" [ref=f2e786] [cursor=pointer]': ◂ 3
+        - paragraph [ref=f2e787]:
+          - generic [ref=f2e788]: S141
+          - text: "FIG. 4 shows a diagram representing the steps of the preferred embodiment of said method 200. The method 200 uses the system 100 described and comprises the following steps:"
+        - list [ref=f2e789]:
+          - listitem [ref=f2e790]:
+            - generic [ref=f2e791]: S142
+            - text: said
+            - strong [ref=f2e792]: capturing step 201
+            - text: ;
+          - listitem [ref=f2e793]:
+            - generic [ref=f2e794]: S143
+            - text: said
+            - strong [ref=f2e795]: management step 210
+            - text: in which the captured video (audio-video content) is received and processed through said audio-video production pipeline 102; said management step 210 comprising commanding real-time switching between camera views within the production pipeline 102 based on creative or strategic decision-making;
+          - listitem [ref=f2e796]:
+            - generic [ref=f2e797]: S144
+            - text: said
+            - strong [ref=f2e798]: camera cut recording step 220
+            - text: in which all camera cut timings and transitions are recorded in said structured list 103 of instructions describing edits;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 23" [ref=f2e799] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e800]:
+            - generic [ref=f2e801]: S145
+            - text: a
+            - strong [ref=f2e802]: programming step 230
+            - text: ", in which said mate creation component 110 is programmed to automatically apply variations to the time codes of camera cuts recorded in said structured list 103, during said camera cut recording step 220, to generate said one or more unique mates 111 of the reference audio-video content 1;"
+          - listitem [ref=f2e803]:
+            - generic [ref=f2e804]: S146
+            - text: a
+            - strong [ref=f2e805]: segmenting step 240
+            - text: in which the ensemble 112 is segmented into optimized chunks 113 for distribution through said CDN to enable adaptive streaming for spectators, ensuring a seamless viewing experience across varying network conditions and device capabilities;
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 25" [ref=f2e806] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e807]:
+            - generic [ref=f2e808]: S147
+            - text: a
+            - strong [ref=f2e809]: generation step 250
+            - text: in which different manifest files 121, tailored to end user 2 devices and network conditions, are generated;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 26" [ref=f2e810] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e811]:
+            - generic [ref=f2e812]: S148
+            - text: an
+            - strong [ref=f2e813]: enabling step
+            - text: in which video players are enabled to utilize the most suitable sequence of chunks 113 for optimal viewing experiences through the manifest files 121, which point to unique interleaved combinations of chunks 113;
+            - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 27" [ref=f2e814] [cursor=pointer]': ◂ 1
+          - listitem [ref=f2e815]:
+            - generic [ref=f2e816]: S149
+            - text: said
+            - strong [ref=f2e817]: distribution step 260
+            - text: ", in which streamed content is distributed to end users 2;"
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 28" [ref=f2e818] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e819]:
+            - generic [ref=f2e820]: S150
+            - text: said
+            - strong [ref=f2e821]: ledger recording step 270
+            - text: in which, the distribution of different manifest files 121 to spectators is recorded in said ledger 122, facilitating the identification of recipients of particular manifest files 121;
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 29" [ref=f2e822] [cursor=pointer]': ◂ 2
+          - listitem [ref=f2e823]:
+            - generic [ref=f2e824]: S151
+            - text: said
+            - strong [ref=f2e825]: monitoring step 280
+            - text: ", in which said detection component 130 monitors for pirate webcasting of the event detecting scene changes and devising time codes; said camera cuts detection algorithm 131 building one or more reconstructed manifest files 121' from said devised time codes;"
+            - 'button "Indexed by 4 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 30" [ref=f2e826] [cursor=pointer]': ◂ 4
+          - listitem [ref=f2e827]:
+            - generic [ref=f2e828]: S152
+            - text: said
+            - strong [ref=f2e829]: searching step 290
+            - text: in which the ledger 122 is searched employing said retrieval component 140 to identify an end user 2 account or accounts associated with the reconstructed manifest file 121', thereby identifying the source of pirated content.
+            - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · item 31" [ref=f2e830] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e831]:
+          - generic [ref=f2e832]: S153
+          - text: According to some embodiments of the present invention, in said programming step 230, additional audio-video elements are overlayed to said ensemble 112 of the reference audio-video content 1 and its mates 111, using said set of pipeline components.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶59" [ref=f2e833] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e834]:
+          - generic [ref=f2e835]: S154
+          - text: According to some embodiments of the present invention, in said programming step 230, said advanced analytics component 104 employs said machine learning algorithms to conduct real-time analysis and to dynamically adjust content variations to maintain effectiveness against piracy while ensuring high-quality content delivery to legitimate end users 2.
+        - paragraph [ref=f2e836]:
+          - generic [ref=f2e837]: S155
+          - text: According to some embodiments of the present invention, in said distribution step 260, streamed content is distributed using unicasting to provide each spectator with a unique content stream, further complicating unauthorized redistribution efforts.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶61" [ref=f2e838] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e839]:
+          - generic [ref=f2e840]: S156
+          - text: According to some embodiments of the present invention, in said monitoring step 280, said camera cuts detection algorithm 131 uses said perceptual hash method to compare the reference audio-video content 1 with pirated webcasting to identify visually similar frames despite minor discrepancies.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶62" [ref=f2e841] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e842]:
+          - generic [ref=f2e843]: S157
+          - text: According to some embodiments of the present invention, in said monitoring step 280, said camera cuts detection algorithm 131 uses said fuzzy matching method to compare content segments between the reference audio-video content 1 and pirated webcasting, allowing for the identification of matches despite temporal shifts or alterations.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Detailed description of Preferred Embodiments · ¶63" [ref=f2e844] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e845]:
+          - generic [ref=f2e846]: S158
+          - text: "The object of the present invention further relates to a computer program which comprises instructions (such as the ones provided in the following examples) which, when the program is executed by a computer, cause the computer to carry out the following steps of the method 200: said management step 210, said camera cut recording step 220, said programming step 230, said segmenting step 240 and said generation step 250 (in the embodiments in which the method 200 comprises them), said distribution step 260, said ledger recording step 270, said monitoring step 280, said searching step 290."
+        - paragraph [ref=f2e847]:
+          - generic [ref=f2e848]: S159
+          - text: Lastly, it is clear that, modifications, additions or variations, which are obvious for a person having ordinary knowledge in the art, may be made to the invention described, without thereby departing from the scope of protection provided by the attached set of claims.
+        - heading "Examples" [level=2] [ref=f2e849]:
+          - generic [ref=f2e850]: S160
+          - text: Examples
+        - heading "Example 1" [level=3] [ref=f2e851]:
+          - generic [ref=f2e852]: S161
+          - text: Example 1
+        - paragraph [ref=f2e853]:
+          - generic [ref=f2e854]: S162
+          - text: "With a typical EDL file (a particular well-known implementation of the general concept of a structured list of instructions describing audio and video edits) serving as a reference for illustrative purposes, the mate creation component within the pipeline programmatically applies variations to the time codes of any camera cut. A metacode illustrating the mate creation component operativity is herein provided as a non-limiting example of an algorithm which adjusts the timing of camera cuts based on a real-time decision-making process, leveraging a function that generates variations based on certain criteria (e.g., time, event dynamics, or director inputs):"
+        - generic [ref=f2e855]:
+          - generic [ref=f2e856]: S163
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 1 · code 1" [ref=f2e857] [cursor=pointer]': ◂ 1
+          - code [ref=f2e858]: "// Define the structure of a real-time camera cut event struct CameraCutEvent { timestamp: TimeCode, cameraID: Integer, transitionType: String } // Function to simulate receiving real-time camera cut events function receiveCameraCutEvent() -> CameraCutEvent { // Simulate receiving a new camera cut event CameraCutEvent newEvent = {...}; // Details populated in real-time return newEvent; } // Function to determine variation for the current camera cut function determineVariation(currentEvent: CameraCutEvent) -> Integer { // Implement logic to determine variation based on the event // Example: Alternate between adding and subtracting time, or base on cameraID Integer variation = (currentEvent.cameraID % 2 == 0) ? 1 : -1; return variation; } // Function to apply variation to a camera cut event in real-time function applyRealTimeVariation(event: CameraCutEvent) -> CameraCutEvent { Integer variation = determineVariation(event); event.timestamp += variation; // Apply the determined variation to the timestamp return event; } // Main loop for processing real-time camera cuts and applying variations while (true) { CameraCutEvent currentEvent = receiveCameraCutEvent(); // Receive a new camera cut in real-time CameraCutEvent variedEvent = applyRealTimeVariation(currentEvent); // Apply variation to the event // Process the varied event (e.g., record in a live EDL, use for live streaming) processVariedCameraCutEvent(variedEvent); }"
+        - heading "Example 2" [level=3] [ref=f2e859]:
+          - generic [ref=f2e860]: S164
+          - text: Example 2
+        - paragraph [ref=f2e861]:
+          - generic [ref=f2e862]: S165
+          - text: "A non-limiting example of a simplified Edit Decision List (EDL) for a reference audio-video content is here provided. The present example shows the subsequent implementation of a mate in the EDL consisting in the application of a delay of 10 frames to a particular camera cut. It is recognized that in practical applications, an EDL encompasses a broader spectrum of information; however, for the sake of clarity in this exposition, our focus will be confined to the core elements: the cut number, the source camera, the in-point (commencement time of the cut), and the out-point (conclusion time of the cut). This simplified representation aims to elucidate the fundamental principles underpinning the operation of the invention in the context of video content management and modification."
+          - 'button "Indexed by 3 claim fragment(s) of this edition: Example 2 · ¶1" [ref=f2e863] [cursor=pointer]': ◂ 3
+        - generic [ref=f2e864]:
+          - generic [ref=f2e865]: S166
+          - 'button "Indexed by 7 claim fragment(s) of this edition: Example 2 · Table 1" [ref=f2e866] [cursor=pointer]': ◂ 7
+          - table [ref=f2e867]:
+            - caption [ref=f2e868]: Table 1. Reference video content 1 EDL file / reference EDL file
+            - rowgroup [ref=f2e869]:
+              - row [ref=f2e870]:
+                - columnheader "Anchor" [ref=f2e871]
+                - columnheader "Cut Number" [ref=f2e872]
+                - columnheader "Source Camera" [ref=f2e873]
+                - columnheader "In-Point (Timecode)" [ref=f2e874]
+                - columnheader "Out-Point (Timecode)" [ref=f2e875]
+            - rowgroup [ref=f2e876]:
+              - row [ref=f2e877]:
+                - cell [ref=f2e878]:
+                  - generic [ref=f2e879]: S166.r1
+                - cell "1" [ref=f2e880]
+                - cell "Camera 1" [ref=f2e881]
+                - cell "00:00:00:00" [ref=f2e882]
+                - cell "00:00:10:00" [ref=f2e883]
+              - row [ref=f2e884]:
+                - cell [ref=f2e885]:
+                  - generic [ref=f2e886]: S166.r2
+                - cell "2" [ref=f2e887]
+                - cell "Camera 2" [ref=f2e888]
+                - cell "00:00:10:01" [ref=f2e889]
+                - cell "00:00:20:00" [ref=f2e890]
+              - row [ref=f2e891]:
+                - cell [ref=f2e892]:
+                  - generic [ref=f2e893]: S166.r3
+                - cell "3" [ref=f2e894]
+                - cell "Camera 3" [ref=f2e895]
+                - cell "00:00:20:01" [ref=f2e896]
+                - cell "00:00:30:00" [ref=f2e897]
+              - row [ref=f2e898]:
+                - cell [ref=f2e899]:
+                  - generic [ref=f2e900]: S166.r4
+                - cell "4" [ref=f2e901]
+                - cell "Camera 2" [ref=f2e902]
+                - cell "00:00:30:01" [ref=f2e903]
+                - cell "00:00:40:00" [ref=f2e904]
+              - row [ref=f2e905]:
+                - cell [ref=f2e906]:
+                  - generic [ref=f2e907]: S166.r5
+                - cell "5" [ref=f2e908]
+                - cell "Camera 1" [ref=f2e909]
+                - cell "00:00:40:01" [ref=f2e910]
+                - cell "00:00:50:00" [ref=f2e911]
+        - paragraph [ref=f2e912]:
+          - generic [ref=f2e913]: S167
+          - text: To implement said mate, the duration of Cut 2 is extended by 10 frames, thus delaying the start of Cut 3 by 10 frames. Cut 4 will start at the same time as in the reference to maintain synchronization from Cut 4 onwards.
+          - 'button "Indexed by 7 claim fragment(s) of this edition: Example 2 · ¶2" [ref=f2e914] [cursor=pointer]': ◂ 7
+        - generic [ref=f2e915]:
+          - generic [ref=f2e916]: S168
+          - 'button "Indexed by 10 claim fragment(s) of this edition: Example 2 · Table 2" [ref=f2e917] [cursor=pointer]': ◂ 10
+          - table [ref=f2e918]:
+            - caption [ref=f2e919]: Table 2. Modified video EDL file / mate EDL file
+            - rowgroup [ref=f2e920]:
+              - row [ref=f2e921]:
+                - columnheader "Anchor" [ref=f2e922]
+                - columnheader "Cut Number" [ref=f2e923]
+                - columnheader "Source Camera" [ref=f2e924]
+                - columnheader "In-Point (Timecode)" [ref=f2e925]
+                - columnheader "Out-Point (Timecode)" [ref=f2e926]
+            - rowgroup [ref=f2e927]:
+              - row [ref=f2e928]:
+                - cell [ref=f2e929]:
+                  - generic [ref=f2e930]: S168.r1
+                - cell "1" [ref=f2e931]
+                - cell "Camera 1" [ref=f2e932]
+                - cell "00:00:00:00" [ref=f2e933]
+                - cell "00:00:10:00 *// Unchanged*" [ref=f2e934]
+              - row [ref=f2e935]:
+                - cell [ref=f2e936]:
+                  - generic [ref=f2e937]: S168.r2
+                  - 'button "Indexed by 1 claim fragment(s) of this edition: Example 2 · Table 2 · row Cut 2" [ref=f2e938] [cursor=pointer]': ◂ 1
+                - cell "2" [ref=f2e939]
+                - cell "Camera 2" [ref=f2e940]
+                - cell "00:00:10:01" [ref=f2e941]
+                - cell "00:00:20:10 *// Extended by 10 frames*" [ref=f2e942]
+              - row [ref=f2e943]:
+                - cell [ref=f2e944]:
+                  - generic [ref=f2e945]: S168.r3
+                  - 'button "Indexed by 1 claim fragment(s) of this edition: Example 2 · Table 2 · row Cut 3" [ref=f2e946] [cursor=pointer]': ◂ 1
+                - cell "3" [ref=f2e947]
+                - cell "Camera 3" [ref=f2e948]
+                - cell "00:00:20:11" [ref=f2e949]
+                - cell "00:00:30:00 *// Delayed start by 10 frames, adjusted duration*" [ref=f2e950]
+              - row [ref=f2e951]:
+                - cell [ref=f2e952]:
+                  - generic [ref=f2e953]: S168.r4
+                  - 'button "Indexed by 2 claim fragment(s) of this edition: Example 2 · Table 2 · row Cut 4" [ref=f2e954] [cursor=pointer]': ◂ 2
+                - cell "4" [ref=f2e955]
+                - cell "Camera 2" [ref=f2e956]
+                - cell "00:00:30:01" [ref=f2e957]
+                - cell "00:00:40:00 *// Adjusted to the reference*" [ref=f2e958]
+              - row [ref=f2e959]:
+                - cell [ref=f2e960]:
+                  - generic [ref=f2e961]: S168.r5
+                - cell "5" [ref=f2e962]
+                - cell "Camera 1" [ref=f2e963]
+                - cell "00:00:40:01" [ref=f2e964]
+                - cell "00:00:50:00" [ref=f2e965]
+        - paragraph [ref=f2e966]:
+          - generic [ref=f2e967]: S169
+          - text: As shown in Table 2, in the mate EDL file, cut 2 is extended to last 10 frames longer than in the reference, thus ending at 00:00:20:10 instead of 00:00:20:00. Cut 3 begins 10 frames later than in the reference, starting at 00:00:20:11 to accommodate the extension of Cut 2. Cut 3 duration is adjusted to ensure Cut 4 can start at the intended time. To realign the mate EDL file with the reference EDL file, starting from Cut 4, the mate EDL file's Cut 4 begins at 00:00:30:01, just like in the reference EDL file, with no delay, implying that the mate's Cut 3 duration adjustment ensures alignment for Cut 4's start time.
+          - 'button "Indexed by 7 claim fragment(s) of this edition: Example 2 · ¶3" [ref=f2e968] [cursor=pointer]': ◂ 7
+        - paragraph [ref=f2e969]:
+          - generic [ref=f2e970]: S170
+          - text: "A different additional mate could be provided for this same event as follows:"
+        - generic [ref=f2e971]:
+          - generic [ref=f2e972]: S171
+          - table [ref=f2e973]:
+            - caption [ref=f2e974]: Table 3. Modified video EDL file / mate EDL file
+            - rowgroup [ref=f2e975]:
+              - row [ref=f2e976]:
+                - columnheader "Anchor" [ref=f2e977]
+                - columnheader "Cut Number" [ref=f2e978]
+                - columnheader "Source Camera" [ref=f2e979]
+                - columnheader "In-Point (Timecode)" [ref=f2e980]
+                - columnheader "Out-Point (Timecode)" [ref=f2e981]
+            - rowgroup [ref=f2e982]:
+              - row [ref=f2e983]:
+                - cell [ref=f2e984]:
+                  - generic [ref=f2e985]: S171.r1
+                - cell "1" [ref=f2e986]
+                - cell "Camera 1" [ref=f2e987]
+                - cell "00:00:00:00" [ref=f2e988]
+                - cell "00:00:10:00 *// Unchanged*" [ref=f2e989]
+              - row [ref=f2e990]:
+                - cell [ref=f2e991]:
+                  - generic [ref=f2e992]: S171.r2
+                - cell "2" [ref=f2e993]
+                - cell "Camera 2" [ref=f2e994]
+                - cell "00:00:10:01" [ref=f2e995]
+                - cell "00:00:20:05 *// Extended by 5 frames*" [ref=f2e996]
+              - row [ref=f2e997]:
+                - cell [ref=f2e998]:
+                  - generic [ref=f2e999]: S171.r3
+                - cell "3" [ref=f2e1000]
+                - cell "Camera 3" [ref=f2e1001]
+                - cell "00:00:20:06" [ref=f2e1002]
+                - cell "00:00:30:05 *// Delayed start by 5 frames, same number of frames of the reference video*" [ref=f2e1003]
+              - row [ref=f2e1004]:
+                - cell [ref=f2e1005]:
+                  - generic [ref=f2e1006]: S171.r4
+                - cell "4" [ref=f2e1007]
+                - cell "Camera 2" [ref=f2e1008]
+                - cell "00:00:30:06" [ref=f2e1009]
+                - cell "00:00:40:05 *// Delayed start by 5 frames, same number of frames of the reference video*" [ref=f2e1010]
+              - row [ref=f2e1011]:
+                - cell [ref=f2e1012]:
+                  - generic [ref=f2e1013]: S171.r5
+                - cell "5" [ref=f2e1014]
+                - cell "Camera 1" [ref=f2e1015]
+                - cell "00:00:40:06" [ref=f2e1016]
+                - cell "00:00:50:00 *// Adjusted to the reference*" [ref=f2e1017]
+        - paragraph [ref=f2e1018]:
+          - generic [ref=f2e1019]: S172
+          - text: With a single mate generation, the number of different videos is doubled at every camera cut, that results in a power of 2 being applied to said number of videos. Additional mates raise the value of said power applied to the number of different videos, for example, with two mates a power of 3 is applied. Thus, it is easy to calculate that, by using a couple of mates in addition to the reference video, the number of different videos would be 1 million after only 100 camera cuts (100 to the power of 3).
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 2 · ¶5" [ref=f2e1020] [cursor=pointer]': ◂ 1
+        - heading "Example 3" [level=3] [ref=f2e1021]:
+          - generic [ref=f2e1022]: S173
+          - text: Example 3
+        - paragraph [ref=f2e1023]:
+          - generic [ref=f2e1024]: S174
+          - text: The example is intended to clarify how the manifest files would differ in the sections corresponding to the altered cuts, while maintaining consistency in chunk duration across both versions.
+        - paragraph [ref=f2e1025]:
+          - generic [ref=f2e1026]: S175
+          - text: "Assuming each cut results in a set of chunks of equal duration (10 seconds each for simplicity), here is an example of how the reference video's manifest file looks:"
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 3 · ¶2" [ref=f2e1027] [cursor=pointer]': ◂ 1
+        - generic [ref=f2e1028]:
+          - generic [ref=f2e1029]: S176
+          - 'button "Indexed by 2 claim fragment(s) of this edition: Example 3 · code 1" [ref=f2e1030] [cursor=pointer]': ◂ 2
+          - code [ref=f2e1031]: "# Manifest for Reference Video # EXT-X-VERSION:3 #EXT-X-MEDIA-SEQUENCE:1 #EXTINF:10, reference_segment1_000.ts #EXTINF:10, reference_segment2_000.ts #EXTINF:10, reference_segment3_000.ts #EXTINF:10, reference_segment4_000.ts #EXTINF:10, reference_segment5_000.ts #EXT-X-ENDLIST"
+        - paragraph [ref=f2e1032]:
+          - generic [ref=f2e1033]: S177
+          - text: "For the manifest file relating to the video modified with mates (mate version), where modifications have been applied to the second and third cuts (for example, adding a delay to the start of the third cut), the manifest file would reference different chunks for those specific sections, indicating the variations:"
+        - generic [ref=f2e1034]:
+          - generic [ref=f2e1035]: S178
+          - 'button "Indexed by 4 claim fragment(s) of this edition: Example 3 · code 2" [ref=f2e1036] [cursor=pointer]': ◂ 4
+          - code [ref=f2e1037]: "# Manifest for Mate Video (With EDL Variations) # EXT-X-VERSION:3 #EXT-X-MEDIA-SEQUENCE:1 #EXTINF:10, mate_segment1_000.ts # Unchanged from reference #EXTINF:10, mate_segment2_000.ts # Might be the same as reference if the cut itself is unchanged but leads into the delayed third cut # Here, for the third cut, assuming the delay alters how the cut is represented, a different chunk sequence is used #EXTINF:10, mate_segment3_001.ts # Different chunk for the third cut reflecting the delay or alteration #EXTINF:10, mate_segment4_000.ts # Resumes alignment with reference, assuming cut four follows seamlessly from the adjusted third cut #EXTINF:10, mate_segment5_000.ts # Unchanged from reference #EXT-X-ENDLIST"
+        - paragraph [ref=f2e1038]:
+          - generic [ref=f2e1039]: S179
+          - text: The
+          - code [ref=f2e1040]: reference_segmentX_000.ts
+          - text: and
+          - code [ref=f2e1041]: mate_segmentX_000.ts
+          - text: files represent chunks of video data. For the reference video, each segment is straightforwardly named to reflect its sequence in the original content. In the mate version,
+          - code [ref=f2e1042]: mate_segment3_001.ts
+          - text: indicates a different chunk than what's used in the corresponding place in the reference video. This chunk represents the altered third cut due to the applied delay or modification for anti-piracy purposes. The naming convention (001 vs. 000) signifies that this chunk is a variant specifically created to incorporate the EDL modification.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 3 · ¶4" [ref=f2e1043] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e1044]:
+          - generic [ref=f2e1045]: S180
+          - text: The above approach shows that while both the reference and mate videos use chunks of equal duration, ensuring compatibility with adaptive streaming protocols, the specific chunks referenced for certain cuts are different in the mate version. These differences reflect the modifications made to the video content as part of the anti-piracy strategy, without altering the fundamental structure of the manifest files.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 3 · ¶5" [ref=f2e1046] [cursor=pointer]': ◂ 1
+        - heading "Example 4" [level=3] [ref=f2e1047]:
+          - generic [ref=f2e1048]: S181
+          - text: Example 4
+        - paragraph [ref=f2e1049]:
+          - generic [ref=f2e1050]: S182
+          - text: "The present non-limiting example provides an insight on the mixing component framework. The present illustrative example and hypothetical programming scenario, employs the Python programming language for demonstration purposes. Said mixing component framework, in some preferred embodiments, can be described in the following five steps:"
+        - paragraph [ref=f2e1051]:
+          - generic [ref=f2e1052]: S183
+          - strong [ref=f2e1053]: "Step 1: Initialize Data Structures"
+        - paragraph [ref=f2e1054]:
+          - generic [ref=f2e1055]: S184
+          - text: "User Group Mapping: A HashMap or Dictionary data structure can be used to map each group of end users (or individual end users) to their unique manifest file identifier. The key is the user or users group identifier, and the value would be the manifest file identifier."
+        - generic [ref=f2e1056]:
+          - generic [ref=f2e1057]: S185
+          - code [ref=f2e1058]: "user_manifest_map = {} # Key: User/Group ID, Value: Manifest File ID"
+        - paragraph [ref=f2e1059]:
+          - generic [ref=f2e1060]: S186
+          - text: "Manifest File Variations: A List or Array to store the variations of the content created at each camera cut. Each element in the list represents a unique variation (mate) of the content."
+        - generic [ref=f2e1061]:
+          - generic [ref=f2e1062]: S187
+          - code [ref=f2e1063]: "content_variations = [] # Stores each unique content variation"
+        - paragraph [ref=f2e1064]:
+          - generic [ref=f2e1065]: S188
+          - text: "Manifest File Generation: A List or Array to store the manifest files corresponding to each content variation. Each manifest file will have a unique combination of content chunks."
+        - generic [ref=f2e1066]:
+          - generic [ref=f2e1067]: S189
+          - code [ref=f2e1068]: "manifest_files = [] # Stores the manifest files for each content variation"
+        - paragraph [ref=f2e1069]:
+          - generic [ref=f2e1070]: S190
+          - strong [ref=f2e1071]: "Step 2: Generate Content Variations"
+        - paragraph [ref=f2e1072]:
+          - generic [ref=f2e1073]: S191
+          - text: For each camera cut, the mixing component creates a new variation of the content (mate) and adds it to the content_variations list. This involves applying variations to the camera cuts as specified in an EDL file.
+        - generic [ref=f2e1074]:
+          - generic [ref=f2e1075]: S192
+          - code [ref=f2e1076]: "def create_content_variation(camera_cut_event): # Apply variation logic based on camera_cut_event details # Add the new variation to the content_variations list new_variation = \"Variation_\" + str(len(content_variations) + 1) content_variations.append(new_variation)"
+        - paragraph [ref=f2e1077]:
+          - generic [ref=f2e1078]: S193
+          - strong [ref=f2e1079]: "Step 3: Create Unique Manifest Files"
+        - paragraph [ref=f2e1080]:
+          - generic [ref=f2e1081]: S194
+          - text: The mixing component generates a unique manifest file for each content variation. The manifest file dictates the sequence of content chunks for playback. Each new variation leads to the generation of new manifest files, potentially doubling the number with each camera cut.
+        - generic [ref=f2e1082]:
+          - generic [ref=f2e1083]: S195
+          - code [ref=f2e1084]: "def generate_manifest_files(): for variation in content_variations: new_manifest = \"Manifest_\" + str(len(manifest_files) + 1) manifest_files.append(new_manifest)"
+        - paragraph [ref=f2e1085]:
+          - generic [ref=f2e1086]: S196
+          - strong [ref=f2e1087]: "Step 4: Map Users to Manifest Files"
+        - paragraph [ref=f2e1088]:
+          - generic [ref=f2e1089]: S197
+          - text: The mixing component distributes the manifest files among users or groups. Initially, groups of users might receive the same manifest file, but as more variations are generated, individual users are assigned with their unique manifest files.
+        - generic [ref=f2e1090]:
+          - generic [ref=f2e1091]: S198
+          - code [ref=f2e1092]: "def distribute_manifest_files_to_users(users): # Distribute manifest files ensuring as much uniqueness as possible for user in users: assigned_manifest = manifest_files[user.id % len(manifest_files)] user_manifest_map[user.id] = assigned_manifest"
+        - paragraph [ref=f2e1093]:
+          - generic [ref=f2e1094]: S199
+          - strong [ref=f2e1095]: "Step 5: Dynamically Update User-Manifest Associations"
+        - paragraph [ref=f2e1096]:
+          - generic [ref=f2e1097]: S200
+          - text: As more content variations are created, the mixing component updates the user_manifest_map to point to newer, unique manifest files. This step ensures that over time, with a sufficient number of cuts, each user can be associated with a distinct manifest file.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 4 · ¶13" [ref=f2e1098] [cursor=pointer]': ◂ 1
+        - generic [ref=f2e1099]:
+          - generic [ref=f2e1100]: S201
+          - code [ref=f2e1101]: "def update_user_manifest_associations(): # Logic to update mappings as new content variations are generated # Ensuring each user gets a unique manifest file when possible"
+        - heading "Example 5" [level=3] [ref=f2e1102]:
+          - generic [ref=f2e1103]: S202
+          - text: Example 5
+        - paragraph [ref=f2e1104]:
+          - generic [ref=f2e1105]: S203
+          - text: The process of video comparison carried out by said advanced analytics component begins by extracting the middle third of each frame from both the reference video (reference video content) and the mate streaming video (content modified with a mate). This is done to eliminate the top and bottom thirds of the frames, which often contain broadcaster-specific logos, icons, and overlay advertisements, ensuring that these elements do not interfere with the comparison. By focusing on the middle third, said advanced analytics component removes most external differences, allowing for a more accurate comparison of the content itself.
+        - generic [ref=f2e1106]:
+          - generic [ref=f2e1107]: S204
+          - code [ref=f2e1108]: "from PIL import Image def extract_middle_third(image_path): with Image.open(image_path) as im_pil: crop_x1 = 0 crop_x2 = im_pil.width crop_y1 = int(im_pil.height * 0.333) crop_y2 = int(im_pil.height * 0.666) return im_pil.crop((crop_x1, crop_y1, crop_x2, crop_y2))"
+        - paragraph [ref=f2e1109]:
+          - generic [ref=f2e1110]: S205
+          - text: As discussed, said perceptual hash method is adopted by said camera cuts detection algorithm. Said perceptual hash method employs advanced perceptual hashing algorithms that meticulously analyse the visual content of each frame, generating a hash value that encapsulates the essence of the visual information contained therein. Notably, this hash value exhibits a high degree of resilience to subtle alterations affecting the frame, such as resizing or minor distortions, thereby ensuring consistency in the hash value across visually similar frames despite these variations. Consequently, this facilitates the precise identification of frames that are visually akin to one another, effectively addressing the challenge of minor discrepancies between frames from different video sources. As discussed, a fuzzy matching method is further adopted by said camera cuts detection algorithm in some preferred embodiments of the present invention. The fuzzy matching method is implemented through the comparison of perceptual hashes of groups of frames using sliding windows. The fuzzy matching method enables the identification of content matches even in scenarios where commercials or other elements cause temporal shifts in the content.
+          - 'button "Indexed by 4 claim fragment(s) of this edition: Example 5 · ¶2" [ref=f2e1111] [cursor=pointer]': ◂ 4
+        - generic [ref=f2e1112]:
+          - generic [ref=f2e1113]: S206
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 5 · code 2" [ref=f2e1114] [cursor=pointer]': ◂ 1
+          - code [ref=f2e1115]: "def fuzzy_matching(hashes1, hashes2, max_difference, min_match_percentage): num_matches = 0 for hash1 in hashes1: for hash2 in hashes2: if abs(hash1 - hash2) <= max_difference: num_matches += 1 break percentage_match = num_matches / len(hashes1) return percentage_match >= min_match_percentage"
+        - paragraph [ref=f2e1116]:
+          - generic [ref=f2e1117]: S207
+          - text: This automated process, as delineated in the preferred embodiments of the present invention, facilitates the efficient comparison of the mate streaming video with the reference video, thereby pinpointing its specific manifest file. By scrutinizing the timing and characteristics of the altered cuts, this described process empowers the identification of pirated content and the tracing back to its origin, capitalizing on the distinctive features of the anti-piracy system. The deployment of these advanced techniques enables broadcasters and content providers to significantly streamline the detection of unauthorized usage of their content. This automation not only minimizes the necessity for manual intervention but also enhances the precision with which piracy is detected, marking a substantial improvement in the efforts to safeguard intellectual property rights in the digital media landscape.
+        - paragraph [ref=f2e1118]:
+          - generic [ref=f2e1119]: S208
+          - text: According to some embodiments of the present invention, in said monitoring step 280 the detection component 130 leverages said probabilistic fingerprinting algorithm for enhanced accuracy in identifying pirated content and tracing its source.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: Example 5 · ¶4" [ref=f2e1120] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e1121]:
+          - generic [ref=f2e1122]: S209
+          - text: In the context of enhancing the Automated Video Comparison Process detailed in the preferred embodiments of this invention, it is critical to acknowledge that the methodology is not confined solely to the use of perceptual hashing and fuzzy matching. While these approaches serve as foundational techniques for addressing the challenges of precise video comparison under variable conditions, the invention's framework is designed to be inclusive of a broad array of alternative and supplementary methods that can provide equivalent or superior functionalities for achieving the objectives of the invention.
+        - heading "Claims" [level=2] [ref=f2e1123]:
+          - generic [ref=f2e1124]: S210
+          - text: Claims
+        - generic [ref=f2e1125]:
+          - paragraph [ref=f2e1126]:
+            - generic [ref=f2e1127]: S211
+            - strong [ref=f2e1128]: "1."
+            - text: "Anti-piracy system (100) identifying unauthorized distributions of streaming audio-video content; said anti-piracy system (100) comprising:"
+          - list [ref=f2e1129]:
+            - listitem [ref=f2e1130]:
+              - generic [ref=f2e1131]: S212
+              - text: a pipeline receiving live or pre-recorded video captured from one or more cameras (101); said pipeline creating a reference audio-video content (1); switches between said cameras (101) being called camera cuts;
+            - listitem [ref=f2e1132]:
+              - generic [ref=f2e1133]: S213
+              - text: a mate creation component (110) generating at least one modified version of the video by automatically altering at least one camera-cut timing relative to the reference audio-video content (1), thereby producing one or more unique mates (111) of the reference audio-video content (1); a mate (111) being a distinguishable version of the same underlying audio-video content (1); an ensemble (112) being a combination of both the reference audio-video content (1) and its mates (111);
+            - listitem [ref=f2e1134]:
+              - generic [ref=f2e1135]: S214
+              - text: a distribution apparatus delivering one or more of said distinguishable versions to at least one recipient;
+            - listitem [ref=f2e1136]:
+              - generic [ref=f2e1137]: S215
+              - text: a record of associations, made by said distribution apparatus, between said distinguishable versions and respective recipients;
+            - listitem [ref=f2e1138]:
+              - generic [ref=f2e1139]: S216
+              - text: a detection apparatus applying an artificial intelligence algorithm to analyze a suspected unauthorized distribution by detecting camera-switch timings therein and to identify which of said distinguishable versions matches the suspected unauthorized distribution; said detection apparatus searching said record for a recipient associated to a distinguishable version matching the suspected unauthorized distribution.
+        - paragraph [ref=f2e1141]:
+          - generic [ref=f2e1142]: S217
+          - strong [ref=f2e1143]: "2."
+          - text: Anti-piracy system (100), according to the previous claim 1, where said artificial intelligence algorithm compares the reference audio-video content (1) with the pirate webcasting video using a perceptual hash method.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: PCT claim 2 (whole)" [ref=f2e1144] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e1146]:
+          - generic [ref=f2e1147]: S218
+          - strong [ref=f2e1148]: "3."
+          - text: Anti-piracy system (100), according to any of the previous claims 1 or 2, where the artificial intelligence algorithm compares the reference audio-video content (1) with the pirate webcasting video using a fuzzy matching method.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: PCT claim 3 (whole)" [ref=f2e1149] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e1151]:
+          - generic [ref=f2e1152]: S219
+          - strong [ref=f2e1153]: "4."
+          - text: Anti-piracy system (100), according to any of the previous claims, further comprising a set of pipeline components in said pipeline overlaying additional audio and/or video elements to the combination of both the reference audio-video content (1) and its mates (111).
+          - 'button "Indexed by 2 claim fragment(s) of this edition: PCT claim 4 (whole)" [ref=f2e1154] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e1156]:
+          - generic [ref=f2e1157]: S220
+          - strong [ref=f2e1158]: "5."
+          - text: Anti-piracy system (100), according to any of the previous claims, where said detection apparatus is using a probabilistic fingerprinting algorithm.
+        - paragraph [ref=f2e1160]:
+          - generic [ref=f2e1161]: S221
+          - strong [ref=f2e1162]: "6."
+          - text: Anti-piracy system (100), according to any of the previous claims, where streamed content is distributed using unicasting.
+          - 'button "Indexed by 2 claim fragment(s) of this edition: PCT claim 6 (whole)" [ref=f2e1163] [cursor=pointer]': ◂ 2
+        - paragraph [ref=f2e1165]:
+          - generic [ref=f2e1166]: S222
+          - strong [ref=f2e1167]: "7."
+          - text: Anti-piracy system (100), according to any of the previous claims, wherein the pipeline further comprises an advanced analytics component (104); said advanced analytics component (104) comprising machine learning algorithms predicting and preemptively counteracting potential piracy activities by adjusting the time code variations of camera cuts and the configuration of the unique content mates (111), based on historical data patterns and piracy attempt profiles; said advanced analytics component (104) sending said time code variations and said mates (111) configuration to said mate creation component (110).
+        - paragraph [ref=f2e1169]:
+          - generic [ref=f2e1170]: S223
+          - strong [ref=f2e1171]: "8."
+          - text: Anti-piracy system (100), according to any of the previous claims, being implemented within a computing environment comprising at least a processor, at least a memory, at least a storage hardware; said computing environment being capable of executing instruction code.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: PCT claim 8 (whole)" [ref=f2e1172] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e1174]:
+          - generic [ref=f2e1175]: S224
+          - strong [ref=f2e1176]: "9."
+          - text: Anti-piracy system (100), according to any of the previous claims 1-7, being implemented within one or more server clusters.
+        - paragraph [ref=f2e1178]:
+          - generic [ref=f2e1179]: S225
+          - strong [ref=f2e1180]: "10."
+          - text: Anti-piracy system (100), according to any of the previous claims, where said pipeline is an audio-video production pipeline (102) receiving, processing, and managing content from the cameras (101); a director using said pipeline (102) to command real-time camera cuts; said pipeline (102) recording all camera cut timings and transitions by inserting corresponding time codes in a list (103) of instructions describing edits.
+        - paragraph [ref=f2e1182]:
+          - generic [ref=f2e1183]: S226
+          - strong [ref=f2e1184]: "11."
+          - text: Anti-piracy system (100), according to any of the previous claims, where said distribution apparatus comprises a set of transcoding components (120) segmenting said ensemble (112) in chunks (113) for distributing to end users (2) through a Content Delivery Network - CDN enabling adaptive streaming fruition by the spectators; the transcoding components (120) generating a set of different manifest files (121) tailored to end user devices and network conditions; said set of different manifest files (121) pointing to unique interleaved combinations of said chunks (113) of the ensemble (112).
+          - 'button "Indexed by 4 claim fragment(s) of this edition: PCT claim 11 (whole)" [ref=f2e1185] [cursor=pointer]': ◂ 4
+        - paragraph [ref=f2e1187]:
+          - generic [ref=f2e1188]: S227
+          - strong [ref=f2e1189]: "12."
+          - text: Anti-piracy system (100), according to the previous claim 11, wherein said transcoding components (120) further comprise a mixing component (123); said mixing component (123) integrating said chunks (113) of the reference audio-video content (1) with chunks (113) of content modified with mates (111); said mixing component (123) generating said manifest files (121); said mixing component (123) associating end users (2) with manifest files (121) as the system (100) progressively provides different camera cuts.
+          - 'button "Indexed by 1 claim fragment(s) of this edition: PCT claim 12 (whole)" [ref=f2e1190] [cursor=pointer]': ◂ 1
+        - paragraph [ref=f2e1192]:
+          - generic [ref=f2e1193]: S228
+          - strong [ref=f2e1194]: "13."
+          - text: Anti-piracy system (100), according to any of the previous claims 11 or 12, further comprising a blockchain registration component (150) registering the association of manifest files (121) and end users (2) in a blockchain; said blockchain registration component (150) reading said manifest files (121) and said end users (2) in said record.
+        - paragraph [ref=f2e1196]:
+          - generic [ref=f2e1197]: S229
+          - strong [ref=f2e1198]: "14."
+          - text: Anti-piracy system (100), according to any the previous claim 11-13, where said record is a ledger (122) containing records related to said set of different manifest files (121) and the end users/spectators (2) receiving one manifest file (121); said ledger (122) identifying which end user (2) or group of end users (2) received a certain manifest file (121).
+          - 'button "Indexed by 2 claim fragment(s) of this edition: PCT claim 14 (whole)" [ref=f2e1199] [cursor=pointer]': ◂ 2
+        - generic [ref=f2e1200]:
+          - paragraph [ref=f2e1201]:
+            - generic [ref=f2e1202]: S230
+            - strong [ref=f2e1203]: "15."
+            - text: "Anti-piracy system (100), according to the previous claim 14, where said artificial intelligence algorithm is a camera cuts detection algorithm (131) and where said detection apparatus comprises:"
+          - list [ref=f2e1204]:
+            - listitem [ref=f2e1205]:
+              - generic [ref=f2e1206]: S231
+              - text: a detection component (130) detecting a pirate webcasting of the event; said detection component (130) running said detection algorithm (131); said detection algorithm (131) analyzing the timings of said camera cuts in the pirate webcasting and devising time codes; said camera cuts detection algorithm (131) building one or more reconstructed manifest files (121') from said devised time codes;
+              - 'button "Indexed by 1 claim fragment(s) of this edition: PCT claim 15 — element 1" [ref=f2e1207] [cursor=pointer]': ◂ 1
+            - listitem [ref=f2e1208]:
+              - generic [ref=f2e1209]: S232
+              - text: a retrieval component (140) searching in the ledger (122) which spectator or group of spectators received one or more manifest files (121) that are equal to the reconstructed manifest files (121'); said retrieval component (140) identifying an end user (2) account, or a set of end user (2) accounts, used by the pirate for accessing the audio video content related to the event.
+              - 'button "Indexed by 2 claim fragment(s) of this edition: PCT claim 15 — element 2" [ref=f2e1210] [cursor=pointer]': ◂ 2
+        - generic [ref=f2e1211]:
+          - paragraph [ref=f2e1212]:
+            - generic [ref=f2e1213]: S233
+            - strong [ref=f2e1214]: "16."
+            - text: "Method (200) of identification and protection of audio-video streaming content against unauthorized distribution and piracy; the method (200) exploiting the system (100), according to any of the previous claims, and comprising the following steps:"
+            - 'button "Indexed by 1 claim fragment(s) of this edition: PCT claim 16 (whole)" [ref=f2e1215] [cursor=pointer]': ◂ 1
+          - list [ref=f2e1216]:
+            - listitem [ref=f2e1217]:
+              - generic [ref=f2e1218]: S234
+              - text: a capturing step (201) in which said video is captured from diverse viewpoints using said set of cameras (101);
+            - listitem [ref=f2e1219]:
+              - generic [ref=f2e1220]: S235
+              - text: a management step (210) in which the captured video is received and processed through said pipeline;
+            - listitem [ref=f2e1221]:
+              - generic [ref=f2e1222]: S236
+              - text: a camera cut recording step (220) in which camera cut timings and transitions are recorded;
+            - listitem [ref=f2e1223]:
+              - generic [ref=f2e1224]: S237
+              - text: a programming step (230), in which said mate creation component (110) is programmed to automatically apply variations to the time codes of camera cuts recorded in said camera cut recording step (220) to generate said one or more unique mates (111) of the reference audio-video content (1);
+            - listitem [ref=f2e1225]:
+              - generic [ref=f2e1226]: S238
+              - text: a distribution step (260), in which said mates (111) are distributed to said recipients;
+            - listitem [ref=f2e1227]:
+              - generic [ref=f2e1228]: S239
+              - text: a recording step (270) in which, the distribution of mates (111) to said recipients is recorded in said record;
+            - listitem [ref=f2e1229]:
+              - generic [ref=f2e1230]: S240
+              - text: a monitoring step (280), in which said detection apparatus monitors for pirate webcasting of the event detecting scene changes;
+            - listitem [ref=f2e1231]:
+              - generic [ref=f2e1232]: S241
+              - text: a searching step (290) in which the record is searched employing said detection apparatus to identify one or more recipients associated with a manifest file (121) having said detected scene changes, thereby identifying the source of pirated content.
+        - generic [ref=f2e1233]:
+          - paragraph [ref=f2e1234]:
+            - generic [ref=f2e1235]: S242
+            - strong [ref=f2e1236]: "17."
+            - text: "Method (200), according to the previous claim 16, exploiting the system (100), according to the previous claim 15, and comprising the following steps:"
+          - list [ref=f2e1237]:
+            - listitem [ref=f2e1238]:
+              - generic [ref=f2e1239]: S243
+              - text: said capturing step (201);
+            - listitem [ref=f2e1240]:
+              - generic [ref=f2e1241]: S244
+              - text: said management step (210) in which the captured video is received and processed through said audio-video production pipeline (102); said management step (210) comprising commanding real-time switching between camera views within the production pipeline (102);
+            - listitem [ref=f2e1242]:
+              - generic [ref=f2e1243]: S245
+              - text: said camera cut recording step (220) in which all camera cut timings and transitions are recorded in said list (103) of instructions describing edits;
+            - listitem [ref=f2e1244]:
+              - generic [ref=f2e1245]: S246
+              - text: said programming step (230), in which said mate creation component (110) is programmed to automatically apply variations to the time codes of camera cuts recorded in said list (103), during said camera cut recording step (220), to generate said one or more unique mates (111) of the reference audio-video content (1);
+            - listitem [ref=f2e1246]:
+              - generic [ref=f2e1247]: S247
+              - text: a segmenting step (240) in which the ensemble (112) is segmented into chunks (113) for distribution through said CDN;
+            - listitem [ref=f2e1248]:
+              - generic [ref=f2e1249]: S248
+              - text: a generation step (250) in which different manifest files (121), tailored to end user devices and network conditions, are generated;
+            - listitem [ref=f2e1250]:
+              - generic [ref=f2e1251]: S249
+              - text: said distribution step (260), in which streamed content is distributed to end users (2);
+            - listitem [ref=f2e1252]:
+              - generic [ref=f2e1253]: S250
+              - text: said ledger recording step (270) in which, the distribution of different manifest files (121) to spectators is recorded in said ledger (122);
+            - listitem [ref=f2e1254]:
+              - generic [ref=f2e1255]: S251
+              - text: said monitoring step (280), in which said detection component (130) monitors for pirate webcasting of the event detecting scene changes and devising time codes; said camera cuts detection algorithm (131) building one or more reconstructed manifest files (121') from said devised time codes;
+            - listitem [ref=f2e1256]:
+              - generic [ref=f2e1257]: S252
+              - text: said searching step (290) in which the ledger (122) is searched employing said retrieval component (140) to identify an end user (2) account or accounts associated with the reconstructed manifest file (121'), thereby identifying the source of pirated content.
+        - paragraph [ref=f2e1259]:
+          - generic [ref=f2e1260]: S253
+          - strong [ref=f2e1261]: "18."
+          - text: "Computer program, comprising instructions which, when the program is executed by a computer, cause the computer to carry out the following steps of the method (200), according to any one of previous claims 16 or 17: said management step (210), said camera cut recording step (220), said programming step (230), said segmenting step (240) when depending on claim 17, said generation step (250) when depending on claim 17, said distribution step (260), said ledger recording step (270), said monitoring step (280), said searching step (290)."
+        - heading "Abstract" [level=2] [ref=f2e1262]:
+          - generic [ref=f2e1263]: S254
+          - text: Abstract
+        - paragraph [ref=f2e1264]:
+          - generic [ref=f2e1265]: S255
+          - strong [ref=f2e1266]: AI – DRIVEN SYSTEM AND METHOD FOR CONTENT DIFFERENTIATION AND PIRACY TRACEABILITY IN STREAMING MEDIA
+        - paragraph [ref=f2e1267]:
+          - generic [ref=f2e1268]: S256
+          - text: The invention introduces an advanced AI-driven anti-piracy system that safeguards audio-video streaming content by generating unique content variations through programmable adjustments to camera cut time codes within a structured list of instructions describing edits of audio-video content. It employs a sophisticated production pipeline to create and distribute these variations ensuring tailored delivery to individual viewer conditions. A recorder meticulously records the distribution of manifest files, enabling the identification of potential sources of piracy. The system includes a detection component that utilizes advanced Artificial Intelligence algorithms to compare the original content with potentially pirated versions, allowing for the effective identification and tracking of unauthorized distributions. This approach represents a significant advancement in combating digital piracy, ensuring content security while maintaining high-quality viewing experiences.
+        - paragraph [ref=f2e1269]:
+          - generic [ref=f2e1270]: S257
+          - text: "*(FIG. 1)*"
+        - heading "6. Drawings" [level=1] [ref=f2e1271]:
+          - generic [ref=f2e1272]: S258
+          - text: 6. Drawings
+        - blockquote [ref=f2e1273]:
+          - generic [ref=f2e1274]: S259
+          - generic [ref=f2e1275]: editorial (not filed text)
+          - text: The four drawing sheets carry no text layer in the source PDF; they are reproduced below as rendered images (200 dpi). Reference numerals read from each figure are listed beneath it.
+        - heading "Figure 1 (Sheet 1/4)" [level=2] [ref=f2e1276]:
+          - generic [ref=f2e1277]: S260
+          - text: Figure 1 (Sheet 1/4)
+        - 'figure "editorial (not filed text) Reference numerals: 100 (system) · 101 (set of cameras / capture) · 102 (audio-video production pipeline) · 103 (structured list of instructions / EDL) · 110 (mate creation component) · 111 (mates) · 112 (ensemble) · 113 (chunks) · 120 (transcoding components) · 121 (manifest files) · 121'' (reconstructed manifest file) · 122 (ledger) · 130 (detection component) · 131 (camera cuts detection algorithm) · 140 (retrieval component) · 2 (end users / spectators)." [ref=f2e1278]':
+          - generic [ref=f2e1279]: S261
+          - img "Figure 1 (Sheet 1/4) · image" [ref=f2e1280]
+          - generic [ref=f2e1281]:
+            - generic [ref=f2e1282]: S262
+            - generic [ref=f2e1283]: editorial (not filed text)
+            - strong [ref=f2e1284]: "Reference numerals:"
+            - text: 100 (system) · 101 (set of cameras / capture) · 102 (audio-video production pipeline) · 103 (structured list of instructions / EDL) · 110 (mate creation component) · 111 (mates) · 112 (ensemble) · 113 (chunks) · 120 (transcoding components) · 121 (manifest files) · 121' (reconstructed manifest file) · 122 (ledger) · 130 (detection component) · 131 (camera cuts detection algorithm) · 140 (retrieval component) · 2 (end users / spectators).
+        - heading "Figure 2 (Sheet 2/4)" [level=2] [ref=f2e1285]:
+          - generic [ref=f2e1286]: S263
+          - text: Figure 2 (Sheet 2/4)
+        - 'figure "editorial (not filed text) Reference numerals: as Figure 1, additionally showing 104 (advanced analytics component / machine learning) within the production pipeline 102." [ref=f2e1287]':
+          - generic [ref=f2e1288]: S264
+          - img "Figure 2 (Sheet 2/4) · image" [ref=f2e1289]
+          - generic [ref=f2e1290]:
+            - generic [ref=f2e1291]: S265
+            - generic [ref=f2e1292]: editorial (not filed text)
+            - strong [ref=f2e1293]: "Reference numerals:"
+            - text: as Figure 1, additionally showing
+            - strong [ref=f2e1294]: "104"
+            - text: (advanced analytics component / machine learning) within the production pipeline 102.
+        - heading "Figure 3 (Sheet 3/4)" [level=2] [ref=f2e1295]:
+          - generic [ref=f2e1296]: S266
+          - text: Figure 3 (Sheet 3/4)
+        - 'figure "editorial (not filed text) Reference numerals: as Figure 2, additionally showing 123 (mixing component, within transcoding components 120) and 150 (blockchain registration component)." [ref=f2e1297]':
+          - generic [ref=f2e1298]: S267
+          - img "Figure 3 (Sheet 3/4) · image" [ref=f2e1299]
+          - generic [ref=f2e1300]:
+            - generic [ref=f2e1301]: S268
+            - generic [ref=f2e1302]: editorial (not filed text)
+            - strong [ref=f2e1303]: "Reference numerals:"
+            - text: as Figure 2, additionally showing
+            - strong [ref=f2e1304]: "123"
+            - text: (mixing component, within transcoding components 120) and
+            - strong [ref=f2e1305]: "150"
+            - text: (blockchain registration component).
+        - heading "Figure 4 (Sheet 4/4)" [level=2] [ref=f2e1306]:
+          - generic [ref=f2e1307]: S269
+          - text: Figure 4 (Sheet 4/4)
+        - 'figure "editorial (not filed text) Method 200 — sequential steps: 201 (capturing) → 210 (management) → 220 (camera cut recording) → 230 (programming) → 240 (segmenting) → 250 (generation) → 260 (distribution) → 270 (ledger recording) → 280 (monitoring) → 290 (searching)." [ref=f2e1308]':
+          - generic [ref=f2e1309]: S270
+          - img "Figure 4 (Sheet 4/4) · image" [ref=f2e1310]
+          - generic [ref=f2e1311]:
+            - generic [ref=f2e1312]: S271
+            - generic [ref=f2e1313]: editorial (not filed text)
+            - strong [ref=f2e1314]: "Method 200 — sequential steps:"
+            - text: 201 (capturing) → 210 (management) → 220 (camera cut recording) → 230 (programming) → 240 (segmenting) → 250 (generation) → 260 (distribution) → 270 (ledger recording) → 280 (monitoring) → 290 (searching).
+        - paragraph [ref=f2e1315]:
+          - generic [ref=f2e1316]: S272
+          - generic [ref=f2e1317]: editorial (not filed text)
+          - text: "Application:"
+          - strong [ref=f2e1318]: PCT/IB2025/051755
+          - text: "· Filed 19 February 2025 · Priority US 63/557,868 (26.02.2024) · Applicant: STEALTH COMPANY SRL START UP INNOVATIVA · Inventor: Antonio Rossi · Agent: PRAXI Intellectual Property S.p.A. (ref. PF-MA-AA11393US-PCT)."

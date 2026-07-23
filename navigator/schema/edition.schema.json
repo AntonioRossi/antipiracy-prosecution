@@ -2,20 +2,27 @@
  "schemaVersion": "1",
  "comment": "Closed schema for edition configs (TDD §8.6): the complete parameter set for one artifact, including the declared transitive input set used by the exact-set check.",
  "type": "object",
- "required": ["editionVersion", "editionId", "displayName", "strategyName", "strategyPrefix", "claimCorpus", "targetCorpus", "claimSetVersion", "relationSet", "gateInventory", "dependencyMap", "independentClaims", "census", "groups", "forbiddenTerms", "qaSources", "stringsNamespace", "artifactName", "declaredReleaseTimestamp", "declaredTransitiveInputs"],
+ "required": ["editionVersion", "editionId", "displayName", "strategyName", "strategyPrefix", "claimCorpus", "targetCorpus", "authorityCorpus", "corpusRegistries", "claimSetVersion", "relationSet", "gateInventory", "dependencyMap", "independentClaims", "census", "groups", "forbiddenTerms", "qaSources", "qaRegistry", "stringsNamespace", "stringsResource", "artifactName", "declaredReleaseTimestamp", "declaredTransitiveInputs"],
  "additionalProperties": false,
  "properties": {
   "editionVersion": {"type": "string", "enum": ["1"]},
-  "editionId": {"type": "string"},
+  "editionId": {"type": "string", "minLength": 1},
   "displayName": {"type": "string"},
   "strategyName": {"type": "string"},
   "strategyPrefix": {"type": "string"},
-  "claimCorpus": {"type": "string"},
-  "targetCorpus": {"type": "string"},
+  "claimCorpus": {"type": "string", "minLength": 1},
+  "targetCorpus": {"type": "string", "minLength": 1},
+  "authorityCorpus": {"type": "string", "minLength": 1},
+  "corpusRegistries": {
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {"type": "string", "minLength": 1}
+  },
   "claimSetVersion": {"type": "string"},
-  "relationSet": {"type": "string"},
-  "gateInventory": {"type": "string"},
-  "dependencyMap": {"type": "string"},
+  "relationSet": {"type": "string", "minLength": 1},
+  "gateInventory": {"type": "string", "minLength": 1},
+  "dependencyMap": {"type": "string", "minLength": 1},
   "independentClaims": {"type": "array", "items": {"type": "integer"}},
   "census": {
    "type": "object",
@@ -35,15 +42,23 @@
   "forbiddenTerms": {"type": "array", "items": {"type": "string"}},
   "qaSources": {
    "type": "object",
+   "required": ["priorityMap", "crosswalk"],
    "additionalProperties": false,
    "properties": {
-    "priorityMap": {"type": "string"},
-    "crosswalk": {"type": "string"}
+    "priorityMap": {"type": "string", "minLength": 1},
+    "crosswalk": {"type": ["string", "null"], "minLength": 1}
    }
   },
+  "qaRegistry": {"type": "string", "minLength": 1},
   "stringsNamespace": {"type": "string"},
+  "stringsResource": {"type": "string", "minLength": 1},
   "artifactName": {"type": "string"},
   "declaredReleaseTimestamp": {"type": "string"},
-  "declaredTransitiveInputs": {"type": "array", "items": {"type": "string"}}
+  "declaredTransitiveInputs": {
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {"type": "string", "minLength": 1}
+  }
  }
 }

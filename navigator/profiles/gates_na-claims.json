@@ -2,7 +2,7 @@
  "inventoryVersion": "1",
  "corpusId": "na-claims",
  "profileDigest": "sha256/c1:9f9b80d2b666e063f5d8bb165ba25b0d60c2c72f848bd0abd98b458e9e84c38a",
- "comment": "Gate inventory for NA-2026-07-21-v2 (TDD §8.1): reviewed interpretation of the claim-set document's prose gates, hash-pinned to its quotable source blocks. Endpoint hashes (source textHash, claim/fragment hashes, profileDigest) are stamped mechanically from the pinned corpora by tools/stamp.py; null means not yet stamped and fails validation. Inventory completeness is a digest-bound human attestation (§9).",
+ "comment": "Gate inventory for NA-2026-07-21-v2 (TDD §8.1): reviewed interpretation of the claim-set document's prose gates, hash-pinned to its quotable source blocks. Endpoint hashes (source textHash, claim/fragment hashes, profileDigest) are stamped mechanically from the pinned corpora by tools/stamp.py; null means not yet stamped and fails validation. Inventory completeness is a digest-bound authorized operator attestation (§9).",
  "gates": [
   {
    "gateId": "na-gate-example2-priority",

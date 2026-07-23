@@ -6,13 +6,9 @@ page script (it builds DOM via textContent only).
 
 import base64
 import json
+import re
 
 from . import projections
-
-CSP = ("default-src 'none'; img-src data:; style-src 'unsafe-inline'; "
-       "script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; "
-       "object-src 'none'; connect-src 'none'")
-
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;")
@@ -42,9 +38,209 @@ def script_json(obj):
         .replace(" ", "\\u2029")
 
 
+def microcopy(template, **values):
+    """Fill a central-registry template without treating values as markup."""
+    out = template
+    for key, value in values.items():
+        out = out.replace("{%s}" % key, str(value))
+    return out
+
+
+def responsive_css(support_matrix):
+    """Bind the responsive breakpoint to the normative support matrix."""
+    try:
+        viewport = support_matrix["viewport"]
+        width, height = viewport["minimum"]
+    except (KeyError, TypeError, ValueError):
+        raise ValueError("support matrix has no two-value minimum viewport")
+    if any(isinstance(value, bool) or not isinstance(value, int) or value < 1
+           for value in (width, height)):
+        raise ValueError(
+            "support matrix minimum viewport must be positive integers")
+    if viewport.get("stackedBelowMinimum") is not True:
+        raise ValueError(
+            "support matrix must require stacking below its minimum")
+    return (_CSS_TEMPLATE
+            .replace("@@VIEWPORT_MAX_WIDTH@@", str(width - 1))
+            .replace("@@VIEWPORT_MAX_HEIGHT@@", str(height - 1)))
+
+
+def _claim_reference(prefix, number, strings):
+    return microcopy(
+        strings["ui"]["claimReference"], prefix=prefix, n=number)
+
+
+def _unit_label(unit, strings):
+    """Present a unit through the central microcopy registry.
+
+    ``Unit.label`` remains useful parser metadata, but it is not an approved
+    presentation surface.  The small fallback keeps renderer-focused fixtures
+    with lightweight stand-ins usable.
+    """
+    if hasattr(unit, "index"):
+        if unit.index == 0:
+            return strings["ui"]["preambleLabel"]
+        return microcopy(strings["ui"]["limitationLabel"], n=unit.index)
+    return unit.label
+
+
+def _unit_context(prefix, claim_number, unit, strings):
+    return microcopy(
+        strings["ui"]["unitContext"],
+        claim=_claim_reference(prefix, claim_number, strings),
+        label=_unit_label(unit, strings))
+
+
+def _phrase_context(prefix, claim_number, text, strings):
+    return microcopy(
+        strings["ui"]["phraseContext"],
+        claim=_claim_reference(prefix, claim_number, strings), text=text)
+
+
+def _fragment_control_label(context, status, strings):
+    if status == "counsel-review-required":
+        return microcopy(
+            strings["ui"]["showMappingStatus"], label=context,
+            status=strings["status"][status])
+    return microcopy(strings["ui"]["showCandidates"], label=context)
+
+
+EXPECTED_API_CLASSES = {
+    "document.cookie": "probed",
+    "window.localStorage": "probed",
+    "window.sessionStorage": "probed",
+    "indexedDB.open": "probed",
+    "history.pushState": "probed",
+    "history.replaceState": "probed",
+    "location.assign": "procedural",
+    "location.replace": "procedural",
+    "fetch": "csp-governed",
+    "XMLHttpRequest": "csp-governed",
+    "WebSocket": "csp-governed",
+    "EventSource": "csp-governed",
+    "navigator.sendBeacon": "probed",
+    "innerHTML-untrusted": "procedural",
+}
+
+_SUPPORTED_PROBED_APIS = frozenset(
+    api for api, policy_class in EXPECTED_API_CLASSES.items()
+    if policy_class == "probed")
+
+EXPECTED_CSP = (
+    "default-src 'none'; img-src data:; style-src 'unsafe-inline'; "
+    "script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; "
+    "object-src 'none'; connect-src 'none'")
+
+
+def api_policy_problems(api_policy, require_normative_csp=True):
+    """Validate the closed runtime-policy registry used by AC-15.
+
+    A misspelled class must never silently turn a probed API into an
+    uninstrumented one.  The per-class field sets are exact so an obsolete
+    ``instrument`` or missing procedural explanation is visible as drift.
+    """
+    if not isinstance(api_policy, dict):
+        return ["API policy is not an object"]
+    problems = []
+    expected_top = {"apiPolicyVersion", "comment", "csp", "apis"}
+    if set(api_policy) != expected_top:
+        problems.append("API policy fields must be exactly %s" %
+                        sorted(expected_top))
+    if api_policy.get("apiPolicyVersion") != "1":
+        problems.append("API policy version is not '1'")
+    for field in ("comment", "csp"):
+        if not isinstance(api_policy.get(field), str) or \
+                not api_policy.get(field, "").strip():
+            problems.append("API policy %s is not a non-empty string" % field)
+    if require_normative_csp and api_policy.get("csp") != EXPECTED_CSP:
+        problems.append("API policy CSP is not the exact normative policy")
+    apis = api_policy.get("apis")
+    if not isinstance(apis, dict) or not apis:
+        problems.append("API policy apis must be a non-empty object")
+        return problems
+    actual_apis = set(apis)
+    expected_apis = set(EXPECTED_API_CLASSES)
+    if actual_apis != expected_apis:
+        problems.append(
+            "API policy API set is not exact (missing=%r, extra=%r)" %
+            (sorted(expected_apis - actual_apis),
+             sorted(actual_apis - expected_apis)))
+    for api, spec in apis.items():
+        label = "API policy entry %r" % api
+        if not isinstance(api, str) or not api.strip():
+            problems.append("API policy has an empty API name")
+        if not isinstance(spec, dict):
+            problems.append("%s is not an object" % label)
+            continue
+        cls = spec.get("class")
+        if cls in ("probed", "csp-governed"):
+            expected_fields = {"class", "instrument"}
+            evidence_field = "instrument"
+        elif cls == "procedural":
+            expected_fields = {"class", "note"}
+            evidence_field = "note"
+        else:
+            problems.append("%s has unknown class %r" % (label, cls))
+            continue
+        expected_class = EXPECTED_API_CLASSES.get(api)
+        if expected_class is not None and cls != expected_class:
+            problems.append(
+                "%s class %r does not match required class %r" %
+                (label, cls, expected_class))
+        if set(spec) != expected_fields:
+            problems.append("%s fields must be exactly %s" %
+                            (label, sorted(expected_fields)))
+        if not isinstance(spec.get(evidence_field), str) or \
+                not spec.get(evidence_field, "").strip():
+            problems.append("%s has no non-empty %s" %
+                            (label, evidence_field))
+    return problems
+
+
+def api_probe_instruments(api_policy):
+    """Derive the runtime probe labels from the registered API policy.
+
+    Wrapping browser APIs is necessarily API-specific.  Fail closed when a
+    newly probed API has no implementation instead of silently shipping a
+    policy entry that the artifact cannot observe.
+    """
+    problems = api_policy_problems(
+        api_policy, require_normative_csp=False)
+    if problems:
+        raise ValueError("invalid API policy: %s" % "; ".join(problems))
+    probes = {
+        api: spec["instrument"]
+        for api, spec in api_policy["apis"].items()
+        if spec["class"] == "probed"
+    }
+    unsupported = sorted(set(probes) - _SUPPORTED_PROBED_APIS)
+    if unsupported:
+        raise ValueError("unsupported probed API(s): %s" %
+                         ", ".join(unsupported))
+    return probes
+
+
+_TEMPLATE_TOKEN_RE = re.compile(r"@@[A-Z][A-Z0-9_]*@@")
+
+
+def substitute_template(template, replacements):
+    """Replace tokens found in *template* exactly once.
+
+    Replacement values are deliberately not scanned again: authored text that
+    happens to contain another token cannot inject a later template section.
+    """
+    missing = sorted(set(_TEMPLATE_TOKEN_RE.findall(template)) -
+                     set(replacements))
+    if missing:
+        raise ValueError("unbound template token(s): %s" % ", ".join(missing))
+    return _TEMPLATE_TOKEN_RE.sub(
+        lambda match: replacements[match.group(0)], template)
+
+
 def _unit_html(prefix, claim, unit, frag, strings):
     fid = unit.id
-    label = "%s claim %d · %s" % (prefix, claim.number, unit.label)
+    unit_label = _unit_label(unit, strings)
+    label = _unit_context(prefix, claim.number, unit, strings)
     phrases = frag.get("phrases", [])
     spans = []
     for ph in phrases:
@@ -59,12 +255,14 @@ def _unit_html(prefix, claim, unit, frag, strings):
     for start, end, ph in spans:
         text_html.append(esc(unit.text[cur:start]))
         marker = "" if ph["status"] == "mapped" else \
-            ' <span class="crr-dot" title="%s">◇</span>' % \
+            ' <span class="crr-dot" title="%s" aria-hidden="true">◇</span>' % \
             esc(strings["status"]["counsel-review-required"])
         text_html.append(
             '<button type="button" class="phrase-btn" id="btn-%s" '
-            'data-frag="%s" aria-label="%s · &quot;%s&quot;">%s</button>%s'
-            % (ph["id"], ph["id"], esc(label), esc(ph["text"]),
+            'data-frag="%s" aria-label="%s">%s</button>%s'
+            % (ph["id"], ph["id"], esc(_fragment_control_label(
+                   _phrase_context(prefix, claim.number, ph["text"], strings),
+                   ph["status"], strings)),
                esc(ph["text"]), marker))
         cur = end
     text_html.append(esc(unit.text[cur:]))
@@ -73,14 +271,15 @@ def _unit_html(prefix, claim, unit, frag, strings):
     if status == "counsel-review-required":
         marker = ('<p class="crr-note" role="note">◇ %s</p>'
                   % esc(strings["status"]["counsel-review-required"]))
+    aria = _fragment_control_label(label, status, strings)
     return (
         '<div class="unit status-%s" id="u-%s" data-frag="%s">'
         '<button type="button" class="unit-btn" id="btn-%s" data-frag="%s" '
-        'aria-label="%s — show recorded candidate passages"></button>'
+        'aria-label="%s"></button>'
         '<div class="unit-body"><span class="unit-label">%s</span>'
         '<span class="pointer-surface" data-frag="%s">%s</span>%s</div></div>'
-        % (status, fid, fid, fid, fid, esc(label),
-           esc(unit.label), fid, "".join(text_html), marker))
+        % (status, fid, fid, fid, fid, esc(aria),
+           esc(unit_label), fid, "".join(text_html), marker))
 
 
 def _claims_pane(m, ship, strings):
@@ -102,31 +301,15 @@ def _claims_pane(m, ship, strings):
             cls = "chip chip-ind" if c.number in independents else "chip"
             chips.append(
                 '<button type="button" class="%s" data-goto="claim-%d" '
-                'aria-label="Go to %s claim %d">%d</button>'
-                % (cls, c.number, esc(prefix), c.number, c.number))
+                'aria-label="%s">%d</button>'
+                % (cls, c.number, esc(microcopy(
+                    strings["ui"]["goToClaim"], prefix=prefix, n=c.number)),
+                   c.number))
         chips.append("</span>")
         body = ['<section class="claim-group"><h2>%s</h2>' % esc(g)]
-        for c in groups[g]:
-            ckey = "c%d" % c.number
-            gates = ship.get("claimGates", {}).get(ckey, [])
-            gate_html = "".join(
-                '<button type="button" class="gate-chip" data-gate="%s" '
-                'data-claim="%s" aria-label="Claim-level gate: %s">⚑ %s</button>'
-                % (esc(gt["gateId"]), ckey, esc(gate_codes[gt["code"]]),
-                   esc(gate_codes[gt["code"]]))
-                for gt in gates)
-            ind = " claim-independent" if c.number in independents else ""
-            body.append(
-                '<article class="claim%s" id="claim-%d">'
-                '<header class="claim-header"><span class="claim-no">%s claim %d'
-                '</span>%s</header>' % (ind, c.number, esc(prefix), c.number,
-                                        gate_html))
-            for u in c.units:
-                body.append(_unit_html(prefix, c, u,
-                                       ship["fragments"][u.id], strings))
-            body.append("</article>")
-        # AF priority-gate blockquote renders as a labeled guidance note in
-        # its §3 position (profile-designated quotable, never claim text)
+        # Profile-designated guidance inside a claim group precedes that
+        # group's claims in the source document (currently the AF claims 2–3
+        # priority gate).  Keep it at that source position.
         for b in m.guidance_blocks:
             if b.kind == "note" and b.cls == "quotable" and \
                     len(b.path) >= 3 and b.path[-1] == g:
@@ -135,11 +318,37 @@ def _claims_pane(m, ship, strings):
                     '<span class="editorial-tag">%s</span>%s</aside>'
                     % (esc(strings["ui"]["guidanceNoteLabel"]),
                        md_inline(b.canonical)))
+        for c in groups[g]:
+            ckey = "c%d" % c.number
+            gates = ship.get("claimGates", {}).get(ckey, [])
+            gate_html = "".join(
+                '<button type="button" class="gate-chip" '
+                'id="btn-gate-%s-%s" data-gate="%s" data-claim="%s" '
+                'aria-label="%s">⚑ %s</button>'
+                % (esc(ckey), esc(gt["gateId"]), esc(gt["gateId"]),
+                   esc(ckey), esc(microcopy(
+                       strings["ui"]["claimLevelGateLabel"],
+                       prefix=prefix, n=c.number,
+                       name=gate_codes[gt["code"]])),
+                   esc(gate_codes[gt["code"]]))
+                for gt in gates)
+            ind = " claim-independent" if c.number in independents else ""
+            claim_label = _claim_reference(prefix, c.number, strings)
+            body.append(
+                '<article class="claim%s" id="claim-%d">'
+                '<header class="claim-header"><span class="claim-no">%s'
+                '</span>%s</header>' % (ind, c.number, esc(claim_label),
+                                        gate_html))
+            for u in c.units:
+                body.append(_unit_html(prefix, c, u,
+                                       ship["fragments"][u.id], strings))
+            body.append("</article>")
         body.append("</section>")
         sections.append("".join(body))
     return ('<div class="claim-strip" role="navigation" '
-            'aria-label="Claim index">%s</div>%s'
-            % ("".join(chips), "".join(sections)))
+            'aria-label="%s">%s</div>%s'
+            % (esc(strings["ui"]["claimIndex"]),
+               "".join(chips), "".join(sections)))
 
 
 def _disclosure_pane(m, reverse, figures_b64, strings):
@@ -147,15 +356,24 @@ def _disclosure_pane(m, reverse, figures_b64, strings):
     blocks = [b for b in m.target_blocks if b.id.startswith("S")]
     in_list = False
     claim_open = None
+    figure_open = False
+    figure_captions = {
+        block.id: blocks[index + 1].id
+        for index, block in enumerate(blocks[:-1])
+        if block.kind == "figure" and
+        blocks[index + 1].kind == "figure-caption"
+    }
 
     def badge(bid):
         n = len(reverse.get(bid, []))
         if not n:
             return ""
+        label = m.target_anchor(bid).label
         return ('<button type="button" class="rev-badge" data-block="%s" '
-                'aria-label="%s">◂ %d</button>'
-                % (bid, esc(strings["ui"]["indexedBy"].replace("{n}", str(n))),
-                   n))
+                'id="btn-rev-%s" aria-label="%s">◂ %d</button>'
+                % (esc(bid), esc(bid),
+                   esc(microcopy(strings["ui"]["indexedBy"],
+                                 n=n, label=label)), n))
 
     def margin(b):
         return ('<span class="anchor-label" aria-hidden="true">%s</span>'
@@ -174,6 +392,9 @@ def _disclosure_pane(m, reverse, figures_b64, strings):
             claim_open = None
 
     for b in blocks:
+        if figure_open and b.kind != "figure-caption":
+            out.append("</figure>")
+            figure_open = False
         if b.kind != "list-item" and b.kind != "claim-element":
             close_list()
         if b.kind in ("heading",) or (b.meta.get("pctClaim") and
@@ -184,8 +405,9 @@ def _disclosure_pane(m, reverse, figures_b64, strings):
               % esc(strings["ui"]["editorialLabel"])) if b.cls == "editorial" else ""
         if b.kind == "heading":
             depth = min(len(b.path), 4)
-            out.append('<h%d class="dblock" id="%s">%s%s%s</h%d>'
-                       % (depth, b.id, margin(b), esc(b.text), badge(b.id), depth))
+            out.append('<h%d class="dblock" id="%s">%s%s%s%s</h%d>'
+                       % (depth, b.id, margin(b), ed, esc(b.text),
+                          badge(b.id), depth))
         elif b.kind == "claim-head":
             num = b.meta["pctClaim"]
             out.append('<div class="pct-claim" id="PC%d">' % num)
@@ -212,9 +434,16 @@ def _disclosure_pane(m, reverse, figures_b64, strings):
             rows = [b.meta["header"]] if b.meta.get("header") else []
             out.append('<div class="tablewrap dblock" id="%s">%s%s<table>'
                        % (b.id, margin(b), badge(b.id)))
+            if b.meta.get("caption"):
+                out.append('<caption class="tcaption">%s</caption>'
+                           % esc(b.meta["caption"]))
             if rows:
-                out.append("<thead><tr><th></th>%s</tr></thead>" % "".join(
-                    "<th>%s</th>" % md_inline(c) for c in b.meta["header"]))
+                out.append(
+                    '<thead><tr><th scope="col" aria-label="%s"></th>%s'
+                    '</tr></thead>' % (
+                        esc(strings["ui"]["anchorHeader"]),
+                        "".join('<th scope="col">%s</th>' % md_inline(c)
+                                for c in b.meta["header"])))
             out.append("<tbody>")
             for r in b.rows:
                 rid = "%s.%s" % (b.id, r["id"])
@@ -222,23 +451,36 @@ def _disclosure_pane(m, reverse, figures_b64, strings):
                     '<tr id="%s"><td class="rowmeta">'
                     '<span class="anchor-label" aria-hidden="true">%s</span>%s</td>%s</tr>'
                     % (rid, rid, badge(rid),
-                       "".join("<td>%s</td>" % md_inline(c) for c in r["cells"])))
+                       "".join("<td>%s</td>" % md_inline(c)
+                               for c in r["cells"])))
             out.append("</tbody></table>")
-            if b.meta.get("caption"):
-                out.append('<p class="tcaption"><span class="editorial-tag">%s'
-                           '</span>%s</p>'
-                           % (esc(strings["ui"]["editorialLabel"]),
-                              esc(b.meta["caption"])))
             out.append("</div>")
         elif b.kind == "figure":
             data = figures_b64[b.meta["file"]]
+            caption_id = figure_captions.get(b.id)
+            association = (' aria-labelledby="%s"' % esc(caption_id)
+                           if caption_id else '')
+            image_description = (' aria-describedby="%s"' % esc(caption_id)
+                                 if caption_id else '')
             out.append(
-                '<figure class="dblock" id="%s">%s%s'
-                '<img src="data:image/png;base64,%s" alt="%s"></figure>'
-                % (b.id, margin(b), badge(b.id), data, esc(b.label)))
+                '<figure class="dblock" id="%s"%s>%s%s'
+                '<img src="data:image/png;base64,%s" alt="%s"%s>'
+                % (b.id, association, margin(b), badge(b.id), data,
+                   esc(b.label), image_description))
+            if caption_id:
+                figure_open = True
+            else:
+                out.append("</figure>")
         elif b.kind == "figure-caption":
-            out.append('<p class="dblock editorial" id="%s">%s%s%s</p>'
-                       % (b.id, margin(b), ed, md_inline(b.text)))
+            if figure_open:
+                out.append(
+                    '<figcaption class="dblock editorial" id="%s">%s%s%s'
+                    '</figcaption></figure>'
+                    % (b.id, margin(b), ed, md_inline(b.text)))
+                figure_open = False
+            else:
+                out.append('<p class="dblock editorial" id="%s">%s%s%s</p>'
+                           % (b.id, margin(b), ed, md_inline(b.text)))
         elif b.kind in ("note",):
             out.append('<blockquote class="dblock editorial" id="%s">%s%s%s'
                        '</blockquote>'
@@ -252,6 +494,8 @@ def _disclosure_pane(m, reverse, figures_b64, strings):
                        % (cls, b.id, margin(b), ed, md_inline(b.text), badge(b.id)))
     close_list()
     close_claim()
+    if figure_open:
+        out.append("</figure>")
     return "".join(out)
 
 
@@ -264,9 +508,10 @@ def _schedule(m, ship_schedule, strings):
     rows = []
 
     def target_cell(t):
-        parts = ["%s (%s)" % (m.target_anchor(t["block"]).label, t["block"])]
+        parts = ["%s (%s)" % (esc(m.target_anchor(t["block"]).label),
+                               esc(t["block"]))]
         if t.get("role"):
-            parts.append("[%s]" % strings["role"][t["role"]])
+            parts.append("[%s]" % esc(strings["role"][t["role"]]))
         parts.append(esc(t["note"]))
         if t.get("rationale"):
             parts.append("<em>%s</em>" % esc(t["rationale"]))
@@ -280,14 +525,16 @@ def _schedule(m, ship_schedule, strings):
     for c in m.claims:
         for u in c.units:
             frag = ship_schedule["fragments"][u.id]
-            label = "%s claim %d · %s" % (prefix, c.number, u.label)
+            label = _unit_context(prefix, c.number, u, strings)
             tcells = "<br>".join(target_cell(t) for t in frag.get("targets", []))
             extra = []
             if frag.get("caution"):
                 cc = frag["caution"]
-                extra.append("⚑ %s" % esc(gate_codes.get(
-                    cc["code"], cc["code"]) if cc["type"] == "source-gate"
-                    else cc["code"]))
+                name = (gate_codes.get(cc["code"], cc["code"])
+                        if cc["type"] == "source-gate" else
+                        strings["generalizationCodes"].get(
+                            cc["code"], cc["code"]))
+                extra.append("⚑ %s" % esc(name))
             for d in frag.get("dispositions", []):
                 extra.append(esc(strings["dispositions"][d["disposition"]]))
             rows.append("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>"
@@ -308,21 +555,33 @@ def _schedule(m, ship_schedule, strings):
                 for d in ship_schedule.get("claimDispositions", {}).get(ckey, [])
                 if d["gateId"] == g["gateId"])
             gate_rows.append(
-                "<tr><td>%s claim %s</td><td>⚑ %s</td><td>%s</td></tr>"
-                % (esc(prefix), ckey[1:], esc(gate_codes[g["code"]]), disp))
+                "<tr><td>%s</td><td>⚑ %s</td><td>%s</td></tr>"
+                % (esc(_claim_reference(prefix, ckey[1:], strings)),
+                   esc(gate_codes[g["code"]]), disp))
     return (
-        '<section id="schedule"><h2>%s</h2>'
-        '<table class="sched"><thead><tr><th>Fragment</th><th>Status</th>'
-        '<th>Recorded candidate passages</th><th>Cautions / dispositions</th>'
+        '<section id="schedule"><h2 id="schedule-title">%s</h2>'
+        '<table class="sched" aria-labelledby="schedule-title"><thead><tr>'
+        '<th scope="col">%s</th><th scope="col">%s</th>'
+        '<th scope="col">%s</th><th scope="col">%s</th>'
         '</tr></thead><tbody>%s</tbody></table>'
-        '<h3>Claim-level gates</h3><table class="sched"><thead><tr>'
-        '<th>Claim</th><th>Gate</th><th>Disposition</th></tr></thead>'
+        '<h3 id="schedule-gates-title">%s</h3>'
+        '<table class="sched" aria-labelledby="schedule-gates-title">'
+        '<thead><tr><th scope="col">%s</th><th scope="col">%s</th>'
+        '<th scope="col">%s</th></tr></thead>'
         '<tbody>%s</tbody></table></section>'
-        % (esc(strings["ui"]["scheduleTitle"]), "".join(rows),
+        % (esc(strings["ui"]["scheduleTitle"]),
+           esc(strings["ui"]["scheduleFragmentHeader"]),
+           esc(strings["ui"]["scheduleStatusHeader"]),
+           esc(strings["ui"]["scheduleCandidatesHeader"]),
+           esc(strings["ui"]["scheduleCautionsHeader"]), "".join(rows),
+           esc(strings["ui"]["scheduleClaimGatesTitle"]),
+           esc(strings["ui"]["scheduleClaimHeader"]),
+           esc(strings["ui"]["scheduleGateHeader"]),
+           esc(strings["ui"]["scheduleDispositionHeader"]),
            "".join(gate_rows)))
 
 
-def _provenance_html(prov, strings):
+def _provenance_html(prov, strings, support_matrix):
     rows = []
     for c in prov["corpora"]:
         files = "<br>".join("%s — <code>%s</code>" % (esc(p), esc(d[:23]) + "…")
@@ -332,28 +591,43 @@ def _provenance_html(prov, strings):
     auth = prov.get("authority")
     auth_html = ""
     if auth:
-        auth_html = ("<p>Authority of record: <strong>%s</strong> (%s) — "
+        auth_html = ("<p>%s: <strong>%s</strong> (%s) — "
                      "<code>%s…</code></p>"
-                     % (esc(auth["id"]), esc(auth["version"]),
+                     % (esc(strings["ui"]["authorityOfRecord"]),
+                        esc(auth["id"]), esc(auth["version"]),
                         esc(auth["digest"][:23])))
     digests = "".join(
         "<li>%s: <code>%s…</code></li>" % (esc(k), esc((prov[k] or "?")[:23]))
         for k in ("relationSetDigest", "gateInventoryDigest",
                   "dependencyMapDigest", "editionConfigDigest",
-                  "stringsDigest", "builderTreeHash") if prov.get(k))
+                  "schemaDigest", "stringsProjectionDigest",
+                  "builderTreeHash") if prov.get(k))
     return (
-        '<section id="about"><h2>%s</h2>%s'
-        '<table class="sched"><thead><tr><th>Corpus</th><th>Role</th>'
-        '<th>Version</th><th>Pinned files (SHA-256, abbreviated display; '
-        'full digests in the machine-readable block)</th></tr></thead>'
+        '<section id="about"><h2>%s</h2>'
+        '<h3 id="provenance-title">%s</h3>%s'
+        '<table class="sched" aria-labelledby="provenance-title"><thead><tr>'
+        '<th scope="col">%s</th><th scope="col">%s</th>'
+        '<th scope="col">%s</th><th scope="col">%s</th></tr></thead>'
         '<tbody>%s</tbody></table><ul>%s</ul>'
-        '<p>canonVersion %s · schema %s · declared release timestamp %s · '
-        '%d claims / %d units / %d disclosure blocks</p><p>%s</p></section>'
-        % (esc(strings["ui"]["aboutTitle"]), auth_html, "".join(rows), digests,
-           esc(prov["canonVersion"]), esc(prov["schemaVersion"]),
-           esc(prov["declaredReleaseTimestamp"]), prov["counts"]["claims"],
-           prov["counts"]["units"], prov["counts"]["disclosureBlocks"],
-           esc(strings["ui"]["viewportNote"])))
+        '<p>%s</p><p>%s</p></section>'
+        % (esc(strings["ui"]["aboutTitle"]),
+           esc(strings["ui"]["provenanceTitle"]), auth_html,
+           esc(strings["ui"]["corpusHeader"]),
+           esc(strings["ui"]["roleHeader"]),
+           esc(strings["ui"]["versionHeader"]),
+           esc(strings["ui"]["pinnedFilesHeader"]),
+           "".join(rows), digests,
+           esc(microcopy(
+               strings["ui"]["provenanceSummary"],
+               canonVersion=prov["canonVersion"],
+               schemaVersion=prov["schemaVersion"],
+               timestamp=prov["declaredReleaseTimestamp"],
+               claims=prov["counts"]["claims"], units=prov["counts"]["units"],
+               blocks=prov["counts"]["disclosureBlocks"])),
+           esc(microcopy(
+               strings["ui"]["viewportNote"],
+               width=support_matrix["viewport"]["minimum"][0],
+               height=support_matrix["viewport"]["minimum"][1]))))
 
 
 def render(m, mode="candidate"):
@@ -380,11 +654,12 @@ def render(m, mode="candidate"):
     prefix = m.edition["strategyPrefix"]
     for c in m.claims:
         for u in c.units:
-            unit_labels[u.id] = "%s claim %d · %s" % (prefix, c.number, u.label)
+            unit_labels[u.id] = _unit_context(
+                prefix, c.number, u, strings)
             frag = m.relation["fragments"][u.id]
             for ph in frag.get("phrases", []):
-                unit_labels[ph["id"]] = "%s claim %d · “%s”" % (
-                    prefix, c.number, ph["text"])
+                unit_labels[ph["id"]] = _phrase_context(
+                    prefix, c.number, ph["text"], strings)
 
     disclaimer = strings["standingDisclaimer"].replace(
         "{editionVersion}", m.edition["claimSetVersion"])
@@ -416,31 +691,39 @@ def render(m, mode="candidate"):
 
     watermark = ""
     if mode == "preview":
-        watermark = ('<div class="watermark" aria-hidden="true">%s</div>'
+        watermark = ('<div class="watermark" aria-hidden="true">'
+                     '<span>%s</span></div>'
                      % esc(strings["ui"]["previewWatermark"]))
 
-    html = HTML_TEMPLATE
-    for key, val in {
+    probe_instruments = api_probe_instruments(m.api_policy)
+
+    replacements = {
         "@@TITLE@@": esc("%s — %s" % (m.edition["displayName"],
                                       m.edition["claimSetVersion"])),
-        "@@CSP@@": CSP,
-        "@@CSS@@": CSS,
+        "@@CSP@@": esc(m.api_policy["csp"]),
+        "@@CSS@@": responsive_css(m.support_matrix),
         "@@WATERMARK@@": watermark,
         "@@HEADERTITLE@@": esc(m.edition["displayName"]),
         "@@STRATEGY@@": esc("%s — %s" % (prefix, m.edition["strategyName"])),
         "@@VERSION@@": esc(m.edition["claimSetVersion"]),
-        "@@WO@@": "PCT/IB2025/051755 · WO 2025/181623 A1",
+        "@@WO@@": esc(strings["ui"]["authorityHeader"]),
+        "@@CLAIMSETLABEL@@": esc(strings["ui"]["claimSetLabel"]),
+        "@@AUXLABEL@@": esc(strings["ui"]["aboutScheduleToggle"]),
+        "@@CLAIMSPANELABEL@@": esc(strings["ui"]["candidateClaimsLabel"]),
+        "@@DISCLOSUREPANELABEL@@": esc(
+            strings["ui"]["asFiledDisclosureLabel"]),
         "@@LEGEND@@": esc(strings["counselLegend"]),
         "@@DISCLAIMER@@": esc(disclaimer),
         "@@CLAIMSPANE@@": _claims_pane(m, ship, strings),
         "@@DISCLOSUREPANE@@": _disclosure_pane(m, reverse, figures_b64, strings),
         "@@SCHEDULE@@": _schedule(m, ship_schedule, strings),
-        "@@ABOUT@@": _provenance_html(prov, strings),
+        "@@ABOUT@@": _provenance_html(prov, strings, m.support_matrix),
         "@@NAVDATA@@": script_json(navdata),
         "@@PROVDATA@@": script_json(prov),
+        "@@APIPROBES@@": script_json(probe_instruments),
         "@@JS@@": JS,
-    }.items():
-        html = html.replace(key, val)
+    }
+    html = substitute_template(HTML_TEMPLATE, replacements)
     return html.encode("utf-8")
 
 
@@ -461,16 +744,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <header id="masthead">
 <p class="legend">@@LEGEND@@</p>
 <h1>@@HEADERTITLE@@ <span class="strategy">@@STRATEGY@@</span></h1>
-<p class="meta">Claim set <strong>@@VERSION@@</strong> · @@WO@@
-<button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">About &amp; mapping schedule</button></p>
+<p class="meta">@@CLAIMSETLABEL@@ <strong>@@VERSION@@</strong> · @@WO@@
+<button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">@@AUXLABEL@@</button></p>
 <p class="disclaimer">@@DISCLAIMER@@</p>
 </header>
+<div id="content-root">
 <main id="panes">
-<section id="claims-pane" aria-label="Candidate claims">
+<section id="claims-pane" aria-label="@@CLAIMSPANELABEL@@">
 <div id="reverse-bar" class="navbar" hidden></div>
 @@CLAIMSPANE@@
 </section>
-<section id="disclosure-pane" aria-label="As-filed disclosure">
+<section id="disclosure-pane" aria-label="@@DISCLOSUREPANELABEL@@">
 <div id="forward-bar" class="navbar" hidden></div>
 <div id="disclosure-scroll">
 @@DISCLOSUREPANE@@
@@ -481,17 +765,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <div id="aux">
 @@SCHEDULE@@
 @@ABOUT@@
-<footer><p class="legend">@@LEGEND@@</p><p class="disclaimer">@@DISCLAIMER@@</p></footer>
 </div>
-<noscript><style>#aux{display:block;flex:1;min-height:0}</style></noscript>
+</div>
+<footer><p class="legend">@@LEGEND@@</p><p class="disclaimer">@@DISCLAIMER@@</p></footer>
+<noscript><style>
+#content-root{display:block;overflow-y:auto;min-height:0;flex:1 1 auto}
+#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{
+  height:auto;min-height:0;overflow:visible}
+#aux{display:block}
+#aux-toggle{display:none}
+.pointer-surface{cursor:auto}
+@media print {
+  #content-root,#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{
+    display:block;overflow:visible;height:auto}
+}
+</style></noscript>
 <script type="application/json" id="nav-data">@@NAVDATA@@</script>
 <script type="application/json" id="prov-data">@@PROVDATA@@</script>
+<script type="application/json" id="api-probes">@@APIPROBES@@</script>
 <script>@@JS@@</script>
 </body>
 </html>
 """
 
-CSS = """
+_CSS_TEMPLATE = """
 :root { --accent:#1a4f8b; --strong:#ffe08a; --soft:#fff3c9; --gate:#8b2c1a;
         --crr:#6a4a00; --chrome:#f4f2ec; --line:#c9c4b8; }
 * { box-sizing:border-box; }
@@ -503,12 +800,15 @@ body { font-family:Georgia,'Times New Roman',serif; color:#1c1c1c;
 #masthead,footer { font-family:'Helvetica Neue',Arial,sans-serif;
        background:var(--chrome); border-bottom:1px solid var(--line);
        padding:6px 14px; flex:none; }
+footer { display:none; }
 #masthead h1 { font-size:15px; margin:2px 0; }
 .strategy { color:var(--accent); font-weight:normal; }
 #masthead .meta { margin:2px 0; font-size:12px; }
 .legend { font-size:10px; letter-spacing:.4px; color:#7a1f1f; margin:2px 0;
        font-weight:bold; }
 .disclaimer { font-size:10.5px; color:#444; margin:2px 0; }
+#content-root { flex:1 1 auto; display:flex; flex-direction:column;
+       min-height:0; }
 #panes { flex:1 1 auto; display:flex; min-height:0; }
 #claims-pane { width:45%; overflow-y:auto; padding:10px 14px;
        border-right:2px solid var(--line); position:relative; }
@@ -534,7 +834,7 @@ body { font-family:Georgia,'Times New Roman',serif; color:#1c1c1c;
        color:var(--gate); background:#fdf3f0; border-radius:4px;
        cursor:pointer; min-height:24px; }
 .unit { display:flex; margin:2px 0; }
-.unit-btn { flex:none; width:18px; min-height:24px; border:none;
+.unit-btn { flex:none; width:24px; min-height:24px; border:none;
        border-left:4px solid var(--line); background:transparent;
        cursor:pointer; }
 .unit:hover .unit-btn,.unit-btn:focus { border-left-color:var(--accent);
@@ -572,7 +872,8 @@ body { font-family:Georgia,'Times New Roman',serif; color:#1c1c1c;
        border-left:4px solid var(--accent); }
 .hl-soft { background:var(--soft); border-left:4px double var(--accent); }
 .hl-frag { outline:2px solid var(--accent); }
-.hl-frag-soft { background:var(--soft); }
+.hl-frag-soft { background:var(--soft); outline:2px dotted var(--accent);
+       outline-offset:1px; }
 .navbar { position:sticky; top:0; z-index:10; background:#fff;
        border:2px solid var(--accent); border-radius:0 0 6px 6px;
        padding:6px 10px; font-family:Arial,sans-serif; font-size:12px;
@@ -594,7 +895,8 @@ body { font-family:Georgia,'Times New Roman',serif; color:#1c1c1c;
 table { border-collapse:collapse; font-size:12.5px; }
 td,th { border:1px solid var(--line); padding:3px 7px; }
 .rowmeta { background:var(--chrome); font-size:9px; }
-.tcaption { font-size:11px; color:#555; }
+.tcaption { font-size:11px; color:#555; caption-side:bottom;
+       text-align:left; padding-top:4px; }
 figure { margin:10px 0; }
 figure img { max-width:100%; border:1px solid var(--line); }
 pre { background:#f7f6f2; border:1px solid var(--line); padding:8px;
@@ -611,10 +913,10 @@ body.aux-open #panes { display:none; }
 .sched-caution { color:var(--gate); }
 .watermark { position:fixed; inset:0; pointer-events:none; z-index:99;
        display:flex; align-items:center; justify-content:center; }
-.watermark::after { content:"PREVIEW — NOT FOR QA OR DELIVERY";
+.watermark span {
        font:bold 42px Arial,sans-serif; color:rgba(180,30,30,.18);
        transform:rotate(-28deg); white-space:nowrap; }
-@media (max-width:1279px),(max-height:719px) {
+@media (max-width:@@VIEWPORT_MAX_WIDTH@@px),(max-height:@@VIEWPORT_MAX_HEIGHT@@px) {
   /* stacked: one dedicated combined scroll container; the page body
      never scrolls in any mode (TDD §12) */
   #panes { display:block; overflow-y:auto; }
@@ -625,57 +927,182 @@ body.aux-open #panes { display:none; }
 @media (prefers-reduced-motion:reduce) {
   html { scroll-behavior:auto; }
 }
+@page { margin:12mm 10mm; }
 @media print {
   body { overflow:visible; display:block; }
+  #content-root { display:block; overflow:visible; padding-bottom:29mm;
+       -webkit-box-decoration-break:clone; box-decoration-break:clone; }
   #aux { display:block; overflow:visible; }
   #panes { display:block; }
+  body.aux-open #panes { display:block; }
   #claims-pane,#disclosure-pane,#disclosure-scroll { width:100%;
        overflow:visible; border:none; display:block; }
-  .navbar,.rev-badge,.unit-btn,.chip,.claim-strip,.watermark { display:none !important; }
-  .legend { position:fixed; bottom:0; left:0; right:0; background:#fff; }
-  footer .disclaimer { margin-bottom:18px; }
+  button:not(.phrase-btn),.navbar,.claim-strip,.watermark {
+       display:none !important; }
+  .phrase-btn { border:none; background:transparent; color:inherit;
+       cursor:default; min-height:0; padding:0; }
+  #masthead > .legend,#masthead > .disclaimer { display:none; }
+  /* Clone content padding at every page fragment to reserve space for the
+     fixed banner instead of letting it cover printable prose or tables. */
+  footer { position:fixed; top:auto; bottom:0; left:0; right:0;
+       display:block; height:27mm; min-height:0; overflow:hidden;
+       transform:none; padding:2mm 0 0; background:#fff;
+       border-top:1px solid var(--line); border-bottom:none; }
+  footer .legend,footer .disclaimer { position:static; margin:1mm 0 0; }
 }
 noscript .navbar { display:none; }
 """
+
+# The exported default remains useful to static source-level checks. Artifact
+# builds always call ``responsive_css`` with their loaded normative matrix.
+CSS = (_CSS_TEMPLATE
+       .replace("@@VIEWPORT_MAX_WIDTH@@", "1279")
+       .replace("@@VIEWPORT_MAX_HEIGHT@@", "719"))
 
 JS = r"""
 'use strict';
 /* Attempted-use instrumentation per schema/api-policy.json (probed class).
    Records attempts; the page's own code never uses these APIs (AC-15). */
 window.__apiAttempts = [];
+var PROBE_POLICY = JSON.parse(
+  document.getElementById('api-probes').textContent);
+var PROBE_APIS = Object.keys(PROBE_POLICY).sort();
+window.__apiProbeStatus = {expected:PROBE_APIS.slice(), hooks:{}, ready:false};
+PROBE_APIS.forEach(function(api){
+  window.__apiProbeStatus.hooks[api] = {
+    status:'pending', error:null, detail:null
+  };
+});
 (function(){
   function rec(name){ window.__apiAttempts.push(name); }
-  function wrapFn(obj, key, name){
-    try { var orig = obj[key];
-      if (typeof orig !== 'function') return;
-      obj[key] = function(){ rec(name); return orig.apply(this, arguments); };
-    } catch (e) {}
+  function policyInstrument(api){
+    return Object.prototype.hasOwnProperty.call(PROBE_POLICY, api) ?
+      PROBE_POLICY[api] : null;
   }
-  wrapFn(window, 'fetch', 'fetch');
-  if (window.XMLHttpRequest) wrapFn(XMLHttpRequest.prototype, 'open', 'XMLHttpRequest');
-  try { var WS = window.WebSocket;
-    if (WS) window.WebSocket = function(){ rec('WebSocket');
-      return new (Function.prototype.bind.apply(WS,[null].concat([].slice.call(arguments))))(); };
-  } catch (e) {}
-  try { var ES = window.EventSource;
-    if (ES) window.EventSource = function(){ rec('EventSource');
-      return new (Function.prototype.bind.apply(ES,[null].concat([].slice.call(arguments))))(); };
-  } catch (e) {}
-  if (window.navigator) wrapFn(navigator, 'sendBeacon', 'navigator.sendBeacon');
-  if (window.history){ wrapFn(history, 'pushState', 'history.pushState');
-    wrapFn(history, 'replaceState', 'history.replaceState'); }
-  /* localStorage + sessionStorage are covered via Storage.prototype */
-  if (window.Storage){ wrapFn(Storage.prototype, 'setItem', 'web-storage');
-    wrapFn(Storage.prototype, 'getItem', 'web-storage'); }
-  if (window.indexedDB) wrapFn(window.indexedDB.constructor ?
-    IDBFactory.prototype : {}, 'open', 'indexedDB.open');
+  function errorDetail(error){
+    try {
+      if (error && typeof error.message === 'string') return error.message;
+      return String(error);
+    } catch (ignored) { return 'unavailable'; }
+  }
+  function failed(api, error, exception){
+    var hook = window.__apiProbeStatus.hooks[api];
+    if (!hook) return;
+    hook.status = 'failed';
+    hook.error = error;
+    hook.detail = exception === undefined ? null : errorDetail(exception);
+  }
+  function installed(api){
+    var hook = window.__apiProbeStatus.hooks[api];
+    if (!hook || hook.status === 'failed') return;
+    hook.status = 'installed';
+    hook.error = null;
+    hook.detail = null;
+  }
+  function wrapFn(obj, key, api){
+    var name = policyInstrument(api);
+    if (!name) return;
+    if (!obj) { failed(api, 'owner-unavailable'); return; }
+    try {
+      var orig = obj[key];
+      if (typeof orig !== 'function') {
+        failed(api, 'function-unavailable'); return;
+      }
+      var wrapped = function(){
+        rec(name); return orig.apply(this, arguments);
+      };
+      obj[key] = wrapped;
+      if (obj[key] !== wrapped) {
+        failed(api, 'assignment-not-retained'); return;
+      }
+      installed(api);
+    } catch (e) { failed(api, 'installation-threw', e); }
+  }
+  function wrapWindowGetter(key, api){
+    var name = policyInstrument(api);
+    if (!name) return;
+    try {
+      var owner = window, desc = null;
+      while (owner && !desc){
+        desc = Object.getOwnPropertyDescriptor(owner, key);
+        owner = Object.getPrototypeOf(owner);
+      }
+      if (!desc) { failed(api, 'descriptor-unavailable'); return; }
+      if (typeof desc.get !== 'function') {
+        failed(api, 'getter-unavailable'); return;
+      }
+      var wrappedGet = function(){
+        rec(name); return desc.get.call(window);
+      };
+      Object.defineProperty(window, key, {
+        configurable: true, enumerable: desc.enumerable,
+        get: wrappedGet
+      });
+      var actual = Object.getOwnPropertyDescriptor(window, key);
+      if (!actual || actual.get !== wrappedGet) {
+        failed(api, 'definition-not-retained'); return;
+      }
+      installed(api);
+    } catch (e) { failed(api, 'installation-threw', e); }
+  }
+  function wrapCookie(){
+    var api = 'document.cookie';
+    var cookieName = policyInstrument(api);
+    if (!cookieName) return;
+    try {
+      var desc = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie');
+      if (!desc) { failed(api, 'descriptor-unavailable'); return; }
+      if (!desc.configurable) {
+        failed(api, 'descriptor-not-configurable'); return;
+      }
+      if (typeof desc.get !== 'function' || typeof desc.set !== 'function') {
+        failed(api, 'accessor-unavailable'); return;
+      }
+      var wrappedGet = function(){ return desc.get.call(document); };
+      var wrappedSet = function(v){
+        rec(cookieName); return desc.set.call(document, v);
+      };
+      Object.defineProperty(document, 'cookie', {
+        configurable: true, enumerable: desc.enumerable,
+        get: wrappedGet, set: wrappedSet
+      });
+      var actual = Object.getOwnPropertyDescriptor(document, 'cookie');
+      if (!actual || actual.get !== wrappedGet || actual.set !== wrappedSet) {
+        failed(api, 'definition-not-retained'); return;
+      }
+      installed(api);
+    } catch (e) { failed(api, 'installation-threw', e); }
+  }
+  wrapFn(window.navigator, 'sendBeacon', 'navigator.sendBeacon');
+  wrapFn(window.history, 'pushState', 'history.pushState');
+  wrapFn(window.history, 'replaceState', 'history.replaceState');
+  wrapWindowGetter('localStorage', 'window.localStorage');
+  wrapWindowGetter('sessionStorage', 'window.sessionStorage');
   try {
-    var desc = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie');
-    if (desc && desc.configurable) Object.defineProperty(document, 'cookie', {
-      get: function(){ rec('cookie-read'); return desc.get.call(document); },
-      set: function(v){ rec('cookie-write'); return desc.set.call(document, v); }
-    });
-  } catch (e) {}
+    if (!window.indexedDB) failed('indexedDB.open', 'api-unavailable');
+    else wrapFn(window.IDBFactory && window.IDBFactory.prototype, 'open',
+                'indexedDB.open');
+  } catch (e) { failed('indexedDB.open', 'installation-threw', e); }
+  wrapCookie();
+
+  PROBE_APIS.forEach(function(api){
+    if (window.__apiProbeStatus.hooks[api].status === 'pending')
+      failed(api, 'installer-not-invoked');
+  });
+  var hookApis = Object.keys(window.__apiProbeStatus.hooks).sort();
+  var exact = hookApis.length === PROBE_APIS.length &&
+    hookApis.every(function(api, i){ return api === PROBE_APIS[i]; });
+  var failures = PROBE_APIS.filter(function(api){
+    return window.__apiProbeStatus.hooks[api].status !== 'installed';
+  });
+  window.__apiProbeStatus.ready = exact && failures.length === 0;
+  if (!window.__apiProbeStatus.ready) {
+    /* The ledger remains inspectable after this fail-closed exception. */
+    throw new Error('API probe installation failed: ' +
+      failures.map(function(api){
+        return api + '=' + window.__apiProbeStatus.hooks[api].error;
+      }).join(', '));
+  }
 })();
 
 var DATA = JSON.parse(document.getElementById('nav-data').textContent);
@@ -721,6 +1148,63 @@ function el(tag, cls, text){ var e = document.createElement(tag);
 function btn(cls, label, text, fn){ var b = el('button', cls, text);
   b.type = 'button'; b.setAttribute('aria-label', label);
   b.addEventListener('click', fn); return b; }
+function fmt(template, values){
+  Object.keys(values).forEach(function(key){
+    template = template.split('{' + key + '}').join(String(values[key]));
+  });
+  return template;
+}
+function positionText(position, total, label){
+  return fmt(DATA.strings.ui.position,
+    { position: position, total: total, label: label });
+}
+function presenceText(info, key, currentTarget){
+  var bits = [];
+  var caution = info && info.caution;
+  if (!caution && currentTarget !== undefined)
+    caution = currentTarget && currentTarget.caution;
+  else if (!caution && info && info.targets)
+    caution = info.targets.some(function(t){ return !!t.caution; });
+  if (caution) bits.push(DATA.strings.ui.cautionPresent);
+  if ((DATA.claimGates[NavModel.claimOf(key)] || []).length)
+    bits.push(DATA.strings.ui.gatePresent);
+  return bits.length ? ' — ' + bits.join(', ') : '';
+}
+function targetLabel(target){
+  return DATA.anchors[target.block] || target.block;
+}
+function forwardAnnouncement(info, key, position, presence){
+  var subject = DATA.unitLabels[key] || key;
+  var parts = [DATA.strings.ui.forwardMode, subject];
+  var target;
+  if (info.status === 'counsel-review-required')
+    parts.push(DATA.strings.ui.noCandidateNotice);
+  else {
+    target = info.targets[position];
+    parts.push(positionText(position + 1, info.targets.length,
+      targetLabel(target)));
+  }
+  return parts.join(' — ') + (presence === undefined ?
+    presenceText(info, key, target) : presence);
+}
+function reverseAnnouncement(blockId, list, position){
+  var currentId = list[position].fragment;
+  var currentInfo = NavModel.forwardTargets(DATA, currentId);
+  var currentTarget = currentInfo && currentInfo.targets.filter(function(t){
+    return t.block === blockId;
+  })[0];
+  var claims = list.reduce(function(out, item){
+    out[NavModel.claimOf(item.fragment)] = 1; return out;
+  }, {});
+  return [
+    DATA.strings.ui.reverseMode,
+    DATA.anchors[blockId] || blockId,
+    fmt(DATA.strings.ui.reverseCounts,
+      { fragments: list.length, claims: Object.keys(claims).length }),
+    positionText(position + 1, list.length,
+      DATA.unitLabels[currentId] || currentId)
+  ].join(' — ') + presenceText(currentInfo, currentId, currentTarget);
+}
 
 function clearHighlights(){
   ['hl-strong','hl-soft','hl-frag','hl-frag-soft'].forEach(function(c){
@@ -734,7 +1218,7 @@ function clearSelection(refocus){
   fbar.hidden = true; rbar.hidden = true; clearHighlights();
   fbar.textContent = ''; rbar.textContent = '';
   if (refocus && rf){ var n = document.getElementById(rf); if (n) n.focus(); }
-  say('Selection cleared');
+  say(DATA.strings.ui.selectionCleared);
 }
 function scrollToBlock(id, strong){
   var n = document.getElementById(id);
@@ -743,23 +1227,45 @@ function scrollToBlock(id, strong){
   if (strong) n.classList.add('hl-strong');
 }
 
+function selectionControls(canCycle){
+  var controls = el('div', 'selection-controls');
+  if (canCycle){
+    controls.appendChild(btn(null, DATA.strings.ui.previous, '◀',
+      function(){ move(-1); }));
+    controls.appendChild(btn(null, DATA.strings.ui.next, '▶',
+      function(){ move(1); }));
+  }
+  controls.appendChild(btn(null, DATA.strings.ui.clearSelection, '×',
+    function(){ clearSelection(true); }));
+  return controls;
+}
+
 function cautionChip(caution, isClaimGate){
   var wrap = el('span');
   var name;
   if (caution.type === 'source-gate') name = DATA.strings.gateCodes[caution.code] || caution.code;
-  else name = 'Author observation';
+  else name = DATA.strings.cautionType['generalization-note'];
+  var labelValues = { name: name };
+  if (isClaimGate){
+    var claimKey = NavModel.claimOf(state.key);
+    labelValues.prefix = DATA.edition.prefix;
+    labelValues.n = claimKey.slice(1);
+  }
   var chip = btn('caution-chip' + (isClaimGate ? ' claim-gate-chip' : ''),
-    (isClaimGate ? 'Claim-level gate: ' : 'Caution: ') + name, '⚑ ' + name,
+    fmt(isClaimGate ? DATA.strings.ui.claimLevelGateLabel :
+      DATA.strings.ui.cautionLabel, labelValues), '⚑ ' + name,
     function(){
       var q = wrap.querySelector('.caution-quote');
-      if (q){ q.remove(); return; }
+      if (q){ q.remove(); chip.setAttribute('aria-expanded', 'false'); return; }
       var quote = el('span', 'caution-quote');
       if (caution.type === 'source-gate' && caution.source &&
           DATA.quotes[caution.source.block])
         quote.textContent = DATA.quotes[caution.source.block];
       else quote.textContent = DATA.strings.generalizationCodes[caution.code] || '';
       wrap.appendChild(quote);
+      chip.setAttribute('aria-expanded', 'true');
     });
+  chip.setAttribute('aria-expanded', 'false');
   wrap.appendChild(chip);
   return wrap;
 }
@@ -774,8 +1280,8 @@ function renderForwardBar(){
   } else {
     var t = info.targets[state.pos];
     var line = el('div');
-    line.appendChild(el('span', null, (state.pos + 1) + ' of ' +
-      info.targets.length + ' : ' + (DATA.anchors[t.block] || t.block)));
+    line.appendChild(el('span', null, positionText(state.pos + 1,
+      info.targets.length, DATA.anchors[t.block] || t.block)));
     if (t.role) line.appendChild(el('span', null, '  [' +
       DATA.strings.role[t.role] + ']'));
     fbar.appendChild(line);
@@ -783,16 +1289,13 @@ function renderForwardBar(){
     if (info.targets.length > 5)
       fbar.appendChild(el('span', 'more', DATA.strings.ui.moreCandidates
         .replace('{n}', String(info.targets.length - 5))));
-    var controls = el('div');
-    controls.appendChild(btn(null, DATA.strings.ui.previous, '◀',
-      function(){ move(-1); }));
-    controls.appendChild(btn(null, DATA.strings.ui.next, '▶',
-      function(){ move(1); }));
-    controls.appendChild(btn(null, DATA.strings.ui.clearSelection, '×',
-      function(){ clearSelection(true); }));
-    fbar.appendChild(controls);
     if (t.caution) fbar.appendChild(cautionChip(t.caution, false));
   }
+  (info.dispositions || []).forEach(function(d){
+    var wording = DATA.strings.dispositions[d.disposition];
+    if (wording) fbar.appendChild(el('div', 'disposition', wording));
+  });
+  fbar.appendChild(selectionControls(info.status === 'mapped'));
   if (info.caution) fbar.appendChild(cautionChip(info.caution, false));
   NavModel.claimGates(DATA, state.key).forEach(function(g){
     fbar.appendChild(cautionChip(g, true));
@@ -823,11 +1326,7 @@ function activate(fragId, fromId){
             returnFocus: fromId };
   renderForwardBar();
   applyForwardHighlights();
-  var label = DATA.unitLabels[fragId] || fragId;
-  if (info.status === 'counsel-review-required')
-    say(label + ' — ' + DATA.strings.ui.noCandidateNotice);
-  else say(DATA.strings.ui.forwardMode + ' — ' + label + ' — 1 of ' +
-    info.targets.length + ' : ' + (DATA.anchors[info.targets[0].block] || ''));
+  say(forwardAnnouncement(info, fragId, 0));
   fbar.setAttribute('tabindex', '-1');
   fbar.focus();
 }
@@ -837,14 +1336,13 @@ function move(delta){
     state.pos = NavModel.cycle(state.pos, state.info.targets.length, delta);
     renderForwardBar(); applyForwardHighlights();
     var t = state.info.targets[state.pos];
-    say((state.pos + 1) + ' of ' + state.info.targets.length + ' : ' +
-        (DATA.anchors[t.block] || t.block));
+    say(forwardAnnouncement(state.info, state.key, state.pos,
+      presenceText(state.info, state.key, t)));
     fbar.focus();
   } else if (state.mode === 'reverse'){
     state.pos = NavModel.cycle(state.pos, state.list.length, delta);
     renderReverseBar(); applyReverseHighlights();
-    say((state.pos + 1) + ' of ' + state.list.length + ' : ' +
-        (DATA.unitLabels[state.list[state.pos].fragment] || ''));
+    say(reverseAnnouncement(state.key, state.list, state.pos));
     rbar.focus();
   }
 }
@@ -855,19 +1353,12 @@ function renderReverseBar(){
   var claims = {};
   state.list.forEach(function(e){ claims[NavModel.claimOf(e.fragment)] = 1; });
   rbar.appendChild(el('div', 'ctx', (DATA.anchors[state.key] || state.key)));
-  rbar.appendChild(el('div', null, state.list.length + ' fragments · ' +
-    Object.keys(claims).length + ' claims'));
+  rbar.appendChild(el('div', null, fmt(DATA.strings.ui.reverseCounts,
+    { fragments: state.list.length, claims: Object.keys(claims).length })));
   var cur = state.list[state.pos];
-  rbar.appendChild(el('div', null, (state.pos + 1) + ' of ' +
-    state.list.length + ' : ' + (DATA.unitLabels[cur.fragment] || cur.fragment)));
-  var controls = el('div');
-  controls.appendChild(btn(null, DATA.strings.ui.previous, '◀',
-    function(){ move(-1); }));
-  controls.appendChild(btn(null, DATA.strings.ui.next, '▶',
-    function(){ move(1); }));
-  controls.appendChild(btn(null, DATA.strings.ui.clearSelection, '×',
-    function(){ clearSelection(true); }));
-  rbar.appendChild(controls);
+  rbar.appendChild(el('div', null, positionText(state.pos + 1,
+    state.list.length, DATA.unitLabels[cur.fragment] || cur.fragment)));
+  rbar.appendChild(selectionControls(true));
   rbar.hidden = false;
 }
 
@@ -893,8 +1384,7 @@ function activateReverse(blockId, fromId){
   state = { mode: 'reverse', key: blockId, pos: 0, list: list,
             returnFocus: fromId };
   renderReverseBar(); applyReverseHighlights();
-  say(DATA.strings.ui.reverseMode + ' — ' + (DATA.anchors[blockId] || '') +
-      ' — ' + list.length + ' fragments');
+  say(reverseAnnouncement(blockId, list, 0));
   rbar.setAttribute('tabindex', '-1');
   rbar.focus();
 }
@@ -933,12 +1423,15 @@ function activateGate(claimKey, gateId, fromId){
   for (var i = 0; i < gates.length; i++){
     if (gates[i].gateId === gateId){
       clearSelection(false);
-      state = { mode: 'forward', key: claimKey, pos: 0,
+      /* A claim gate has no candidate list.  Keep it out of the forward
+         cycling state so ArrowLeft/ArrowRight cannot index an empty list. */
+      state = { mode: 'claim-gate', key: claimKey, pos: 0,
         info: { status: 'claim-gate', targets: [] }, returnFocus: fromId };
       fbar.textContent = '';
       fbar.appendChild(el('div', 'mode', DATA.strings.ui.forwardMode));
-      fbar.appendChild(el('div', 'ctx', DATA.edition.prefix + ' claim ' +
-        claimKey.slice(1) + ' — claim-level gate'));
+      fbar.appendChild(el('div', 'ctx', fmt(
+        DATA.strings.ui.claimGateContext,
+        { prefix: DATA.edition.prefix, n: claimKey.slice(1) })));
       fbar.appendChild(cautionChip(gates[i], true));
       (DATA.claimDispositions[claimKey] || []).forEach(function(d){
         if (d.gateId === gateId)
@@ -950,8 +1443,10 @@ function activateGate(claimKey, gateId, fromId){
       fbar.hidden = false;
       fbar.setAttribute('tabindex', '-1');
       fbar.focus();
-      say('Claim-level gate on ' + DATA.edition.prefix + ' claim ' +
-          claimKey.slice(1));
+      say(DATA.strings.ui.forwardMode + ' — ' +
+        fmt(DATA.strings.ui.claimGateAnnouncement,
+          { prefix: DATA.edition.prefix, n: claimKey.slice(1) }) + ' — ' +
+        DATA.strings.ui.gatePresent);
       return;
     }
   }
@@ -959,7 +1454,8 @@ function activateGate(claimKey, gateId, fromId){
 
 document.addEventListener('keydown', function(ev){
   if (ev.key === 'Escape' && state.mode){ clearSelection(true); return; }
-  if ((ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') && state.mode){
+  if ((ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') &&
+      (state.mode === 'forward' || state.mode === 'reverse')){
     var bar = state.mode === 'forward' ? fbar : rbar;
     if (bar.contains(document.activeElement)){
       ev.preventDefault();

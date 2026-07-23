@@ -25,6 +25,67 @@ class ClaimsParseError(ValueError):
     pass
 
 
+def parse_dependency_table(text):
+    """Parse the claim document's published ``Depends from`` table.
+
+    This is deliberately independent of both the authored dependency map
+    and claim-reference parsing: the AF three-way check is meaningful only
+    if the document table is read from the pinned claim-set bytes rather
+    than copied into the map and compared with itself.  Returns ``None``
+    when the document publishes no such table.
+    """
+    lines = text.splitlines()
+    found = []
+    for i, line in enumerate(lines[:-1]):
+        if not line.lstrip().startswith("|"):
+            continue
+        headers = [re.sub(r"[*_`]", "", c).strip().lower()
+                   for c in line.strip().strip("|").split("|")]
+        try:
+            dep_col = headers.index("depends from")
+        except ValueError:
+            continue
+        claim_cols = [n for n, h in enumerate(headers) if "claim" in h]
+        if not claim_cols:
+            continue
+        claim_col = claim_cols[0]
+        sep = lines[i + 1].strip()
+        if not re.match(r"^\|[\s:|\-]+\|$", sep):
+            raise ClaimsParseError(
+                "dependency table header is not followed by a separator")
+        table = {}
+        j = i + 2
+        while j < len(lines) and lines[j].lstrip().startswith("|"):
+            cells = [c.strip() for c in
+                     lines[j].strip().strip("|").split("|")]
+            if max(claim_col, dep_col) >= len(cells):
+                raise ClaimsParseError("short row in dependency table")
+            cm = re.search(r"\d+", cells[claim_col])
+            if cm is None:
+                raise ClaimsParseError(
+                    "dependency table row has no claim number: %r"
+                    % cells[claim_col])
+            number = int(cm.group(0))
+            raw_parent = cells[dep_col].strip()
+            if raw_parent in ("", "-", "—", "–"):
+                parent = None
+            elif re.fullmatch(r"\d+", raw_parent):
+                parent = int(raw_parent)
+            else:
+                raise ClaimsParseError(
+                    "claim %d has unparseable Depends from value %r"
+                    % (number, raw_parent))
+            if number in table:
+                raise ClaimsParseError(
+                    "duplicate claim %d in dependency table" % number)
+            table[number] = parent
+            j += 1
+        found.append(table)
+    if len(found) > 1:
+        raise ClaimsParseError("multiple Depends from tables found")
+    return found[0] if found else None
+
+
 class Unit:
     __slots__ = ("claim", "index", "text", "canonical", "digest")
 

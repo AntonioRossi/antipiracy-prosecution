@@ -50,8 +50,15 @@
    "actionClasses": ["read"]
   },
   "bundle": {
-   "reads": ["content", "sealed", "artifact-checksum", "release-record"],
+   "reads": ["content", "sealed", "artifact-checksum", "attestation",
+             "qa-record", "release-record"],
    "writes": ["bundle-manifest", "bundle", "bundle-checksum", "bundle-record"],
+   "actionClasses": ["read"]
+  },
+  "bundle-plan": {
+   "reads": ["content", "sealed", "artifact-checksum", "attestation",
+             "qa-record", "release-record"],
+   "writes": [],
    "actionClasses": ["read"]
   },
   "status": {

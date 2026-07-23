@@ -1,0 +1,13 @@
+{
+ "stringsVersion": "1",
+ "namespace": "af",
+ "sourceGateCodes": {
+  "claim-as-a-whole": "Claim-as-a-whole gate",
+  "source-identity-detection": "Source-identity detection gate",
+  "examples-integration": "Examples 2–5 integration gate",
+  "example2-priority-gate": "Example 2 priority gate",
+  "combined-example": "Combined-example gate",
+  "collusion-output": "Collusion-output gate",
+  "overlay-sequencing": "Overlay sequencing gate"
+ }
+}

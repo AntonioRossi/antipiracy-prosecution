@@ -58,9 +58,9 @@
       "fragmentTextHash": {"type": "string", "x-ship": "never", "x-review": "include"},
       "targets": {"type": "array", "items": {"$ref": "#/definitions/target"}},
       "caution": {"$ref": "#/definitions/caution"},
-      "phrases": {"type": "array", "items": {"$ref": "#/definitions/phrase"}},
-      "previousTargets": {"type": "array", "items": {"type": "object"}, "x-ship": "never", "x-review": "exclude"},
-      "proposedFrom": {"type": "object", "x-ship": "never", "x-review": "exclude"}
+      "phrases": {"type": "array", "items": {"$ref": "#/definitions/phrase"}, "x-reviewOwnerBoundary": true},
+      "previousTargets": {"$ref": "#/definitions/previousTargets"},
+      "proposedFrom": {"$ref": "#/definitions/proposedFrom"}
      }
     }
    }
@@ -96,11 +96,12 @@
  "definitions": {
   "review": {
    "type": "object",
-   "required": ["by", "date", "contentHash"],
+   "required": ["by", "operatorKind", "date", "contentHash"],
    "additionalProperties": false,
    "properties": {
-    "by": {"type": "string", "x-ship": "never", "x-review": "exclude"},
-    "date": {"type": "string", "x-ship": "never", "x-review": "exclude"},
+    "by": {"type": "string", "minLength": 1, "x-ship": "never", "x-review": "exclude"},
+    "operatorKind": {"type": "string", "enum": ["human", "model", "tool"], "x-ship": "never", "x-review": "exclude"},
+    "date": {"type": "string", "minLength": 1, "x-ship": "never", "x-review": "exclude"},
     "contentHash": {"type": "string", "x-ship": "never", "x-review": "exclude"}
    }
   },
@@ -144,7 +145,7 @@
    "additionalProperties": false,
    "properties": {
     "id": {"type": "string", "x-ship": "artifact", "x-review": "include"},
-    "text": {"type": "string", "x-ship": "artifact", "x-review": "include"},
+    "text": {"type": "string", "minLength": 1, "x-ship": "artifact", "x-review": "include"},
     "occurrence": {"type": "integer", "x-ship": "artifact", "x-review": "include"},
     "status": {"type": "string", "enum": ["mapped", "counsel-review-required"], "x-ship": "artifact", "x-review": "include"},
     "reviewState": {"type": "string", "enum": ["pending", "internally-reviewed"], "x-ship": "never", "x-review": "exclude"},
@@ -153,9 +154,39 @@
     "review": {"$ref": "#/definitions/review"},
     "targets": {"type": "array", "items": {"$ref": "#/definitions/target"}},
     "caution": {"$ref": "#/definitions/caution"},
-    "previousTargets": {"type": "array", "items": {"type": "object"}, "x-ship": "never", "x-review": "exclude"},
-    "proposedFrom": {"type": "object", "x-ship": "never", "x-review": "exclude"}
+    "previousTargets": {"$ref": "#/definitions/previousTargets"},
+    "proposedFrom": {"$ref": "#/definitions/proposedFrom"}
    }
+  },
+  "previousTargets": {
+   "comment": "Preserved migration snapshot; each entry has exactly the same closed shape as an authored target.",
+   "type": "array",
+   "items": {"$ref": "#/definitions/target"},
+   "x-ship": "never",
+   "x-review": "exclude"
+  },
+  "proposedFrom": {
+   "comment": "Closed, syntactically pinned cross-edition reuse provenance. These local shape checks do not authenticate the named source edition/corpora/owner; release remains blocked until the deferred pair-scoped verifier exists.",
+   "type": "object",
+   "required": ["sourceEdition", "fragmentCorpus", "targetCorpus", "owner", "contentHash"],
+   "additionalProperties": false,
+   "properties": {
+    "sourceEdition": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"},
+    "fragmentCorpus": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"},
+    "targetCorpus": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"},
+    "owner": {
+     "type": "object",
+     "required": ["kind", "id"],
+     "additionalProperties": false,
+     "properties": {
+      "kind": {"type": "string", "enum": ["unit", "phrase"]},
+      "id": {"type": "string", "pattern": "^c[1-9][0-9]*u(?:0|[1-9][0-9]*)(?:p[1-9][0-9]*)?$"}
+     }
+    },
+    "contentHash": {"type": "string", "pattern": "^sha256/c1:[0-9a-f]{64}$"}
+   },
+   "x-ship": "never",
+   "x-review": "exclude"
   }
  }
 }

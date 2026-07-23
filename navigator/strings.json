@@ -1,8 +1,7 @@
 {
  "stringsVersion": "1",
- "comment": "Central microcopy registry (TDD §10.11). All UI-authored fixed microcopy lives here; approvals bind to wording digests. Enum presentation entries must exactly cover every closed enum value that reaches the UI (guardrail 13). The counsel legend and bundle-manifest text are counsel-approvable normative defaults (TDD §17.4).",
+ "comment": "Shared artifact microcopy registry (TDD §10.11). Edition source-gate labels live in the selected edition strings resource; bundle-only wording lives in bundle-manifest.json. Approvals bind to wording digests. Enum presentation entries must exactly cover every closed enum value that reaches the UI (guardrail 13). The counsel legend is a counsel-approvable normative default (TDD §17.4).",
  "counselLegend": "CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED FOR US COUNSEL REVIEW. This navigator presents unfiled draft claim-strategy material relating to PCT/IB2025/051755 (published as WO 2025/181623 A1). Do not distribute outside the engagement.",
- "bundleManifestText": "This bundle contains two alternative counsel-review editions of the AA11393US claims-to-specification navigator: the NA edition (claim set NA-2026-07-21-v2) and the AF edition (claim set AF-2026-07-17-v2). Each edition presents one candidate claim strategy for counsel review. Inclusion of both editions expresses no comparison, preference, or filing recommendation.",
  "standingDisclaimer": "Draft navigation aid generated from claim-set {editionVersion} and PCT/IB2025/051755 as filed (WO 2025/181623 A1). Mappings are author-recorded candidate associations for counsel review — not a written-description, priority, or any other legal opinion. Fragments marked \"counsel review required\" carry no recorded candidate passage. Claim-level gates concern the complete claim and are quoted from the claim-set document. Anchor references are internal navigation labels, not official numbering, and must not be cited. This edition presents one candidate strategy; it does not compare strategies or recommend a filing choice.",
  "status": {
   "mapped": "Candidate passages recorded",
@@ -35,7 +34,7 @@
   "target-changed": "target block text changed",
   "source-changed": "caution-source block changed",
   "endpoint-changed": "claim, ancestor-claim, or gate endpoint changed",
-  "unclassified": "unclassified change — human review"
+  "unclassified": "unclassified change — authorized operator review"
  },
  "generalizationCodes": {
   "beyond-literal-example": "The recorded passage supports this language by example; the claim wording is broader than the literal example."
@@ -43,41 +42,57 @@
  "ui": {
   "forwardMode": "Claims → Specification",
   "reverseMode": "Specification → Claims",
+  "claimReference": "{prefix} claim {n}",
   "preambleLabel": "preamble",
   "limitationLabel": "limitation {n}",
+  "unitContext": "{claim} · {label}",
+  "phraseContext": "{claim} · “{text}”",
   "noCandidateNotice": "No candidate passage recorded — counsel review required",
+  "showMappingStatus": "Show mapping status for {label}: {status}",
   "clearSelection": "Clear selection",
   "previous": "Previous candidate",
   "next": "Next candidate",
   "moreCandidates": "+{n} more",
-  "indexedBy": "Indexed by {n} claim fragment(s) of this edition",
+  "indexedBy": "Indexed by {n} claim fragment(s) of this edition: {label}",
+  "showCandidates": "Show recorded candidate passages for {label}",
+  "goToClaim": "Go to {prefix} claim {n}",
+  "claimIndex": "Claim index",
+  "claimLevelGate": "Claim-level gate",
+  "claimLevelGateLabel": "Claim-level gate on {prefix} claim {n}: {name}",
+  "cautionLabel": "Caution: {name}",
+  "claimGateContext": "{prefix} claim {n} — claim-level gate",
+  "claimGateAnnouncement": "Claim-level gate on {prefix} claim {n}",
+  "selectionCleared": "Selection cleared",
+  "position": "{position} of {total}: {label}",
+  "reverseCounts": "{fragments} fragments · {claims} claims",
+  "cautionPresent": "caution present",
+  "gatePresent": "claim-level gate present",
+  "claimSetLabel": "Claim set",
+  "authorityHeader": "PCT/IB2025/051755 · WO 2025/181623 A1",
+  "aboutScheduleToggle": "About & mapping schedule",
+  "candidateClaimsLabel": "Candidate claims",
+  "asFiledDisclosureLabel": "As-filed disclosure",
+  "scheduleFragmentHeader": "Fragment",
+  "scheduleStatusHeader": "Status",
+  "scheduleCandidatesHeader": "Recorded candidate passages",
+  "scheduleCautionsHeader": "Cautions / dispositions",
+  "scheduleClaimGatesTitle": "Claim-level gates",
+  "scheduleClaimHeader": "Claim",
+  "scheduleGateHeader": "Gate",
+  "scheduleDispositionHeader": "Disposition",
+  "anchorHeader": "Anchor",
+  "authorityOfRecord": "Authority of record",
+  "corpusHeader": "Corpus",
+  "roleHeader": "Role",
+  "versionHeader": "Version",
+  "pinnedFilesHeader": "Pinned files (SHA-256, abbreviated display; full digests in the machine-readable block)",
+  "provenanceSummary": "canonVersion {canonVersion} · schema {schemaVersion} · declared release timestamp {timestamp} · {claims} claims / {units} units / {blocks} disclosure blocks",
   "editorialLabel": "editorial (not filed text)",
   "guidanceNoteLabel": "Guidance note from the claim-set document (not claim text)",
   "aboutTitle": "About this navigator",
   "scheduleTitle": "Flat mapping schedule",
   "provenanceTitle": "Provenance",
-  "viewportNote": "Designed for viewports of 1280×720 and above; panes stack below the minimum.",
+  "viewportNote": "Designed for viewports of {width}×{height} and above; panes stack below the minimum.",
   "previewWatermark": "PREVIEW — NOT FOR QA OR DELIVERY"
- },
- "editionNamespaces": {
-  "na": {
-   "sourceGateCodes": {
-    "example2-priority": "Example 2 priority gate",
-    "combined-example": "Combined-example support gate",
-    "detection-support": "Detection-support gate",
-    "collusion-output": "Collusion-output gate"
-   }
-  },
-  "af": {
-   "sourceGateCodes": {
-    "claim-as-a-whole": "Claim-as-a-whole gate",
-    "source-identity-detection": "Source-identity detection gate",
-    "examples-integration": "Examples 2–5 integration gate",
-    "example2-priority-gate": "Example 2 priority gate",
-    "combined-example": "Combined-example gate",
-    "collusion-output": "Collusion-output gate",
-    "overlay-sequencing": "Overlay sequencing gate"
-   }
-  }
  }
 }
