@@ -10,7 +10,7 @@ from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lib import (bundlezip, canon, gateway, model, projections,
-                 profilepolicy, recordprovenance, release)  # noqa: E402
+                 profilepolicy, recordprovenance, release, snapshot)  # noqa: E402
 
 
 PLANES = {
@@ -321,6 +321,95 @@ class TestAuthorityPin(unittest.TestCase):
             }
             self.assertEqual(projections.provenance(m)["authority"]["id"],
                              authority_id)
+
+
+class TestGatewayByteSource(unittest.TestCase):
+    """A byte source replaces only the final disk read, never the policy."""
+
+    def _captured(self, root, contents):
+        for relpath, data in contents.items():
+            path = os.path.join(root, *relpath.split("/"))
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "wb") as fh:
+                fh.write(data)
+        return snapshot.RepositorySnapshot.capture(root, retain_bytes=True)
+
+    def test_byte_source_must_be_callable(self):
+        with tempfile.TemporaryDirectory() as root:
+            for construct in (
+                    lambda: gateway.ContentGateway(
+                        root, byte_source=b"not-callable"),
+                    lambda: gateway.ArtifactGateway(
+                        root, "reader", PLANES, byte_source=42),
+                    lambda: gateway.VerificationGateway(
+                        root, "reader", PLANES, byte_source="x")):
+                with self.subTest(construct=construct):
+                    with self.assertRaisesRegex(
+                            gateway.GatewayError, "byte source"):
+                        construct()
+
+    def test_content_gateway_serves_frozen_bytes_under_unchanged_policy(self):
+        with tempfile.TemporaryDirectory() as root:
+            captured = self._captured(root, {"docs/a.txt": b"captured",
+                                             "docs/b.txt": b"other"})
+            with open(os.path.join(root, "docs", "a.txt"), "wb") as fh:
+                fh.write(b"live drift")
+            content = gateway.ContentGateway(
+                root, allowlist=["docs/a.txt"],
+                byte_source=captured.byte_source())
+            self.assertEqual(content.read_bytes("docs/a.txt"), b"captured")
+            # Frozen bytes repeat exactly, so change detection cannot fire.
+            self.assertEqual(content.read_bytes("docs/a.txt"), b"captured")
+            self.assertEqual(content.read_log["docs/a.txt"],
+                             canon.bytes_digest(b"captured"))
+            # Allowlist, terminal-plane, and escape checks still bind.
+            with self.assertRaisesRegex(gateway.GatewayError, "allowlist"):
+                content.read_bytes("docs/b.txt")
+            with self.assertRaises(gateway.GatewayError):
+                content.read_bytes("../escape")
+            with self.assertRaisesRegex(
+                    gateway.GatewayError, "terminal plane"):
+                content.read_bytes("navigator/dist/candidate_x.html")
+
+    def test_artifact_and_verification_gateways_serve_frozen_bytes(self):
+        planes = {
+            "kinds": {"candidate": "artifact", "attestation": "verification"},
+            "commands": {
+                "reader": {"reads": ["candidate", "attestation"],
+                           "writes": []},
+            },
+        }
+        record = {"approvalStatus": "passed", "note": "final evidence"}
+        digest = canon.composite_digest("aa11393:attestation:c1", record)
+        name = "attestation_%s.json" % digest.rsplit(":", 1)[1]
+        payload = canon.canonical_json(
+            {"kind": "attestation", "digest": digest, "record": record})
+        with tempfile.TemporaryDirectory() as root:
+            captured = self._captured(root, {
+                "dist/candidate_release.html": b"candidate captured",
+                "records/" + name: payload,
+            })
+            with open(os.path.join(root, "dist", "candidate_release.html"),
+                      "wb") as fh:
+                fh.write(b"candidate live drift")
+            artifact = gateway.ArtifactGateway(
+                os.path.join(root, "dist"), "reader", planes,
+                byte_source=captured.byte_source())
+            self.assertEqual(artifact.read("candidate",
+                                           "candidate_release.html"),
+                             b"candidate captured")
+            verification = gateway.VerificationGateway(
+                os.path.join(root, "records"), "reader", planes,
+                byte_source=captured.byte_source())
+            envelopes = verification.read_all("attestation")
+            self.assertEqual(len(envelopes), 1)
+            self.assertEqual(envelopes[0]["digest"], digest)
+            self.assertEqual(envelopes[0]["record"], record)
+            # Privilege and kind/path checks still bind snapshot-backed reads.
+            with self.assertRaisesRegex(gateway.GatewayError, "privilege"):
+                artifact.read("sealed", "sealed_release.html")
+            with self.assertRaises(gateway.GatewayError):
+                artifact.read("candidate", "../escape.html")
 
 
 if __name__ == "__main__":

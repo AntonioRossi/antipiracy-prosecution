@@ -348,7 +348,8 @@ class EditionModel:
                 if corpus_id is not None
             }
             selected = qaregistry.QaRegistry(
-                gateway.ContentGateway(self.gw.root),
+                gateway.ContentGateway(
+                    self.gw.root, byte_source=self.gw.byte_source),
                 self.edition["qaRegistry"], allowed)
             overlap = set(selected.corpora) & set(self.registry.corpora)
             if overlap:

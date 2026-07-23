@@ -771,7 +771,8 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
             with mock.patch.object(build, "ROOT", root), \
                     mock.patch.object(
                         build, "_verify_current_closure",
-                        side_effect=lambda: self._closure_report()), \
+                        side_effect=lambda byte_source:
+                            self._closure_report()), \
                     mock.patch.object(
                         build, "_run_full_test_suite",
                         side_effect=mutate_sandbox), \
@@ -795,13 +796,61 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
             with mock.patch.object(build, "ROOT", root), \
                     mock.patch.object(
                         build, "_verify_current_closure",
-                        side_effect=lambda: self._closure_report()), \
+                        side_effect=lambda byte_source:
+                            self._closure_report()), \
                     mock.patch.object(
                         build, "_run_full_test_suite",
                         side_effect=mutate_live), \
                     self.assertRaisesRegex(
                         RuntimeError, "live repository changed"):
                 build.verify_current_state(run_tests=True)
+
+    def test_first_closure_consumes_the_initial_snapshot(self):
+        with tempfile.TemporaryDirectory() as root:
+            source = os.path.join(root, "verified-source.txt")
+            with open(source, "wb") as fh:
+                fh.write(b"captured\n")
+            seen = []
+
+            def closure(byte_source):
+                seen.append(byte_source(source))
+                if len(seen) == 1:
+                    # A live change after the initial capture must not reach
+                    # the first closure: its byte source serves only the
+                    # captured bytes, and the A/B bracket refuses the run.
+                    with open(source, "wb") as fh:
+                        fh.write(b"mutated live\n")
+                    seen.append(byte_source(source))
+                return self._closure_report()
+
+            with mock.patch.object(build, "ROOT", root), \
+                    mock.patch.object(
+                        build, "_verify_current_closure",
+                        side_effect=closure), \
+                    self.assertRaisesRegex(
+                        RuntimeError, "live repository changed"):
+                build.verify_current_state(run_tests=False)
+            self.assertEqual(seen, [b"captured\n", b"captured\n"])
+
+    def test_final_closure_consumes_a_snapshot_equal_to_the_initial(self):
+        with tempfile.TemporaryDirectory() as root:
+            source = os.path.join(root, "verified-source.txt")
+            with open(source, "wb") as fh:
+                fh.write(b"stable\n")
+            received = []
+
+            def closure(byte_source):
+                received.append(byte_source(source))
+                return self._closure_report()
+
+            with mock.patch.object(build, "ROOT", root), \
+                    mock.patch.object(
+                        build, "_verify_current_closure",
+                        side_effect=closure):
+                report = build.verify_current_state(run_tests=False)
+            self.assertEqual(received, [b"stable\n", b"stable\n"])
+            self.assertEqual(report["status"], "current")
+            self.assertIn("repositorySnapshot", report["checks"])
 
     def test_snapshot_capture_rejects_a_file_changed_while_reading(self):
         with tempfile.TemporaryDirectory() as root:
@@ -839,6 +888,80 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                     self.assertRaisesRegex(
                         snapshot.SnapshotError, "changed during snapshot"):
                 snapshot.RepositorySnapshot.capture(root)
+
+
+class TestSnapshotByteSource(unittest.TestCase):
+    def _pinned_tree(self, root, contents):
+        for relpath, data in contents.items():
+            path = os.path.join(root, *relpath.split("/"))
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "wb") as fh:
+                fh.write(data)
+
+    def test_closure_reads_captured_bytes_not_live_changes(self):
+        original = b"original claims\n"
+        entry = {
+            "role": "fragment-source",
+            "visibility": "rendered",
+            "version": "NA-2026-07-22-v4",
+            "primary": "claims/na.md",
+            "files": {"claims/na.md": canon.bytes_digest(original)},
+        }
+        with tempfile.TemporaryDirectory() as root:
+            self._pinned_tree(root, {"claims/na.md": original})
+            captured = snapshot.RepositorySnapshot.capture(
+                root, retain_bytes=True)
+            with open(os.path.join(root, "claims", "na.md"), "wb") as fh:
+                fh.write(b"drifted claims\n")
+
+            content = gateway.ContentGateway(
+                root, byte_source=captured.byte_source())
+            plan = pinplan.corpus_closure("na-claims", entry, content)
+            self.assertTrue(plan["pinCurrent"])
+            self.assertEqual(
+                pinplan.closure_problems(plan, "na-claims"), [])
+
+            fresh = snapshot.RepositorySnapshot.capture(
+                root, retain_bytes=True)
+            drifted = pinplan.corpus_closure(
+                "na-claims", entry,
+                gateway.ContentGateway(
+                    root, byte_source=fresh.byte_source()))
+            self.assertFalse(drifted["pinCurrent"])
+            self.assertEqual(
+                drifted["files"][0]["actualDigest"],
+                canon.bytes_digest(b"drifted claims\n"))
+            self.assertTrue(any(
+                "claims/na.md" in problem
+                for problem in pinplan.closure_problems(
+                    drifted, "na-claims")))
+
+    def test_snapshot_without_retained_bytes_has_no_byte_source(self):
+        with tempfile.TemporaryDirectory() as root:
+            self._pinned_tree(root, {"input.txt": b"data\n"})
+            digest_only = snapshot.RepositorySnapshot.capture(root)
+            with self.assertRaisesRegex(
+                    snapshot.SnapshotError, "without byte retention"):
+                digest_only.read_bytes("input.txt")
+            retained = snapshot.RepositorySnapshot.capture(
+                root, retain_bytes=True)
+            with self.assertRaisesRegex(
+                    snapshot.SnapshotError,
+                    "absent from repository snapshot"):
+                retained.read_bytes("missing.txt")
+
+    def test_materialize_writes_captured_bytes_after_live_drift(self):
+        with tempfile.TemporaryDirectory() as root, \
+                tempfile.TemporaryDirectory() as destination:
+            self._pinned_tree(root, {"docs/a.txt": b"captured\n"})
+            captured = snapshot.RepositorySnapshot.capture(
+                root, retain_bytes=True)
+            with open(os.path.join(root, "docs", "a.txt"), "wb") as fh:
+                fh.write(b"live drift\n")
+            captured.materialize(destination)
+            with open(os.path.join(destination, "docs", "a.txt"),
+                      "rb") as fh:
+                self.assertEqual(fh.read(), b"captured\n")
 
 
 class TestQaPinPlanning(unittest.TestCase):
@@ -2124,7 +2247,8 @@ class TestReleaseEvidence(unittest.TestCase):
             edition={"editionId": "na"}, release_policy={},
             support_matrix_bytes=b"{}",
             api_policy={},
-            strings={"counselLegend": "legend"})
+            strings={"counselLegend": "legend"},
+            gw=SimpleNamespace(root=ROOT, byte_source=None))
 
         def qa(digest, kind):
             return {"kind": "qa-record", "digest": digest, "record": {
@@ -2165,7 +2289,8 @@ class TestReleaseEvidence(unittest.TestCase):
         edition = SimpleNamespace(
             edition={"editionId": "na"}, release_policy={},
             support_matrix_bytes=b"{}", api_policy={},
-            strings={"counselLegend": "legend"})
+            strings={"counselLegend": "legend"},
+            gw=SimpleNamespace(root=ROOT, byte_source=None))
         stale = [{"kind": "qa-record", "digest": "old-qa", "record": {
             "edition": "na", "candidateDigest": "old-candidate",
             "lockDigest": "old-lock", "operatorKind": "model",
@@ -2199,7 +2324,8 @@ class TestReleaseEvidence(unittest.TestCase):
         edition = SimpleNamespace(
             edition={"editionId": "na"}, release_policy={},
             support_matrix_bytes=b"{}", api_policy={},
-            strings={"counselLegend": "legend"})
+            strings={"counselLegend": "legend"},
+            gw=SimpleNamespace(root=ROOT, byte_source=None))
         prior_profile = [{
             "kind": "qa-record", "digest": "validated-evidence",
             "record": {

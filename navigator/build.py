@@ -63,14 +63,29 @@ def ci_guard(argv):
                          % ", ".join(hits))
 
 
-def load_planes():
+def load_planes(byte_source=None):
     planes = canon.parse_json(
-        gateway.ContentGateway(ROOT).read_text("navigator/schema/planes.json"))
+        gateway.ContentGateway(ROOT, byte_source=byte_source).read_text(
+            "navigator/schema/planes.json"))
     version_problems = canon.require_version(planes, "planesVersion", "1")
     if version_problems:
         raise SystemExit(
             "navigator/schema/planes.json: %s" % version_problems[0])
     return planes
+
+
+def _command_snapshot():
+    """Capture the one immutable byte source for a read-only command.
+
+    Read-only verification commands capture the repository once at their
+    boundary and consume only the captured bytes through gateway byte
+    sources, so a repeated or inconsistent live read is structurally
+    impossible within one command invocation.
+    """
+    try:
+        return snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
+    except snapshot.SnapshotError as exc:
+        raise SystemExit("cannot snapshot current repository: %s" % exc)
 
 
 def delivery_edition_ids(content=None):
@@ -139,19 +154,19 @@ def edition_path(edition_id):
     return "navigator/editions/%s.json" % edition_id
 
 
-def build_model(edition_id, planes=None):
-    boot = gateway.ContentGateway(ROOT)
+def build_model(edition_id, planes=None, byte_source=None):
+    boot = gateway.ContentGateway(ROOT, byte_source=byte_source)
     allow = canon.parse_json(
         boot.read_text(edition_path(edition_id)))["declaredTransitiveInputs"]
-    gw = gateway.ContentGateway(ROOT, allowlist=allow)
+    gw = gateway.ContentGateway(ROOT, allowlist=allow, byte_source=byte_source)
     m = model.EditionModel(gw, edition_path(edition_id))
     return gw, m
 
 
-def derive(edition_id, mode):
+def derive(edition_id, mode, byte_source=None):
     """Shared derivation for preview/candidate/release: validate, render,
     lock, exact-set check. Returns (m, html_bytes, lock)."""
-    gw, m = build_model(edition_id)
+    gw, m = build_model(edition_id, byte_source=byte_source)
     errors = validate.validate_edition(m)
     if errors:
         for code, msg in errors:
@@ -201,9 +216,10 @@ def _claim_document_version(text, strategy_prefix):
     return matches[0]
 
 
-def _plan_schema():
+def _plan_schema(byte_source=None):
     """Load and meta-validate the closed current-pin plan schema."""
-    schema = canon.parse_json(gateway.ContentGateway(ROOT).read_text(
+    schema = canon.parse_json(gateway.ContentGateway(
+        ROOT, byte_source=byte_source).read_text(
         "navigator/schema/plan.schema.json"))
     try:
         schema_validate.check_schema(schema)
@@ -212,7 +228,7 @@ def _plan_schema():
     return schema
 
 
-def current_pin_plan(edition_id):
+def current_pin_plan(edition_id, byte_source=None):
     """Return a deterministic, read-only current-pin plan.
 
     Unlike ``build_model``, this command deliberately reads registered source
@@ -222,7 +238,7 @@ def current_pin_plan(edition_id):
     registry and QA corpus the edition depends on is planned by the same
     generic closure, so integrity currency never narrows to a primary file.
     """
-    boot = gateway.ContentGateway(ROOT)
+    boot = gateway.ContentGateway(ROOT, byte_source=byte_source)
     epath = edition_path(edition_id)
     edition = canon.parse_json(boot.read_text(epath))
     edition_schema = canon.parse_json(
@@ -232,7 +248,8 @@ def current_pin_plan(edition_id):
         raise SystemExit("invalid edition config: %s" % "; ".join(problems))
 
     declared = edition["declaredTransitiveInputs"]
-    content = gateway.ContentGateway(ROOT, allowlist=declared)
+    content = gateway.ContentGateway(
+        ROOT, allowlist=declared, byte_source=byte_source)
     reg = registry_mod.Registry(
         content, registry_paths=edition["corpusRegistries"],
         allowed_corpora={edition["claimCorpus"], edition["targetCorpus"],
@@ -269,7 +286,7 @@ def current_pin_plan(edition_id):
     qa_ids = {value for value in edition["qaSources"].values()
               if value is not None}
     qa_allow = [edition["qaRegistry"]]
-    qa_boot = gateway.ContentGateway(ROOT)
+    qa_boot = gateway.ContentGateway(ROOT, byte_source=byte_source)
     qa_doc = canon.parse_json(qa_boot.read_text(edition["qaRegistry"]))
     if not isinstance(qa_doc, dict) or not isinstance(
             qa_doc.get("corpora"), dict):
@@ -277,7 +294,8 @@ def current_pin_plan(edition_id):
     for entry in qa_doc["corpora"].values():
         if isinstance(entry, dict):
             qa_allow.extend(entry.get("files", {}).keys())
-    qa_gateway = gateway.ContentGateway(ROOT, allowlist=qa_allow)
+    qa_gateway = gateway.ContentGateway(
+        ROOT, allowlist=qa_allow, byte_source=byte_source)
     qa_registry = qaregistry.QaRegistry(
         qa_gateway, edition["qaRegistry"], qa_ids)
     delivery_cfg = canon.parse_json(qa_boot.read_text(BUNDLE_CONFIG))
@@ -342,7 +360,7 @@ def current_pin_plan(edition_id):
         "configuredArtifactName": edition["artifactName"],
         "artifactNameCurrent": expected_artifact == edition["artifactName"],
     }
-    schema_problems = schema_validate.validate(plan, _plan_schema())
+    schema_problems = schema_validate.validate(plan, _plan_schema(byte_source))
     if schema_problems:
         raise SystemExit("%s pin plan violates the closed plan schema: %s"
                          % (edition_id, "; ".join(schema_problems)))
@@ -351,7 +369,9 @@ def current_pin_plan(edition_id):
 
 def cmd_pin_plan(edition_id, argv):
     """Print the canonical representation of :func:`current_pin_plan`."""
-    print(canon.canonical_json(current_pin_plan(edition_id)).decode("utf-8"))
+    print(canon.canonical_json(current_pin_plan(
+        edition_id, byte_source=_command_snapshot().byte_source())
+    ).decode("utf-8"))
 
 
 def cmd_migrate(edition_id, argv):
@@ -505,9 +525,9 @@ def _qa_registry_read(m):
     return {"path": path, "digest": qa_registry.gw.read_log[path]}
 
 
-def _delivery_version_bindings(root=ROOT):
+def _delivery_version_bindings(root=ROOT, byte_source=None):
     """Return the sole live strategy-to-claim-version map."""
-    content = gateway.ContentGateway(root)
+    content = gateway.ContentGateway(root, byte_source=byte_source)
     cfg = canon.parse_json(content.read_text(BUNDLE_CONFIG))
     editions = cfg.get("editions") if isinstance(cfg, dict) else None
     if not isinstance(editions, list) or not editions or \
@@ -534,7 +554,8 @@ def _expected_qa_version_bindings(m, role):
             m.edition["strategyPrefix"]: m.edition["claimSetVersion"],
         }
     if role == "crosswalk":
-        return _delivery_version_bindings(m.gw.root)
+        return _delivery_version_bindings(
+            m.gw.root, byte_source=m.gw.byte_source)
     raise SystemExit("unknown QA source role %r" % role)
 
 
@@ -547,7 +568,8 @@ def _verified_qa_source_files(m):
     that the declared bytes were actually read.
     """
     reads = []
-    qa_gateway = gateway.ContentGateway(m.gw.root)
+    qa_gateway = gateway.ContentGateway(
+        m.gw.root, byte_source=m.gw.byte_source)
     qa_corpora = _qa_corpora(m)
     for role, corpus_id in sorted(m.edition.get("qaSources", {}).items()):
         if corpus_id is None:
@@ -1036,7 +1058,8 @@ def current_authorized_qa_records(m, candidate_digest, content_lock,
     """
     side_digests = current_side_digests(m)
     required = _required_attestation_types(m)
-    acceptance_registry = acceptance.load_registry(ROOT)
+    acceptance_registry = acceptance.load_registry(
+        m.gw.root, byte_source=m.gw.byte_source)
     release_profile, profile_contract = \
         acceptance.release_profile_contract(
             m.release_policy, acceptance_registry)
@@ -1402,7 +1425,8 @@ def current_side_digests(m, include_bundle=False):
     }
     if include_bundle:
         unused_manifest, unused_manifest_bytes, manifest_wording = \
-            bundle_manifest_input(gateway.ContentGateway(m.gw.root))
+            bundle_manifest_input(gateway.ContentGateway(
+                m.gw.root, byte_source=m.gw.byte_source))
         sides["manifestWording"] = manifest_wording
     for qa_read in _verified_qa_source_files(m):
         entry = qa_reg[qa_read["corpusId"]]
@@ -1411,7 +1435,7 @@ def current_side_digests(m, include_bundle=False):
     return sides
 
 
-def bundle_attestation_context(cfg):
+def bundle_attestation_context(cfg, byte_source=None):
     """Derive each edition's policy and exact current attestation sides.
 
     Bundle verification cannot infer an edition-specific crosswalk
@@ -1423,7 +1447,7 @@ def bundle_attestation_context(cfg):
     policies = {}
     current_sides = {}
     for edition_id in cfg.get("editions", []):
-        _, edition_model = build_model(edition_id)
+        _, edition_model = build_model(edition_id, byte_source=byte_source)
         policies[edition_id] = _required_attestation_types(edition_model)
         current_sides[edition_id] = current_side_digests(
             edition_model, include_bundle=True)
@@ -1435,7 +1459,7 @@ def bundle_attestation_policy(cfg):
     return bundle_attestation_context(cfg)[0]
 
 
-def bundle_acceptance_context(cfg):
+def bundle_acceptance_context(cfg, byte_source=None):
     """Return edition-scoped acceptance contexts.
 
     Each context binds shared control inputs plus only that edition's declared
@@ -1445,11 +1469,12 @@ def bundle_acceptance_context(cfg):
     for edition_id in cfg.get("editions", []):
         contexts[edition_id] = acceptance.acceptance_context(
             ROOT, (edition_id,),
-            release_profile=cfg.get("releaseProfile"))
+            release_profile=cfg.get("releaseProfile"),
+            byte_source=byte_source)
     return contexts
 
 
-def current_release_bindings(cfg):
+def current_release_bindings(cfg, byte_source=None):
     """Independently derive the current release identity for each edition.
 
     A self-consistent historical release chain is not proof that it matches
@@ -1459,7 +1484,7 @@ def current_release_bindings(cfg):
     """
     bindings = {}
     for edition_id in cfg.get("editions", []):
-        m, html, lock = derive(edition_id, "candidate")
+        m, html, lock = derive(edition_id, "candidate", byte_source=byte_source)
         bindings[edition_id] = {
             "sealed": m.edition["artifactName"],
             "sealedDigest": canon.bytes_digest(html),
@@ -1470,7 +1495,7 @@ def current_release_bindings(cfg):
     return bindings
 
 
-def bundle_qa_authorization_context(cfg, release_bindings):
+def bundle_qa_authorization_context(cfg, release_bindings, byte_source=None):
     """Independently derive the current private-QA context per edition.
 
     A QA envelope can be internally self-consistent after its registry/source
@@ -1495,7 +1520,8 @@ def bundle_qa_authorization_context(cfg, release_bindings):
             raise model.ModelError(
                 "current release binding for %s has the wrong fields"
                 % edition_id)
-        edition_model, html, content_lock = derive(edition_id, "candidate")
+        edition_model, html, content_lock = derive(
+            edition_id, "candidate", byte_source=byte_source)
         actual_binding = {
             "sealed": edition_model.edition["artifactName"],
             "sealedDigest": canon.bytes_digest(html),
@@ -1548,31 +1574,34 @@ def release_artifact_status(artifact_gateway, sealed_name, sealed_digest):
         bundlezip.verify_detached_checksum(
             checksum_bytes, sealed_name, sealed_digest)
         checksum_ok = sealed_ok
-    except (bundlezip.BundleError, gateway.GatewayError, OSError):
+    except (bundlezip.BundleError, gateway.GatewayError, OSError,
+            snapshot.SnapshotError):
         pass
     return sealed_ok, checksum_ok
 
 
-def _current_bundle_plan_state(command):
+def _current_bundle_plan_state(command, byte_source=None):
     """Derive the one current bundle proposal through a read-only command.
 
     ``bundle-plan`` and ``verify-current`` share this boundary so status
     verification cannot quietly implement a weaker release-chain resolver.
     """
-    planes = load_planes()
-    boot = gateway.ContentGateway(ROOT)
+    planes = load_planes(byte_source)
+    boot = gateway.ContentGateway(ROOT, byte_source=byte_source)
     cfg = canon.parse_json(boot.read_text(BUNDLE_CONFIG))
-    records = gateway.VerificationGateway(RECORDS, command, planes)
-    artifacts = gateway.ArtifactGateway(DIST, command, planes)
+    records = gateway.VerificationGateway(
+        RECORDS, command, planes, byte_source=byte_source)
+    artifacts = gateway.ArtifactGateway(
+        DIST, command, planes, byte_source=byte_source)
     manifest, manifest_bytes, manifest_wording = bundle_manifest_input(boot)
     bundlezip.validate_bundle_config(
         cfg, expected_edition_count=DELIVERY_EDITION_COUNT)
     attestation_policy, current_attestation_sides = \
-        bundle_attestation_context(cfg)
-    acceptance_contexts = bundle_acceptance_context(cfg)
-    bindings = current_release_bindings(cfg)
+        bundle_attestation_context(cfg, byte_source)
+    acceptance_contexts = bundle_acceptance_context(cfg, byte_source)
+    bindings = current_release_bindings(cfg, byte_source)
     qa_authorization_contexts = bundle_qa_authorization_context(
-        cfg, bindings)
+        cfg, bindings, byte_source)
     release_records = records.read_all("release-record")
     qa_records = records.read_all("qa-record")
     attestations = records.read_all("attestation")
@@ -1605,9 +1634,11 @@ def _current_bundle_plan_state(command):
 def cmd_bundle_plan(argv):
     """Print a verified proposed bundle config; never write source/evidence."""
     try:
-        state = _current_bundle_plan_state("bundle-plan")
+        state = _current_bundle_plan_state(
+            "bundle-plan", _command_snapshot().byte_source())
     except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
-            acceptance.AcceptanceError, OSError, SystemExit) as exc:
+            acceptance.AcceptanceError, OSError, SystemExit,
+            snapshot.SnapshotError) as exc:
         raise SystemExit("bundle-plan refused: %s" % exc)
     # Stdout is the sole output of this read-only command.  Emit the same
     # canonical JSON encoding used by digest-bearing structures so repeated
@@ -1778,7 +1809,7 @@ def cmd_bundle(argv):
     print("bundle -> dist/%s\n  bundle-record %s" % (cfg["name"], digest))
 
 
-def _pin_plan_problems(plan):
+def _pin_plan_problems(plan, byte_source=None):
     """Return every stale authored value exposed by one pin plan."""
     problems = []
     edition_id = plan.get("edition", "unknown") \
@@ -1791,7 +1822,8 @@ def _pin_plan_problems(plan):
             plan, "planVersion", pinplan.PLAN_VERSION))
     problems.extend(
         "%s pin plan schema: %s" % (edition_id, problem)
-        for problem in schema_validate.validate(plan, _plan_schema()))
+        for problem in schema_validate.validate(
+            plan, _plan_schema(byte_source)))
     corpora = plan.get("corpora")
     if not isinstance(corpora, dict):
         problems.append("%s pin plan has no corpus closure" % edition_id)
@@ -2028,23 +2060,35 @@ def _git_whitespace_problems():
     return []
 
 
-def _verify_current_closure():
-    """Prove one exact live source/evidence/artifact closure or refuse."""
-    content = gateway.ContentGateway(ROOT)
+def _verify_current_closure(byte_source):
+    """Prove one exact snapshot-scoped source/evidence/artifact closure.
+
+    Every content, record, and artifact byte is fetched through *byte_source*
+    — one captured repository snapshot — so the closure verifies exactly the
+    captured tree and can never observe a live change mid-run.  The remaining
+    live-tree contact points are structural inventories (directory walks that
+    only enumerate names) and the git whitespace subprocess gate; both are
+    fail-closed and bracketed by the snapshot equality checks in
+    :func:`verify_current_state`.
+    """
+    content = gateway.ContentGateway(ROOT, byte_source=byte_source)
     edition_ids = delivery_edition_ids(content)
-    pin_plans = {edition: current_pin_plan(edition)
-                 for edition in edition_ids}
+    pin_plans = {
+        edition: current_pin_plan(edition, byte_source=byte_source)
+        for edition in edition_ids}
     problems = []
     for plan in pin_plans.values():
-        problems.extend(_pin_plan_problems(plan))
+        problems.extend(_pin_plan_problems(plan, byte_source))
 
-    planes = load_planes()
-    artifacts = gateway.ArtifactGateway(DIST, "verify-current", planes)
+    planes = load_planes(byte_source)
+    artifacts = gateway.ArtifactGateway(
+        DIST, "verify-current", planes, byte_source=byte_source)
     candidate_state = {}
     expected_dist = set()
     current_versions = {}
     for edition_id in edition_ids:
-        edition_model, html, lock = derive(edition_id, "candidate")
+        edition_model, html, lock = derive(
+            edition_id, "candidate", byte_source=byte_source)
         name = "candidate_" + edition_model.edition["artifactName"]
         try:
             stored = artifacts.read("candidate", name)
@@ -2072,7 +2116,7 @@ def _verify_current_closure():
     if problems:
         raise RuntimeError("; ".join(problems))
 
-    state = _current_bundle_plan_state("verify-current")
+    state = _current_bundle_plan_state("verify-current", byte_source)
     cfg = state["config"]
     if cfg["editions"] != list(edition_ids):
         raise RuntimeError(
@@ -2169,18 +2213,19 @@ def _verify_current_closure():
 def verify_current_state(run_tests=True):
     """Prove the final state, with tests isolated from authoritative bytes.
 
-    The complete repository is snapshotted before verification.  Discovered
-    tests run only in a materialized copy and must leave that copy unchanged.
-    The live closure is then re-derived and the live snapshot is compared
-    again immediately before success is returned.  A passing test can
-    therefore neither mutate nor stale an already-verified source, record, or
-    artifact.
+    The complete repository is snapshotted before verification, and the
+    first closure consumes exactly that snapshot's bytes.  Discovered tests
+    run only in a materialized copy and must leave that copy unchanged.
+    The live snapshot is then compared again, and the final closure consumes
+    the final snapshot's bytes immediately before success is returned.  A
+    passing test can therefore neither mutate nor stale an already-verified
+    source, record, or artifact.
     """
     try:
-        initial = snapshot.RepositorySnapshot.capture(ROOT)
+        initial = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
     except snapshot.SnapshotError as exc:
         raise RuntimeError("cannot snapshot current repository: %s" % exc)
-    _verify_current_closure()
+    _verify_current_closure(initial.byte_source())
     test_result = "not requested"
     if run_tests:
         try:
@@ -2200,13 +2245,13 @@ def verify_current_state(run_tests=True):
         except snapshot.SnapshotError as exc:
             raise RuntimeError("isolated test snapshot failed: %s" % exc)
 
-    before_final = snapshot.RepositorySnapshot.capture(ROOT)
+    before_final = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
     live_changes = initial.differences(before_final)
     if live_changes:
         raise RuntimeError(
             "live repository changed during verification: %s" %
             "; ".join(live_changes))
-    report = _verify_current_closure()
+    report = _verify_current_closure(before_final.byte_source())
     final = snapshot.RepositorySnapshot.capture(ROOT)
     live_changes = initial.differences(final)
     if live_changes:
@@ -2233,8 +2278,20 @@ def cmd_status(argv):
     """Resolve and report the current digest chain (read-only): which
     records authorize the current derivation. Records are selected by
     digest equality, never recency (TDD §10)."""
-    planes = load_planes()
-    boot = gateway.ContentGateway(ROOT)
+    snap = _command_snapshot()
+    try:
+        _status_report(snap)
+    except snapshot.SnapshotError as exc:
+        raise SystemExit(
+            "status refused: repository changed during status: %s" % exc)
+
+
+def _status_report(snap):
+    byte_source = snap.byte_source()
+    snapshot_paths = snap.by_path()
+    dist_prefix = os.path.relpath(DIST, ROOT).replace(os.sep, "/") + "/"
+    planes = load_planes(byte_source)
+    boot = gateway.ContentGateway(ROOT, byte_source=byte_source)
     config_path = BUNDLE_CONFIG
     cfg = canon.parse_json(boot.read_text(config_path))
     try:
@@ -2243,15 +2300,17 @@ def cmd_status(argv):
     except bundlezip.BundleError as exc:
         print("bundle: invalid config (%s)" % exc)
         return
-    vgw = gateway.VerificationGateway(RECORDS, "status", planes)
-    ags = gateway.ArtifactGateway(DIST, "status", planes)
+    vgw = gateway.VerificationGateway(
+        RECORDS, "status", planes, byte_source=byte_source)
+    ags = gateway.ArtifactGateway(DIST, "status", planes,
+                                  byte_source=byte_source)
     qa_records = vgw.read_all("qa-record")
     attestations = vgw.read_all("attestation")
     release_records = vgw.read_all("release-record")
     try:
         attestation_policy, current_attestation_sides = \
-            bundle_attestation_context(cfg)
-        acceptance_contexts = bundle_acceptance_context(cfg)
+            bundle_attestation_context(cfg, byte_source)
+        acceptance_contexts = bundle_acceptance_context(cfg, byte_source)
         bundle_receipt_context = acceptance.combine_acceptance_contexts(
             acceptance_contexts, cfg["editions"])
     except (gateway.GatewayError, model.ModelError,
@@ -2267,7 +2326,7 @@ def cmd_status(argv):
     for ed in cfg["editions"]:
         print("edition %s" % ed)
         try:
-            m, html, lock = derive(ed, "candidate")
+            m, html, lock = derive(ed, "candidate", byte_source=byte_source)
         except SystemExit as e:
             print("  derivation: INVALID (%s)" % e)
             continue
@@ -2293,7 +2352,7 @@ def cmd_status(argv):
         print("  derivation: valid; candidate %s… lock %s…"
               % (cdig[:20], lock["lockDigest"][:20]))
         name = "candidate_" + m.edition["artifactName"]
-        if os.path.exists(os.path.join(DIST, name)):
+        if dist_prefix + name in snapshot_paths:
             current = ags.read("candidate", name) == html
             print("  dist candidate: %s" % ("current" if current else "STALE"))
         else:
@@ -2380,8 +2439,7 @@ def cmd_status(argv):
     print("bundle config: %s"
           % ("current" if config_current else "STALE/unavailable"))
 
-    bpath = os.path.join(DIST, cfg["name"])
-    if os.path.exists(bpath):
+    if dist_prefix + cfg["name"] in snapshot_paths:
         bundle_bytes = ags.read("bundle", cfg["name"])
         bdig = canon.bytes_digest(bundle_bytes)
         expected_members = [(m["name"], m["digest"])
@@ -2397,7 +2455,8 @@ def cmd_status(argv):
             checksum = ags.read("bundle-checksum", cfg["name"] + ".sha256")
             bundlezip.verify_detached_checksum(checksum, cfg["name"], bdig)
             checksum_current = True
-        except (bundlezip.BundleError, gateway.GatewayError, OSError):
+        except (bundlezip.BundleError, gateway.GatewayError, OSError,
+                snapshot.SnapshotError):
             checksum_current = False
 
         exact_records = [

@@ -157,10 +157,20 @@ def _safe_path(root, relpath):
 
 
 class ContentGateway:
-    """Reads content-plane files, recording every read (path, digest)."""
+    """Reads content-plane files, recording every read (path, digest).
 
-    def __init__(self, root, allowlist=None):
+    With ``byte_source`` the policy-resolved absolute path is handed to that
+    callable instead of the live filesystem (this pins planning and
+    verification commands to one captured repository snapshot).  Every
+    policy check — canonical path, terminal planes, allowlist — is
+    unchanged; the byte source replaces only the final disk read.
+    """
+
+    def __init__(self, root, allowlist=None, byte_source=None):
         self.root = os.path.abspath(root)
+        if byte_source is not None and not callable(byte_source):
+            raise GatewayError("content byte source must be callable")
+        self.byte_source = byte_source
         if allowlist is None:
             self.allowlist = None
         else:
@@ -221,8 +231,14 @@ class ContentGateway:
 
     def read_bytes(self, relpath):
         rel, path = self._resolve(relpath)
-        with open(path, "rb") as fh:
-            data = fh.read()
+        if self.byte_source is None:
+            with open(path, "rb") as fh:
+                data = fh.read()
+        else:
+            # The byte source replaces only the final disk read.  Frozen
+            # snapshot bytes cannot change between reads, so the change
+            # detection below stays exact and can never misfire on them.
+            data = self.byte_source(path)
         digest = canon.bytes_digest(data)
         previous = self.read_log.get(rel)
         if previous is not None and previous != digest:
@@ -315,12 +331,20 @@ class OutputGateway:
 
 class ArtifactGateway:
     """Reads artifact outputs under declared read privileges (e.g. release
-    reads the QA'd candidate; bundle reads sealed artifacts)."""
+    reads the QA'd candidate; bundle reads sealed artifacts).
 
-    def __init__(self, root, command, planes):
+    With ``byte_source`` the policy-resolved absolute path is handed to that
+    callable instead of the live filesystem; the kind/path and privilege
+    checks are unchanged.
+    """
+
+    def __init__(self, root, command, planes, byte_source=None):
         self.root = os.path.abspath(root)
         self.command = command
         self.planes = planes
+        if byte_source is not None and not callable(byte_source):
+            raise GatewayError("artifact byte source must be callable")
+        self.byte_source = byte_source
 
     def read(self, kind, relpath):
         allowed = self.planes["commands"].get(self.command, {}).get("reads", [])
@@ -332,6 +356,8 @@ class ArtifactGateway:
             raise GatewayError("kind %r is not an artifact kind" % kind)
         validate_artifact_path(kind, relpath)
         _, path = _safe_path(self.root, relpath)
+        if self.byte_source is not None:
+            return self.byte_source(path)
         with open(path, "rb") as fh:
             return fh.read()
 
@@ -369,12 +395,21 @@ def write_source(command, planes, root, kind, relpath, data):
 
 
 class VerificationGateway:
-    """Append-only verification records, digest-addressed and immutable."""
+    """Append-only verification records, digest-addressed and immutable.
 
-    def __init__(self, root, command, planes):
+    With ``byte_source`` record payloads are fetched through that callable
+    instead of the live filesystem; the append-only store still lists its
+    own directory, and a listed name absent from the byte source fails
+    closed on the fetch.
+    """
+
+    def __init__(self, root, command, planes, byte_source=None):
         self.root = os.path.abspath(root)
         self.command = command
         self.planes = planes
+        if byte_source is not None and not callable(byte_source):
+            raise GatewayError("verification byte source must be callable")
+        self.byte_source = byte_source
 
     def append(self, kind, record):
         allowed = self.planes["commands"].get(self.command, {}).get("writes", [])
@@ -428,8 +463,13 @@ class VerificationGateway:
         for name in sorted(os.listdir(self.root)):
             if name.startswith(kind + "_") and name.endswith(".json"):
                 _, path = _safe_path(self.root, name)
-                with open(path, "rb") as fh:
-                    payload = fh.read()
+                if self.byte_source is not None:
+                    # Frozen snapshot bytes: a record that appears after the
+                    # command's snapshot was captured fails closed here.
+                    payload = self.byte_source(path)
+                else:
+                    with open(path, "rb") as fh:
+                        payload = fh.read()
                 try:
                     envelope = canon.parse_json(payload)
                 except (UnicodeDecodeError, ValueError) as exc:

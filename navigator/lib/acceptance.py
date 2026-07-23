@@ -335,8 +335,8 @@ def validate_registry(value):
     return value
 
 
-def load_registry(root):
-    content = gateway.ContentGateway(root)
+def load_registry(root, byte_source=None):
+    content = gateway.ContentGateway(root, byte_source=byte_source)
     return validate_registry(canon.parse_json(
         content.read_bytes(ACCEPTANCE_PATH)))
 
@@ -428,9 +428,10 @@ def runner_digest(registry_digest, policy_digest, runner_inputs,
     })
 
 
-def acceptance_context(root, editions, release_profile=None):
+def acceptance_context(root, editions, release_profile=None,
+                       byte_source=None):
     """Snapshot the exact control implementation, registry, and policy."""
-    content = gateway.ContentGateway(root)
+    content = gateway.ContentGateway(root, byte_source=byte_source)
     registry_bytes = content.read_bytes(ACCEPTANCE_PATH)
     policy_bytes = content.read_bytes(RELEASE_POLICY_PATH)
     registry = validate_registry(canon.parse_json(registry_bytes))

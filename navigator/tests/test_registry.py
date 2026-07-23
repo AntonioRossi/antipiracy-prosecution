@@ -181,7 +181,7 @@ class TestRegistryStructure(unittest.TestCase):
                 "qaRegistry": "qa.json",
             },
             registry=SimpleNamespace(corpora={"authority": {}}),
-            gw=SimpleNamespace(root=temporary.name),
+            gw=SimpleNamespace(root=temporary.name, byte_source=None),
         )
         with self.assertRaisesRegex(model.ModelError, "duplicate corpus"):
             model.EditionModel.qa_registry(fake)

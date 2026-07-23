@@ -1,6 +1,6 @@
 """Immutable repository manifests and hermetic workspace materialization."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import os
 import stat as statlib
 
@@ -48,12 +48,17 @@ class RepositorySnapshot:
     root: str
     entries: tuple
     digest: str
+    # Captured file bytes, present only when requested at capture time.  The
+    # mapping is excluded from equality and representation: snapshot identity
+    # is the entry set and its digest, not a second copy of every byte.
+    retained_bytes: object = field(default=None, compare=False, repr=False)
 
     @classmethod
-    def capture(cls, root):
+    def capture(cls, root, retain_bytes=False):
         root = os.path.abspath(root)
         entries = []
         identities = set()
+        retained = {} if retain_bytes else None
         for directory, dirnames, filenames in os.walk(root, followlinks=False):
             kept = []
             for name in sorted(dirnames):
@@ -96,31 +101,56 @@ class RepositorySnapshot:
                 entries.append(SnapshotEntry(
                     rel, canon.bytes_digest(data), after_read.st_mode & 0o777,
                     len(data)))
+                if retained is not None:
+                    retained[rel] = data
         entries.sort(key=lambda entry: entry.path)
         records = [entry.as_record() for entry in entries]
         digest = canon.composite_digest(
             "aa11393:lock:c1", {"repositorySnapshot": records})
-        return cls(root, tuple(entries), digest)
+        return cls(root, tuple(entries), digest, retained)
 
     def by_path(self):
         return {entry.path: entry for entry in self.entries}
 
     def read_bytes(self, relpath):
-        entry = self.by_path().get(relpath)
-        if entry is None:
-            raise SnapshotError("path is absent from repository snapshot: %s" % relpath)
-        path = os.path.join(self.root, *relpath.split("/"))
-        with open(path, "rb") as handle:
-            data = handle.read()
-        actual = canon.bytes_digest(data)
-        if actual != entry.digest:
+        """Return the frozen bytes captured for *relpath*.
+
+        Bytes come from the capture itself, never from a live re-read, so a
+        tree change after capture can neither alter nor revoke what a
+        consumer verifies.  A snapshot captured without byte retention has
+        no byte source.
+        """
+        if self.retained_bytes is None:
             raise SnapshotError(
-                "repository path changed after snapshot %s: %s -> %s" %
-                (relpath, entry.digest, actual))
+                "repository snapshot was captured without byte retention")
+        data = self.retained_bytes.get(relpath)
+        if data is None:
+            raise SnapshotError(
+                "path is absent from repository snapshot: %s" % relpath)
         return data
 
+    def byte_source(self):
+        """Return the immutable gateway byte source bound to this snapshot.
+
+        Gateways hand their policy-resolved absolute paths to this callable
+        instead of opening the live file, so every byte a planning or
+        verification function consumes is exactly the captured byte.
+        """
+        root = self.root
+        read_bytes = self.read_bytes
+
+        def read(path):
+            rel = os.path.relpath(os.path.abspath(path), root)
+            return read_bytes(rel.replace(os.sep, "/"))
+
+        return read
+
     def materialize(self, destination):
-        """Copy the exact snapshot into an existing empty directory."""
+        """Copy the exact snapshot into an existing empty directory.
+
+        Requires a snapshot captured with byte retention: the frozen bytes
+        are the only bytes written, never a live re-read.
+        """
         destination = os.path.abspath(destination)
         if not os.path.isdir(destination) or os.listdir(destination):
             raise SnapshotError(
