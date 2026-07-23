@@ -158,7 +158,7 @@ def _plan_schema(byte_source=None):
     return schema
 
 
-def current_pin_plan(edition_id, byte_source=None):
+def current_pin_plan(edition_id, byte_source=None, planes=None):
     """Return a deterministic, read-only current-pin plan.
 
     Unlike ``build_model``, this command deliberately reads registered source
@@ -167,7 +167,18 @@ def current_pin_plan(edition_id, byte_source=None):
     still enforced before any edition-selected path is dereferenced. Every
     registry and QA corpus the edition depends on is planned by the same
     generic closure, so integrity currency never narrows to a primary file.
+
+    When *planes* is supplied (the ``pin-plan`` command boundary), the
+    command's declared capability must be exactly read-only content access;
+    any write privilege or missing content read fails closed.
     """
+    if planes is not None:
+        capability = planes.get("commands", {}).get("pin-plan") or {}
+        if "content" not in capability.get("reads", ()) or \
+                capability.get("writes") != []:
+            raise SystemExit(
+                "pin-plan capability in schema/planes.json must be "
+                "read-only content")
     boot = gateway.ContentGateway(ROOT, byte_source=byte_source)
     epath = edition_path(edition_id)
     edition = canon.parse_json(boot.read_text(epath))
@@ -1156,8 +1167,8 @@ def _classified_navigator_source_problems(content, edition_ids):
         BUNDLE_CONFIG,
         BUNDLE_MANIFEST_RESOURCE,
         "navigator/schema/acceptance.json",
+        "navigator/schema/commands.json",
         "navigator/schema/plan.schema.json",
-        "navigator/tools/pre-commit-check.sh",
     }
     expected.update(control_inventory.CONTROL_SOURCE_PATHS)
     for edition_id in edition_ids:
@@ -1320,6 +1331,62 @@ def _git_whitespace_problems():
     return []
 
 
+def _subprocess_failure(label, result):
+    detail = "\n".join(
+        part.strip() for part in (result.stdout, result.stderr)
+        if part.strip())
+    return "%s failed: %s" % (label, detail[-4000:] or "no diagnostic")
+
+
+def _changed_markdown_render_problems():
+    """Render every changed Markdown source through pandoc (fail-closed).
+
+    This is the repository gate's changed-Markdown leg: ``git diff`` names
+    the changed ``*.md`` set, and each named file must parse as GFM.  An
+    empty changed set passes vacuously; a missing tool or a listing failure
+    is a problem, never a skip.
+    """
+    try:
+        listing = subprocess.run(
+            ["git", "diff", "--name-only", "-z", "--", "*.md"], cwd=ROOT,
+            capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return ["changed-Markdown listing could not complete: %s" % exc]
+    if listing.returncode:
+        return [_subprocess_failure("changed-Markdown listing", listing)]
+    problems = []
+    for name in sorted(
+            entry for entry in listing.stdout.split("\0") if entry):
+        try:
+            result = subprocess.run(
+                ["pandoc", "--from=gfm", "--to=html", "-o", os.devnull, name],
+                cwd=ROOT, capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            problems.append(
+                "pandoc render check could not complete for %s: %s"
+                % (name, exc))
+            continue
+        if result.returncode:
+            problems.append(_subprocess_failure(
+                "pandoc render check for %s" % name, result))
+    return problems
+
+
+def _prior_art_checksum_problems():
+    """Verify the canonical prior-art source checksums (fail-closed)."""
+    try:
+        result = subprocess.run(
+            ["shasum", "-a", "256", "-c",
+             ".pipeline/pdf-source-checksums.sha256"],
+            cwd=os.path.join(ROOT, "US", "prior-art"),
+            capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return ["prior-art checksum check could not complete: %s" % exc]
+    if result.returncode:
+        return [_subprocess_failure("prior-art checksum check", result)]
+    return []
+
+
 def _verify_current_closure(byte_source, load_planes=None):
     """Prove one exact snapshot-scoped source/evidence/artifact closure.
 
@@ -1470,7 +1537,8 @@ def _verify_current_closure(byte_source, load_planes=None):
     }
 
 
-def verify_current_state(run_tests=True, load_planes=None):
+def verify_current_state(run_tests=True, load_planes=None,
+                         boundary_checks=()):
     """Prove the final state, with tests isolated from authoritative bytes.
 
     The complete repository is snapshotted before verification, and the
@@ -1480,12 +1548,24 @@ def verify_current_state(run_tests=True, load_planes=None):
     the final snapshot's bytes immediately before success is returned.  A
     passing test can therefore neither mutate nor stale an already-verified
     source, record, or artifact.
+
+    *boundary_checks* are ``(label, check)`` pairs of live-checkout
+    subprocess gates (each returning problem strings).  They run once,
+    bracketed by the snapshot equality proofs, so their result is bound to
+    exactly the tree the final closure certifies; a failing check raises
+    before any report exists.
     """
     try:
         initial = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
     except snapshot.SnapshotError as exc:
         raise RuntimeError("cannot snapshot current repository: %s" % exc)
     _verify_current_closure(initial.byte_source(), load_planes)
+    boundary_labels = []
+    for label, check in boundary_checks:
+        problems = check()
+        if problems:
+            raise RuntimeError("%s: %s" % (label, "; ".join(problems)))
+        boundary_labels.append(label)
     test_result = "not requested"
     if run_tests:
         try:
@@ -1521,7 +1601,26 @@ def verify_current_state(run_tests=True, load_planes=None):
             "; ".join(live_changes))
     report["checks"]["softwareTests"] = test_result
     report["checks"]["repositorySnapshot"] = final.digest
+    for label in boundary_labels:
+        report["checks"][label] = "current"
     return report
+
+
+def validate_current_state(run_tests=True, load_planes=None):
+    """Prove the verify-current closure plus document-integrity gates.
+
+    The changed-Markdown render check and the prior-art source checksum
+    check operate on the live checkout at the command boundary, like the
+    git whitespace gate.  They run inside :func:`verify_current_state`'s
+    snapshot brackets and before its final proof, so a last-discovered
+    failing document check can never report status current.
+    """
+    return verify_current_state(
+        run_tests=run_tests, load_planes=load_planes,
+        boundary_checks=(
+            ("changedMarkdown", _changed_markdown_render_problems),
+            ("priorArtChecksums", _prior_art_checksum_problems),
+        ))
 
 
 def _status_report(snap, load_planes=None):
@@ -1597,13 +1696,15 @@ def _status_report(snap, load_planes=None):
             print("  dist candidate: missing")
         manual_qa = acceptance_contexts[ed][
             "releaseProfileContract"]["manualQaEvidence"]
+        profile_id = acceptance_contexts[ed][
+            "releaseProfileContract"]["id"]
         valid_qa = []
         if manual_qa == "required":
             valid_qa, _ = current_authorized_qa_records(
                 m, cdig, lock, qa_records, attestations)
         qa_digest = valid_qa[0]["digest"] if valid_qa else None
         if manual_qa == "deferred":
-            print("  qa-record: deferred by technical-preview (not required)")
+            print("  qa-record: deferred by %s (not required)" % profile_id)
         else:
             print("  qa-record: %s" % (
                 qa_digest[:20] + "…" if qa_digest else

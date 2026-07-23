@@ -5,6 +5,7 @@ rewrite reviewed source data, and each assertion names the invariant that
 must fail closed.
 """
 
+import ast
 import copy
 import glob
 import json
@@ -858,6 +859,7 @@ VERSION_KEY_CHECKS = {
     "acceptanceVersion": ("sentinel", "3", "acceptance.validate_registry"),
     "apiPolicyVersion": ("sentinel", "1", "render.api_policy_problems"),
     "bundleVersion": ("sentinel", "3", "bundlezip.validate_bundle_config"),
+    "commandsVersion": ("sentinel", "1", "build.load_commands"),
     "depsVersion": ("enum", "1", "navigator/schema/deps.schema.json"),
     "editionVersion": ("enum", "2", "navigator/schema/edition.schema.json"),
     "inventoryVersion": ("enum", "1", "navigator/schema/gates.schema.json"),
@@ -1095,6 +1097,117 @@ class VersionRegistryWalk(unittest.TestCase):
             any("schema" in problem for problem in problems), problems)
         self.assertTrue(
             any("has no files" in problem for problem in problems), problems)
+
+
+class CommandRegistryContracts(unittest.TestCase):
+    """The command registry, planes matrix, and dispatch cannot drift."""
+
+    @staticmethod
+    def _main_dispatch_commands():
+        path = os.path.join(ROOT, "navigator", "build.py")
+        with open(path, encoding="utf-8") as fh:
+            tree = ast.parse(fh.read(), filename=path)
+        main_function = next(
+            node for node in tree.body
+            if isinstance(node, ast.FunctionDef) and node.name == "main")
+        commands = set()
+        for node in ast.walk(main_function):
+            if isinstance(node, ast.Assign) and \
+                    any(isinstance(target, ast.Name) and
+                        target.id == "single_edition"
+                        for target in node.targets) and \
+                    isinstance(node.value, ast.Dict):
+                commands.update(
+                    key.value for key in node.value.keys
+                    if isinstance(key, ast.Constant))
+            elif isinstance(node, ast.Compare) and \
+                    isinstance(node.left, ast.Name) and \
+                    node.left.id == "cmd" and \
+                    len(node.ops) == 1 and \
+                    isinstance(node.ops[0], ast.Eq) and \
+                    len(node.comparators) == 1 and \
+                    isinstance(node.comparators[0], ast.Constant):
+                commands.add(node.comparators[0].value)
+        return commands
+
+    def test_load_commands_enforces_registry_version_and_closed_fields(self):
+        self.assertEqual(build_mod.load_commands()["commandsVersion"], "1")
+        with open(os.path.join(ROOT, "navigator", "schema",
+                               "commands.json"), encoding="utf-8") as fh:
+            current = json.load(fh)
+        mutations = (
+            ("unknown version",
+             lambda doc: doc.update({"commandsVersion": "2"})),
+            ("missing version", lambda doc: doc.pop("commandsVersion")),
+            ("extra top-level field",
+             lambda doc: doc.update({"extra": {}})),
+            ("missing commands", lambda doc: doc.pop("commands")),
+            ("entry field added",
+             lambda doc: doc["commands"]["status"].update({"extra": "x"})),
+            ("entry field removed",
+             lambda doc: doc["commands"]["status"].pop("usage")),
+            ("empty summary",
+             lambda doc: doc["commands"]["status"].update({"summary": " "})),
+        )
+        for label, mutate in mutations:
+            with self.subTest(mutation=label):
+                document = copy.deepcopy(current)
+                mutate(document)
+                with tempfile.TemporaryDirectory() as root:
+                    schema_dir = os.path.join(root, "navigator", "schema")
+                    os.makedirs(schema_dir)
+                    with open(os.path.join(schema_dir, "commands.json"), "w",
+                              encoding="utf-8") as fh:
+                        json.dump(document, fh)
+                    with mock.patch.object(build_mod, "ROOT", root):
+                        with self.assertRaises(SystemExit):
+                            build_mod.load_commands()
+
+    def test_registry_planes_and_dispatch_are_one_command_set(self):
+        registry = set(build_mod.load_commands()["commands"])
+        planes = set(build_mod.load_planes()["commands"])
+        dispatch = self._main_dispatch_commands()
+        self.assertEqual(registry, dispatch)
+        self.assertEqual(dispatch, planes)
+
+    def test_main_usage_text_carries_every_registry_usage(self):
+        registry = build_mod.load_commands()["commands"]
+        with self.assertRaises(SystemExit) as caught:
+            build_mod.main([])
+        usage_text = str(caught.exception)
+        for name, entry in sorted(registry.items()):
+            with self.subTest(command=name):
+                self.assertIn(entry["usage"], usage_text)
+
+    def test_pin_plan_capability_is_read_only_and_enforced(self):
+        planes = build_mod.load_planes()
+        capability = planes["commands"]["pin-plan"]
+        self.assertEqual(capability["writes"], [])
+        self.assertEqual(set(capability["reads"]), {"content"})
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaises(gateway.GatewayError):
+                gateway.OutputGateway(root, "pin-plan", planes).write(
+                    "candidate", "candidate_release.html", b"")
+            with self.assertRaises(gateway.GatewayError):
+                gateway.VerificationGateway(
+                    root, "pin-plan", planes).append("attestation", {})
+            with self.assertRaises(gateway.GatewayError):
+                gateway.ArtifactGateway(root, "pin-plan", planes).read(
+                    "candidate", "candidate_release.html")
+        plan = currentstate.current_pin_plan("na", planes=planes)
+        self.assertEqual(plan["edition"], "na")
+        mutations = (
+            ("write privilege",
+             lambda row: row.update({"writes": ["attestation"]})),
+            ("content read missing",
+             lambda row: row.update({"reads": ["candidate"]})),
+        )
+        for label, mutate in mutations:
+            with self.subTest(mutation=label):
+                changed = copy.deepcopy(planes)
+                mutate(changed["commands"]["pin-plan"])
+                with self.assertRaises(SystemExit):
+                    currentstate.current_pin_plan("na", planes=changed)
 
 
 if __name__ == "__main__":

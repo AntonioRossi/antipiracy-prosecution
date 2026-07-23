@@ -15,6 +15,7 @@ environments; ``--private-runner`` is the logged override.
 import copy
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -57,6 +58,45 @@ def load_planes(byte_source=None):
     return planes
 
 
+_COMMAND_ID = re.compile(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*\Z")
+
+
+def load_commands(byte_source=None):
+    """Load the closed command metadata registry (schema/commands.json).
+
+    Every CLI command has exactly one entry carrying its canonical summary
+    and usage strings; the registry, the planes matrix, and main's dispatch
+    set are one closed command vocabulary, bound together by test.
+    """
+    document = canon.parse_json(
+        gateway.ContentGateway(ROOT, byte_source=byte_source).read_text(
+            "navigator/schema/commands.json"))
+    problems = canon.require_version(document, "commandsVersion", "1")
+    if not isinstance(document, dict) or \
+            not {"commandsVersion", "commands"}.issubset(document) or \
+            not set(document) <= {"commandsVersion", "comment", "commands"}:
+        problems.append("commands registry fields are not closed")
+    commands = document.get("commands") if isinstance(document, dict) else None
+    if not isinstance(commands, dict) or not commands:
+        problems.append("commands registry has no command entries")
+        commands = {}
+    for name, entry in sorted(commands.items()):
+        if not isinstance(name, str) or _COMMAND_ID.fullmatch(name) is None:
+            problems.append("command name %r is malformed" % (name,))
+            continue
+        if not isinstance(entry, dict) or set(entry) != {"summary", "usage"}:
+            problems.append("command %r fields are not closed" % name)
+            continue
+        if any(not isinstance(entry[field], str) or
+               not entry[field].strip() or
+               canon.normalize_nfc(entry[field]) != entry[field]
+               for field in ("summary", "usage")):
+            problems.append("command %r metadata is malformed" % name)
+    if problems:
+        raise SystemExit("navigator/schema/commands.json: %s" % problems[0])
+    return document
+
+
 def _command_snapshot():
     """Capture the one immutable byte source for a read-only command.
 
@@ -93,8 +133,10 @@ def cmd_candidate(edition_id, argv):
 
 def cmd_pin_plan(edition_id, argv):
     """Print the canonical representation of :func:`current_pin_plan`."""
+    snap = _command_snapshot()
     print(canon.canonical_json(currentstate.current_pin_plan(
-        edition_id, byte_source=_command_snapshot().byte_source())
+        edition_id, byte_source=snap.byte_source(),
+        planes=load_planes(snap.byte_source()))
     ).decode("utf-8"))
 
 
@@ -876,6 +918,18 @@ def cmd_verify_current(argv):
     print(canon.canonical_json(report).decode("utf-8"))
 
 
+def cmd_validate_current(argv):
+    try:
+        report = currentstate.validate_current_state(
+            run_tests=True, load_planes=load_planes)
+    except (bundlezip.BundleError, gateway.GatewayError, model.ModelError,
+            acceptance.AcceptanceError, OSError, RuntimeError,
+            snapshot.SnapshotError, SystemExit, KeyError, TypeError,
+            ValueError) as exc:
+        raise SystemExit("validate-current refused: %s" % exc)
+    print(canon.canonical_json(report).decode("utf-8"))
+
+
 def cmd_status(argv):
     """Resolve and report the current digest chain (read-only): which
     records authorize the current derivation. Records are selected by
@@ -888,14 +942,27 @@ def cmd_status(argv):
             "status refused: repository changed during status: %s" % exc)
 
 
+USAGE = """usage: build.py <command> [arguments]
+  build.py attest <type> [edition] --approved --note=<evidence>
+  build.py bundle
+  build.py bundle-plan
+  build.py candidate <edition>
+  build.py migrate <edition>
+  build.py pin-plan <edition>
+  build.py preview <edition>
+  build.py propose-reuse (deferred)
+  build.py record-qa <edition> [--template | [--check-only] (--evidence-file=<workspace-relative.json> | --acNN=<JSON> ...) ]
+  build.py release <edition> --profile=<active-release-profile>
+  build.py status
+  build.py validate-current
+  build.py verify-current"""
+
+
 def main(argv):
     ci_guard(argv)
     argv = [a for a in argv if a != "--private-runner"]
     if not argv:
-        raise SystemExit(
-            "usage: build.py preview|candidate|migrate|pin-plan|record-qa|release "
-            "<edition> | attest <type> [edition] | bundle-plan | bundle | "
-            "status | verify-current")
+        raise SystemExit(USAGE)
     cmd, rest = argv[0], argv[1:]
     single_edition = {
         "preview": cmd_preview,
@@ -933,6 +1000,10 @@ def main(argv):
         if rest:
             raise SystemExit("usage: build.py verify-current")
         cmd_verify_current(rest)
+    elif cmd == "validate-current":
+        if rest:
+            raise SystemExit("usage: build.py validate-current")
+        cmd_validate_current(rest)
     elif cmd == "propose-reuse":
         raise SystemExit("propose-reuse is deferred (TDD §10.7)")
     else:

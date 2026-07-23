@@ -4,6 +4,7 @@ import copy
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -888,6 +889,180 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                     self.assertRaisesRegex(
                         snapshot.SnapshotError, "changed during snapshot"):
                 snapshot.RepositorySnapshot.capture(root)
+
+
+class TestValidateCurrentDocuments(unittest.TestCase):
+    """validate-current adds live document-integrity gates to the closure."""
+
+    def _closure_report(self):
+        return {"status": "current", "checks": {}}
+
+    @staticmethod
+    def _git_root_with_changed_markdown(root, initial, changed):
+        subprocess.run(["git", "init", "-q"], cwd=root, check=True,
+                       capture_output=True)
+        path = os.path.join(root, "doc.md")
+        with open(path, "wb") as fh:
+            fh.write(initial)
+        subprocess.run(["git", "add", "doc.md"], cwd=root, check=True,
+                       capture_output=True)
+        subprocess.run(
+            ["git", "-c", "user.name=Test",
+             "-c", "user.email=test@example.invalid",
+             "-c", "commit.gpgsign=false",
+             "commit", "-qm", "baseline"],
+            cwd=root, check=True, capture_output=True)
+        if changed is not None:
+            with open(path, "wb") as fh:
+                fh.write(changed)
+
+    @staticmethod
+    def _prior_art_tree(root, digest=None):
+        prior = os.path.join(root, "US", "prior-art")
+        os.makedirs(os.path.join(prior, ".pipeline"))
+        payload = b"canonical source pdf bytes\n"
+        with open(os.path.join(prior, "A1.pdf"), "wb") as fh:
+            fh.write(payload)
+        hex_digest = digest or canon.bytes_digest(payload).rsplit(":", 1)[1]
+        with open(os.path.join(prior, ".pipeline",
+                               "pdf-source-checksums.sha256"),
+                  "w", encoding="utf-8") as fh:
+            fh.write("%s  %s\n" % (hex_digest, "A1.pdf"))
+
+    def test_changed_markdown_renders_or_fails_closed(self):
+        with tempfile.TemporaryDirectory() as root:
+            self._git_root_with_changed_markdown(
+                root, b"# Title\n", b"# Title\n\nchanged body\n")
+            with mock.patch.object(currentstate, "ROOT", root):
+                self.assertEqual(
+                    currentstate._changed_markdown_render_problems(), [])
+        with tempfile.TemporaryDirectory() as root:
+            # A deleted tracked Markdown file is still named by git diff,
+            # and pandoc cannot render a path that does not exist.
+            self._git_root_with_changed_markdown(root, b"# Title\n", None)
+            os.remove(os.path.join(root, "doc.md"))
+            with mock.patch.object(currentstate, "ROOT", root):
+                problems = currentstate._changed_markdown_render_problems()
+            self.assertTrue(
+                any("pandoc" in problem for problem in problems), problems)
+
+    def test_changed_markdown_empty_set_passes_and_tool_failure_closes(self):
+        with tempfile.TemporaryDirectory() as root:
+            self._git_root_with_changed_markdown(root, b"# Title\n", None)
+            with mock.patch.object(currentstate, "ROOT", root):
+                self.assertEqual(
+                    currentstate._changed_markdown_render_problems(), [])
+        with mock.patch.object(
+                currentstate.subprocess, "run",
+                side_effect=OSError("tool missing")):
+            problems = currentstate._changed_markdown_render_problems()
+        self.assertTrue(
+            any("could not complete" in problem for problem in problems),
+            problems)
+
+    def test_prior_art_checksums_verify_or_fail_closed(self):
+        with tempfile.TemporaryDirectory() as root:
+            self._prior_art_tree(root)
+            with mock.patch.object(currentstate, "ROOT", root):
+                self.assertEqual(
+                    currentstate._prior_art_checksum_problems(), [])
+        with tempfile.TemporaryDirectory() as root:
+            self._prior_art_tree(root, digest="0" * 64)
+            with mock.patch.object(currentstate, "ROOT", root):
+                problems = currentstate._prior_art_checksum_problems()
+            self.assertTrue(
+                any("prior-art checksum check failed" in problem
+                    for problem in problems), problems)
+        with tempfile.TemporaryDirectory() as root:
+            with mock.patch.object(currentstate, "ROOT", root):
+                problems = currentstate._prior_art_checksum_problems()
+            self.assertTrue(problems, "missing tree must fail closed")
+        with mock.patch.object(
+                currentstate.subprocess, "run",
+                side_effect=OSError("tool missing")):
+            problems = currentstate._prior_art_checksum_problems()
+        self.assertTrue(
+            any("could not complete" in problem for problem in problems),
+            problems)
+
+    def test_validate_current_runs_document_checks_inside_the_brackets(self):
+        with tempfile.TemporaryDirectory() as root:
+            source = os.path.join(root, "verified-source.txt")
+            with open(source, "wb") as fh:
+                fh.write(b"stable\n")
+            order = []
+
+            def closure(byte_source, load_planes):
+                order.append("closure")
+                return self._closure_report()
+
+            with mock.patch.object(currentstate, "ROOT", root), \
+                    mock.patch.object(
+                        currentstate, "_verify_current_closure",
+                        side_effect=closure), \
+                    mock.patch.object(
+                        currentstate, "_changed_markdown_render_problems",
+                        side_effect=lambda: order.append(
+                            "changedMarkdown") or []), \
+                    mock.patch.object(
+                        currentstate, "_prior_art_checksum_problems",
+                        side_effect=lambda: order.append(
+                            "priorArtChecksums") or []):
+                report = currentstate.validate_current_state(run_tests=False)
+            self.assertEqual(
+                order, ["closure", "changedMarkdown", "priorArtChecksums",
+                        "closure"])
+            self.assertEqual(report["checks"]["changedMarkdown"], "current")
+            self.assertEqual(
+                report["checks"]["priorArtChecksums"], "current")
+
+    def test_validate_current_refuses_when_a_document_check_fails(self):
+        with tempfile.TemporaryDirectory() as root:
+            with open(os.path.join(root, "verified-source.txt"), "wb") as fh:
+                fh.write(b"stable\n")
+            closures = []
+
+            def closure(byte_source, load_planes):
+                closures.append(byte_source)
+                return self._closure_report()
+
+            with mock.patch.object(currentstate, "ROOT", root), \
+                    mock.patch.object(
+                        currentstate, "_verify_current_closure",
+                        side_effect=closure), \
+                    mock.patch.object(
+                        currentstate, "_changed_markdown_render_problems",
+                        return_value=["broken.md does not render"]), \
+                    self.assertRaisesRegex(RuntimeError, "changedMarkdown"):
+                currentstate.validate_current_state(run_tests=False)
+            # The final closure produces the report; it never ran, so no
+            # status-current report can exist after a failing document gate.
+            self.assertEqual(len(closures), 1)
+
+    def test_verify_current_carries_no_document_checks_by_default(self):
+        with tempfile.TemporaryDirectory() as root:
+            with open(os.path.join(root, "verified-source.txt"), "wb") as fh:
+                fh.write(b"stable\n")
+            with mock.patch.object(currentstate, "ROOT", root), \
+                    mock.patch.object(
+                        currentstate, "_verify_current_closure",
+                        side_effect=lambda byte_source, load_planes:
+                            self._closure_report()):
+                report = currentstate.verify_current_state(run_tests=False)
+            self.assertNotIn("changedMarkdown", report["checks"])
+            self.assertNotIn("priorArtChecksums", report["checks"])
+
+    def test_module_entry_delegates_to_build_main(self):
+        child = subprocess.run(
+            [sys.executable, "-m", "navigator", "status", "--private-runner"],
+            cwd=ROOT, capture_output=True, text=True, timeout=300)
+        self.assertEqual(child.returncode, 0, child.stderr)
+        self.assertIn("release profile:", child.stdout)
+        usage = subprocess.run(
+            [sys.executable, "-m", "navigator", "--private-runner"],
+            cwd=ROOT, capture_output=True, text=True, timeout=300)
+        self.assertNotEqual(usage.returncode, 0)
+        self.assertIn("build.py validate-current", usage.stderr)
 
 
 class TestSnapshotByteSource(unittest.TestCase):

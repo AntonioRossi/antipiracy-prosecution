@@ -1705,6 +1705,7 @@ class Acceptance(unittest.TestCase):
     def test_ac07_meta_tests(self):
         # single-digest-path + registry-access AST discipline
         scope = [
+            os.path.join(NAV, "__main__.py"),
             os.path.join(NAV, "build.py"),
             os.path.join(NAV, "schema", "invariants.py"),
         ]

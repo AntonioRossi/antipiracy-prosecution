@@ -1,0 +1,58 @@
+{
+ "commandsVersion": "1",
+ "comment": "Closed command metadata registry (TDD §10). One entry per CLI command dispatched by build.py main; planes.json declares the same command set's privileges. summaries and usages are the canonical source for documentation snippet verification.",
+ "commands": {
+  "attest": {
+   "summary": "Append one operator-signed attestation binding current content side digests.",
+   "usage": "build.py attest <type> [edition] --approved --note=<evidence>"
+  },
+  "bundle": {
+   "summary": "Promote the current sealed editions into the deterministic delivery bundle.",
+   "usage": "build.py bundle"
+  },
+  "bundle-plan": {
+   "summary": "Print the verified proposed bundle config without writing source or evidence.",
+   "usage": "build.py bundle-plan"
+  },
+  "candidate": {
+   "summary": "Derive one edition's candidate artifact and print its digests.",
+   "usage": "build.py candidate <edition>"
+  },
+  "migrate": {
+   "summary": "Apply closed-class mechanical migrations to relation and gate inventories.",
+   "usage": "build.py migrate <edition>"
+  },
+  "pin-plan": {
+   "summary": "Print the canonical current-pin plan exposing digest drift before pins change.",
+   "usage": "build.py pin-plan <edition>"
+  },
+  "preview": {
+   "summary": "Derive one edition's internal-review preview artifact.",
+   "usage": "build.py preview <edition>"
+  },
+  "propose-reuse": {
+   "summary": "Cross-edition reuse proposal; deferred (TDD §10.7).",
+   "usage": "build.py propose-reuse"
+  },
+  "record-qa": {
+   "summary": "Record manual QA evidence bound to the current candidate and attestations.",
+   "usage": "build.py record-qa <edition> [--template | [--check-only] (--evidence-file=<workspace-relative.json> | --acNN=<JSON> ...) ]"
+  },
+  "release": {
+   "summary": "Seal the current candidate under the active release profile.",
+   "usage": "build.py release <edition> --profile=<active-release-profile>"
+  },
+  "status": {
+   "summary": "Report which records authorize the current derivation (read-only).",
+   "usage": "build.py status"
+  },
+  "validate-current": {
+   "summary": "Prove the full verify-current closure plus document-integrity gates on the live checkout.",
+   "usage": "build.py validate-current"
+  },
+  "verify-current": {
+   "summary": "Prove the immutable live navigator state with isolated tests and snapshot brackets.",
+   "usage": "build.py verify-current"
+  }
+ }
+}

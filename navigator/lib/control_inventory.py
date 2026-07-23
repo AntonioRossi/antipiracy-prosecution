@@ -6,6 +6,7 @@ subject, so a source belongs to one inventory instead of two.
 """
 
 CONTROL_SOURCE_PATHS = (
+    "navigator/__main__.py",
     "navigator/lib/acceptance.py",
     "navigator/build.py",
     "navigator/lib/bundleplan.py",

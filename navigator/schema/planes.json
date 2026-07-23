@@ -29,6 +29,10 @@
    "contentScope": "edition-allowlist",
    "actionClasses": ["read", "mechanical-re-anchoring", "proposal-writing"]
   },
+  "pin-plan": {
+   "reads": ["content"], "writes": [],
+   "contentScope": "edition-allowlist", "actionClasses": ["read"]
+  },
   "propose-reuse": {
    "deferred": true,
    "reads": ["content"], "writes": ["source:relation-set-destination"],
@@ -69,6 +73,13 @@
    "actionClasses": ["read"]
   },
   "verify-current": {
+   "reads": ["content", "candidate", "sealed", "artifact-checksum", "bundle",
+             "bundle-manifest", "bundle-checksum", "qa-record", "attestation",
+             "release-record", "bundle-record"],
+   "writes": [],
+   "actionClasses": ["read"]
+  },
+  "validate-current": {
    "reads": ["content", "candidate", "sealed", "artifact-checksum", "bundle",
              "bundle-manifest", "bundle-checksum", "qa-record", "attestation",
              "release-record", "bundle-record"],

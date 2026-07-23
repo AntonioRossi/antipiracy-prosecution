@@ -81,6 +81,7 @@ class TestProvenance(unittest.TestCase):
         # source is declared by both editions, and no unrelated Python path
         # can become a content input merely by being added to an allowlist.
         filesystem_sources = {
+            "navigator/__main__.py",
             "navigator/build.py",
             "navigator/schema/invariants.py",
         } | {
