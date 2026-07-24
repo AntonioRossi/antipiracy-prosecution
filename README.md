@@ -55,10 +55,22 @@ The NA and AF-CONT claim sets (and any successor claim set) are produced and mai
 
 ## Validation
 
-After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. The canonical current-state and document-integrity gate is:
+The host must provide the exact `uv` version required by [`pyproject.toml`](pyproject.toml); the
+repository does not contain or fall back to a platform-specific `uv` binary. Provision the locked
+project-local Python environment after cloning or after an authorized lock change:
 
 ```sh
-python3 -m navigator validate-current
+uv --no-cache sync --locked --all-groups
+```
+
+This explicit bootstrap may obtain locked dependencies. Recurring verification never installs or
+updates them. After changing claims, verify claim count, dependency, antecedent basis, support
+mappings, and every affected matrix row; re-score art when claim wording changes. Follow
+[`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md)
+whenever a navigator input changes. The canonical current-state and document-integrity gate is:
+
+```sh
+uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
 One command proves the complete live navigator closure inside immutable repository snapshots — pin plans, candidate and sealed bytes, bundle and authorization chains, record and distribution inventories, `git diff --check` whitespace — runs the full discovered test suite in a materialized sandbox, renders every changed Markdown file through pandoc, verifies the `US/prior-art` source checksums, and certifies only the final unchanged snapshot. The runbook's [current-state and cutover gate](navigator/RUNBOOK-content-sync-and-regeneration.md#7-current-state-and-cutover-gate) section places this gate in the full content-integration workflow.

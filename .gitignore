@@ -283,6 +283,15 @@ navigator/lib/**/__pycache__/
 .mypy_cache/
 .ruff_cache/
 
+# uv project boundary
+# The generic environment rule above excludes .venv; uv's cache is likewise
+# non-authoritative. Project metadata, the exact lock, and the interpreter pin
+# are repository-controlled inputs and remain tracked.
+.uv-cache/
+!pyproject.toml
+!uv.lock
+!.python-version
+
 # Local environment/configuration
 .env.*
 !.env.example
