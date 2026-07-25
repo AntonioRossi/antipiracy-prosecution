@@ -74,15 +74,29 @@ def verify_environment(root=ROOT, byte_source=None) -> dict:
         raise EnvironmentError(
             "Python version mismatch: expected %s, got %s" %
             (expected_python, actual_python))
-    expected_environment = _canonical_path(
-        policy["environmentPath"], "environment path", root)
-    if os.path.realpath(sys.prefix) != os.path.realpath(expected_environment) or \
-            sys.base_prefix == sys.prefix:
+    environment_relative = policy["environmentPath"]
+    _canonical_path(environment_relative, "environment path", root)
+    active_environment = os.path.realpath(sys.prefix)
+    if sys.base_prefix == sys.prefix:
         raise EnvironmentError("structured-source command is outside the project environment")
     if os.environ.get("PYTHONPATH"):
         raise EnvironmentError("ambient PYTHONPATH is prohibited")
     if site.ENABLE_USER_SITE is not False:
         raise EnvironmentError("user-site packages are not disabled")
+
+    # The global gate imports the materialized snapshot with the same locked
+    # interpreter that invoked it.  Resolve the active environment's project
+    # root from the declared relative environment path, then require its lock
+    # inputs to equal the tested snapshot.  This permits isolation of source
+    # bytes without accepting an unrelated virtual environment.
+    active_project_root = active_environment
+    for unused_part in environment_relative.split("/"):
+        active_project_root = os.path.dirname(active_project_root)
+    if os.path.realpath(os.path.join(
+            active_project_root, *environment_relative.split("/"))) != \
+            active_environment:
+        raise EnvironmentError(
+            "structured-source command uses the wrong environment path")
 
     declared = {
         field: _read_bytes(root, policy[field], byte_source)
@@ -94,6 +108,15 @@ def verify_environment(root=ROOT, byte_source=None) -> dict:
         raise EnvironmentError(".python-version is not UTF-8") from exc
     if declared_python != expected_python:
         raise EnvironmentError(".python-version does not match the environment policy")
+    for relative, expected in (
+            (POLICY_RELATIVE_PATH,
+             _read_bytes(root, POLICY_RELATIVE_PATH, byte_source)),
+            (policy["projectPath"], declared["projectPath"]),
+            (policy["lockPath"], declared["lockPath"]),
+            (policy["pythonVersionPath"], declared["pythonVersionPath"])):
+        if _read_bytes(active_project_root, relative) != expected:
+            raise EnvironmentError(
+                "active environment project inputs differ from the tested snapshot")
 
     try:
         result = subprocess.run(
@@ -130,7 +153,7 @@ def verify_environment(root=ROOT, byte_source=None) -> dict:
     census = []
     seen = set()
     site_root = os.path.realpath(os.path.join(
-        expected_environment, "lib", "python%s.%s" % sys.version_info[:2],
+        active_environment, "lib", "python%s.%s" % sys.version_info[:2],
         "site-packages"))
     for entry in distributions:
         if not isinstance(entry, dict) or set(entry) != {"name", "version"} or \
@@ -154,8 +177,12 @@ def verify_environment(root=ROOT, byte_source=None) -> dict:
         if spec is None or spec.origin is None or \
                 os.path.commonpath((site_root, os.path.realpath(spec.origin))) != site_root:
             raise EnvironmentError("distribution import origin is not project-local: %s" % name)
-        census.append({"name": name, "version": installed.version,
-                       "origin": os.path.relpath(spec.origin, root).replace(os.sep, "/")})
+        census.append({
+            "name": name,
+            "version": installed.version,
+            "origin": os.path.relpath(
+                spec.origin, active_project_root).replace(os.sep, "/"),
+        })
     if [entry["name"] for entry in census] != sorted(seen):
         raise EnvironmentError("environment distributions are not canonically ordered")
     installed_names = set()
@@ -196,6 +223,7 @@ def verify_environment(root=ROOT, byte_source=None) -> dict:
         "pandocVersion": policy["pandocVersion"],
         "pandocApiVersion": policy["pandocApiVersion"],
         "pythonVersion": actual_python,
-        "interpreter": os.path.relpath(sys.executable, root).replace(os.sep, "/"),
+        "interpreter": os.path.relpath(
+            sys.executable, active_project_root).replace(os.sep, "/"),
         "distributions": census,
     }
