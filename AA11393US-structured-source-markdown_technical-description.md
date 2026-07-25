@@ -232,7 +232,10 @@ The closed structured-source command surface is:
 - `check <subject-id>` — validate one package and compare its generated files without writing;
 - `regenerate <subject-id>` — regenerate only that package's permitted derived files;
 - `regenerate-controls` — regenerate routers and the marked acceptance-table region; and
-- `verify-callback` and `verify-current` — verify without writing.
+- `verify-current` — perform one complete read-only structured-source verification pass.
+
+The parser implements this exact four-command surface directly. There is no parallel command-policy
+file to drift from the executable interface.
 
 `check` and `regenerate` always compute and validate package coverage but do not persist a package
 coverage artifact. A currently declared downstream coverage-view consumer owns any retained view
@@ -277,8 +280,10 @@ mutable external path substitutes for the exact checkout and current execution.
 ## 10. Live-contract and implementation closure
 
 The operative structured-source contract is this technical description and its coupled acceptance
-criteria. The executable acceptance registry maps each `SSM-AC` criterion to one callback, and
-`regenerate-controls` projects that registry into the marked acceptance table.
+criteria. The data-only acceptance registry contains the ordered current criterion wording and
+evidence; `regenerate-controls` projects it into the marked acceptance table. `verify-current`
+performs one shared corpus verification pass and then emits an ephemeral pass status for each of the
+ten criteria. It has no per-criterion callback or runner layer.
 
 Only registered implementation required by the three authority schemes, uniform XML interface,
 consumers, and closed command surface remains. Structured-source approval, export,

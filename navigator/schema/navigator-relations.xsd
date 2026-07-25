@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:r="urn:aa11393:navigator:relations:1"
+           targetNamespace="urn:aa11393:navigator:relations:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           xpathDefaultNamespace="urn:aa11393:navigator:relations:1"
+           version="1.1">
+  <xs:simpleType name="stableIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z][A-Za-z0-9._:-]*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="semanticDigestType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="sha256/xc1/ssp-xd1:[0-9a-f]{64}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="editionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="na" />
+      <xs:enumeration value="af" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mappingStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="mapped" />
+      <xs:enumeration value="counsel-review-required" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="targetRoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="specific" />
+      <xs:enumeration value="context" />
+      <xs:enumeration value="combination" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="unitKindType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="preamble" />
+      <xs:enumeration value="limitation" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="gateScopeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="claim" />
+      <xs:enumeration value="fragment" />
+      <xs:enumeration value="target" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="dispositionValueType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="carried-at-required-scope" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="endpointType">
+    <xs:attribute name="documentId" type="r:stableIdType" use="required" />
+    <xs:attribute name="fragmentId" type="r:stableIdType" use="required" />
+    <xs:attribute name="fragmentContentDigest" type="r:semanticDigestType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="documentType">
+    <xs:attribute name="role" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="subject" />
+          <xs:enumeration value="target" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="documentId" type="r:stableIdType" use="required" />
+    <xs:attribute name="semanticDigest" type="r:semanticDigestType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="cautionType">
+    <xs:attribute name="kind" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="source-gate" />
+          <xs:enumeration value="generalization-note" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="gateId" type="r:stableIdType" />
+    <xs:attribute name="code">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="beyond-literal-example" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:assert test="(@kind = 'source-gate' and exists(@gateId) and not(exists(@code))) or (@kind = 'generalization-note' and exists(@code) and not(exists(@gateId)))" />
+  </xs:complexType>
+
+  <xs:complexType name="gateDefinitionType">
+    <xs:sequence>
+      <xs:element name="source">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="endpoint" type="r:endpointType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="gateId" type="r:stableIdType" use="required" />
+    <xs:attribute name="code" type="r:stableIdType" use="required" />
+    <xs:attribute name="requiredScope" type="r:gateScopeType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="unitSubjectType">
+    <xs:sequence>
+      <xs:element name="endpoint" type="r:endpointType" />
+    </xs:sequence>
+    <xs:attribute name="unitKind" type="r:unitKindType" use="required" />
+    <xs:attribute name="unitIndex" type="xs:nonNegativeInteger" use="required" />
+    <xs:assert test="(@unitKind = 'preamble' and @unitIndex = 0) or (@unitKind = 'limitation' and @unitIndex gt 0)" />
+  </xs:complexType>
+
+  <xs:complexType name="targetType">
+    <xs:sequence>
+      <xs:element name="endpoint" type="r:endpointType" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="note">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="caution" type="r:cautionType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="role" type="r:targetRoleType" use="required" />
+    <xs:assert test="count(endpoint) = count(distinct-values(endpoint/@fragmentId))" />
+  </xs:complexType>
+
+  <xs:complexType name="mappingType">
+    <xs:sequence>
+      <xs:element name="subject" type="r:unitSubjectType" />
+      <xs:element name="caution" type="r:cautionType" minOccurs="0" />
+      <xs:element name="targets" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="target" type="r:targetType" minOccurs="1" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="relationId" type="xs:ID" use="required" />
+    <xs:attribute name="status" type="r:mappingStatusType" use="required" />
+    <xs:assert test="(@status = 'mapped' and exists(targets/target)) or (@status = 'counsel-review-required' and not(exists(targets)))" />
+  </xs:complexType>
+
+  <xs:complexType name="selectorType">
+    <xs:sequence>
+      <xs:element name="exactText">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="phraseMappingType">
+    <xs:sequence>
+      <xs:element name="parent" type="r:unitSubjectType" />
+      <xs:element name="selector" type="r:selectorType" />
+      <xs:element name="targets">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="target" type="r:targetType" minOccurs="1" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="relationId" type="xs:ID" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="dispositionSubjectType">
+    <xs:sequence>
+      <xs:element name="endpoint" type="r:endpointType" />
+    </xs:sequence>
+    <xs:attribute name="kind" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="claim" />
+          <xs:enumeration value="claim-unit" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="unitKind" type="r:unitKindType" />
+    <xs:attribute name="unitIndex" type="xs:nonNegativeInteger" />
+    <xs:assert test="(@kind = 'claim' and not(exists(@unitKind)) and not(exists(@unitIndex))) or (@kind = 'claim-unit' and exists(@unitKind) and exists(@unitIndex) and ((@unitKind = 'preamble' and @unitIndex = 0) or (@unitKind = 'limitation' and @unitIndex gt 0)))" />
+  </xs:complexType>
+
+  <xs:complexType name="dispositionType">
+    <xs:sequence>
+      <xs:element name="subject" type="r:dispositionSubjectType" />
+    </xs:sequence>
+    <xs:attribute name="dispositionId" type="xs:ID" use="required" />
+    <xs:attribute name="gateId" type="r:stableIdType" use="required" />
+    <xs:attribute name="value" type="r:dispositionValueType" use="required" />
+  </xs:complexType>
+
+  <xs:element name="relations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="documents">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="document" type="r:documentType" minOccurs="2" maxOccurs="2" />
+            </xs:sequence>
+            <xs:assert test="count(document[@role = 'subject']) = 1 and count(document[@role = 'target']) = 1 and document[1]/@documentId ne document[2]/@documentId" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="gateDefinitions">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="gate" type="r:gateDefinitionType" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="mappings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mapping" type="r:mappingType" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="phraseMappings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="phrase" type="r:phraseMappingType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dispositions">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="disposition" type="r:dispositionType" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="schemaVersion" use="required" fixed="1" />
+      <xs:attribute name="schemaProfile" use="required" fixed="navigator-claim-pct-relations-v1" />
+      <xs:attribute name="relationSetId" type="xs:ID" use="required" />
+      <xs:attribute name="edition" type="r:editionType" use="required" />
+      <xs:assert test="(@edition = 'na' and @relationSetId = 'na-pct') or (@edition = 'af' and @relationSetId = 'af-pct')" />
+      <xs:assert test="every $e in (gateDefinitions/gate/source/endpoint, mappings/mapping/subject/endpoint, phraseMappings/phrase/parent/endpoint, dispositions/disposition/subject/endpoint) satisfies $e/@documentId = $e/ancestor::relations/documents/document[@role = 'subject']/@documentId" />
+      <xs:assert test="every $e in (mappings/mapping/targets/target/endpoint, phraseMappings/phrase/targets/target/endpoint) satisfies $e/@documentId = $e/ancestor::relations/documents/document[@role = 'target']/@documentId" />
+      <xs:assert test="every $c in (mappings/mapping/caution[@kind = 'source-gate'], mappings/mapping/targets/target/caution[@kind = 'source-gate'], phraseMappings/phrase/targets/target/caution[@kind = 'source-gate']) satisfies exists($c/ancestor::relations/gateDefinitions/gate[@gateId = $c/@gateId])" />
+      <xs:assert test="every $c in mappings/mapping/caution[@kind = 'source-gate'] satisfies $c/ancestor::relations/gateDefinitions/gate[@gateId = $c/@gateId]/@requiredScope = 'fragment'" />
+      <xs:assert test="every $c in (mappings/mapping/targets/target/caution[@kind = 'source-gate'], phraseMappings/phrase/targets/target/caution[@kind = 'source-gate']) satisfies $c/ancestor::relations/gateDefinitions/gate[@gateId = $c/@gateId]/@requiredScope = 'target'" />
+      <xs:assert test="every $d in dispositions/disposition satisfies exists($d/ancestor::relations/gateDefinitions/gate[@gateId = $d/@gateId])" />
+      <xs:assert test="every $d in dispositions/disposition satisfies if ($d/subject/@kind = 'claim') then $d/ancestor::relations/gateDefinitions/gate[@gateId = $d/@gateId]/@requiredScope = 'claim' else $d/ancestor::relations/gateDefinitions/gate[@gateId = $d/@gateId]/@requiredScope = ('fragment', 'target')" />
+      <xs:assert test="count(dispositions/disposition) = count(distinct-values(for $d in dispositions/disposition return concat($d/@gateId, '|', $d/subject/endpoint/@fragmentId, '|', string($d/subject/@unitIndex))))" />
+      <xs:assert test="every $g in gateDefinitions/gate satisfies exists($g/ancestor::relations/dispositions/disposition[@gateId = $g/@gateId])" />
+    </xs:complexType>
+    <xs:unique name="documentRoleUnique">
+      <xs:selector xpath="r:documents/r:document" />
+      <xs:field xpath="@role" />
+    </xs:unique>
+    <xs:unique name="gateIdentityUnique">
+      <xs:selector xpath="r:gateDefinitions/r:gate" />
+      <xs:field xpath="@gateId" />
+    </xs:unique>
+    <xs:unique name="gateCodeUnique">
+      <xs:selector xpath="r:gateDefinitions/r:gate" />
+      <xs:field xpath="@code" />
+    </xs:unique>
+    <xs:unique name="phraseSelectorUnique">
+      <xs:selector xpath="r:phraseMappings/r:phrase" />
+      <xs:field xpath="r:parent/r:endpoint/@fragmentId" />
+      <xs:field xpath="r:selector/r:exactText" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

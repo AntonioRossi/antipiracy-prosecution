@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relations xmlns="urn:aa11393:navigator:relations:1" schemaVersion="1" schemaProfile="navigator-claim-pct-relations-v1" relationSetId="af-pct" edition="af">
+  <documents>
+    <document role="subject" documentId="aa11393us-af-us-claim-set" semanticDigest="sha256/xc1/ssp-xd1:02307d5327fa9c7430d8836b9970a84828a782994e4e42b3615519d50cb6cef8" />
+    <document role="target" documentId="pct-as-filed-dossier" semanticDigest="sha256/xc1/ssp-xd1:fea45714d5093a6988fdbc8f97eb8c44995f14f99ee81f2b9b39d6bfe3fb2bbf" />
+  </documents>
+  <gateDefinitions>
+    <gate gateId="af-gate-claim-as-a-whole" code="claim-as-a-whole" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00198" fragmentContentDigest="sha256/xc1/ssp-xd1:68ba00aa16ded38db66d27ea26f3ee66108df91be1faf78fed3ffed59043247d" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-production-boundary" code="production-boundary-generalization" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00200" fragmentContentDigest="sha256/xc1/ssp-xd1:82fabffbd329b2c25dcb07d21218e1d779f83c3ac36f730cf9086c53a116df4f" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-per-filing-support" code="per-filing-support" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00202" fragmentContentDigest="sha256/xc1/ssp-xd1:9134b4a8fa2021abe5f67b3da33176bfe45aa2624af12d747be5238d98ea2a48" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-plural-cut-integration" code="plural-cut-integration" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00204" fragmentContentDigest="sha256/xc1/ssp-xd1:211b57df1e94f78df0a53111ab35ac21af7c8597f31de35f5c72f80d27f223f1" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-claim6-respective-mate" code="claim6-respective-mate" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00206" fragmentContentDigest="sha256/xc1/ssp-xd1:b3938c489cb5f52700591657bb25e23c356ba88f4aa2740f9948ba0f8af76426" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-example2-priority" code="example2-priority" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00208" fragmentContentDigest="sha256/xc1/ssp-xd1:c19fac16e22441bb82c716d9b9bc7837c4a796cd965a1f5cc928b1daae4a8aa2" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-claim14-combined" code="claim14-combined" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00210" fragmentContentDigest="sha256/xc1/ssp-xd1:d347b007e71302e34397bd8a52705662a1789db0ed088aeb7747318c7be53209" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-collusion-output" code="collusion-output" requiredScope="fragment">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00212" fragmentContentDigest="sha256/xc1/ssp-xd1:015ec504133675c78f5a78bf3e037b79517a2530522c34cd74e16c3bc31c535b" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-overlay-sequencing" code="overlay-sequencing" requiredScope="fragment">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00214" fragmentContentDigest="sha256/xc1/ssp-xd1:539d2563692f262f315cd8083614f2e0ce99adf554b55830673bb2a098dcc24b" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-method-fallback" code="method-fallback" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00216" fragmentContentDigest="sha256/xc1/ssp-xd1:f1305b72928f41374e4dbdf8e2dbb42df65cbc4d6daa7c1ad0e628ea66d8dd2a" />
+      </source>
+    </gate>
+    <gate gateId="af-gate-monitor-method" code="monitor-method" requiredScope="claim">
+      <source>
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="aa11393us-af-us-claim-set-list-item-00218" fragmentContentDigest="sha256/xc1/ssp-xd1:0771d8ab19075d0c49bb24eb618b237cb014652d7d072e8d1918ec01052078aa" />
+      </source>
+    </gate>
+  </gateDefinitions>
+  <mappings>
+    <mapping relationId="af-claim-1-preamble-support" status="mapped">
+      <subject unitKind="preamble" unitIndex="0">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1" fragmentContentDigest="sha256/xc1/ssp-xd1:b7f61658b1bb7ec736525ea1dda1143e32916c784acdbd862118b7a590a35b72" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00950" fragmentContentDigest="sha256/xc1/ssp-xd1:0cc0a8211c1fb681a1a7b231c80e08fe04f8a51fe73c4da5582b44adc587b178" />
+          <note>Anti-piracy system 100 identifying distributed streaming content and altering camera cuts of the reference content</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00895" fragmentContentDigest="sha256/xc1/ssp-xd1:a240853bae5d0fa3077ec502c3ce4604a4d96fbb22d56bad217b54b8f230185c" />
+          <note>Distinctive mates created and traced to their origin</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00975" fragmentContentDigest="sha256/xc1/ssp-xd1:8695b1af4a92e6f519014021e682e8376bb7bfae6a8a38ece573266ef729f5b9" />
+          <note>Processor/memory computing environment</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:94c676477d284b653ae3dc95ee8121562d92c4e414d67ec08243ecce1cf3c395" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00935" fragmentContentDigest="sha256/xc1/ssp-xd1:c531a14e83ba4617e447079e5478d8cd2c1e58d799cacc61063021f341f52b24" />
+          <note>Pipeline receives video captured from cameras 101</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00954" fragmentContentDigest="sha256/xc1/ssp-xd1:e5f056f96ce23ec0b8818e96f0d4c4452c70f308a4aa83859ad4292e699f3f79" />
+          <note>Pipeline records cut timings and transitions as time codes in list 103</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00970" fragmentContentDigest="sha256/xc1/ssp-xd1:c971cd68ed8b34d31e8362227597d0d958124871b5e1ebde77f8c523254c5387" />
+          <note>EDL entries: source reference plus time code</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-2-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="2">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-2" fragmentContentDigest="sha256/xc1/ssp-xd1:ec70bdf75aa75e99680d6693915d31e068b33c9656955d5f2cb97930bb78c742" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00935" fragmentContentDigest="sha256/xc1/ssp-xd1:c531a14e83ba4617e447079e5478d8cd2c1e58d799cacc61063021f341f52b24" />
+          <note>Pipeline creates the reference audio-video content 1</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00954" fragmentContentDigest="sha256/xc1/ssp-xd1:e5f056f96ce23ec0b8818e96f0d4c4452c70f308a4aa83859ad4292e699f3f79" />
+          <note>Director-driven production through pipeline 102</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00970" fragmentContentDigest="sha256/xc1/ssp-xd1:c971cd68ed8b34d31e8362227597d0d958124871b5e1ebde77f8c523254c5387" />
+          <note>The EDL guides reconstruction of the sequence: production according to the structured list</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-3-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="3">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-3" fragmentContentDigest="sha256/xc1/ssp-xd1:804e73b4e9fb02a9f77634516e14123c728b7f4c02a51606b2513ac77525e8b6" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00956" fragmentContentDigest="sha256/xc1/ssp-xd1:fec229e489aa8628433da6b2b8418a3b18d2afee1fee4e44877f248ffaf6d844" />
+          <note>Automatic variation of a recorded cut time code originates unique mates</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00937" fragmentContentDigest="sha256/xc1/ssp-xd1:e4de891c6f63bd4cee980f1659cce7d301d1a171fd1e1eb40cfaca6852ded5c2" />
+          <note>Mate as a distinguishable version of the same content</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL keeps the Camera 2/Camera 3 order at a moved time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-4-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="4">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-4" fragmentContentDigest="sha256/xc1/ssp-xd1:c05825528441a016b56701d9fc841daa40e2c69b89dc58a8ab7527e1428fe8a8" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference EDL boundary at the recorded time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL boundary ten frames later</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Explanation of the moved boundary</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-5-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="5">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-5" fragmentContentDigest="sha256/xc1/ssp-xd1:1cc9757d20d8b662aa93633c5936f6152b3e58bfd48aea05c4190e1a3bdd6888" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01101" fragmentContentDigest="sha256/xc1/ssp-xd1:9ec3f11f689f5134874aba03b1f05fb2d86503402bff64064cb91c99468469d7" />
+          <note>Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval frames come from different cameras</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Adjusted cut durations around the interval</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL rows identify the cameras on each side of the moved boundary</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-6-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="6">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-6" fragmentContentDigest="sha256/xc1/ssp-xd1:28c662bd93d816a99381669d99d7b3ef0a091262e725468619d9e8b809e31009" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>Ensemble of reference and mates segmented into chunks 113</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01041" fragmentContentDigest="sha256/xc1/ssp-xd1:071c4aa6820d6f098e46fda24ce4308c994809aa9f7e62eaa29fcc73802cdf2b" />
+          <note>Segmenting step 240</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-7-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="7">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-7" fragmentContentDigest="sha256/xc1/ssp-xd1:2ce4f0c48a652bfb9ebcbca28b7699d9b515c0434c60c9dde893ca474535798b" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>Manifests point to unique interleaved combinations of reference and mate chunks</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01174" fragmentContentDigest="sha256/xc1/ssp-xd1:1a19d523db6316f0d53715ecf1244f0866f696b1cf9f7301ecafe9596cb9d3a2" />
+          <note>Mate manifest selects the variant chunk at the altered cut</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Chunk references differ exactly where the timing was moved</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-8-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="8">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-8" fragmentContentDigest="sha256/xc1/ssp-xd1:9966fdfb255f97b74845d5dd00c2d9e28e6019a644e648c1496fb9bc015df1c0" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Delivery of streams assembled from manifest-listed chunks</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01047" fragmentContentDigest="sha256/xc1/ssp-xd1:e88e67e3f60cabdf6b5480ae71384ddc85fd92165b70d9d8cc029b3593232478" />
+          <note>Distribution step 260</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-9-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="9">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-9" fragmentContentDigest="sha256/xc1/ssp-xd1:ed9e241da54d443c6577d0c0f2e71d34b4867174fc257b49553d9ab54e51d090" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00960" fragmentContentDigest="sha256/xc1/ssp-xd1:fbd08235b85c9ec3e31ce8a30e1769fa8578588c001dc069d3ca08c50ab4e359" />
+          <note>Ledger records which recipient received which delivered version/manifest</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations between versions and recipients</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00982" fragmentContentDigest="sha256/xc1/ssp-xd1:808e938b9e4786cb6ce5c02db3db96fed76957972cacae4bd378c500ea00ac4f" />
+          <note>Archived manifests associated with spectators</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-10-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="10">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-10" fragmentContentDigest="sha256/xc1/ssp-xd1:b413083932c27dbee2764a34ba7b7c297f88016ee0ecb230b8254c1e6c3098ae" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Detection component receives/detects the pirate webcasting</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01027" fragmentContentDigest="sha256/xc1/ssp-xd1:eedcf9507e36c38b94df4ce10128d89c8e0a0d4341843050eb827ec7276be06e" />
+          <note>Monitoring step 280</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-11-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="11">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-11" fragmentContentDigest="sha256/xc1/ssp-xd1:d88b04c8c64049f9ed3d332c5ed53939ca88d8d1eea79f8106b5c4cb23e99865" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Algorithm analyzes camera-cut timings in the suspect and devises time codes</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00943" fragmentContentDigest="sha256/xc1/ssp-xd1:e3de3f493e1fdffb050e0fc9e0711559684526dc7f84e117ab0e69090a9764d0" />
+          <note>Detecting camera-switch timings in the suspected distribution</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Scene-change comparison against the reference</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-12-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="12">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-12" fragmentContentDigest="sha256/xc1/ssp-xd1:889e6da200bba959874ab6e7d267849ebe228c8958809385e88495b9753b9539" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Comparison identifies the specific manifest fingerprint of the delivered version</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Reconstructed manifests from devised time codes select the candidate</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Delivered manifests matched against the reconstruction</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-1-limitation-13-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="13">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-13" fragmentContentDigest="sha256/xc1/ssp-xd1:70245757ed514d83812a4cc877d02a3c8e59bc34ef1ad24c1ac2791bd6af0b6c" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Retrieval component searches the ledger and identifies the account(s)</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations searched</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01237" fragmentContentDigest="sha256/xc1/ssp-xd1:5eb364a52119e2c2d276226bc5f3a873a4b050293e67fc50803860e2fef9feec" />
+          <note>PCT claim 15: retrieval element</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-2-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-2-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:d69f82ddf1c9b083dc4a8bf83ac90d170207c80d901404884e2b98575bd4a8e0" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01101" fragmentContentDigest="sha256/xc1/ssp-xd1:9ec3f11f689f5134874aba03b1f05fb2d86503402bff64064cb91c99468469d7" />
+          <note>Cut 4 starts at the reference time, maintaining synchronization from Cut 4 onwards</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-row-01123" fragmentContentDigest="sha256/xc1/ssp-xd1:2e655856130575e5b1eebb1c93827a47dba75e8f6092e6f2855dd9456f5d2a46" />
+          <note>Mate row Cut 4 adjusted to the reference</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Realignment explanation</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-3-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-3-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:b21d5cd109eba78d06973fb4274a65307a964c5a90a1ed07f0993802ac2a4c60" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01101" fragmentContentDigest="sha256/xc1/ssp-xd1:9ec3f11f689f5134874aba03b1f05fb2d86503402bff64064cb91c99468469d7" />
+          <note>Ten-frame extension of Cut 2 delays the Cut 3 boundary; synchronization restored at Cut 4</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-row-01113" fragmentContentDigest="sha256/xc1/ssp-xd1:df689a004112e7e9a0f45f08338884b5603c7e6a023a07d46f4626ff748e40ef" />
+          <note>Row Cut 2 extended by 10 frames</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-row-01118" fragmentContentDigest="sha256/xc1/ssp-xd1:6e34f8ccda08515df974d3ca893fe13038f1bdf80179c056827d42a0a386ca50" />
+          <note>Row Cut 3 delayed by 10 frames with adjusted duration</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Ten-frame boundary move explained</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-4-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-4-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:c99299954007f740a8ecc23cb7da98eea91140150ba2b5e95b9006f6cede0716" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00970" fragmentContentDigest="sha256/xc1/ssp-xd1:c971cd68ed8b34d31e8362227597d0d958124871b5e1ebde77f8c523254c5387" />
+          <note>EDL as the structured list of edit instructions</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01068" fragmentContentDigest="sha256/xc1/ssp-xd1:08b583383337a28f68b5fdeb5abd59617e8d0a51946db10577c80a5b84be80ba" />
+          <note>EDL fields: cut number, source camera, in-point, out-point</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference EDL table</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-5-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-5-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:98827cdcb8fc0dc6ef5d02a9efd735ac551843ada86318cd36c4f2b8c57e9ea2" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00952" fragmentContentDigest="sha256/xc1/ssp-xd1:3d9a12ef6d3a9e9d5f6a027a1fb43768a0f6c90b5a402b82b525b551c170ad8e" />
+          <note>Cameras capture the event from diverse viewpoints</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00954" fragmentContentDigest="sha256/xc1/ssp-xd1:e5f056f96ce23ec0b8818e96f0d4c4452c70f308a4aa83859ad4292e699f3f79" />
+          <note>Director commands real-time selections recorded by the pipeline</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00972" fragmentContentDigest="sha256/xc1/ssp-xd1:8554cbe8d4238456f17e3f1b4ed592be861b208ba8f942c163eeb9ab546245ff" />
+          <note>Live-switched production</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-6-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-6-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:abd181ffcfae79025e3c56988db614f1e7becd8294aee7d4e3b0e787f5e574de" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00989" fragmentContentDigest="sha256/xc1/ssp-xd1:3fa88bc6a05cc2e2ff4f997ca73d3709d5663fa22666873572166ed78902565e" />
+          <note>A time-code variation applied at each director-commanded camera cut</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00969" fragmentContentDigest="sha256/xc1/ssp-xd1:627d104f14e160c8c2a5fe61244ac6410403ed70401d1087c2fa2e03f50f7389" />
+          <note>Each varied cut multiplies the distinguishable versions</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00901" fragmentContentDigest="sha256/xc1/ssp-xd1:33ae383c96febce85ae85312cd2762ecafbcc82dd49c384840f684531536fe1c" />
+          <note>Summary of per-cut variations</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>EDL rows define per-cut regions with camera identifiers and time codes</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00960" fragmentContentDigest="sha256/xc1/ssp-xd1:fbd08235b85c9ec3e31ce8a30e1769fa8578588c001dc069d3ca08c50ab4e359" />
+          <note>Delivered-version associations recorded per recipient</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-7-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-7-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:9996b7d3d6ead225095609949c94e12b49703e67cd9cc6f2dfa50259478e7a86" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00990" fragmentContentDigest="sha256/xc1/ssp-xd1:e1f0e5bd294b5f51944a403254b7ccd9b37e1232b46964fbd00354ff15b433c4" />
+          <note>Perceptual-hash comparison of the reference content with the pirate webcast</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01201" fragmentContentDigest="sha256/xc1/ssp-xd1:f4b505f6906586904c3327ccf840623fe9bb66d260be42473df835e0e454ec9e" />
+          <note>Example 5 perceptual hashing across corresponding frames</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01199" fragmentContentDigest="sha256/xc1/ssp-xd1:45f4631bdf5b610e1ecc631ef55fb178c52b6bb06f57681f1a8b4c83287f2e3b" />
+          <note>Frame regions extracted from both reference and mate stream for comparison</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-8-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-8-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:efe1821d24167d672ef29a1c199ce1067e218e15b27051a7bbf0bc5e43d9c30c" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01201" fragmentContentDigest="sha256/xc1/ssp-xd1:f4b505f6906586904c3327ccf840623fe9bb66d260be42473df835e0e454ec9e" />
+          <note>Sliding-window fuzzy matching over perceptual hashes of frame groups</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01202" fragmentContentDigest="sha256/xc1/ssp-xd1:9cf3b8748ec7e0940c6d1ea81b9624f471bdc6811f40533a110a6d32cd78e779" />
+          <note>Example 5 fuzzy_matching code</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01059" fragmentContentDigest="sha256/xc1/ssp-xd1:72248cd398bfee00bd52718235cb211a2c5785cedf1c0c17c32e5df13a06fb8f" />
+          <note>Fuzzy matching in the monitoring step</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-9-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-9-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:aff4d6778944f6fdc2eb3a285cf646d6033e677e91bd2fc44a9e3812d066a24a" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>CDN distribution, adaptive streaming, manifests tailored to devices and network conditions</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Adaptive segment selection</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01229" fragmentContentDigest="sha256/xc1/ssp-xd1:28914f3e64213dfee95b309ddb187c52d521ad69d677595f654b481d69f60c7f" />
+          <note>PCT claim 11: CDN and tailored manifests</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-10-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-10-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:2811e3eb288e6e22fbb4bcd4f0afcd3812fc56bbc485a5e39d590f447ea3c7b8" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00980" fragmentContentDigest="sha256/xc1/ssp-xd1:3b26a9a40f24950dd883de36ef1c38d723342029ed1aead232ede221b0c7ce82" />
+          <note>Mixing component integrates reference and mate chunks, progressively assigning distinct manifests</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01196" fragmentContentDigest="sha256/xc1/ssp-xd1:2fe2fef47a486cc616c8a1311e62ac7655d7b86dc8c4adaf5d9c0379e16d5576" />
+          <note>Associations updated as variations accumulate</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01230" fragmentContentDigest="sha256/xc1/ssp-xd1:6ff69f01630fa14c808cfaef0c86620e5a7394643695c08d2e48cdb2f6ad36f3" />
+          <note>PCT claim 12: mixing component</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-11-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-11-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:27f52183abea55e9eb4da2d407bd8cc9c18f7f4ca42516d3bfeed961b392f73f" />
+      </subject>
+      <caution kind="source-gate" gateId="af-gate-collusion-output" />
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00994" fragmentContentDigest="sha256/xc1/ssp-xd1:01d22ba3b5533542e9f50636e60c48339716faf94b587ac612378f101ef3ea8b" />
+          <note>Mixed-copy collusion: each segment traced back; accounts identified via the ledger</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00997" fragmentContentDigest="sha256/xc1/ssp-xd1:32ef641f5ce9d7467ac1c29382448059fad368489553ff527d1e9e61827a4790" />
+          <note>Probabilistic (Tardos) fingerprinting in the detection component</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00998" fragmentContentDigest="sha256/xc1/ssp-xd1:7a312135fd2cde0308e3afe851c46582a0f367cfe465c556de49ddb05ed89d64" />
+          <note>Collusion-secure tracing back to the contributing users</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-12-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-12-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:024d155f62399538db94ef4820d7db1f6a40c97f2a88d90c9ab00d78258ba5f4" />
+      </subject>
+      <caution kind="source-gate" gateId="af-gate-collusion-output" />
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01001" fragmentContentDigest="sha256/xc1/ssp-xd1:092161cca369e2ffc9c6781c8e47d7ef3f5ff106381450e6fe5d775cf8911e8c" />
+          <note>Segmented Tardos: unique fingerprints per segment localize pirated segments and colluders</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00998" fragmentContentDigest="sha256/xc1/ssp-xd1:7a312135fd2cde0308e3afe851c46582a0f367cfe465c556de49ddb05ed89d64" />
+          <note>Tardos accusation foundations</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00994" fragmentContentDigest="sha256/xc1/ssp-xd1:01d22ba3b5533542e9f50636e60c48339716faf94b587ac612378f101ef3ea8b" />
+          <note>Per-segment tracing under collusion</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-13-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-13-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:bb20244b73bd7ce5f55a5ba2a8f9ef4e7d95b2e97ab542323afe8c932949ada8" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01172" fragmentContentDigest="sha256/xc1/ssp-xd1:6582d06d88c4ed5990acfbd4ac9b09926c74295be2d14b9d085f0c41b3de83bd" />
+          <note>Reference manifest lists reference chunks</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Manifest chunk selection</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01174" fragmentContentDigest="sha256/xc1/ssp-xd1:1a19d523db6316f0d53715ecf1244f0866f696b1cf9f7301ecafe9596cb9d3a2" />
+          <note>Different manifest selects the mate's variant chunk</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01171" fragmentContentDigest="sha256/xc1/ssp-xd1:3e31bc9014f15284267ee4c64423495a28495fa311c0f327b22edf63a527a02d" />
+          <note>Equal-duration chunks in Example 3</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01176" fragmentContentDigest="sha256/xc1/ssp-xd1:ae27e3aba001d6e239b1a49ef71f34ee685806175d1ac984df4c034aa73f06d2" />
+          <note>Equal-duration compatibility statement</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-14-preamble-support" status="mapped">
+      <subject unitKind="preamble" unitIndex="0">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-14" fragmentContentDigest="sha256/xc1/ssp-xd1:4cb1a071a5a42b47c5757fa4f20de61d2a4e771a2fcc88749b2ebfe93f6532ce" />
+      </subject>
+      <targets>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Reference/mate manifests and their chunk references</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-14-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-14-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:6a2eecbad6296ffb0c3b501ce8aa964146a49fe19905e7bb7a5fb88326d55a20" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference boundary inside the paired chunk interval</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01172" fragmentContentDigest="sha256/xc1/ssp-xd1:6582d06d88c4ed5990acfbd4ac9b09926c74295be2d14b9d085f0c41b3de83bd" />
+          <note>Reference manifest lists reference_segment3_000 spanning the third-cut interval</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-14-limitation-2-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="2">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-14-limitation-2" fragmentContentDigest="sha256/xc1/ssp-xd1:ae0ff0eca02c11c073ac1d8cf0e84044bb8397ba6c70d7350e7a103e0af6d50f" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate boundary at the moved time code inside the same interval</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01174" fragmentContentDigest="sha256/xc1/ssp-xd1:1a19d523db6316f0d53715ecf1244f0866f696b1cf9f7301ecafe9596cb9d3a2" />
+          <note>Variant chunk reflecting the delay</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-15-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-15-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:1cd627a470a9b1fb12495c75a623ce5e80736a240bf234a294cf219e3620a4a8" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00985" fragmentContentDigest="sha256/xc1/ssp-xd1:3d1ef969876093f423a40e032708a62ce803ac8e77b4ae65ab337679241a10ad" />
+          <note>Blockchain component records and retrieves manifest-recipient associations.</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01231" fragmentContentDigest="sha256/xc1/ssp-xd1:c22380e8f399777b874fd3f9627c6366ead9a092abbb7b6d1ac9f2c812c9c139" />
+          <note>PCT claim 13 expressly recites blockchain registration and ledger reading.</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00917" fragmentContentDigest="sha256/xc1/ssp-xd1:7c560cd8cd6dbc633fad6d81c5c52c5797dd89478fec1b35dd8ffc7222933a98" />
+          <note>Distribution architecture permits blockchain-backed manifest association records.</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-16-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-16-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:938138823e9caaee37f5006136eca2788b0e895495a22005780f69df79dfe2d8" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01008" fragmentContentDigest="sha256/xc1/ssp-xd1:9de6e5f6062a3225b4eb132243f94566dfde26c0ae67437a74632a61b090b887" />
+          <note>Unicast distribution of the chunks</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01057" fragmentContentDigest="sha256/xc1/ssp-xd1:baf5c0ba63b519671052d677e42c9a7bd01521bbb7dc2969990054b0db92d37a" />
+          <note>Unicasting gives each spectator a unique stream</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01224" fragmentContentDigest="sha256/xc1/ssp-xd1:a140ed0287dbe6ef809fe0c29b0af84fec2956646ad84696e3e7a0237bdc9cb0" />
+          <note>PCT claim 6: unicasting</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-17-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-17-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:19f5760bc148a67f221416ab17b45608cbbb356424a140b5ce8003bafa0b77a3" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01174" fragmentContentDigest="sha256/xc1/ssp-xd1:1a19d523db6316f0d53715ecf1244f0866f696b1cf9f7301ecafe9596cb9d3a2" />
+          <note>Mate manifest selects the variant chunk reflecting the moved boundary</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Manifest chunk references differ exactly where the timing was altered</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>Interleaved chunk combinations per manifest</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-18-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-18-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:770b7a4fee2ce549f9024a92960816788cba936690216f3a586d56a4c06ce43a" />
+      </subject>
+      <caution kind="source-gate" gateId="af-gate-overlay-sequencing" />
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00995" fragmentContentDigest="sha256/xc1/ssp-xd1:a0495358e10695247d61f12d3af6fd6512667a760b1a7cd817c8b917335c89f0" />
+          <note>Overlay of additional audio/video elements nonexistent in the reference content</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01055" fragmentContentDigest="sha256/xc1/ssp-xd1:0b2ad007506c3f316c96248bcee2ba6d7d8490958533f4be3b2b95dce3f5acb6" />
+          <note>Overlay applied in the programming step, before segmenting step 240 in the method order</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-preamble-support" status="mapped">
+      <subject unitKind="preamble" unitIndex="0">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19" fragmentContentDigest="sha256/xc1/ssp-xd1:1870fc7668b0c120198c8f94da106f714f8ddb6b74da16210739ba25a9a5d8dd" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01013" fragmentContentDigest="sha256/xc1/ssp-xd1:692d61f939a8b7023fbf0948fee92668135c3c6fb363338457e0b812b741e222" />
+          <note>Method 200 of identification and protection using the system</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01239" fragmentContentDigest="sha256/xc1/ssp-xd1:c1affaaa78f5971baad494d585696577279606bca961607ed6a61e1059785d08" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01241" fragmentContentDigest="sha256/xc1/ssp-xd1:3521927a7dafd12c482b25973f63542fa5616e2f5c71a0e749f894e984e8ff7c" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01243" fragmentContentDigest="sha256/xc1/ssp-xd1:adf5c8743d8f0dccbe549efba339f44ed66785621a1ac90991fc182ade920f76" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01245" fragmentContentDigest="sha256/xc1/ssp-xd1:58fe5629ef3c9ecfccb9b8ed2405a6a7e2304074b002a288979acf05020018fc" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01247" fragmentContentDigest="sha256/xc1/ssp-xd1:9f9ae40d9c4cf10215969ae028f6de29c2f1600bd0c9bce967703c9a1ecec43b" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01249" fragmentContentDigest="sha256/xc1/ssp-xd1:464d48728425d2e6931b10b520af57f0ea889718ee38285a998d5e019d560689" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01251" fragmentContentDigest="sha256/xc1/ssp-xd1:9c25d941485a79f74cbd102879e10413933400eb6912e13d6a2d9366d2bc922f" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01253" fragmentContentDigest="sha256/xc1/ssp-xd1:d76475975c18c55c876e6de083f2b1eabad8c7a8b15f9aa2eec447e84a86c86f" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01255" fragmentContentDigest="sha256/xc1/ssp-xd1:3105dad1c81bf38f09ad4f4b03f49dc045ae0b3545e7b055ca3a4b1f8de39c2c" />
+          <note>PCT claim 16: the method</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:4f4be1ec023d7b9d1a4a975be0b28deac807f4b1b70e356d90843b4b78181d63" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00935" fragmentContentDigest="sha256/xc1/ssp-xd1:c531a14e83ba4617e447079e5478d8cd2c1e58d799cacc61063021f341f52b24" />
+          <note>Pipeline receives video captured from cameras 101</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00954" fragmentContentDigest="sha256/xc1/ssp-xd1:e5f056f96ce23ec0b8818e96f0d4c4452c70f308a4aa83859ad4292e699f3f79" />
+          <note>Pipeline records cut timings and transitions as time codes in list 103</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00970" fragmentContentDigest="sha256/xc1/ssp-xd1:c971cd68ed8b34d31e8362227597d0d958124871b5e1ebde77f8c523254c5387" />
+          <note>EDL entries: source reference plus time code</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-2-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="2">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-2" fragmentContentDigest="sha256/xc1/ssp-xd1:780d65b5d229fc29f950de635b03ac540e1fc2758c77bcf31d8c60dbd323ffa3" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00935" fragmentContentDigest="sha256/xc1/ssp-xd1:c531a14e83ba4617e447079e5478d8cd2c1e58d799cacc61063021f341f52b24" />
+          <note>Pipeline creates the reference audio-video content 1</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00954" fragmentContentDigest="sha256/xc1/ssp-xd1:e5f056f96ce23ec0b8818e96f0d4c4452c70f308a4aa83859ad4292e699f3f79" />
+          <note>Director-driven production through pipeline 102</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00970" fragmentContentDigest="sha256/xc1/ssp-xd1:c971cd68ed8b34d31e8362227597d0d958124871b5e1ebde77f8c523254c5387" />
+          <note>The EDL guides reconstruction of the sequence: production according to the structured list</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-3-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="3">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-3" fragmentContentDigest="sha256/xc1/ssp-xd1:2f5fd6a8b87c90a2a15a89ad27c76b9c8072d7eb87c8bdccac629629385f0268" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00956" fragmentContentDigest="sha256/xc1/ssp-xd1:fec229e489aa8628433da6b2b8418a3b18d2afee1fee4e44877f248ffaf6d844" />
+          <note>Automatic variation of a recorded cut time code originates unique mates</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00937" fragmentContentDigest="sha256/xc1/ssp-xd1:e4de891c6f63bd4cee980f1659cce7d301d1a171fd1e1eb40cfaca6852ded5c2" />
+          <note>Mate as a distinguishable version of the same content</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL keeps the Camera 2/Camera 3 order at a moved time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-4-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="4">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-4" fragmentContentDigest="sha256/xc1/ssp-xd1:585b1860599020e43eaa94211bb22390945fb48e4fcd473a50f347f6b8729cbd" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference EDL boundary at the recorded time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL boundary ten frames later</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Explanation of the moved boundary</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-5-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="5">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-5" fragmentContentDigest="sha256/xc1/ssp-xd1:5f1e5acf2f7a30a3e8eeda5be1abb5ea83bca41b07252bd818b8cf6b674b4258" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01101" fragmentContentDigest="sha256/xc1/ssp-xd1:9ec3f11f689f5134874aba03b1f05fb2d86503402bff64064cb91c99468469d7" />
+          <note>Cut 2 extended ten frames delays Cut 3; with Tables 1-2 the interval frames come from different cameras</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Adjusted cut durations around the interval</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL rows identify the cameras on each side of the moved boundary</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-6-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="6">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-6" fragmentContentDigest="sha256/xc1/ssp-xd1:3e9d9cb1e88bb44467ebb32aede095b837622afa946ee7f6ad7b55ff02eefaf4" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>Ensemble of reference and mates segmented into chunks 113</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01041" fragmentContentDigest="sha256/xc1/ssp-xd1:071c4aa6820d6f098e46fda24ce4308c994809aa9f7e62eaa29fcc73802cdf2b" />
+          <note>Segmenting step 240</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-7-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="7">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-7" fragmentContentDigest="sha256/xc1/ssp-xd1:f1b80de49b8eb2d1275ba1196f3aaf79e95d2148b0d7f8935706384451b2e31a" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>Manifests point to unique interleaved combinations of reference and mate chunks</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01174" fragmentContentDigest="sha256/xc1/ssp-xd1:1a19d523db6316f0d53715ecf1244f0866f696b1cf9f7301ecafe9596cb9d3a2" />
+          <note>Mate manifest selects the variant chunk at the altered cut</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Chunk references differ exactly where the timing was moved</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-8-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="8">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-8" fragmentContentDigest="sha256/xc1/ssp-xd1:adde9ff4d7fabf7fccca8412ab6b06ab2a47f0b5c19ffcfab77c6840b5aebcac" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Delivery of streams assembled from manifest-listed chunks</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01047" fragmentContentDigest="sha256/xc1/ssp-xd1:e88e67e3f60cabdf6b5480ae71384ddc85fd92165b70d9d8cc029b3593232478" />
+          <note>Distribution step 260</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-9-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="9">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-9" fragmentContentDigest="sha256/xc1/ssp-xd1:7c69d907e42cca7903a18f0a757754cade69825660f78d9a0c0e5f37f7d5964b" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00960" fragmentContentDigest="sha256/xc1/ssp-xd1:fbd08235b85c9ec3e31ce8a30e1769fa8578588c001dc069d3ca08c50ab4e359" />
+          <note>Ledger records which recipient received which delivered version/manifest</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations between versions and recipients</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00982" fragmentContentDigest="sha256/xc1/ssp-xd1:808e938b9e4786cb6ce5c02db3db96fed76957972cacae4bd378c500ea00ac4f" />
+          <note>Archived manifests associated with spectators</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-10-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="10">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-10" fragmentContentDigest="sha256/xc1/ssp-xd1:b717ba30b792c528da0648fdd4395544b80fbe6563ba9dcdc7992cc82e4b1c0a" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Detection component receives/detects the pirate webcasting</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01027" fragmentContentDigest="sha256/xc1/ssp-xd1:eedcf9507e36c38b94df4ce10128d89c8e0a0d4341843050eb827ec7276be06e" />
+          <note>Monitoring step 280</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-11-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="11">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-11" fragmentContentDigest="sha256/xc1/ssp-xd1:738e55bb2ae5c160d6fc288125dc9a332b54a5e6e01f42687cc74343ea13641a" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Algorithm analyzes camera-cut timings in the suspect and devises time codes</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00943" fragmentContentDigest="sha256/xc1/ssp-xd1:e3de3f493e1fdffb050e0fc9e0711559684526dc7f84e117ab0e69090a9764d0" />
+          <note>Detecting camera-switch timings in the suspected distribution</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Scene-change comparison against the reference</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-12-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="12">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-12" fragmentContentDigest="sha256/xc1/ssp-xd1:c22f1bbdd996a4c2a4f409694a5b0718cb090f11b15cba23848c98721d12e97e" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Comparison identifies the specific manifest fingerprint of the delivered version</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Reconstructed manifests from devised time codes select the candidate</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Delivered manifests matched against the reconstruction</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-19-limitation-13-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="13">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19-limitation-13" fragmentContentDigest="sha256/xc1/ssp-xd1:ad2300090e6e956021b0ce72196056902baf7543ab51b655741c1f4803a0d208" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Retrieval component searches the ledger and identifies the account(s)</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations searched</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01237" fragmentContentDigest="sha256/xc1/ssp-xd1:5eb364a52119e2c2d276226bc5f3a873a4b050293e67fc50803860e2fef9feec" />
+          <note>PCT claim 15: retrieval element</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-20-preamble-support" status="mapped">
+      <subject unitKind="preamble" unitIndex="0">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-20" fragmentContentDigest="sha256/xc1/ssp-xd1:cd361919e6c552243d9ef9c2796c871b855209cc78b25bfbca68647f60eab96f" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01013" fragmentContentDigest="sha256/xc1/ssp-xd1:692d61f939a8b7023fbf0948fee92668135c3c6fb363338457e0b812b741e222" />
+          <note>Method 200 of identification and protection using the system</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01239" fragmentContentDigest="sha256/xc1/ssp-xd1:c1affaaa78f5971baad494d585696577279606bca961607ed6a61e1059785d08" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01241" fragmentContentDigest="sha256/xc1/ssp-xd1:3521927a7dafd12c482b25973f63542fa5616e2f5c71a0e749f894e984e8ff7c" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01243" fragmentContentDigest="sha256/xc1/ssp-xd1:adf5c8743d8f0dccbe549efba339f44ed66785621a1ac90991fc182ade920f76" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01245" fragmentContentDigest="sha256/xc1/ssp-xd1:58fe5629ef3c9ecfccb9b8ed2405a6a7e2304074b002a288979acf05020018fc" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01247" fragmentContentDigest="sha256/xc1/ssp-xd1:9f9ae40d9c4cf10215969ae028f6de29c2f1600bd0c9bce967703c9a1ecec43b" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01249" fragmentContentDigest="sha256/xc1/ssp-xd1:464d48728425d2e6931b10b520af57f0ea889718ee38285a998d5e019d560689" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01251" fragmentContentDigest="sha256/xc1/ssp-xd1:9c25d941485a79f74cbd102879e10413933400eb6912e13d6a2d9366d2bc922f" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01253" fragmentContentDigest="sha256/xc1/ssp-xd1:d76475975c18c55c876e6de083f2b1eabad8c7a8b15f9aa2eec447e84a86c86f" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01255" fragmentContentDigest="sha256/xc1/ssp-xd1:3105dad1c81bf38f09ad4f4b03f49dc045ae0b3545e7b055ca3a4b1f8de39c2c" />
+          <note>PCT claim 16: the method</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-20-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-20-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:be562079f50dcec5f579722ed5072e00001c4206741d843c83826aa33201d5c6" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference EDL boundary at the recorded time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL boundary ten frames later</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Explanation of the moved boundary</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00960" fragmentContentDigest="sha256/xc1/ssp-xd1:fbd08235b85c9ec3e31ce8a30e1769fa8578588c001dc069d3ca08c50ab4e359" />
+          <note>Ledger records which recipient received which delivered version/manifest</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations between versions and recipients</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00982" fragmentContentDigest="sha256/xc1/ssp-xd1:808e938b9e4786cb6ce5c02db3db96fed76957972cacae4bd378c500ea00ac4f" />
+          <note>Archived manifests associated with spectators</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-20-limitation-2-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="2">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-20-limitation-2" fragmentContentDigest="sha256/xc1/ssp-xd1:825d676e5cb455fbd35e82c263949729b8af9fe9847489b4d5d96009530be54b" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Algorithm analyzes camera-cut timings in the suspect and devises time codes</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00943" fragmentContentDigest="sha256/xc1/ssp-xd1:e3de3f493e1fdffb050e0fc9e0711559684526dc7f84e117ab0e69090a9764d0" />
+          <note>Detecting camera-switch timings in the suspected distribution</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Scene-change comparison against the reference</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Delivered manifests matched against the reconstruction</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-20-limitation-3-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="3">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-20-limitation-3" fragmentContentDigest="sha256/xc1/ssp-xd1:d85d0d6d2b61b0933e4461ed83220f105f968c262abbdac323c61cd5c9b6f270" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Retrieval component searches the ledger and identifies the account(s)</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations searched</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01237" fragmentContentDigest="sha256/xc1/ssp-xd1:5eb364a52119e2c2d276226bc5f3a873a4b050293e67fc50803860e2fef9feec" />
+          <note>PCT claim 15: retrieval element</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference EDL boundary at the recorded time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL boundary ten frames later</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Explanation of the moved boundary</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-21-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-21-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:e75c27d392156bfae04d3f5c30180c60ff925b29a14ab36f2e306222e672abcf" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00990" fragmentContentDigest="sha256/xc1/ssp-xd1:e1f0e5bd294b5f51944a403254b7ccd9b37e1232b46964fbd00354ff15b433c4" />
+          <note>Perceptual-hash comparison of the reference content with the pirate webcast</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01201" fragmentContentDigest="sha256/xc1/ssp-xd1:f4b505f6906586904c3327ccf840623fe9bb66d260be42473df835e0e454ec9e" />
+          <note>Example 5 perceptual hashing across corresponding frames</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01199" fragmentContentDigest="sha256/xc1/ssp-xd1:45f4631bdf5b610e1ecc631ef55fb178c52b6bb06f57681f1a8b4c83287f2e3b" />
+          <note>Frame regions extracted from both reference and mate stream for comparison</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-22-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-22-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:db219558cedc2c1a07031bff93207b811cf247dc5dd8960c3323dd98af51808c" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01201" fragmentContentDigest="sha256/xc1/ssp-xd1:f4b505f6906586904c3327ccf840623fe9bb66d260be42473df835e0e454ec9e" />
+          <note>Sliding-window fuzzy matching over perceptual hashes of frame groups</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01202" fragmentContentDigest="sha256/xc1/ssp-xd1:9cf3b8748ec7e0940c6d1ea81b9624f471bdc6811f40533a110a6d32cd78e779" />
+          <note>Example 5 fuzzy_matching code</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01059" fragmentContentDigest="sha256/xc1/ssp-xd1:72248cd398bfee00bd52718235cb211a2c5785cedf1c0c17c32e5df13a06fb8f" />
+          <note>Fuzzy matching in the monitoring step</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-preamble-support" status="mapped">
+      <subject unitKind="preamble" unitIndex="0">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23" fragmentContentDigest="sha256/xc1/ssp-xd1:afb20f7cfd6027f19c825655306bdbd1fd49a10329cfacec8391cedaf93ca20f" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01013" fragmentContentDigest="sha256/xc1/ssp-xd1:692d61f939a8b7023fbf0948fee92668135c3c6fb363338457e0b812b741e222" />
+          <note>Method 200 of identification and protection using the system</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01239" fragmentContentDigest="sha256/xc1/ssp-xd1:c1affaaa78f5971baad494d585696577279606bca961607ed6a61e1059785d08" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01241" fragmentContentDigest="sha256/xc1/ssp-xd1:3521927a7dafd12c482b25973f63542fa5616e2f5c71a0e749f894e984e8ff7c" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01243" fragmentContentDigest="sha256/xc1/ssp-xd1:adf5c8743d8f0dccbe549efba339f44ed66785621a1ac90991fc182ade920f76" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01245" fragmentContentDigest="sha256/xc1/ssp-xd1:58fe5629ef3c9ecfccb9b8ed2405a6a7e2304074b002a288979acf05020018fc" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01247" fragmentContentDigest="sha256/xc1/ssp-xd1:9f9ae40d9c4cf10215969ae028f6de29c2f1600bd0c9bce967703c9a1ecec43b" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01249" fragmentContentDigest="sha256/xc1/ssp-xd1:464d48728425d2e6931b10b520af57f0ea889718ee38285a998d5e019d560689" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01251" fragmentContentDigest="sha256/xc1/ssp-xd1:9c25d941485a79f74cbd102879e10413933400eb6912e13d6a2d9366d2bc922f" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01253" fragmentContentDigest="sha256/xc1/ssp-xd1:d76475975c18c55c876e6de083f2b1eabad8c7a8b15f9aa2eec447e84a86c86f" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01255" fragmentContentDigest="sha256/xc1/ssp-xd1:3105dad1c81bf38f09ad4f4b03f49dc045ae0b3545e7b055ca3a4b1f8de39c2c" />
+          <note>PCT claim 16: the method</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-1-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:e58e6b732bb8f02ed8e6a2bc507f41b8f730b9cdd42fdc4e89ac6e395f66baf0" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Detection component receives/detects the pirate webcasting</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01027" fragmentContentDigest="sha256/xc1/ssp-xd1:eedcf9507e36c38b94df4ce10128d89c8e0a0d4341843050eb827ec7276be06e" />
+          <note>Monitoring step 280</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-2-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="2">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-2" fragmentContentDigest="sha256/xc1/ssp-xd1:7947109eb08fb95f043c53eac2e07bdd8e4705d5ea7fd70cb453921520260c0f" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Algorithm analyzes camera-cut timings in the suspect and devises time codes</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00943" fragmentContentDigest="sha256/xc1/ssp-xd1:e3de3f493e1fdffb050e0fc9e0711559684526dc7f84e117ab0e69090a9764d0" />
+          <note>Detecting camera-switch timings in the suspected distribution</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Scene-change comparison against the reference</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-3-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="3">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-3" fragmentContentDigest="sha256/xc1/ssp-xd1:58f325aea4fcca94e5f40c12001b293ae117c764977682ec1e3c76c928b9cef1" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00988" fragmentContentDigest="sha256/xc1/ssp-xd1:76da9ea6fbb4bc0239574247c004f778374e1d0b1f93a21a86f065082606711b" />
+          <note>Comparison identifies the specific manifest fingerprint of the delivered version</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00962" fragmentContentDigest="sha256/xc1/ssp-xd1:30640f64d54ff6f78259ade08cafb6ac8be4ff2c77e7674415c685b5f98f3241" />
+          <note>Reconstructed manifests from devised time codes select the candidate</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Delivered manifests matched against the reconstruction</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-4-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="4">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-4" fragmentContentDigest="sha256/xc1/ssp-xd1:487033d48c9560be91ad5d7de8613c2942c4ec656887853c590bb7e3885fab83" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00964" fragmentContentDigest="sha256/xc1/ssp-xd1:4d880d9a7938cbe5149c4dae9ae32ae93c5c6a0c349839f02048807b62a30ef8" />
+          <note>Retrieval component searches the ledger and identifies the account(s)</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations searched</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01237" fragmentContentDigest="sha256/xc1/ssp-xd1:5eb364a52119e2c2d276226bc5f3a873a4b050293e67fc50803860e2fef9feec" />
+          <note>PCT claim 15: retrieval element</note>
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-5-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="5">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-5" fragmentContentDigest="sha256/xc1/ssp-xd1:cd95d66c4332f0eb5045a233de5f453106ed3b8bcb42253b9f274e0af12ed1a1" />
+      </subject>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00958" fragmentContentDigest="sha256/xc1/ssp-xd1:d9679b30ef4d1c2ba29d659eb81c4389a50e3b6f345fd9c0d50adcfe34ec06fc" />
+          <note>Ensemble of reference and mates segmented into chunks 113</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-01041" fragmentContentDigest="sha256/xc1/ssp-xd1:071c4aa6820d6f098e46fda24ce4308c994809aa9f7e62eaa29fcc73802cdf2b" />
+          <note>Segmenting step 240</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-codeblock-01174" fragmentContentDigest="sha256/xc1/ssp-xd1:1a19d523db6316f0d53715ecf1244f0866f696b1cf9f7301ecafe9596cb9d3a2" />
+          <note>Mate manifest selects the variant chunk at the altered cut</note>
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00966" fragmentContentDigest="sha256/xc1/ssp-xd1:63fa3e863f711d885377d7e07e9551b2bd75590f725347ec03803d9dfb3950dd" />
+          <note>Chunk references differ exactly where the timing was moved</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-6-support" status="mapped">
+      <subject unitKind="limitation" unitIndex="6">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-6" fragmentContentDigest="sha256/xc1/ssp-xd1:c4622fa232e3b8963d944c7d6620d8f80d5ec51c4cf0de877898d278ea428d6f" />
+      </subject>
+      <targets>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01069" fragmentContentDigest="sha256/xc1/ssp-xd1:0ff8f3a965415488bd7e3f6f1bb3690d18d8f0646d9dfca4f988648d58e49dba" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01100" fragmentContentDigest="sha256/xc1/ssp-xd1:f2639abd58604caf30faddbb6e11b994835cea7852522660402f0ee1eb460dc8" />
+          <note>Reference EDL boundary at the recorded time code</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+        <target role="combination">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-table-01102" fragmentContentDigest="sha256/xc1/ssp-xd1:ddb0df4f2b71e21ca1d9fcf3d9eed6bad5a3164c54ccb5e9170a2730d272d0fd" />
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01133" fragmentContentDigest="sha256/xc1/ssp-xd1:5afd56a45fd74ac3c2d015c0d4d3a15c10a1a1fa7134ddfa843b6f77946b9ea3" />
+          <note>Mate EDL boundary ten frames later</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01134" fragmentContentDigest="sha256/xc1/ssp-xd1:ed6c2ea9c096657a40248d8a53d9e8cab48837a9466d70abbb641eebe6ef10f6" />
+          <note>Explanation of the moved boundary</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00960" fragmentContentDigest="sha256/xc1/ssp-xd1:fbd08235b85c9ec3e31ce8a30e1769fa8578588c001dc069d3ca08c50ab4e359" />
+          <note>Ledger records which recipient received which delivered version/manifest</note>
+        </target>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-list-item-00941" fragmentContentDigest="sha256/xc1/ssp-xd1:1df227255f0f565fe1c6f7a8874a42d1b7165ab498f4f099bf14d5455e780ce7" />
+          <note>Record of associations between versions and recipients</note>
+        </target>
+        <target role="context">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00982" fragmentContentDigest="sha256/xc1/ssp-xd1:808e938b9e4786cb6ce5c02db3db96fed76957972cacae4bd378c500ea00ac4f" />
+          <note>Archived manifests associated with spectators</note>
+          <caution kind="generalization-note" code="beyond-literal-example" />
+        </target>
+      </targets>
+    </mapping>
+    <mapping relationId="af-claim-23-limitation-7-support" status="counsel-review-required">
+      <subject unitKind="limitation" unitIndex="7">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23-limitation-7" fragmentContentDigest="sha256/xc1/ssp-xd1:c6fa7c8cc088dfac64feaa6c0c7e5c88fc800030429384fde13063bb075974a8" />
+      </subject>
+    </mapping>
+  </mappings>
+  <phraseMappings>
+    <phrase relationId="af-claim-1-limitation-1-phrase-1-support">
+      <parent unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:94c676477d284b653ae3dc95ee8121562d92c4e414d67ec08243ecce1cf3c395" />
+      </parent>
+      <selector>
+        <exactText>structured list of edit instructions</exactText>
+      </selector>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-00970" fragmentContentDigest="sha256/xc1/ssp-xd1:c971cd68ed8b34d31e8362227597d0d958124871b5e1ebde77f8c523254c5387" />
+          <note>Structured list 103 as an Edit Decision List</note>
+        </target>
+      </targets>
+    </phrase>
+    <phrase relationId="af-claim-12-limitation-1-phrase-1-support">
+      <parent unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-12-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:024d155f62399538db94ef4820d7db1f6a40c97f2a88d90c9ab00d78258ba5f4" />
+      </parent>
+      <selector>
+        <exactText>segmented Tardos fingerprinting algorithm</exactText>
+      </selector>
+      <targets>
+        <target role="specific">
+          <endpoint documentId="pct-as-filed-dossier" fragmentId="pct-as-filed-dossier-para-01001" fragmentContentDigest="sha256/xc1/ssp-xd1:092161cca369e2ffc9c6781c8e47d7ef3f5ff106381450e6fe5d775cf8911e8c" />
+          <note>Segmented Tardos algorithms applying fingerprints per content segment</note>
+        </target>
+      </targets>
+    </phrase>
+  </phraseMappings>
+  <dispositions>
+    <disposition dispositionId="disp-af-af-gate-claim-as-a-whole-c1" gateId="af-gate-claim-as-a-whole" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1" fragmentContentDigest="sha256/xc1/ssp-xd1:b7f61658b1bb7ec736525ea1dda1143e32916c784acdbd862118b7a590a35b72" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-claim-as-a-whole-c19" gateId="af-gate-claim-as-a-whole" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19" fragmentContentDigest="sha256/xc1/ssp-xd1:1870fc7668b0c120198c8f94da106f714f8ddb6b74da16210739ba25a9a5d8dd" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-production-boundary-c1" gateId="af-gate-production-boundary" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1" fragmentContentDigest="sha256/xc1/ssp-xd1:b7f61658b1bb7ec736525ea1dda1143e32916c784acdbd862118b7a590a35b72" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-production-boundary-c19" gateId="af-gate-production-boundary" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19" fragmentContentDigest="sha256/xc1/ssp-xd1:1870fc7668b0c120198c8f94da106f714f8ddb6b74da16210739ba25a9a5d8dd" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-per-filing-support-c1" gateId="af-gate-per-filing-support" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1" fragmentContentDigest="sha256/xc1/ssp-xd1:b7f61658b1bb7ec736525ea1dda1143e32916c784acdbd862118b7a590a35b72" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-per-filing-support-c19" gateId="af-gate-per-filing-support" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19" fragmentContentDigest="sha256/xc1/ssp-xd1:1870fc7668b0c120198c8f94da106f714f8ddb6b74da16210739ba25a9a5d8dd" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-plural-cut-integration-c1" gateId="af-gate-plural-cut-integration" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-1" fragmentContentDigest="sha256/xc1/ssp-xd1:b7f61658b1bb7ec736525ea1dda1143e32916c784acdbd862118b7a590a35b72" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-plural-cut-integration-c17" gateId="af-gate-plural-cut-integration" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-17" fragmentContentDigest="sha256/xc1/ssp-xd1:1d4099e767a9582023b269e3eab4b2a36413d9bf9eb6a425a159fa268042fedf" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-plural-cut-integration-c19" gateId="af-gate-plural-cut-integration" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-19" fragmentContentDigest="sha256/xc1/ssp-xd1:1870fc7668b0c120198c8f94da106f714f8ddb6b74da16210739ba25a9a5d8dd" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-claim6-respective-mate-c6" gateId="af-gate-claim6-respective-mate" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-6" fragmentContentDigest="sha256/xc1/ssp-xd1:fd4e2141324dbe8cbb94d5258a09eba313eaa6236a1d81e4925b976c9eba0f1c" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-example2-priority-c2" gateId="af-gate-example2-priority" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-2" fragmentContentDigest="sha256/xc1/ssp-xd1:dd0118ef0db438daaba76030d285fd1228a4065826050942e0ef4aa0f7b7550e" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-example2-priority-c3" gateId="af-gate-example2-priority" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-3" fragmentContentDigest="sha256/xc1/ssp-xd1:683afdc8dbe3428a409b396abece3e8ccba0ee00108a6ef3b215093647d32783" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-claim14-combined-c14" gateId="af-gate-claim14-combined" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-14" fragmentContentDigest="sha256/xc1/ssp-xd1:4cb1a071a5a42b47c5757fa4f20de61d2a4e771a2fcc88749b2ebfe93f6532ce" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-collusion-output-c11u0" gateId="af-gate-collusion-output" value="carried-at-required-scope">
+      <subject kind="claim-unit" unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-11-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:27f52183abea55e9eb4da2d407bd8cc9c18f7f4ca42516d3bfeed961b392f73f" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-collusion-output-c12u0" gateId="af-gate-collusion-output" value="carried-at-required-scope">
+      <subject kind="claim-unit" unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-12-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:024d155f62399538db94ef4820d7db1f6a40c97f2a88d90c9ab00d78258ba5f4" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-overlay-sequencing-c18u0" gateId="af-gate-overlay-sequencing" value="carried-at-required-scope">
+      <subject kind="claim-unit" unitKind="limitation" unitIndex="1">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-18-limitation-1" fragmentContentDigest="sha256/xc1/ssp-xd1:770b7a4fee2ce549f9024a92960816788cba936690216f3a586d56a4c06ce43a" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-method-fallback-c20" gateId="af-gate-method-fallback" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-20" fragmentContentDigest="sha256/xc1/ssp-xd1:cd361919e6c552243d9ef9c2796c871b855209cc78b25bfbca68647f60eab96f" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-method-fallback-c21" gateId="af-gate-method-fallback" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-21" fragmentContentDigest="sha256/xc1/ssp-xd1:c64907ab6c2a0f49a5d23d4ac35e4730b8232cfbf629e39b4af34c85d4cbfc6f" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-method-fallback-c22" gateId="af-gate-method-fallback" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-22" fragmentContentDigest="sha256/xc1/ssp-xd1:39f4a7f818f034ad9b455e1f852a1786781ccd10e0eedfd868dffd8b822b10a1" />
+      </subject>
+    </disposition>
+    <disposition dispositionId="disp-af-af-gate-monitor-method-c23" gateId="af-gate-monitor-method" value="carried-at-required-scope">
+      <subject kind="claim">
+        <endpoint documentId="aa11393us-af-us-claim-set" fragmentId="claim-23" fragmentContentDigest="sha256/xc1/ssp-xd1:afb20f7cfd6027f19c825655306bdbd1fd49a10329cfacec8391cedaf93ca20f" />
+      </subject>
+    </disposition>
+  </dispositions>
+</relations>

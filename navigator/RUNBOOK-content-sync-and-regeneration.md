@@ -1,195 +1,150 @@
-# Content Integration and Navigator Regeneration Runbook
+# Content Sync and Navigator Regeneration Runbook
 
 > **CURRENT OPERATING PROCEDURE · INTERNAL COUNSEL-REVIEW SYSTEM**
 
-This runbook applies the normative update contract in
-[`../AA11393US-claims-navigator_technical-description_DRAFT.md`](../AA11393US-claims-navigator_technical-description_DRAFT.md),
-especially §§10, 13, and 14. The technical description controls every conflict. This
-runbook supplies commands and stop conditions; it creates no exception, authorization, or
-alternative release path.
+This runbook applies the normative contract in
+[`../AA11393US-claims-navigator_technical-description_DRAFT.md`](../AA11393US-claims-navigator_technical-description_DRAFT.md)
+and its
+[`acceptance criteria`](../AA11393US-claims-navigator_acceptance-criteria_DRAFT.md).
+Those documents control any conflict. This runbook supplies the shortest supported update path;
+it creates no exception or alternative release path.
 
-## 1. Invariants
+## 1. Current contract
 
-- Registered authority sources, generated representations, and `navigator/` are regular files in
-  one repository checkout.
-- Integration uses an exact Git commit, recorded as a merge parent.
-- Symlinks, external content roots, mutable cross-worktree reads, unrecorded copying, and
-  implicit version upgrades are forbidden.
-- The working tree is clean before integration and before release.
-- `migrate` classifies current-schema content drift. It never approves a mapping or accepts
-  an obsolete schema or canon version.
-- Navigator-specific reviewed-owner and verification controls apply only to navigator release
-  authorization. They do not approve structured-source content or alter a package's authority.
-- The active release profile is selected before evidence is created. Profile labels and
-  requirements are not interchangeable.
-- The live navigator verification store equals the exact active reachable record graph. Every
-  record is full-digest-addressed, canonical, and immutable while present; Git alone retains
-  displaced records and retired formats.
+- Work from one repository checkout and one exact Git commit. Do not read semantic content from
+  another worktree, an external directory, a symlink, a cache, or the network.
+- Preserve each package's declared authority direction. XML is the uniform machine interface, not
+  a universal replacement authority.
+- Navigator production reads semantic content only through the secure XML gateway. The renderer
+  consumes only the immutable typed model produced by that gateway.
+- Keep only current schemas, current content, current relations, current wording, tests, and
+  generated products. Git retains history.
+- Coverage and substantive-origin tracing are computed during validation and are not committed as
+  separate inventories.
+- Do not create author approvals, self-review evidence, receipts, attestations, handoff archives,
+  or other proof that the sole contributor reviewed their own work.
 
-## 2. Baseline gate
+The navigator exposes exactly these five commands:
 
-From the navigator integration checkout:
+| Command | Effect |
+|---|---|
+| `preview <edition>` | Writes one non-persistent HTML preview to standard output |
+| `candidate <edition>` | Regenerates the edition's current candidate HTML |
+| `release <edition>` | Reproduces the candidate and atomically writes the sealed HTML and detached checksum |
+| `bundle` | Regenerates the deterministic five-member delivery ZIP and its detached checksum |
+| `validate-current` | Read-only validation of the exact unchanged current repository snapshot |
 
-```sh
-git status --short --branch
-git rev-parse HEAD
-git rev-parse <source-commit>
-git merge-base HEAD <source-commit>
+`<edition>` is exactly `na` or `af`. There are no command aliases or upgrade paths.
+
+## 2. Change content according to its authority
+
+Identify every affected package in the structured-source content registry before editing.
+
+- **PDF evidence package:** never edit the canonical PDF. Correct the asserted transcription XML
+  only against that PDF, preserve page/region provenance and uncertainty disclosures, and
+  regenerate the Markdown review view.
+- **Authored-Markdown package:** edit the authoritative Markdown, then regenerate its XML
+  representation. Do not edit the generated XML or maintain a second Markdown owner.
+- **Authored-relation package:** edit the authoritative relation XML and regenerate its Markdown
+  review view. Every endpoint remains directional, identity-bound, and digest-bound.
+
+Use the structured-source documentation pair for the applicable conversion procedure. Stop if a
+generated representation differs from regeneration, a Markdown round trip loses semantics, PDF
+provenance is incomplete, a relation endpoint is unresolved, or a consumer would need a fallback.
+
+## 3. Update navigator-owned XML
+
+Edit only the edition relation file or controlled-wording file that owns the changed semantic
+value:
+
+```text
+navigator/relations/na__pct.relations.xml
+navigator/relations/af__pct.relations.xml
+navigator/wording/shared.wording.xml
+navigator/wording/na.wording.xml
+navigator/wording/af.wording.xml
 ```
 
-Stop if the worktree is not clean, either commit is unresolved, or the selected source
-commit has not passed the repository's document-integrity review. Record both exact SHAs in
-the merge commit through Git ancestry; do not substitute a moving branch name after review.
+Keep ordinary interface labels and layout instructions in the renderer. Put only substantive,
+provenance, caution, disposition, disclaimer, product-label, artifact, manifest, or security
+wording in wording XML. Add only slots that are actually consumed and give each slot one typed
+scalar type and one exact origin; every slot is rendered as escaped plain text.
 
-## 3. Integration gate
+Review each affected relation against the current source item. Do not infer a target, copy one
+edition's mapping into the other, reuse a stale digest, or use visible text, order, line number, or
+heading slug as identity. A fragment with no recorded candidate remains explicitly
+`counsel-review-required`.
+
+## 4. Inspect and generate both editions
+
+A preview is read-only and writes HTML to standard output:
 
 ```sh
-git merge --no-ff <source-commit>
-git diff --name-status HEAD^1..HEAD
+uv --no-cache --offline run --locked --no-sync python -m navigator preview na
+uv --no-cache --offline run --locked --no-sync python -m navigator preview af
 ```
 
-Inspect every imported path. Stop on an unexpected source, deletion, generated artifact, or
-canonical authority-file change. A conflict-free merge proves only text integration; the
-navigator is expected to reject stale pins and mappings until the remaining gates pass.
+Inspect the changed edition visually, including forward and reverse navigation, no-candidate
+states, cautions and gates, disclosure figures, keyboard focus, the no-JavaScript document order,
+and print content. Visual inspection is useful product review, not a stored authorization step.
 
-## 4. Pin and parameter plan
-
-Generate the read-only plans:
+Regenerate both current candidates so shared-input drift cannot remain hidden:
 
 ```sh
-python3 navigator/build.py pin-plan na
-python3 navigator/build.py pin-plan af
+uv --no-cache --offline run --locked --no-sync python -m navigator candidate na
+uv --no-cache --offline run --locked --no-sync python -m navigator candidate af
 ```
 
-Apply the reported current versions and raw-byte digests to the edition-selected corpus and
-QA registries. The plan's `corpora` map covers every corpus the edition depends on — the
-claim corpus, the target corpus (every pinned disclosure file), the authority corpus, and
-each QA source named by `qaSources` — keyed by corpus id. For every corpus closure, inspect
-every sorted entry in `files`, not only the entry marked `primary`. If any `pinCurrent` is
-false, use that entry's `actualDigest` as the replacement pin for its exact path. For QA
-corpora, require `configuredVersions` to equal `expectedVersions` exactly; for registry
-corpora, require the version label current, with the plan's document, corpus, and edition
-versions in agreement. A missing auxiliary entry, a free-form version label, or
-a version binding not equal to the selected current claim version is a stop condition.
-Update the edition census, independent claims, groups, artifact name, release timestamp,
-dependency map, segmentation policy, gates, fixtures, bundle wording, and every other
-reported exact-set dependency. Do not calculate a digest through an alternate helper or edit
-generated output.
+Stop if either edition reads the other's private input, any semantic source bypasses the XML
+gateway, a relation or wording entry is unused or unresolved, or regeneration is not byte-stable.
 
-Run `pin-plan` again. Stop unless it reports that every proposed version, digest, census,
-group, dependency, and artifact-name value is already represented by the current sources or
-explicitly lists the remaining authored work.
+## 5. Seal and bundle
 
-## 5. Migration and review gate
-
-For each edition:
+Release reproduces each candidate in a fresh process before replacing only its generated product
+and detached checksum:
 
 ```sh
-python3 navigator/build.py candidate <edition>
-python3 navigator/build.py migrate <edition>
+uv --no-cache --offline run --locked --no-sync python -m navigator release na
+uv --no-cache --offline run --locked --no-sync python -m navigator release af
+uv --no-cache --offline run --locked --no-sync python -m navigator bundle
 ```
 
-Inspect the complete migration diagnostic. Resolve every `stale` and `pending` owner by
-reviewing the current claim text, dependency context, PCT target, gate source, disposition,
-and prior target snapshot. New owners begin with no candidate passage recorded. Automatic
-target inheritance and cross-edition copying are forbidden.
+The bundle must contain exactly both sealed HTML files, both corresponding detached checksums, and
+`MANIFEST.txt`. Its own detached checksum stays beside the ZIP. The ZIP is a delivery product, not
+an audit package. Remove any superseded generated product before the final commit.
 
-After resolving the authored data, stamp only the owners actually reviewed:
+## 6. Final audit gate
 
-```sh
-python3 navigator/tools/stamp.py navigator/editions/<edition>.json \
-  --mark-reviewed \
-  --owner=<type>:<key> \
-  --reviewer="<identified-operator>" \
-  --review-date=YYYY-MM-DD \
-  --operator-kind=<human|model>
-```
-
-`--all-owners` is permitted only after the operator has inspected every owner projection.
-Then require a clean candidate:
+Inspect the complete current diff, run `git diff --check`, and commit the coherent current state.
+From that clean exact commit run:
 
 ```sh
-python3 navigator/build.py candidate <edition>
-```
-
-Stop on any stale pin, exact-set mismatch, missing disposition, unreviewed owner, schema
-error, forbidden term, dependency disagreement, or undeclared input.
-
-## 6. Verification and release gate
-
-Declare the navigator operator for commands that publish current verification evidence:
-
-```sh
-export NAV_OPERATOR="<identified-operator>"
-export NAV_OPERATOR_KIND="<human|model>"
-```
-
-Create fresh exact-side inventory and QA-source attestations for each edition. AF also
-requires the crosswalk attestation. Refresh global wording approvals only when their exact
-sides changed. The technical-preview profile creates no QA record; validated-release
-requires the complete current structured QA record before release.
-
-```sh
-python3 navigator/build.py release na --profile=<active-profile>
-python3 navigator/build.py release af --profile=<active-profile>
-python3 navigator/build.py bundle-plan
-```
-
-Inspect and apply the exact canonical `bundle-plan` proposal as an authored config edit, then:
-
-```sh
-python3 navigator/build.py bundle
-```
-
-No attestation, QA record, release record, bundle record, filename, or checksum may be relabelled
-or reused for new bytes. Each writer validates the complete new record before replacing any record
-in the same logical scope. Current authorization is resolved from exact profile and predecessor
-bindings, never recency or directory ordering. `bundle` retains exactly one selected bundle
-record, the releases pinned by the active config, only their profile-required QA records, their
-exact attestation predecessors, and the separately pinned manifest approval. Git alone retains
-displaced records.
-
-## 7. Current-state and cutover gate
-
-Remove non-current files from `navigator/dist/`. Require `navigator/records/` to equal the exact
-active reachable graph produced by the current bundle. Remove transient browser snapshots, caches,
-migration scratch data, and every unclassified tracked file.
-
-```sh
-git status --short --branch
 uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
-`validate-current` is the canonical cutover gate. It must report one coherent current
-baseline, current candidates and sealed artifacts, a current configured bundle and
-authorization chain, no obsolete live version, no compatibility path, and no unclassified
-file. It captures the complete live repository, proves the full closure against the
-captured bytes, runs the document-integrity legs (the current changed-Markdown render check and
-the co-located prior-art source-manifest checks) and both registered test families only in a
-materialized snapshot,
-rejects mutation of that snapshot or
-the live tree, re-derives the full live closure, and compares a final snapshot immediately
-before reporting success. Run it last; stop on any warning or nonzero result. The audit unit is
-that exact clean commit and checkout with supplied Git history, the controlling documentation and
-executable registries, and this current result; no detached export or stored receipt substitutes
-for execution.
+Stop on every skip, unknown criterion, validation failure, stale product, undeclared read or
+write, failed test, source-manifest mismatch, tracked-Markdown render failure, or repository
+mutation. The gate certifies only the unchanged snapshot it actually read.
 
-When the selected source branch has not advanced, integrate the accepted navigator branch
-with a fast-forward-only merge. If it has advanced, merge the new exact source commit into
-the integration branch and repeat every affected gate. Remove the additional worktree only
-after the final branch contains all current sources, artifacts, checksums, and required
-evidence.
+The audit unit is:
 
-## 8. Recovery
+```text
+exact clean Git commit
+→ repository checkout and supplied Git history
+→ current documentation pairs and executable acceptance registry
+→ validate-current result
+```
 
-- Before an integration commit exists, abort an unsuccessful merge with `git merge --abort`.
-- After a merge commit exists, correct forward on the integration branch; do not rewrite or
-  disguise reviewed history.
-- A failed `candidate`, `validate-current`, release, or bundle command is a stop condition, not
-  permission to bypass a validator.
-- Never edit a verification record in place. Correct the inputs and publish a new fully validated
-  digest-addressed record in the same logical scope; the writer displaces the prior record only
-  after validation. The final bundle prunes everything outside the validated active graph. Git
-  alone preserves displaced, defective, or retired-format records.
-- Restore no artifact manually. Reproduce it through the current pipeline after correcting
-  its declared inputs.
+No separately packaged audit artifact or contributor self-attestation adds authority to that unit.
+
+## 7. Failure handling
+
+- Treat a failed command as a stop condition. Correct the declared source and rerun the affected
+  generation steps; do not weaken a validator.
+- Never repair generated HTML, checksums, the manifest, or ZIP by hand.
+- Never repair semantic content in the typed model or renderer. Correct its owning XML or the
+  package authority and regenerate.
+- If source content changes after candidate generation, regenerate candidates, releases, and the
+  bundle before committing.
+- If the clean commit changes after validation, rerun `validate-current`; the earlier result does
+  not apply to the new commit.

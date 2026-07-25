@@ -192,6 +192,18 @@ class SecureParser(unittest.TestCase):
         )
         self.assertEqual(root.tag, "{urn:example:consumer:1}catalog")
 
+        # The same resource limits cover the schema document itself, not only
+        # the instance being validated.  The instance has exactly two nodes;
+        # the larger schema must therefore be the tree rejected here.
+        with mock.patch.object(parser, "MAX_NODES", 2):
+            with self.assertRaises(ParseError):
+                parser.parse_validated_xml(
+                    CONSUMER_XML,
+                    CONSUMER_SCHEMA,
+                    expected_namespace="urn:example:consumer:1",
+                    expected_root="catalog",
+                )
+
     def test_consumer_xml_rejects_wrong_contract_and_composed_schema(self):
         with self.assertRaises(ParseError):
             parser.parse_validated_xml(

@@ -34,14 +34,7 @@ WHITESPACE = frozenset(
 TAGS = {
     "aa11393:claim-agg:c1": "digest-list",
     "aa11393:dep-chain:c1": "digest-list",
-    "aa11393:figure:c1": "digest-list",
-    "aa11393:review:c1": "object",
-    "aa11393:inventory:c1": "object",
     "aa11393:lock:c1": "object",
-    "aa11393:qa-record:c1": "object",
-    "aa11393:attestation:c1": "object",
-    "aa11393:release-record:c1": "object",
-    "aa11393:bundle-record:c1": "object",
 }
 
 # Cell / row separators of the table serialization.
@@ -59,7 +52,7 @@ def parse_json(data):
     Python's default decoder silently keeps the last duplicate member. That
     is incompatible with the c1 object law, including keys that collide only
     after NFC normalization. Non-finite/fractional numbers and out-of-range
-    integers are rejected at the same boundary so parsed verification data
+    integers are rejected at the same boundary so parsed semantic data
     cannot enter a different value domain from canonical serialization.
     """
     if isinstance(data, bytes):

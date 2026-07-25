@@ -1,4 +1,4 @@
-"""Canonicalization law — golden vectors + property-based tests (AC-07)."""
+"""Canonicalization law — golden vectors and property-based tests."""
 
 import json
 import os
@@ -65,14 +65,15 @@ class TestVectors(unittest.TestCase):
                 self.assertEqual(got, want)
 
     def test_tag_registry(self):
+        self.assertEqual(canon.TAGS, {
+            "aa11393:claim-agg:c1": "digest-list",
+            "aa11393:dep-chain:c1": "digest-list",
+            "aa11393:lock:c1": "object",
+        })
         for tag, form in canon.TAGS.items():
             self.assertNotIn("\x00", tag)
             tag.encode("ascii")
             self.assertIn(form, ("digest-list", "object"))
-        # one tag per verification-record kind (TDD §8.2)
-        for kind in ("qa-record", "attestation", "release-record",
-                     "bundle-record"):
-            self.assertIn("aa11393:%s:c1" % kind, canon.TAGS)
 
     def test_law_edges(self):
         with self.assertRaises(canon.CanonError):
@@ -123,8 +124,8 @@ class TestVectors(unittest.TestCase):
 
 class TestProperties(unittest.TestCase):
     """Property-based canonicalization tests over generated inputs
-    (AC-07): idempotence, NFC duplicate-key rejection, escaping exactness,
-    integer edge rules."""
+    covering idempotence, NFC duplicate-key rejection, escaping exactness,
+    and integer edge rules."""
 
     def setUp(self):
         self.rng = random.Random(11393)

@@ -1,197 +1,189 @@
-"""Projections — derived from the schema ship axis, never hand-maintained
-(TDD §13). Also derives the reverse index and provenance data at build time
-(derived content is never stored).
-"""
+"""Small computed projections over the immutable navigator model."""
 
-from . import canon, render_inventory, schema_validate
+from __future__ import annotations
 
-ROLE_RANK = {"specific": 0, "combination": 1, "context": 2}
+from dataclasses import dataclass
+from types import MappingProxyType
 
-def artifact_strings(m):
-    """Return the exact strings projection capable of affecting an edition.
 
-    Other-edition vocabulary and bundle-only manifest wording are excluded,
-    so their changes cannot alter this artifact's provenance.
-    """
-    strings = m.strings
-    return {
-        "stringsVersion": strings["stringsVersion"],
-        "counselLegend": strings["counselLegend"],
-        "standingDisclaimer": strings["standingDisclaimer"],
-        "status": strings["status"],
-        "role": strings["role"],
-        "cautionType": strings["cautionType"],
-        "cautionScope": strings["cautionScope"],
-        "dispositions": strings["dispositions"],
-        "generalizationCodes": strings["generalizationCodes"],
-        "ui": strings["ui"],
-        "editionNamespace": strings["editionNamespaces"][
-            m.edition["stringsNamespace"]],
+@dataclass(frozen=True, slots=True)
+class RelationRef:
+    kind: str
+    relation_id: str
+    subject_fragment_id: str
+
+
+@dataclass(frozen=True, slots=True)
+class OriginRecord:
+    value_id: str
+    kind: str
+    owner_path: str
+    owner_ref: str
+    owner_digest: str
+
+
+def reverse_index(relation_set, units_by_fragment):
+    """Compute target-fragment → ordered relation references."""
+    values = {}
+    for mapping in relation_set.mappings:
+        for target in mapping.targets:
+            for endpoint in target.endpoints:
+                values.setdefault(endpoint.fragment_id, []).append(RelationRef(
+                    kind="mapping",
+                    relation_id=mapping.relation_id,
+                    subject_fragment_id=mapping.subject.fragment_id,
+                ))
+    for phrase in relation_set.phrase_mappings:
+        for target in phrase.targets:
+            for endpoint in target.endpoints:
+                values.setdefault(endpoint.fragment_id, []).append(RelationRef(
+                    kind="phrase",
+                    relation_id=phrase.relation_id,
+                    subject_fragment_id=phrase.parent.fragment_id,
+                ))
+
+    def key(reference):
+        unit = units_by_fragment[reference.subject_fragment_id]
+        return (unit.claim_number,
+                0 if reference.kind == "mapping" else 1,
+                unit.unit_index,
+                reference.relation_id)
+
+    return MappingProxyType({
+        fragment_id: tuple(sorted(references, key=key))
+        for fragment_id, references in sorted(values.items())
+    })
+
+
+def origin_inventory(model):
+    """Compute substantive/security-relevant value origins from typed state."""
+    reads = dict(model.read_inventory)
+    values = []
+
+    def add(value_id, kind, path, owner_ref, digest=None):
+        values.append(OriginRecord(
+            value_id=value_id,
+            kind=kind,
+            owner_path=path,
+            owner_ref=owner_ref,
+            owner_digest=reads[path] if digest is None else digest,
+        ))
+
+    claim_document, pct_document = model.source_documents
+    for document in model.source_documents:
+        add("document:" + document.document_id, "source-document",
+            document.registered_path, document.document_id,
+            document.semantic_digest)
+    for fragment_id, item in sorted(model._source_items.items()):
+        add("source-item:%s#%s" % (claim_document.document_id, fragment_id),
+            "source-item", claim_document.registered_path, fragment_id,
+            item.content_digest)
+    for fragment_id, item in sorted(model.disclosure_index.items()):
+        add("source-item:%s#%s" % (pct_document.document_id, fragment_id),
+            "source-item", pct_document.registered_path, fragment_id,
+            item.content_digest)
+    for asset_id, asset in sorted(model.assets.items()):
+        add("asset:" + asset_id, "asset", asset.path, asset_id,
+            asset.raw_digest)
+
+    relation_path = model._relation_path
+    add("relation-set:" + model.relation_set_id, "relation-set",
+        relation_path, model.relation_set_id)
+    for gate in model.relations.gate_definitions:
+        add("gate:" + gate.gate_id, "relation-gate", relation_path,
+            gate.gate_id)
+    relation_items = (*model.relations.mappings,
+                      *model.relations.phrase_mappings)
+    for relation in relation_items:
+        add("relation:" + relation.relation_id, "relation", relation_path,
+            relation.relation_id)
+        for index, target in enumerate(relation.targets, 1):
+            add("relation:%s:target:%d" % (relation.relation_id, index),
+                "relation-target", relation_path,
+                "%s/target/%d" % (relation.relation_id, index))
+    for disposition in model.relations.dispositions:
+        add("disposition:" + disposition.disposition_id,
+            "relation-disposition", relation_path,
+            disposition.disposition_id)
+
+    for wording_id, entry in sorted(model._wording.items()):
+        path = model._wording_owner_paths[wording_id]
+        add("wording:" + wording_id, "controlled-wording", path, wording_id)
+        for slot in entry.slots:
+            if slot.origin_ref.startswith((
+                    "edition.na.", "edition.af.")):
+                # The paired bundle resolver proves these two origins once
+                # both independently sealed models are available.
+                continue
+            if slot.origin_ref in {
+                    "edition.claimSetVersion",
+                    "edition.declaredReleaseTimestamp"}:
+                owner_path = model._edition_path
+            elif slot.origin_ref in {
+                    "edition.claimCount", "edition.unitCount"}:
+                owner_path = claim_document.registered_path
+            elif slot.origin_ref == "pct.blockCount":
+                owner_path = pct_document.registered_path
+            else:
+                raise ValueError("controlled wording slot origin is unowned")
+            add("wording:%s:slot:%s" % (wording_id, slot.name),
+                "wording-slot-" + slot.origin_kind, owner_path,
+                slot.origin_ref)
+
+    for field in (
+            "artifactName", "census", "claimPackageId", "claimSetVersion",
+            "consumerId", "declaredReleaseTimestamp", "displayName",
+            "editionId", "editionVersion", "editionWordingPath", "groups",
+            "independentClaims",
+            "relationPath", "strategyName", "strategyPrefix"):
+        add("edition:" + field, "edition-control", model._edition_path,
+            "edition." + field)
+
+    value_ids = [item.value_id for item in values]
+    if len(value_ids) != len(set(value_ids)):
+        raise ValueError("computed substantive origin identities collide")
+    return tuple(sorted(values, key=lambda item: item.value_id))
+
+
+def bundle_origin_inventory(na_model, af_model, config, config_digest,
+                            config_path):
+    """Compute paired wording-slot and bundle-control origins."""
+    if na_model.edition_id != "na" or af_model.edition_id != "af":
+        raise ValueError("bundle origin models are not the exact edition pair")
+    reads = {
+        "na": dict(na_model.read_inventory),
+        "af": dict(af_model.read_inventory),
     }
-
-
-def ship_relation(m, mode="artifact"):
-    """Ship-axis projection of the relation set, with dispositions regrouped
-    under their subjects and presentation ordering applied (most specific
-    candidate first). mode 'schedule' additionally keeps rationale."""
-    proj = schema_validate.ship_axis(m.schemas["relation"], m.relation, mode)
-    for frag in proj.get("fragments", {}).values():
-        if "targets" in frag:
-            frag["targets"] = sorted(
-                frag["targets"], key=lambda t: ROLE_RANK.get(t.get("role"), 3))
-        for ph in frag.get("phrases", []):
-            if "targets" in ph:
-                ph["targets"] = sorted(
-                    ph["targets"], key=lambda t: ROLE_RANK.get(t.get("role"), 3))
-    # dispositions attach under their subjects as (gateId, disposition)
-    frag_disp, claim_disp = {}, {}
-    for d in m.relation.get("dispositions", []):
-        entry = {"gateId": d["gateId"], "disposition": d["disposition"]}
-        if d["subject"]["kind"] == "fragment":
-            frag_disp.setdefault(d["subject"]["id"], []).append(entry)
-        else:
-            claim_disp.setdefault(d["subject"]["id"], []).append(entry)
-    for fid, entries in frag_disp.items():
-        if fid in proj.get("fragments", {}):
-            proj["fragments"][fid]["dispositions"] = entries
-    proj["claimDispositions"] = claim_disp
-    proj.pop("dispositions", None)
-    return proj
-
-
-def reverse_index(ship):
-    """Invert the forward relation: block id -> ordered fragment refs
-    (claims ascending, units before phrases within a claim). Derived at
-    build time; never separately authored (TDD §6.2)."""
-
-    def claim_num(fid):
-        return int(fid.split("u")[0][1:])
-
-    def unit_num(fid):
-        rest = fid.split("u")[1]
-        return int(rest.split("p")[0])
-
-    def phrase_num(fid):
-        return int(fid.rsplit("p", 1)[1]) if "p" in fid else -1
-
-    entries = []
-    for fid, frag in ship.get("fragments", {}).items():
-        for t in frag.get("targets", []):
-            entries.append((t["block"], fid, "unit"))
-        for ph in frag.get("phrases", []):
-            for t in ph.get("targets", []):
-                entries.append((t["block"], ph["id"], "phrase"))
-    index = {}
-    for block, fid, kind in entries:
-        index.setdefault(block, [])
-        if not any(e["fragment"] == fid for e in index[block]):
-            index[block].append({"fragment": fid, "kind": kind})
-    for block in index:
-        index[block].sort(key=lambda e: (
-            claim_num(e["fragment"]),
-            0 if e["kind"] == "unit" else 1,
-            unit_num(e["fragment"]), phrase_num(e["fragment"])))
-    return index
-
-
-def quotable_texts(m, ship):
-    """Pinned quotable source texts referenced by carried gates — derived at
-    render from the pinned blocks, never stored (TDD §8.5)."""
-    blocks = set()
-
-    def collect(caution):
-        if caution and "source" in caution:
-            blocks.add(caution["source"]["block"])
-    for frag in ship.get("fragments", {}).values():
-        collect(frag.get("caution"))
-        for t in frag.get("targets", []):
-            collect(t.get("caution"))
-        for ph in frag.get("phrases", []):
-            collect(ph.get("caution"))
-            for t in ph.get("targets", []):
-                collect(t.get("caution"))
-    for gates in ship.get("claimGates", {}).values():
-        for g in gates:
-            collect(g)
-    out = {}
-    for b in sorted(blocks):  # deterministic: set iteration is seed-dependent
-        anchor = m.quotable_anchor(b)
-        if anchor is not None:
-            out[b] = anchor.block.canonical
-    return out
-
-
-def provenance(m):
-    """Embedded provenance projection (§13): rendered/quotable corpora with
-    versions and per-file SHA-256, public authority metadata for the
-    authoritative corpus, artifact-input digests, and counts. Internal
-    QA-source identifiers, paths, and hashes never appear."""
-    corpora = []
-    for cid in sorted((m.edition["claimCorpus"], m.edition["targetCorpus"])):
-        entry = m.registry.corpora[cid]
-        corpora.append({
-            "id": cid, "role": entry["role"], "version": entry["version"],
-            "files": entry["files"],
-        })
-    authority_id = m.edition["authorityCorpus"]
-    authority_entry = m.registry.entry(authority_id)
-    authority = {
-        "id": authority_id,
-        "version": authority_entry["version"],
-        "digest": m.authority_digest,
-    }
-    log = m.gw.read_log
-    return {
-        "corpora": corpora,
-        "authority": authority,
-        "canonVersion": m.binding.get("canonVersion", "c1"),
-        "schemaVersion": m.binding.get("schemaVersion", "1"),
-        "relationSetDigest": log.get(m.edition["relationSet"]),
-        "gateInventoryDigest": log.get(m.edition["gateInventory"]),
-        "dependencyMapDigest": log.get(m.edition["dependencyMap"]),
-        "editionConfigDigest": log.get(
-            "navigator/editions/%s.json" % m.edition["editionId"]),
-        "schemaDigest": log.get("navigator/schema/relation.schema.json"),
-        "stringsProjectionDigest": canon.bytes_digest(
-            canon.canonical_json(artifact_strings(m))),
-        "declaredReleaseTimestamp": m.edition["declaredReleaseTimestamp"],
-        "counts": {
-            "claims": m.edition["census"]["claims"],
-            "units": m.edition["census"]["units"],
-            "disclosureBlocks": len(m.target_blocks),
-        },
-    }
-
-
-def render_source_paths(inputs):
-    """Validate and return the exact artifact-renderer source inventory.
-
-    Python is also used for tests and maintenance tools, so ``*.py`` is not
-    itself an implementation boundary.  Missing implementation sources and
-    out-of-family Python declarations both fail before any source is read or
-    hash-bound.
-    """
-    declared = {
-        path for path in inputs
-        if isinstance(path, str) and path.endswith(".py")
-    }
-    expected = set(render_inventory.RENDER_SOURCE_PATHS)
-    if declared != expected:
-        raise ValueError(
-            "declared render source inventory is not exact "
-            "(missing=%r, extra=%r)" %
-            (sorted(expected - declared), sorted(declared - expected)))
-    return render_inventory.RENDER_SOURCE_PATHS
-
-
-def render_tree_hash(gw, inputs):
-    """Digest over the exact renderer family (embedded provenance).
-
-    Reads cross the content gateway so the private lock covers every selected
-    source byte.  Out-of-family declarations are rejected, never absorbed
-    into this hash.
-    """
-    digests = []
-    for path in render_source_paths(inputs):
-        digests.append(canon.bytes_digest(gw.read_bytes(path)))
-    return canon.composite_digest("aa11393:lock:c1", {"renderTree": digests})
+    values = [
+        OriginRecord(
+            value_id="wording:bundle-manifest-neutral:slot:naEditionVersion",
+            kind="wording-slot-registered-control",
+            owner_path=na_model._edition_path,
+            owner_ref="edition.na.claimSetVersion",
+            owner_digest=reads["na"][na_model._edition_path],
+        ),
+        OriginRecord(
+            value_id="wording:bundle-manifest-neutral:slot:afEditionVersion",
+            kind="wording-slot-registered-control",
+            owner_path=af_model._edition_path,
+            owner_ref="edition.af.claimSetVersion",
+            owner_digest=reads["af"][af_model._edition_path],
+        ),
+    ]
+    controls = (
+        ("bundle:bundleVersion", "bundleVersion"),
+        ("bundle:name", "name"),
+        ("bundle:declaredTimestamp", "declaredTimestamp"),
+        ("bundle:editions", "editions"),
+        ("bundle:manifestWordingId", "manifestWordingId"),
+    )
+    values.extend(OriginRecord(
+        value_id=value_id, kind="bundle-control", owner_path=config_path,
+        owner_ref="bundle." + field, owner_digest=config_digest)
+        for value_id, field in controls if field in config)
+    values.extend(OriginRecord(
+        value_id="bundle:member:%d" % index, kind="bundle-control",
+        owner_path=config_path, owner_ref="bundle.members.%d" % index,
+        owner_digest=config_digest)
+        for index, unused_member in enumerate(config["members"]))
+    return tuple(sorted(values, key=lambda item: item.value_id))

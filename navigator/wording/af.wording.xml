@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wording xmlns="urn:aa11393:navigator:wording:1" schemaVersion="1" schemaProfile="navigator-controlled-wording-v1" wordingSetId="af" locale="en-US" scope="af">
+  <entry wordingId="gate-label-af-claim-as-a-whole" category="gate-label">
+    <usage context="gate-label" />
+    <text>Claim-as-a-whole gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-production-boundary-generalization" category="gate-label">
+    <usage context="gate-label" />
+    <text>Production-boundary generalization gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-per-filing-support" category="gate-label">
+    <usage context="gate-label" />
+    <text>Per-filing support gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-plural-cut-integration" category="gate-label">
+    <usage context="gate-label" />
+    <text>Plural-cut reconstructed-manifest integration gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-claim6-respective-mate" category="gate-label">
+    <usage context="gate-label" />
+    <text>Claim 6 respective-mate gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-example2-priority" category="gate-label">
+    <usage context="gate-label" />
+    <text>Example 2 priority gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-claim14-combined" category="gate-label">
+    <usage context="gate-label" />
+    <text>Claim 14 combined-example gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-collusion-output" category="gate-label">
+    <usage context="gate-label" />
+    <text>Collusion-output gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-overlay-sequencing" category="gate-label">
+    <usage context="gate-label" />
+    <text>Overlay-sequencing gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-method-fallback" category="gate-label">
+    <usage context="gate-label" />
+    <text>Method fallback-ladder gate</text>
+  </entry>
+  <entry wordingId="gate-label-af-monitor-method" category="gate-label">
+    <usage context="gate-label" />
+    <text>Monitor-side method gate</text>
+  </entry>
+</wording>

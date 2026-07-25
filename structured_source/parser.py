@@ -22,6 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEMA_DIRECTORY = os.path.join(ROOT, "structured_source", "schemas")
 POLICY_PATH = os.path.join(ROOT, "structured_source", "policy", "parser.json")
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
+XML_BASE = "{http://www.w3.org/XML/1998/namespace}base"
 
 _POLICY_FIELDS = {
     "parserPolicyVersion", "xmlVersion", "encoding", "unicodeNormalization",
@@ -164,7 +165,7 @@ def _closed_tree_checks(
         for value in (node.text, node.tail):
             if value is not None and len(value) > MAX_TEXT_LENGTH:
                 raise ParseError("XML text node exceeds the text limit")
-        if any(name.endswith("}base") or name == "base" for name in node.attrib):
+        if XML_BASE in node.attrib:
             raise ParseError("xml:base is prohibited")
         namespace = node.tag[1:].split("}", 1)[0] \
             if node.tag.startswith("{") else ""
@@ -198,6 +199,7 @@ def parse_validated_xml(data: bytes, schema: bytes, *,
 
     xsd_namespace = "http://www.w3.org/2001/XMLSchema"
     schema_root = _parse_tree(schema)
+    _closed_tree_checks(schema_root, xsd_namespace, "schema")
     if schema_root.tag != "{%s}schema" % xsd_namespace or \
             schema_root.get("targetNamespace") != expected_namespace:
         raise SchemaError("XSD target namespace does not match the XML contract")

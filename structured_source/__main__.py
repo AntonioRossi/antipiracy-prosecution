@@ -18,17 +18,17 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ACCEPTANCE_PATH = "AA11393US-structured-source-markdown_acceptance-criteria.md"
 _TABLE_START = "<!-- SSM-AC-TABLE:START -->\n"
 _TABLE_END = "<!-- SSM-AC-TABLE:END -->"
+COMMANDS = ("check", "regenerate", "regenerate-controls", "verify-current")
 
 
 def _parser():
     parser = argparse.ArgumentParser(prog="python -m structured_source")
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("check", "regenerate"):
+    for name in COMMANDS[:2]:
         child = commands.add_parser(name)
         child.add_argument("subject_id")
-    commands.add_parser("regenerate-controls")
-    commands.add_parser("verify-callback")
-    commands.add_parser("verify-current")
+    for name in COMMANDS[2:]:
+        commands.add_parser(name)
     return parser
 
 
@@ -82,9 +82,9 @@ def main(argv=None):
         result = VerificationContext(ROOT).regenerate(args.subject_id)
     elif args.command == "regenerate-controls":
         result = _regenerate_controls()
-    elif args.command in {"verify-callback", "verify-current"}:
+    elif args.command == "verify-current":
         result = run_acceptance(ROOT)
-    else:  # argparse and the exact command policy make this unreachable.
+    else:  # The exact parser surface makes this unreachable.
         raise StructuredSourceError("unsupported command")
     sys.stdout.buffer.write(canonical_json(result))
     return 0

@@ -1,1470 +1,1417 @@
-"""Artifact renderer — one self-contained HTML5 file per edition (TDD
-§§4–6, 11–13). Everything inlined; all source-derived text escaped for its
-context; embedded JSON script-safe-escaped; no untrusted innerHTML in the
-page script (it builds DOM via textContent only).
+"""Deterministic self-contained HTML5 renderer for an immutable EditionModel.
+
+The renderer has one semantic input: the typed model.  It does not open source
+files, parse an authority format, repair relations, or maintain a second view
+of content.  Static interface copy is kept in :data:`UI`; controlled legal,
+status, caution, disposition, profile, and provenance wording is resolved by
+``EditionModel.controlled_text`` before any HTML is emitted.
 """
 
+from __future__ import annotations
+
 import base64
+import html
 import json
-import re
-
-from . import canon, profilepolicy, projections
-
-def esc(s):
-    return (s.replace("&", "&amp;").replace("<", "&lt;")
-            .replace(">", "&gt;").replace('"', "&quot;"))
+from types import MappingProxyType
 
 
-def md_inline(s):
-    """Escape, then minimal markdown: **bold** and `code` only."""
-    out = esc(s)
-    parts = out.split("**")
-    if len(parts) % 2 == 1:
-        out = ""
-        for i, p in enumerate(parts):
-            out += p if i % 2 == 0 else "<strong>%s</strong>" % p
-    parts = out.split("`")
-    if len(parts) % 2 == 1:
-        out = ""
-        for i, p in enumerate(parts):
-            out += p if i % 2 == 0 else "<code>%s</code>" % p
-    return out
-
-
-def script_json(obj):
-    """JSON for embedding inside <script> — escapes </script sequences."""
-    return json.dumps(obj, ensure_ascii=False, separators=(",", ":")) \
-        .replace("<", "\\u003c").replace(chr(0x2028), "\\u2028") \
-        .replace(chr(0x2029), "\\u2029")
-
-
-def microcopy(template, **values):
-    """Fill a central-registry template without treating values as markup."""
-    out = template
-    for key, value in values.items():
-        out = out.replace("{%s}" % key, str(value))
-    return out
-
-
-def responsive_css(support_matrix):
-    """Bind the responsive breakpoint to the normative support matrix."""
-    try:
-        viewport = support_matrix["viewport"]
-        width, height = viewport["minimum"]
-    except (KeyError, TypeError, ValueError):
-        raise ValueError("support matrix has no two-value minimum viewport")
-    if any(isinstance(value, bool) or not isinstance(value, int) or value < 1
-           for value in (width, height)):
-        raise ValueError(
-            "support matrix minimum viewport must be positive integers")
-    if viewport.get("stackedBelowMinimum") is not True:
-        raise ValueError(
-            "support matrix must require stacking below its minimum")
-    return (_CSS_TEMPLATE
-            .replace("@@VIEWPORT_MAX_WIDTH@@", str(width - 1))
-            .replace("@@VIEWPORT_MAX_HEIGHT@@", str(height - 1)))
-
-
-def _claim_reference(prefix, number, strings):
-    return microcopy(
-        strings["ui"]["claimReference"], prefix=prefix, n=number)
-
-
-def _unit_label(unit, strings):
-    """Present a parsed unit through the central microcopy registry."""
-    if unit.index == 0:
-        return strings["ui"]["preambleLabel"]
-    return microcopy(strings["ui"]["limitationLabel"], n=unit.index)
-
-
-def _unit_context(prefix, claim_number, unit, strings):
-    return microcopy(
-        strings["ui"]["unitContext"],
-        claim=_claim_reference(prefix, claim_number, strings),
-        label=_unit_label(unit, strings))
-
-
-def _phrase_context(prefix, claim_number, text, strings):
-    return microcopy(
-        strings["ui"]["phraseContext"],
-        claim=_claim_reference(prefix, claim_number, strings), text=text)
-
-
-def _fragment_control_label(context, status, strings):
-    if status == "counsel-review-required":
-        return microcopy(
-            strings["ui"]["showMappingStatus"], label=context,
-            status=strings["status"][status])
-    return microcopy(strings["ui"]["showCandidates"], label=context)
-
-
-EXPECTED_API_CLASSES = {
-    "document.cookie": "probed",
-    "window.localStorage": "probed",
-    "window.sessionStorage": "probed",
-    "indexedDB.open": "probed",
-    "history.pushState": "probed",
-    "history.replaceState": "probed",
-    "location.assign": "procedural",
-    "location.replace": "procedural",
-    "fetch": "csp-governed",
-    "XMLHttpRequest": "csp-governed",
-    "WebSocket": "csp-governed",
-    "EventSource": "csp-governed",
-    "navigator.sendBeacon": "probed",
-    "innerHTML-untrusted": "procedural",
-}
-
-_SUPPORTED_PROBED_APIS = frozenset(
-    api for api, policy_class in EXPECTED_API_CLASSES.items()
-    if policy_class == "probed")
-
-EXPECTED_CSP = (
+EXACT_CSP = (
     "default-src 'none'; img-src data:; style-src 'unsafe-inline'; "
     "script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; "
-    "object-src 'none'; connect-src 'none'")
+    "object-src 'none'; connect-src 'none'"
+)
+FORBIDDEN_SCRIPT_TOKENS = (
+    "fetch(", "XMLHttpRequest", "WebSocket", "EventSource",
+    "navigator.sendBeacon", "localStorage", "sessionStorage",
+    "document.cookie", "history.", "location.",
+)
+
+# This is the sole ordinary-interface wording inventory.  Semantic wording is
+# intentionally absent and must come from model.controlled_text().
+UI = MappingProxyType({
+    "about": "About and provenance",
+    "aboutScheduleToggle": "Mappings and about",
+    "asFiledDisclosureLabel": "As-filed PCT disclosure",
+    "authorityHeader": "PCT as filed",
+    "authoritySchemeHeader": "Authority direction",
+    "candidateClaimsLabel": "Candidate claims",
+    "cautionPresent": "caution present",
+    "claimGateAnnouncement": "{prefix} claim {number} claim-level gate",
+    "claimGateContext": "{prefix} claim {number} — claim-level gate",
+    "claimIndex": "Claim index",
+    "claimReference": "{prefix} claim {number}",
+    "claimSetLabel": "Claim set",
+    "clearSelection": "Clear selection",
+    "completeSchedule": "Complete mapping schedule",
+    "compositeJoin": " + ",
+    "forwardMode": "Claims → Specification",
+    "gateHeader": "Gate",
+    "gatePresent": "claim-level gate present",
+    "goToClaim": "Go to {prefix} claim {number}",
+    "limitationLabel": "limitation {number}",
+    "machineData": "Machine-readable navigation and provenance data",
+    "mappingCautions": "Cautions and dispositions",
+    "mappingStatus": "Recording state",
+    "moreCandidates": "+{number} more candidates",
+    "next": "Next",
+    "position": "{position} of {total} — {label}",
+    "preambleLabel": "preamble",
+    "previous": "Previous",
+    "provenanceDocument": "Source document",
+    "provenanceDigest": "Semantic digest",
+    "provenanceRelationSet": "Relation set",
+    "reverseBadge": "Show {count} related claim fragments for {label}",
+    "reverseCounts": "{fragments} fragments across {claims} claims",
+    "reverseMode": "Specification → Claims",
+    "scheduleClaimGates": "Claim-level gates",
+    "scheduleDisposition": "Disposition",
+    "scheduleFragment": "Claim fragment",
+    "scheduleTargets": "All recorded candidates",
+    "selectionCleared": "Selection cleared",
+    "showCandidates": "Show recorded candidates for {label}",
+    "showRecordingState": "Show mapping state for {label}: {status}",
+    "sourcePathHeader": "Registered source",
+    "xmlRoleHeader": "XML interface role",
+    "unitContext": "{claim}, {unit}",
+    "phraseContext": "{claim}, phrase “{text}”",
+})
+
+_ROLE_RANK = {"specific": 0, "combination": 1, "context": 2}
+_CELL_ALIGNMENT = {
+    "default": "cell-align-default",
+    "left": "cell-align-left",
+    "center": "cell-align-center",
+    "right": "cell-align-right",
+}
+_GENERALIZATION_WORDING = {
+    "beyond-literal-example": "generalization-beyond-literal-example",
+}
 
 
-def api_policy_problems(api_policy, require_normative_csp=True):
-    """Validate the closed runtime-policy registry used by AC-15.
-
-    A misspelled class must never silently turn a probed API into an
-    uninstrumented one.  The per-class field sets are exact so an obsolete
-    ``instrument`` or missing procedural explanation is visible as drift.
-    """
-    if not isinstance(api_policy, dict):
-        return ["API policy is not an object"]
-    problems = []
-    expected_top = {"apiPolicyVersion", "comment", "csp", "apis"}
-    if set(api_policy) != expected_top:
-        problems.append("API policy fields must be exactly %s" %
-                        sorted(expected_top))
-    problems.extend(canon.require_version(api_policy, "apiPolicyVersion", "1"))
-    for field in ("comment", "csp"):
-        if not isinstance(api_policy.get(field), str) or \
-                not api_policy.get(field, "").strip():
-            problems.append("API policy %s is not a non-empty string" % field)
-    if require_normative_csp and api_policy.get("csp") != EXPECTED_CSP:
-        problems.append("API policy CSP is not the exact normative policy")
-    apis = api_policy.get("apis")
-    if not isinstance(apis, dict) or not apis:
-        problems.append("API policy apis must be a non-empty object")
-        return problems
-    actual_apis = set(apis)
-    expected_apis = set(EXPECTED_API_CLASSES)
-    if actual_apis != expected_apis:
-        problems.append(
-            "API policy API set is not exact (missing=%r, extra=%r)" %
-            (sorted(expected_apis - actual_apis),
-             sorted(actual_apis - expected_apis)))
-    for api, spec in apis.items():
-        label = "API policy entry %r" % api
-        if not isinstance(api, str) or not api.strip():
-            problems.append("API policy has an empty API name")
-        if not isinstance(spec, dict):
-            problems.append("%s is not an object" % label)
-            continue
-        cls = spec.get("class")
-        if cls in ("probed", "csp-governed"):
-            expected_fields = {"class", "instrument"}
-            evidence_field = "instrument"
-        elif cls == "procedural":
-            expected_fields = {"class", "note"}
-            evidence_field = "note"
-        else:
-            problems.append("%s has unknown class %r" % (label, cls))
-            continue
-        expected_class = EXPECTED_API_CLASSES.get(api)
-        if expected_class is not None and cls != expected_class:
-            problems.append(
-                "%s class %r does not match required class %r" %
-                (label, cls, expected_class))
-        if set(spec) != expected_fields:
-            problems.append("%s fields must be exactly %s" %
-                            (label, sorted(expected_fields)))
-        if not isinstance(spec.get(evidence_field), str) or \
-                not spec.get(evidence_field, "").strip():
-            problems.append("%s has no non-empty %s" %
-                            (label, evidence_field))
-    return problems
+class RenderError(ValueError):
+    """Raised when a typed model cannot satisfy the closed render contract."""
 
 
-def api_probe_instruments(api_policy):
-    """Derive the runtime probe labels from the registered API policy.
+def _esc(value) -> str:
+    return html.escape(str(value), quote=True)
 
-    Wrapping browser APIs is necessarily API-specific.  Fail closed when a
-    newly probed API has no implementation instead of silently shipping a
-    policy entry that the artifact cannot observe.
-    """
-    problems = api_policy_problems(
-        api_policy, require_normative_csp=False)
-    if problems:
-        raise ValueError("invalid API policy: %s" % "; ".join(problems))
-    probes = {
-        api: spec["instrument"]
-        for api, spec in api_policy["apis"].items()
-        if spec["class"] == "probed"
+
+def _fmt(template: str, **values) -> str:
+    result = template
+    for key, value in values.items():
+        token = "{%s}" % key
+        if result.count(token) != 1:
+            raise RenderError("UI template slot is absent or duplicated: %s" % key)
+        result = result.replace(token, str(value))
+    if "{" in result or "}" in result:
+        raise RenderError("UI template retains an unresolved slot")
+    return result
+
+
+def _script_json(value) -> str:
+    """Serialize data for an application/json script element, inertly."""
+    return (json.dumps(value, ensure_ascii=False, separators=(",", ":"),
+                       sort_keys=True)
+            .replace("&", "\\u0026")
+            .replace("<", "\\u003c")
+            .replace(">", "\\u003e")
+            .replace(chr(0x2028), "\\u2028")
+            .replace(chr(0x2029), "\\u2029"))
+
+
+def _control_id(model, relation_id: str) -> str:
+    return "control-" + model.dom_id(model.relation_set_id, relation_id)
+
+
+def _claim_key(number: int) -> str:
+    return "claim-%d" % number
+
+
+def _claim_label(model, number: int) -> str:
+    return _fmt(UI["claimReference"], prefix=model.strategy_prefix,
+                number=number)
+
+
+def _unit_label(unit) -> str:
+    if unit.unit_kind == "preamble":
+        return UI["preambleLabel"]
+    return _fmt(UI["limitationLabel"], number=unit.unit_index)
+
+
+def _unit_context(model, unit) -> str:
+    return _fmt(UI["unitContext"],
+                claim=_claim_label(model, unit.claim_number),
+                unit=_unit_label(unit))
+
+
+def _phrase_context(model, phrase, unit) -> str:
+    return _fmt(UI["phraseContext"],
+                claim=_claim_label(model, unit.claim_number),
+                text=phrase.exact_text)
+
+
+def _anchor_label(fragment_id: str) -> str:
+    """Return a concise display aid; identity remains the model DOM locator."""
+    tail = fragment_id.rsplit("-", 1)[-1]
+    kinds = (
+        ("table-row-", "R"), ("list-item-", "L"),
+        ("codeblock-", "C"), ("blockquote-", "Q"),
+        ("horizontalrule-", "§"), ("header-", "H"),
+        ("table-", "T"), ("para-", "P"), ("plain-", "I"),
+    )
+    lowered = fragment_id.casefold()
+    for marker, prefix in kinds:
+        if marker in lowered:
+            return prefix + tail
+    return tail
+
+
+def _wording(model, wording_id: str) -> str:
+    try:
+        return model.controlled_text(wording_id)
+    except Exception as exc:
+        raise RenderError("controlled wording does not resolve: %s" % wording_id) from exc
+
+
+def _gate_view(model, gate) -> dict:
+    try:
+        source = model.get_item(gate.source.document_id, gate.source.fragment_id)
+        quote = source.text
+    except Exception as exc:
+        raise RenderError("gate source does not resolve through the model") from exc
+    return {
+        "gateId": gate.gate_id,
+        "code": gate.code,
+        "name": _wording(
+            model, "gate-label-%s-%s" % (model.edition_id, gate.code)),
+        "scope": _wording(model, "caution-scope-" + gate.required_scope),
+        "typeLabel": _wording(model, "caution-type-source-gate"),
+        "quote": quote,
     }
-    unsupported = sorted(set(probes) - _SUPPORTED_PROBED_APIS)
-    if unsupported:
-        raise ValueError("unsupported probed API(s): %s" %
-                         ", ".join(unsupported))
-    return probes
 
 
-_TEMPLATE_TOKEN_RE = re.compile(r"@@[A-Z][A-Z0-9_]*@@")
+def _caution_view(model, caution, scope: str) -> dict | None:
+    if caution is None:
+        return None
+    if caution.kind == "source-gate":
+        gate = model.gates_by_id.get(caution.gate_id)
+        if gate is None or caution.code is not None:
+            raise RenderError("source-gate caution has no exact gate definition")
+        view = _gate_view(model, gate)
+        view["scope"] = _wording(model, "caution-scope-" + scope)
+        return view
+    if caution.kind == "generalization-note":
+        wording_id = _GENERALIZATION_WORDING.get(caution.code)
+        if wording_id is None or caution.gate_id is not None:
+            raise RenderError("generalization caution code is not closed")
+        return {
+            "gateId": None,
+            "code": caution.code,
+            "name": _wording(model, wording_id),
+            "scope": _wording(model, "caution-scope-" + scope),
+            "typeLabel": _wording(model, "caution-type-generalization-note"),
+            "quote": _wording(model, wording_id),
+        }
+    raise RenderError("unsupported caution kind")
 
 
-def substitute_template(template, replacements):
-    """Replace tokens found in *template* exactly once.
-
-    Replacement values are deliberately not scanned again: authored text that
-    happens to contain another token cannot inject a later template section.
-    """
-    missing = sorted(set(_TEMPLATE_TOKEN_RE.findall(template)) -
-                     set(replacements))
-    if missing:
-        raise ValueError("unbound template token(s): %s" % ", ".join(missing))
-    return _TEMPLATE_TOKEN_RE.sub(
-        lambda match: replacements[match.group(0)], template)
+def _disposition_view(model, disposition) -> dict:
+    return {
+        "gateId": disposition.gate_id,
+        "value": disposition.value,
+        "text": _wording(model, "gate-disposition-" + disposition.value),
+    }
 
 
-def _unit_html(prefix, claim, unit, frag, strings):
-    fid = unit.id
-    unit_label = _unit_label(unit, strings)
-    label = _unit_context(prefix, claim.number, unit, strings)
-    phrases = frag.get("phrases", [])
+def _target_view(model, target, target_document_id: str) -> dict:
+    if target.role not in _ROLE_RANK or not isinstance(target.note, str) or \
+            not target.note.strip():
+        raise RenderError("target role and descriptive note are not exact")
+    endpoint_ids = tuple(
+        model.dom_id(endpoint.document_id, endpoint.fragment_id)
+        for endpoint in target.endpoints)
+    if not endpoint_ids or any(
+            endpoint.document_id != target_document_id
+            for endpoint in target.endpoints):
+        raise RenderError("target is empty or crosses the disclosure document")
+    labels = tuple(_anchor_label(endpoint.fragment_id)
+                   for endpoint in target.endpoints)
+    return {
+        "role": target.role,
+        "roleLabel": _wording(model, "mapping-role-" + target.role),
+        "blocks": list(endpoint_ids),
+        "primary": endpoint_ids[0],
+        "labels": list(labels),
+        "label": UI["compositeJoin"].join(labels),
+        "note": target.note,
+        "caution": _caution_view(model, target.caution, "target"),
+    }
+
+
+def _sorted_target_views(model, targets, target_document_id: str) -> list[dict]:
+    if any(target.role not in _ROLE_RANK for target in targets):
+        raise RenderError("target role is outside the closed rank")
+    ranked = sorted(enumerate(targets),
+                    key=lambda pair: (_ROLE_RANK[pair[1].role], pair[0]))
+    return [_target_view(model, target, target_document_id)
+            for _, target in ranked]
+
+
+def _relation_data(model) -> tuple[dict, dict, dict]:
+    """Compute render relations, reverse links, gates, and dispositions."""
+    claim_document_id = model.source_documents[0].document_id
+    target_document_id = model.source_documents[1].document_id
+    relations = {}
+
+    for mapping in model.relations.mappings:
+        unit = model.units_by_fragment[mapping.subject.fragment_id]
+        relation_id = mapping.relation_id
+        if relation_id in relations:
+            raise RenderError("duplicate relation identity")
+        source_dom = model.dom_id(claim_document_id, unit.fragment_id)
+        dispositions = tuple(model.dispositions_by_subject.get(
+            ("claim-unit", unit.fragment_id), ()))
+        relations[relation_id] = {
+            "relationId": relation_id,
+            "kind": "unit",
+            "status": mapping.status,
+            "statusLabel": _wording(model, "mapping-status-" + mapping.status),
+            "claimKey": _claim_key(unit.claim_number),
+            "subjectDomId": source_dom,
+            "subjectControlId": _control_id(model, relation_id),
+            "subjectLabel": _unit_context(model, unit),
+            "targets": _sorted_target_views(
+                model, mapping.targets, target_document_id),
+            "caution": _caution_view(model, mapping.caution, "fragment"),
+            "dispositions": [
+                _disposition_view(model, item) for item in dispositions],
+        }
+
+    for phrase in model.relations.phrase_mappings:
+        unit = model.units_by_fragment[phrase.parent.fragment_id]
+        relation_id = phrase.relation_id
+        if relation_id in relations:
+            raise RenderError("duplicate relation identity")
+        relations[relation_id] = {
+            "relationId": relation_id,
+            "kind": "phrase",
+            "status": "mapped",
+            "statusLabel": _wording(model, "mapping-status-mapped"),
+            "claimKey": _claim_key(unit.claim_number),
+            "subjectDomId": _control_id(model, relation_id),
+            "subjectControlId": _control_id(model, relation_id),
+            "subjectLabel": _phrase_context(model, phrase, unit),
+            "targets": _sorted_target_views(
+                model, phrase.targets, target_document_id),
+            "caution": None,
+            "dispositions": [],
+        }
+
+    reverse = {}
+    for fragment_id, references in model.reverse_index.items():
+        dom_id = model.dom_id(target_document_id, fragment_id)
+        ordered = []
+        seen = set()
+        for reference in references:
+            if reference.relation_id not in relations:
+                raise RenderError("reverse relation does not resolve")
+            if reference.relation_id not in seen:
+                seen.add(reference.relation_id)
+                ordered.append(reference.relation_id)
+        if ordered:
+            reverse[dom_id] = ordered
+
+    claim_gates = {}
+    for disposition in model.relations.dispositions:
+        if disposition.subject_kind != "claim":
+            continue
+        gate = model.gates_by_id.get(disposition.gate_id)
+        if gate is None:
+            raise RenderError("disposition gate does not resolve")
+        item = {
+            "gate": _gate_view(model, gate),
+            "disposition": _disposition_view(model, disposition),
+        }
+        claim_number = int(disposition.subject.fragment_id.rsplit("-", 1)[1])
+        claim_gates.setdefault(_claim_key(claim_number), []).append(item)
+    return relations, reverse, claim_gates
+
+
+def _relation_aria(relation: dict) -> str:
+    if relation["status"] == "mapped":
+        return _fmt(UI["showCandidates"], label=relation["subjectLabel"])
+    return _fmt(UI["showRecordingState"],
+                label=relation["subjectLabel"],
+                status=relation["statusLabel"])
+
+
+def _unit_text_html(model, unit, phrases, relations) -> str:
     spans = []
-    for ph in phrases:
-        import re as _re
-        pos = [mm.start() for mm in
-               _re.finditer(_re.escape(ph["text"]), unit.text)]
-        if len(pos) >= ph["occurrence"] >= 1:
-            start = pos[ph["occurrence"] - 1]
-            spans.append((start, start + len(ph["text"]), ph))
-    spans.sort()
-    text_html, cur = [], 0
-    for start, end, ph in spans:
-        text_html.append(esc(unit.text[cur:start]))
-        marker = "" if ph["status"] == "mapped" else \
-            ' <span class="crr-dot" title="%s" aria-hidden="true">◇</span>' % \
-            esc(strings["status"]["counsel-review-required"])
-        text_html.append(
-            '<button type="button" class="phrase-btn" id="btn-%s" '
-            'data-frag="%s" aria-label="%s">%s</button>%s'
-            % (ph["id"], ph["id"], esc(_fragment_control_label(
-                   _phrase_context(prefix, claim.number, ph["text"], strings),
-                   ph["status"], strings)),
-               esc(ph["text"]), marker))
-        cur = end
-    text_html.append(esc(unit.text[cur:]))
-    status = frag["status"]
-    marker = ""
-    if status == "counsel-review-required":
-        marker = ('<p class="crr-note" role="note">◇ %s</p>'
-                  % esc(strings["status"]["counsel-review-required"]))
-    aria = _fragment_control_label(label, status, strings)
-    return (
-        '<div class="unit status-%s" id="u-%s" data-frag="%s">'
-        '<button type="button" class="unit-btn" id="btn-%s" data-frag="%s" '
-        'aria-label="%s"></button>'
-        '<div class="unit-body"><span class="unit-label">%s</span>'
-        '<span class="pointer-surface" data-frag="%s">%s</span>%s</div></div>'
-        % (status, fid, fid, fid, fid, esc(aria),
-           esc(unit_label), fid, "".join(text_html), marker))
+    for phrase in phrases:
+        if phrase.start < 0 or phrase.end > len(unit.text) or \
+                phrase.start >= phrase.end:
+            raise RenderError("phrase span is outside its typed unit")
+        spans.append((phrase.start, phrase.end, phrase))
+    spans.sort(key=lambda item: (item[0], item[1], item[2].relation_id))
+    prior_end = 0
+    output = []
+    for start, end, phrase in spans:
+        if start < prior_end:
+            raise RenderError("phrase render spans overlap")
+        output.append(_esc(unit.text[prior_end:start]))
+        relation = relations[phrase.relation_id]
+        output.append(
+            '<button type="button" class="phrase-btn" id="%s" '
+            'data-relation="%s" aria-label="%s">%s</button>' % (
+                _esc(relation["subjectControlId"]),
+                _esc(phrase.relation_id), _esc(_relation_aria(relation)),
+                _esc(unit.text[start:end])))
+        prior_end = end
+    output.append(_esc(unit.text[prior_end:]))
+    return "".join(output)
 
 
-def _claims_pane(m, ship, strings):
-    prefix = m.edition["strategyPrefix"]
-    gate_codes = m.strings["editionNamespaces"][
-        m.edition["stringsNamespace"]]["sourceGateCodes"]
-    independents = set(m.edition["independentClaims"])
-    groups, order = {}, []
-    for c in m.claims:
-        if c.group not in groups:
-            groups[c.group] = []
-            order.append(c.group)
-        groups[c.group].append(c)
-    chips, sections = [], []
-    for g in order:
+def _claims_html(model, relations, claim_gates) -> str:
+    claims_by_group = {name: tuple(numbers)
+                       for name, numbers in model.claim_groups}
+    if tuple(claims_by_group) != tuple(name for name, _ in model.claim_groups):
+        raise RenderError("claim groups are duplicated")
+    chips = []
+    sections = []
+    independent = set(model.independent_claims)
+    for group_name, numbers in claims_by_group.items():
         chips.append('<span class="chip-group"><span class="chip-group-name">%s</span>'
-                     % esc(g))
-        for c in groups[g]:
-            cls = "chip chip-ind" if c.number in independents else "chip"
+                     % _esc(group_name))
+        for number in numbers:
+            css = "chip chip-independent" if number in independent else "chip"
             chips.append(
-                '<button type="button" class="%s" data-goto="claim-%d" '
-                'aria-label="%s">%d</button>'
-                % (cls, c.number, esc(microcopy(
-                    strings["ui"]["goToClaim"], prefix=prefix, n=c.number)),
-                   c.number))
+                '<button type="button" class="%s" data-goto="claim-view-%d" '
+                'aria-label="%s">%d</button>' % (
+                    css, number, _esc(_fmt(UI["goToClaim"],
+                        prefix=model.strategy_prefix, number=number)), number))
         chips.append("</span>")
-        body = ['<section class="claim-group"><h2>%s</h2>' % esc(g)]
-        # Profile-designated guidance inside a claim group precedes that
-        # group's claims in the source document (currently the AF claims 2–3
-        # priority gate).  Keep it at that source position.
-        for b in m.guidance_blocks:
-            if b.kind == "note" and b.cls == "quotable" and \
-                    len(b.path) >= 3 and b.path[-1] == g:
-                body.append(
-                    '<aside class="guidance-note" role="note">'
-                    '<span class="editorial-tag">%s</span>%s</aside>'
-                    % (esc(strings["ui"]["guidanceNoteLabel"]),
-                       md_inline(b.canonical)))
-        for c in groups[g]:
-            ckey = "c%d" % c.number
-            gates = ship.get("claimGates", {}).get(ckey, [])
+
+        body = ['<section class="claim-group"><h2>%s</h2>' % _esc(group_name)]
+        for number in numbers:
+            claim = model.claims_by_number[number]
+            gates = claim_gates.get(_claim_key(number), ())
             gate_html = "".join(
-                '<button type="button" class="gate-chip" '
-                'id="btn-gate-%s-%s" data-gate="%s" data-claim="%s" '
-                'aria-label="%s">⚑ %s</button>'
-                % (esc(ckey), esc(gt["gateId"]), esc(gt["gateId"]),
-                   esc(ckey), esc(microcopy(
-                       strings["ui"]["claimLevelGateLabel"],
-                       prefix=prefix, n=c.number,
-                       name=gate_codes[gt["code"]])),
-                   esc(gate_codes[gt["code"]]))
-                for gt in gates)
-            ind = " claim-independent" if c.number in independents else ""
-            claim_label = _claim_reference(prefix, c.number, strings)
+                '<button type="button" class="gate-chip" id="gate-control-%s-%d" '
+                'data-gate="%s" data-claim="%s" aria-label="%s">⚑ %s</button>'
+                % (_esc(item["gate"]["gateId"]), number,
+                   _esc(item["gate"]["gateId"]), _claim_key(number),
+                   _esc(_fmt(UI["claimGateAnnouncement"],
+                       prefix=model.strategy_prefix, number=number)),
+                   _esc(item["gate"]["name"]))
+                for item in gates)
+            independent_class = " claim-independent" if number in independent else ""
             body.append(
-                '<article class="claim%s" id="claim-%d">'
-                '<header class="claim-header"><span class="claim-no">%s'
-                '</span>%s</header>' % (ind, c.number, esc(claim_label),
-                                        gate_html))
-            for u in c.units:
-                body.append(_unit_html(prefix, c, u,
-                                       ship["fragments"][u.id], strings))
+                '<article class="claim%s" id="claim-view-%d">'
+                '<header class="claim-header"><span class="claim-no">%s</span>%s'
+                '</header>' % (independent_class, number,
+                               _esc(_claim_label(model, number)), gate_html))
+            for unit in claim.units:
+                mappings = model.mappings_by_unit.get(unit.fragment_id, ())
+                if len(mappings) != 1:
+                    raise RenderError("claim unit does not have exactly one mapping")
+                mapping = mappings[0]
+                relation = relations[mapping.relation_id]
+                phrases = model.phrases_by_unit.get(unit.fragment_id, ())
+                marker = ""
+                if relation["status"] != "mapped":
+                    marker = '<p class="state-note" role="note">◇ %s</p>' % \
+                        _esc(relation["statusLabel"])
+                body.append(
+                    '<div class="unit state-%s" id="%s" data-fragment="%s">'
+                    '<button type="button" class="unit-btn" id="%s" '
+                    'data-relation="%s" aria-label="%s"></button>'
+                    '<div class="unit-body"><span class="unit-label">%s</span>'
+                    '<span class="pointer-surface" data-relation="%s">%s</span>%s'
+                    '</div></div>' % (
+                        _esc(relation["status"]),
+                        _esc(relation["subjectDomId"]),
+                        _esc(unit.fragment_id),
+                        _esc(relation["subjectControlId"]),
+                        _esc(mapping.relation_id), _esc(_relation_aria(relation)),
+                        _esc(_unit_label(unit)), _esc(mapping.relation_id),
+                        _unit_text_html(model, unit, phrases, relations), marker))
             body.append("</article>")
         body.append("</section>")
         sections.append("".join(body))
-    return ('<div class="claim-strip" role="navigation" '
-            'aria-label="%s">%s</div>%s'
-            % (esc(strings["ui"]["claimIndex"]),
-               "".join(chips), "".join(sections)))
+    return (
+        '<nav class="claim-strip" aria-label="%s">%s</nav>%s' % (
+            _esc(UI["claimIndex"]), "".join(chips), "".join(sections)))
 
 
-def _disclosure_pane(m, reverse, figures_b64, strings):
-    out = []
-    blocks = [b for b in m.target_blocks if b.id.startswith("S")]
-    in_list = False
-    claim_open = None
-    figure_open = False
-    figure_captions = {
-        block.id: blocks[index + 1].id
-        for index, block in enumerate(blocks[:-1])
-        if block.kind == "figure" and
-        blocks[index + 1].kind == "figure-caption"
-    }
-
-    def badge(bid):
-        n = len(reverse.get(bid, []))
-        if not n:
-            return ""
-        label = m.target_anchor(bid).label
-        return ('<button type="button" class="rev-badge" data-block="%s" '
-                'id="btn-rev-%s" aria-label="%s">◂ %d</button>'
-                % (esc(bid), esc(bid),
-                   esc(microcopy(strings["ui"]["indexedBy"],
-                                 n=n, label=label)), n))
-
-    def margin(b):
-        return ('<span class="anchor-label" aria-hidden="true">%s</span>'
-                % b.id)
-
-    def close_list():
-        nonlocal in_list
-        if in_list:
-            out.append("</ul>")
-            in_list = False
-
-    def close_claim():
-        nonlocal claim_open
-        if claim_open is not None:
-            out.append("</div>")
-            claim_open = None
-
-    for b in blocks:
-        if figure_open and b.kind != "figure-caption":
-            out.append("</figure>")
-            figure_open = False
-        if b.kind != "list-item" and b.kind != "claim-element":
-            close_list()
-        if b.kind in ("heading",) or (b.meta.get("pctClaim") and
-                                      claim_open != b.meta.get("pctClaim") and
-                                      b.kind == "claim-head"):
-            close_claim()
-        ed = ('<span class="editorial-tag">%s</span>'
-              % esc(strings["ui"]["editorialLabel"])) if b.cls == "editorial" else ""
-        if b.kind == "heading":
-            depth = min(len(b.path), 4)
-            out.append('<h%d class="dblock" id="%s">%s%s%s%s</h%d>'
-                       % (depth, b.id, margin(b), ed, esc(b.text),
-                          badge(b.id), depth))
-        elif b.kind == "claim-head":
-            num = b.meta["pctClaim"]
-            out.append('<div class="pct-claim" id="PC%d">' % num)
-            claim_open = num
-            out.append('<p class="dblock claim-head" id="%s">%s%s%s%s</p>'
-                       % (b.id, margin(b), md_inline(b.text), badge(b.id),
-                          badge("PC%d" % num)))
-        elif b.kind == "claim-element":
-            if not in_list:
-                out.append('<ul class="claim-elements">')
-                in_list = True
-            out.append('<li class="dblock" id="%s">%s%s%s</li>'
-                       % (b.id, margin(b), md_inline(b.text), badge(b.id)))
-        elif b.kind == "list-item":
-            if not in_list:
-                out.append("<ul>")
-                in_list = True
-            out.append('<li class="dblock" id="%s">%s%s%s</li>'
-                       % (b.id, margin(b), md_inline(b.text), badge(b.id)))
-        elif b.kind == "code":
-            out.append('<pre class="dblock" id="%s">%s%s<code>%s</code></pre>'
-                       % (b.id, margin(b), badge(b.id), esc(b.canonical)))
-        elif b.kind == "table":
-            rows = [b.meta["header"]] if b.meta.get("header") else []
-            out.append('<div class="tablewrap dblock" id="%s">%s%s<table>'
-                       % (b.id, margin(b), badge(b.id)))
-            if b.meta.get("caption"):
-                out.append('<caption class="tcaption">%s</caption>'
-                           % esc(b.meta["caption"]))
-            if rows:
-                out.append(
-                    '<thead><tr><th scope="col" aria-label="%s"></th>%s'
-                    '</tr></thead>' % (
-                        esc(strings["ui"]["anchorHeader"]),
-                        "".join('<th scope="col">%s</th>' % md_inline(c)
-                                for c in b.meta["header"])))
-            out.append("<tbody>")
-            for r in b.rows:
-                rid = "%s.%s" % (b.id, r["id"])
-                out.append(
-                    '<tr id="%s"><td class="rowmeta">'
-                    '<span class="anchor-label" aria-hidden="true">%s</span>%s</td>%s</tr>'
-                    % (rid, rid, badge(rid),
-                       "".join("<td>%s</td>" % md_inline(c)
-                               for c in r["cells"])))
-            out.append("</tbody></table>")
-            out.append("</div>")
-        elif b.kind == "figure":
-            data = figures_b64[b.meta["file"]]
-            caption_id = figure_captions.get(b.id)
-            association = (' aria-labelledby="%s"' % esc(caption_id)
-                           if caption_id else '')
-            image_description = (' aria-describedby="%s"' % esc(caption_id)
-                                 if caption_id else '')
-            out.append(
-                '<figure class="dblock" id="%s"%s>%s%s'
-                '<img src="data:image/png;base64,%s" alt="%s"%s>'
-                % (b.id, association, margin(b), badge(b.id), data,
-                   esc(b.label), image_description))
-            if caption_id:
-                figure_open = True
-            else:
-                out.append("</figure>")
-        elif b.kind == "figure-caption":
-            if figure_open:
-                out.append(
-                    '<figcaption class="dblock editorial" id="%s">%s%s%s'
-                    '</figcaption></figure>'
-                    % (b.id, margin(b), ed, md_inline(b.text)))
-                figure_open = False
-            else:
-                out.append('<p class="dblock editorial" id="%s">%s%s%s</p>'
-                           % (b.id, margin(b), ed, md_inline(b.text)))
-        elif b.kind in ("note",):
-            out.append('<blockquote class="dblock editorial" id="%s">%s%s%s'
-                       '</blockquote>'
-                       % (b.id, margin(b), ed, md_inline(b.text)))
-        elif b.kind == "footer":
-            out.append('<p class="dblock editorial filing-footer" id="%s">%s%s%s</p>'
-                       % (b.id, margin(b), ed, md_inline(b.text)))
-        else:  # paragraph
-            cls = "dblock editorial" if b.cls == "editorial" else "dblock"
-            out.append('<p class="%s" id="%s">%s%s%s%s</p>'
-                       % (cls, b.id, margin(b), ed, md_inline(b.text), badge(b.id)))
-    close_list()
-    close_claim()
-    if figure_open:
-        out.append("</figure>")
-    return "".join(out)
+def _attributes(node) -> dict:
+    return dict(node.attributes)
 
 
-def _schedule(m, ship_schedule, strings):
-    """Flat mapping schedule — static markup, printable, lists ALL
-    candidates including rationale (schedule-only axis)."""
-    prefix = m.edition["strategyPrefix"]
-    gate_codes = m.strings["editionNamespaces"][
-        m.edition["stringsNamespace"]]["sourceGateCodes"]
+def _inline_html(model, node, target_document_id: str) -> str:
+    kind = node.kind
+    if kind == "text":
+        content = _esc(node.text)
+    elif kind == "space":
+        content = " "
+    elif kind in {"softBreak", "lineBreak"}:
+        content = "<br>"
+    elif kind == "image":
+        attributes = _attributes(node)
+        asset_id = attributes.get("assetId")
+        asset = model.assets.get(asset_id)
+        if asset is None or asset.media_type != "image/png":
+            raise RenderError("image does not resolve to a typed PNG asset")
+        data = base64.b64encode(asset.data).decode("ascii")
+        content = '<img src="data:image/png;base64,%s" alt="%s">' % (
+            data, _esc(attributes.get("alt", node.text)))
+    else:
+        child_html = "".join(
+            _inline_html(model, child, target_document_id)
+            for child in node.children)
+        content = child_html if node.children else _esc(node.text)
+        wrappers = {
+            "strong": "strong", "emphasis": "em", "subscript": "sub",
+            "superscript": "sup", "code": "code", "plain": "span",
+        }
+        if kind in wrappers:
+            tag = wrappers[kind]
+            content = "<%s>%s</%s>" % (tag, content, tag)
+    if node.fragment_id:
+        dom_id = model.dom_id(target_document_id, node.fragment_id)
+        return '<span id="%s">%s</span>' % (_esc(dom_id), content)
+    return content
+
+
+def _node_chrome(model, node, target_document_id: str, reverse: dict,
+                 *, parent_editorial: bool = False) -> tuple[str, str, str]:
+    if not node.fragment_id:
+        return "", "", ""
+    dom_id = model.dom_id(target_document_id, node.fragment_id)
+    anchor = _anchor_label(node.fragment_id)
+    margin = '<span class="anchor-label" aria-hidden="true">%s</span>' % _esc(anchor)
+    references = reverse.get(dom_id, ())
+    badge = ""
+    if references:
+        badge = (
+            '<button type="button" class="reverse-badge" id="reverse-control-%s" '
+            'data-block="%s" aria-label="%s">◂ %d</button>' % (
+                _esc(dom_id), _esc(dom_id),
+                _esc(_fmt(UI["reverseBadge"], count=len(references), label=anchor)),
+                len(references)))
+    editorial = ""
+    if node.editorial and not parent_editorial:
+        editorial = '<span class="editorial-tag">%s</span>' % _esc(
+            _wording(model, "editorial-not-filed"))
+    return dom_id, margin + editorial, badge
+
+
+def _table_html(model, node, target_document_id: str, reverse: dict) -> str:
+    dom_id, chrome, badge = _node_chrome(
+        model, node, target_document_id, reverse)
+    output = ['<div class="table-wrap dblock%s"%s>%s%s<table>' % (
+        " editorial" if node.editorial else "",
+        ' id="%s"' % _esc(dom_id) if dom_id else "", chrome, badge)]
+    for section in node.children:
+        if section.kind not in {"head", "body"}:
+            raise RenderError("table has an unsupported typed section")
+        section_tag = "thead" if section.kind == "head" else "tbody"
+        output.append("<%s>" % section_tag)
+        for row in section.children:
+            if row.kind != "row":
+                raise RenderError("table section has a non-row child")
+            row_dom, row_chrome, row_badge = _node_chrome(
+                model, row, target_document_id, reverse,
+                parent_editorial=node.editorial)
+            output.append('<tr%s>' % (
+                ' id="%s"' % _esc(row_dom) if row_dom else ""))
+            for index, cell in enumerate(row.children):
+                if cell.kind != "cell":
+                    raise RenderError("table row has a non-cell child")
+                tag = "th" if section.kind == "head" else "td"
+                scope = ' scope="col"' if tag == "th" else ""
+                attributes = dict(cell.attributes)
+                if set(attributes) != {"alignment"} or \
+                        attributes["alignment"] not in _CELL_ALIGNMENT:
+                    raise RenderError("table-cell alignment metadata is not closed")
+                alignment = ' class="%s"' % _CELL_ALIGNMENT[
+                    attributes["alignment"]]
+                cell_body = "".join(
+                    _inline_html(model, child, target_document_id)
+                    for child in cell.children)
+                if index == 0:
+                    cell_body = row_chrome + row_badge + cell_body
+                output.append('<%s%s%s>%s</%s>' % (
+                    tag, scope, alignment, cell_body, tag))
+            output.append("</tr>")
+        output.append("</%s>" % section_tag)
+    output.append("</table></div>")
+    return "".join(output)
+
+
+def _block_html(model, node, target_document_id: str, reverse: dict,
+                *, parent_editorial: bool = False) -> str:
+    if node.kind == "table":
+        return _table_html(model, node, target_document_id, reverse)
+    dom_id, chrome, badge = _node_chrome(
+        model, node, target_document_id, reverse,
+        parent_editorial=parent_editorial)
+    id_attr = ' id="%s"' % _esc(dom_id) if dom_id else ""
+    editorial_class = " editorial" if node.editorial else ""
+    children = "".join(
+        _inline_html(model, child, target_document_id)
+        for child in node.children)
+    content = children if node.children else _esc(node.text)
+
+    if node.kind == "heading":
+        level = node.level
+        if not isinstance(level, int) or not 1 <= level <= 6:
+            raise RenderError("typed heading level is invalid")
+        return '<h%d class="dblock%s"%s>%s%s%s</h%d>' % (
+            level, editorial_class, id_attr, chrome, content, badge, level)
+    if node.kind == "paragraph":
+        images = [child for child in node.children if child.kind == "image"]
+        if images:
+            if len(images) != 1:
+                raise RenderError("figure paragraph has a non-exact image inventory")
+            return '<figure class="dblock%s"%s>%s%s%s<figcaption>%s</figcaption></figure>' % (
+                editorial_class, id_attr, chrome, badge,
+                _inline_html(model, images[0], target_document_id),
+                _esc(images[0].text))
+        return '<p class="dblock%s"%s>%s%s%s</p>' % (
+            editorial_class, id_attr, chrome, content, badge)
+    if node.kind == "codeBlock":
+        language = _attributes(node).get("language", "")
+        class_attr = ' class="language-%s"' % _esc(language) if language else ""
+        return '<pre class="dblock%s"%s>%s%s<code%s>%s</code></pre>' % (
+            editorial_class, id_attr, chrome, badge, class_attr, _esc(node.text))
+    if node.kind == "blockQuotation":
+        nested = "".join(_block_html(
+            model, child, target_document_id, reverse,
+            parent_editorial=node.editorial) for child in node.children)
+        return '<blockquote class="dblock%s"%s>%s%s%s</blockquote>' % (
+            editorial_class, id_attr, chrome, badge, nested)
+    if node.kind == "list":
+        tag = "ol" if _attributes(node).get("ordered") == "true" else "ul"
+        nested = "".join(_block_html(
+            model, child, target_document_id, reverse,
+            parent_editorial=node.editorial) for child in node.children)
+        return '<div class="dblock%s"%s>%s%s<%s>%s</%s></div>' % (
+            editorial_class, id_attr, chrome, badge, tag, nested, tag)
+    if node.kind == "item":
+        nested = "".join(_block_html(
+            model, child, target_document_id, reverse,
+            parent_editorial=node.editorial) for child in node.children)
+        return '<li class="dblock%s"%s>%s%s%s</li>' % (
+            editorial_class, id_attr, chrome, badge, nested)
+    if node.kind == "separator":
+        return '<div class="dblock%s"%s>%s%s<hr></div>' % (
+            editorial_class, id_attr, chrome, badge)
+    if node.kind == "plain":
+        return '<span%s>%s%s%s</span>' % (id_attr, chrome, content, badge)
+    nested = ("".join(_block_html(
+        model, child, target_document_id, reverse,
+        parent_editorial=node.editorial) for child in node.children)
+              if node.children else content)
+    return '<div class="dblock%s"%s>%s%s%s</div>' % (
+        editorial_class, id_attr, chrome, badge, nested)
+
+
+def _disclosure_html(model, reverse: dict) -> str:
+    target_document_id = model.source_documents[1].document_id
+    return "".join(_block_html(
+        model, node, target_document_id, reverse)
+        for node in model.disclosure_blocks)
+
+
+def _caution_schedule_html(caution: dict) -> str:
+    detail = "%s — %s" % (caution["typeLabel"], caution["scope"])
+    quote = ""
+    if caution["quote"] and caution["quote"] != caution["name"]:
+        quote = '<q class="caution-quote">%s</q>' % _esc(caution["quote"])
+    return '<span class="schedule-caution">⚑ %s — %s%s</span>' % (
+        _esc(detail), _esc(caution["name"]), quote)
+
+
+def _target_schedule_html(target: dict) -> str:
+    parts = [_esc(target["label"])]
+    if target["roleLabel"]:
+        parts.append("[%s]" % _esc(target["roleLabel"]))
+    if target["note"]:
+        parts.append(_esc(target["note"]))
+    if target["caution"]:
+        parts.append(_caution_schedule_html(target["caution"]))
+    return " · ".join(parts)
+
+
+def _schedule_html(model, relations: dict, claim_gates: dict) -> str:
     rows = []
-
-    def target_cell(t):
-        parts = ["%s (%s)" % (esc(m.target_anchor(t["block"]).label),
-                               esc(t["block"]))]
-        if t.get("role"):
-            parts.append("[%s]" % esc(strings["role"][t["role"]]))
-        parts.append(esc(t["note"]))
-        if t.get("rationale"):
-            parts.append("<em>%s</em>" % esc(t["rationale"]))
-        if t.get("caution"):
-            c = t["caution"]
-            name = gate_codes.get(c["code"]) if c["type"] == "source-gate" \
-                else m.strings["generalizationCodes"].get(c["code"], c["code"])
-            parts.append('<span class="sched-caution">⚑ %s</span>' % esc(name))
-        return " · ".join(parts)
-
-    for c in m.claims:
-        for u in c.units:
-            frag = ship_schedule["fragments"][u.id]
-            label = _unit_context(prefix, c.number, u, strings)
-            tcells = "<br>".join(target_cell(t) for t in frag.get("targets", []))
-            extra = []
-            if frag.get("caution"):
-                cc = frag["caution"]
-                name = (gate_codes.get(cc["code"], cc["code"])
-                        if cc["type"] == "source-gate" else
-                        strings["generalizationCodes"].get(
-                            cc["code"], cc["code"]))
-                extra.append("⚑ %s" % esc(name))
-            for d in frag.get("dispositions", []):
-                extra.append(esc(strings["dispositions"][d["disposition"]]))
-            rows.append("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>"
-                        % (esc(label), esc(strings["status"][frag["status"]]),
-                           tcells, "<br>".join(extra)))
-            for ph in frag.get("phrases", []):
-                tcells = "<br>".join(target_cell(t) for t in ph.get("targets", []))
+    for claim in model.claims:
+        for unit in claim.units:
+            mapping = model.mappings_by_unit[unit.fragment_id][0]
+            ordered_ids = [mapping.relation_id]
+            ordered_ids.extend(
+                phrase.relation_id
+                for phrase in model.phrases_by_unit.get(unit.fragment_id, ()))
+            for relation_id in ordered_ids:
+                relation = relations[relation_id]
+                targets = "<br>".join(
+                    _target_schedule_html(target)
+                    for target in relation["targets"])
+                cautions = []
+                if relation["caution"]:
+                    cautions.append(_caution_schedule_html(
+                        relation["caution"]))
+                cautions.extend(_esc(item["text"])
+                                for item in relation["dispositions"])
                 rows.append(
-                    "<tr><td>%s · «%s»</td><td>%s</td><td>%s</td><td></td></tr>"
-                    % (esc(label), esc(ph["text"]),
-                       esc(strings["status"][ph["status"]]), tcells))
+                    '<tr class="mapping-row"><th scope="row">%s</th><td>%s</td><td>%s</td><td>%s</td></tr>'
+                    % (_esc(relation["subjectLabel"]),
+                       _esc(relation["statusLabel"]), targets,
+                       "<br>".join(cautions)))
     gate_rows = []
-    for ckey in sorted(ship_schedule.get("claimGates", {}),
-                       key=lambda k: int(k[1:])):
-        for g in ship_schedule["claimGates"][ckey]:
-            disp = "; ".join(
-                esc(strings["dispositions"][d["disposition"]])
-                for d in ship_schedule.get("claimDispositions", {}).get(ckey, [])
-                if d["gateId"] == g["gateId"])
+    for claim in model.claims:
+        for item in claim_gates.get(_claim_key(claim.number), ()):
             gate_rows.append(
-                "<tr><td>%s</td><td>⚑ %s</td><td>%s</td></tr>"
-                % (esc(_claim_reference(prefix, ckey[1:], strings)),
-                   esc(gate_codes[g["code"]]), disp))
+                '<tr><th scope="row">%s</th><td>%s</td><td>%s</td></tr>' % (
+                    _esc(_claim_label(model, claim.number)),
+                    _caution_schedule_html(item["gate"]),
+                    _esc(item["disposition"]["text"])))
     return (
         '<section id="schedule"><h2 id="schedule-title">%s</h2>'
-        '<table class="sched" aria-labelledby="schedule-title"><thead><tr>'
+        '<table class="schedule" aria-labelledby="schedule-title"><thead><tr>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
         '</tr></thead><tbody>%s</tbody></table>'
-        '<h3 id="schedule-gates-title">%s</h3>'
-        '<table class="sched" aria-labelledby="schedule-gates-title">'
-        '<thead><tr><th scope="col">%s</th><th scope="col">%s</th>'
-        '<th scope="col">%s</th></tr></thead>'
-        '<tbody>%s</tbody></table></section>'
-        % (esc(strings["ui"]["scheduleTitle"]),
-           esc(strings["ui"]["scheduleFragmentHeader"]),
-           esc(strings["ui"]["scheduleStatusHeader"]),
-           esc(strings["ui"]["scheduleCandidatesHeader"]),
-           esc(strings["ui"]["scheduleCautionsHeader"]), "".join(rows),
-           esc(strings["ui"]["scheduleClaimGatesTitle"]),
-           esc(strings["ui"]["scheduleClaimHeader"]),
-           esc(strings["ui"]["scheduleGateHeader"]),
-           esc(strings["ui"]["scheduleDispositionHeader"]),
+        '<h3 id="claim-gates-title">%s</h3>'
+        '<table class="schedule" aria-labelledby="claim-gates-title"><thead><tr>'
+        '<th scope="col">%s</th><th scope="col">%s</th>'
+        '<th scope="col">%s</th></tr></thead><tbody>%s</tbody></table></section>'
+        % (_esc(UI["completeSchedule"]), _esc(UI["scheduleFragment"]),
+           _esc(UI["mappingStatus"]), _esc(UI["scheduleTargets"]),
+           _esc(UI["mappingCautions"]), "".join(rows),
+           _esc(UI["scheduleClaimGates"]), _esc(UI["scheduleFragment"]),
+           _esc(UI["gateHeader"]), _esc(UI["scheduleDisposition"]),
            "".join(gate_rows)))
 
 
-def _provenance_html(prov, strings, support_matrix):
+def _provenance(model, profile_label: str) -> tuple[dict, str]:
+    documents = []
     rows = []
-    for c in prov["corpora"]:
-        files = "<br>".join("%s — <code>%s</code>" % (esc(p), esc(d[:23]) + "…")
-                            for p, d in sorted(c["files"].items()))
-        rows.append("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>"
-                    % (esc(c["id"]), esc(c["role"]), esc(c["version"]), files))
-    auth = prov.get("authority")
-    auth_html = ""
-    if auth:
-        auth_html = ("<p>%s: <strong>%s</strong> (%s) — "
-                     "<code>%s…</code></p>"
-                     % (esc(strings["ui"]["authorityOfRecord"]),
-                        esc(auth["id"]), esc(auth["version"]),
-                        esc(auth["digest"][:23])))
-    digests = "".join(
-        "<li>%s: <code>%s…</code></li>" % (esc(k), esc((prov[k] or "?")[:23]))
-        for k in ("relationSetDigest", "gateInventoryDigest",
-                  "dependencyMapDigest", "editionConfigDigest",
-                  "schemaDigest", "stringsProjectionDigest",
-                  "renderTreeHash") if prov.get(k))
-    return (
-        '<section id="about"><h2>%s</h2>'
-        '<h3 id="provenance-title">%s</h3>%s'
-        '<table class="sched" aria-labelledby="provenance-title"><thead><tr>'
+    for source in model.source_documents:
+        item = {
+            "documentId": source.document_id,
+            "authorityScheme": source.authority_scheme,
+            "xmlRole": source.xml_role,
+            "semanticDigest": source.semantic_digest,
+            "registeredPath": source.registered_path,
+        }
+        documents.append(item)
+        rows.append(
+            '<tr><th scope="row">%s</th><td>%s</td><td>%s</td>'
+            '<td><code>%s</code></td><td>%s</td></tr>' % (
+                _esc(source.document_id), _esc(source.authority_scheme),
+                _esc(source.xml_role), _esc(source.semantic_digest),
+                _esc(source.registered_path)))
+    assets = [{
+        "assetId": asset.asset_id,
+        "path": asset.path,
+        "mediaType": asset.media_type,
+        "rawDigest": asset.raw_digest,
+    } for asset in model.assets.values()]
+    summary = _wording(model, "provenance-summary")
+    provenance = {
+        "editionId": model.edition_id,
+        "claimSetVersion": model.claim_set_version,
+        "relationSetId": model.relation_set_id,
+        "profileLabel": profile_label,
+        "documents": documents,
+        "assets": assets,
+        "summary": summary,
+    }
+    source_label = _wording(model, "source-input-provenance")
+    authority = _wording(model, "authority-pct-as-filed")
+    markup = (
+        '<section id="about"><h2>%s</h2><p><strong>%s</strong></p>'
+        '<p>%s</p><p>%s</p>'
+        '<table class="schedule" aria-label="%s"><thead><tr>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
-        '<th scope="col">%s</th><th scope="col">%s</th></tr></thead>'
-        '<tbody>%s</tbody></table><ul>%s</ul>'
-        '<p>%s</p><p>%s</p></section>'
-        % (esc(strings["ui"]["aboutTitle"]),
-           esc(strings["ui"]["provenanceTitle"]), auth_html,
-           esc(strings["ui"]["corpusHeader"]),
-           esc(strings["ui"]["roleHeader"]),
-           esc(strings["ui"]["versionHeader"]),
-           esc(strings["ui"]["pinnedFilesHeader"]),
-           "".join(rows), digests,
-           esc(microcopy(
-               strings["ui"]["provenanceSummary"],
-               canonVersion=prov["canonVersion"],
-               schemaVersion=prov["schemaVersion"],
-               timestamp=prov["declaredReleaseTimestamp"],
-               claims=prov["counts"]["claims"], units=prov["counts"]["units"],
-               blocks=prov["counts"]["disclosureBlocks"])),
-           esc(microcopy(
-               strings["ui"]["viewportNote"],
-               width=support_matrix["viewport"]["minimum"][0],
-               height=support_matrix["viewport"]["minimum"][1]))))
+        '<th scope="col">%s</th><th scope="col">%s</th><th scope="col">%s</th>'
+        '</tr></thead><tbody>%s</tbody></table>'
+        '<p>%s: <code>%s</code></p></section>' % (
+            _esc(UI["about"]), _esc(authority), _esc(source_label),
+            _esc(summary), _esc(source_label),
+            _esc(UI["provenanceDocument"]),
+            _esc(UI["authoritySchemeHeader"]),
+            _esc(UI["xmlRoleHeader"]), _esc(UI["provenanceDigest"]),
+            _esc(UI["sourcePathHeader"]),
+            "".join(rows), _esc(UI["provenanceRelationSet"]),
+            _esc(model.relation_set_id)))
+    return provenance, markup
 
 
-def render(m, mode="candidate"):
-    """Render the edition artifact. mode: 'preview' adds the watermark
-    (additive only — identical shipping projection)."""
-    strings = m.strings
-    release_profile, profile_contract = \
-        profilepolicy.profile_contract(m.release_policy)
-    profile_label = profile_contract["artifactLabel"]
-    ship = projections.ship_relation(m, "artifact")
-    ship_schedule = projections.ship_relation(m, "schedule")
-    reverse = projections.reverse_index(ship)
-    quotes = projections.quotable_texts(m, ship)
-    prov = projections.provenance(m)
-    prov["renderTreeHash"] = projections.render_tree_hash(
-        m.gw, m.edition["declaredTransitiveInputs"])
-
-    figures_b64 = {}
-    for b in m.target_blocks:
-        if b.kind == "figure":
-            reader = m.registry.sibling_reader(m.edition["targetCorpus"])
-            figures_b64[b.meta["file"]] = base64.b64encode(
-                reader(b.meta["file"])).decode("ascii")
-
-    anchors = {a.id: a.label for a in m.target_order}
-    unit_labels = {}
-    prefix = m.edition["strategyPrefix"]
-    for c in m.claims:
-        for u in c.units:
-            unit_labels[u.id] = _unit_context(
-                prefix, c.number, u, strings)
-            frag = m.relation["fragments"][u.id]
-            for ph in frag.get("phrases", []):
-                unit_labels[ph["id"]] = _phrase_context(
-                    prefix, c.number, ph["text"], strings)
-
-    disclaimer = strings["standingDisclaimer"].replace(
-        "{editionVersion}", m.edition["claimSetVersion"])
-    gate_codes = strings["editionNamespaces"][
-        m.edition["stringsNamespace"]]["sourceGateCodes"]
-
-    navdata = {
+def render(model, mode="candidate") -> bytes:
+    """Render one candidate or preview from the sealed typed model."""
+    if mode not in {"candidate", "preview"}:
+        raise RenderError("render mode must be candidate or preview")
+    relations, reverse, claim_gates = _relation_data(model)
+    statuses = {
+        status: _wording(model, "mapping-status-" + status)
+        for status in ("mapped", "counsel-review-required")
+    }
+    legend = _wording(model, "counsel-legend")
+    profile_label = _wording(model, "artifact-label-technical-preview")
+    if profile_label != model.profile_label:
+        raise RenderError("typed profile label and controlled wording differ")
+    disclaimer = _wording(model, "standing-disclaimer")
+    watermark_text = _wording(
+        model, "artifact-watermark-technical-preview") if mode == "preview" else ""
+    watermark = ('<div class="watermark" aria-hidden="true"><span>%s</span></div>'
+                 % _esc(watermark_text)) if watermark_text else ""
+    provenance, provenance_html = _provenance(model, profile_label)
+    forbidden = [token for token in FORBIDDEN_SCRIPT_TOKENS if token in JS]
+    if forbidden:
+        raise RenderError(
+            "application script uses forbidden browser capabilities: %s" %
+            ", ".join(forbidden))
+    navigation = {
+        "ui": dict(UI),
         "edition": {
-            "id": m.edition["editionId"], "prefix": prefix,
-            "version": m.edition["claimSetVersion"],
-            "name": m.edition["displayName"],
-            "releaseProfile": release_profile,
-            "compatibilityAuthorization":
-                profile_contract["compatibilityAuthorization"],
-            "deferredControls": profile_contract["deferredControls"],
+            "id": model.edition_id,
+            "prefix": model.strategy_prefix,
+            "version": model.claim_set_version,
+            "name": model.display_name,
         },
-        "strings": {
-            "ui": strings["ui"], "status": strings["status"],
-            "role": strings["role"], "dispositions": strings["dispositions"],
-            "cautionType": strings["cautionType"],
-            "cautionScope": strings["cautionScope"],
-            "gateCodes": gate_codes,
-            "generalizationCodes": strings["generalizationCodes"],
-        },
-        "fragments": ship["fragments"],
-        "claimGates": ship.get("claimGates", {}),
-        "claimDispositions": ship.get("claimDispositions", {}),
+        "statuses": statuses,
+        "relations": relations,
         "reverse": reverse,
-        "quotes": quotes,
-        "anchors": anchors,
-        "unitLabels": unit_labels,
+        "claimGates": claim_gates,
     }
-
-    watermark = ""
-    if mode == "preview":
-        watermark = ('<div class="watermark" aria-hidden="true">'
-                     '<span>%s</span></div>'
-                     % esc(strings["ui"]["previewWatermark"]))
-
-    probe_instruments = api_probe_instruments(m.api_policy)
-
-    replacements = {
-        "@@TITLE@@": esc("%s — %s — %s" % (
-            m.edition["displayName"], m.edition["claimSetVersion"],
-            release_profile)),
-        "@@CSP@@": esc(m.api_policy["csp"]),
-        "@@CSS@@": responsive_css(m.support_matrix),
-        "@@WATERMARK@@": watermark,
-        "@@HEADERTITLE@@": esc(m.edition["displayName"]),
-        "@@STRATEGY@@": esc("%s — %s" % (prefix, m.edition["strategyName"])),
-        "@@VERSION@@": esc(m.edition["claimSetVersion"]),
-        "@@WO@@": esc(strings["ui"]["authorityHeader"]),
-        "@@CLAIMSETLABEL@@": esc(strings["ui"]["claimSetLabel"]),
-        "@@AUXLABEL@@": esc(strings["ui"]["aboutScheduleToggle"]),
-        "@@CLAIMSPANELABEL@@": esc(strings["ui"]["candidateClaimsLabel"]),
-        "@@DISCLOSUREPANELABEL@@": esc(
-            strings["ui"]["asFiledDisclosureLabel"]),
-        "@@LEGEND@@": esc(strings["counselLegend"]),
-        "@@RELEASEPROFILE@@": esc(profile_label),
-        "@@DISCLAIMER@@": esc(disclaimer),
-        "@@CLAIMSPANE@@": _claims_pane(m, ship, strings),
-        "@@DISCLOSUREPANE@@": _disclosure_pane(m, reverse, figures_b64, strings),
-        "@@SCHEDULE@@": _schedule(m, ship_schedule, strings),
-        "@@ABOUT@@": _provenance_html(prov, strings, m.support_matrix),
-        "@@NAVDATA@@": script_json(navdata),
-        "@@PROVDATA@@": script_json(prov),
-        "@@APIPROBES@@": script_json(probe_instruments),
-        "@@JS@@": JS,
-    }
-    html = substitute_template(HTML_TEMPLATE, replacements)
-    return html.encode("utf-8")
+    title = "%s — %s" % (model.display_name, model.claim_set_version)
+    html_text = HTML_TEMPLATE.format(
+        csp=EXACT_CSP,
+        css=CSS,
+        title=_esc(title),
+        watermark=watermark,
+        legend=_esc(legend),
+        profile=_esc(profile_label),
+        display_name=_esc(model.display_name),
+        strategy=_esc("%s — %s" % (
+            model.strategy_prefix, model.strategy_name)),
+        claim_set_label=_esc(UI["claimSetLabel"]),
+        version=_esc(model.claim_set_version),
+        authority=_esc(UI["authorityHeader"]),
+        aux_label=_esc(UI["aboutScheduleToggle"]),
+        disclaimer=_esc(disclaimer),
+        claims_label=_esc(UI["candidateClaimsLabel"]),
+        disclosure_label=_esc(UI["asFiledDisclosureLabel"]),
+        claims=_claims_html(model, relations, claim_gates),
+        disclosure=_disclosure_html(model, reverse),
+        schedule=_schedule_html(model, relations, claim_gates),
+        provenance=provenance_html,
+        machine_data_label=_esc(UI["machineData"]),
+        nav_data=_script_json(navigation),
+        provenance_data=_script_json(provenance),
+        js=JS,
+    )
+    return html_text.encode("utf-8")
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
-<!-- GENERATED artifact: built by navigator/build.py from pinned sources;
-     do not edit by hand. Verify against the detached .sha256 checksum;
-     rebuild with: python3 navigator/build.py candidate <edition> (TDD §13). -->
+<!-- GENERATED current product; do not edit by hand. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="@@CSP@@">
+<meta http-equiv="Content-Security-Policy" content="{csp}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>@@TITLE@@</title>
-<style>@@CSS@@</style>
+<title>{title}</title>
+<style>{css}</style>
 </head>
 <body>
-@@WATERMARK@@
+{watermark}
 <header id="masthead">
-<p class="legend">@@LEGEND@@</p>
-<p class="release-profile">@@RELEASEPROFILE@@</p>
-<h1>@@HEADERTITLE@@ <span class="strategy">@@STRATEGY@@</span></h1>
-<p class="meta">@@CLAIMSETLABEL@@ <strong>@@VERSION@@</strong> · @@WO@@
-<button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">@@AUXLABEL@@</button></p>
-<p class="disclaimer">@@DISCLAIMER@@</p>
+<p class="legend">{legend}</p>
+<p class="release-profile">{profile}</p>
+<h1>{display_name} <span class="strategy">{strategy}</span></h1>
+<p class="meta">{claim_set_label} <strong>{version}</strong> · {authority}
+<button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">{aux_label}</button></p>
+<p class="disclaimer">{disclaimer}</p>
 </header>
 <div id="content-root">
 <main id="panes">
-<section id="claims-pane" aria-label="@@CLAIMSPANELABEL@@">
-<div id="reverse-bar" class="navbar" hidden></div>
-@@CLAIMSPANE@@
+<section id="claims-pane" aria-label="{claims_label}">
+<div id="reverse-bar" class="navigation-bar" hidden></div>
+{claims}
 </section>
-<section id="disclosure-pane" aria-label="@@DISCLOSUREPANELABEL@@">
-<div id="forward-bar" class="navbar" hidden></div>
-<div id="disclosure-scroll">
-@@DISCLOSUREPANE@@
-</div>
+<section id="disclosure-pane" aria-label="{disclosure_label}">
+<div id="forward-bar" class="navigation-bar" hidden></div>
+<div id="disclosure-scroll">{disclosure}</div>
 </section>
 </main>
-<div id="live" aria-live="polite" class="visually-hidden"></div>
-<div id="aux">
-@@SCHEDULE@@
-@@ABOUT@@
+<div id="live" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+<div id="aux">{schedule}{provenance}</div>
 </div>
-</div>
-<footer><p class="legend">@@LEGEND@@</p><p class="release-profile">@@RELEASEPROFILE@@</p><p class="disclaimer">@@DISCLAIMER@@</p></footer>
+<footer><p class="legend">{legend}</p><p class="release-profile">{profile}</p>
+<p class="disclaimer">{disclaimer}</p></footer>
 <noscript><style>
-#content-root{display:block;overflow-y:auto;min-height:0;flex:1 1 auto}
-#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{
-  height:auto;min-height:0;overflow:visible}
-#aux{display:block}
-#aux-toggle{display:none}
-.pointer-surface{cursor:auto}
-@media print {
-  #content-root,#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{
-    display:block;overflow:visible;height:auto}
-}
+#content-root{{display:block;overflow-y:auto;min-height:0;flex:1 1 auto}}
+#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{height:auto;min-height:0;overflow:visible}}
+#aux{{display:block}} #aux-toggle{{display:none}} .pointer-surface{{cursor:auto}}
+@media print {{#content-root,#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{display:block;overflow:visible;height:auto}}}}
 </style></noscript>
-<script type="application/json" id="nav-data">@@NAVDATA@@</script>
-<script type="application/json" id="prov-data">@@PROVDATA@@</script>
-<script type="application/json" id="api-probes">@@APIPROBES@@</script>
-<script>@@JS@@</script>
+<script type="application/json" id="nav-data" aria-label="{machine_data_label}">{nav_data}</script>
+<script type="application/json" id="provenance-data">{provenance_data}</script>
+<script>{js}</script>
 </body>
 </html>
 """
 
-_CSS_TEMPLATE = """
-:root { --accent:#1a4f8b; --strong:#ffe08a; --soft:#fff3c9; --gate:#8b2c1a;
-        --crr:#6a4a00; --chrome:#f4f2ec; --line:#c9c4b8; }
+
+CSS = r"""
+:root {
+  --accent:#1a4f8b; --strong:#ffe08a; --soft:#fff3c9; --gate:#8b2c1a;
+  --state:#6a4a00; --chrome:#f4f2ec; --line:#c9c4b8; --paper:#fff;
+}
 * { box-sizing:border-box; }
-html,body { margin:0; padding:0; height:100%; }
-body { font-family:Georgia,'Times New Roman',serif; color:#1c1c1c;
-       display:flex; flex-direction:column; overflow:hidden; }
-.visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden;
-       clip:rect(0 0 0 0); }
-#masthead,footer { font-family:'Helvetica Neue',Arial,sans-serif;
-       background:var(--chrome); border-bottom:1px solid var(--line);
-       padding:6px 14px; flex:none; }
-footer { display:none; }
-#masthead h1 { font-size:15px; margin:2px 0; }
-.strategy { color:var(--accent); font-weight:normal; }
+html,body { height:100%; margin:0; padding:0; }
+body {
+  color:#1c1c1c; background:var(--paper);
+  display:flex; flex-direction:column; overflow:hidden;
+  font-family:Georgia,'Times New Roman',serif;
+}
+.visually-hidden {
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+#masthead,footer {
+  flex:none; padding:6px 14px; background:var(--chrome);
+  border-bottom:1px solid var(--line); font-family:Arial,sans-serif;
+}
+#masthead h1 { margin:2px 0; font-size:15px; }
 #masthead .meta { margin:2px 0; font-size:12px; }
-.legend { font-size:10px; letter-spacing:.4px; color:#7a1f1f; margin:2px 0;
-       font-weight:bold; }
-.release-profile { font-size:10.5px; color:#704d00; margin:2px 0;
-       font-weight:bold; }
-.disclaimer { font-size:10.5px; color:#444; margin:2px 0; }
-#content-root { flex:1 1 auto; display:flex; flex-direction:column;
-       min-height:0; }
+.strategy { color:var(--accent); font-weight:normal; }
+.legend {
+  margin:2px 0; color:#7a1f1f; font-size:10px; font-weight:bold;
+  letter-spacing:.4px;
+}
+.release-profile {
+  margin:2px 0; color:#704d00; font-size:10.5px; font-weight:bold;
+}
+.disclaimer { margin:2px 0; color:#444; font-size:10.5px; }
+#content-root { flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
 #panes { flex:1 1 auto; display:flex; min-height:0; }
-#claims-pane { width:45%; overflow-y:auto; padding:10px 14px;
-       border-right:2px solid var(--line); position:relative; }
-#disclosure-pane { width:55%; display:flex; flex-direction:column;
-       min-height:0; position:relative; }
-#disclosure-scroll { overflow-y:auto; padding:10px 40px 10px 58px; flex:1; }
-.claim-strip { position:sticky; top:-10px; z-index:5; background:#fff;
-       border-bottom:1px solid var(--line); padding:6px 0; font-family:Arial,
-       sans-serif; }
-.chip-group { margin-right:8px; white-space:nowrap; display:inline-block; }
-.chip-group-name { font-size:9px; color:#666; margin-right:2px;
-       text-transform:uppercase; }
-.chip { min-width:24px; min-height:24px; border:1px solid var(--line);
-       background:#fff; border-radius:4px; cursor:pointer; font-size:12px; }
-.chip-ind { border:2px solid var(--accent); font-weight:bold; }
-.claim-group h2 { font-family:Arial,sans-serif; font-size:13px;
-       color:var(--accent); border-bottom:1px solid var(--line); }
-.claim { margin:0 0 14px 0; }
-.claim-header { font-family:Arial,sans-serif; font-weight:bold;
-       margin:8px 0 4px 0; }
+#claims-pane {
+  width:45%; overflow-y:auto; padding:10px 14px; position:relative;
+  border-right:2px solid var(--line);
+}
+#disclosure-pane {
+  width:55%; display:flex; flex-direction:column; min-height:0; position:relative;
+}
+#disclosure-scroll { flex:1; overflow-y:auto; padding:10px 40px 10px 58px; }
+.claim-strip {
+  position:sticky; top:-10px; z-index:5; display:block;
+  padding:6px 0; background:#fff; border-bottom:1px solid var(--line);
+  font-family:Arial,sans-serif;
+}
+.chip-group { display:inline-block; margin-right:8px; white-space:nowrap; }
+.chip-group-name {
+  margin-right:2px; color:#666; font-size:9px; text-transform:uppercase;
+}
+.chip {
+  min-width:24px; min-height:24px; border:1px solid var(--line);
+  border-radius:4px; background:#fff; cursor:pointer; font-size:12px;
+}
+.chip-independent { border:2px solid var(--accent); font-weight:bold; }
+.claim-group h2 {
+  color:var(--accent); border-bottom:1px solid var(--line);
+  font:600 13px Arial,sans-serif;
+}
+.claim { margin:0 0 14px; }
+.claim-header { margin:8px 0 4px; font:bold 13px Arial,sans-serif; }
 .claim-independent > .claim-header .claim-no { color:var(--accent); }
-.gate-chip { margin-left:8px; font-size:11px; border:1.5px dashed var(--gate);
-       color:var(--gate); background:#fdf3f0; border-radius:4px;
-       cursor:pointer; min-height:24px; }
+.gate-chip {
+  min-height:24px; margin-left:8px; padding:1px 5px;
+  border:2px dashed var(--gate); border-radius:4px;
+  color:var(--gate); background:#fdf3f0; cursor:pointer; font-size:11px;
+}
 .unit { display:flex; margin:2px 0; }
-.unit-btn { flex:none; width:24px; min-height:24px; border:none;
-       border-left:4px solid var(--line); background:transparent;
-       cursor:pointer; }
-.unit:hover .unit-btn,.unit-btn:focus { border-left-color:var(--accent);
-       background:#eef3fa; }
+.unit-btn {
+  flex:none; width:24px; min-height:24px; border:0;
+  border-left:4px solid var(--line); background:transparent; cursor:pointer;
+}
+.unit:hover .unit-btn,.unit-btn:focus {
+  border-left-color:var(--accent); background:#eef3fa;
+}
 .unit-body { padding:2px 4px; }
-.unit-label { display:block; font-family:Arial,sans-serif; font-size:9px;
-       color:#888; text-transform:uppercase; }
-.status-counsel-review-required > .unit-body { background:#fbf6e8; }
-.crr-note { font-family:Arial,sans-serif; font-size:11px; color:var(--crr);
-       margin:2px 0; }
-.crr-dot { color:var(--crr); }
-.phrase-btn { font:inherit; border:none; border-bottom:2px dotted var(--accent);
-       background:transparent; color:var(--accent); cursor:pointer;
-       padding:0 1px; min-height:24px; }
-.phrase-btn:focus,.unit-btn:focus,.rev-badge:focus,.chip:focus,
-.gate-chip:focus,.navbar button:focus { outline:3px solid #d98c00;
-       outline-offset:1px; }
+.unit-label {
+  display:block; color:#777; font:9px Arial,sans-serif; text-transform:uppercase;
+}
+.state-counsel-review-required > .unit-body { background:#fbf6e8; }
+.state-note {
+  margin:2px 0; color:var(--state); font:11px Arial,sans-serif;
+}
+.phrase-btn {
+  min-height:24px; padding:0 1px; border:0;
+  border-bottom:2px dotted var(--accent); color:var(--accent);
+  background:transparent; cursor:pointer; font:inherit;
+}
 .pointer-surface { cursor:pointer; }
-.guidance-note { border:1px solid var(--gate); background:#fdf6f0;
-       padding:6px 10px; font-size:13px; margin:8px 0; }
-.editorial-tag { display:inline-block; font-family:Arial,sans-serif;
-       font-size:9px; background:#e8e4da; color:#555; border-radius:3px;
-       padding:0 4px; margin-right:6px; text-transform:uppercase;
-       vertical-align:middle; }
+button:focus-visible,.navigation-bar:focus-visible {
+  outline:3px solid #d98c00; outline-offset:1px;
+}
 .dblock { position:relative; }
-.anchor-label { position:absolute; left:-46px; top:2px; width:40px;
-       font-family:Menlo,monospace; font-size:9px; color:#999;
-       text-align:right; }
-.tablewrap .anchor-label,.rowmeta .anchor-label { position:static;
-       display:block; width:auto; text-align:left; }
-.rev-badge { font-family:Arial,sans-serif; font-size:10px; margin-left:6px;
-       border:1px solid var(--accent); color:var(--accent); background:#fff;
-       border-radius:8px; cursor:pointer; min-height:24px; min-width:24px; }
-.hl-strong { background:var(--strong); box-shadow:0 0 0 2px var(--strong);
-       border-left:4px solid var(--accent); }
-.hl-soft { background:var(--soft); border-left:4px double var(--accent); }
-.hl-frag { outline:2px solid var(--accent); }
-.hl-frag-soft { background:var(--soft); outline:2px dotted var(--accent);
-       outline-offset:1px; }
-.navbar { position:sticky; top:0; z-index:10; background:#fff;
-       border:2px solid var(--accent); border-radius:0 0 6px 6px;
-       padding:6px 10px; font-family:Arial,sans-serif; font-size:12px;
-       box-shadow:0 2px 6px rgba(0,0,0,.15); }
-.navbar .mode { font-size:10px; text-transform:uppercase; color:var(--accent);
-       letter-spacing:.5px; }
-.navbar .ctx { font-weight:bold; }
-.navbar button { min-width:28px; min-height:24px; border:1px solid var(--line);
-       background:#fff; border-radius:4px; cursor:pointer; }
-.caution-chip { display:inline-block; border:1px solid var(--gate);
-       color:var(--gate); background:#fdf3f0; border-radius:4px;
-       padding:1px 5px; margin:2px 4px 2px 0; font-size:11px; }
-.caution-chip.claim-gate-chip { border-style:dashed; border-width:2px;
-       font-weight:bold; }
-.caution-quote { display:block; font-size:11px; background:#faf7f2;
-       border-left:3px solid var(--gate); margin:4px 0; padding:4px 6px; }
-.pct-claim { border-left:3px solid #ddd; padding-left:8px; margin:6px 0; }
-.tablewrap { overflow-x:auto; }
+.anchor-label {
+  position:absolute; left:-48px; top:2px; width:42px;
+  color:#777; text-align:right; font:9px Menlo,monospace;
+}
+.table-wrap .anchor-label,td .anchor-label,th .anchor-label {
+  position:static; display:inline-block; width:auto; margin-right:5px; text-align:left;
+}
+.reverse-badge {
+  min-width:24px; min-height:24px; margin-left:6px;
+  border:1px solid var(--accent); border-radius:12px;
+  color:var(--accent); background:#fff; cursor:pointer; font:10px Arial,sans-serif;
+}
+.editorial-tag {
+  display:inline-block; margin-right:6px; padding:1px 4px; border-radius:3px;
+  color:#555; background:#e8e4da; vertical-align:middle;
+  font:9px Arial,sans-serif; text-transform:uppercase;
+}
+.editorial { color:#3d3d3d; }
+.table-wrap { max-width:100%; overflow-x:auto; }
 table { border-collapse:collapse; font-size:12.5px; }
-td,th { border:1px solid var(--line); padding:3px 7px; }
-.rowmeta { background:var(--chrome); font-size:9px; }
-.tcaption { font-size:11px; color:#555; caption-side:bottom;
-       text-align:left; padding-top:4px; }
-figure { margin:10px 0; }
-figure img { max-width:100%; border:1px solid var(--line); }
-pre { background:#f7f6f2; border:1px solid var(--line); padding:8px;
-       overflow-x:auto; font-size:11.5px; }
-#aux { display:none; overflow-y:auto; flex:1; min-height:0; }
+th,td { padding:3px 7px; border:1px solid var(--line); text-align:left; }
+.cell-align-default,.cell-align-left { text-align:left; }
+.cell-align-center { text-align:center; }
+.cell-align-right { text-align:right; }
+figure { margin:12px 0; }
+figure img { display:block; max-width:100%; border:1px solid var(--line); }
+figcaption { margin-top:3px; color:#555; font:11px Arial,sans-serif; }
+pre {
+  max-width:100%; overflow-x:auto; padding:8px;
+  border:1px solid var(--line); background:#f7f6f2; font-size:11.5px;
+}
+.highlight-strong {
+  background:var(--strong); border-left:4px solid var(--accent);
+  box-shadow:0 0 0 2px var(--strong);
+}
+.highlight-soft { background:var(--soft); border-left:4px double var(--accent); }
+.highlight-subject { outline:2px solid var(--accent); outline-offset:1px; }
+.highlight-related { background:var(--soft); outline:2px dotted var(--accent); }
+.navigation-bar {
+  position:sticky; top:0; z-index:10; padding:6px 10px;
+  border:2px solid var(--accent); border-radius:0 0 6px 6px;
+  background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.15);
+  font:12px Arial,sans-serif;
+}
+.navigation-bar .mode {
+  color:var(--accent); font-size:10px; letter-spacing:.5px; text-transform:uppercase;
+}
+.navigation-bar .context { font-weight:bold; }
+.navigation-bar button {
+  min-width:28px; min-height:24px; border:1px solid var(--line);
+  border-radius:4px; background:#fff; cursor:pointer;
+}
+.selection-controls { display:inline-flex; gap:3px; margin:4px 0; }
+.caution-chip {
+  display:inline-block; margin:2px 4px 2px 0; padding:1px 5px;
+  border:1px solid var(--gate); border-radius:4px;
+  color:var(--gate); background:#fdf3f0; font-size:11px;
+}
+.caution-detail {
+  display:block; margin:4px 0; padding:4px 6px;
+  border-left:3px solid var(--gate); background:#faf7f2; font-size:11px;
+}
+.disposition { color:var(--gate); font-size:11px; }
+#aux { display:none; flex:1; min-height:0; overflow-y:auto; }
 body.aux-open #aux { display:block; }
 body.aux-open #panes { display:none; }
-#aux-toggle { font-size:11px; margin-left:12px; min-height:24px;
-       border:1px solid var(--line); background:#fff; border-radius:4px;
-       cursor:pointer; }
-#schedule,#about { display:block; font-family:Arial,sans-serif;
-       padding:10px 16px; }
-.sched { font-size:11px; }
-.sched-caution { color:var(--gate); }
-.watermark { position:fixed; inset:0; pointer-events:none; z-index:99;
-       display:flex; align-items:center; justify-content:center; }
+#aux-toggle {
+  min-height:24px; margin-left:12px; border:1px solid var(--line);
+  border-radius:4px; background:#fff; cursor:pointer; font-size:11px;
+}
+#schedule,#about { display:block; padding:10px 16px; font-family:Arial,sans-serif; }
+.schedule { width:100%; font-size:11px; }
+.schedule-caution { color:var(--gate); }
+.caution-quote { display:block; margin:3px 0; color:#333; }
+.watermark {
+  position:fixed; inset:0; z-index:99; display:flex;
+  align-items:center; justify-content:center; pointer-events:none;
+}
 .watermark span {
-       font:bold 42px Arial,sans-serif; color:rgba(180,30,30,.18);
-       transform:rotate(-28deg); white-space:nowrap; }
-@media (max-width:@@VIEWPORT_MAX_WIDTH@@px),(max-height:@@VIEWPORT_MAX_HEIGHT@@px) {
-  /* stacked: one dedicated combined scroll container; the page body
-     never scrolls in any mode (TDD §12) */
+  color:rgba(180,30,30,.18); white-space:nowrap;
+  transform:rotate(-28deg); font:bold 42px Arial,sans-serif;
+}
+footer { display:none; }
+@media (max-width:1279px),(max-height:719px) {
   #panes { display:block; overflow-y:auto; }
-  #claims-pane,#disclosure-pane { width:100%; height:auto; display:block;
-       border-right:none; overflow:visible; }
+  #claims-pane,#disclosure-pane {
+    display:block; width:100%; height:auto; overflow:visible; border-right:0;
+  }
   #disclosure-scroll { overflow:visible; }
 }
-@media (prefers-reduced-motion:reduce) {
-  html { scroll-behavior:auto; }
-}
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
 @page { margin:12mm 10mm; }
 @media print {
-  body { overflow:visible; display:block; }
-  #content-root { display:block; overflow:visible; padding-bottom:37mm;
-       -webkit-box-decoration-break:clone; box-decoration-break:clone; }
-  #aux { display:block; overflow:visible; }
-  #panes { display:block; }
-  body.aux-open #panes { display:block; }
-  #claims-pane,#disclosure-pane,#disclosure-scroll { width:100%;
-       overflow:visible; border:none; display:block; }
-  button:not(.phrase-btn),.navbar,.claim-strip,.watermark {
-       display:none !important; }
-  .phrase-btn { border:none; background:transparent; color:inherit;
-       cursor:default; min-height:0; padding:0; }
-  #masthead > .legend,#masthead > .release-profile,
-  #masthead > .disclaimer { display:none; }
-  /* Clone content padding at every page fragment to reserve space for the
-     fixed banner instead of letting it cover printable prose or tables. */
-  footer { position:fixed; top:auto; bottom:0; left:0; right:0;
-       display:block; height:35mm; min-height:0; overflow:hidden;
-       transform:none; padding:2mm 0 0; background:#fff;
-       border-top:1px solid var(--line); border-bottom:none; }
-  footer .legend,footer .disclaimer { position:static; margin:1mm 0 0; }
+  body { display:block; overflow:visible; }
+  #content-root {
+    display:block; overflow:visible; padding-bottom:37mm;
+    -webkit-box-decoration-break:clone; box-decoration-break:clone;
+  }
+  #aux,#panes { display:block !important; overflow:visible; }
+  #claims-pane,#disclosure-pane,#disclosure-scroll {
+    display:block; width:100%; overflow:visible; border:0;
+  }
+  button:not(.phrase-btn),.navigation-bar,.claim-strip,.watermark {
+    display:none !important;
+  }
+  .phrase-btn {
+    min-height:0; padding:0; border:0; color:inherit; background:transparent;
+    cursor:default;
+  }
+  #masthead > .legend,#masthead > .release-profile,#masthead > .disclaimer {
+    display:none;
+  }
+  footer {
+    position:fixed; right:0; bottom:0; left:0; display:block;
+    height:35mm; overflow:hidden; padding:2mm 0 0;
+    border-top:1px solid var(--line); border-bottom:0; background:#fff;
+  }
+  table,figure,pre { break-inside:avoid; }
 }
-noscript .navbar { display:none; }
+noscript .navigation-bar { display:none; }
 """
 
-# The exported default remains useful to static source-level checks. Artifact
-# builds always call ``responsive_css`` with their loaded normative matrix.
-CSS = (_CSS_TEMPLATE
-       .replace("@@VIEWPORT_MAX_WIDTH@@", "1279")
-       .replace("@@VIEWPORT_MAX_HEIGHT@@", "719"))
 
 JS = r"""
 'use strict';
-/* Attempted-use instrumentation per schema/api-policy.json (probed class).
-   Records attempts; the page's own code never uses these APIs (AC-15). */
-window.__apiAttempts = [];
-var PROBE_POLICY = JSON.parse(
-  document.getElementById('api-probes').textContent);
-var PROBE_APIS = Object.keys(PROBE_POLICY).sort();
-window.__apiProbeStatus = {expected:PROBE_APIS.slice(), hooks:{}, ready:false};
-PROBE_APIS.forEach(function(api){
-  window.__apiProbeStatus.hooks[api] = {
-    status:'pending', error:null, detail:null
-  };
-});
-(function(){
-  function rec(name){ window.__apiAttempts.push(name); }
-  function policyInstrument(api){
-    return Object.prototype.hasOwnProperty.call(PROBE_POLICY, api) ?
-      PROBE_POLICY[api] : null;
-  }
-  function errorDetail(error){
-    try {
-      if (error && typeof error.message === 'string') return error.message;
-      return String(error);
-    } catch (ignored) { return 'unavailable'; }
-  }
-  function failed(api, error, exception){
-    var hook = window.__apiProbeStatus.hooks[api];
-    if (!hook) return;
-    hook.status = 'failed';
-    hook.error = error;
-    hook.detail = exception === undefined ? null : errorDetail(exception);
-  }
-  function installed(api){
-    var hook = window.__apiProbeStatus.hooks[api];
-    if (!hook || hook.status === 'failed') return;
-    hook.status = 'installed';
-    hook.error = null;
-    hook.detail = null;
-  }
-  function wrapFn(obj, key, api){
-    var name = policyInstrument(api);
-    if (!name) return;
-    if (!obj) { failed(api, 'owner-unavailable'); return; }
-    try {
-      var orig = obj[key];
-      if (typeof orig !== 'function') {
-        failed(api, 'function-unavailable'); return;
-      }
-      var wrapped = function(){
-        rec(name); return orig.apply(this, arguments);
-      };
-      obj[key] = wrapped;
-      if (obj[key] !== wrapped) {
-        failed(api, 'assignment-not-retained'); return;
-      }
-      installed(api);
-    } catch (e) { failed(api, 'installation-threw', e); }
-  }
-  function wrapWindowGetter(key, api){
-    var name = policyInstrument(api);
-    if (!name) return;
-    try {
-      var owner = window, desc = null;
-      while (owner && !desc){
-        desc = Object.getOwnPropertyDescriptor(owner, key);
-        owner = Object.getPrototypeOf(owner);
-      }
-      if (!desc) { failed(api, 'descriptor-unavailable'); return; }
-      if (typeof desc.get !== 'function') {
-        failed(api, 'getter-unavailable'); return;
-      }
-      var wrappedGet = function(){
-        rec(name); return desc.get.call(window);
-      };
-      Object.defineProperty(window, key, {
-        configurable: true, enumerable: desc.enumerable,
-        get: wrappedGet
-      });
-      var actual = Object.getOwnPropertyDescriptor(window, key);
-      if (!actual || actual.get !== wrappedGet) {
-        failed(api, 'definition-not-retained'); return;
-      }
-      installed(api);
-    } catch (e) { failed(api, 'installation-threw', e); }
-  }
-  function wrapCookie(){
-    var api = 'document.cookie';
-    var cookieName = policyInstrument(api);
-    if (!cookieName) return;
-    try {
-      var desc = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie');
-      if (!desc) { failed(api, 'descriptor-unavailable'); return; }
-      if (!desc.configurable) {
-        failed(api, 'descriptor-not-configurable'); return;
-      }
-      if (typeof desc.get !== 'function' || typeof desc.set !== 'function') {
-        failed(api, 'accessor-unavailable'); return;
-      }
-      var wrappedGet = function(){ return desc.get.call(document); };
-      var wrappedSet = function(v){
-        rec(cookieName); return desc.set.call(document, v);
-      };
-      Object.defineProperty(document, 'cookie', {
-        configurable: true, enumerable: desc.enumerable,
-        get: wrappedGet, set: wrappedSet
-      });
-      var actual = Object.getOwnPropertyDescriptor(document, 'cookie');
-      if (!actual || actual.get !== wrappedGet || actual.set !== wrappedSet) {
-        failed(api, 'definition-not-retained'); return;
-      }
-      installed(api);
-    } catch (e) { failed(api, 'installation-threw', e); }
-  }
-  wrapFn(window.navigator, 'sendBeacon', 'navigator.sendBeacon');
-  wrapFn(window.history, 'pushState', 'history.pushState');
-  wrapFn(window.history, 'replaceState', 'history.replaceState');
-  wrapWindowGetter('localStorage', 'window.localStorage');
-  wrapWindowGetter('sessionStorage', 'window.sessionStorage');
-  try {
-    if (!window.indexedDB) failed('indexedDB.open', 'api-unavailable');
-    else wrapFn(window.IDBFactory && window.IDBFactory.prototype, 'open',
-                'indexedDB.open');
-  } catch (e) { failed('indexedDB.open', 'installation-threw', e); }
-  wrapCookie();
-
-  PROBE_APIS.forEach(function(api){
-    if (window.__apiProbeStatus.hooks[api].status === 'pending')
-      failed(api, 'installer-not-invoked');
-  });
-  var hookApis = Object.keys(window.__apiProbeStatus.hooks).sort();
-  var exact = hookApis.length === PROBE_APIS.length &&
-    hookApis.every(function(api, i){ return api === PROBE_APIS[i]; });
-  var failures = PROBE_APIS.filter(function(api){
-    return window.__apiProbeStatus.hooks[api].status !== 'installed';
-  });
-  window.__apiProbeStatus.ready = exact && failures.length === 0;
-  if (!window.__apiProbeStatus.ready) {
-    /* The ledger remains inspectable after this fail-closed exception. */
-    throw new Error('API probe installation failed: ' +
-      failures.map(function(api){
-        return api + '=' + window.__apiProbeStatus.hooks[api].error;
-      }).join(', '));
-  }
-})();
-
 var DATA = JSON.parse(document.getElementById('nav-data').textContent);
-
-/*NAVMODEL-START*/
-/* ---- pure selection model (also exercised by AC-10 scripted checks) ---- */
-var NavModel = {
-  forwardTargets: function(data, fragId){
-    var frag = null;
-    if (fragId.indexOf('p') > 0){
-      var uid = fragId.slice(0, fragId.indexOf('p', fragId.indexOf('u')));
-      var unit = data.fragments[uid];
-      if (!unit || !unit.phrases) return null;
-      for (var i = 0; i < unit.phrases.length; i++)
-        if (unit.phrases[i].id === fragId) frag = unit.phrases[i];
-    } else frag = data.fragments[fragId];
-    if (!frag) return null;
-    return { status: frag.status, targets: frag.targets || [],
-             caution: frag.caution || null,
-             dispositions: frag.dispositions || [] };
-  },
-  claimOf: function(fragId){ return 'c' + parseInt(fragId.slice(1), 10); },
-  claimGates: function(data, fragId){
-    return data.claimGates[NavModel.claimOf(fragId)] || [];
-  },
-  reverseFragments: function(data, blockId){
-    return data.reverse[blockId] || [];
-  },
-  cycle: function(pos, len, delta){ return len ? (pos + delta + len) % len : 0; }
-};
-/*NAVMODEL-END*/
-
-var state = { mode: null, key: null, pos: 0, list: [], returnFocus: null };
-var fbar = document.getElementById('forward-bar');
-var rbar = document.getElementById('reverse-bar');
+var state = {mode:null, key:null, position:0, list:[], returnFocus:null};
+var forwardBar = document.getElementById('forward-bar');
+var reverseBar = document.getElementById('reverse-bar');
 var live = document.getElementById('live');
-var reduced = window.matchMedia &&
+var reducedMotion = window.matchMedia &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function say(t){ live.textContent = t; }
-function el(tag, cls, text){ var e = document.createElement(tag);
-  if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-function btn(cls, label, text, fn){ var b = el('button', cls, text);
-  b.type = 'button'; b.setAttribute('aria-label', label);
-  b.addEventListener('click', fn); return b; }
-function fmt(template, values){
+function ui(key){ return DATA.ui[key]; }
+function format(template, values){
   Object.keys(values).forEach(function(key){
     template = template.split('{' + key + '}').join(String(values[key]));
   });
   return template;
 }
+function element(tag, className, text){
+  var node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined && text !== null) node.textContent = text;
+  return node;
+}
+function button(className, label, text, handler){
+  var node = element('button', className, text);
+  node.type = 'button';
+  node.setAttribute('aria-label', label);
+  node.addEventListener('click', handler);
+  return node;
+}
+function announce(text){ live.textContent = text; }
 function positionText(position, total, label){
-  return fmt(DATA.strings.ui.position,
-    { position: position, total: total, label: label });
+  return format(ui('position'), {position:position, total:total, label:label});
 }
-function presenceText(info, key, currentTarget){
-  var bits = [];
-  var caution = info && info.caution;
-  if (!caution && currentTarget !== undefined)
-    caution = currentTarget && currentTarget.caution;
-  else if (!caution && info && info.targets)
-    caution = info.targets.some(function(t){ return !!t.caution; });
-  if (caution) bits.push(DATA.strings.ui.cautionPresent);
-  if ((DATA.claimGates[NavModel.claimOf(key)] || []).length)
-    bits.push(DATA.strings.ui.gatePresent);
-  return bits.length ? ' — ' + bits.join(', ') : '';
-}
-function targetLabel(target){
-  return DATA.anchors[target.block] || target.block;
-}
-function forwardAnnouncement(info, key, position, presence){
-  var subject = DATA.unitLabels[key] || key;
-  var parts = [DATA.strings.ui.forwardMode, subject];
-  var target;
-  if (info.status === 'counsel-review-required')
-    parts.push(DATA.strings.ui.noCandidateNotice);
-  else {
-    target = info.targets[position];
-    parts.push(positionText(position + 1, info.targets.length,
-      targetLabel(target)));
-  }
-  return parts.join(' — ') + (presence === undefined ?
-    presenceText(info, key, target) : presence);
-}
-function reverseAnnouncement(blockId, list, position){
-  var currentId = list[position].fragment;
-  var currentInfo = NavModel.forwardTargets(DATA, currentId);
-  var currentTarget = currentInfo && currentInfo.targets.filter(function(t){
-    return t.block === blockId;
-  })[0];
-  var claims = list.reduce(function(out, item){
-    out[NavModel.claimOf(item.fragment)] = 1; return out;
-  }, {});
-  return [
-    DATA.strings.ui.reverseMode,
-    DATA.anchors[blockId] || blockId,
-    fmt(DATA.strings.ui.reverseCounts,
-      { fragments: list.length, claims: Object.keys(claims).length }),
-    positionText(position + 1, list.length,
-      DATA.unitLabels[currentId] || currentId)
-  ].join(' — ') + presenceText(currentInfo, currentId, currentTarget);
-}
+function relation(relationId){ return DATA.relations[relationId] || null; }
+function claimGates(current){ return DATA.claimGates[current.claimKey] || []; }
 
 function clearHighlights(){
-  ['hl-strong','hl-soft','hl-frag','hl-frag-soft'].forEach(function(c){
-    Array.prototype.slice.call(document.querySelectorAll('.' + c))
-      .forEach(function(n){ n.classList.remove(c); });
+  ['highlight-strong','highlight-soft','highlight-subject','highlight-related']
+    .forEach(function(className){
+      Array.prototype.slice.call(document.querySelectorAll('.' + className))
+        .forEach(function(node){ node.classList.remove(className); });
+    });
+}
+function clearSelection(returnFocus){
+  var focusId = state.returnFocus;
+  state = {mode:null, key:null, position:0, list:[], returnFocus:null};
+  forwardBar.hidden = true;
+  reverseBar.hidden = true;
+  forwardBar.textContent = '';
+  reverseBar.textContent = '';
+  clearHighlights();
+  if (returnFocus && focusId){
+    var focusNode = document.getElementById(focusId);
+    if (focusNode) focusNode.focus();
+  }
+  announce(ui('selectionCleared'));
+}
+function scrollToNode(id){
+  var node = document.getElementById(id);
+  if (node) node.scrollIntoView({
+    behavior:reducedMotion ? 'auto' : 'smooth', block:'center'
   });
 }
-function clearSelection(refocus){
-  var rf = state.returnFocus;
-  state = { mode: null, key: null, pos: 0, list: [], returnFocus: null };
-  fbar.hidden = true; rbar.hidden = true; clearHighlights();
-  fbar.textContent = ''; rbar.textContent = '';
-  if (refocus && rf){ var n = document.getElementById(rf); if (n) n.focus(); }
-  say(DATA.strings.ui.selectionCleared);
-}
-function scrollToBlock(id, strong){
-  var n = document.getElementById(id);
-  if (!n) return;
-  n.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-  if (strong) n.classList.add('hl-strong');
-}
-
-function selectionControls(canCycle){
-  var controls = el('div', 'selection-controls');
+function controls(canCycle){
+  var wrap = element('div', 'selection-controls');
   if (canCycle){
-    controls.appendChild(btn(null, DATA.strings.ui.previous, '◀',
-      function(){ move(-1); }));
-    controls.appendChild(btn(null, DATA.strings.ui.next, '▶',
-      function(){ move(1); }));
+    wrap.appendChild(button(null, ui('previous'), '◀', function(){ move(-1); }));
+    wrap.appendChild(button(null, ui('next'), '▶', function(){ move(1); }));
   }
-  controls.appendChild(btn(null, DATA.strings.ui.clearSelection, '×',
-    function(){ clearSelection(true); }));
-  return controls;
+  wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
+    clearSelection(true);
+  }));
+  return wrap;
 }
-
-function cautionChip(caution, isClaimGate){
-  var wrap = el('span');
-  var name;
-  if (caution.type === 'source-gate') name = DATA.strings.gateCodes[caution.code] || caution.code;
-  else name = DATA.strings.cautionType['generalization-note'];
-  var labelValues = { name: name };
-  if (isClaimGate){
-    var claimKey = NavModel.claimOf(state.key);
-    labelValues.prefix = DATA.edition.prefix;
-    labelValues.n = claimKey.slice(1);
-  }
-  var chip = btn('caution-chip' + (isClaimGate ? ' claim-gate-chip' : ''),
-    fmt(isClaimGate ? DATA.strings.ui.claimLevelGateLabel :
-      DATA.strings.ui.cautionLabel, labelValues), '⚑ ' + name,
-    function(){
-      var q = wrap.querySelector('.caution-quote');
-      if (q){ q.remove(); chip.setAttribute('aria-expanded', 'false'); return; }
-      var quote = el('span', 'caution-quote');
-      if (caution.type === 'source-gate' && caution.source &&
-          DATA.quotes[caution.source.block])
-        quote.textContent = DATA.quotes[caution.source.block];
-      else quote.textContent = DATA.strings.generalizationCodes[caution.code] || '';
-      wrap.appendChild(quote);
-      chip.setAttribute('aria-expanded', 'true');
-    });
+function cautionControl(caution){
+  var wrap = element('span');
+  var chipLabel = caution.typeLabel + ' — ' + caution.name + ' — ' + caution.scope;
+  var chip = button('caution-chip', chipLabel, '⚑ ' + caution.name, function(){
+    var detail = wrap.querySelector('.caution-detail');
+    if (detail){
+      detail.remove();
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    detail = element('span', 'caution-detail',
+      caution.typeLabel + ' — ' + caution.scope + ' — ' + caution.quote);
+    wrap.appendChild(detail);
+    chip.setAttribute('aria-expanded', 'true');
+  });
   chip.setAttribute('aria-expanded', 'false');
   wrap.appendChild(chip);
   return wrap;
 }
-
-function renderForwardBar(){
-  fbar.textContent = '';
-  var info = state.info;
-  fbar.appendChild(el('div', 'mode', DATA.strings.ui.forwardMode));
-  fbar.appendChild(el('div', 'ctx', DATA.unitLabels[state.key] || state.key));
-  if (info.status === 'counsel-review-required'){
-    fbar.appendChild(el('div', null, DATA.strings.ui.noCandidateNotice));
-  } else {
-    var t = info.targets[state.pos];
-    var line = el('div');
-    line.appendChild(el('span', null, positionText(state.pos + 1,
-      info.targets.length, DATA.anchors[t.block] || t.block)));
-    if (t.role) line.appendChild(el('span', null, '  [' +
-      DATA.strings.role[t.role] + ']'));
-    fbar.appendChild(line);
-    if (t.note) fbar.appendChild(el('div', null, t.note));
-    if (info.targets.length > 5)
-      fbar.appendChild(el('span', 'more', DATA.strings.ui.moreCandidates
-        .replace('{n}', String(info.targets.length - 5))));
-    if (t.caution) fbar.appendChild(cautionChip(t.caution, false));
-  }
-  (info.dispositions || []).forEach(function(d){
-    var wording = DATA.strings.dispositions[d.disposition];
-    if (wording) fbar.appendChild(el('div', 'disposition', wording));
-  });
-  fbar.appendChild(selectionControls(info.status === 'mapped'));
-  if (info.caution) fbar.appendChild(cautionChip(info.caution, false));
-  NavModel.claimGates(DATA, state.key).forEach(function(g){
-    fbar.appendChild(cautionChip(g, true));
-  });
-  fbar.hidden = false;
+function cautionPresence(current, target){
+  var values = [];
+  if (current.caution || (target && target.caution))
+    values.push(ui('cautionPresent'));
+  if (claimGates(current).length) values.push(ui('gatePresent'));
+  return values.length ? ' — ' + values.join(', ') : '';
 }
-
+function forwardAnnouncement(current){
+  var parts = [ui('forwardMode'), current.subjectLabel];
+  var target = null;
+  if (current.status === 'counsel-review-required')
+    parts.push(current.statusLabel);
+  else {
+    target = current.targets[state.position];
+    parts.push(positionText(
+      state.position + 1, current.targets.length, target.label));
+  }
+  return parts.join(' — ') + cautionPresence(current, target);
+}
+function renderForwardBar(){
+  var current = relation(state.key);
+  forwardBar.textContent = '';
+  forwardBar.appendChild(element('div', 'mode', ui('forwardMode')));
+  forwardBar.appendChild(element('div', 'context', current.subjectLabel));
+  if (current.status === 'counsel-review-required'){
+    forwardBar.appendChild(element('div', null, current.statusLabel));
+  } else {
+    var target = current.targets[state.position];
+    var targetLine = positionText(
+      state.position + 1, current.targets.length, target.label);
+    if (target.roleLabel) targetLine += ' [' + target.roleLabel + ']';
+    forwardBar.appendChild(element('div', null, targetLine));
+    if (target.note) forwardBar.appendChild(element('div', null, target.note));
+    if (current.targets.length > 5)
+      forwardBar.appendChild(element('div', null,
+        format(ui('moreCandidates'), {number:current.targets.length - 5})));
+    if (target.caution) forwardBar.appendChild(cautionControl(target.caution));
+  }
+  if (current.caution) forwardBar.appendChild(cautionControl(current.caution));
+  current.dispositions.forEach(function(item){
+    forwardBar.appendChild(element('div', 'disposition', item.text));
+  });
+  claimGates(current).forEach(function(item){
+    forwardBar.appendChild(cautionControl(item.gate));
+  });
+  forwardBar.appendChild(controls(current.status === 'mapped'));
+  forwardBar.hidden = false;
+}
 function applyForwardHighlights(){
   clearHighlights();
-  var info = state.info;
-  var fragNode = document.getElementById('u-' + state.key) ||
-    document.getElementById('btn-' + state.key);
-  if (fragNode) fragNode.classList.add('hl-frag');
-  if (info.status !== 'counsel-review-required'){
-    info.targets.slice(0, 5).forEach(function(t, i){
-      var n = document.getElementById(t.block);
-      if (n && i !== state.pos) n.classList.add('hl-soft');
+  var current = relation(state.key);
+  var subject = document.getElementById(current.subjectDomId);
+  if (subject) subject.classList.add('highlight-subject');
+  if (current.status !== 'mapped') return;
+  current.targets.slice(0, 5).forEach(function(target, index){
+    target.blocks.forEach(function(blockId){
+      var block = document.getElementById(blockId);
+      if (!block) return;
+      block.classList.add(index === state.position ?
+        'highlight-strong' : 'highlight-soft');
     });
-    scrollToBlock(info.targets[state.pos].block, true);
-  }
+  });
+  var selected = current.targets[state.position];
+  selected.blocks.forEach(function(blockId){
+    var block = document.getElementById(blockId);
+    if (block){
+      block.classList.remove('highlight-soft');
+      block.classList.add('highlight-strong');
+    }
+  });
+  scrollToNode(selected.primary);
 }
-
-function activate(fragId, fromId){
-  var info = NavModel.forwardTargets(DATA, fragId);
-  if (!info) return;
+function activateForward(relationId, fromId){
+  var current = relation(relationId);
+  if (!current) return;
   clearSelection(false);
-  state = { mode: 'forward', key: fragId, pos: 0, info: info,
-            returnFocus: fromId };
+  state = {mode:'forward', key:relationId, position:0, list:[],
+    returnFocus:fromId};
   renderForwardBar();
   applyForwardHighlights();
-  say(forwardAnnouncement(info, fragId, 0));
-  fbar.setAttribute('tabindex', '-1');
-  fbar.focus();
+  announce(forwardAnnouncement(current));
+  forwardBar.setAttribute('tabindex', '-1');
+  forwardBar.focus();
 }
 
+function reverseAnnouncement(blockId, list, position){
+  var current = relation(list[position]);
+  var target = current.targets.find(function(candidate){
+    return candidate.blocks.indexOf(blockId) !== -1;
+  }) || null;
+  var claims = {};
+  list.forEach(function(id){ claims[relation(id).claimKey] = true; });
+  return [
+    ui('reverseMode'),
+    positionText(position + 1, list.length, current.subjectLabel),
+    format(ui('reverseCounts'), {
+      fragments:list.length, claims:Object.keys(claims).length
+    })
+  ].join(' — ') + cautionPresence(current, target);
+}
+function renderReverseBar(){
+  var list = state.list;
+  var current = relation(list[state.position]);
+  var claims = {};
+  list.forEach(function(id){ claims[relation(id).claimKey] = true; });
+  reverseBar.textContent = '';
+  reverseBar.appendChild(element('div', 'mode', ui('reverseMode')));
+  reverseBar.appendChild(element('div', 'context', current.subjectLabel));
+  reverseBar.appendChild(element('div', null, format(ui('reverseCounts'), {
+    fragments:list.length, claims:Object.keys(claims).length
+  })));
+  reverseBar.appendChild(element('div', null,
+    positionText(state.position + 1, list.length, current.subjectLabel)));
+  reverseBar.appendChild(controls(true));
+  reverseBar.hidden = false;
+}
+function applyReverseHighlights(){
+  clearHighlights();
+  var disclosure = document.getElementById(state.key);
+  if (disclosure) disclosure.classList.add('highlight-subject');
+  state.list.forEach(function(relationId, index){
+    var current = relation(relationId);
+    var subject = document.getElementById(current.subjectDomId);
+    if (!subject) return;
+    subject.classList.add(index === state.position ?
+      'highlight-strong' : 'highlight-related');
+    if (index === state.position) scrollToNode(current.subjectDomId);
+  });
+}
+function activateReverse(blockId, fromId){
+  var list = DATA.reverse[blockId] || [];
+  if (!list.length) return;
+  clearSelection(false);
+  state = {mode:'reverse', key:blockId, position:0, list:list,
+    returnFocus:fromId};
+  renderReverseBar();
+  applyReverseHighlights();
+  announce(reverseAnnouncement(blockId, list, 0));
+  reverseBar.setAttribute('tabindex', '-1');
+  reverseBar.focus();
+}
 function move(delta){
-  if (state.mode === 'forward' && state.info.status === 'mapped'){
-    state.pos = NavModel.cycle(state.pos, state.info.targets.length, delta);
-    renderForwardBar(); applyForwardHighlights();
-    var t = state.info.targets[state.pos];
-    say(forwardAnnouncement(state.info, state.key, state.pos,
-      presenceText(state.info, state.key, t)));
-    fbar.focus();
+  if (state.mode === 'forward'){
+    var current = relation(state.key);
+    if (current.status !== 'mapped' || !current.targets.length) return;
+    state.position = (state.position + delta + current.targets.length) %
+      current.targets.length;
+    renderForwardBar();
+    applyForwardHighlights();
+    announce(forwardAnnouncement(current));
+    forwardBar.focus();
   } else if (state.mode === 'reverse'){
-    state.pos = NavModel.cycle(state.pos, state.list.length, delta);
-    renderReverseBar(); applyReverseHighlights();
-    say(reverseAnnouncement(state.key, state.list, state.pos));
-    rbar.focus();
+    state.position = (state.position + delta + state.list.length) %
+      state.list.length;
+    renderReverseBar();
+    applyReverseHighlights();
+    announce(reverseAnnouncement(state.key, state.list, state.position));
+    reverseBar.focus();
+  }
+}
+function activateGate(claimKey, gateId, fromId){
+  var entries = DATA.claimGates[claimKey] || [];
+  for (var index = 0; index < entries.length; index += 1){
+    if (entries[index].gate.gateId !== gateId) continue;
+    clearSelection(false);
+    state = {mode:'claim-gate', key:claimKey, position:0, list:[],
+      returnFocus:fromId};
+    forwardBar.textContent = '';
+    forwardBar.appendChild(element('div', 'mode', ui('forwardMode')));
+    forwardBar.appendChild(element('div', 'context',
+      format(ui('claimGateContext'), {
+        prefix:DATA.edition.prefix, number:claimKey.split('-')[1]
+      })));
+    forwardBar.appendChild(cautionControl(entries[index].gate));
+    forwardBar.appendChild(element(
+      'div', 'disposition', entries[index].disposition.text));
+    forwardBar.appendChild(controls(false));
+    forwardBar.hidden = false;
+    forwardBar.setAttribute('tabindex', '-1');
+    forwardBar.focus();
+    announce(format(ui('claimGateAnnouncement'), {
+      prefix:DATA.edition.prefix, number:claimKey.split('-')[1]
+    }) + ' — ' + ui('gatePresent'));
+    return;
   }
 }
 
-function renderReverseBar(){
-  rbar.textContent = '';
-  rbar.appendChild(el('div', 'mode', DATA.strings.ui.reverseMode));
-  var claims = {};
-  state.list.forEach(function(e){ claims[NavModel.claimOf(e.fragment)] = 1; });
-  rbar.appendChild(el('div', 'ctx', (DATA.anchors[state.key] || state.key)));
-  rbar.appendChild(el('div', null, fmt(DATA.strings.ui.reverseCounts,
-    { fragments: state.list.length, claims: Object.keys(claims).length })));
-  var cur = state.list[state.pos];
-  rbar.appendChild(el('div', null, positionText(state.pos + 1,
-    state.list.length, DATA.unitLabels[cur.fragment] || cur.fragment)));
-  rbar.appendChild(selectionControls(true));
-  rbar.hidden = false;
-}
-
-function applyReverseHighlights(){
-  clearHighlights();
-  var blockNode = document.getElementById(state.key);
-  if (blockNode) blockNode.classList.add('hl-frag');
-  state.list.forEach(function(e, i){
-    var n = document.getElementById('u-' + e.fragment) ||
-            document.getElementById('btn-' + e.fragment);
-    if (!n) return;
-    if (i === state.pos){ n.classList.add('hl-strong');
-      n.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth',
-                         block: 'center' });
-    } else n.classList.add('hl-frag-soft');
-  });
-}
-
-function activateReverse(blockId, fromId){
-  var list = NavModel.reverseFragments(DATA, blockId);
-  if (!list.length) return;
-  clearSelection(false);
-  state = { mode: 'reverse', key: blockId, pos: 0, list: list,
-            returnFocus: fromId };
-  renderReverseBar(); applyReverseHighlights();
-  say(reverseAnnouncement(blockId, list, 0));
-  rbar.setAttribute('tabindex', '-1');
-  rbar.focus();
-}
-
-document.addEventListener('click', function(ev){
-  var b = ev.target.closest ? ev.target.closest('button') : null;
-  if (b){
-    if (b.dataset.frag){ activate(b.dataset.frag, b.id); return; }
-    if (b.dataset.block){ activateReverse(b.dataset.block, b.id); return; }
-    if (b.dataset.goto){
-      var n = document.getElementById(b.dataset.goto);
-      if (n) n.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth',
-                                block: 'start' });
+document.addEventListener('click', function(event){
+  var control = event.target.closest ? event.target.closest('button') : null;
+  if (control){
+    if (control.dataset.relation){
+      activateForward(control.dataset.relation, control.id);
       return;
     }
-    if (b.dataset.gate){
-      activateGate(b.dataset.claim, b.dataset.gate, b.id); return;
+    if (control.dataset.block){
+      activateReverse(control.dataset.block, control.id);
+      return;
     }
-    if (b.dataset.aux){
-      var on = document.body.classList.toggle('aux-open');
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (control.dataset.goto){
+      var destination = document.getElementById(control.dataset.goto);
+      if (destination) destination.scrollIntoView({
+        behavior:reducedMotion ? 'auto' : 'smooth', block:'start'
+      });
+      return;
+    }
+    if (control.dataset.gate){
+      activateGate(control.dataset.claim, control.dataset.gate, control.id);
+      return;
+    }
+    if (control.dataset.aux){
+      var open = document.body.classList.toggle('aux-open');
+      control.setAttribute('aria-pressed', open ? 'true' : 'false');
       return;
     }
     return;
   }
-  var surf = ev.target.closest ? ev.target.closest('.pointer-surface') : null;
-  if (surf){
-    var sel = window.getSelection && window.getSelection();
-    if (sel && sel.toString().length) return; /* selection suppresses it */
-    activate(surf.dataset.frag, 'btn-' + surf.dataset.frag);
-  }
+  var surface = event.target.closest ? event.target.closest('.pointer-surface') : null;
+  if (!surface) return;
+  var selection = window.getSelection && window.getSelection();
+  if (selection && selection.toString().length) return;
+  var current = relation(surface.dataset.relation);
+  activateForward(surface.dataset.relation,
+    current ? current.subjectControlId : null);
 });
 
-function activateGate(claimKey, gateId, fromId){
-  var gates = DATA.claimGates[claimKey] || [];
-  for (var i = 0; i < gates.length; i++){
-    if (gates[i].gateId === gateId){
-      clearSelection(false);
-      /* A claim gate has no candidate list.  Keep it out of the forward
-         cycling state so ArrowLeft/ArrowRight cannot index an empty list. */
-      state = { mode: 'claim-gate', key: claimKey, pos: 0,
-        info: { status: 'claim-gate', targets: [] }, returnFocus: fromId };
-      fbar.textContent = '';
-      fbar.appendChild(el('div', 'mode', DATA.strings.ui.forwardMode));
-      fbar.appendChild(el('div', 'ctx', fmt(
-        DATA.strings.ui.claimGateContext,
-        { prefix: DATA.edition.prefix, n: claimKey.slice(1) })));
-      fbar.appendChild(cautionChip(gates[i], true));
-      (DATA.claimDispositions[claimKey] || []).forEach(function(d){
-        if (d.gateId === gateId)
-          fbar.appendChild(el('div', null,
-            DATA.strings.dispositions[d.disposition]));
-      });
-      fbar.appendChild(btn(null, DATA.strings.ui.clearSelection, '×',
-        function(){ clearSelection(true); }));
-      fbar.hidden = false;
-      fbar.setAttribute('tabindex', '-1');
-      fbar.focus();
-      say(DATA.strings.ui.forwardMode + ' — ' +
-        fmt(DATA.strings.ui.claimGateAnnouncement,
-          { prefix: DATA.edition.prefix, n: claimKey.slice(1) }) + ' — ' +
-        DATA.strings.ui.gatePresent);
-      return;
-    }
+document.addEventListener('keydown', function(event){
+  if (event.key === 'Escape' && state.mode){
+    clearSelection(true);
+    return;
   }
-}
-
-document.addEventListener('keydown', function(ev){
-  if (ev.key === 'Escape' && state.mode){ clearSelection(true); return; }
-  if ((ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') &&
+  if ((event.key === 'ArrowLeft' || event.key === 'ArrowRight') &&
       (state.mode === 'forward' || state.mode === 'reverse')){
-    var bar = state.mode === 'forward' ? fbar : rbar;
+    var bar = state.mode === 'forward' ? forwardBar : reverseBar;
     if (bar.contains(document.activeElement)){
-      ev.preventDefault();
-      move(ev.key === 'ArrowLeft' ? -1 : 1);
+      event.preventDefault();
+      move(event.key === 'ArrowLeft' ? -1 : 1);
     }
   }
 });

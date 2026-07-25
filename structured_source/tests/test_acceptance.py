@@ -1,4 +1,4 @@
-"""Focused recurring-acceptance and command-surface fixtures."""
+"""Focused data-only acceptance and command-surface fixtures."""
 
 import copy
 import os
@@ -7,12 +7,9 @@ import unittest
 from unittest import mock
 
 from structured_source import acceptance
-from structured_source.__main__ import _parser
-from structured_source.acceptance_callbacks import CALLBACKS
-from structured_source.control import canonical_json, parse_json
+from structured_source.__main__ import COMMANDS, _parser
 from structured_source.errors import StructuredSourceError
-from structured_source.verify import COMMAND_CAPABILITIES, validate_command_policy
-from structured_source.verify import VerificationContext
+from structured_source.verify import VerificationContext, run_acceptance
 from structured_source.tests.test_registry import registry_fixture
 
 
@@ -23,14 +20,15 @@ class AcceptanceContract(unittest.TestCase):
     def setUp(self):
         self.registry = acceptance.load_registry(ROOT)
 
-    def test_ten_criteria_each_own_one_exact_callback(self):
+    def test_registry_is_ordered_current_criteria_data_only(self):
+        self.assertEqual(set(self.registry), {"acceptanceVersion", "criteria"})
+        self.assertEqual(self.registry["acceptanceVersion"], "2")
         self.assertEqual(
             [entry["code"] for entry in self.registry["criteria"]],
             list(acceptance.CRITERIA))
-        callbacks = [entry["callbacks"][0]
-                     for entry in self.registry["criteria"]]
-        self.assertEqual(len(callbacks), 10)
-        self.assertEqual(set(callbacks), set(CALLBACKS))
+        self.assertTrue(all(set(entry) == {
+            "code", "evidence", "id", "outcome"}
+            for entry in self.registry["criteria"]))
 
     def test_acceptance_table_is_the_exact_registry_projection(self):
         path = os.path.join(
@@ -43,56 +41,48 @@ class AcceptanceContract(unittest.TestCase):
             text.split(start, 1)[1].split(end, 1)[0],
             acceptance.render_table(self.registry))
 
-    def test_every_registered_test_family_declares_current_criteria(self):
-        runner = self.registry["runner"]
-        self.assertIn(
-            "structured_source.tests.test_conversion", runner["testModules"])
-        self.assertNotIn(
-            "structured_source.tests.test_projection", runner["testModules"])
-        self.assertEqual(set(runner["testModules"]),
-                         set(runner["testCriteria"]))
-        self.assertTrue(all(runner["testCriteria"][module]
-                            for module in runner["testModules"]))
-
-    def test_missing_or_duplicate_callback_fails_closed(self):
-        value = copy.deepcopy(self.registry)
-        value["criteria"][0]["callbacks"] = []
-        with self.assertRaisesRegex(StructuredSourceError, "exactly one"):
-            acceptance.validate_registry(value)
-        value = copy.deepcopy(self.registry)
-        value["criteria"][1]["callbacks"] = \
-            value["criteria"][0]["callbacks"]
+    def test_runner_and_callback_metadata_fail_closed(self):
+        for field, value in (("runner", {}), ("namespace", "ssp")):
+            malformed = copy.deepcopy(self.registry)
+            malformed[field] = value
+            with self.subTest(field=field), self.assertRaises(
+                    StructuredSourceError):
+                acceptance.validate_registry(malformed)
+        malformed = copy.deepcopy(self.registry)
+        malformed["criteria"][0]["callbacks"] = ["retired"]
         with self.assertRaises(StructuredSourceError):
-            acceptance.validate_registry(value)
+            acceptance.validate_registry(malformed)
 
-    def test_command_policy_and_cli_are_exact(self):
-        path = os.path.join(ROOT, "structured_source", "policy", "commands.json")
-        with open(path, "rb") as handle:
-            data = handle.read()
-        policy = validate_command_policy(parse_json(data))
-        self.assertEqual(data, canonical_json(policy))
-        self.assertEqual(
-            {entry["id"] for entry in policy["commands"]},
-            set(COMMAND_CAPABILITIES))
+    def test_parser_is_the_exact_command_surface(self):
         actions = _parser()._subparsers._group_actions[0].choices
-        self.assertEqual(set(actions), set(COMMAND_CAPABILITIES))
-        self.assertTrue({"approve", "export", "migrate"}.isdisjoint(actions))
+        self.assertEqual(tuple(actions), COMMANDS)
+        self.assertEqual(
+            COMMANDS,
+            ("check", "regenerate", "regenerate-controls", "verify-current"))
+        self.assertFalse(os.path.exists(os.path.join(
+            ROOT, "structured_source", "policy", "commands.json")))
 
-    def test_callbacks_reuse_one_context_result(self):
-        class Context:
-            def __init__(self):
-                self.calls = []
+    def test_run_acceptance_uses_one_pass_and_emits_plain_statuses(self):
+        snapshot = type("Snapshot", (), {"digest": "sha256:test"})()
+        with mock.patch(
+                "structured_source.verify.VerificationContext") as context_type:
+            context = context_type.return_value
+            context.verify_all.return_value = {
+                "criteria": 10,
+                "globalPasses": 1,
+                "status": "conformant",
+            }
+            result = run_acceptance(ROOT, repository_snapshot=snapshot)
+        context.verify_all.assert_called_once_with()
+        self.assertEqual(result["repositorySnapshot"], "sha256:test")
+        self.assertEqual(result["results"], [
+            {"id": criterion, "status": "passed"}
+            for criterion in acceptance.CRITERIA
+        ])
+        self.assertTrue(all(
+            set(entry) == {"id", "status"} for entry in result["results"]))
 
-            def evidence_for(self, code):
-                self.calls.append(code)
-                return {"criterion": code, "status": "conformant"}
-
-        context = Context()
-        for callback in CALLBACKS.values():
-            callback(context)
-        self.assertEqual(context.calls, list(acceptance.CRITERIA))
-
-    def test_real_context_memoizes_one_corpus_pass_for_all_callbacks(self):
+    def test_real_global_pass_checks_each_package_once(self):
         context = VerificationContext(ROOT, registry=registry_fixture())
         package_results = {
             package_id: {
@@ -105,16 +95,15 @@ class AcceptanceContract(unittest.TestCase):
         }
         with mock.patch.object(
                 context, "_control_closure",
-                return_value=(
-                    {"criteria": [{}] * 10},
-                    {"commands": [{}] * 5})), \
+                return_value={"criteria": [{}] * 10}), \
                 mock.patch.object(
                     context, "check",
                     side_effect=lambda package_id: package_results[package_id]
                 ) as check:
-            for callback in CALLBACKS.values():
-                callback(context)
-        self.assertEqual(context._global_passes, 1)
+            first = context.verify_all()
+            second = context.verify_all()
+        self.assertIs(first, second)
+        self.assertEqual(first["globalPasses"], 1)
         self.assertEqual(check.call_count, len(context.packages))
 
     def test_targeted_retired_import_scan_fails_closed(self):

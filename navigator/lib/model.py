@@ -1,569 +1,958 @@
-"""Edition model — everything the validator, projections, and renderer
-consume, built once per command through the gateways.
+"""Immutable XML-only semantic model for one navigator edition."""
 
-Loads the edition config, registry, profiles, corpora, claims, dependency
-map, gate inventory, strings, schemas, and relation set; computes aggregate
-claim hashes, dependency-chain hashes, anchor indexes (including table-row
-anchors ``S###.rK`` and whole-claim anchors ``PC<n>``), digest ambiguity
-sets, and the per-owner review projections whose composite digest is
-``review.contentHash`` (TDD §8.2, §8.4, §13).
-"""
+from __future__ import annotations
 
+from dataclasses import dataclass
+from datetime import datetime
+import os
 import re
+from types import MappingProxyType
 
-from . import canon, claims as claims_mod, depgraph, gateway
-from . import registry as registry_mod, schema_validate, segmenter
+from structured_source.canonical import raw_digest
 
-PHRASE_ID_RE = re.compile(r"^c(\d+)u(\d+)p(\d+)$")
-FRAG_ID_RE = re.compile(r"^c(\d+)u(\d+)$")
+from . import canon, claims as claims_mod, depgraph, projections
+from . import registry as registry_mod, schema_validate
+
+C = "{urn:aa11393:ssp:content:1}"
+R = "{urn:aa11393:navigator:relations:1}"
+W = "{urn:aa11393:navigator:wording:1}"
+XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
+RELATION_NAMESPACE = "urn:aa11393:navigator:relations:1"
+WORDING_NAMESPACE = "urn:aa11393:navigator:wording:1"
+RELATION_SCHEMA = "navigator/schema/navigator-relations.xsd"
+WORDING_SCHEMA = "navigator/schema/wording.xsd"
+SHARED_WORDING = "navigator/wording/shared.wording.xml"
+EDITION_SCHEMA = "navigator/schema/edition.schema.json"
+_STABLE_ID = re.compile(r"[A-Za-z][A-Za-z0-9._:-]*\Z")
+_TIMESTAMP = re.compile(
+    r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\Z")
+_WORDING_CONTRACT = {
+    "counsel-legend": ("legend", "counsel-legend"),
+    "standing-disclaimer": ("disclaimer", "standing-disclaimer"),
+    "authority-pct-as-filed": ("provenance", "authority-provenance"),
+    "source-input-provenance": ("provenance", "source-input-provenance"),
+    "provenance-summary": ("provenance", "provenance-summary"),
+    "editorial-not-filed": ("editorial", "editorial-label"),
+    "claim-set-guidance": ("editorial", "guidance-label"),
+    "artifact-label-technical-preview": ("release-profile", "artifact-label"),
+    "artifact-watermark-technical-preview": ("security", "artifact-watermark"),
+    "bundle-manifest-neutral": ("bundle-manifest", "bundle-manifest"),
+}
+_WORDING_PREFIX_CONTRACT = (
+    ("mapping-status-", "mapping-status", "mapping-status"),
+    ("mapping-role-", "mapping-role", "mapping-role"),
+    ("caution-type-", "caution", "caution-type"),
+    ("caution-scope-", "caution", "caution-scope"),
+    ("gate-disposition-", "disposition", "gate-disposition"),
+    ("generalization-", "caution", "generalization-caution"),
+    ("gate-label-", "gate-label", "gate-label"),
+)
+_SLOT_CONTRACT = {
+    "standing-disclaimer": (
+        ("editionVersion", "stable-id", "registered-control",
+         "edition.claimSetVersion"),
+    ),
+    "provenance-summary": (
+        ("timestamp", "timestamp", "registered-control",
+         "edition.declaredReleaseTimestamp"),
+        ("claims", "integer", "closed-derivation", "edition.claimCount"),
+        ("units", "integer", "closed-derivation", "edition.unitCount"),
+        ("blocks", "integer", "closed-derivation", "pct.blockCount"),
+    ),
+    "bundle-manifest-neutral": (
+        ("naEditionVersion", "stable-id", "registered-control",
+         "edition.na.claimSetVersion"),
+        ("afEditionVersion", "stable-id", "registered-control",
+         "edition.af.claimSetVersion"),
+    ),
+}
 
 
 class ModelError(RuntimeError):
     pass
 
 
-def gate_entry_projection(entry, source_context=None):
-    """Review projection of a gate-inventory entry: the source block locator
-    is excluded (declared locator exception — mechanical re-anchoring never
-    invalidates review), its identity covered by source.textHash and, when
-    that digest repeats in the quotable set, computed contextual identity;
-    appliesTo hashes stay included, so applicability changes deliberately
-    cascade to the gate's dispositions.
-
-    ``source_context`` is computed from the pinned corpus by
-    :class:`EditionModel`; it is never authored into the inventory.  Keeping
-    this small pure helper public is useful for synthetic fixture generation,
-    where a source is known to be unique and no context is required.
-    """
-    source = {"textHash": entry["source"]["textHash"]}
-    if source_context is not None:
-        source["contextualIdentity"] = source_context
-    return {
-        "gateId": entry["gateId"],
-        "code": entry["code"],
-        "requiredScope": entry["requiredScope"],
-        "requirement": entry["requirement"],
-        "source": source,
-        "appliesTo": entry["appliesTo"],
-    }
+@dataclass(frozen=True, slots=True)
+class SourceItem:
+    fragment_id: str
+    text: str
+    content_digest: str
+    binding_kind: str
 
 
-class Anchor:
-    __slots__ = ("id", "digest", "kind", "cls", "label", "parent", "block")
-
-    def __init__(self, id_, digest, kind, cls, label, parent=None, block=None):
-        self.id = id_
-        self.digest = digest
-        self.kind = kind
-        self.cls = cls
-        self.label = label
-        self.parent = parent      # parent-container anchor id (rows -> table)
-        self.block = block        # owning Block
+@dataclass(frozen=True, slots=True)
+class Asset:
+    asset_id: str
+    path: str
+    media_type: str
+    data: bytes
+    raw_digest: str
 
 
-def _anchor_index(blocks):
-    """Anchor id -> Anchor, including row anchors, in document order."""
-    anchors = {}
-    order = []
-    heading = None
-    claim_headings = {}
-    for b in blocks:
-        if b.kind == "heading":
-            heading = b
-        if b.kind in ("claim-head", "claim-element") and b.meta.get("pctClaim"):
-            claim_number = b.meta["pctClaim"]
-            if heading is not None:
-                claim_headings.setdefault(claim_number, heading.id)
-            parent = "PC%d" % claim_number
-        elif b.kind == "claim-whole":
-            # Whole-claim anchors contain their members.  Parenting a whole
-            # claim back to its first member creates a two-node cycle, so use
-            # the real Claims section captured while parsing those members.
-            parent = claim_headings.get(b.meta.get("pctClaim"))
+@dataclass(frozen=True, slots=True)
+class ContentNode:
+    fragment_id: str | None
+    kind: str
+    text: str
+    level: int | None
+    attributes: tuple[tuple[str, str], ...]
+    children: tuple["ContentNode", ...]
+    content_digest: str | None
+    editorial: bool
+
+
+@dataclass(frozen=True, slots=True)
+class Endpoint:
+    document_id: str
+    fragment_id: str
+    content_digest: str
+
+
+@dataclass(frozen=True, slots=True)
+class Caution:
+    kind: str
+    gate_id: str | None
+    code: str | None
+
+
+@dataclass(frozen=True, slots=True)
+class Target:
+    role: str
+    endpoints: tuple[Endpoint, ...]
+    note: str
+    caution: Caution | None
+
+
+@dataclass(frozen=True, slots=True)
+class Mapping:
+    relation_id: str
+    status: str
+    subject: Endpoint
+    unit_kind: str
+    unit_index: int
+    caution: Caution | None
+    targets: tuple[Target, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class PhraseMapping:
+    relation_id: str
+    parent: Endpoint
+    unit_kind: str
+    unit_index: int
+    exact_text: str
+    start: int
+    end: int
+    targets: tuple[Target, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class GateDefinition:
+    gate_id: str
+    code: str
+    required_scope: str
+    source: Endpoint
+
+
+@dataclass(frozen=True, slots=True)
+class Disposition:
+    disposition_id: str
+    gate_id: str
+    value: str
+    subject_kind: str
+    subject: Endpoint
+    unit_kind: str | None
+    unit_index: int | None
+
+
+@dataclass(frozen=True, slots=True)
+class RelationDocument:
+    role: str
+    document_id: str
+    semantic_digest: str
+
+
+@dataclass(frozen=True, slots=True)
+class RelationSet:
+    relation_set_id: str
+    edition: str
+    documents: tuple[RelationDocument, ...]
+    gate_definitions: tuple[GateDefinition, ...]
+    mappings: tuple[Mapping, ...]
+    phrase_mappings: tuple[PhraseMapping, ...]
+    dispositions: tuple[Disposition, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class WordingSlot:
+    name: str
+    scalar_type: str
+    origin_kind: str
+    origin_ref: str
+
+
+@dataclass(frozen=True, slots=True)
+class WordingEntry:
+    wording_id: str
+    category: str
+    usage: tuple[str, ...]
+    text: str
+    slots: tuple[WordingSlot, ...]
+
+
+def _wording_contract(wording_id):
+    direct = _WORDING_CONTRACT.get(wording_id)
+    if direct is not None:
+        return direct
+    for prefix, category, usage in _WORDING_PREFIX_CONTRACT:
+        if wording_id.startswith(prefix):
+            return category, usage
+    return None
+
+
+def _slot_shape(entry):
+    return tuple((slot.name, slot.scalar_type, slot.origin_kind, slot.origin_ref)
+                 for slot in entry.slots)
+
+
+def _render_wording_entry(entry, values):
+    slots = {slot.name: slot for slot in entry.slots}
+    if set(values) != set(slots):
+        raise ModelError("controlled wording slot inventory is not exact")
+    text = entry.text
+    for name, slot in slots.items():
+        value = values[name]
+        if slot.scalar_type == "integer":
+            if not isinstance(value, int) or isinstance(value, bool):
+                raise ModelError("controlled wording integer slot is invalid")
+            rendered = str(value)
         else:
-            parent = heading.id if heading and heading.id != b.id else None
-        a = Anchor(b.id, b.digest, b.kind, b.cls, b.label,
-                   parent=parent, block=b)
-        if b.id in anchors:
-            raise ModelError("duplicate anchor id %r" % b.id)
-        anchors[b.id] = a
-        order.append(a)
-        for r in b.rows:
-            rid = "%s.%s" % (b.id, r["id"])
-            ra = Anchor(rid, r["digest"], "table-row", b.cls,
-                        "%s · %s" % (b.label, r["label"]), parent=b.id, block=b)
-            if rid in anchors:
-                raise ModelError("duplicate anchor id %r" % rid)
-            anchors[rid] = ra
-            order.append(ra)
-    return anchors, order
+            if not isinstance(value, str) or not value or \
+                    canon.normalize_nfc(value) != value:
+                raise ModelError("controlled wording text slot is invalid")
+            rendered = value
+            if slot.scalar_type == "stable-id" and \
+                    _STABLE_ID.fullmatch(value) is None:
+                raise ModelError("controlled wording stable-id slot is invalid")
+            if slot.scalar_type == "timestamp" and \
+                    _TIMESTAMP.fullmatch(value) is None:
+                raise ModelError("controlled wording timestamp slot is invalid")
+        token = "{%s}" % name
+        if text.count(token) != 1:
+            raise ModelError("controlled wording slot occurrence is stale")
+        text = text.replace(token, rendered)
+    if re.search(r"\{[A-Za-z][A-Za-z0-9._:-]*\}", text):
+        raise ModelError("controlled wording retains an unresolved slot")
+    return text
+
+
+def _local(element):
+    return element.tag.rsplit("}", 1)[-1]
+
+
+def _plain_text(element) -> str:
+    if _local(element) == "codeBlock":
+        return canon.canon_code(element.text or "")
+    parts = []
+
+    def visit(node):
+        local = _local(node)
+        if local == "text":
+            parts.append(node.text or "")
+            return
+        if local == "space":
+            parts.append(" ")
+            return
+        if local in {"softBreak", "lineBreak"}:
+            parts.append("\n")
+            return
+        if local == "image":
+            parts.append(node.get("alt", ""))
+            return
+        for child in node:
+            visit(child)
+
+    visit(element)
+    return canon.canon_prose("".join(parts))
+
+
+def _content_node(element, fragment_digests, editorial_ids, inherited=False):
+    identifier = element.get(XML_ID)
+    editorial = inherited or identifier in editorial_ids
+    attributes = tuple(sorted(
+        (name.rsplit("}", 1)[-1], value)
+        for name, value in element.attrib.items() if name != XML_ID))
+    level = None
+    if _local(element) == "heading":
+        try:
+            level = int(element.get("level"))
+        except (TypeError, ValueError) as exc:
+            raise ModelError("disclosure heading level is invalid") from exc
+    digest = fragment_digests.get(identifier) if identifier else None
+    if identifier and digest is None:
+        raise ModelError("addressable disclosure node has no semantic digest")
+    return ContentNode(
+        fragment_id=identifier,
+        kind=_local(element),
+        text=_plain_text(element),
+        level=level,
+        attributes=attributes,
+        children=tuple(_content_node(
+            child, fragment_digests, editorial_ids, editorial)
+            for child in element),
+        content_digest=digest,
+        editorial=editorial,
+    )
+
+
+def _disclosure(content_root, fragment_digests):
+    blocks = list(content_root)
+    wrappers = [index for index, block in enumerate(blocks)
+                if _local(block) == "heading" and
+                _plain_text(block) == "5. International Application Text"]
+    if len(wrappers) != 1 or wrappers[0] + 1 >= len(blocks):
+        raise ModelError("PCT filed-text render boundary is not exact")
+    filed = blocks[wrappers[0] + 1:]
+    texts = [_plain_text(block) for block in filed]
+    if _local(filed[0]) != "paragraph" or not texts[0].startswith(
+            "AI – DRIVEN SYSTEM AND METHOD"):
+        raise ModelError("PCT filed title is absent at the render boundary")
+
+    def one_heading(text):
+        found = [index for index, block in enumerate(filed)
+                 if _local(block) == "heading" and texts[index] == text]
+        if len(found) != 1:
+            raise ModelError("PCT section heading is not exact: %s" % text)
+        return found[0]
+
+    description = one_heading("Description")
+    claims_heading = one_heading("Claims")
+    abstract = one_heading("Abstract")
+    drawings = one_heading("6. Drawings")
+    if not 0 < description < claims_heading < abstract < drawings:
+        raise ModelError("PCT title/description/claims/abstract/drawings order is stale")
+    examples = [text for index, text in enumerate(texts)
+                if _local(filed[index]) == "heading" and
+                re.fullmatch(r"Example [1-5]", text)]
+    if examples != ["Example %d" % number for number in range(1, 6)]:
+        raise ModelError("PCT Example 1..5 heading inventory is not exact")
+    pct_claims = []
+    for text in texts[claims_heading + 1:abstract]:
+        match = re.match(r"^([1-9][0-9]*)\.\s", text)
+        if match:
+            pct_claims.append(int(match.group(1)))
+    if pct_claims != list(range(1, 19)):
+        raise ModelError("PCT claim inventory is not exactly 1..18")
+
+    drawing_blocks = filed[drawings + 1:]
+    image_positions = [index for index, block in enumerate(drawing_blocks)
+                       if any(_local(node) == "image" for node in block.iter())]
+    image_ids = [node.get("assetId") for block in drawing_blocks
+                 for node in block.iter() if _local(node) == "image"]
+    if image_ids != ["asset-fig-%d-png" % number for number in range(1, 5)] or \
+            len(image_positions) != 4:
+        raise ModelError("PCT figure inventory is not exactly figures 1..4")
+    if not drawing_blocks or _local(drawing_blocks[0]) != "blockQuotation":
+        raise ModelError("PCT drawing transcription note is absent")
+    editorial_ids = {drawing_blocks[0].get(XML_ID)}
+    for position in image_positions:
+        if position + 1 >= len(drawing_blocks) or \
+                _local(drawing_blocks[position + 1]) != "paragraph":
+            raise ModelError("PCT drawing reference caption is absent")
+        editorial_ids.add(drawing_blocks[position + 1].get(XML_ID))
+    if _local(drawing_blocks[-1]) != "paragraph" or \
+            not _plain_text(drawing_blocks[-1]).startswith("Application: PCT/"):
+        raise ModelError("PCT editorial filing footer is absent")
+    editorial_ids.add(drawing_blocks[-1].get(XML_ID))
+    if None in editorial_ids or len(editorial_ids) != 6:
+        raise ModelError("PCT editorial marker inventory is not exact")
+
+    nodes = tuple(_content_node(
+        block, fragment_digests, editorial_ids) for block in filed)
+    index = {}
+
+    def add(node):
+        if node.fragment_id:
+            if node.fragment_id in index:
+                raise ModelError("duplicate disclosure fragment identity")
+            index[node.fragment_id] = node
+        for child in node.children:
+            add(child)
+
+    for node in nodes:
+        add(node)
+    return nodes, MappingProxyType(index), frozenset(editorial_ids)
+
+
+def _source_items(authored_root, fragment_digests):
+    parent = authored_root.find(C + "fragments")
+    if parent is None:
+        raise ModelError("authored source has no fragment index")
+    items = {}
+    for fragment in parent.findall(C + "fragment"):
+        identifier = fragment.get(XML_ID)
+        excerpt = fragment.find(C + "excerpt")
+        if not identifier or excerpt is None or not excerpt.text or \
+                identifier not in fragment_digests:
+            raise ModelError("authored source item is incomplete")
+        items[identifier] = SourceItem(
+            fragment_id=identifier,
+            text=excerpt.text,
+            content_digest=fragment_digests[identifier],
+            binding_kind=fragment.get("bindingKind"),
+        )
+    return MappingProxyType(items)
+
+
+def _endpoint(element):
+    return Endpoint(
+        document_id=element.get("documentId"),
+        fragment_id=element.get("fragmentId"),
+        content_digest=element.get("fragmentContentDigest"),
+    )
+
+
+def _caution(element):
+    if element is None:
+        return None
+    return Caution(
+        kind=element.get("kind"), gate_id=element.get("gateId"),
+        code=element.get("code"))
+
+
+def _target(element):
+    note = element.find(R + "note")
+    return Target(
+        role=element.get("role"),
+        endpoints=tuple(_endpoint(item)
+                        for item in element.findall(R + "endpoint")),
+        note=note.text if note is not None else "",
+        caution=_caution(element.find(R + "caution")),
+    )
+
+
+def _targets(parent):
+    if parent is None:
+        return ()
+    return tuple(_target(item) for item in parent.findall(R + "target"))
+
+
+def _unique_span(text, exact):
+    starts = []
+    offset = 0
+    while True:
+        found = text.find(exact, offset)
+        if found < 0:
+            break
+        starts.append(found)
+        offset = found + 1
+    if len(starts) != 1:
+        raise ModelError("phrase selector exactText does not resolve uniquely")
+    start = starts[0]
+    return start, start + len(exact)
+
+
+def _parse_relations(root, units_by_fragment):
+    documents = tuple(RelationDocument(
+        role=item.get("role"), document_id=item.get("documentId"),
+        semantic_digest=item.get("semanticDigest"))
+        for item in root.findall(R + "documents/" + R + "document"))
+    gates = []
+    for item in root.findall(R + "gateDefinitions/" + R + "gate"):
+        gates.append(GateDefinition(
+            gate_id=item.get("gateId"), code=item.get("code"),
+            required_scope=item.get("requiredScope"),
+            source=_endpoint(item.find(R + "source/" + R + "endpoint")),
+        ))
+    mappings = []
+    for item in root.findall(R + "mappings/" + R + "mapping"):
+        subject = item.find(R + "subject")
+        mappings.append(Mapping(
+            relation_id=item.get("relationId"), status=item.get("status"),
+            subject=_endpoint(subject.find(R + "endpoint")),
+            unit_kind=subject.get("unitKind"),
+            unit_index=int(subject.get("unitIndex")),
+            caution=_caution(item.find(R + "caution")),
+            targets=_targets(item.find(R + "targets")),
+        ))
+    phrases = []
+    for item in root.findall(R + "phraseMappings/" + R + "phrase"):
+        parent = item.find(R + "parent")
+        endpoint = _endpoint(parent.find(R + "endpoint"))
+        selector = item.find(R + "selector")
+        exact = selector.find(R + "exactText").text
+        unit = units_by_fragment.get(endpoint.fragment_id)
+        if unit is None:
+            raise ModelError("phrase parent is not a claim unit")
+        start, end = _unique_span(unit.text, exact)
+        phrases.append(PhraseMapping(
+            relation_id=item.get("relationId"), parent=endpoint,
+            unit_kind=parent.get("unitKind"),
+            unit_index=int(parent.get("unitIndex")),
+            exact_text=exact, start=start, end=end,
+            targets=_targets(item.find(R + "targets")),
+        ))
+    dispositions = []
+    for item in root.findall(R + "dispositions/" + R + "disposition"):
+        subject = item.find(R + "subject")
+        dispositions.append(Disposition(
+            disposition_id=item.get("dispositionId"),
+            gate_id=item.get("gateId"), value=item.get("value"),
+            subject_kind=subject.get("kind"),
+            subject=_endpoint(subject.find(R + "endpoint")),
+            unit_kind=subject.get("unitKind"),
+            unit_index=(int(subject.get("unitIndex"))
+                        if subject.get("unitIndex") is not None else None),
+        ))
+    return RelationSet(
+        relation_set_id=root.get("relationSetId"), edition=root.get("edition"),
+        documents=documents, gate_definitions=tuple(gates),
+        mappings=tuple(mappings), phrase_mappings=tuple(phrases),
+        dispositions=tuple(dispositions),
+    )
+
+
+def _parse_wording(root, expected_scope):
+    if root.get("scope") != expected_scope or root.get("wordingSetId") != expected_scope:
+        raise ModelError("controlled wording scope is stale")
+    entries = {}
+    for element in root.findall(W + "entry"):
+        identifier = element.get("wordingId")
+        text = element.find(W + "text")
+        slots_parent = element.find(W + "slots")
+        slots = tuple(WordingSlot(
+            name=item.get("name"), scalar_type=item.get("scalarType"),
+            origin_kind=item.get("originKind"), origin_ref=item.get("originRef"))
+            for item in (() if slots_parent is None
+                         else slots_parent.findall(W + "slot")))
+        if not identifier or identifier in entries or text is None or not text.text:
+            raise ModelError("controlled wording entry is incomplete or duplicated")
+        entry = WordingEntry(
+            wording_id=identifier, category=element.get("category"),
+            usage=tuple(item.get("context")
+                        for item in element.findall(W + "usage")),
+            text=text.text, slots=slots,
+        )
+        contract = _wording_contract(identifier)
+        expected_slots = _SLOT_CONTRACT.get(identifier, ())
+        scope_is_current = (
+            (expected_scope == "shared" and
+             not identifier.startswith("gate-label-")) or
+            (expected_scope in {"na", "af"} and
+             identifier.startswith("gate-label-%s-" % expected_scope))
+        )
+        if not scope_is_current or contract is None or \
+                (entry.category, entry.usage) != (contract[0], (contract[1],)) or \
+                _slot_shape(entry) != expected_slots:
+            raise ModelError(
+                "controlled wording context or slot origin is not current")
+        entries[identifier] = entry
+    return entries
 
 
 class EditionModel:
+    """One current edition, decoded from registered XML and closed controls."""
+
+    def __setattr__(self, name, value):
+        if getattr(self, "_sealed", False):
+            raise AttributeError("EditionModel is immutable after construction")
+        object.__setattr__(self, name, value)
+
     def __init__(self, gw, edition_path):
-        self.gw = gw
-        self.edition = canon.parse_json(gw.read_text(edition_path))
-        # The edition object selects every subsequent path.  Validate its
-        # closed shape before dereferencing any selector so malformed source
-        # data fails as a schema defect rather than escaping into a KeyError
-        # (and so authoring commands such as migrate cannot consume an
-        # unvalidated parameter set).
-        edition_schema = canon.parse_json(gw.read_text(
-            "navigator/schema/edition.schema.json"))
         try:
+            config = canon.parse_json(gw.read_text(edition_path))
+            edition_schema = canon.parse_json(gw.read_text(EDITION_SCHEMA))
             schema_validate.check_schema(edition_schema)
-        except schema_validate.SchemaError as exc:
-            raise ModelError("invalid edition schema: %s" % exc)
-        edition_errors = schema_validate.validate(
-            self.edition, edition_schema)
-        if edition_errors:
-            raise ModelError("invalid edition config: %s" %
-                             "; ".join(edition_errors))
-        allowed = {
-            self.edition["claimCorpus"], self.edition["targetCorpus"],
-            self.edition["authorityCorpus"],
-        }
-        self.registry = registry_mod.Registry(
-            gw, registry_paths=self.edition["corpusRegistries"],
-            allowed_corpora=allowed, require_exact=True)
-        for field, expected_role in (
-                ("claimCorpus", "fragment-source"),
-                ("targetCorpus", "derivative")):
-            corpus_id = self.edition[field]
-            corpus_entry = self.registry.entry(corpus_id)
-            if corpus_entry["role"] != expected_role or \
-                    corpus_entry["visibility"] != "rendered":
-                raise ModelError(
-                    "%s %r must be role %r with rendered visibility"
-                    % (field, corpus_id, expected_role))
-        authority_id = self.edition["authorityCorpus"]
-        authority_entry = self.registry.entry(authority_id)
-        if authority_entry["role"] != "authoritative":
-            raise ModelError("authorityCorpus %r is not authoritative"
-                             % authority_id)
-        authority_bytes = self.registry.read_file(
-            authority_id, authority_entry["primary"])
-        self.authority_digest = canon.bytes_digest(authority_bytes)
-        shared_strings = canon.parse_json(
-            gw.read_text("navigator/strings.json"))
-        edition_strings = canon.parse_json(
-            gw.read_text(self.edition["stringsResource"]))
-        expected_shared_string_fields = {
-            "stringsVersion", "comment", "counselLegend",
-            "standingDisclaimer", "status", "role", "cautionType",
-            "cautionScope", "dispositions", "migrationReasons",
-            "generalizationCodes", "ui",
-        }
-        if set(shared_strings) != expected_shared_string_fields or \
-                canon.require_version(shared_strings, "stringsVersion", "1"):
-            raise ModelError(
-                "shared strings fields/version do not match the closed "
-                "artifact-microcopy resource")
-        expected_string_fields = {
-            "stringsVersion", "namespace", "sourceGateCodes",
-        }
-        if set(edition_strings) != expected_string_fields:
-            raise ModelError(
-                "edition strings fields must be exactly %r"
-                % sorted(expected_string_fields))
-        namespace = self.edition["stringsNamespace"]
-        if edition_strings["namespace"] != namespace:
-            raise ModelError(
-                "edition strings namespace %r does not match %r"
-                % (edition_strings["namespace"], namespace))
-        if edition_strings["stringsVersion"] != \
-                shared_strings.get("stringsVersion"):
-            raise ModelError("shared and edition strings versions differ")
-        source_codes = edition_strings["sourceGateCodes"]
-        if not isinstance(source_codes, dict) or not all(
-                isinstance(code, str) and code.strip() and
-                isinstance(label, str) and label.strip()
-                for code, label in source_codes.items()):
-            raise ModelError(
-                "edition sourceGateCodes must map non-empty strings")
-        self.strings = dict(shared_strings)
-        # Preserve the renderer-facing shape while exposing only the selected
-        # namespace.  No other edition's authored strings enter this model.
-        self.strings["editionNamespaces"] = {
-            namespace: {"sourceGateCodes": source_codes},
-        }
-        self.schemas = {
-            "relation": canon.parse_json(gw.read_text(
-                "navigator/schema/relation.schema.json")),
-            "gates": canon.parse_json(gw.read_text(
-                "navigator/schema/gates.schema.json")),
-            "deps": canon.parse_json(gw.read_text(
-                "navigator/schema/deps.schema.json")),
-            "edition": edition_schema,
-            "support-matrix": canon.parse_json(gw.read_text(
-                "navigator/schema/support-matrix.schema.json")),
-            "segmentation-profile": canon.parse_json(gw.read_text(
-                "navigator/schema/segmentation-profile.schema.json")),
-        }
+            problems = schema_validate.validate(config, edition_schema)
+        except Exception as exc:
+            raise ModelError("edition control is unreadable or invalid") from exc
+        if problems:
+            raise ModelError("edition control is invalid: %s" % "; ".join(problems))
+        expected_path = "navigator/editions/%s.json" % config["editionId"]
+        if edition_path != expected_path or \
+                config["consumerId"] != "navigator-" + config["editionId"] or \
+                config["strategyPrefix"].casefold() != config["editionId"] or \
+                config["relationPath"] != (
+                    "navigator/relations/%s__pct.relations.xml" % config["editionId"]) or \
+                config["editionWordingPath"] != (
+                    "navigator/wording/%s.wording.xml" % config["editionId"]):
+            raise ModelError("edition identity/path bindings are not exact")
         try:
-            for schema_name, schema in self.schemas.items():
-                schema_validate.check_schema(schema)
-        except schema_validate.SchemaError as exc:
-            raise ModelError("invalid %s schema: %s" %
-                             (schema_name, exc))
-        relation_schema = self.schemas["relation"]
-        self.review_schemas = {
-            "binding": relation_schema["properties"]["binding"],
-            "unit": next(iter(relation_schema["properties"]["fragments"]
-                              ["patternProperties"].values())),
-            "phrase": relation_schema["definitions"]["phrase"],
-            "target": relation_schema["definitions"]["target"],
-            "claim-gate": next(iter(
-                relation_schema["properties"]["claimGates"]
-                ["patternProperties"].values()))["items"],
-            "disposition": relation_schema["properties"]["dispositions"]
-            ["items"],
+            parsed_timestamp = datetime.fromisoformat(
+                config["declaredReleaseTimestamp"].replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ModelError("declared release timestamp is invalid") from exc
+        if not _TIMESTAMP.fullmatch(config["declaredReleaseTimestamp"]) or \
+                parsed_timestamp.utcoffset().total_seconds() != 0:
+            raise ModelError("declared release timestamp is not a UTC second")
+
+        self.edition_id = config["editionId"]
+        self.display_name = config["displayName"]
+        self.strategy_name = config["strategyName"]
+        self.strategy_prefix = config["strategyPrefix"]
+        self.artifact_name = config["artifactName"]
+        self.declared_release_timestamp = config["declaredReleaseTimestamp"]
+        self.claim_set_version = config["claimSetVersion"]
+        self.independent_claims = tuple(config["independentClaims"])
+        self._expected_census = MappingProxyType(dict(config["census"]))
+        self._expected_groups = tuple(config["groups"])
+        self._edition_path = edition_path
+        self._relation_path = config["relationPath"]
+        self._edition_wording_path = config["editionWordingPath"]
+
+        registry = registry_mod.Registry(gw)
+        claim_package, pct_package = registry.consumer_packages(
+            config["consumerId"], config["claimPackageId"])
+        claim_document, claim_artifact = registry.load_document(claim_package)
+        pct_document, pct_artifact = registry.load_document(pct_package)
+        self.source_documents = (claim_document, pct_document)
+        self._document_artifacts = MappingProxyType({
+            claim_package: claim_artifact, pct_package: pct_artifact})
+        self._documents = MappingProxyType({
+            item.document_id: item for item in self.source_documents})
+
+        claim_set = claims_mod.parse_claims(
+            claim_artifact.root, claim_artifact.fragment_digests)
+        self.claims = claim_set.claims
+        self.claims_by_number = claim_set.by_number
+        self.units_by_fragment = claim_set.units_by_fragment
+        self.claim_groups = claim_set.groups
+        self._source_items = _source_items(
+            claim_artifact.root, claim_artifact.fragment_digests)
+        graph = depgraph.build(self.claims, self.independent_claims)
+        self.parents = graph.parents
+        self.children = graph.children
+        self.aggregate_hashes = graph.aggregate_hashes
+        self.chain_hashes = graph.chain_hashes
+
+        content = pct_artifact.root.find(C + "content")
+        if content is None:
+            raise ModelError("PCT XML omits typed content")
+        self.disclosure_blocks, self.disclosure_index, self._editorial_ids = \
+            _disclosure(content, pct_artifact.fragment_digests)
+        self.assets = self._load_assets(
+            pct_artifact.root, pct_package, registry, gw)
+
+        relation_root = gw.read_validated_xml(
+            self._relation_path, RELATION_SCHEMA,
+            expected_namespace=RELATION_NAMESPACE, expected_root="relations")
+        self.relations = _parse_relations(relation_root, self.units_by_fragment)
+        self.relation_set_id = self.relations.relation_set_id
+        self._validate_relations(claim_package, pct_package)
+
+        shared_bytes = gw.read_bytes(SHARED_WORDING)
+        shared_root = gw.read_validated_xml(
+            SHARED_WORDING, WORDING_SCHEMA,
+            expected_namespace=WORDING_NAMESPACE, expected_root="wording")
+        edition_root = gw.read_validated_xml(
+            self._edition_wording_path, WORDING_SCHEMA,
+            expected_namespace=WORDING_NAMESPACE, expected_root="wording")
+        wording = _parse_wording(shared_root, "shared")
+        edition_wording = _parse_wording(edition_root, self.edition_id)
+        collision = set(wording) & set(edition_wording)
+        if collision:
+            raise ModelError("shared and edition wording identities collide")
+        wording_owners = {identifier: SHARED_WORDING for identifier in wording}
+        wording_owners.update({
+            identifier: self._edition_wording_path
+            for identifier in edition_wording
+        })
+        wording.update(edition_wording)
+        self._wording = MappingProxyType(wording)
+        self._wording_owner_paths = MappingProxyType(wording_owners)
+        self.shared_wording_digest = canon.bytes_digest(shared_bytes)
+        self.profile_label = self.controlled_text(
+            "artifact-label-technical-preview")
+
+        self.mappings_by_unit = self._index_by_unit(self.relations.mappings)
+        self.phrases_by_unit = self._index_by_unit(
+            self.relations.phrase_mappings, parent=True)
+        self.gates_by_id = MappingProxyType({
+            gate.gate_id: gate for gate in self.relations.gate_definitions})
+        disposition_index = {}
+        for disposition in self.relations.dispositions:
+            key = (disposition.subject_kind,
+                   disposition.subject.fragment_id)
+            disposition_index.setdefault(key, []).append(disposition)
+        self.dispositions_by_subject = MappingProxyType({
+            key: tuple(value) for key, value in sorted(disposition_index.items())})
+        relation_index = {
+            item.relation_id: item for item in
+            (*self.relations.mappings, *self.relations.phrase_mappings)}
+        if len(relation_index) != len(self.relations.mappings) + \
+                len(self.relations.phrase_mappings):
+            raise ModelError("relation identities are not globally unique")
+        self._relations_by_id = MappingProxyType(relation_index)
+        self.reverse_index = projections.reverse_index(
+            self.relations, self.units_by_fragment)
+        self._relations_by_endpoint = self._endpoint_relation_index()
+        expected_reads = {
+            self._edition_path,
+            EDITION_SCHEMA,
+            registry_mod.REGISTRY_PATH,
+            self._relation_path,
+            RELATION_SCHEMA,
+            SHARED_WORDING,
+            self._edition_wording_path,
+            WORDING_SCHEMA,
         }
-        self.planes = canon.parse_json(gw.read_text(
-            "navigator/schema/planes.json"))
-        planes_errors = canon.require_version(
-            self.planes, "planesVersion", "1")
-        if planes_errors:
-            raise ModelError("invalid planes: %s" % "; ".join(planes_errors))
-        self.api_policy = canon.parse_json(gw.read_text(
-            "navigator/schema/api-policy.json"))
-        self.support_matrix_bytes = gw.read_bytes(
-            "navigator/schema/support-matrix.json")
-        self.support_matrix = canon.parse_json(self.support_matrix_bytes)
-        support_errors = schema_validate.validate(
-            self.support_matrix, self.schemas["support-matrix"])
-        if support_errors:
-            raise ModelError("invalid support matrix: %s" %
-                             "; ".join(support_errors))
-        self.release_policy = canon.parse_json(gw.read_text(
-            "navigator/schema/release-policy.json"))
-
-        # target corpus segmentation
-        tc = self.edition["targetCorpus"]
-        self.target_profile = self.registry.profile(tc)
-        profile_errors = schema_validate.validate(
-            self.target_profile, self.schemas["segmentation-profile"])
-        profile_errors.extend(segmenter.profile_problems(
-            self.target_profile, tc))
-        if profile_errors:
-            raise ModelError("invalid target segmentation profile: %s" %
-                             "; ".join(profile_errors))
-        self.target_profile_digest = self.gw.read_log[
-            self.registry.entry(tc)["profile"]]
-        target_text = self.registry.primary_text(tc)
-        self.target_root_hash = canon.text_digest(canon.canon_prose(target_text))
-        self.target_blocks = segmenter.segment(
-            target_text, self.target_profile,
-            self.registry.sibling_reader(tc))
-        self.target_anchors, self.target_order = _anchor_index(self.target_blocks)
-
-        # claim corpus: guidance segmentation + claims parsing
-        cc = self.edition["claimCorpus"]
-        self.claim_profile = self.registry.profile(cc)
-        profile_errors = schema_validate.validate(
-            self.claim_profile, self.schemas["segmentation-profile"])
-        profile_errors.extend(segmenter.profile_problems(
-            self.claim_profile, cc))
-        if profile_errors:
-            raise ModelError("invalid claim segmentation profile: %s" %
-                             "; ".join(profile_errors))
-        self.claim_profile_digest = self.gw.read_log[
-            self.registry.entry(cc)["profile"]]
-        claim_text = self.registry.primary_text(cc)
-        self.guidance_root_hash = canon.text_digest(
-            canon.canon_prose(claim_text))
-        self.guidance_blocks = segmenter.segment(
-            claim_text, self.claim_profile, self.registry.sibling_reader(cc))
-        self.guidance_anchors, self.guidance_order = _anchor_index(self.guidance_blocks)
-        self.claims = claims_mod.parse_claims(
-            claim_text, self.claim_profile.get("claimsHeading", "Candidate claims"))
-        self.claims_by_number = {c.number: c for c in self.claims}
-        self.units = {}
-        for c in self.claims:
-            for u in c.units:
-                self.units[u.id] = u
-
-        # dependency map (dual-sourced) + chain hashes
-        self.deps = canon.parse_json(gw.read_text(
-            self.edition["dependencyMap"]))
-        dependency_errors = schema_validate.validate(
-            self.deps, self.schemas["deps"])
-        if dependency_errors:
-            raise ModelError("invalid dependency map: %s" %
-                             "; ".join(dependency_errors))
-        document_table = claims_mod.parse_dependency_table(claim_text)
-        self.parents = depgraph.validate(
-            self.deps, self.claims, self.edition["independentClaims"],
-            document_table=document_table)
-        self.agg_hashes = {c.number: c.aggregate_hash for c in self.claims}
-        self.chain_hashes = {
-            n: depgraph.chain_hash(self.parents, self.agg_hashes, n)
-            for n in self.agg_hashes
-        }
-
-        # gate inventory + relation set
-        self.gates = canon.parse_json(gw.read_text(
-            self.edition["gateInventory"]))
-        gate_errors = schema_validate.validate(
-            self.gates, self.schemas["gates"])
-        if gate_errors:
-            raise ModelError("invalid gate inventory: %s" %
-                             "; ".join(gate_errors))
-        self.gates_by_id = {g["gateId"]: g for g in self.gates["gates"]}
-        self.relation = canon.parse_json(gw.read_text(
-            self.edition["relationSet"]))
-        relation_errors = schema_validate.validate(
-            self.relation, self.schemas["relation"])
-        if relation_errors:
-            raise ModelError("invalid relation set: %s" %
-                             "; ".join(relation_errors))
-        self.binding = self.relation.get("binding", {})
-
-        # digest ambiguity over the eligible (targetable) anchor set
-        self.digest_positions = {}
-        for a in self.target_order:
-            if a.cls == "targetable":
-                self.digest_positions.setdefault(a.digest, []).append(a.id)
-        self.quotable_digest_positions = {}
-        for a in self.guidance_order:
-            if a.cls == "quotable":
-                self.quotable_digest_positions.setdefault(
-                    a.digest, []).append(a.id)
-
-    # -- lookups ----------------------------------------------------------
-
-    def claim_of(self, fragment_id):
-        m = FRAG_ID_RE.match(fragment_id) or PHRASE_ID_RE.match(fragment_id)
-        if not m:
-            raise ModelError("bad fragment id %r" % fragment_id)
-        return int(m.group(1))
-
-    def unit_of(self, fragment_id):
-        m = PHRASE_ID_RE.match(fragment_id)
-        if m:
-            return "c%su%s" % (m.group(1), m.group(2))
-        return fragment_id
-
-    def target_anchor(self, block_id):
-        return self.target_anchors.get(block_id)
-
-    def quotable_anchor(self, block_id):
-        a = self.guidance_anchors.get(block_id)
-        return a if a is not None and a.cls == "quotable" else None
+        expected_reads.update(document.registered_path
+                              for document in self.source_documents)
+        expected_reads.update(asset.path for asset in self.assets.values())
+        gw.seal(expected_reads)
+        self._read_inventory = tuple(sorted(gw.read_log.items()))
+        lock = gw.lock()
+        self._content_lock_digest = lock["lockDigest"]
+        self.origin_inventory = projections.origin_inventory(self)
+        # Parsed XML roots and their resolver are construction details.  No
+        # mutable tree or generic repository reader survives into rendering.
+        self._document_artifacts = None
+        object.__setattr__(self, "_sealed", True)
 
     @staticmethod
-    def _contextual_identity(block_id, digest, positions_by_digest,
-                             anchors, root_hash):
-        """Return the non-positional proof for one ambiguous block locator."""
-        positions = positions_by_digest.get(digest, [])
-        if len(positions) <= 1:
-            return None
-        anchor = anchors.get(block_id)
-        if anchor is None or block_id not in positions:
-            return None
-        parent_id = anchor.parent
-        parent = anchors.get(parent_id) if parent_id else None
+    def _load_assets(pct_root, package_id, registry, gw):
+        dependencies = {}
+        parent = pct_root.find(C + "dependencies")
+        if parent is None:
+            raise ModelError("PCT XML omits registered asset dependencies")
+        for item in parent.findall(C + "dependency"):
+            if item.get("kind") == "asset":
+                dependencies[item.get("subjectId")] = item.get("digest")
+        assets = {}
+        for path in registry.asset_paths(package_id):
+            match = re.fullmatch(r".*/Fig-([1-4])[.]png", path)
+            if match is None:
+                raise ModelError("registered PCT asset path is outside the figure set")
+            asset_id = "asset-fig-%s-png" % match.group(1)
+            data = gw.read_bytes(path)
+            digest = raw_digest(data)
+            if dependencies.get(asset_id) != digest:
+                raise ModelError("PCT asset digest does not match its XML dependency")
+            assets[asset_id] = Asset(
+                asset_id=asset_id, path=path, media_type="image/png",
+                data=data, raw_digest=digest)
+        if set(assets) != set(dependencies) or len(assets) != 4:
+            raise ModelError("PCT registered asset/dependency inventory is not exact")
+        return MappingProxyType(dict(sorted(assets.items())))
+
+    @staticmethod
+    def _index_by_unit(items, parent=False):
+        index = {}
+        for item in items:
+            endpoint = item.parent if parent else item.subject
+            index.setdefault(endpoint.fragment_id, []).append(item)
+        return MappingProxyType({
+            key: tuple(value) for key, value in sorted(index.items())})
+
+    def _validate_endpoint(self, endpoint, expected_document, *, target=False):
+        if endpoint.document_id != expected_document:
+            raise ModelError("relation endpoint document identity is stale")
+        artifact = self._document_artifacts[expected_document]
+        if artifact.fragment_digests.get(endpoint.fragment_id) != \
+                endpoint.content_digest:
+            raise ModelError("relation endpoint ID/digest does not resolve exactly")
+        if target:
+            node = self.disclosure_index.get(endpoint.fragment_id)
+            if node is None:
+                raise ModelError(
+                    "relation target is outside the PCT filed render boundary")
+            if node.editorial:
+                raise ModelError("relation target resolves to editorial material")
+
+    def _validate_relations(self, claim_document, pct_document):
+        if self.relations.edition != self.edition_id or \
+                self.relations.relation_set_id != self.edition_id + "-pct":
+            raise ModelError("relation set identity is stale")
+        declared = {item.role: item for item in self.relations.documents}
+        if set(declared) != {"subject", "target"}:
+            raise ModelError("relation document role inventory is not exact")
+        for role, document_id in (("subject", claim_document),
+                                  ("target", pct_document)):
+            metadata = self._documents[document_id]
+            if declared[role].document_id != document_id or \
+                    declared[role].semantic_digest != metadata.semantic_digest:
+                raise ModelError("relation document semantic binding is stale")
+
+        mapped = []
+        for mapping in self.relations.mappings:
+            self._validate_endpoint(mapping.subject, claim_document)
+            unit = self.units_by_fragment.get(mapping.subject.fragment_id)
+            if unit is None or unit.unit_kind != mapping.unit_kind or \
+                    unit.unit_index != mapping.unit_index:
+                raise ModelError("mapping subject does not resolve to its typed claim unit")
+            mapped.append(unit.fragment_id)
+            target_fragments = []
+            for target in mapping.targets:
+                for endpoint in target.endpoints:
+                    self._validate_endpoint(endpoint, pct_document, target=True)
+                    target_fragments.append(endpoint.fragment_id)
+            if len(target_fragments) != len(set(target_fragments)):
+                raise ModelError(
+                    "one relation repeats an endpoint across candidate targets")
+        if len(mapped) != len(set(mapped)) or set(mapped) != set(self.units_by_fragment):
+            raise ModelError("relation mapping coverage is not exactly one per claim unit")
+
+        selected = {}
+        for phrase in self.relations.phrase_mappings:
+            self._validate_endpoint(phrase.parent, claim_document)
+            unit = self.units_by_fragment.get(phrase.parent.fragment_id)
+            if unit is None or unit.unit_kind != phrase.unit_kind or \
+                    unit.unit_index != phrase.unit_index or \
+                    unit.text[phrase.start:phrase.end] != phrase.exact_text:
+                raise ModelError("phrase selector is not a contiguous exact unit substring")
+            span = (phrase.start, phrase.end)
+            prior = selected.setdefault(unit.fragment_id, [])
+            if any(span[0] < other[1] and other[0] < span[1]
+                   for other in prior):
+                raise ModelError("phrase selectors overlap within one claim unit")
+            prior.append(span)
+            target_fragments = []
+            for target in phrase.targets:
+                for endpoint in target.endpoints:
+                    self._validate_endpoint(endpoint, pct_document, target=True)
+                    target_fragments.append(endpoint.fragment_id)
+            if len(target_fragments) != len(set(target_fragments)):
+                raise ModelError(
+                    "one phrase relation repeats an endpoint across candidate targets")
+
+        for gate in self.relations.gate_definitions:
+            self._validate_endpoint(gate.source, claim_document)
+        for disposition in self.relations.dispositions:
+            self._validate_endpoint(disposition.subject, claim_document)
+            if disposition.subject_kind == "claim":
+                match = re.fullmatch(r"claim-([1-9][0-9]*)",
+                                     disposition.subject.fragment_id)
+                if match is None or int(match.group(1)) not in self.claims_by_number:
+                    raise ModelError("claim disposition subject is not a claim")
+            else:
+                unit = self.units_by_fragment.get(disposition.subject.fragment_id)
+                if unit is None or unit.unit_kind != disposition.unit_kind or \
+                        unit.unit_index != disposition.unit_index:
+                    raise ModelError("unit disposition subject is stale")
+
+    def _endpoint_relation_index(self):
+        index = {}
+
+        def add(endpoint, owner):
+            index.setdefault((endpoint.document_id, endpoint.fragment_id), []).append(
+                owner)
+
+        for mapping in self.relations.mappings:
+            add(mapping.subject, mapping)
+            for target in mapping.targets:
+                for endpoint in target.endpoints:
+                    add(endpoint, mapping)
+        for phrase in self.relations.phrase_mappings:
+            add(phrase.parent, phrase)
+            for target in phrase.targets:
+                for endpoint in target.endpoints:
+                    add(endpoint, phrase)
+        for gate in self.relations.gate_definitions:
+            add(gate.source, gate)
+        for disposition in self.relations.dispositions:
+            add(disposition.subject, disposition)
+        return MappingProxyType({
+            key: tuple(value) for key, value in sorted(index.items())})
+
+    @property
+    def read_inventory(self):
+        return self._read_inventory
+
+    @property
+    def content_lock(self):
+        reads = [{"path": path, "digest": digest}
+                 for path, digest in self._read_inventory]
         return {
-            "parentHash": parent.digest if parent else root_hash,
-            "occurrence": positions.index(block_id) + 1,
+            "canonVersion": canon.CANON_VERSION,
+            "reads": reads,
+            "lockDigest": self._content_lock_digest,
         }
 
-    def contextual_identity(self, block_id, digest):
-        """Contextual identity for an ambiguous target covering digest.
+    def _origin_value(self, origin_ref):
+        values = {
+            "edition.claimSetVersion": self.claim_set_version,
+            "edition.declaredReleaseTimestamp": self.declared_release_timestamp,
+            "edition.claimCount": len(self.claims),
+            "edition.unitCount": len(self.units_by_fragment),
+            "pct.blockCount": len(self.disclosure_blocks),
+        }
+        try:
+            return values[origin_ref]
+        except KeyError as exc:
+            raise ModelError(
+                "controlled wording origin is not edition-resolvable") from exc
 
-        The parent-container canonical hash and occurrence index are review
-        inputs; the positional block id remains a review-excluded locator.
-        """
-        return self._contextual_identity(
-            block_id, digest, self.digest_positions,
-            self.target_anchors, self.target_root_hash)
-
-    def quotable_contextual_identity(self, block_id, digest):
-        """Contextual identity for an ambiguous quotable-source digest.
-
-        This is the caution-source and gate-inventory counterpart of
-        :meth:`contextual_identity`.  A root-level guidance block is covered
-        by the canonical claim-corpus root hash, never by an empty or
-        positional surrogate.
-        """
-        return self._contextual_identity(
-            block_id, digest, self.quotable_digest_positions,
-            self.guidance_anchors, self.guidance_root_hash)
-
-    def gate_entry_projection(self, entry):
-        """Return an inventory entry's corpus-aware review projection."""
-        source = entry["source"]
-        context = self.quotable_contextual_identity(
-            source["block"], source["textHash"])
-        return gate_entry_projection(entry, context)
-
-    def gate_entry_hash(self, gate_id):
-        entry = self.gates_by_id.get(gate_id)
+    def controlled_text(self, wording_id):
+        entry = self._wording.get(wording_id)
         if entry is None:
-            raise ModelError("unknown gateId %r" % gate_id)
-        return canon.composite_digest("aa11393:inventory:c1",
-                                      self.gate_entry_projection(entry))
+            raise ModelError("controlled wording identity does not resolve")
+        values = {slot.name: self._origin_value(slot.origin_ref)
+                  for slot in entry.slots}
+        return _render_wording_entry(entry, values)
 
-    def inventory_digest(self):
-        return canon.composite_digest("aa11393:inventory:c1", self.gates)
+    def get_document(self, document_id):
+        document = self._documents.get(document_id)
+        if document is None:
+            raise ModelError("source document does not resolve")
+        return document
 
-    # -- review projections (§13) -----------------------------------------
-
-    def _stored_review(self, schema_name, instance,
-                       stop_owner_boundaries=False):
-        """Project stored fields from the relation schema's review axis."""
-        return schema_validate.review_axis(
-            self.review_schemas[schema_name], instance,
-            root=self.schemas["relation"],
-            stop_owner_boundaries=stop_owner_boundaries)
-
-    def _target_projection(self, target):
-        out = self._stored_review("target", target)
-        ctx = self.contextual_identity(target["block"], target["textHash"])
-        if ctx is not None:
-            out["contextualIdentity"] = ctx
-        if "caution" in out and "caution" in target:
-            out["caution"] = self._caution_projection(
-                target["caution"], out["caution"])
-        return out
-
-    def _source_projection(self, source, projected):
-        """Add computed identity to a schema-projected source reference."""
-        out = dict(projected)
-        ctx = self.quotable_contextual_identity(
-            source["block"], source["textHash"])
-        if ctx is not None:
-            out["contextualIdentity"] = ctx
-        return out
-
-    def _caution_projection(self, caution, projected):
-        """Add computed identity to a projected source-gate caution."""
-        out = dict(projected)
-        if "source" in out and "source" in caution:
-            out["source"] = self._source_projection(
-                caution["source"], out["source"])
-        return out
-
-    def _owner_stored_review(self, schema_name, owner):
-        """Schema-derived owner fields with computed locator context added.
-
-        Phrases are independent reviewed owners, so the unit-owner projection
-        stops at the ownership boundary declared on the relation schema.
-        Computed contextual identity is added only to target and quotable
-        source references that survived that same schema projection.
-        """
-        out = self._stored_review(
-            schema_name, owner,
-            stop_owner_boundaries=(schema_name == "unit"))
-        if "targets" in out:
-            out["targets"] = [self._target_projection(t)
-                              for t in owner["targets"]]
-        if "caution" in out and "caution" in owner:
-            out["caution"] = self._caution_projection(
-                owner["caution"], out["caution"])
-        if "source" in out and "source" in owner:
-            out["source"] = self._source_projection(
-                owner["source"], out["source"])
-        return out
-
-    def unit_projection(self, fragment_id, frag):
-        proj = self._owner_stored_review("unit", frag)
-        proj.update({
-            "identity": {
-                "binding": self._stored_review("binding", self.binding),
-                "owner": "unit",
-                "fragment": fragment_id,
-            },
-            "dependencyChainHash": self.chain_hashes[self.claim_of(fragment_id)],
+    def get_metadata(self, document_id):
+        document = self.get_document(document_id)
+        return MappingProxyType({
+            "documentId": document.document_id,
+            "authorityScheme": document.authority_scheme,
+            "xmlRole": document.xml_role,
+            "semanticDigest": document.semantic_digest,
+            "registeredPath": document.registered_path,
         })
-        return proj
 
-    def phrase_projection(self, fragment_id, frag, phrase):
-        proj = self._owner_stored_review("phrase", phrase)
-        proj.update({
-            "identity": {
-                "binding": self._stored_review("binding", self.binding),
-                "owner": "phrase",
-                "fragment": fragment_id, "phrase": phrase["id"],
-            },
-            "dependencyChainHash": self.chain_hashes[self.claim_of(fragment_id)],
-            "parentFragmentHash": frag["fragmentTextHash"],
-        })
-        return proj
-
-    def claim_gate_projection(self, claim_key, gate):
-        proj = self._owner_stored_review("claim-gate", gate)
-        proj.update({
-            "identity": {
-                "binding": self._stored_review("binding", self.binding),
-                "owner": "claim-gate",
-                "claim": claim_key, "gateId": gate["gateId"],
-            },
-            "dependencyChainHash": self.chain_hashes[int(claim_key[1:])],
-        })
-        return proj
-
-    def disposition_projection(self, disp):
-        subject = disp["subject"]
-        if subject["kind"] == "fragment":
-            claim = self.claim_of(subject["id"])
+    def get_item(self, document_id, fragment_id):
+        if document_id == self.source_documents[0].document_id:
+            unit = self.units_by_fragment.get(fragment_id)
+            if unit is not None:
+                return unit
+            match = re.fullmatch(r"claim-([1-9][0-9]*)", fragment_id)
+            if match and int(match.group(1)) in self.claims_by_number:
+                return self.claims_by_number[int(match.group(1))]
+            item = self._source_items.get(fragment_id)
+        elif document_id == self.source_documents[1].document_id:
+            item = self.disclosure_index.get(fragment_id)
         else:
-            claim = int(subject["id"][1:])
-        proj = self._owner_stored_review("disposition", disp)
-        proj.update({
-            "identity": {
-                "binding": self._stored_review("binding", self.binding),
-                "owner": "disposition",
-                "gateId": disp["gateId"], "subject": dict(subject),
-            },
-            "dependencyChainHash": self.chain_hashes[claim],
-        })
-        return proj
+            raise ModelError("source document does not resolve")
+        if item is None:
+            raise ModelError("source item does not resolve")
+        return item
 
-    def content_hash(self, projection):
-        return canon.composite_digest("aa11393:review:c1", projection)
+    def resolve_relation(self, relation_id):
+        relation = self._relations_by_id.get(relation_id)
+        if relation is None:
+            raise ModelError("relation identity does not resolve")
+        return relation
 
-    def iter_owners(self, with_projection=True, skip_stale=False):
-        """Yield ``(owner_type, key, stored_fields, projection)``.
+    def relations_for(self, document_id, fragment_id):
+        self.get_item(document_id, fragment_id)
+        return self._relations_by_endpoint.get((document_id, fragment_id), ())
 
-        Migration must be able to enumerate owners whose projection inputs
-        have disappeared (for example, every owner of a removed claim).
-        Callers doing that bookkeeping use ``with_projection=False``; normal
-        validation and review callers retain the eager-projection default.
-        ``skip_stale`` avoids constructing projections that a migration pass
-        has already classified as unresolved.
-        """
-        def item(owner_type, key, fields, projection_factory):
-            if skip_stale and fields.get("migrationState") == "stale":
-                return None
-            projection = projection_factory() if with_projection else None
-            return owner_type, key, fields, projection
+    @staticmethod
+    def dom_id(document_id, fragment_id):
+        if not isinstance(document_id, str) or not isinstance(fragment_id, str):
+            raise ModelError("DOM identity inputs must be strings")
+        framed = (document_id + "\x00" + fragment_id).encode("utf-8")
+        return "n-" + canon.bytes_digest(framed).rsplit(":", 1)[1]
 
-        for fid in sorted(self.relation.get("fragments", {})):
-            frag = self.relation["fragments"][fid]
-            result = item("unit", fid, frag,
-                          lambda fid=fid, frag=frag:
-                          self.unit_projection(fid, frag))
-            if result is not None:
-                yield result
-            for ph in frag.get("phrases", []):
-                key = ph.get("id", "%s?" % fid)
-                result = item("phrase", key, ph,
-                              lambda fid=fid, frag=frag, ph=ph:
-                              self.phrase_projection(fid, frag, ph))
-                if result is not None:
-                    yield result
-        for ckey in sorted(self.relation.get("claimGates", {})):
-            for gate in self.relation["claimGates"][ckey]:
-                key = "%s/%s" % (ckey, gate.get("gateId"))
-                result = item("claim-gate", key, gate,
-                              lambda ckey=ckey, gate=gate:
-                              self.claim_gate_projection(ckey, gate))
-                if result is not None:
-                    yield result
-        for disp in self.relation.get("dispositions", []):
-            key = "%s@%s" % (disp.get("gateId"), disp.get("subject", {}).get("id"))
-            result = item("disposition", key, disp,
-                          lambda disp=disp: self.disposition_projection(disp))
-            if result is not None:
-                yield result
+
+def bundle_manifest_text(na_model, af_model):
+    """Resolve shared bundle wording from the two typed edition origins."""
+    if not isinstance(na_model, EditionModel) or \
+            not isinstance(af_model, EditionModel) or \
+            na_model.edition_id != "na" or af_model.edition_id != "af" or \
+            na_model.shared_wording_digest != af_model.shared_wording_digest:
+        raise ModelError("bundle wording models are not the exact edition pair")
+    na_entry = na_model._wording.get("bundle-manifest-neutral")
+    af_entry = af_model._wording.get("bundle-manifest-neutral")
+    if na_entry is None or na_entry != af_entry:
+        raise ModelError("bundle wording differs between edition models")
+    return _render_wording_entry(na_entry, {
+        "naEditionVersion": na_model.claim_set_version,
+        "afEditionVersion": af_model.claim_set_version,
+    })

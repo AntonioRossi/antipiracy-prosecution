@@ -113,28 +113,21 @@
    "output": "sha256/c1:f918e0e8fd30c2c8c1743359b6808b36c56becb667c3173daf34d28b298d954b"
   },
   {
-   "name": "object review composite",
+   "name": "object input-lock composite",
    "kind": "composite-obj",
    "input": {
-    "tag": "aa11393:review:c1",
+    "tag": "aa11393:lock:c1",
     "obj": {
-     "k": "v",
-     "d": "sha256/c1:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+     "reads": [
+      {
+       "path": "a.xml",
+       "digest": "sha256/c1:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      }
+     ],
+     "canonVersion": "c1"
     }
    },
-   "output": "sha256/c1:84841d6c9590ca92e3c0b106316f37dbd298ad938dd40dd8b41b3f09e6ef5969"
-  },
-  {
-   "name": "figure composite",
-   "kind": "composite",
-   "input": {
-    "tag": "aa11393:figure:c1",
-    "digests": [
-     "abc",
-     "def"
-    ]
-   },
-   "output": "sha256/c1:9f2c0867edaeefedd71802c1c031e5d3235db20162779d5ac59b9d7fb3ee68bc"
+   "output": "sha256/c1:54fdbe3ca208e4fe3b953c7c0e0f1448e5e262913849ac0599b36fe51bf5ca49"
   }
  ]
 }

@@ -78,7 +78,8 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 | **Authority scheme** | The package declaration that identifies whether source fidelity is governed by a stored PDF, authored content by Markdown, or authored assertions by relation XML; file type and consumer choice cannot change it | [`AA11393US-structured-source-markdown_technical-description.md`](AA11393US-structured-source-markdown_technical-description.md) §2 |
 | **Uniform XML machine interface** | The one registered, typed, item-addressable XML representation exposed by every package; interface uniformity does not make XML universally authoritative | same, §§1–3 |
 | **Computed coverage** | Validation derived from the current immutable snapshot that proves the applicable authority-to-representation, item, provenance, and endpoint mappings; it is not a stored package artifact | same, §§2 and 5 |
-| **Repository audit boundary** | Exact clean Git commit and checkout with supplied history, the structured-source documentation pair and executable registries, and the current snapshot-bracketed global-gate result | same, §9 |
+| **Substantive-origin tracing** | A validation-time derivation that resolves substantive and security-relevant navigator values to their declared XML item, registered control, typed state, or closed mechanical derivation; it is not a stored lineage inventory | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §2.4 |
+| **Repository audit unit** | Exact clean Git commit and checkout with supplied history, the current documentation pairs and executable registries, and the unchanged-snapshot `validate-current` result | same, §10 |
 
 ## Filing and record terms
 
@@ -112,12 +113,12 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 
 | Term | Current meaning | Controlling document |
 |---|---|---|
-| **Repository snapshot** | Immutable capture of the complete repository tree (paths, digests, modes, sizes) with retained bytes; planning and read-only verification commands consume exactly the captured bytes through gateway byte sources, never live re-reads | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §10 |
-| **Release profile** | Closed artifact-facing release-governance selection — `technical-preview` (active: manual cross-platform and assistive-technology QA deferred, compatibility not authorized) or `validated-release` (declared: full seven-row structured QA required) — always selected explicitly via `release --profile=` | same, §1 and §10 |
-| **Record resolver** | The single typed per-kind validation of the active reachable authorization graph; every live record is current, uniquely reachable from the configured roots, and exact-side valid, while an unknown, stale, duplicate, rejected, retired-format, or unreachable record fails closed | same, §10 |
-| **Render/control inventories** | The two disjoint closed Python source inventories: renderer sources bind candidate provenance, control sources bind acceptance receipts; their union closes the production source family, and an unclassified or doubly classified source fails | same, §10 |
-| **Acceptance control / receipt** | An atomic check derived from the acceptance registry as `<id>.automated` or `<id>.observed`, executed in a derived phase and recorded in the version-3 acceptance receipt as `{control, phase, status}` — passed or policy-deferred | same, §10 and §14 |
-| **Closure planner** | The `pin-plan` planner's closed planVersion-3 output: one generic per-corpus closure over every registry and QA corpus (per-file pinned and actual digests, per-file and aggregate currency, version bindings) plus edition-level census, group, dependency, and artifact-name currency | same, §8.1 and §10 |
+| **Repository snapshot** | Immutable capture of the complete repository tree with retained bytes; validation reads the captured bytes and rejects a changed final tree | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §10 |
+| **Secure XML gateway** | The sole read-only production entry point for registered semantic content; it validates each package according to its authority scheme and rejects undeclared, unsafe, stale, or ambiguous input | same, §2.2 |
+| **Immutable edition model** | The sealed typed representation produced by the gateway and consumed by the edition-blind renderer; it cannot repair, infer, retarget, or persist semantic content | same, §§2.2 and 4 |
+| **Technical-preview product** | The sole current navigator product class, carrying the exact technical-preview label and making no claim of observed browser, operating-system, print-engine, or assistive-technology behavior | same, §§1 and 3 |
+| **Executable acceptance registry** | The current machine-readable projection of the ordered `AC-01` through `AC-20` IDs, scopes, and criterion text; every criterion must pass in the invoking validation process | [`AA11393US-claims-navigator_acceptance-criteria_DRAFT.md`](AA11393US-claims-navigator_acceptance-criteria_DRAFT.md) |
+| **Delivery bundle** | The deterministic five-member STORE ZIP containing both sealed HTML products, their detached checksums, and `MANIFEST.txt`; its own detached checksum remains beside the ZIP | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §9 |
 
 ## Status suffixes and outcome labels
 

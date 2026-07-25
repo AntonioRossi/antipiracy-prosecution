@@ -28,16 +28,17 @@ filing authorization.
 | **SSM-AC-07 — Assurance separation** | Git supplies the operative committed bytes; machine results report conformance only. No reviewer registry, approval inventory or record, confirmation token, approval resolver, self-attestation, or implementation-bound human envelope exists. | Targeted approval-path/import/command scan and result-message tests; negative approval, reviewer, fidelity, and legal-authorization fixtures. |
 | **SSM-AC-08 — Commands, writes, and efficiency** | Commands expose only the documented surface, never write authority files, validate before writes, and atomically replace only permitted derived files. Package commands inspect only their target and dependencies, compute coverage without persisting it, and perform no repeated whole-corpus pass. Each pre-test and final post-test phase builds fresh shared indexes. | Command/write allowlists; coverage no-write, rollback, external-mutation, crash-residue, target-scope, repeated-whole-corpus-pass, phase-isolation, and environment tests. |
 | **SSM-AC-09 — Audit and final-snapshot closure** | One clean commit, Git-addressable evidence, the documentation pair, executable registries, locked environment, and one current `validate-current` result close the audit. The gate is read-only, runs all registered tests in isolation, and revalidates the unchanged final snapshot. No export or stored receipt substitutes for execution. | Git/index/worktree, controlled-path, environment, test-isolation, post-test mutation, detached-export, stored-receipt, and final-snapshot tests. |
-| **SSM-AC-10 — Active implementation closure** | Registry, table, callbacks, tests, sources, schemas, profiles, commands, and consumers agree exactly. Old formats; structured-source approval/export/register/migration/compatibility paths; and unused package-level coverage fields, artifacts, persistence code, comparisons, fixtures, and tests are absent. Coverage computation remains mandatory, each current conversion has one pathway, and consumers have no undeclared reader. | Exact control/source census, targeted forbidden residue and coverage-persistence scans, current-family tests, registry/table regeneration, and global result. |
+| **SSM-AC-10 — Active implementation closure** | Registry, table, tests, sources, schemas, profiles, command implementation, and consumers agree exactly. Old formats; structured-source approval/export/register/migration/compatibility paths; and unused package-level coverage fields, artifacts, persistence code, comparisons, fixtures, and tests are absent. Coverage computation remains mandatory, each current conversion has one pathway, and consumers have no undeclared reader. | Exact control/source census, targeted forbidden residue and coverage-persistence scans, current-family tests, registry/table regeneration, and global result. |
 <!-- SSM-AC-TABLE:END -->
 
 ## Acceptance evidence boundary
 
 The executable acceptance registry is the machine-readable source for `SSM-AC-01` through
-`SSM-AC-10`; the marked table is its deterministic projection. Each criterion maps to one callback,
-and every callback maps back to one criterion. Each registered test declares a nonempty criterion
-set and may support more than one criterion.
+`SSM-AC-10`; the marked table is its deterministic projection. The registry contains only the
+ordered current criterion wording and evidence. The verifier performs one shared corpus pass and
+projects its successful result into one ephemeral pass status for each criterion; it has no
+per-criterion callback, runner metadata, or stored acceptance evidence.
 
-The global runner emits one ephemeral machine result bound to the exact commit and snapshot. It is
+The global verifier emits one ephemeral machine result bound to the exact commit and snapshot. It is
 not stored and is not human-review, fidelity, authenticity, legal, counsel, readiness, or
 filing-authorization evidence. Git alone retains drafting and implementation history.

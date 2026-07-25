@@ -17,11 +17,10 @@ import os
 import re
 
 from . import CONTENT_NAMESPACE, RELATIONS_NAMESPACE
-from .acceptance import load_registry as load_acceptance_registry
-from .acceptance_callbacks import CALLBACKS
+from .acceptance import CRITERIA, load_registry as load_acceptance_registry
 from .atomic import publish_set
 from .canonical import raw_digest
-from .control import canonical_json, control_digest, parse_json
+from .control import canonical_json, parse_json
 from .errors import StructuredSourceError
 from .registry import (consumer_edge, files_by_id, load_registry,
                        packages_by_id, safe_path)
@@ -30,24 +29,7 @@ C = "{%s}" % CONTENT_NAMESPACE
 R = "{%s}" % RELATIONS_NAMESPACE
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-COMMAND_POLICY_PATH = "structured_source/policy/commands.json"
 ACCEPTANCE_PATH = "AA11393US-structured-source-markdown_acceptance-criteria.md"
-
-COMMAND_CAPABILITIES = {
-    "check": (
-        ["content-registry", "target-package", "declared-dependencies",
-         "schemas", "profiles", "derived-representation"], []),
-    "regenerate": (
-        ["content-registry", "target-package", "declared-dependencies",
-         "schemas", "profiles", "derived-representation"],
-        ["derived-representation"]),
-    "regenerate-controls": (
-        ["content-registry", "acceptance-registry", "routers",
-         "acceptance-table"],
-        ["routers", "acceptance-table"]),
-    "verify-callback": (["complete-repository-snapshot"], []),
-    "verify-current": (["complete-repository-snapshot"], []),
-}
 
 _ANCHOR = re.compile(br'id="ssp-([A-Za-z][A-Za-z0-9_.:-]*)"')
 _RETIRED_PATH_PATTERNS = (
@@ -91,20 +73,6 @@ def _render_content(*args, **kwargs):
 def _render_relations(*args, **kwargs):
     from .render import render_relations
     return render_relations(*args, **kwargs)
-
-
-def validate_command_policy(value):
-    expected = {
-        "commandPolicyVersion": "1",
-        "commands": [
-            {"id": command, "reads": reads, "writes": writes}
-            for command, (reads, writes) in sorted(COMMAND_CAPABILITIES.items())
-        ],
-    }
-    if value != expected:
-        raise StructuredSourceError(
-            "structured-source command policy is not exact")
-    return value
 
 
 class Reader:
@@ -697,10 +665,6 @@ class VerificationContext:
                    for item in repository_paths):
                 raise StructuredSourceError(
                     "forbidden current path remains: %s" % path)
-        policy_bytes = self.reader.read(COMMAND_POLICY_PATH)
-        policy = validate_command_policy(parse_json(policy_bytes))
-        if policy_bytes != canonical_json(policy):
-            raise StructuredSourceError("command policy bytes are not canonical")
         acceptance = load_acceptance_registry(
             self.root, self.reader.read_absolute)
         from .acceptance import render_table
@@ -716,13 +680,13 @@ class VerificationContext:
                 text.split(start, 1)[1].split(end, 1)[0] != \
                 render_table(acceptance):
             raise StructuredSourceError("operative acceptance table is stale")
-        return acceptance, policy
+        return acceptance
 
     def verify_all(self):
         if self._global_result is not None:
             return self._global_result
         self._global_passes += 1
-        acceptance, policy = self._control_closure()
+        acceptance = self._control_closure()
         results = [self.check(package_id) for package_id in sorted(self.packages)]
         schemes = Counter(result["authorityScheme"] for result in results)
         covered = sum(result["computedCoverage"].get("coveredItems", 0)
@@ -734,26 +698,11 @@ class VerificationContext:
             "computedCoveredItems": covered,
             "consumerEdges": sum(len(consumer["edges"])
                                  for consumer in self.registry["consumers"]),
-            "commands": len(policy["commands"]),
             "criteria": len(acceptance["criteria"]),
             "globalPasses": self._global_passes,
             "retiredResidue": 0,
         }
         return self._global_result
-
-    def evidence_for(self, criterion):
-        if criterion not in {"SSM-AC-%02d" % number for number in range(1, 11)}:
-            raise StructuredSourceError("acceptance criterion is not current")
-        result = self.verify_all()
-        return {
-            "criterion": criterion,
-            "status": result["status"],
-            "packages": result["packages"],
-            "computedCoveredItems": result["computedCoveredItems"],
-            "consumerEdges": result["consumerEdges"],
-            "globalPasses": result["globalPasses"],
-            "retiredResidue": result["retiredResidue"],
-        }
 
 
 def run_acceptance(root=ROOT, *, byte_source=None, repository_snapshot=None,
@@ -763,29 +712,19 @@ def run_acceptance(root=ROOT, *, byte_source=None, repository_snapshot=None,
         root, registry=registry, byte_source=byte_source,
         repository_snapshot=repository_snapshot,
         markdown_adapter=markdown_adapter)
-    acceptance = load_acceptance_registry(root, context.reader.read_absolute)
-    results = []
-    for criterion in acceptance["criteria"]:
-        callback_name = criterion["callbacks"][0]
-        evidence = CALLBACKS[callback_name](context)
-        if not isinstance(evidence, dict) or \
-                evidence.get("criterion") != criterion["code"] or \
-                evidence.get("status") != "conformant":
-            raise StructuredSourceError(
-                "acceptance callback did not prove its current criterion")
-        results.append({
-            "criterion": criterion["code"],
-            "callback": callback_name,
-            "status": "satisfied",
-            "evidenceDigest": control_digest(evidence),
-        })
-    if len(results) != 10 or {entry["callback"] for entry in results} != set(CALLBACKS):
+    summary = context.verify_all()
+    if not isinstance(summary, dict) or \
+            summary.get("status") != "conformant" or \
+            summary.get("criteria") != len(CRITERIA) or \
+            summary.get("globalPasses") != 1:
         raise StructuredSourceError(
-            "acceptance result callback census is incomplete")
+            "structured-source verification did not prove the current criteria")
     return {
-        "verificationResultVersion": "1",
-        "namespace": "ssp",
+        "verificationResultVersion": "2",
         "repositorySnapshot": getattr(repository_snapshot, "digest", None),
         "status": "conformant",
-        "results": results,
+        "results": [
+            {"id": criterion, "status": "passed"}
+            for criterion in CRITERIA
+        ],
     }

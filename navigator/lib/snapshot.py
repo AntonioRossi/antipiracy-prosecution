@@ -8,8 +8,10 @@ from . import canon
 
 
 EXCLUDED_DIRECTORY_NAMES = frozenset((
-    ".git", ".uv-cache", ".venv", "__pycache__",
+    ".agents", ".claude", ".codex", ".git", ".uv-cache", ".venv",
+    "__pycache__",
 ))
+EXCLUDED_FILE_NAMES = frozenset((".DS_Store",))
 
 
 class SnapshotError(RuntimeError):
@@ -77,6 +79,8 @@ class RepositorySnapshot:
                 kept.append(name)
             dirnames[:] = kept
             for name in sorted(filenames):
+                if name in EXCLUDED_FILE_NAMES:
+                    continue
                 path = os.path.join(directory, name)
                 rel = os.path.relpath(path, root).replace(os.sep, "/")
                 before = os.stat(path, follow_symlinks=False)

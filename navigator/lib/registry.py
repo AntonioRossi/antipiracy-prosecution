@@ -1,188 +1,125 @@
-"""Corpus registry accessor — typed access to registered corpora.
+"""Resolve navigator inputs exclusively through the live content registry."""
 
-Every input is a registered corpus with a globally unique id, role,
-visibility, and per-file SHA-256 pins (TDD §2, §8.1). All reads go through
-the content gateway (read log -> content-input lock); a pin mismatch is a
-hard error (source drift is never silent). Per-edition allowlists are
-enforced by the gateway; this module additionally refuses corpus ids not
-named by the edition config when one is bound.
-"""
+from __future__ import annotations
 
-import posixpath
+from dataclasses import dataclass
+from types import MappingProxyType
+
+from structured_source import CONTENT_NAMESPACE
+from structured_source.parser import parse_artifact
+from structured_source.registry import validate_registry
 
 from . import canon
 
-ROLES = ("authoritative", "derivative", "fragment-source")
-VISIBILITIES = ("rendered", "quotable", "internal")
-ROLE_VISIBILITY = {
-    "authoritative": "internal",
-    "derivative": "rendered",
-    "fragment-source": "rendered",
-}
-BASE_ENTRY_FIELDS = frozenset((
-    "role", "visibility", "version", "files", "primary",
-))
-PROFILE_ROLES = frozenset(("derivative", "fragment-source"))
+REGISTRY_PATH = "structured_source/registry/content.json"
+C = "{%s}" % CONTENT_NAMESPACE
 
 
 class RegistryError(RuntimeError):
     pass
 
 
-def _safe_registry_path(value, label):
-    if not isinstance(value, str) or not value or "\\" in value or \
-            any(ord(character) < 0x20 for character in value) or \
-            value.startswith("/") or posixpath.normpath(value) != value or \
-            value in (".", "..") or value.startswith("../") or \
-            any(not part or part in (".", "..")
-                for part in value.split("/")):
-        raise RegistryError(
-            "%s must be a canonical repository-relative path" % label)
-    first = value.split("/", 1)[0]
-    if first.endswith(":"):
-        raise RegistryError(
-            "%s must be a canonical repository-relative path" % label)
-    return value
-
-
-def _validate_corpus(cid, entry):
-    if not isinstance(cid, str) or not cid:
-        raise RegistryError("corpus id must be a non-empty string")
-    if not isinstance(entry, dict):
-        raise RegistryError("corpus %r is not an object" % cid)
-    role = entry.get("role")
-    if role not in ROLES:
-        raise RegistryError("corpus %r: unknown role %r" % (cid, role))
-    visibility = entry.get("visibility")
-    if visibility not in VISIBILITIES:
-        raise RegistryError(
-            "corpus %r: unknown visibility %r" % (cid, visibility))
-    if visibility != ROLE_VISIBILITY[role]:
-        raise RegistryError(
-            "corpus %r: role %r requires visibility %r"
-            % (cid, role, ROLE_VISIBILITY[role]))
-    expected_fields = set(BASE_ENTRY_FIELDS)
-    if role in PROFILE_ROLES:
-        expected_fields.add("profile")
-    if set(entry) != expected_fields:
-        raise RegistryError(
-            "corpus %r fields must be exactly %r"
-            % (cid, sorted(expected_fields)))
-    if not isinstance(entry["version"], str) or not entry["version"].strip():
-        raise RegistryError("corpus %r has an empty version" % cid)
-    files = entry["files"]
-    if not isinstance(files, dict) or not files:
-        raise RegistryError("corpus %r has no pinned files" % cid)
-    for path, digest in files.items():
-        _safe_registry_path(path, "corpus %r file" % cid)
-        try:
-            canon.parse_digest(digest)
-        except (TypeError, ValueError) as exc:
-            raise RegistryError(
-                "corpus %r file %r has a non-canonical digest: %s"
-                % (cid, path, exc))
-    primary = _safe_registry_path(
-        entry["primary"], "corpus %r primary" % cid)
-    if primary not in files:
-        raise RegistryError(
-            "corpus %r primary %r is not pinned" % (cid, primary))
-    if role in PROFILE_ROLES:
-        _safe_registry_path(entry["profile"], "corpus %r profile" % cid)
+@dataclass(frozen=True, slots=True)
+class SourceDocument:
+    document_id: str
+    authority_scheme: str
+    xml_role: str
+    semantic_digest: str
+    registered_path: str
 
 
 class Registry:
-    def __init__(self, content_gateway, registry_path="navigator/corpora.json",
-                 registry_paths=None, allowed_corpora=None,
-                 require_exact=False):
-        self.gw = content_gateway
-        self.allowed = None if allowed_corpora is None else set(allowed_corpora)
-        if registry_paths is None:
-            registry_paths = (registry_path,)
-        if not isinstance(registry_paths, (list, tuple)) or not registry_paths:
-            raise RegistryError("registry paths must be a non-empty sequence")
-        self.registry_paths = tuple(registry_paths)
-        for path in self.registry_paths:
-            _safe_registry_path(path, "registry path")
-        self.corpora = {}
-        seen = set()
-        registry_version = None
-        for path in self.registry_paths:
-            data = canon.parse_json(self.gw.read_text(path))
-            if not isinstance(data, dict) or \
-                    set(data) != {"registryVersion", "corpora"}:
-                raise RegistryError(
-                    "registry %r fields must be exactly registryVersion and "
-                    "corpora" % path)
-            version_problems = canon.require_version(
-                data, "registryVersion", "1")
-            if version_problems:
-                raise RegistryError(
-                    "registry %r: %s" % (path, version_problems[0]))
-            version = data["registryVersion"]
-            if registry_version is None:
-                registry_version = version
-            elif version != registry_version:
-                raise RegistryError(
-                    "registry %r has version %r, expected %r"
-                    % (path, version, registry_version))
-            corpora = data.get("corpora")
-            if not isinstance(corpora, dict) or not corpora:
-                raise RegistryError(
-                    "registry %r has an empty or invalid corpus map" % path)
-            for cid, entry in corpora.items():
-                if cid in seen:
-                    raise RegistryError("duplicate corpus id %r" % cid)
-                seen.add(cid)
-                _validate_corpus(cid, entry)
-                self.corpora[cid] = entry
-        if require_exact and self.allowed is not None and \
-                set(self.corpora) != self.allowed:
-            missing = sorted(self.allowed - set(self.corpora))
-            extra = sorted(set(self.corpora) - self.allowed)
-            raise RegistryError(
-                "registry corpus set is not exact (missing=%r, extra=%r)"
-                % (missing, extra))
+    """Current package/consumer resolver with no corpus or path fallback."""
 
-    def entry(self, corpus_id):
-        if self.allowed is not None and corpus_id not in self.allowed:
-            raise RegistryError(
-                "corpus %r is not in this edition's declared corpus set" % corpus_id)
+    def __init__(self, gw):
         try:
-            return self.corpora[corpus_id]
-        except KeyError:
-            raise RegistryError("unregistered corpus id %r" % corpus_id)
+            value = canon.parse_json(gw.read_text(REGISTRY_PATH))
+            validate_registry(value)
+        except Exception as exc:
+            raise RegistryError("live structured-source registry is invalid") from exc
+        self._gw = gw
+        self._files = MappingProxyType({
+            item["fileId"]: MappingProxyType(dict(item))
+            for item in value["files"]})
+        self._packages = MappingProxyType({
+            item["packageId"]: MappingProxyType(dict(item))
+            for item in value["packages"]})
+        self._consumers = MappingProxyType({
+            item["consumerId"]: tuple(MappingProxyType(dict(edge))
+                                      for edge in item["edges"])
+            for item in value["consumers"]})
+        self._artifacts = {}
+        self._documents = {}
 
-    def read_file(self, corpus_id, relpath):
-        """Read one pinned file of a corpus, verifying its digest pin."""
-        entry = self.entry(corpus_id)
-        pins = entry["files"]
-        if relpath not in pins:
+    def consumer_packages(self, consumer_id: str, claim_package: str) -> tuple[str, str]:
+        edges = self._consumers.get(consumer_id)
+        expected = {claim_package, "pct-as-filed-dossier"}
+        if edges is None or len(edges) != 2 or \
+                {edge["packageId"] for edge in edges} != expected or any(
+                    edge["inputRepresentation"] != "xml" or edge["dependencies"]
+                    for edge in edges):
             raise RegistryError(
-                "file %r is not pinned by corpus %r" % (relpath, corpus_id))
-        data = self.gw.read_bytes(relpath)
-        actual = canon.bytes_digest(data)
-        if actual != pins[relpath]:
+                "navigator consumer must resolve exactly claim and PCT packages as XML")
+        return claim_package, "pct-as-filed-dossier"
+
+    def xml_path(self, package_id: str) -> tuple[str, str, str]:
+        package = self._packages.get(package_id)
+        if package is None:
+            raise RegistryError("registered package does not resolve: %s" % package_id)
+        file_entry = self._files.get(package["xmlFile"])
+        scheme = package["authorityScheme"]
+        expected_role = {
+            "authored-markdown-v1": "generated-xml",
+            "pdf-evidence-transcription-v1": "transcription-xml",
+        }.get(scheme)
+        if file_entry is None or expected_role is None or \
+                file_entry["role"] != expected_role:
+            raise RegistryError("package has no current registered XML interface")
+        return file_entry["path"], scheme, expected_role
+
+    def load_document(self, package_id: str):
+        if package_id in self._artifacts:
+            return self._documents[package_id], self._artifacts[package_id]
+        path, scheme, role = self.xml_path(package_id)
+        data = self._gw.read_bytes(path)
+        kind = ("authored-document" if scheme == "authored-markdown-v1"
+                else "content-document")
+        try:
+            artifact = parse_artifact(data, kind)
+        except Exception as exc:
             raise RegistryError(
-                "corpus %r file %r drifted: pinned %s, actual %s"
-                % (corpus_id, relpath, pins[relpath], actual))
-        return data
+                "registered XML failed its secure structured-source contract") from exc
+        identity = artifact.root.find(C + "documentIdentity")
+        if identity is None or identity.get("documentId") != package_id:
+            raise RegistryError("registered XML document identity is stale")
+        document = SourceDocument(
+            document_id=package_id,
+            authority_scheme=scheme,
+            xml_role=role,
+            semantic_digest=artifact.semantic_digest,
+            registered_path=path,
+        )
+        self._artifacts[package_id] = artifact
+        self._documents[package_id] = document
+        return document, artifact
 
-    def primary_text(self, corpus_id):
-        entry = self.entry(corpus_id)
-        return self.read_file(corpus_id, entry["primary"]).decode("utf-8")
+    def asset_paths(self, package_id: str) -> tuple[str, ...]:
+        package = self._packages.get(package_id)
+        if package is None:
+            raise RegistryError("registered package does not resolve: %s" % package_id)
+        paths = []
+        for file_id in package["assetFiles"]:
+            entry = self._files.get(file_id)
+            if entry is None or entry["role"] != "asset":
+                raise RegistryError("package asset registration is malformed")
+            paths.append(entry["path"])
+        return tuple(sorted(paths))
 
-    def profile(self, corpus_id):
-        entry = self.entry(corpus_id)
-        if "profile" not in entry:
-            raise RegistryError("corpus %r has no segmentation profile" % corpus_id)
-        return canon.parse_json(self.gw.read_text(entry["profile"]))
+    def get_document(self, document_id: str) -> SourceDocument:
+        if document_id not in self._documents:
+            self.load_document(document_id)
+        return self._documents[document_id]
 
-    def sibling_reader(self, corpus_id):
-        """read_file(relpath) for files referenced relative to the corpus
-        primary file's directory (figures) — pin-verified."""
-        entry = self.entry(corpus_id)
-        base = entry["primary"].rsplit("/", 1)[0]
-
-        def read(rel):
-            return self.read_file(corpus_id, base + "/" + rel)
-        return read
+    @property
+    def documents(self):
+        return tuple(self._documents[key] for key in sorted(self._documents))

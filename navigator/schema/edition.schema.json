@@ -1,64 +1,57 @@
 {
- "schemaVersion": "1",
- "comment": "Closed schema for edition configs (TDD §8.6): the complete parameter set for one artifact, including the declared transitive input set used by the exact-set check.",
- "type": "object",
- "required": ["editionVersion", "editionId", "displayName", "strategyName", "strategyPrefix", "claimCorpus", "targetCorpus", "authorityCorpus", "corpusRegistries", "claimSetVersion", "relationSet", "gateInventory", "dependencyMap", "independentClaims", "census", "groups", "forbiddenTerms", "qaSources", "qaRegistry", "stringsNamespace", "stringsResource", "artifactName", "declaredReleaseTimestamp", "declaredTransitiveInputs"],
- "additionalProperties": false,
- "properties": {
-  "editionVersion": {"type": "string", "enum": ["2"]},
-  "editionId": {"type": "string", "minLength": 1},
-  "displayName": {"type": "string"},
-  "strategyName": {"type": "string"},
-  "strategyPrefix": {"type": "string"},
-  "claimCorpus": {"type": "string", "minLength": 1},
-  "targetCorpus": {"type": "string", "minLength": 1},
-  "authorityCorpus": {"type": "string", "minLength": 1},
-  "corpusRegistries": {
-   "type": "array",
-   "minItems": 1,
-   "uniqueItems": true,
-   "items": {"type": "string", "minLength": 1}
-  },
-  "claimSetVersion": {"type": "string"},
-  "relationSet": {"type": "string", "minLength": 1},
-  "gateInventory": {"type": "string", "minLength": 1},
-  "dependencyMap": {"type": "string", "minLength": 1},
-  "independentClaims": {"type": "array", "items": {"type": "integer"}},
-  "census": {
-   "type": "object",
-   "required": ["claims", "units", "perClaim"],
-   "additionalProperties": false,
-   "properties": {
-    "claims": {"type": "integer"},
-    "units": {"type": "integer"},
-    "perClaim": {
-     "type": "object",
-     "additionalProperties": false,
-     "patternProperties": {"^[0-9]+$": {"type": "integer"}}
+  "schemaVersion": "1",
+  "type": "object",
+  "required": [
+    "editionVersion",
+    "editionId",
+    "displayName",
+    "strategyName",
+    "strategyPrefix",
+    "consumerId",
+    "claimPackageId",
+    "claimSetVersion",
+    "relationPath",
+    "editionWordingPath",
+    "artifactName",
+    "declaredReleaseTimestamp",
+    "independentClaims",
+    "census",
+    "groups"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "editionVersion": {"type": "string", "enum": ["1"]},
+    "editionId": {"type": "string", "enum": ["na", "af"]},
+    "displayName": {"type": "string", "minLength": 1},
+    "strategyName": {"type": "string", "minLength": 1},
+    "strategyPrefix": {"type": "string", "enum": ["NA", "AF"]},
+    "consumerId": {"type": "string", "pattern": "^navigator-(na|af)$"},
+    "claimPackageId": {"type": "string", "pattern": "^aa11393us-(na|af)-us-claim-set$"},
+    "claimSetVersion": {"type": "string", "pattern": "^(NA|AF)-[0-9]{4}-[0-9]{2}-[0-9]{2}-v[1-9][0-9]*$"},
+    "relationPath": {"type": "string", "pattern": "^navigator/relations/(na|af)__pct[.]relations[.]xml$"},
+    "editionWordingPath": {"type": "string", "pattern": "^navigator/wording/(na|af)[.]wording[.]xml$"},
+    "artifactName": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*[.]html$"},
+    "declaredReleaseTimestamp": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+    "independentClaims": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "integer", "minimum": 1}
+    },
+    "census": {
+      "type": "object",
+      "required": ["claims", "units"],
+      "additionalProperties": false,
+      "properties": {
+        "claims": {"type": "integer", "minimum": 1},
+        "units": {"type": "integer", "minimum": 1}
+      }
+    },
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
     }
-   }
-  },
-  "groups": {"type": "array", "items": {"type": "string"}},
-  "forbiddenTerms": {"type": "array", "items": {"type": "string"}},
-  "qaSources": {
-   "type": "object",
-   "required": ["priorityMap", "crosswalk"],
-   "additionalProperties": false,
-   "properties": {
-    "priorityMap": {"type": "string", "minLength": 1},
-    "crosswalk": {"type": ["string", "null"], "minLength": 1}
-   }
-  },
-  "qaRegistry": {"type": "string", "minLength": 1},
-  "stringsNamespace": {"type": "string"},
-  "stringsResource": {"type": "string", "minLength": 1},
-  "artifactName": {"type": "string"},
-  "declaredReleaseTimestamp": {"type": "string"},
-  "declaredTransitiveInputs": {
-   "type": "array",
-   "minItems": 1,
-   "uniqueItems": true,
-   "items": {"type": "string", "minLength": 1}
   }
- }
 }

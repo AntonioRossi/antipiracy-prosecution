@@ -1,201 +1,337 @@
-"""Claim-set §3 parser — fragment corpus -> claims and limitation units.
+"""Typed claim units decoded from the registered authored-XML Pandoc AST."""
 
-Every claim is decomposed into limitation units: its markdown paragraphs —
-preamble (u0) plus each clause (TDD §5.2). The census is normative per
-edition and asserted exactly by the extraction test (AC-01). Group headings
-are captured for the claims-pane grouping (§5.1); a blockquote inside the
-claims section is guidance (profile-designated quotable, segmented by
-lib.segmenter), never a unit.
+from __future__ import annotations
 
-Dependency references (``of claim N``) are parsed here for the dual-source
-cross-validation of the authored dependency map (§8.1).
-"""
-
+from dataclasses import dataclass
 import re
+from types import MappingProxyType
 
 from . import canon
 
-CLAIM_HEAD_RE = re.compile(r"^\*\*(\d+)\.\*\*\s+(.*)$", re.S)
-DEP_REF_RE = re.compile(r"\bof claims? (\d+)")
-H2_RE = re.compile(r"^## (.+)$")
-H3_RE = re.compile(r"^### (.+)$")
+C = "{urn:aa11393:ssp:content:1}"
+XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
+_CLAIM = re.compile(r"claim-([1-9][0-9]*)\Z")
+_LIMITATION = re.compile(r"claim-([1-9][0-9]*)-limitation-([1-9][0-9]*)\Z")
+_REFERENCE = re.compile(r"\bclaims?\s+([1-9][0-9]*)\b", re.IGNORECASE)
+_UNSUPPORTED_REFERENCE = re.compile(
+    r"\bclaims\s+[1-9]|"
+    r"\bclaim\s+[1-9][0-9]*\s+(?:and|or|through|to)\s+[1-9]|"
+    r"\bclaim\s+[1-9][0-9]*\s*[-–]\s*[1-9]|"
+    r"\bclaim\s+[1-9][0-9]*\s*,\s*[1-9]",
+    re.IGNORECASE,
+)
+_ANCHOR_OPEN = re.compile(r'<a id="(ssp-[a-z][a-z0-9-]*)">\Z')
 
 
 class ClaimsParseError(ValueError):
     pass
 
 
-def parse_dependency_table(text):
-    """Parse the claim document's published ``Depends from`` table.
-
-    This is deliberately independent of both the authored dependency map
-    and claim-reference parsing: the AF three-way check is meaningful only
-    if the document table is read from the pinned claim-set bytes rather
-    than copied into the map and compared with itself.  Returns ``None``
-    when the document publishes no such table.
-    """
-    lines = text.splitlines()
-    found = []
-    for i, line in enumerate(lines[:-1]):
-        if not line.lstrip().startswith("|"):
-            continue
-        headers = [re.sub(r"[*_`]", "", c).strip().lower()
-                   for c in line.strip().strip("|").split("|")]
-        try:
-            dep_col = headers.index("depends from")
-        except ValueError:
-            continue
-        claim_cols = [n for n, h in enumerate(headers) if "claim" in h]
-        if not claim_cols:
-            continue
-        claim_col = claim_cols[0]
-        sep = lines[i + 1].strip()
-        if not re.match(r"^\|[\s:|\-]+\|$", sep):
-            raise ClaimsParseError(
-                "dependency table header is not followed by a separator")
-        table = {}
-        j = i + 2
-        while j < len(lines) and lines[j].lstrip().startswith("|"):
-            cells = [c.strip() for c in
-                     lines[j].strip().strip("|").split("|")]
-            if max(claim_col, dep_col) >= len(cells):
-                raise ClaimsParseError("short row in dependency table")
-            cm = re.search(r"\d+", cells[claim_col])
-            if cm is None:
-                raise ClaimsParseError(
-                    "dependency table row has no claim number: %r"
-                    % cells[claim_col])
-            number = int(cm.group(0))
-            raw_parent = cells[dep_col].strip()
-            if raw_parent in ("", "-", "—", "–"):
-                parent = None
-            elif re.fullmatch(r"\d+", raw_parent):
-                parent = int(raw_parent)
-            else:
-                raise ClaimsParseError(
-                    "claim %d has unparseable Depends from value %r"
-                    % (number, raw_parent))
-            if number in table:
-                raise ClaimsParseError(
-                    "duplicate claim %d in dependency table" % number)
-            table[number] = parent
-            j += 1
-        found.append(table)
-    if len(found) > 1:
-        raise ClaimsParseError("multiple Depends from tables found")
-    return found[0] if found else None
+def dependency_references(text):
+    """Parse the sole current singular ``claim N`` dependency grammar."""
+    if _UNSUPPORTED_REFERENCE.search(text):
+        raise ClaimsParseError(
+            "plural, conjunctive, list, or range claim references are unsupported")
+    return tuple(sorted({int(value) for value in _REFERENCE.findall(text)}))
 
 
-class Unit:
-    __slots__ = ("claim", "index", "text", "canonical", "digest")
-
-    def __init__(self, claim, index, text):
-        self.claim = claim
-        self.index = index
-        self.text = text
-        self.canonical = canon.canon_prose(text)
-        self.digest = canon.text_digest(self.canonical)
+@dataclass(frozen=True, slots=True)
+class ClaimUnit:
+    fragment_id: str
+    claim_number: int
+    unit_kind: str
+    unit_index: int
+    text: str
+    text_digest: str
+    content_digest: str
 
     @property
     def id(self):
-        return "c%du%d" % (self.claim, self.index)
+        return self.fragment_id
+
+    @property
+    def claim(self):
+        return self.claim_number
+
+    @property
+    def index(self):
+        return self.unit_index
 
     @property
     def label(self):
-        return "preamble" if self.index == 0 else "limitation %d" % self.index
+        return ("preamble" if self.unit_kind == "preamble" else
+                "limitation %d" % self.unit_index)
 
 
+@dataclass(frozen=True, slots=True)
 class Claim:
-    __slots__ = ("number", "group", "units", "parsed_refs")
-
-    def __init__(self, number, group):
-        self.number = number
-        self.group = group
-        self.units = []
-        self.parsed_refs = []
+    number: int
+    group: str
+    units: tuple[ClaimUnit, ...]
+    dependencies: tuple[int, ...]
+    fragment_id: str
+    content_digest: str
 
     @property
-    def aggregate_hash(self):
-        return canon.composite_digest(
-            "aa11393:claim-agg:c1", [u.digest for u in self.units])
+    def text(self):
+        return " ".join(unit.text for unit in self.units)
 
 
-def parse_claims(text, claims_heading="Candidate claims"):
-    """Parse the §3 claims of one claim-set markdown document."""
-    lines = text.split("\n")
-    in_section = False
+@dataclass(frozen=True, slots=True)
+class ClaimSet:
+    claims: tuple[Claim, ...]
+    by_number: object
+    units_by_fragment: object
+    groups: tuple[tuple[str, tuple[int, ...]], ...]
+
+
+def _value(element):
+    local = element.tag.rsplit("}", 1)[-1]
+    if local == "null":
+        return None
+    if local == "boolean":
+        return element.text in {"1", "true"}
+    if local == "integer":
+        return int(element.text)
+    if local == "number":
+        return float(element.text)
+    if local == "string":
+        return element.text or ""
+    if local == "array":
+        return [_value(child) for child in element]
+    if local == "node":
+        children = list(element)
+        if len(children) > 1:
+            raise ClaimsParseError("Pandoc node has more than one payload")
+        node = {"t": element.get("constructor")}
+        if children:
+            node["c"] = _value(children[0])
+        return node
+    raise ClaimsParseError("unknown authored Pandoc value %r" % local)
+
+
+def decode_pandoc(authored_root) -> tuple[dict, ...]:
+    pandoc = authored_root.find(C + "pandoc")
+    if pandoc is None or pandoc.get("profile") != "gfm-v1" or \
+            pandoc.get("apiVersion") != "1.23.1":
+        raise ClaimsParseError("authored XML has no current Pandoc payload")
+    blocks = []
+    for element in pandoc.findall(C + "block"):
+        children = list(element)
+        if len(children) > 1:
+            raise ClaimsParseError("Pandoc block has more than one payload")
+        block = {"t": element.get("constructor")}
+        if children:
+            block["c"] = _value(children[0])
+        blocks.append(block)
+    if not blocks:
+        raise ClaimsParseError("authored XML has no Pandoc blocks")
+    return tuple(blocks)
+
+
+def _raw_anchor(node):
+    if not isinstance(node, dict) or node.get("t") != "RawInline":
+        return None
+    content = node.get("c")
+    if not isinstance(content, list) or len(content) != 2 or \
+            content[0] != "html" or not isinstance(content[1], str):
+        raise ClaimsParseError("malformed RawInline in authored claim XML")
+    if content[1] == "</a>":
+        return "close"
+    match = _ANCHOR_OPEN.fullmatch(content[1])
+    if match is None:
+        raise ClaimsParseError("non-anchor raw inline in authored claim XML")
+    return match.group(1)[4:]
+
+
+def _events(value):
+    """Yield semantic text and exact stable-anchor events in source order."""
+    if isinstance(value, list):
+        index = 0
+        while index < len(value):
+            anchor = _raw_anchor(value[index])
+            if anchor is None:
+                yield from _events(value[index])
+                index += 1
+                continue
+            if anchor == "close" or index + 1 >= len(value) or \
+                    _raw_anchor(value[index + 1]) != "close":
+                raise ClaimsParseError("stable anchors are not exact adjacent pairs")
+            yield "anchor", anchor
+            index += 2
+        return
+    if not isinstance(value, dict):
+        return
+    constructor = value.get("t")
+    content = value.get("c")
+    if constructor == "Str":
+        yield "text", content
+    elif constructor in {"Space", "SoftBreak", "LineBreak"}:
+        yield "text", " "
+    elif constructor in {"Code", "Math"}:
+        yield "text", content[1]
+    elif constructor in {"Link", "Image"}:
+        yield from _events(content[1])
+    elif constructor == "Header":
+        yield from _events(content[2])
+    elif "c" in value:
+        yield from _events(content)
+
+
+def _block_text(block) -> str:
+    return canon.canon_prose("".join(
+        value for kind, value in _events(block) if kind == "text"))
+
+
+def _fragments(authored_root):
+    parent = authored_root.find(C + "fragments")
+    if parent is None:
+        raise ClaimsParseError("authored XML omits its fragment index")
+    result = {}
+    for fragment in parent.findall(C + "fragment"):
+        identifier = fragment.get(XML_ID)
+        if not identifier or identifier in result:
+            raise ClaimsParseError("authored fragment identity is absent or duplicated")
+        result[identifier] = fragment
+    return result
+
+
+def parse_claims(authored_root, fragment_digests) -> ClaimSet:
+    """Decode exact preamble/limitation units without reading Markdown."""
+    blocks = decode_pandoc(authored_root)
+    indexed_fragments = _fragments(authored_root)
+    claim_fragment_ids = {
+        identifier for identifier in indexed_fragments
+        if _CLAIM.fullmatch(identifier) or _LIMITATION.fullmatch(identifier)}
+
+    stream = []
     group = None
+    for block in blocks:
+        if block.get("t") == "Header" and block.get("c", [None])[0] == 3:
+            group = _block_text(block)
+        for event in _events(block):
+            stream.append((event[0], event[1], group))
+        stream.append(("text", " ", group))
+
     claims = []
+    consumed = set()
     current = None
-    para = []
+    active_id = None
+    active_kind = None
+    active_index = None
+    text_parts = []
+    units = []
+    limitation_expected = 1
 
-    def flush_para():
-        nonlocal para
-        joined = " ".join(p.strip() for p in para if p.strip())
-        para = []
-        if not joined:
+    def finish_unit():
+        nonlocal text_parts, active_id, active_kind, active_index
+        if current is None or active_id is None:
+            text_parts = []
             return
-        m = CLAIM_HEAD_RE.match(joined)
-        if m:
-            start_claim(int(m.group(1)), m.group(2))
+        text = canon.canon_prose("".join(text_parts))
+        if active_kind == "preamble":
+            text = re.sub(r"^%d\.\s*" % current["number"], "", text)
+            text = canon.canon_prose(text)
+            if not text:
+                text_parts = []
+                return
+        if not text:
+            raise ClaimsParseError("claim unit %s has no exact text" % active_id)
+        digest = fragment_digests.get(active_id)
+        if digest is None:
+            raise ClaimsParseError("claim unit %s has no XML fragment digest" % active_id)
+        units.append(ClaimUnit(
+            fragment_id=active_id,
+            claim_number=current["number"],
+            unit_kind=active_kind,
+            unit_index=active_index,
+            text=text,
+            text_digest=canon.text_digest(text),
+            content_digest=digest,
+        ))
+        consumed.add(active_id)
+        text_parts = []
+
+    def finish_claim():
+        nonlocal current, units, active_id, active_kind, active_index
+        if current is None:
+            return
+        finish_unit()
+        if not units:
+            raise ClaimsParseError("claim %d has no semantic units" % current["number"])
+        full_text = " ".join(unit.text for unit in units)
+        dependencies = dependency_references(full_text)
+        number = current["number"]
+        if any(parent >= number for parent in dependencies):
+            raise ClaimsParseError("claim %d contains a non-ancestral claim reference" % number)
+        fragment_id = "claim-%d" % number
+        claims.append(Claim(
+            number=number,
+            group=current["group"],
+            units=tuple(units),
+            dependencies=dependencies,
+            fragment_id=fragment_id,
+            content_digest=fragment_digests[fragment_id],
+        ))
+        consumed.add(fragment_id)
+        current = None
+        units = []
+        active_id = active_kind = active_index = None
+
+    for kind, value, event_group in stream:
+        if kind == "text":
+            if current is not None:
+                text_parts.append(value)
+            continue
+        claim_match = _CLAIM.fullmatch(value)
+        limitation_match = _LIMITATION.fullmatch(value)
+        if claim_match:
+            finish_claim()
+            number = int(claim_match.group(1))
+            if not event_group:
+                raise ClaimsParseError("claim %d has no group heading" % number)
+            if value not in indexed_fragments or value not in fragment_digests:
+                raise ClaimsParseError("claim %d has no exact fragment identity" % number)
+            current = {"number": number, "group": event_group}
+            active_id, active_kind, active_index = value, "preamble", 0
+            limitation_expected = 1
+            text_parts = []
+        elif limitation_match:
+            number, limitation = map(int, limitation_match.groups())
+            if current is None or number != current["number"] or \
+                    limitation != limitation_expected:
+                raise ClaimsParseError("claim limitation identities are not contiguous")
+            finish_unit()
+            if value not in indexed_fragments or value not in fragment_digests:
+                raise ClaimsParseError("claim limitation has no exact fragment identity")
+            active_id, active_kind, active_index = value, "limitation", limitation
+            limitation_expected += 1
         elif current is not None:
-            current.units.append(Unit(current.number, len(current.units), joined))
+            finish_claim()
+    finish_claim()
 
-    def start_claim(number, headtext):
-        nonlocal current
-        current = Claim(number, group)
-        current.units.append(Unit(number, 0, headtext))
-        claims.append(current)
-
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        m2 = H2_RE.match(line)
-        if m2:
-            flush_para()
-            name = re.sub(r"^\d+\.\s+", "", m2.group(1)).strip()
-            if in_section:
-                break  # left the claims section
-            in_section = name == claims_heading
-            current = None
-            i += 1
-            continue
-        if not in_section:
-            i += 1
-            continue
-        m3 = H3_RE.match(line)
-        if m3:
-            flush_para()
-            group = m3.group(1).strip()
-            current = None
-            i += 1
-            continue
-        if line.startswith(">"):
-            flush_para()
-            current = None  # guidance blockquote: not claim text
-            while i < len(lines) and lines[i].startswith(">"):
-                i += 1
-            continue
-        if not line.strip():
-            flush_para()
-            i += 1
-            continue
-        para.append(line)
-        i += 1
-    flush_para()
-
-    if not claims:
-        raise ClaimsParseError("no claims found under %r" % claims_heading)
-    for c in claims:
-        full = " ".join(u.text for u in c.units)
-        c.parsed_refs = sorted({int(n) for n in DEP_REF_RE.findall(full)})
-    numbers = [c.number for c in claims]
+    numbers = [claim.number for claim in claims]
     if numbers != list(range(1, len(claims) + 1)):
-        raise ClaimsParseError("claim numbering not contiguous: %r" % numbers)
-    return claims
+        raise ClaimsParseError("claim numbering is not exact and contiguous")
+    if consumed != claim_fragment_ids:
+        raise ClaimsParseError(
+            "claim unit coverage is not exact (missing=%r, extra=%r)" %
+            (sorted(claim_fragment_ids - consumed), sorted(consumed - claim_fragment_ids)))
+    unit_map = {unit.fragment_id: unit for claim in claims for unit in claim.units}
+    groups = []
+    for claim in claims:
+        if not groups or groups[-1][0] != claim.group:
+            groups.append((claim.group, []))
+        groups[-1][1].append(claim.number)
+    return ClaimSet(
+        claims=tuple(claims),
+        by_number=MappingProxyType({claim.number: claim for claim in claims}),
+        units_by_fragment=MappingProxyType(unit_map),
+        groups=tuple((label, tuple(numbers)) for label, numbers in groups),
+    )
 
 
 def census(claims):
-    """(claim count, unit count, {claim: units}) for the census assertion."""
-    per = {c.number: len(c.units) for c in claims}
-    return len(claims), sum(per.values()), per
+    sequence = claims.claims if isinstance(claims, ClaimSet) else tuple(claims)
+    return len(sequence), sum(len(claim.units) for claim in sequence), \
+        MappingProxyType({claim.number: len(claim.units) for claim in sequence})

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:w="urn:aa11393:navigator:wording:1"
+           targetNamespace="urn:aa11393:navigator:wording:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           xpathDefaultNamespace="urn:aa11393:navigator:wording:1"
+           version="1.1">
+  <xs:simpleType name="stableIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z][A-Za-z0-9._:-]*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="scopeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="shared" />
+      <xs:enumeration value="na" />
+      <xs:enumeration value="af" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="categoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="legend" />
+      <xs:enumeration value="disclaimer" />
+      <xs:enumeration value="mapping-status" />
+      <xs:enumeration value="mapping-role" />
+      <xs:enumeration value="caution" />
+      <xs:enumeration value="disposition" />
+      <xs:enumeration value="provenance" />
+      <xs:enumeration value="editorial" />
+      <xs:enumeration value="security" />
+      <xs:enumeration value="release-profile" />
+      <xs:enumeration value="bundle-manifest" />
+      <xs:enumeration value="gate-label" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="usageContextType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="counsel-legend" />
+      <xs:enumeration value="standing-disclaimer" />
+      <xs:enumeration value="mapping-status" />
+      <xs:enumeration value="mapping-role" />
+      <xs:enumeration value="caution-type" />
+      <xs:enumeration value="caution-scope" />
+      <xs:enumeration value="gate-disposition" />
+      <xs:enumeration value="generalization-caution" />
+      <xs:enumeration value="authority-provenance" />
+      <xs:enumeration value="source-input-provenance" />
+      <xs:enumeration value="provenance-summary" />
+      <xs:enumeration value="editorial-label" />
+      <xs:enumeration value="guidance-label" />
+      <xs:enumeration value="artifact-label" />
+      <xs:enumeration value="artifact-watermark" />
+      <xs:enumeration value="bundle-manifest" />
+      <xs:enumeration value="gate-label" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="scalarType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="stable-id" />
+      <xs:enumeration value="integer" />
+      <xs:enumeration value="timestamp" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="originKindType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="registered-control" />
+      <xs:enumeration value="closed-derivation" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="slotType">
+    <xs:attribute name="name" type="w:stableIdType" use="required" />
+    <xs:attribute name="scalarType" type="w:scalarType" use="required" />
+    <xs:attribute name="originKind" type="w:originKindType" use="required" />
+    <xs:attribute name="originRef" type="w:stableIdType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="entryType">
+    <xs:sequence>
+      <xs:element name="usage" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="context" type="w:usageContextType" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="text">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="slots" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="slot" type="w:slotType" minOccurs="1" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="wordingId" type="xs:ID" use="required" />
+    <xs:attribute name="category" type="w:categoryType" use="required" />
+    <xs:assert test="count(usage) = count(distinct-values(usage/@context))" />
+    <xs:assert test="count(slots/slot) = count(distinct-values(slots/slot/@name))" />
+    <xs:assert test="if (exists(slots)) then every $s in slots/slot satisfies (contains(string(../../text), concat('{', $s/@name, '}')) and not(contains(substring-after(string(../../text), concat('{', $s/@name, '}')), concat('{', $s/@name, '}')))) else not(matches(string(text), '\{[A-Za-z][A-Za-z0-9._:-]*\}'))" />
+  </xs:complexType>
+
+  <xs:element name="wording">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="entry" type="w:entryType" minOccurs="1" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="schemaVersion" use="required" fixed="1" />
+      <xs:attribute name="schemaProfile" use="required" fixed="navigator-controlled-wording-v1" />
+      <xs:attribute name="wordingSetId" type="xs:ID" use="required" />
+      <xs:attribute name="locale" use="required" fixed="en-US" />
+      <xs:attribute name="scope" type="w:scopeType" use="required" />
+      <xs:assert test="@wordingSetId = @scope" />
+    </xs:complexType>
+    <xs:unique name="wordingIdentityUnique">
+      <xs:selector xpath="w:entry" />
+      <xs:field xpath="@wordingId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
