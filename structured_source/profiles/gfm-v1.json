@@ -1,0 +1,22 @@
+{
+  "profileVersion": "1",
+  "profileId": "gfm-v1",
+  "lineEndings": "LF",
+  "finalNewline": true,
+  "stableAnchorPrefix": "ssp-",
+  "anchorSyntax": "html-a-id-v1",
+  "xmlFragmentIdPolicy": "strip-stable-anchor-prefix",
+  "tableStyle": "pipe",
+  "unorderedListMarker": "-",
+  "generatedNoticeVersion": "generated-v1",
+  "externalSchemes": ["http", "https", "mailto"],
+  "pandocVersion": "3.5",
+  "pandocApiVersion": [1, 23, 1],
+  "pandocReader": "gfm",
+  "pandocWriter": "gfm",
+  "supportedBlockConstructors": ["BlockQuote", "BulletList", "CodeBlock", "Header", "HorizontalRule", "OrderedList", "Para", "Plain", "Table"],
+  "topLevelBlockConstructors": ["BlockQuote", "BulletList", "CodeBlock", "Header", "HorizontalRule", "OrderedList", "Para", "Table"],
+  "supportedInlineConstructors": ["Code", "Emph", "Image", "LineBreak", "Link", "Math", "Note", "RawInline", "SoftBreak", "Space", "Str", "Strikeout", "Strong"],
+  "supportedAuxiliaryConstructors": ["AlignCenter", "AlignDefault", "AlignLeft", "AlignRight", "ColWidth", "ColWidthDefault", "Decimal", "DisplayMath", "InlineMath", "OneParen", "Period"],
+  "presentationalNormalizations": ["anchor-carrier-placement", "equivalent-markdown-escaping", "final-newline"]
+}

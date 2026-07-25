@@ -1,0 +1,5 @@
+# Generated review projections preserve source line breaks, including GFM's
+# two-space hard-break spelling. Their bytes are checked by regeneration.
+*.md whitespace=-blank-at-eof
+PCT/structured-source/**/*.md whitespace=-blank-at-eol,-blank-at-eof
+US/prior-art/*/*.md whitespace=-blank-at-eol,-blank-at-eof

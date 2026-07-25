@@ -39,11 +39,11 @@ The detector independent is exposed to A4, A6, A13, B6, B8, B9, A20, and A21 bec
 
 | File | Function |
 |---|---|
-| [`AA11393US-NA-US_claim-set_DRAFT.md`](AA11393US-NA-US_claim-set_DRAFT.md) | Exact 30-claim candidate text and operative support gates |
-| [`AA11393US-NA-US_counsel-briefing_DRAFT.md`](AA11393US-NA-US_counsel-briefing_DRAFT.md) | Decision-focused art, support, enforcement, procedure, and filing instructions |
-| [`AA11393US-NA-priority-support-map_DRAFT.md`](AA11393US-NA-priority-support-map_DRAFT.md) | Provisional/PCT limitation map and claim-as-a-whole gates |
-| [`AA11393US-NA-prior-art-comparison-matrix_DRAFT.md`](AA11393US-NA-prior-art-comparison-matrix_DRAFT.md) | Feature, combination, and fallback analysis |
-| [`AA11393US-NA-claim-document-mapping-matrix_DRAFT.md`](AA11393US-NA-claim-document-mapping-matrix_DRAFT.md) | Claim-group mapping against all 33 canonical sources |
+| [`AA11393US-NA-US_claim-set_DRAFT.md`](claims/AA11393US-NA-US_claim-set_DRAFT.md) | Exact 30-claim candidate text and operative support gates |
+| [`AA11393US-NA-US_counsel-briefing_DRAFT.md`](counsel/AA11393US-NA-US_counsel-briefing_DRAFT.md) | Decision-focused art, support, enforcement, procedure, and filing instructions |
+| [`AA11393US-NA-priority-support-map_DRAFT.md`](support/AA11393US-NA-priority-support-map_DRAFT.md) | Provisional/PCT limitation map and claim-as-a-whole gates |
+| [`AA11393US-NA-prior-art-comparison-matrix_DRAFT.md`](prior-art-analysis/AA11393US-NA-prior-art-comparison-matrix_DRAFT.md) | Feature, combination, and fallback analysis |
+| [`AA11393US-NA-claim-document-mapping-matrix_DRAFT.md`](claim-document-mapping/AA11393US-NA-claim-document-mapping-matrix_DRAFT.md) | Claim-group mapping against all 33 canonical sources |
 
 Use `NA claim N`, `AF claim N`, and `PCT claim N` outside exact claim text.
 
@@ -74,5 +74,5 @@ Do not fork shared IDS, filing-control, or public-comment records into this dire
 - Convert to the required § 371 national-stage amendment format.
 - Recheck claim count, dependencies, antecedent basis, ordinary excess-claim fees, unity, restriction exposure, support maps, and every matrix row after any amendment.
 - Complete the DW-12 transmission, access, retention, and preservation controls.
-- Apply the shared [`continuation-preservation memo`](../common/AA11393US-continuation-preservation_MEMO.md) and coordinate public positions, IDS decisions, and continuation claims across NA, AF, and any approved hybrid.
+- Apply the shared [`continuation-preservation memo`](../common/continuation-controls/AA11393US-continuation-preservation_MEMO.md) and coordinate public positions, IDS decisions, and continuation claims across NA, AF, and any approved hybrid.
 - Continuation practice cannot cure missing disclosure or restore an unsupported filing date.

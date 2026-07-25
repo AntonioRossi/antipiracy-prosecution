@@ -22,16 +22,16 @@ There is one AF package. AF claims 19–22 and AF claim 23 are separate method f
 
 | File | Function |
 |---|---|
-| [`AA11393US-AF-US_counsel-briefing_DRAFT.md`](AA11393US-AF-US_counsel-briefing_DRAFT.md) | Decision-focused instructions for US counsel, including art, support, proof, procedure, and continuation controls |
-| [`AA11393US-AF-US_claim-set_DRAFT.md`](AA11393US-AF-US_claim-set_DRAFT.md) | Exact AF candidate text: 23 total claims, three independent claims, no multiple-dependent claim |
-| [`AA11393US-AF-priority-support-map_DRAFT.md`](AA11393US-AF-priority-support-map_DRAFT.md) | Claim-as-a-whole provisional/PCT support analysis and mandatory support gates |
-| [`AA11393US-AF-prior-art-comparison-matrix_DRAFT.md`](AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) | Feature-level comparison and claim-specific combination pressure |
-| [`AA11393US-AF-claim-document-mapping-matrix_DRAFT.md`](AA11393US-AF-claim-document-mapping-matrix_DRAFT.md) | AF-claim-by-document mapping against the canonical reviewed corpus |
-| [`AA11393US-AF-claim-crosswalk_DRAFT.md`](AA11393US-AF-claim-crosswalk_DRAFT.md) | AF-to-NA correspondence and actor-specific coverage outside AF |
-| [`../common/AA11393US-continuation-preservation_MEMO.md`](../common/AA11393US-continuation-preservation_MEMO.md) | Shared owner, docket, filing, benefit-verification, and repeat-or-close controls for any selected parent topology |
-| [`AA11393US-AF-CONT-US_claim-set_DRAFT.md`](AA11393US-AF-CONT-US_claim-set_DRAFT.md) | Exact 19-claim actor-focused continuation candidate; not filed and not preserved |
-| [`AA11393US-AF-CONT-priority-support-map_DRAFT.md`](AA11393US-AF-CONT-priority-support-map_DRAFT.md) | Continuation claim-as-a-whole support, enablement, and effective-date gates |
-| [`AA11393US-AF-CONT-prior-art-comparison-matrix_DRAFT.md`](AA11393US-AF-CONT-prior-art-comparison-matrix_DRAFT.md) | Continuation claim-specific art scoring against all 33 canonical sources |
+| [`AA11393US-AF-US_counsel-briefing_DRAFT.md`](parent/counsel/AA11393US-AF-US_counsel-briefing_DRAFT.md) | Decision-focused instructions for US counsel, including art, support, proof, procedure, and continuation controls |
+| [`AA11393US-AF-US_claim-set_DRAFT.md`](parent/claims/AA11393US-AF-US_claim-set_DRAFT.md) | Exact AF candidate text: 23 total claims, three independent claims, no multiple-dependent claim |
+| [`AA11393US-AF-priority-support-map_DRAFT.md`](parent/support/AA11393US-AF-priority-support-map_DRAFT.md) | Claim-as-a-whole provisional/PCT support analysis and mandatory support gates |
+| [`AA11393US-AF-prior-art-comparison-matrix_DRAFT.md`](parent/prior-art-analysis/AA11393US-AF-prior-art-comparison-matrix_DRAFT.md) | Feature-level comparison and claim-specific combination pressure |
+| [`AA11393US-AF-claim-document-mapping-matrix_DRAFT.md`](parent/claim-document-mapping/AA11393US-AF-claim-document-mapping-matrix_DRAFT.md) | AF-claim-by-document mapping against the canonical reviewed corpus |
+| [`AA11393US-AF-claim-crosswalk_DRAFT.md`](cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md) | AF-to-NA correspondence and actor-specific coverage outside AF |
+| [`AA11393US-continuation-preservation_MEMO.md`](../common/continuation-controls/AA11393US-continuation-preservation_MEMO.md) | Shared owner, docket, filing, benefit-verification, and repeat-or-close controls for any selected parent topology |
+| [`AA11393US-AF-CONT-US_claim-set_DRAFT.md`](continuation-candidate/claims/AA11393US-AF-CONT-US_claim-set_DRAFT.md) | Exact 19-claim actor-focused continuation candidate; not filed and not preserved |
+| [`AA11393US-AF-CONT-priority-support-map_DRAFT.md`](continuation-candidate/support/AA11393US-AF-CONT-priority-support-map_DRAFT.md) | Continuation claim-as-a-whole support, enablement, and effective-date gates |
+| [`AA11393US-AF-CONT-prior-art-comparison-matrix_DRAFT.md`](continuation-candidate/prior-art-analysis/AA11393US-AF-CONT-prior-art-comparison-matrix_DRAFT.md) | Continuation claim-specific art scoring against all 33 canonical sources |
 
 Every external claim reference must use `AF claim N`, `NA claim N`, or `PCT claim N`. Bare claim numbers are ambiguous outside the exact claim text.
 

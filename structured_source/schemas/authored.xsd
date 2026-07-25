@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:c="urn:aa11393:ssp:content:1"
+           xmlns:xml="http://www.w3.org/XML/1998/namespace"
+           targetNamespace="urn:aa11393:ssp:content:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1"
+           vc:minVersion="1.1">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+             schemaLocation="xml.xsd"/>
+
+  <xs:simpleType name="authoredStableId">
+    <xs:restriction base="xs:NCName">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="160"/>
+      <xs:pattern value="[a-z][a-z0-9-]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="authoredPresentationId">
+    <xs:restriction base="xs:NCName">
+      <xs:minLength value="5"/>
+      <xs:maxLength value="164"/>
+      <xs:pattern value="ssp-[a-z][a-z0-9-]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="authoredRepoPath">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="512"/>
+      <xs:pattern value="[^\\]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="authoredRawDigest">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="sha256/raw:[0-9a-f]{64}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bindingKind">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="block"/>
+      <xs:enumeration value="claim"/>
+      <xs:enumeration value="document"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pandocConstructor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AlignCenter"/>
+      <xs:enumeration value="AlignDefault"/>
+      <xs:enumeration value="AlignLeft"/>
+      <xs:enumeration value="AlignRight"/>
+      <xs:enumeration value="BlockQuote"/>
+      <xs:enumeration value="BulletList"/>
+      <xs:enumeration value="Code"/>
+      <xs:enumeration value="CodeBlock"/>
+      <xs:enumeration value="ColWidth"/>
+      <xs:enumeration value="ColWidthDefault"/>
+      <xs:enumeration value="Decimal"/>
+      <xs:enumeration value="DisplayMath"/>
+      <xs:enumeration value="Emph"/>
+      <xs:enumeration value="Header"/>
+      <xs:enumeration value="HorizontalRule"/>
+      <xs:enumeration value="Image"/>
+      <xs:enumeration value="InlineMath"/>
+      <xs:enumeration value="LineBreak"/>
+      <xs:enumeration value="Link"/>
+      <xs:enumeration value="Math"/>
+      <xs:enumeration value="Note"/>
+      <xs:enumeration value="OneParen"/>
+      <xs:enumeration value="OrderedList"/>
+      <xs:enumeration value="Para"/>
+      <xs:enumeration value="Period"/>
+      <xs:enumeration value="Plain"/>
+      <xs:enumeration value="RawInline"/>
+      <xs:enumeration value="SoftBreak"/>
+      <xs:enumeration value="Space"/>
+      <xs:enumeration value="Str"/>
+      <xs:enumeration value="Strikeout"/>
+      <xs:enumeration value="Strong"/>
+      <xs:enumeration value="Table"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="topLevelBlockConstructor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BlockQuote"/>
+      <xs:enumeration value="BulletList"/>
+      <xs:enumeration value="CodeBlock"/>
+      <xs:enumeration value="Header"/>
+      <xs:enumeration value="HorizontalRule"/>
+      <xs:enumeration value="OrderedList"/>
+      <xs:enumeration value="Para"/>
+      <xs:enumeration value="Table"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:group name="pandocValue">
+    <xs:choice>
+      <xs:element name="string" type="xs:string"/>
+      <xs:element name="integer" type="xs:integer"/>
+      <xs:element name="number" type="xs:decimal"/>
+      <xs:element name="boolean" type="xs:boolean"/>
+      <xs:element name="null" type="c:emptyValue"/>
+      <xs:element name="array" type="c:pandocArray"/>
+      <xs:element name="node" type="c:pandocNode"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="emptyValue"/>
+  <xs:complexType name="pandocArray">
+    <xs:sequence>
+      <xs:group ref="c:pandocValue" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pandocNode">
+    <xs:sequence>
+      <xs:group ref="c:pandocValue" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="constructor" type="c:pandocConstructor" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="pandocBlock">
+    <xs:sequence>
+      <xs:group ref="c:pandocValue" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="constructor" type="c:topLevelBlockConstructor" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="authoredPandoc">
+    <xs:sequence>
+      <xs:element name="block" type="c:pandocBlock" minOccurs="1" maxOccurs="100000"/>
+    </xs:sequence>
+    <xs:attribute name="profile" use="required" fixed="gfm-v1"/>
+    <xs:attribute name="apiVersion" use="required" fixed="1.23.1"/>
+  </xs:complexType>
+  <xs:complexType name="authoredFragment">
+    <xs:sequence>
+      <xs:element name="excerpt">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1000000"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="presentationId" type="c:authoredPresentationId" use="required"/>
+    <xs:attribute name="bindingKind" type="c:bindingKind" use="required"/>
+    <xs:attribute name="semanticPath" type="xs:string" use="required"/>
+    <xs:attribute name="bindingDigest" type="c:authoredRawDigest" use="required"/>
+    <xs:assert test="matches(string(@xml:id), '^[a-z][a-z0-9-]*$')"/>
+  </xs:complexType>
+  <xs:complexType name="authoredFragments">
+    <xs:sequence>
+      <xs:element name="fragment" type="c:authoredFragment"
+                  minOccurs="1" maxOccurs="100000"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="authoredIdentity">
+    <xs:attribute name="documentId" type="c:authoredStableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="markdownBinding">
+    <xs:attribute name="path" type="c:authoredRepoPath" use="required"/>
+    <xs:attribute name="rawDigest" type="c:authoredRawDigest" use="required"/>
+    <xs:attribute name="size" type="xs:nonNegativeInteger" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="authoredDocument">
+    <xs:sequence>
+      <xs:element name="documentIdentity" type="c:authoredIdentity"/>
+      <xs:element name="markdownBinding" type="c:markdownBinding"/>
+      <xs:element name="fragments" type="c:authoredFragments"/>
+      <xs:element name="pandoc" type="c:authoredPandoc"/>
+    </xs:sequence>
+    <xs:attribute name="schemaProfile" use="required" fixed="authored-markdown-v1"/>
+    <xs:attribute name="schemaVersion" use="required" fixed="1"/>
+  </xs:complexType>
+  <xs:element name="authored" type="c:authoredDocument"/>
+</xs:schema>

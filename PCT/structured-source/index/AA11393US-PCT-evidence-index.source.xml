@@ -1,0 +1,1186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<authored xmlns="urn:aa11393:ssp:content:1" schemaProfile="authored-markdown-v1" schemaVersion="1">
+  <documentIdentity documentId="pct-evidence-index" />
+  <markdownBinding path="PCT/structured-source/index/AA11393US-PCT-evidence-index.md" rawDigest="sha256/raw:69bdd0751155581cb0cf963ac256d9444ae522416fdda048f75fcc8204dcbc73" size="2481" />
+  <fragments>
+    <fragment xml:id="pct-evidence-index-root" presentationId="ssp-pct-evidence-index-root" bindingKind="document" semanticPath="$" bindingDigest="sha256/raw:4a2ea713ed014b25139ca80e6914b5c1ea23a7469ca49165853cd45cd201b8f0">
+      <excerpt>AA11393US — PCT Source and Publication ProvenanceThis directory contains the applicant's PCT filing and examination records. It is separate from the US/prior-art/ source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.Local as-filed record AA11393US-PCT_RAPPORTO DEPOSITO.pdf is the locally preserved as-filed dossier for PCT/IB2025/051755. It is not the later published international application and should not be cited as local proof of the WO publication number or publication date.Official publication recordThe WIPO PATENTSCOPE permanent bibliographic record and documents record were checked on 21 July 2026. They record:international application PCT/IB2025/051755 , filed 19 February 2025;publication WO 2025/181623 , published 4 September 2025; Initial Publication with ISR (A1 36/2025) , 56 pages;applicant STEALTH COMPANY SRL START UP INNOVATIVA and inventor Antonio Rossi; andpriority claim to US 63/557,868, filed 26 February 2024.Accordingly, the publication is identified in the US-phase working package as WO 2025/181623 A1 . The official publication PDF is linked through PATENTSCOPE rather than duplicated locally. Counsel should recheck the live WIPO record before relying on bibliographic data in a filing.</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-header-00001" presentationId="ssp-pct-evidence-index-header-00001" bindingKind="block" semanticPath="block:0" bindingDigest="sha256/raw:237c1510d0e83986496e158a40a52af2e5d836cfa1d1b16976a8fe5ca34d8d9b">
+      <excerpt>AA11393US — PCT Source and Publication Provenance</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-para-00002" presentationId="ssp-pct-evidence-index-para-00002" bindingKind="block" semanticPath="block:1" bindingDigest="sha256/raw:c0ce7990a270d826a34043b3fe2cea2e6f60afe824ea4f1155e4c9a49c4495f7">
+      <excerpt>This directory contains the applicant's PCT filing and examination records. It is separate from the US/prior-art/ source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-header-00003" presentationId="ssp-pct-evidence-index-header-00003" bindingKind="block" semanticPath="block:2" bindingDigest="sha256/raw:f700c417838fa4cea268144c4eb15b859824704bf118b1fd959f0a6d9f63b5bf">
+      <excerpt>Local as-filed record</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-para-00004" presentationId="ssp-pct-evidence-index-para-00004" bindingKind="block" semanticPath="block:3" bindingDigest="sha256/raw:0929f85ff454dfe9e72ecd2f90f052da5be62bfcde1796ac6ad03de1aefcb765">
+      <excerpt>AA11393US-PCT_RAPPORTO DEPOSITO.pdf is the locally preserved as-filed dossier for PCT/IB2025/051755. It is not the later published international application and should not be cited as local proof of the WO publication number or publication date.</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-header-00005" presentationId="ssp-pct-evidence-index-header-00005" bindingKind="block" semanticPath="block:4" bindingDigest="sha256/raw:bfb11eb630e4c6cdbbb70d3bcffde1bff9c3cf4052f46470de1ccdeb7e694394">
+      <excerpt>Official publication record</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-para-00006" presentationId="ssp-pct-evidence-index-para-00006" bindingKind="block" semanticPath="block:5" bindingDigest="sha256/raw:a435800ffcec68af4a00850655b2ae55d5d70401401805ca36972ea7fb0d71a9">
+      <excerpt>The WIPO PATENTSCOPE permanent bibliographic record and documents record were checked on 21 July 2026. They record:</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-bulletlist-00007" presentationId="ssp-pct-evidence-index-bulletlist-00007" bindingKind="block" semanticPath="block:7" bindingDigest="sha256/raw:542707147715b2ebc5927d349a8e2face42a41f1c3f7dc0a74e16507ffb10a27">
+      <excerpt>international application PCT/IB2025/051755 , filed 19 February 2025;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-list-item-00008" presentationId="ssp-pct-evidence-index-list-item-00008" bindingKind="block" semanticPath="block:7" bindingDigest="sha256/raw:542707147715b2ebc5927d349a8e2face42a41f1c3f7dc0a74e16507ffb10a27">
+      <excerpt>international application PCT/IB2025/051755 , filed 19 February 2025;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-plain-00009" presentationId="ssp-pct-evidence-index-plain-00009" bindingKind="block" semanticPath="block:7" bindingDigest="sha256/raw:542707147715b2ebc5927d349a8e2face42a41f1c3f7dc0a74e16507ffb10a27">
+      <excerpt>international application PCT/IB2025/051755 , filed 19 February 2025;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-list-item-00010" presentationId="ssp-pct-evidence-index-list-item-00010" bindingKind="block" semanticPath="block:8" bindingDigest="sha256/raw:ca0372dd804771a44b9d4ee77f45d642fcd0885e0dadd82b4b3b1c8b0b65ebb1">
+      <excerpt>publication WO 2025/181623 , published 4 September 2025;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-plain-00011" presentationId="ssp-pct-evidence-index-plain-00011" bindingKind="block" semanticPath="block:8" bindingDigest="sha256/raw:ca0372dd804771a44b9d4ee77f45d642fcd0885e0dadd82b4b3b1c8b0b65ebb1">
+      <excerpt>publication WO 2025/181623 , published 4 September 2025;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-list-item-00012" presentationId="ssp-pct-evidence-index-list-item-00012" bindingKind="block" semanticPath="block:9" bindingDigest="sha256/raw:671f24bff7b0416011a31dec4f4e11d4a82fd573870ed886ca7a70ffc6ee2d73">
+      <excerpt>Initial Publication with ISR (A1 36/2025) , 56 pages;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-plain-00013" presentationId="ssp-pct-evidence-index-plain-00013" bindingKind="block" semanticPath="block:9" bindingDigest="sha256/raw:671f24bff7b0416011a31dec4f4e11d4a82fd573870ed886ca7a70ffc6ee2d73">
+      <excerpt>Initial Publication with ISR (A1 36/2025) , 56 pages;</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-list-item-00014" presentationId="ssp-pct-evidence-index-list-item-00014" bindingKind="block" semanticPath="block:10" bindingDigest="sha256/raw:9e03a9ba4a668906749ea6c1b44c5b91407e8bafacef7321d741b4845a72941c">
+      <excerpt>applicant STEALTH COMPANY SRL START UP INNOVATIVA and inventor Antonio Rossi; and</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-plain-00015" presentationId="ssp-pct-evidence-index-plain-00015" bindingKind="block" semanticPath="block:10" bindingDigest="sha256/raw:9e03a9ba4a668906749ea6c1b44c5b91407e8bafacef7321d741b4845a72941c">
+      <excerpt>applicant STEALTH COMPANY SRL START UP INNOVATIVA and inventor Antonio Rossi; and</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-list-item-00016" presentationId="ssp-pct-evidence-index-list-item-00016" bindingKind="block" semanticPath="block:11" bindingDigest="sha256/raw:5da5b95f528e1feeb236dc2e550b9332d8f270fdd7315f79a185401aadffb062">
+      <excerpt>priority claim to US 63/557,868, filed 26 February 2024.</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-plain-00017" presentationId="ssp-pct-evidence-index-plain-00017" bindingKind="block" semanticPath="block:11" bindingDigest="sha256/raw:5da5b95f528e1feeb236dc2e550b9332d8f270fdd7315f79a185401aadffb062">
+      <excerpt>priority claim to US 63/557,868, filed 26 February 2024.</excerpt>
+    </fragment>
+    <fragment xml:id="pct-evidence-index-para-00018" presentationId="ssp-pct-evidence-index-para-00018" bindingKind="block" semanticPath="block:12" bindingDigest="sha256/raw:6846a566db316ad80d517e40875818417fc286654fd103798316321453e0669f">
+      <excerpt>Accordingly, the publication is identified in the US-phase working package as WO 2025/181623 A1 . The official publication PDF is linked through PATENTSCOPE rather than duplicated locally. Counsel should recheck the live WIPO record before relying on bibliographic data in a filing.</excerpt>
+    </fragment>
+  </fragments>
+  <pandoc profile="gfm-v1" apiVersion="1.23.1">
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-root"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-header-00001"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+      </array>
+    </block>
+    <block constructor="Header">
+      <array>
+        <integer>1</integer>
+        <array>
+          <string>aa11393us--pct-source-and-publication-provenance</string>
+          <array />
+          <array />
+        </array>
+        <array>
+          <node constructor="Str">
+            <string>AA11393US</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>—</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>PCT</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>Source</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>and</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>Publication</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>Provenance</string>
+          </node>
+        </array>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-para-00002"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+        <node constructor="SoftBreak" />
+        <node constructor="Str">
+          <string>This</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>directory</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>contains</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>applicant's</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>PCT</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>filing</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>examination</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>records.</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>It</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>is</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>separate</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>from</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Code">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <string>US/prior-art/</string>
+          </array>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>source</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>store;</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>adding</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>or</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>linking</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>an</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>applicant</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>publication</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>here</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>does</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>not</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>change</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>that</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>store's</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>33-document</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>checksum</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>manifest.</string>
+        </node>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-header-00003"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+      </array>
+    </block>
+    <block constructor="Header">
+      <array>
+        <integer>2</integer>
+        <array>
+          <string>local-as-filed-record</string>
+          <array />
+          <array />
+        </array>
+        <array>
+          <node constructor="Str">
+            <string>Local</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>as-filed</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>record</string>
+          </node>
+        </array>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-para-00004"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+        <node constructor="SoftBreak" />
+        <node constructor="Link">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <array>
+              <node constructor="Code">
+                <array>
+                  <array>
+                    <string />
+                    <array />
+                    <array />
+                  </array>
+                  <string>AA11393US-PCT_RAPPORTO DEPOSITO.pdf</string>
+                </array>
+              </node>
+            </array>
+            <array>
+              <string>../../AA11393US-PCT_RAPPORTO%20DEPOSITO.pdf</string>
+              <string />
+            </array>
+          </array>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>is</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>locally</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>preserved</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>as-filed</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>dossier</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>for</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>PCT/IB2025/051755.</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>It</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>is</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>not</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>later</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>published</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>international</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>application</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>should</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>not</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>be</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>cited</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>as</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>local</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>proof</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>of</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>WO</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>publication</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>number</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>or</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>publication</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>date.</string>
+        </node>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-header-00005"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+      </array>
+    </block>
+    <block constructor="Header">
+      <array>
+        <integer>2</integer>
+        <array>
+          <string>official-publication-record</string>
+          <array />
+          <array />
+        </array>
+        <array>
+          <node constructor="Str">
+            <string>Official</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>publication</string>
+          </node>
+          <node constructor="Space" />
+          <node constructor="Str">
+            <string>record</string>
+          </node>
+        </array>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-para-00006"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+        <node constructor="SoftBreak" />
+        <node constructor="Str">
+          <string>The</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>WIPO</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>PATENTSCOPE</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Link">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <array>
+              <node constructor="Str">
+                <string>permanent</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>bibliographic</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>record</string>
+              </node>
+            </array>
+            <array>
+              <string>https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2025181623</string>
+              <string />
+            </array>
+          </array>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Link">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <array>
+              <node constructor="Str">
+                <string>documents</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>record</string>
+              </node>
+            </array>
+            <array>
+              <string>https://patentscope.wipo.int/search/en/WO2025181623#detailMainForm:MyTabViewId:PCTDOCUMENTS</string>
+              <string />
+            </array>
+          </array>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>were</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>checked</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>on</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>21</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>July</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>2026.</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>They</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>record:</string>
+        </node>
+      </array>
+    </block>
+    <block constructor="BulletList">
+      <array>
+        <array>
+          <node constructor="Plain">
+            <array>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-bulletlist-00007"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-list-item-00008"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-plain-00009"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>international</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>application</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Code">
+                <array>
+                  <array>
+                    <string />
+                    <array />
+                    <array />
+                  </array>
+                  <string>PCT/IB2025/051755</string>
+                </array>
+              </node>
+              <node constructor="Str">
+                <string>,</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>filed</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>19</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>February</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>2025;</string>
+              </node>
+            </array>
+          </node>
+        </array>
+        <array>
+          <node constructor="Plain">
+            <array>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-list-item-00010"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-plain-00011"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>publication</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Code">
+                <array>
+                  <array>
+                    <string />
+                    <array />
+                    <array />
+                  </array>
+                  <string>WO 2025/181623</string>
+                </array>
+              </node>
+              <node constructor="Str">
+                <string>,</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>published</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>4</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>September</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>2025;</string>
+              </node>
+            </array>
+          </node>
+        </array>
+        <array>
+          <node constructor="Plain">
+            <array>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-list-item-00012"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-plain-00013"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Code">
+                <array>
+                  <array>
+                    <string />
+                    <array />
+                    <array />
+                  </array>
+                  <string>Initial Publication with ISR (A1 36/2025)</string>
+                </array>
+              </node>
+              <node constructor="Str">
+                <string>,</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>56</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>pages;</string>
+              </node>
+            </array>
+          </node>
+        </array>
+        <array>
+          <node constructor="Plain">
+            <array>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-list-item-00014"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-plain-00015"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>applicant</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>STEALTH</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>COMPANY</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>SRL</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>START</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>UP</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>INNOVATIVA</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>and</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>inventor</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>Antonio</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>Rossi;</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>and</string>
+              </node>
+            </array>
+          </node>
+        </array>
+        <array>
+          <node constructor="Plain">
+            <array>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-list-item-00016"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;a id="ssp-pct-evidence-index-plain-00017"&gt;</string>
+                </array>
+              </node>
+              <node constructor="RawInline">
+                <array>
+                  <string>html</string>
+                  <string>&lt;/a&gt;</string>
+                </array>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>priority</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>claim</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>to</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>US</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>63/557,868,</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>filed</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>26</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>February</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>2024.</string>
+              </node>
+            </array>
+          </node>
+        </array>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;a id="ssp-pct-evidence-index-para-00018"&gt;</string>
+          </array>
+        </node>
+        <node constructor="RawInline">
+          <array>
+            <string>html</string>
+            <string>&lt;/a&gt;</string>
+          </array>
+        </node>
+        <node constructor="SoftBreak" />
+        <node constructor="Str">
+          <string>Accordingly,</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>publication</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>is</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>identified</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>in</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>US-phase</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>working</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>package</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>as</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Code">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <string>WO 2025/181623 A1</string>
+          </array>
+        </node>
+        <node constructor="Str">
+          <string>.</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>The</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>official</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>publication</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>PDF</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>is</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>linked</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>through</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>PATENTSCOPE</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>rather</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>than</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>duplicated</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>locally.</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>Counsel</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>should</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>recheck</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>live</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>WIPO</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>record</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>before</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>relying</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>on</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>bibliographic</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>data</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>in</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>a</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>filing.</string>
+        </node>
+      </array>
+    </block>
+  </pandoc>
+</authored>
