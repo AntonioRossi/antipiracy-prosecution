@@ -10,19 +10,21 @@ alternative release path.
 
 ## 1. Invariants
 
-- The claim sources and `navigator/` are regular files in one repository checkout.
+- Registered authority sources, generated representations, and `navigator/` are regular files in
+  one repository checkout.
 - Integration uses an exact Git commit, recorded as a merge parent.
 - Symlinks, external content roots, mutable cross-worktree reads, unrecorded copying, and
   implicit version upgrades are forbidden.
 - The working tree is clean before integration and before release.
 - `migrate` classifies current-schema content drift. It never approves a mapping or accepts
   an obsolete schema or canon version.
-- Only an identified human or model operator may approve reviewed owners or verification
-  evidence. Tool output is evidence, never authority.
+- Navigator-specific reviewed-owner and verification controls apply only to navigator release
+  authorization. They do not approve structured-source content or alter a package's authority.
 - The active release profile is selected before evidence is created. Profile labels and
   requirements are not interchangeable.
-- The live verification store contains only the current record format. Superseded records
-  using that format remain append-only; Git alone retains records from retired formats.
+- The live navigator verification store equals the exact active reachable record graph. Every
+  record is full-digest-addressed, canonical, and immutable while present; Git alone retains
+  displaced records and retired formats.
 
 ## 2. Baseline gate
 
@@ -115,7 +117,7 @@ error, forbidden term, dependency disagreement, or undeclared input.
 
 ## 6. Verification and release gate
 
-Declare the approving operator for commands that append verification evidence:
+Declare the navigator operator for commands that publish current verification evidence:
 
 ```sh
 export NAV_OPERATOR="<identified-operator>"
@@ -139,31 +141,38 @@ Inspect and apply the exact canonical `bundle-plan` proposal as an authored conf
 python3 navigator/build.py bundle
 ```
 
-No old attestation, QA record, release record, bundle record, filename, or checksum may be
-relabelled or reused for new bytes. A profile switch does not authorize deletion of a valid
-same-schema QA record: leave it immutable as superseded evidence. Current authorization is
-resolved from exact profile and predecessor bindings, never from record-store membership.
+No attestation, QA record, release record, bundle record, filename, or checksum may be relabelled
+or reused for new bytes. Each writer validates the complete new record before replacing any record
+in the same logical scope. Current authorization is resolved from exact profile and predecessor
+bindings, never recency or directory ordering. `bundle` retains exactly one selected bundle
+record, the releases pinned by the active config, only their profile-required QA records, their
+exact attestation predecessors, and the separately pinned manifest approval. Git alone retains
+displaced records.
 
 ## 7. Current-state and cutover gate
 
-Remove superseded files from `navigator/dist/`; append-only same-schema records remain only
-as non-current evidence. Remove transient browser snapshots, caches, migration scratch data,
-and every unclassified tracked file.
+Remove non-current files from `navigator/dist/`. Require `navigator/records/` to equal the exact
+active reachable graph produced by the current bundle. Remove transient browser snapshots, caches,
+migration scratch data, and every unclassified tracked file.
 
 ```sh
 git status --short --branch
-python3 -m navigator validate-current
+uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
 `validate-current` is the canonical cutover gate. It must report one coherent current
 baseline, current candidates and sealed artifacts, a current configured bundle and
 authorization chain, no obsolete live version, no compatibility path, and no unclassified
 file. It captures the complete live repository, proves the full closure against the
-captured bytes, runs the document-integrity legs (the changed-Markdown render check and the
-prior-art source checksums) and the discovered tests only in a materialized snapshot,
+captured bytes, runs the document-integrity legs (the current changed-Markdown render check and
+the co-located prior-art source-manifest checks) and both registered test families only in a
+materialized snapshot,
 rejects mutation of that snapshot or
 the live tree, re-derives the full live closure, and compares a final snapshot immediately
-before reporting success. Run it last; stop on any warning or nonzero result.
+before reporting success. Run it last; stop on any warning or nonzero result. The audit unit is
+that exact clean commit and checkout with supplied Git history, the controlling documentation and
+executable registries, and this current result; no detached export or stored receipt substitutes
+for execution.
 
 When the selected source branch has not advanced, integrate the accepted navigator branch
 with a fast-forward-only merge. If it has advanced, merge the new exact source commit into
@@ -178,9 +187,9 @@ evidence.
   disguise reviewed history.
 - A failed `candidate`, `validate-current`, release, or bundle command is a stop condition, not
   permission to bypass a validator.
-- Within the current format, verification records are append-only. A defective or
-  superseded record is left non-current and replaced with a new digest-addressed record; it
-  is never edited in place. An intentional schema-breaking refactor removes retired-format
-  records from the live store without rewriting or relabelling them; Git preserves them.
+- Never edit a verification record in place. Correct the inputs and publish a new fully validated
+  digest-addressed record in the same logical scope; the writer displaces the prior record only
+  after validation. The final bundle prunes everything outside the validated active graph. Git
+  alone preserves displaced, defective, or retired-format records.
 - Restore no artifact manually. Reproduce it through the current pipeline after correcting
   its declared inputs.

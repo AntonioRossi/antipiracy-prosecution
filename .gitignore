@@ -279,6 +279,8 @@ navigator/lib/**/__pycache__/
 !navigator/dist/**
 
 # Local Python tooling
+.uv-cache/
+.venv/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/

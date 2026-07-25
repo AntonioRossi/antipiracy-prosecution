@@ -1125,6 +1125,25 @@ class TestSnapshotByteSource(unittest.TestCase):
                     "absent from repository snapshot"):
                 retained.read_bytes("missing.txt")
 
+    def test_snapshot_excludes_local_uv_state_but_not_similar_paths(self):
+        with tempfile.TemporaryDirectory() as root:
+            self._pinned_tree(root, {
+                ".uv-cache/archive": b"host-specific cache\n",
+                ".venv/bin/python": b"host-specific environment\n",
+                ".venv-copy/receipt.txt": b"repository content\n",
+                "source.txt": b"source\n",
+            })
+            captured = snapshot.RepositorySnapshot.capture(
+                root, retain_bytes=True)
+            paths = [entry.path for entry in captured.entries]
+            self.assertEqual(paths, [
+                ".venv-copy/receipt.txt",
+                "source.txt",
+            ])
+            self.assertNotIn(
+                ".uv-cache/archive", captured.retained_bytes)
+            self.assertNotIn(".venv/bin/python", captured.retained_bytes)
+
     def test_materialize_writes_captured_bytes_after_live_drift(self):
         with tempfile.TemporaryDirectory() as root, \
                 tempfile.TemporaryDirectory() as destination:

@@ -1211,7 +1211,8 @@ def _classified_navigator_source_problems(content, edition_ids):
 def _live_version_problems(content, current_versions):
     """Reject obsolete NA/AF version tokens in every live textual source."""
     files, problems = _walk_repository_files(
-        ROOT, excluded_directory_names=(".git", "__pycache__"),
+        ROOT, excluded_directory_names=(
+            ".git", ".uv-cache", ".venv", "__pycache__"),
         excluded_repository_paths=("navigator/dist", "navigator/records"))
     seen_current = set()
     for path in sorted(files):

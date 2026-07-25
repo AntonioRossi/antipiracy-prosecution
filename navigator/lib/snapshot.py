@@ -7,7 +7,9 @@ import stat as statlib
 from . import canon
 
 
-EXCLUDED_DIRECTORY_NAMES = frozenset((".git", "__pycache__"))
+EXCLUDED_DIRECTORY_NAMES = frozenset((
+    ".git", ".uv-cache", ".venv", "__pycache__",
+))
 
 
 class SnapshotError(RuntimeError):
