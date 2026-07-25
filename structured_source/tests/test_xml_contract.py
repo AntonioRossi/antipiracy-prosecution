@@ -38,6 +38,30 @@ RELATIONS = b'''<?xml version="1.0" encoding="UTF-8"?>
 </relations>
 '''
 
+CONSUMER_SCHEMA = b'''<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:c="urn:example:consumer:1"
+           targetNamespace="urn:example:consumer:1"
+           elementFormDefault="qualified"
+           version="1.1">
+  <xs:element name="catalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="item" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="id" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+'''
+
+CONSUMER_XML = b'''<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:example:consumer:1"><item id="one" /></catalog>
+'''
+
 
 class CanonicalContract(unittest.TestCase):
     def test_content_and_relation_vectors_are_stable(self):
@@ -158,6 +182,35 @@ class SecureParser(unittest.TestCase):
             self.assertRejected(CONTENT)
         with mock.patch.object(parser, "MAX_TEXT_LENGTH", 2):
             self.assertRejected(CONTENT)
+
+    def test_consumer_xml_uses_the_same_closed_secure_parser(self):
+        root = parser.parse_validated_xml(
+            CONSUMER_XML,
+            CONSUMER_SCHEMA,
+            expected_namespace="urn:example:consumer:1",
+            expected_root="catalog",
+        )
+        self.assertEqual(root.tag, "{urn:example:consumer:1}catalog")
+
+    def test_consumer_xml_rejects_wrong_contract_and_composed_schema(self):
+        with self.assertRaises(ParseError):
+            parser.parse_validated_xml(
+                CONSUMER_XML,
+                CONSUMER_SCHEMA,
+                expected_namespace="urn:example:consumer:1",
+                expected_root="wrong",
+            )
+        composed = CONSUMER_SCHEMA.replace(
+            b'<xs:element name="catalog">',
+            b'<xs:include schemaLocation="other.xsd" />\n  <xs:element name="catalog">',
+        )
+        with self.assertRaises(SchemaError):
+            parser.parse_validated_xml(
+                CONSUMER_XML,
+                composed,
+                expected_namespace="urn:example:consumer:1",
+                expected_root="catalog",
+            )
 
 
 class LockedEnvironment(unittest.TestCase):

@@ -126,22 +126,34 @@ def _preflight(data: bytes) -> None:
             raise ParseError("canonical XML contains a non-predefined entity reference")
 
 
-def _resource_and_semantic_checks(root: ET.Element, kind: str) -> dict[str, str]:
-    expected_namespace = (RELATIONS_NAMESPACE if kind == "relation-set"
-                          else CONTENT_NAMESPACE)
-    expected_root = {
-        "content-document": "source",
-        "authored-document": "authored",
-        "relation-set": "relations",
-    }.get(kind)
-    if expected_root is None:
-        raise ParseError("unsupported XML artifact kind %s" % kind)
+def _parse_tree(data: bytes) -> ET.Element:
+    parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True,
+                                                insert_pis=True))
+    try:
+        root = ET.fromstring(data, parser=parser)
+    except ET.ParseError as exc:
+        raise ParseError("XML is not well formed: %s" % exc) from exc
+    if any(not isinstance(node.tag, str) for node in root.iter()):
+        raise ParseError("comments and processing instructions are prohibited")
+    return root
+
+
+def _closed_tree_checks(
+        root: ET.Element, expected_namespace: str, expected_root: str, *,
+        additional_namespaces: frozenset[str] = frozenset(),
+) -> list[tuple[ET.Element, str]]:
+    if not isinstance(expected_namespace, str) or not expected_namespace or \
+            any(character in expected_namespace for character in "{}\x00") or \
+            not isinstance(expected_root, str) or not expected_root or \
+            any(character in expected_root for character in "{}:/\x00"):
+        raise ParseError("expected XML namespace/root is malformed")
     if root.tag != "{%s}%s" % (expected_namespace, expected_root):
         raise ParseError("XML root does not match the selected artifact kind")
     stack = [(root, 1)]
     nodes = 0
     identifiers: set[str] = set()
     addressable: list[tuple[ET.Element, str]] = []
+    allowed_namespaces = {expected_namespace, *additional_namespaces}
     while stack:
         node, depth = stack.pop()
         nodes += 1
@@ -154,18 +166,79 @@ def _resource_and_semantic_checks(root: ET.Element, kind: str) -> dict[str, str]
                 raise ParseError("XML text node exceeds the text limit")
         if any(name.endswith("}base") or name == "base" for name in node.attrib):
             raise ParseError("xml:base is prohibited")
-        namespace = node.tag[1:].split("}", 1)[0] if node.tag.startswith("{") else ""
+        namespace = node.tag[1:].split("}", 1)[0] \
+            if node.tag.startswith("{") else ""
+        if namespace not in allowed_namespaces:
+            raise ParseError("foreign element namespace is prohibited")
         identifier = node.get(XML_ID)
         if identifier is not None:
             if identifier in identifiers:
                 raise ParseError("duplicate xml:id %s" % identifier)
             identifiers.add(identifier)
             addressable.append((node, namespace))
-        allowed_namespaces = ({expected_namespace, CONTENT_NAMESPACE}
-                              if kind == "relation-set" else {expected_namespace})
-        if namespace not in allowed_namespaces:
-            raise ParseError("foreign element namespace is prohibited")
         stack.extend((child, depth + 1) for child in reversed(list(node)))
+    return addressable
+
+
+def parse_validated_xml(data: bytes, schema: bytes, *,
+                        expected_namespace: str,
+                        expected_root: str) -> ET.Element:
+    """Secure-parse one registered XML document against a closed XSD 1.1.
+
+    This is the public extension point for consumer-owned XML namespaces. A
+    caller supplies the exact tracked, self-contained schema bytes; imports,
+    includes, overrides, and other resolver-dependent schema composition are
+    prohibited. The same lexical and resource limits used for package XML
+    apply before strict schema validation.
+    """
+    _preflight(data)
+    _preflight(schema)
+    root = _parse_tree(data)
+    _closed_tree_checks(root, expected_namespace, expected_root)
+
+    xsd_namespace = "http://www.w3.org/2001/XMLSchema"
+    schema_root = _parse_tree(schema)
+    if schema_root.tag != "{%s}schema" % xsd_namespace or \
+            schema_root.get("targetNamespace") != expected_namespace:
+        raise SchemaError("XSD target namespace does not match the XML contract")
+    prohibited = {"include", "import", "redefine", "override"}
+    if any(node.tag == "{%s}%s" % (xsd_namespace, local)
+           for node in schema_root.iter() for local in prohibited):
+        raise SchemaError("consumer XSD must be self-contained")
+    try:
+        schema_resource = XMLResource(
+            schema, base_url=ROOT, allow="sandbox", defuse="always")
+        validator = xmlschema.XMLSchema11(
+            schema_resource, validation="strict", allow="sandbox",
+            defuse="always")
+        document_resource = XMLResource(
+            data, base_url=ROOT, allow="sandbox", defuse="always")
+        errors = list(validator.iter_errors(
+            document_resource, validation="lax"))
+    except xmlschema.XMLSchemaException as exc:
+        raise SchemaError("current XSD 1.1 schema is invalid: %s" % exc) from exc
+    if errors:
+        detail = "; ".join(error.reason for error in errors[:8])
+        raise SchemaError("XSD 1.1 validation failed: %s" % detail)
+    return root
+
+
+def _resource_and_semantic_checks(root: ET.Element, kind: str) -> dict[str, str]:
+    expected_namespace = (RELATIONS_NAMESPACE if kind == "relation-set"
+                          else CONTENT_NAMESPACE)
+    expected_root = {
+        "content-document": "source",
+        "authored-document": "authored",
+        "relation-set": "relations",
+    }.get(kind)
+    if expected_root is None:
+        raise ParseError("unsupported XML artifact kind %s" % kind)
+    additional = (frozenset({CONTENT_NAMESPACE})
+                  if kind == "relation-set" else frozenset())
+    addressable = _closed_tree_checks(
+        root, expected_namespace, expected_root,
+        additional_namespaces=additional,
+    )
 
     profile = root.get("schemaProfile")
     if not profile or root.get("schemaVersion") != SCHEMA_VERSION:
@@ -261,14 +334,7 @@ def _resource_and_semantic_checks(root: ET.Element, kind: str) -> dict[str, str]
 def parse_artifact(data: bytes, kind: str) -> ParsedArtifact:
     """Securely parse, XSD-validate, and digest one package."""
     _preflight(data)
-    parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True,
-                                                 insert_pis=True))
-    try:
-        root = ET.fromstring(data, parser=parser)
-    except ET.ParseError as exc:
-        raise ParseError("XML is not well formed: %s" % exc) from exc
-    if any(not isinstance(node.tag, str) for node in root.iter()):
-        raise ParseError("comments and processing instructions are prohibited")
+    root = _parse_tree(data)
     fragments = _resource_and_semantic_checks(root, kind)
     schema = _schema(kind)
     resource = XMLResource(
