@@ -19,6 +19,13 @@ CLAIM_HEAD_RE = re.compile(r"^\*\*(\d+)\.\*\*\s+(.*)$", re.S)
 DEP_REF_RE = re.compile(r"\bof claims? (\d+)")
 H2_RE = re.compile(r"^## (.+)$")
 H3_RE = re.compile(r"^### (.+)$")
+GENERATED_ANCHOR_RE = re.compile(
+    r'<a id="ssp-[A-Za-z][A-Za-z0-9_.:-]*"></a>[ \t]*')
+
+
+def strip_generated_anchors(text):
+    """Remove only the closed stable-anchor form emitted by SSP views."""
+    return GENERATED_ANCHOR_RE.sub("", text)
 
 
 class ClaimsParseError(ValueError):
@@ -34,7 +41,7 @@ def parse_dependency_table(text):
     than copied into the map and compared with itself.  Returns ``None``
     when the document publishes no such table.
     """
-    lines = text.splitlines()
+    lines = strip_generated_anchors(text).splitlines()
     found = []
     for i, line in enumerate(lines[:-1]):
         if not line.lstrip().startswith("|"):
@@ -122,7 +129,7 @@ class Claim:
 
 def parse_claims(text, claims_heading="Candidate claims"):
     """Parse the §3 claims of one claim-set markdown document."""
-    lines = text.split("\n")
+    lines = strip_generated_anchors(text).split("\n")
     in_section = False
     group = None
     claims = []

@@ -222,6 +222,13 @@ def bytes_digest(data):
     return format_digest(_sha256(data))
 
 
+def raw_bytes_digest(data):
+    """Raw-domain SHA-256 used by structured source-evidence manifests."""
+    if not isinstance(data, bytes):
+        raise CanonError("raw digest input must be bytes")
+    return "sha256/raw:" + _sha256(data).hex()
+
+
 def composite_digest(tag, payload_or_digests):
     """Framed composite digest: sha256(tag || 0x00 || payload).
 

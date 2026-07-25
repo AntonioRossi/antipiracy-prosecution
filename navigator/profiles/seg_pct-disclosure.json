@@ -13,6 +13,9 @@
   {"match": {"kind": "blockquote", "path": ["AA11393US-PCT*"]}, "class": "editorial", "editorialLabel": "Transcription note (editorial, not filed text)"},
   {"match": {"kind": "blockquote", "path": ["Drawings"]}, "class": "editorial", "editorialLabel": "Drawing-sheet note (editorial, not filed text)"},
   {"match": {"kind": "paragraph", "path": ["Drawings"]}, "class": "editorial", "editorialLabel": "Figure reference-numeral caption (editorial, not filed text)"},
+  {"match": {"path": ["*", "Structured-source review metadata"]}, "class": "excluded"},
+  {"match": {"path": ["*", "Dependency review schedule"]}, "class": "excluded"},
+  {"match": {"path": ["*", "Provenance review schedule"]}, "class": "excluded"},
   {"match": {"path": ["Drawings"]}, "class": "targetable"},
   {"match": {"path": ["International Application Text"]}, "class": "targetable"}
  ]

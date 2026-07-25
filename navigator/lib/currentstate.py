@@ -1292,28 +1292,36 @@ def _record_inventory_problems(records_by_kind):
 
 
 def _run_full_test_suite(root):
-    """Run every discovered test in the supplied repository snapshot."""
+    """Run every registered test family in the supplied repository snapshot."""
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     try:
         with tempfile.TemporaryDirectory(
                 prefix="aa11393-verify-pycache-") as pycache:
-            result = subprocess.run(
-                [sys.executable, "-B", "-X", "pycache_prefix=" + pycache,
-                 "-m", "unittest", "discover", "-s", "navigator/tests",
-                 "-p", "test_*.py"],
-                cwd=root, capture_output=True, text=True, timeout=1800,
-                env=environment)
+            outputs = []
+            for start in ("navigator/tests", "structured_source/tests"):
+                result = subprocess.run(
+                    [sys.executable, "-B", "-X", "pycache_prefix=" + pycache,
+                     "-m", "unittest", "discover", "-s", start,
+                     "-p", "test_*.py"],
+                    cwd=root, capture_output=True, text=True, timeout=1800,
+                    env=environment)
+                output = "\n".join(
+                    part.strip() for part in (result.stdout, result.stderr)
+                    if part.strip())
+                outputs.append(output)
+                if result.returncode != 0:
+                    raise RuntimeError("full test suite failed in %s: %s" %
+                                       (start, output[-8000:] or "no diagnostic"))
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise RuntimeError("full test suite could not complete: %s" % exc)
-    output = "\n".join(
-        part.strip() for part in (result.stdout, result.stderr)
-        if part.strip())
-    if result.returncode != 0:
-        raise RuntimeError("full test suite failed: %s" %
-                           (output[-8000:] or "no diagnostic"))
-    ran = re.search(r"Ran [0-9]+ tests? in [^\n]+", output)
-    return ran.group(0) if ran else "full discovered suite passed"
+    counts = []
+    for output in outputs:
+        ran = re.search(r"Ran ([0-9]+) tests? in [^\n]+", output)
+        if ran is None:
+            raise RuntimeError("full test suite did not report its census")
+        counts.append(int(ran.group(1)))
+    return "Ran %d tests across %d registered families" % (sum(counts), len(counts))
 
 
 def _git_whitespace_problems():
@@ -1340,24 +1348,38 @@ def _subprocess_failure(label, result):
 
 
 def _changed_markdown_render_problems():
-    """Render every changed Markdown source through pandoc (fail-closed).
+    """Render every current changed Markdown source through pandoc.
 
-    This is the repository gate's changed-Markdown leg: ``git diff`` names
-    the changed ``*.md`` set, and each named file must parse as GFM.  An
-    empty changed set passes vacuously; a missing tool or a listing failure
-    is a problem, never a skip.
+    Modified and added tracked files plus untracked, non-ignored files form
+    the current ``*.md`` set.  Deletions have no current bytes to render.
+    An empty changed set passes vacuously; a missing tool or either listing
+    failure is a problem, never a skip.
     """
     try:
-        listing = subprocess.run(
-            ["git", "diff", "--name-only", "-z", "--", "*.md"], cwd=ROOT,
-            capture_output=True, text=True, timeout=60)
+        tracked = subprocess.run(
+            ["git", "diff", "--name-only", "--diff-filter=ACMRTUXB", "-z",
+             "--", "*.md"], cwd=ROOT, capture_output=True, text=True,
+            timeout=60)
+        untracked = subprocess.run(
+            ["git", "ls-files", "--others", "--exclude-standard", "-z",
+             "--", "*.md"], cwd=ROOT, capture_output=True, text=True,
+            timeout=60)
     except (OSError, subprocess.TimeoutExpired) as exc:
         return ["changed-Markdown listing could not complete: %s" % exc]
-    if listing.returncode:
-        return [_subprocess_failure("changed-Markdown listing", listing)]
+    if tracked.returncode:
+        return [_subprocess_failure(
+            "changed tracked-Markdown listing", tracked)]
+    if untracked.returncode:
+        return [_subprocess_failure(
+            "changed untracked-Markdown listing", untracked)]
+    names = {
+        entry
+        for listing in (tracked, untracked)
+        for entry in listing.stdout.split("\0")
+        if entry
+    }
     problems = []
-    for name in sorted(
-            entry for entry in listing.stdout.split("\0") if entry):
+    for name in sorted(names):
         try:
             result = subprocess.run(
                 ["pandoc", "--from=gfm", "--to=html", "-o", os.devnull, name],
@@ -1374,21 +1396,35 @@ def _changed_markdown_render_problems():
 
 
 def _prior_art_checksum_problems():
-    """Verify the canonical prior-art source checksums (fail-closed)."""
-    try:
-        result = subprocess.run(
-            ["shasum", "-a", "256", "-c",
-             ".pipeline/pdf-source-checksums.sha256"],
-            cwd=os.path.join(ROOT, "US", "prior-art"),
-            capture_output=True, text=True, timeout=120)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return ["prior-art checksum check could not complete: %s" % exc]
-    if result.returncode:
-        return [_subprocess_failure("prior-art checksum check", result)]
-    return []
+    """Verify all canonical prior-art bytes against co-located manifests."""
+    evidence_ids = (["A%d" % number for number in range(1, 22)] +
+                    ["B%d" % number for number in range(1, 11)] + ["C3", "C8"])
+    content = gateway.ContentGateway(ROOT)
+    problems = []
+    for evidence_id in sorted(evidence_ids):
+        relative_manifest = "US/prior-art/%s/source-manifest.json" % evidence_id
+        try:
+            manifest = canon.parse_json(content.read_text(relative_manifest))
+            stored = manifest["storedSource"]
+            relative_source = stored["path"]
+            if not isinstance(relative_source, str) or \
+                    not relative_source.startswith("US/prior-art/%s/" % evidence_id) or \
+                    os.path.isabs(relative_source) or "\\" in relative_source or \
+                    any(part in {"", ".", ".."} for part in relative_source.split("/")):
+                raise ValueError("stored-source path is not package-confined")
+            data = content.read_bytes(relative_source)
+            digest = canon.raw_bytes_digest(data)
+            if stored.get("rawDigest") != digest or stored.get("size") != len(data):
+                raise ValueError("stored-source digest/size is stale")
+        except (OSError, UnicodeDecodeError, gateway.GatewayError,
+                KeyError, TypeError, ValueError) as exc:
+            problems.append("prior-art source check failed for %s: %s" %
+                            (relative_manifest, exc))
+    return problems
 
 
-def _verify_current_closure(byte_source, load_planes=None):
+def _verify_current_closure(byte_source, load_planes=None,
+                            repository_snapshot=None):
     """Prove one exact snapshot-scoped source/evidence/artifact closure.
 
     Every content, record, and artifact byte is fetched through *byte_source*
@@ -1399,6 +1435,11 @@ def _verify_current_closure(byte_source, load_planes=None):
     fail-closed and bracketed by the snapshot equality checks in
     :func:`verify_current_state`.
     """
+    from structured_source.verify import run_callback_receipt
+
+    structured_source_receipt = run_callback_receipt(
+        ROOT, byte_source=byte_source,
+        repository_snapshot=repository_snapshot, fresh_process=True)
     content = gateway.ContentGateway(ROOT, byte_source=byte_source)
     edition_ids = delivery_edition_ids(content)
     pin_plans = {
@@ -1534,6 +1575,10 @@ def _verify_current_closure(byte_source, load_planes=None):
             "distInventory": "exact",
             "recordInventory": "canonical",
             "deterministicBundle": "exact",
+            "structuredSource": {
+                "status": "passed",
+                "receipt": structured_source_receipt,
+            },
         },
     }
 
@@ -1560,7 +1605,8 @@ def verify_current_state(run_tests=True, load_planes=None,
         initial = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
     except snapshot.SnapshotError as exc:
         raise RuntimeError("cannot snapshot current repository: %s" % exc)
-    _verify_current_closure(initial.byte_source(), load_planes)
+    initial_environment = snapshot.environment_path_census(sys.prefix)
+    _verify_current_closure(initial.byte_source(), load_planes, initial)
     boundary_labels = []
     for label, check in boundary_checks:
         problems = check()
@@ -1573,6 +1619,13 @@ def verify_current_state(run_tests=True, load_planes=None,
             with tempfile.TemporaryDirectory(
                     prefix="aa11393-verify-snapshot-") as sandbox_root:
                 initial.materialize(sandbox_root)
+                # Tests execute the immutable materialized sources with the
+                # already verified project-local interpreter/distributions.
+                # The snapshot contract intentionally excludes `.venv`; a
+                # temporary link gives environment checks the same exact
+                # capability without copying or provisioning packages.
+                os.symlink(sys.prefix, os.path.join(sandbox_root, ".venv"),
+                           target_is_directory=True)
                 sandbox_before = snapshot.RepositorySnapshot.capture(
                     sandbox_root)
                 test_result = _run_full_test_suite(sandbox_root)
@@ -1592,14 +1645,19 @@ def verify_current_state(run_tests=True, load_planes=None,
         raise RuntimeError(
             "live repository changed during verification: %s" %
             "; ".join(live_changes))
+    if snapshot.environment_path_census(sys.prefix) != initial_environment:
+        raise RuntimeError("project-local environment changed during verification")
     report = _verify_current_closure(
-        before_final.byte_source(), load_planes)
+        before_final.byte_source(), load_planes, before_final)
     final = snapshot.RepositorySnapshot.capture(ROOT)
     live_changes = initial.differences(final)
     if live_changes:
         raise RuntimeError(
             "live repository changed before final-state certification: %s" %
             "; ".join(live_changes))
+    if snapshot.environment_path_census(sys.prefix) != initial_environment:
+        raise RuntimeError(
+            "project-local environment changed before final-state certification")
     report["checks"]["softwareTests"] = test_result
     report["checks"]["repositorySnapshot"] = final.digest
     for label in boundary_labels:

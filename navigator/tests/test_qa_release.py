@@ -16,11 +16,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, os.path.join(ROOT, "navigator"))
 
 import build  # noqa: E402
-from lib import acceptance, authority, bundlezip, canon  # noqa: E402
+from lib import acceptance, authority, bundlezip, canon, claims  # noqa: E402
 from lib import control_inventory, currentstate, gateway  # noqa: E402
 from lib import pinplan, profilepolicy  # noqa: E402
 from lib import qaevidence, qaregistry  # noqa: E402
-from lib import recordprovenance, release, render, snapshot  # noqa: E402
+from lib import recordprovenance, release, render, segmenter, snapshot  # noqa: E402
 from tests import acceptance_support  # noqa: E402
 
 
@@ -34,6 +34,49 @@ with open(os.path.join(ROOT, "navigator", "schema", "support-matrix.json"),
 with open(os.path.join(ROOT, "navigator", "schema", "api-policy.json"),
           encoding="utf-8") as _api_fh:
     QA_API_PROBES = sorted(render.api_probe_instruments(json.load(_api_fh)))
+
+
+class TestGeneratedClaimProjection(unittest.TestCase):
+    def test_stable_generated_anchors_do_not_change_claim_units(self):
+        source = ("## Candidate claims\n\n"
+                  "<a id=\"ssp-claim-1\"></a>\n"
+                  "**1.** A system comprising:\n"
+                  "<a id=\"ssp-claim-1-limitation-1\"></a>\n\n"
+                  "a processor.\n")
+        parsed = claims.parse_claims(source)
+        self.assertEqual([(item.number, [unit.text for unit in item.units])
+                          for item in parsed],
+                         [(1, ["A system comprising:", "a processor."])])
+
+    def test_generated_table_anchors_do_not_hide_dependencies(self):
+        source = ("| <a id=\"ssp-head-1\"></a> Claim | "
+                  "<a id=\"ssp-head-2\"></a> Depends from |\n"
+                  "|---|---|\n| 1 | — |\n| 2 | 1 |\n")
+        self.assertEqual(claims.parse_dependency_table(source),
+                         {1: None, 2: 1})
+
+    def test_generated_gfm_scaffolding_preserves_segment_identity(self):
+        profile = {
+            "profileVersion": "1", "corpusId": "example",
+            "pctClaimsSection": ["Body", "Claims"],
+            "comment": "Closed generated-view normalization fixture.",
+            "rules": [
+                {"match": {"path": ["*", "Structured-source review metadata"]},
+                 "class": "excluded"},
+                {"match": {"path": ["Body"]}, "class": "targetable"},
+            ],
+        }
+        baseline = "# Body\n\nvalue_name [citation]\n"
+        generated = (
+            "<a id=\"ssp-body\"></a>\n# Body\n\n"
+            "<a id=\"ssp-value\"></a>\nvalue\\_name \\[citation\\]\n\n"
+            "<a id=\"ssp-metadata\"></a>\n"
+            "## Structured-source review metadata\n\n| Field | Value |\n|---|---|\n"
+        )
+        old = segmenter.segment(baseline, profile, lambda unused: b"")
+        new = segmenter.segment(generated, profile, lambda unused: b"")
+        self.assertEqual([item.as_dict() for item in new],
+                         [item.as_dict() for item in old])
 
 
 def _target_result(target, field):
@@ -772,7 +815,7 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
             with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
                         currentstate, "_verify_current_closure",
-                        side_effect=lambda byte_source, load_planes:
+                        side_effect=lambda byte_source, load_planes, repository_snapshot:
                             self._closure_report()), \
                     mock.patch.object(
                         currentstate, "_run_full_test_suite",
@@ -797,7 +840,7 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
             with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
                         currentstate, "_verify_current_closure",
-                        side_effect=lambda byte_source, load_planes:
+                        side_effect=lambda byte_source, load_planes, repository_snapshot:
                             self._closure_report()), \
                     mock.patch.object(
                         currentstate, "_run_full_test_suite",
@@ -813,7 +856,7 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                 fh.write(b"captured\n")
             seen = []
 
-            def closure(byte_source, load_planes):
+            def closure(byte_source, load_planes, repository_snapshot):
                 seen.append(byte_source(source))
                 if len(seen) == 1:
                     # A live change after the initial capture must not reach
@@ -840,8 +883,8 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                 fh.write(b"stable\n")
             received = []
 
-            def closure(byte_source, load_planes):
-                received.append(byte_source(source))
+            def closure(byte_source, load_planes, repository_snapshot):
+                received.append((byte_source(source), repository_snapshot))
                 return self._closure_report()
 
             with mock.patch.object(currentstate, "ROOT", root), \
@@ -849,7 +892,11 @@ class TestVerifyCurrentFinalState(unittest.TestCase):
                         currentstate, "_verify_current_closure",
                         side_effect=closure):
                 report = currentstate.verify_current_state(run_tests=False)
-            self.assertEqual(received, [b"stable\n", b"stable\n"])
+            self.assertEqual([item[0] for item in received],
+                             [b"stable\n", b"stable\n"])
+            self.assertTrue(all(isinstance(item[1], snapshot.RepositorySnapshot)
+                                for item in received))
+            self.assertEqual(received[0][1].digest, received[1][1].digest)
             self.assertEqual(report["status"], "current")
             self.assertIn("repositorySnapshot", report["checks"])
 
@@ -919,15 +966,30 @@ class TestValidateCurrentDocuments(unittest.TestCase):
     @staticmethod
     def _prior_art_tree(root, digest=None):
         prior = os.path.join(root, "US", "prior-art")
-        os.makedirs(os.path.join(prior, ".pipeline"))
-        payload = b"canonical source pdf bytes\n"
-        with open(os.path.join(prior, "A1.pdf"), "wb") as fh:
-            fh.write(payload)
-        hex_digest = digest or canon.bytes_digest(payload).rsplit(":", 1)[1]
-        with open(os.path.join(prior, ".pipeline",
-                               "pdf-source-checksums.sha256"),
-                  "w", encoding="utf-8") as fh:
-            fh.write("%s  %s\n" % (hex_digest, "A1.pdf"))
+        evidence_ids = (["A%d" % number for number in range(1, 22)] +
+                        ["B%d" % number for number in range(1, 11)] +
+                        ["C3", "C8"])
+        import hashlib
+        import json
+        for evidence_id in evidence_ids:
+            directory = os.path.join(prior, evidence_id)
+            os.makedirs(directory)
+            payload = ("canonical source %s\n" % evidence_id).encode("utf-8")
+            source_name = evidence_id + ".pdf"
+            with open(os.path.join(directory, source_name), "wb") as fh:
+                fh.write(payload)
+            raw_digest = "sha256/raw:" + hashlib.sha256(payload).hexdigest()
+            if evidence_id == "A1" and digest is not None:
+                raw_digest = "sha256/raw:" + digest
+            manifest = {
+                "storedSource": {
+                    "path": "US/prior-art/%s/%s" % (evidence_id, source_name),
+                    "rawDigest": raw_digest, "size": len(payload),
+                },
+            }
+            with open(os.path.join(directory, "source-manifest.json"),
+                      "w", encoding="utf-8") as fh:
+                json.dump(manifest, fh)
 
     def test_changed_markdown_renders_or_fails_closed(self):
         with tempfile.TemporaryDirectory() as root:
@@ -937,14 +999,19 @@ class TestValidateCurrentDocuments(unittest.TestCase):
                 self.assertEqual(
                     currentstate._changed_markdown_render_problems(), [])
         with tempfile.TemporaryDirectory() as root:
-            # A deleted tracked Markdown file is still named by git diff,
-            # and pandoc cannot render a path that does not exist.
+            # A deleted tracked Markdown file has no current bytes to render.
             self._git_root_with_changed_markdown(root, b"# Title\n", None)
             os.remove(os.path.join(root, "doc.md"))
             with mock.patch.object(currentstate, "ROOT", root):
-                problems = currentstate._changed_markdown_render_problems()
-            self.assertTrue(
-                any("pandoc" in problem for problem in problems), problems)
+                self.assertEqual(
+                    currentstate._changed_markdown_render_problems(), [])
+        with tempfile.TemporaryDirectory() as root:
+            self._git_root_with_changed_markdown(root, b"# Title\n", None)
+            with open(os.path.join(root, "new.md"), "wb") as fh:
+                fh.write(b"# New current document\n")
+            with mock.patch.object(currentstate, "ROOT", root):
+                self.assertEqual(
+                    currentstate._changed_markdown_render_problems(), [])
 
     def test_changed_markdown_empty_set_passes_and_tool_failure_closes(self):
         with tempfile.TemporaryDirectory() as root:
@@ -971,19 +1038,12 @@ class TestValidateCurrentDocuments(unittest.TestCase):
             with mock.patch.object(currentstate, "ROOT", root):
                 problems = currentstate._prior_art_checksum_problems()
             self.assertTrue(
-                any("prior-art checksum check failed" in problem
+                any("prior-art source check failed" in problem
                     for problem in problems), problems)
         with tempfile.TemporaryDirectory() as root:
             with mock.patch.object(currentstate, "ROOT", root):
                 problems = currentstate._prior_art_checksum_problems()
             self.assertTrue(problems, "missing tree must fail closed")
-        with mock.patch.object(
-                currentstate.subprocess, "run",
-                side_effect=OSError("tool missing")):
-            problems = currentstate._prior_art_checksum_problems()
-        self.assertTrue(
-            any("could not complete" in problem for problem in problems),
-            problems)
 
     def test_validate_current_runs_document_checks_inside_the_brackets(self):
         with tempfile.TemporaryDirectory() as root:
@@ -992,7 +1052,7 @@ class TestValidateCurrentDocuments(unittest.TestCase):
                 fh.write(b"stable\n")
             order = []
 
-            def closure(byte_source, load_planes):
+            def closure(byte_source, load_planes, repository_snapshot):
                 order.append("closure")
                 return self._closure_report()
 
@@ -1022,7 +1082,7 @@ class TestValidateCurrentDocuments(unittest.TestCase):
                 fh.write(b"stable\n")
             closures = []
 
-            def closure(byte_source, load_planes):
+            def closure(byte_source, load_planes, repository_snapshot):
                 closures.append(byte_source)
                 return self._closure_report()
 
@@ -1046,7 +1106,7 @@ class TestValidateCurrentDocuments(unittest.TestCase):
             with mock.patch.object(currentstate, "ROOT", root), \
                     mock.patch.object(
                         currentstate, "_verify_current_closure",
-                        side_effect=lambda byte_source, load_planes:
+                        side_effect=lambda byte_source, load_planes, repository_snapshot:
                             self._closure_report()):
                 report = currentstate.verify_current_state(run_tests=False)
             self.assertNotIn("changedMarkdown", report["checks"])

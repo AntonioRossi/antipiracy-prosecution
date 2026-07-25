@@ -26,6 +26,10 @@ TABLE_SEP_RE = re.compile(r"^\s*\|[\s:\-|]+\|\s*$")
 CAPTION_RE = re.compile(r"^\*(.+)\*\s*$")
 SUB_RE = re.compile(r"^<sub>(.*)</sub>\s*$", re.S)
 ENUM_PREFIX_RE = re.compile(r"^\d+\.\s+")
+GENERATED_ANCHOR_RE = re.compile(
+    r'<a id="ssp-[A-Za-z][A-Za-z0-9_.:-]*"></a>[ \t]*')
+GFM_BACKSLASH_ESCAPE_RE = re.compile(
+    r'\\([!"#$%&\'()*+,\-./:;<=>?@\[\\\]^_`{|}~])')
 
 CLASSES = ("targetable", "editorial", "quotable", "excluded", "claims")
 KINDS = ("heading", "code", "blockquote", "table", "image", "bullet",
@@ -165,6 +169,11 @@ def _norm_heading(text):
     return text
 
 
+def _gfm_text(text):
+    """Return the visible text of GFM backslash-escaped punctuation."""
+    return GFM_BACKSLASH_ESCAPE_RE.sub(r"\1", text)
+
+
 def _match_rule(rule, kind, path):
     m = rule.get("match", {})
     if "kind" in m and m["kind"] != kind:
@@ -302,7 +311,7 @@ def segment(text, profile, read_file):
     if defects:
         raise SegmentError("invalid segmentation profile: %s" %
                            "; ".join(defects))
-    lines = text.split("\n")
+    lines = GENERATED_ANCHOR_RE.sub("", text).split("\n")
     path = []           # normalized heading path
     counters = {}       # per-(path, kind) ordinals for labels
     blocks = []
@@ -329,6 +338,7 @@ def segment(text, profile, read_file):
     for kind, payload in _parse_raw(lines):
         if kind == "heading":
             level, raw = payload
+            raw = _gfm_text(raw)
             close_claim()
             name = _norm_heading(raw)
             # maintain path by heading level
@@ -356,6 +366,16 @@ def segment(text, profile, read_file):
             # lib.claims — never generic blocks (blockquotes there may be
             # separately designated by kind-specific rules).
             continue
+
+        if kind in {"blockquote", "bullet", "footer", "claimhead",
+                    "paragraph"}:
+            payload = _gfm_text(payload)
+        elif kind == "ordered":
+            payload = (payload[0], _gfm_text(payload[1]))
+        elif kind == "table":
+            rows, caption = payload
+            payload = ([[_gfm_text(cell) for cell in row] for row in rows],
+                       _gfm_text(caption))
 
         if in_claims and kind == "claimhead":
             close_claim()

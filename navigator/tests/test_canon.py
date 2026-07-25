@@ -122,6 +122,11 @@ class TestVectors(unittest.TestCase):
 
 
 class TestProperties(unittest.TestCase):
+    def test_raw_bytes_digest_uses_the_raw_digest_domain(self):
+        self.assertEqual(
+            canon.raw_bytes_digest(b"stable bytes\n"),
+            "sha256/raw:257783e29dd76fb20d17128cf0e572d5076261943a4128162f10e04a4c287dc6")
+
     """Property-based canonicalization tests over generated inputs
     (AC-07): idempotence, NFC duplicate-key rejection, escaping exactness,
     integer edge rules."""

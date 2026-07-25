@@ -1,15 +1,10 @@
-# AA11393US — Canonical Shared US Materials
+<!-- GENERATED ROUTER — materialized from the closed structured-source registry; edit the registry, never this Markdown. -->
 
-> **SHARED RECORD — INTERNAL COUNSEL REVIEW EXCEPT WHERE EXPRESSLY IDENTIFIED AS FILING-FACING.**
->
-> Status date: **23 July 2026**. These files serve `NA`, `AF`, and any approved hybrid and must not be forked without an express counsel decision.
+# US shared structured-source packages
 
-| File | Canonical function |
-|---|---|
-| [`AA11393US-US_IDS-reference-list_DRAFT.md`](AA11393US-US_IDS-reference-list_DRAFT.md) | Single disclosure inventory and document-handling checklist for all related US cases |
-| [`AA11393US-PCT_informal-comments-IB_DRAFT.md`](AA11393US-PCT_informal-comments-IB_DRAFT.md) | Single current filing-facing draft for possible PCT informal comments; counsel approval required |
-| [`AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md) | Shared deadlines, retrieval, formalities, ownership, disclosure, and EP work controls |
-| [`AA11393US-continuation-preservation_MEMO.md`](AA11393US-continuation-preservation_MEMO.md) | Strategy-neutral controlled-parent, copendency, filing, benefit-verification, and repeat-or-close controls |
-| [`../prior-art/`](../prior-art/) | Canonical prior-art source and provenance store |
-
-Strategy-specific patentability, claim mapping, support, and enforcement analysis belongs only in [`../normal-allowance/`](../normal-allowance/) or [`../allowance-first/`](../allowance-first/). The strategies may reach different claim-scope conclusions, but they must use the same source identifiers, document copies, IDS record, filing deadlines, continuation controls, and public-comments draft.
+| Stable ID | Primary type | Scope | Status | Canonical XML | Review view | Coverage |
+|---|---|---|---|---|---|---|
+| aa11393us-continuation-preservation | content | shared | memo | [AA11393US-continuation-preservation_MEMO.source.xml](continuation-controls/AA11393US-continuation-preservation_MEMO.source.xml) | [Markdown](continuation-controls/AA11393US-continuation-preservation_MEMO.md) | [Coverage](continuation-controls/AA11393US-continuation-preservation_MEMO.coverage.json) |
+| aa11393us-deferred-filing-disclosure-and-ep-work | content | shared | memo | [AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.source.xml](filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.source.xml) | [Markdown](filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md) | [Coverage](filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.coverage.json) |
+| aa11393us-pct-informal-comments-ib | content | shared | draft | [AA11393US-PCT_informal-comments-IB_DRAFT.source.xml](public-comments/AA11393US-PCT_informal-comments-IB_DRAFT.source.xml) | [Markdown](public-comments/AA11393US-PCT_informal-comments-IB_DRAFT.md) | [Coverage](public-comments/AA11393US-PCT_informal-comments-IB_DRAFT.coverage.json) |
+| aa11393us-us-ids-reference-list | content | shared | draft | [AA11393US-US_IDS-reference-list_DRAFT.source.xml](ids/AA11393US-US_IDS-reference-list_DRAFT.source.xml) | [Markdown](ids/AA11393US-US_IDS-reference-list_DRAFT.md) | [Coverage](ids/AA11393US-US_IDS-reference-list_DRAFT.coverage.json) |

@@ -152,15 +152,16 @@ and every unclassified tracked file.
 
 ```sh
 git status --short --branch
-python3 -m navigator validate-current
+uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
 `validate-current` is the canonical cutover gate. It must report one coherent current
 baseline, current candidates and sealed artifacts, a current configured bundle and
 authorization chain, no obsolete live version, no compatibility path, and no unclassified
 file. It captures the complete live repository, proves the full closure against the
-captured bytes, runs the document-integrity legs (the changed-Markdown render check and the
-prior-art source checksums) and the discovered tests only in a materialized snapshot,
+captured bytes, runs the document-integrity legs (the current changed-Markdown render check and
+the co-located prior-art source-manifest checks) and both registered test families only in a
+materialized snapshot,
 rejects mutation of that snapshot or
 the live tree, re-derives the full live closure, and compares a final snapshot immediately
 before reporting success. Run it last; stop on any warning or nonzero result.

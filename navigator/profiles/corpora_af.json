@@ -5,10 +5,10 @@
    "role": "fragment-source",
    "visibility": "rendered",
    "version": "AF-2026-07-22-v6",
-   "primary": "US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md",
+   "primary": "US/allowance-first/parent/claims/AA11393US-AF-US_claim-set_DRAFT.md",
    "profile": "navigator/profiles/seg_af-claims.json",
    "files": {
-    "US/allowance-first/AA11393US-AF-US_claim-set_DRAFT.md": "sha256/c1:72489e8d0000c94fb1af0dd9415775cc3fdaaea5c40f858765b8f97fd0b3c614"
+    "US/allowance-first/parent/claims/AA11393US-AF-US_claim-set_DRAFT.md": "sha256/c1:bafbacc8376881b5f61e8365facd1e138e1de12cca9c25fe4f9bf553a138b6d2"
    }
   }
  }

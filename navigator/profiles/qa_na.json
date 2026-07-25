@@ -5,9 +5,9 @@
    "role": "qa-source",
    "visibility": "internal",
    "versionBindings": {"NA": "NA-2026-07-22-v4"},
-   "primary": "US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md",
+   "primary": "US/normal-allowance/support/AA11393US-NA-priority-support-map_DRAFT.md",
    "files": {
-    "US/normal-allowance/AA11393US-NA-priority-support-map_DRAFT.md": "sha256/c1:2d7c6dc4754b7402726a2eeb204cbda74834916d0b66a40a3a51aad270ed5e52"
+    "US/normal-allowance/support/AA11393US-NA-priority-support-map_DRAFT.md": "sha256/c1:697cee3084d84ac139b97c1ff58ba6e1147d6c84590d8ee0c285ec7fc7fab0b8"
    }
   }
  }

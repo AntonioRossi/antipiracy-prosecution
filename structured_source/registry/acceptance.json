@@ -1,0 +1,88 @@
+{
+  "acceptanceVersion": "1",
+  "namespace": "ssp",
+  "runner": {
+    "runnerVersion": "1",
+    "callbackModule": "structured_source.acceptance_callbacks",
+    "testModules": [
+      "structured_source.tests.test_acceptance",
+      "structured_source.tests.test_approvals",
+      "structured_source.tests.test_atomic",
+      "structured_source.tests.test_exporter",
+      "structured_source.tests.test_projection",
+      "structured_source.tests.test_xml_contract"
+    ]
+  },
+  "criteria": [
+    {
+      "id": "SSM-AC-01 — Scope and registry closure",
+      "code": "SSM-AC-01",
+      "outcome": "One closed content registry enumerates every in-scope source, source-level relation set, dependency/endpoint allowlist, stored source, asset, generated Markdown/coverage output, required approval type, consumer, and export path. Every controlled content-plane file exists and is registered exactly once; IDs, paths, tuples, roles, and owners are unique; shared material is not forked; no orphan or duplicate semantic owner exists. A separate exact inventory closes the append-only record namespace; schema-valid superseded records are evidence, not content-registry orphans and not current authorizations.",
+      "evidence": "Bidirectional registry/filesystem and record inventories; ID/path/owner uniqueness tests; dependency, endpoint, asset, record-cycle, content-orphan, embedded-relation, and unregistered-file negative fixtures.",
+      "callbacks": ["ssp.SSM-AC-01.registry-closure"]
+    },
+    {
+      "id": "SSM-AC-02 — XML validity and identity",
+      "code": "SSM-AC-02",
+      "outcome": "Every `.source.xml` and `.relations.xml` file validates under the current closed namespace/schema/profile, secure parser policy, `xc1` canonicalization, and `ssp-xd1` digest domain. Every addressable fragment and relation has stable identity and a current canonical digest; all endpoint tuples resolve exactly. The parser and canonicalizer execute only through the exact host-provided `uv` version and repository-owned project, lock, interpreter, and installed-distribution contract. Unsupported constructs, external resources, unknown fields, duplicate IDs, raw Markdown/HTML, unresolved dependencies, stale endpoints, resource-limit violations, undeclared imports, or ambient packages fail closed.",
+      "evidence": "XSD 1.1 and semantic validation; secure-parser/XXE/entity/XInclude/recovery tests; canonicalization/domain vectors; locked-environment and import-origin census; fragment/relation/claim/dependency/endpoint mutation fixtures.",
+      "callbacks": ["ssp.SSM-AC-02.xml-identity"]
+    },
+    {
+      "id": "SSM-AC-03 — Origin, provenance, and asset integrity",
+      "code": "SSM-AC-03",
+      "outcome": "Each content package declares exactly one PDF-derivative or authored-source origin. PDF derivatives bind exact stored bytes, truthful role/status, page/region evidence, uncertainties, and assets; authored sources bind a responsible owner without fictitious external authority. OCR/searchable copies remain non-authoritative, and canonical PDFs are unchanged.",
+      "evidence": "Source checksum and manifest verification; provenance/page-region/asset closure; missing, drifted, ambiguous, false-authority, role-confusion, and PDF-byte-change fixtures.",
+      "callbacks": ["ssp.SSM-AC-03.provenance-assets"]
+    },
+    {
+      "id": "SSM-AC-04 — Stand-off relation closure",
+      "code": "SSM-AC-04",
+      "outcome": "Each source-level cross-document assertion has one `.relations.xml` owner and binds exact `(documentId, fragmentId, fragmentContentDigest)` endpoints. No endpoint document, independently authored Markdown, JSON, or configuration duplicates relation truth; the generated relation Markdown may render it mechanically for review. Relation census, direction, type, assertion fields, owners, and current endpoint versions are complete and reviewable.",
+      "evidence": "Relation inventory and endpoint resolver; duplicate-owner/restatement scan; relation-field and endpoint mutation/swap/staleness fixtures; forward/reverse review-anchor checks.",
+      "callbacks": ["ssp.SSM-AC-04.relation-closure"]
+    },
+    {
+      "id": "SSM-AC-05 — Deterministic Markdown and coverage",
+      "code": "SSM-AC-05",
+      "outcome": "Fresh processes generate byte-identical GFM Markdown and coverage from only locked XML, dependencies, assets, profiles, and control data. Committed views equal regeneration, carry the source/digest warning, and are never independent inputs. Every review-relevant XML field maps to a Markdown anchor or justified closed classification, and every authored Markdown region maps back to a typed XML origin.",
+      "evidence": "Cross-process double render; committed-output and Pandoc checks; schema-derived field census; bidirectional coverage; mixed-content, Unicode, table, claim, relation, link, escaping, hidden-field, and undeclared-read fixtures.",
+      "callbacks": ["ssp.SSM-AC-05.projection-coverage"]
+    },
+    {
+      "id": "SSM-AC-06 — Exact human approval",
+      "code": "SSM-AC-06",
+      "outcome": "Every consumer-eligible package has a current identified-human `projection-completeness` record followed by the origin-appropriate `source-fidelity`, `authored-content-review`, or `relation-content-review` record. Records bind all exact source, dependency, endpoint, asset, schema/parser/canon/domain, renderer, Markdown, coverage, and reviewed-census sides. Drift or ambiguity prevents resolution; same-schema superseded records remain append-only evidence.",
+      "evidence": "Closed record schemas and exact-side resolver; reviewer-authority check; stale/missing/incomplete/ambiguous/model-authority fixtures; append-only record inventory across consumer/profile changes.",
+      "callbacks": ["ssp.SSM-AC-06.human-approvals"]
+    },
+    {
+      "id": "SSM-AC-07 — Discoverability and reference closure",
+      "code": "SSM-AC-07",
+      "outcome": "Every controlled `US/` and registered PCT artifact conforms to the exact path taxonomy and one-primary bundle rule. Shared records have one `US/common/` owner; strategy material remains in its strategy tree; each prior-art ID has one co-located evidence closure. Generated routers are deterministic, and every registered inbound path, local link, semantic ID, manifest, checksum, schema, test, and runbook reference resolves without aliases, symlinks, path escapes, or silent merges.",
+      "evidence": "Current path/ID/ownership registry validators; deterministic router comparison; parser-registry reference scan; misplaced, dangling, escaped, duplicated, obsolete-path, dual-primary, and apparent-duplicate fixtures.",
+      "callbacks": ["ssp.SSM-AC-07.reference-taxonomy"]
+    },
+    {
+      "id": "SSM-AC-08 — Approved structured export",
+      "code": "SSM-AC-08",
+      "outcome": "The export contains exact approved source/dependency/source-level-relation XML, stable identities, assets, materialized registry view, coverage and approval bindings. Its envelope is control-only and Markdown is review evidence, not export semantic authority. Within the upstream source/export plane, no unapproved XML, OCR, searchable PDF, content/relation JSON, or persisted XML-to-JSON model can supply semantics.",
+      "evidence": "Export schema/digest and exact-approval validation; upstream consumer read/origin allowlist; denied-input fixtures; endpoint/dependency/asset/approval traceability and missing/additional/stale-payload tests.",
+      "callbacks": ["ssp.SSM-AC-08.approved-export"]
+    },
+    {
+      "id": "SSM-AC-09 — Fail-closed writes and reproducibility",
+      "code": "SSM-AC-09",
+      "outcome": "Validation completes before writes; generated sets publish atomically or roll back every command-owned change; invalid input or interruption leaves command-owned outputs unchanged. Detected external mutation stops further attributable writes and makes the global final-snapshot comparison fail. Fresh processes in the exact pre-provisioned project-local `uv` environment reproduce every view, coverage, router, manifest, and export byte-for-byte. Recurring verification is no-cache, locked, no-sync, and offline, checks project/lock consistency, performs no persistent package-manager or environment writes, and rejects a missing/mismatched `uv`, Python, lock, environment, distribution, or import origin without pip, system-Python, ambient-site-packages, implicit-sync, or unlocked-install fallback. The namespaced callbacks support complete post-test re-execution by the repository-global outer gate, which solely owns test isolation, environment/repository no-write postconditions, and final snapshot equality.",
+      "evidence": "Command-plane registry; `uv`/Python/project/lock/distribution/import-origin closure; bootstrap-versus-verification separation; before/after repository and environment snapshots; missing/drifted toolchain and forbidden-fallback fixtures; atomicity/rollback/interruption/concurrency tests; cross-process reproduction; child callback receipt; global last-sorted mutating-test fixtures and outer final-state postconditions.",
+      "callbacks": ["ssp.SSM-AC-09.atomic-reproducibility"]
+    },
+    {
+      "id": "SSM-AC-10 — Active structured-source closure",
+      "code": "SSM-AC-10",
+      "outcome": "The current structured-source state has one XML authoring path, exact views/approvals/export, complete `US/`/PCT references, one exact host-provided `uv` capability, and one repository-owned project/lock contract. It contains no independently editable migrated Markdown, importer, dual authoring source, embedded duplicate relation, alias, fallback, stale view, unapproved export, migration archive/report/record/code/dependency, temporary locator/lease, pip or implicit-bootstrap fallback, ambient dependency, or non-operative implementation narrative. The executable registry, generated acceptance table, toolchain/source inventories, namespaced callback ownership, receipt, and result census are exact; currentness is promoted only by the repository-global outer gate.",
+      "evidence": "Forbidden-state and residue scan; registry/table and lock consistency regeneration; project/lock/source/distribution inventory; bidirectional child-callback meta-tests; complete ephemeral receipt/result census; global outer-result binding and final integrated snapshot verification.",
+      "callbacks": ["ssp.SSM-AC-10.operative-closure"]
+    }
+  ]
+}

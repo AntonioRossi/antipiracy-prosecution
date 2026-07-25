@@ -1,0 +1,50 @@
+{
+  "commandPolicyVersion": "1",
+  "commands": [
+    {
+      "id": "approve",
+      "reads": ["content-registry", "approval-authorities", "record-inventory", "source-xml", "relation-xml", "schemas", "profiles", "dependencies", "assets", "markdown", "coverage", "approvals"],
+      "writes": ["approval-record", "record-inventory"]
+    },
+    {
+      "id": "check-source",
+      "reads": ["content-registry", "source-xml", "schemas", "profiles", "dependencies", "assets"],
+      "writes": []
+    },
+    {
+      "id": "compare",
+      "reads": ["content-registry", "source-xml", "relation-xml", "schemas", "profiles", "dependencies", "assets", "markdown", "coverage"],
+      "writes": []
+    },
+    {
+      "id": "export",
+      "reads": ["content-registry", "approval-authorities", "record-inventory", "source-xml", "relation-xml", "schemas", "profiles", "dependencies", "assets", "markdown", "coverage", "approvals"],
+      "writes": ["approved-export"]
+    },
+    {
+      "id": "render",
+      "reads": ["content-registry", "source-xml", "relation-xml", "schemas", "profiles", "dependencies", "assets"],
+      "writes": ["markdown", "coverage"]
+    },
+    {
+      "id": "render-census",
+      "reads": ["content-registry", "source-xml", "relation-xml", "schemas", "profiles", "dependencies", "assets"],
+      "writes": []
+    },
+    {
+      "id": "resolve-approvals",
+      "reads": ["content-registry", "approval-authorities", "record-inventory", "source-xml", "relation-xml", "schemas", "profiles", "dependencies", "assets", "markdown", "coverage", "approvals"],
+      "writes": []
+    },
+    {
+      "id": "verify-callback",
+      "reads": ["complete-repository-snapshot"],
+      "writes": []
+    },
+    {
+      "id": "verify-current",
+      "reads": ["complete-repository-snapshot"],
+      "writes": []
+    }
+  ]
+}

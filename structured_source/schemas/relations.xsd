@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:r="urn:aa11393:ssp:relations:1"
+           xmlns:c="urn:aa11393:ssp:content:1"
+           xmlns:xml="http://www.w3.org/XML/1998/namespace"
+           targetNamespace="urn:aa11393:ssp:relations:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1"
+           vc:minVersion="1.1">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+             schemaLocation="xml.xsd"/>
+  <xs:import namespace="urn:aa11393:ssp:content:1"
+             schemaLocation="content.xsd"/>
+  <xs:simpleType name="stableId">
+    <xs:restriction base="xs:NCName">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="160"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="semanticDigest">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="sha256/xc1/ssp-xd1:[0-9a-f]{64}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="identity">
+    <xs:attribute name="relationSetId" type="r:stableId" use="required"/>
+    <xs:attribute name="profile" type="r:stableId" use="required"/>
+    <xs:attribute name="owner" type="xs:string" use="required"/>
+    <xs:attribute name="scope" type="r:stableId" use="required"/>
+    <xs:attribute name="status" type="r:stableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="endpoint">
+    <xs:attribute name="role" type="r:stableId" use="required"/>
+    <xs:attribute name="documentId" type="r:stableId" use="required"/>
+    <xs:attribute name="fragmentId" type="r:stableId" use="required"/>
+    <xs:attribute name="fragmentContentDigest" type="r:semanticDigest" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="assertionField">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="r:stableId" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="relation">
+    <xs:sequence>
+      <xs:element name="endpoint" type="r:endpoint" minOccurs="2" maxOccurs="32"/>
+      <xs:element name="assertionField" type="r:assertionField" minOccurs="1" maxOccurs="64"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="relationId" type="r:stableId" use="required"/>
+    <xs:attribute name="type" type="r:stableId" use="required"/>
+    <xs:attribute name="direction" type="r:stableId" use="required"/>
+    <xs:attribute name="reviewOwner" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="relationSet">
+    <xs:sequence>
+      <xs:element name="identity" type="r:identity"/>
+      <xs:element name="reviewContext" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="c:block" minOccurs="1" maxOccurs="100000"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="relation" type="r:relation" minOccurs="1" maxOccurs="100000"/>
+    </xs:sequence>
+    <xs:attribute name="schemaProfile" type="r:stableId" use="required"/>
+    <xs:attribute name="schemaVersion" type="xs:string" use="required" fixed="1"/>
+  </xs:complexType>
+  <xs:element name="relations" type="r:relationSet"/>
+</xs:schema>

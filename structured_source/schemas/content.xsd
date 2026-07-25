@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:c="urn:aa11393:ssp:content:1"
+           xmlns:xml="http://www.w3.org/XML/1998/namespace"
+           targetNamespace="urn:aa11393:ssp:content:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1"
+           vc:minVersion="1.1">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+             schemaLocation="xml.xsd"/>
+
+  <xs:simpleType name="stableId">
+    <xs:restriction base="xs:NCName">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="160"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="nonBlank">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000000"/>
+      <xs:pattern value=".*\S.*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="repoPath">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="512"/>
+      <xs:pattern value="[^\\]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rawDigest">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="sha256/raw:[0-9a-f]{64}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="semanticDigest">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="sha256/xc1/ssp-xd1:[0-9a-f]{64}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dependencyDigest">
+    <xs:union memberTypes="c:rawDigest c:semanticDigest"/>
+  </xs:simpleType>
+
+  <xs:complexType name="inlineContainer">
+    <xs:sequence>
+      <xs:group ref="c:inline" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="styledInline">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="codeInline">
+    <xs:simpleContent>
+      <xs:extension base="xs:string"/>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="reviewMarkInline">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer">
+        <xs:attribute name="style" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="red"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="linkInline">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer">
+        <xs:attribute name="target" type="xs:string" use="required"/>
+        <xs:attribute name="title" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="imageInline">
+    <xs:attribute name="assetId" type="c:stableId" use="required"/>
+    <xs:attribute name="alt" type="xs:string" use="required"/>
+    <xs:attribute name="title" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="citationInline">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer">
+        <xs:attribute name="citationId" type="c:stableId" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="noteInline">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="inline">
+    <xs:choice>
+      <xs:element name="text" type="xs:string"/>
+      <xs:element name="emphasis" type="c:styledInline"/>
+      <xs:element name="strong" type="c:styledInline"/>
+      <xs:element name="strikeout" type="c:styledInline"/>
+      <xs:element name="superscript" type="c:styledInline"/>
+      <xs:element name="subscript" type="c:styledInline"/>
+      <xs:element name="definedTerm" type="c:styledInline"/>
+      <xs:element name="quotation" type="c:styledInline"/>
+      <xs:element name="reviewMark" type="c:reviewMarkInline"/>
+      <xs:element name="code" type="c:codeInline"/>
+      <xs:element name="math" type="c:codeInline"/>
+      <xs:element name="link" type="c:linkInline"/>
+      <xs:element name="image" type="c:imageInline"/>
+      <xs:element name="citation" type="c:citationInline"/>
+      <xs:element name="note" type="c:noteInline"/>
+      <xs:element name="space"/>
+      <xs:element name="softBreak"/>
+      <xs:element name="lineBreak"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="fragmentInlineBlock">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer">
+        <xs:attribute ref="xml:id" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="headingBlock">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer">
+        <xs:attribute ref="xml:id" use="required"/>
+        <xs:attribute name="level" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:positiveInteger">
+              <xs:minInclusive value="1"/>
+              <xs:maxInclusive value="6"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="codeBlock">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xml:id" use="required"/>
+        <xs:attribute name="language" type="xs:NCName"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="quotationBlock">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="listItem">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="listBlock">
+    <xs:sequence>
+      <xs:element name="item" type="c:listItem" minOccurs="1" maxOccurs="10000"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="ordered" type="xs:boolean" use="required"/>
+    <xs:attribute name="start" type="xs:positiveInteger"/>
+    <xs:attribute name="delimiter">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="period"/>
+          <xs:enumeration value="one-paren"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="tableCell">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="alignment" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="default"/>
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="right"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="tableRow">
+    <xs:sequence>
+      <xs:element name="cell" type="c:tableCell" minOccurs="1" maxOccurs="256"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="tableSection">
+    <xs:sequence>
+      <xs:element name="row" type="c:tableRow" minOccurs="1" maxOccurs="10000"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tableBlock">
+    <xs:sequence>
+      <xs:element name="caption" type="c:inlineContainer" minOccurs="0"/>
+      <xs:element name="head" type="c:tableSection"/>
+      <xs:element name="body" type="c:tableSection" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="limitation">
+    <xs:complexContent>
+      <xs:extension base="c:inlineContainer">
+        <xs:attribute ref="xml:id" use="required"/>
+        <xs:attribute name="limitationId" type="c:stableId" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="claimBlock">
+    <xs:sequence>
+      <xs:element name="dependency" type="c:stableId" minOccurs="0" maxOccurs="32"/>
+      <xs:element name="preamble" type="c:inlineContainer"/>
+      <xs:element name="limitation" type="c:limitation" minOccurs="1" maxOccurs="256"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="claimId" type="c:stableId" use="required"/>
+    <xs:attribute name="number" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="independent"/>
+          <xs:enumeration value="dependent"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="advisoryBlock">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="status" type="c:stableId"/>
+    <xs:attribute name="owner" type="c:nonBlank"/>
+  </xs:complexType>
+  <xs:complexType name="figureBlock">
+    <xs:sequence>
+      <xs:element name="caption" type="c:inlineContainer" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="assetId" type="c:stableId" use="required"/>
+    <xs:attribute name="alt" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="divisionBlock">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="role" type="c:stableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="separatorBlock">
+    <xs:attribute ref="xml:id" use="required"/>
+  </xs:complexType>
+  <xs:group name="block">
+    <xs:choice>
+      <xs:element name="heading" type="c:headingBlock"/>
+      <xs:element name="paragraph" type="c:fragmentInlineBlock"/>
+      <xs:element name="plain" type="c:fragmentInlineBlock"/>
+      <xs:element name="codeBlock" type="c:codeBlock"/>
+      <xs:element name="blockQuotation" type="c:quotationBlock"/>
+      <xs:element name="list" type="c:listBlock"/>
+      <xs:element name="table" type="c:tableBlock"/>
+      <xs:element name="claim" type="c:claimBlock"/>
+      <xs:element name="noteBlock" type="c:advisoryBlock"/>
+      <xs:element name="caution" type="c:advisoryBlock"/>
+      <xs:element name="action" type="c:advisoryBlock"/>
+      <xs:element name="figure" type="c:figureBlock"/>
+      <xs:element name="division" type="c:divisionBlock"/>
+      <xs:element name="separator" type="c:separatorBlock"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="documentIdentity">
+    <xs:sequence>
+      <xs:element name="title" type="c:nonBlank"/>
+    </xs:sequence>
+    <xs:attribute name="documentId" type="c:stableId" use="required"/>
+    <xs:attribute name="artifactFamily" type="c:stableId" use="required"/>
+    <xs:attribute name="jurisdiction" type="c:stableId" use="required"/>
+    <xs:attribute name="scope" type="c:stableId" use="required"/>
+    <xs:attribute name="status" type="c:stableId" use="required"/>
+    <xs:attribute name="language" type="xs:language" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="sourceBinding">
+    <xs:attribute name="path" type="c:repoPath" use="required"/>
+    <xs:attribute name="rawDigest" type="c:rawDigest" use="required"/>
+    <xs:attribute name="size" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="role" type="c:stableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="convenienceBinding">
+    <xs:complexContent>
+      <xs:extension base="c:sourceBinding">
+        <xs:attribute name="nonAuthoritative" type="xs:boolean" use="required" fixed="true"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="pdfOrigin">
+    <xs:sequence>
+      <xs:element name="storedSource" type="c:sourceBinding"/>
+      <xs:element name="convenienceDerivative" type="c:convenienceBinding"
+                  minOccurs="0" maxOccurs="8"/>
+    </xs:sequence>
+    <xs:attribute name="officialCopyStatus" type="c:stableId" use="required"/>
+    <xs:attribute name="extractionMethod" type="c:stableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="authoredOrigin">
+    <xs:attribute name="responsibleOwner" type="c:nonBlank" use="required"/>
+    <xs:attribute name="reviewScope" type="c:stableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="origin">
+    <xs:choice>
+      <xs:element name="pdfDerivative" type="c:pdfOrigin"/>
+      <xs:element name="authoredSource" type="c:authoredOrigin"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="dependency">
+    <xs:attribute name="kind" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="document"/>
+          <xs:enumeration value="relation-set"/>
+          <xs:enumeration value="asset"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="subjectId" type="c:stableId" use="required"/>
+    <xs:attribute name="digest" type="c:dependencyDigest" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="dependencies">
+    <xs:sequence>
+      <xs:element name="dependency" type="c:dependency" minOccurs="0" maxOccurs="256"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="fragmentEvidence">
+    <xs:attribute name="fragmentId" type="c:stableId" use="required"/>
+    <xs:attribute name="sourcePath" type="c:repoPath" use="required"/>
+    <xs:attribute name="page" type="xs:positiveInteger" use="required"/>
+    <xs:attribute name="region" type="xs:string"/>
+    <xs:attribute name="uncertainty" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="provenance">
+    <xs:sequence>
+      <xs:element name="fragmentEvidence" type="c:fragmentEvidence"
+                  minOccurs="0" maxOccurs="100000"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="content">
+    <xs:sequence>
+      <xs:group ref="c:block" minOccurs="1" maxOccurs="100000"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="projectionPolicy">
+    <xs:attribute name="profile" type="c:stableId" use="required"/>
+    <xs:attribute name="noticeVersion" type="c:stableId" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="sourceDocument">
+    <xs:sequence>
+      <xs:element name="documentIdentity" type="c:documentIdentity"/>
+      <xs:element name="origin" type="c:origin"/>
+      <xs:element name="dependencies" type="c:dependencies"/>
+      <xs:element name="provenance" type="c:provenance"/>
+      <xs:element name="content" type="c:content"/>
+      <xs:element name="projectionPolicy" type="c:projectionPolicy"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:id" use="required"/>
+    <xs:attribute name="schemaProfile" type="c:stableId" use="required"/>
+    <xs:attribute name="schemaVersion" type="xs:string" use="required" fixed="1"/>
+  </xs:complexType>
+  <xs:element name="source" type="c:sourceDocument"/>
+</xs:schema>

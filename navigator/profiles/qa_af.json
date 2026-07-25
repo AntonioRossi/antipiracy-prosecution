@@ -8,18 +8,18 @@
     "AF": "AF-2026-07-22-v6",
     "NA": "NA-2026-07-22-v4"
    },
-   "primary": "US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md",
+   "primary": "US/allowance-first/cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md",
    "files": {
-    "US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md": "sha256/c1:7163948c925a6f34ce80a06426213d3479c5f64474a240ba3183f157cbfba6f3"
+    "US/allowance-first/cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md": "sha256/c1:d7a60ce6389b2bdffa6542353d478b27cf06f153f9cc5c8fe881e8bba70ae1d2"
    }
   },
   "af-priority-map": {
    "role": "qa-source",
    "visibility": "internal",
    "versionBindings": {"AF": "AF-2026-07-22-v6"},
-   "primary": "US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md",
+   "primary": "US/allowance-first/parent/support/AA11393US-AF-priority-support-map_DRAFT.md",
    "files": {
-    "US/allowance-first/AA11393US-AF-priority-support-map_DRAFT.md": "sha256/c1:8d3d78b55ecb8898e3c4b75610aa22b8d187c07cfb5098c2bdc3f4aefe1bf025"
+    "US/allowance-first/parent/support/AA11393US-AF-priority-support-map_DRAFT.md": "sha256/c1:33f6ca47383d0c71865896d49361fa30158f96a4f581ab9d631a5b5345e6cfea"
    }
   }
  }

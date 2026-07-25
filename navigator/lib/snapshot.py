@@ -16,6 +16,40 @@ class SnapshotError(RuntimeError):
     pass
 
 
+def environment_path_census(environment):
+    """Digest the exact project-interpreter tree outside repository snapshots.
+
+    Repository snapshots intentionally exclude ``.venv``.  The outer current
+    gate therefore brackets its already policy-verified interpreter with this
+    independent, symlink-rejecting file census.
+    """
+    environment = os.path.abspath(environment)
+    if not os.path.isdir(environment) or os.path.islink(environment):
+        raise SnapshotError("environment census root is absent or a symlink")
+    entries = []
+    for directory, dirnames, filenames in os.walk(
+            environment, followlinks=False):
+        dirnames[:] = sorted(
+            name for name in dirnames if name != "__pycache__")
+        for name in sorted(filenames):
+            path = os.path.join(directory, name)
+            relative = os.path.relpath(path, environment).replace(os.sep, "/")
+            if os.path.islink(path):
+                entries.append({"path": relative,
+                                "symlink": os.readlink(path)})
+            elif os.path.isfile(path) and \
+                    "__pycache__" not in path.split(os.sep):
+                with open(path, "rb") as handle:
+                    data = handle.read()
+                entries.append({"path": relative,
+                                "rawDigest": canon.raw_bytes_digest(data),
+                                "size": len(data)})
+            else:
+                raise SnapshotError(
+                    "environment contains a non-regular entry")
+    return canon.bytes_digest(canon.canonical_json(entries))
+
+
 def _file_fingerprint(value):
     """Return identity and mutation-sensitive metadata for one file read."""
     return (

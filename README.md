@@ -16,10 +16,10 @@ This corpus supports the prosecution of the invention with one organizing discip
 |---|---|
 | [`US/`](US/) | US claiming strategies: `normal-allowance/` (NA baseline), `allowance-first/` (AF alternative plus AF-CONT continuation candidate), `common/` shared filing and continuation controls, `prior-art/` canonical art store |
 | [`PCT/`](PCT/) | PCT filing and international-search record and publication provenance |
-| [`PPA2/`](PPA2/) | Provisional 63/557,868 filing record and assignment papers |
-| [`ITA/`](ITA/) | Related Italian filing record |
-| [`office action response/`](office%20action%20response/) | Prepared PCT office-action response drafts |
-| [`navigator/`](navigator/) | Edition-blind HTML5 navigator source, closed schemas, reviewed NA/AF mappings, verification records, tests, runbook, and committed current artifacts |
+| [`PPA2/`](PPA2/as%20filed%2063%20557868.pdf) | Provisional 63/557,868 filing record and assignment papers |
+| [`ITA/`](ITA/ITA%20depositi%20ufficiali/AA11393US-IT_Domanda%20di%20brevetto%20n.%20102025000003210.pdf) | Related Italian filing record |
+| [`office action response/`](office%20action%20response/PF-MA-AA11393US-PCT%20prepared%20response%20tightened.md) | Prepared PCT office-action response drafts |
+| [`navigator/`](navigator/RUNBOOK-content-sync-and-regeneration.md) | Edition-blind HTML5 navigator source, closed schemas, reviewed NA/AF mappings, verification records, tests, runbook, and committed current artifacts |
 | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) | Normative navigator contract; controls over the non-normative runbook |
 
 ## Artifact taxonomy
@@ -28,16 +28,16 @@ Two cross-cutting classifiers apply to every artifact: the strategy ID (`NA`, `A
 
 | Artifact type | Naming pattern | Current function |
 |---|---|---|
-| Claim set | `…-<strategy>-US_claim-set_DRAFT.md` | Versioned candidate claims for one strategy; the version header controls all companions |
-| Priority-support map | `…-priority-support-map_DRAFT.md` | Per-claim PCT/provisional written-description and enablement conclusions with Mode A/B/C gating |
-| Prior-art comparison matrix | `…-prior-art-comparison-matrix_DRAFT.md` | Art scoring valid only for the claim-set version named in its header |
-| Claim-document mapping matrix | `…-claim-document-mapping-matrix_DRAFT.md` | Claim-to-disclosure/source mapping for the same version |
+| Claim set | `…-<strategy>-US_claim-set_DRAFT.source.xml` plus generated `.md`/`.coverage.json` | Versioned candidate claims for one strategy; the version header controls all companions |
+| Priority-support map | `…-priority-support-map_DRAFT.relations.xml` plus generated `.md`/`.coverage.json` | Per-claim PCT/provisional written-description and enablement conclusions with Mode A/B/C gating |
+| Prior-art comparison matrix | `…-prior-art-comparison-matrix_DRAFT.relations.xml` plus generated `.md`/`.coverage.json` | Art scoring valid only for the claim-set version named in its header |
+| Claim-document mapping matrix | `…-claim-document-mapping-matrix_DRAFT.relations.xml` plus generated `.md`/`.coverage.json` | Claim-to-disclosure/source mapping for the same version |
 | Counsel briefing | `…-US_counsel-briefing_DRAFT.md` | Strategy evaluation and counsel decision package |
 | Memo | `…_MEMO.md` | Controlling shared instrument for continuation preservation or deferred filing/disclosure/EP work |
 | Claim crosswalk | `…-claim-crosswalk_DRAFT.md` | Inter-strategy AF/NA mapping and successor-reservation support |
 | Shared record | `US/common/…_DRAFT.md` / `…_MEMO.md` | Canonical IDS, public-comments, filing, and continuation controls; referenced, never duplicated |
 | Canonical source record | Filing PDFs in `PCT/`, `PPA2/`, `ITA/`; art PDFs in `US/prior-art/` | Authoritative evidence; never edited; art PDFs checksum-controlled |
-| Review aid | `US/prior-art/markdown/`, `US/prior-art/searchable/` | Transcription and OCR convenience copies; never authoritative over the source PDF |
+| Structured-source package | Co-located `.source.xml`, generated `.md`/`.coverage.json`, stored PDF, source manifest, and any declared convenience copy | XML is canonical content; generated Markdown is review evidence; the stored PDF controls PDF-derived fidelity |
 | Router / README | `README.md` per directory | Live index and routing for its directory |
 | Controlled vocabulary | `GLOSSARY.md` (root) | Current operative meanings of identifiers and terms, each pointing to its controlling document |
 | Navigator artifact | `navigator/dist/AA11393US-<edition>-claims-spec-navigator_<version>.html` | Deterministic current-edition counsel-review navigation aid with detached checksum and exact-side release evidence |
@@ -46,8 +46,8 @@ Two cross-cutting classifiers apply to every artifact: the strategy ID (`NA`, `A
 
 The NA and AF-CONT claim sets (and any successor claim set) are produced and maintained by the following procedure. Each step names its canonical touchpoint; shared materials are referenced, never duplicated into strategy directories.
 
-1. **Read the canonical source record.** The disclosure base is the PCT application and search record in [`PCT/`](PCT/) and the provisional record in [`PPA2/`](PPA2/). These are the only authoritative support sources.
-2. **Assemble the art corpus.** Canonical prior-art PDFs live in [`US/prior-art/`](US/prior-art/) with Markdown review transcriptions, OCR searchable copies, provenance, and the `.pipeline/` checksum manifest and converter. Never edit canonical PDFs; verify every quotation, especially OCR-derived text, against the source PDF.
+1. **Read the canonical source record.** The disclosure base is the PCT application and search record in [`PCT/`](PCT/) and the [as-filed provisional record](PPA2/as%20filed%2063%20557868.pdf). These are the only authoritative support sources.
+2. **Use the registered art packages.** Each [`US/prior-art/`](US/prior-art/) ID has one co-located XML source, generated Markdown and coverage, canonical stored PDF, source manifest, and any declared non-authoritative convenience copy. Never edit canonical PDFs; verify every quotation, especially OCR-derived text, against the stored PDF.
 3. **Select the claim strategy.** [`US/README.md`](US/README.md) defines the strategy IDs (NA, AF, AF-CONT), current claim-set versions, and status controls. Use `NA claim N`, `AF claim N`, and `AF-CONT claim N` outside claim text; an unqualified claim number must not transfer a conclusion between strategies.
 4. **Draft the claims.** Actor-focused independent claims, singly dependent fallbacks, and no multiple-dependent claims, with current counts, dependencies, ordinary fee consequences, and the exclusions recorded in each claim set (no suspect-side physical-camera identification, no joint ordered-source-pair-plus-timing matching, without a new claim-as-a-whole support determination).
 5. **Produce the companion artifacts.** Each claim set is valid only with its versioned companions: priority-support map (separate PCT and provisional written-description/enablement conclusions, Mode A/B/C gating), prior-art comparison matrix, claim-document mapping matrix, and counsel briefing; AF-CONT is additionally mapped by the AF claim crosswalk. A matrix is valid only for the claim-set version named in its header.
@@ -73,9 +73,7 @@ whenever a navigator input changes. The canonical current-state and document-int
 uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
-One command proves the complete live navigator closure inside immutable repository snapshots — pin plans, candidate and sealed bytes, bundle and authorization chains, record and distribution inventories, `git diff --check` whitespace — runs the full discovered test suite in a materialized sandbox, renders every changed Markdown file through pandoc, verifies the `US/prior-art` source checksums, and certifies only the final unchanged snapshot. The runbook's [current-state and cutover gate](navigator/RUNBOOK-content-sync-and-regeneration.md#7-current-state-and-cutover-gate) section places this gate in the full content-integration workflow.
-
-Regenerate prior-art transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
+One command proves the complete structured-source and navigator closure inside immutable repository snapshots — XML identities, deterministic review views, exact human approvals and export, pin plans, candidate and sealed bytes, bundle and authorization chains, record and distribution inventories, `git diff --check` whitespace — runs both registered test families in a materialized sandbox, renders every current changed Markdown file through pandoc, verifies all co-located `US/prior-art` source manifests, and certifies only the final unchanged snapshot. The runbook's [current-state and cutover gate](navigator/RUNBOOK-content-sync-and-regeneration.md#7-current-state-and-cutover-gate) section places this gate in the full content-integration workflow.
 
 ## Status discipline
 

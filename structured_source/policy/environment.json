@@ -1,0 +1,15 @@
+{
+  "environmentVersion": "1",
+  "uvVersion": "0.11.32",
+  "pandocVersion": "3.5",
+  "pandocApiVersion": [1, 23, 1],
+  "pythonVersion": "3.13.12",
+  "projectPath": "pyproject.toml",
+  "lockPath": "uv.lock",
+  "pythonVersionPath": ".python-version",
+  "environmentPath": ".venv",
+  "distributions": [
+    {"name": "elementpath", "version": "5.1.3"},
+    {"name": "xmlschema", "version": "4.3.2"}
+  ]
+}

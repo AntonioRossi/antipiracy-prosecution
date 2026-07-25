@@ -10,7 +10,7 @@
 |---|---|---|
 | **NA** | Normal-allowance strategy: balanced actor-split coverage; current substantive baseline | [`US/README.md`](US/README.md) |
 | **AF** | Allowance-first strategy: integrated chain plus monitor-side method, with broader scope identified for a controlled successor | [`US/README.md`](US/README.md) |
-| **AF-CONT** | AF actor-focused continuation claim candidate; unfiled and unpreserved; not the universal continuation procedure | [`US/allowance-first/AA11393US-AF-CONT-US_claim-set_DRAFT.md`](US/allowance-first/AA11393US-AF-CONT-US_claim-set_DRAFT.md) |
+| **AF-CONT** | AF actor-focused continuation claim candidate; unfiled and unpreserved; not the universal continuation procedure | [`US/allowance-first/continuation-candidate/claims/AA11393US-AF-CONT-US_claim-set_DRAFT.md`](US/allowance-first/continuation-candidate/claims/AA11393US-AF-CONT-US_claim-set_DRAFT.md) |
 | Claim-set version | Version header (`NA-2026-07-22-v4`, `AF-2026-07-22-v6`, `AF-CONT-2026-07-22-v2`) locking a claim set to its maps and matrices | [`US/README.md`](US/README.md) |
 
 ## Support-posture codes
@@ -31,7 +31,7 @@ Counsel's per-claim support/priority outcome. "Support" requires written descrip
 
 | Mode | Required conclusion | Consequence | Controlling document |
 |---|---|---|---|
-| **A — PCT and provisional support** | Both filings satisfy written description and enablement for the claim as a whole | Claim may rely on 26.02.2024; B10's 02.12.2024 publication is not prior art merely by that date | [`US/common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](US/common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md), DW-05A outcome record |
+| **A — PCT and provisional support** | Both filings satisfy written description and enablement for the claim as a whole | Claim may rely on 26.02.2024; B10's 02.12.2024 publication is not prior art merely by that date | [`US/common/filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](US/common/filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md), DW-05A outcome record |
 | **B — PCT support only** | PCT supports the claim as a whole; the provisional fails at least one requirement | Effective filing date no earlier than 19.02.2025; B10 becomes potentially citable § 102(a)(1) art; reassess all intervening art | same |
 | **C — PCT support fails** | PCT fails written description, enablement, or both for the claim as a whole | Do not rely on the claim as drafted; select a supported contingency, amend without new matter, or record a later-date strategy | same |
 
@@ -52,30 +52,30 @@ Open pre-filing and post-engagement work items with owners, triggers, and requir
 | **DW-06** | B6 English-family handling | **DW-12** | Circulation, confidentiality, retention, and preservation controls |
 | **DW-07** | EP 2 811 416 A1 family and EPO file history | **DW-08** | Source verification, nonpatent retrieval, pair selection, materiality |
 
-Controlling document for the full register: [`US/common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](US/common/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md).
+Controlling document for the full register: [`US/common/filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md`](US/common/filing-controls/AA11393US-deferred-filing-disclosure-and-EP-work_MEMO.md).
 
 ## Continuation-preservation controls (CONT-\*)
 
-Strategy-neutral controls applied whether the ordinary § 371 parent uses `NA`, `AF`, or an approved hybrid. **CONT-01** through **CONT-06** govern the controlled parent and benefit chain, owner and docket, filed-versus-reserved scope, successor vehicle and authorization, filing and verification, and generation outcome. Current status: **NOT YET PRESERVED**. Controlling document: [`US/common/AA11393US-continuation-preservation_MEMO.md`](US/common/AA11393US-continuation-preservation_MEMO.md).
+Strategy-neutral controls applied whether the ordinary § 371 parent uses `NA`, `AF`, or an approved hybrid. **CONT-01** through **CONT-06** govern the controlled parent and benefit chain, owner and docket, filed-versus-reserved scope, successor vehicle and authorization, filing and verification, and generation outcome. Current status: **NOT YET PRESERVED**. Controlling document: [`US/common/continuation-controls/AA11393US-continuation-preservation_MEMO.md`](US/common/continuation-controls/AA11393US-continuation-preservation_MEMO.md).
 
 ## Prior-art inventory identifiers
 
 | Identifier family | Current meaning | Controlling document |
 |---|---|---|
-| **A1 / D1** | US 2021/0352381 A1, ISR-cited | [`US/common/AA11393US-US_IDS-reference-list_DRAFT.md`](US/common/AA11393US-US_IDS-reference-list_DRAFT.md); [`US/prior-art/README.md`](US/prior-art/README.md) |
+| **A1 / D1** | US 2021/0352381 A1, ISR-cited | [`US/common/ids/AA11393US-US_IDS-reference-list_DRAFT.md`](US/common/ids/AA11393US-US_IDS-reference-list_DRAFT.md); [`US/prior-art/README.md`](US/prior-art/README.md) |
 | **B1 / D2** | CN 117278762 A, ISR-cited | same |
 | **A2–A21** | US patent documents in the working inventory | same |
 | **B2–B10** | Foreign patent documents in the working inventory | same |
 | **C-series** | Nonpatent literature (C3 author-hosted Tardos extended version; C7 Lin 2008 outstanding; C8 ETSI TS 104 002 DASH-IF A/B watermarking) | same |
 | **B10** | KR 2024-0168593 A, published 02.12.2024; the intervening-art pivot for Mode B analysis | same |
 
-Canonical PDFs in [`US/prior-art/`](US/prior-art/) are checksum-controlled and never edited; `markdown/` and `searchable/` copies are nonauthoritative review aids.
+Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are manifest-controlled and never edited; generated Markdown is review evidence and every declared convenience derivative is nonauthoritative.
 
 ## Filing and record terms
 
 | Term | Current meaning |
 |---|---|
-| **Provisional / PPA2** | US 63/557,868, filed 26.02.2024; record in [`PPA2/`](PPA2/) |
+| **Provisional / PPA2** | US 63/557,868, filed 26.02.2024; [as-filed record](PPA2/as%20filed%2063%20557868.pdf) |
 | **PCT** | PCT/IB2025/051755, filed 19.02.2025, published as WO 2025/181623 A1 on 04.09.2025, with a priority claim to US 63/557,868; record and provenance in [`PCT/`](PCT/) |
 | **ISR / Written Opinion** | International search report and the EPO's negative Written Opinion; D1/D2 derive from the ISR |
 | **§ 371 parent** | Current US route: ordinary national-stage entry of PCT/IB2025/051755; counsel confirmation and filing evidence remain required under DW-01 |
@@ -97,7 +97,7 @@ Canonical PDFs in [`US/prior-art/`](US/prior-art/) are checksum-controlled and n
 | **Reconstructed manifest** | Manifest built by the detector from plural camera-cut time codes identified in a suspected unauthorized distribution | The claim sets (detection independents) |
 | **"Equal" manifest** | The lookup key matching a delivered manifest to a reconstructed one; counsel must select one supported construction (byte identity, equivalent chunk selections, or equivalent represented timing choices) and account for dynamic URLs, tokens, and metadata | NA claim set § 5 and AF-CONT claim set § 3, reconstruction and equality gates; AF priority-support map |
 | **Scene-change detection / perceptual hash / fuzzy matching** | The disclosed cut-time identification implementations: frame comparison by perceptual hashes, sliding-window fuzzy matching over frame groups | The claim sets (NA claims 17–18, 26; AF-CONT claims 12–13, 15–16) |
-| **Causal nexus** | The claimed relationship tying a delivered mate-timing combination to the reconstructed same detected combination (AF claims 20–22, AF-CONT claims 17–19) | [`US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md`](US/allowance-first/AA11393US-AF-claim-crosswalk_DRAFT.md) |
+| **Causal nexus** | The claimed relationship tying a delivered mate-timing combination to the reconstructed same detected combination (AF claims 20–22, AF-CONT claims 17–19) | [`US/allowance-first/cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md`](US/allowance-first/cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md) |
 
 ## Navigator pipeline terms
 

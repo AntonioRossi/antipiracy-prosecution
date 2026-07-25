@@ -5,10 +5,10 @@
    "role": "fragment-source",
    "visibility": "rendered",
    "version": "NA-2026-07-22-v4",
-   "primary": "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md",
+   "primary": "US/normal-allowance/claims/AA11393US-NA-US_claim-set_DRAFT.md",
    "profile": "navigator/profiles/seg_na-claims.json",
    "files": {
-    "US/normal-allowance/AA11393US-NA-US_claim-set_DRAFT.md": "sha256/c1:8016adc2c528bb114c24061fd928711769efff4f56fdfeb9ca9c2ebb1b5606ba"
+    "US/normal-allowance/claims/AA11393US-NA-US_claim-set_DRAFT.md": "sha256/c1:16886c0e141b3019519f3172e58c056f924a3469f6c63fdf21c366822a501d60"
    }
   }
  }

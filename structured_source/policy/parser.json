@@ -1,0 +1,31 @@
+{
+  "parserPolicyVersion": "1",
+  "xmlVersion": "1.0",
+  "encoding": "UTF-8",
+  "unicodeNormalization": "NFC",
+  "xsdVersion": "1.1",
+  "canonicalizationVersion": "xc1",
+  "digestDomainVersion": "ssp-xd1",
+  "forbiddenConstructs": [
+    "CDATA",
+    "DOCTYPE",
+    "XInclude",
+    "XLink",
+    "comments",
+    "entity-declarations",
+    "external-resources",
+    "non-predefined-entity-references",
+    "processing-instructions",
+    "raw-html",
+    "raw-markdown",
+    "recovery",
+    "xml-base"
+  ],
+  "limits": {
+    "attributesPerElement": 64,
+    "bytes": 16777216,
+    "depth": 96,
+    "nodes": 200000,
+    "textNodeCharacters": 2097152
+  }
+}

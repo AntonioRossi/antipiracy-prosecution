@@ -303,3 +303,5 @@ navigator/tmp/
 # Browser-controller accessibility snapshots are transient diagnostics, not
 # registered navigator QA evidence or release inputs.
 .playwright-mcp/
+
+/.claude/settings.local.json

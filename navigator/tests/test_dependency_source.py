@@ -35,7 +35,12 @@ class TestDependencyDocumentSource(unittest.TestCase):
         m = af_model()
         source = m.registry.primary_text(m.edition["claimCorpus"])
         old = "| 8 | Dependent | 7 | Sliding-window fuzzy matching |"
-        new = "| 8 | Dependent | 6 | Sliding-window fuzzy matching |"
+        if old not in source:
+            old = next(line for line in source.splitlines()
+                       if "> 8 |" in line and
+                       "Sliding-window fuzzy matching" in line)
+        new = (old.replace("> 7 |", "> 6 |", 1)
+               if "> 7 |" in old else old.replace("| 7 |", "| 6 |", 1))
         self.assertIn(old, source)
         drifted = claims.parse_dependency_table(source.replace(old, new, 1))
         with self.assertRaisesRegex(depgraph.DepGraphError,

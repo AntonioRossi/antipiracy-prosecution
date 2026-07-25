@@ -2,17 +2,17 @@
 
 ## Project Structure & Module Organization
 
-This repository is a patent-prosecution document corpus maintained under the maximum-honest-defensibility discipline stated in the root `README.md` under "Purpose"; read every rule below against that purpose. `US/normal-allowance/` and `US/allowance-first/` contain the two claim strategies. Shared IDS, filing-control, and public-comment materials belong in `US/common/`; do not fork them into strategy directories. `US/prior-art/` stores canonical source PDFs, `markdown/` review transcriptions, `searchable/` OCR convenience copies, and `.pipeline/` conversion utilities. `PCT/`, `PPA2/`, and `ITA/` hold filing and prosecution records. `navigator/` contains the edition-blind HTML5 navigator pipeline, closed schemas, reviewed mappings, verification records, tests, and committed current build products. Keep response drafts in their existing response directory.
+This repository is a patent-prosecution document corpus maintained under the maximum-honest-defensibility discipline stated in the root `README.md` under "Purpose"; read every rule below against that purpose. `US/normal-allowance/` and `US/allowance-first/` contain the two claim strategies. Shared IDS, filing-control, and public-comment materials belong in `US/common/`; do not fork them into strategy directories. Each `US/prior-art/<ID>/` package co-locates one canonical XML source, generated Markdown and coverage, its manifest-controlled source PDF, and any declared non-authoritative convenience derivative. `PCT/`, `PPA2/`, and `ITA/` hold filing and prosecution records. `structured_source/` contains the closed XML schemas, profiles, registries, approvals, exporter, and recurring verification implementation. `navigator/` contains the edition-blind HTML5 navigator pipeline, closed schemas, reviewed mappings, verification records, tests, and committed current build products. Keep response drafts in their existing response directory.
 
 ## Build, Test, and Development Commands
 
 Use the canonical current-state and document-integrity gate:
 
 ```sh
-python3 -m navigator validate-current
+uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
-One command covers snapshot-bracketed verification of the immutable live navigator state (pin plans, deterministic checked-in candidates, bundle and authorization chains, exact record and distribution inventories), the full discovered test suite in a materialized sandbox, `git diff --check` whitespace, changed-Markdown pandoc rendering, and `US/prior-art` source checksums; it certifies only the final unchanged repository snapshot. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration. Regenerate transcriptions only deliberately: `cd US/prior-art && python3 .pipeline/convert.py A1`.
+One command covers snapshot-bracketed verification of the immutable structured-source and navigator state (XML identity, deterministic views, exact approvals/export, pin plans, deterministic checked-in candidates, bundle and authorization chains, exact record and distribution inventories), both registered test families in a materialized sandbox, `git diff --check` whitespace, current changed-Markdown rendering, and co-located `US/prior-art` source manifests; it certifies only the final unchanged repository snapshot. Follow `navigator/RUNBOOK-content-sync-and-regeneration.md` for content changes and release regeneration.
 
 ## Documentation Style & Naming Conventions
 

@@ -1,0 +1,11 @@
+{
+  "profileVersion": "1",
+  "profileId": "gfm-v1",
+  "lineEndings": "LF",
+  "finalNewline": true,
+  "stableAnchorPrefix": "ssp-",
+  "tableStyle": "pipe",
+  "unorderedListMarker": "-",
+  "generatedNoticeVersion": "generated-v1",
+  "externalSchemes": ["https", "http", "mailto"]
+}
