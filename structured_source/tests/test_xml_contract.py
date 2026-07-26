@@ -168,6 +168,13 @@ class CanonicalContract(unittest.TestCase):
         with self.assertRaises(TypeError):
             loaded.xml_profiles["relationSets"]["support-map-v1"][
                 "directions"][0] = "changed"
+        self.assertTrue(all(
+            isinstance(pair, tuple) and len(pair) == 2 and
+            all(isinstance(data, bytes) for data in pair)
+            for pair in loaded.schemas.values()))
+        self.assertFalse(hasattr(loaded, "__dict__"))
+        with self.assertRaises(TypeError):
+            loaded.schemas["content-document"][0] = b"changed"
         parser.parse_artifact(
             CONTENT, "content-document", controls=loaded)
 

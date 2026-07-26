@@ -188,12 +188,14 @@ class RegistryContract(unittest.TestCase):
                 handle.write(b"# Ordinary documentation\n")
             context = VerificationContext(root, registry=registry_fixture())
             discovered = context._package_artifact_paths({
+                "content/evidence.coverage.json",
                 "content/orphan.bin",
                 "router/README.md",
                 "router/orphan.source.xml",
             })
             self.assertEqual(discovered, {
-                "content/orphan.bin", "router/orphan.source.xml"})
+                "content/evidence.coverage.json", "content/orphan.bin",
+                "router/orphan.source.xml"})
 
     def test_regenerate_guards_every_read_authority_path(self):
         with tempfile.TemporaryDirectory() as root:

@@ -1081,6 +1081,11 @@ class VerificationContext:
 def run_acceptance(root=ROOT, *, byte_source=None, repository_snapshot=None,
                    registry=None, markdown_adapter=None):
     """Return ephemeral machine conformance for one supplied snapshot."""
+    snapshot_digest = getattr(repository_snapshot, "digest", None)
+    if not isinstance(snapshot_digest, str) or not snapshot_digest or \
+            not callable(byte_source):
+        raise StructuredSourceError(
+            "structured-source acceptance requires retained snapshot bytes")
     context = VerificationContext(
         root, registry=registry, byte_source=byte_source,
         repository_snapshot=repository_snapshot,
@@ -1089,12 +1094,14 @@ def run_acceptance(root=ROOT, *, byte_source=None, repository_snapshot=None,
     if not isinstance(summary, dict) or \
             summary.get("status") != "conformant" or \
             summary.get("criteria") != len(CRITERIA) or \
-            summary.get("globalPasses") != 1:
+            summary.get("globalPasses") != 1 or \
+            type(summary.get("consumerEdges")) is not int or \
+            summary.get("consumerEdges") != summary.get("consumerHandoffs"):
         raise StructuredSourceError(
             "structured-source verification did not prove the current criteria")
     return {
         "verificationResultVersion": "3",
-        "repositorySnapshot": getattr(repository_snapshot, "digest", None),
+        "repositorySnapshot": snapshot_digest,
         "status": "conformant",
         "domains": [
             {

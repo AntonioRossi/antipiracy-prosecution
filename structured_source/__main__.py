@@ -86,7 +86,15 @@ def main(argv=None):
     elif args.command == "regenerate-controls":
         result = _regenerate_controls()
     elif args.command == "verify-current":
-        result = run_acceptance(ROOT)
+        from navigator.lib.snapshot import RepositorySnapshot, SnapshotError
+        try:
+            snapshot = RepositorySnapshot.capture(ROOT, retain_bytes=True)
+        except SnapshotError as exc:
+            raise StructuredSourceError(
+                "structured-source snapshot capture failed") from exc
+        result = run_acceptance(
+            ROOT, byte_source=snapshot.byte_source(),
+            repository_snapshot=snapshot)
     else:  # The exact parser surface makes this unreachable.
         raise StructuredSourceError("unsupported command")
     sys.stdout.buffer.write(canonical_json(result))

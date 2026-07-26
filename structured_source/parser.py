@@ -105,14 +105,14 @@ class ParsedArtifact:
     typed_item_records: dict[str, dict]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class ParserControls:
     """Validated policy, profiles, and schemas from one byte source."""
 
     limits: Mapping[str, int]
     projection_profile: Mapping
     xml_profiles: Mapping
-    schemas: Mapping
+    schemas: Mapping[str, tuple[bytes, bytes]]
 
 
 def _deep_freeze(value):
@@ -827,8 +827,14 @@ def load_parser_controls(read_bytes) -> ParserControls:
         schema_data["authored-document"], projection)
     _validate_relation_xsd_profile(
         schema_data["relation-set"], xml_profiles["relationSets"])
+    # Compile every retained pair now so malformed controls fail at load time,
+    # but do not expose the mutable xmlschema validator instances as handed
+    # parser controls.  Production parses construct their validator from these
+    # exact immutable bytes.
+    for kind, data in schema_data.items():
+        _schema_from_bytes(kind, data, xml_schema_data)
     schemas = {
-        kind: _schema_from_bytes(kind, data, xml_schema_data)
+        kind: (data, xml_schema_data)
         for kind, data in schema_data.items()}
     return ParserControls(
         limits=MappingProxyType(dict(policy["limits"])),
@@ -851,9 +857,10 @@ def _default_parser_controls() -> ParserControls:
 
 def _schema(kind: str) -> xmlschema.XMLSchema11:
     try:
-        return _default_parser_controls().schemas[kind]
+        schema_data, xml_schema_data = _default_parser_controls().schemas[kind]
     except KeyError as exc:
         raise ParseError("unsupported XML artifact kind %s" % kind) from exc
+    return _schema_from_bytes(kind, schema_data, xml_schema_data)
 
 
 def _active_limits(limits=None):
@@ -1041,6 +1048,10 @@ def _resource_and_profile_checks(
         content = root.find(namespace + "content")
         if content is None:
             raise ParseError("content-document item surface is absent")
+        root_id = root.get(XML_ID)
+        if root_id is None or _STABLE_ITEM_ID.fullmatch(root_id) is None:
+            raise ParseError(
+                "content document item identity is outside the stable-ID profile")
         declared_metadata = definition["itemMetadataFields"]
         item_ids = []
         for node in content.iter():
@@ -1270,9 +1281,13 @@ def parse_artifact(
         projection_profile=active_controls.projection_profile,
         limits=limits)
     try:
-        schema = active_controls.schemas[kind]
+        schema_pair = active_controls.schemas[kind]
     except KeyError as exc:
         raise ParseError("unsupported XML artifact kind %s" % kind) from exc
+    if not isinstance(schema_pair, tuple) or len(schema_pair) != 2 or \
+            not all(isinstance(item, bytes) for item in schema_pair):
+        raise ParseError("retained XML schema control is malformed")
+    schema = _schema_from_bytes(kind, *schema_pair)
     resource = XMLResource(
         root, base_url=SCHEMA_DIRECTORY, allow="sandbox", defuse="always")
     # ``lax`` here is xmlschema's error-collection mode, not permissive

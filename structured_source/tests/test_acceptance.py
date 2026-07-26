@@ -105,11 +105,15 @@ class AcceptanceContract(unittest.TestCase):
                 "structured_source.verify.VerificationContext") as context_type:
             context = context_type.return_value
             context.verify_all.return_value = {
+                "consumerEdges": 4,
+                "consumerHandoffs": 4,
                 "criteria": len(acceptance.CRITERIA),
                 "globalPasses": 1,
                 "status": "conformant",
             }
-            result = run_acceptance(ROOT, repository_snapshot=snapshot)
+            result = run_acceptance(
+                ROOT, byte_source=lambda unused_path: b"retained",
+                repository_snapshot=snapshot)
         context.verify_all.assert_called_once_with()
         self.assertEqual(result["repositorySnapshot"], "sha256:test")
         self.assertEqual(result["results"], [
@@ -123,6 +127,26 @@ class AcceptanceContract(unittest.TestCase):
                             for entry in result["domains"]))
         self.assertTrue(all(
             set(entry) == {"id", "status"} for entry in result["results"]))
+
+    def test_run_acceptance_requires_snapshot_bytes_and_exact_handoffs(self):
+        with self.assertRaisesRegex(
+                StructuredSourceError, "retained snapshot"):
+            run_acceptance(ROOT)
+        snapshot = type("Snapshot", (), {"digest": "sha256:test"})()
+        with mock.patch(
+                "structured_source.verify.VerificationContext") as context_type:
+            context_type.return_value.verify_all.return_value = {
+                "consumerEdges": 1,
+                "consumerHandoffs": 0,
+                "criteria": len(acceptance.CRITERIA),
+                "globalPasses": 1,
+                "status": "conformant",
+            }
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "current criteria"):
+                run_acceptance(
+                    ROOT, byte_source=lambda unused_path: b"retained",
+                    repository_snapshot=snapshot)
 
     def test_real_global_pass_checks_each_package_once(self):
         context = VerificationContext(ROOT, registry=registry_fixture())

@@ -228,6 +228,13 @@ class PDFItemSurface(unittest.TestCase):
                     StructuredSourceError):
                 parser.parse_artifact(xml, "content-document")
 
+    def test_document_root_identity_uses_the_stable_id_profile(self):
+        malformed = fixture_xml().replace(
+            b'xml:id="pdf-doc-root"', b'xml:id="Page.1"')
+        with self.assertRaisesRegex(
+                StructuredSourceError, "document item identity"):
+            parser.parse_artifact(malformed, "content-document")
+
     def test_missing_and_duplicate_item_provenance_fail_closed(self):
         evidence = (
             b'    <fragmentEvidence fragmentId="frag-heading" page="1" '
@@ -260,8 +267,11 @@ class PDFItemSurface(unittest.TestCase):
 
 
 class PDFEvidenceAndCoverage(unittest.TestCase):
-    def test_manifest_checksum_size_role_copy_method_and_ocr_authority_fail(self):
+    def test_manifest_binding_asset_derivative_and_ocr_authority_fail(self):
         changes = {
+            "manifest": lambda value: value.pop("documentId"),
+            "source-path": lambda value: value["storedSource"].update(
+                path="content/other.pdf"),
             "checksum": lambda value: value["storedSource"].update(
                 rawDigest="sha256/raw:" + "0" * 64),
             "size": lambda value: value["storedSource"].update(size=1),
@@ -269,6 +279,10 @@ class PDFEvidenceAndCoverage(unittest.TestCase):
             "copy": lambda value: value["storedSource"].update(
                 officialCopyStatus="approved"),
             "method": lambda value: value.update(extractionMethod="automatic-ocr"),
+            "asset": lambda value: value["assets"].append({
+                "assetId": "undeclared-asset", "path": "content/asset.png",
+                "rawDigest": raw_digest(b"asset"), "size": 5,
+            }),
             "derivative": lambda value: value["convenienceDerivatives"].append({
                 "nonAuthoritative": False, "path": "content/evidence.pdf",
                 "rawDigest": value["storedSource"]["rawDigest"],
@@ -397,6 +411,45 @@ class PDFEvidenceAndCoverage(unittest.TestCase):
                 item["fieldId"].endswith(":text")
                 for item in fields))
         self.assertEqual(counts[0], counts[1])
+
+    def test_independent_field_census_rejects_all_inventory_mutations(self):
+        def missing(fields):
+            fields.pop()
+
+        def extra(fields):
+            fields.append(copy.deepcopy(fields[-1]))
+
+        def duplicate(fields):
+            fields[1] = copy.deepcopy(fields[0])
+
+        def reordered(fields):
+            fields[0], fields[1] = fields[1], fields[0]
+
+        def stale(fields):
+            fields[0]["origin"]["field"] = "stale"
+
+        for label, mutate in (
+                ("missing", missing), ("extra", extra),
+                ("duplicate", duplicate), ("reordered", reordered),
+                ("stale", stale)):
+            with self.subTest(label=label), tempfile.TemporaryDirectory() as root:
+                registry = write_fixture(root)
+                artifact = parser.parse_artifact(
+                    fixture_xml(), "content-document")
+                projection = render_content(
+                    artifact, "content/evidence.md", {})
+                coverage = copy.deepcopy(projection.coverage)
+                mutate(coverage["fields"])
+                tampered = Projection(
+                    markdown=projection.markdown,
+                    markdown_digest=projection.markdown_digest,
+                    coverage=coverage)
+                with mock.patch(
+                        "structured_source.verify._render_content",
+                        return_value=tampered), self.assertRaises(
+                            StructuredSourceError):
+                    VerificationContext(
+                        root, registry=registry).check("pdf-doc")
 
 
 class PDFSnapshotHandoff(unittest.TestCase):
@@ -538,6 +591,30 @@ class PDFSnapshotHandoff(unittest.TestCase):
         self.assertEqual(handoff["representationRole"], "generated-markdown")
         self.assertIsNone(handoff["surface"])
         self.assertEqual(handoff["assets"], {})
+
+    def test_regenerate_writes_only_review_and_rebuilds_validated_state(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root)
+            context = VerificationContext(root, registry=registry)
+            context.check("pdf-doc")
+            old_surface = context._validated_package_state[
+                "pdf-doc"]["surface"]
+            authority_paths = (
+                "content/evidence.pdf", "content/evidence.xml",
+                "content/source-manifest.json",
+            )
+            before = {
+                path: Path(root, path).read_bytes()
+                for path in authority_paths}
+            result = context.regenerate("pdf-doc")
+            after = {
+                path: Path(root, path).read_bytes()
+                for path in authority_paths}
+            new_surface = context._validated_package_state[
+                "pdf-doc"]["surface"]
+        self.assertEqual(result["status"], "conformant")
+        self.assertEqual(after, before)
+        self.assertIsNot(new_surface, old_surface)
 
     def test_pdf_package_file_and_ownership_census_is_bidirectional(self):
         registry = registry_fixture()
