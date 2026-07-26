@@ -3,23 +3,49 @@
 from __future__ import annotations
 
 from functools import lru_cache
-import json
 import os
 import re
 
+from .control import parse_json
 from .errors import StructuredSourceError
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROFILE_DIRECTORY = os.path.join(ROOT, "structured_source", "profiles")
 _ID = re.compile(r"[a-z][a-z0-9-]{0,159}\Z")
 
+_PDF_ITEM_METADATA_FIELDS = {
+    "action": ["owner", "status"],
+    "blockQuotation": [],
+    "caution": ["owner", "status"],
+    "claim": ["claimId", "number", "type"],
+    "codeBlock": ["language"],
+    "division": ["role"],
+    "figure": ["alt", "assetId"],
+    "heading": ["level"],
+    "item": [],
+    "limitation": ["limitationId"],
+    "list": ["delimiter", "ordered", "start"],
+    "noteBlock": ["owner", "status"],
+    "paragraph": [],
+    "plain": [],
+    "row": [],
+    "separator": [],
+    "table": [],
+}
+_PDF_PROFILE_FIELDS = {
+    "dependencyKinds", "documentMetadataFields", "itemDigestFields",
+    "itemIdentityAttribute", "itemMetadataFields", "itemOrder",
+    "noticeVersion", "originElement", "projectionProfile",
+    "provenanceFields", "sourceNumberPolicy",
+}
+
 
 def _read(name):
     path = os.path.join(PROFILE_DIRECTORY, name)
     try:
-        with open(path, "r", encoding="utf-8") as handle:
-            return json.load(handle)
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        with open(path, "rb") as handle:
+            return parse_json(handle.read())
+    except (OSError, StructuredSourceError) as exc:
         raise StructuredSourceError("structured-source profile is unreadable: %s" % name) from exc
 
 
@@ -89,10 +115,24 @@ def load_xml_profiles():
         raise StructuredSourceError("content-document profile registry is empty")
     for profile_id, profile in content.items():
         if _ID.fullmatch(profile_id) is None or not isinstance(profile, dict) or \
-                set(profile) != {"originElement", "projectionProfile", "noticeVersion"} or \
+                set(profile) != _PDF_PROFILE_FIELDS or \
                 profile.get("originElement") not in {"authoredSource", "pdfDerivative"} or \
                 profile.get("projectionProfile") != projection["profileId"] or \
-                profile.get("noticeVersion") != projection["generatedNoticeVersion"]:
+                profile.get("noticeVersion") != projection["generatedNoticeVersion"] or \
+                profile.get("dependencyKinds") != [
+                    "asset", "document", "relation-set"] or \
+                profile.get("documentMetadataFields") != [
+                    "artifactFamily", "documentId", "jurisdiction", "language",
+                    "scope", "status", "title"] or \
+                profile.get("itemDigestFields") != [
+                    "content", "identity", "metadata", "profile", "type"] or \
+                profile.get("itemIdentityAttribute") != "xml:id" or \
+                profile.get("itemMetadataFields") != _PDF_ITEM_METADATA_FIELDS or \
+                profile.get("itemOrder") != "xml-document-order" or \
+                profile.get("provenanceFields") != [
+                    "fragmentId", "page", "region", "sourcePath", "uncertainty"] or \
+                profile.get("sourceNumberPolicy") != \
+                "content-or-typed-metadata-not-identity":
             raise StructuredSourceError("content-document profile is malformed: %s" % profile_id)
     relations = value.get("relationSets")
     if not isinstance(relations, dict) or not relations:

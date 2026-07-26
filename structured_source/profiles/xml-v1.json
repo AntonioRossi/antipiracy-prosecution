@@ -2,8 +2,34 @@
   "profileVersion": "1",
     "contentDocuments": {
         "pdf-evidence-transcription-v1": {
+            "dependencyKinds": ["asset", "document", "relation-set"],
+            "documentMetadataFields": ["artifactFamily", "documentId", "jurisdiction", "language", "scope", "status", "title"],
+            "itemDigestFields": ["content", "identity", "metadata", "profile", "type"],
+            "itemIdentityAttribute": "xml:id",
+            "itemMetadataFields": {
+                "action": ["owner", "status"],
+                "blockQuotation": [],
+                "caution": ["owner", "status"],
+                "claim": ["claimId", "number", "type"],
+                "codeBlock": ["language"],
+                "division": ["role"],
+                "figure": ["alt", "assetId"],
+                "heading": ["level"],
+                "item": [],
+                "limitation": ["limitationId"],
+                "list": ["delimiter", "ordered", "start"],
+                "noteBlock": ["owner", "status"],
+                "paragraph": [],
+                "plain": [],
+                "row": [],
+                "separator": [],
+                "table": []
+            },
+            "itemOrder": "xml-document-order",
             "originElement": "pdfDerivative",
             "projectionProfile": "gfm-v1",
+            "provenanceFields": ["fragmentId", "page", "region", "sourcePath", "uncertainty"],
+            "sourceNumberPolicy": "content-or-typed-metadata-not-identity",
             "noticeVersion": "generated-v1"
     }
   },

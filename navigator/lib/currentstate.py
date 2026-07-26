@@ -26,6 +26,7 @@ STRUCTURED_TEST_MODULES = (
     "structured_source.tests.test_acceptance",
     "structured_source.tests.test_atomic",
     "structured_source.tests.test_conversion",
+    "structured_source.tests.test_pdf_transcription",
     "structured_source.tests.test_registry",
     "structured_source.tests.test_xml_contract",
 )

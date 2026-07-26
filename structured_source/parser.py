@@ -76,6 +76,7 @@ _FORBIDDEN_LEXICAL = (
 )
 _NAMED_ENTITY = re.compile(br"&([A-Za-z_:][A-Za-z0-9_.:-]*);")
 _ALLOWED_ENTITIES = {b"amp", b"lt", b"gt", b"apos", b"quot"}
+_STABLE_ITEM_ID = re.compile(r"[a-z][a-z0-9-]{0,159}\Z")
 
 
 @dataclass(frozen=True)
@@ -111,8 +112,14 @@ def _preflight(data: bytes) -> None:
         raise TypeError("XML parser input must be bytes")
     if not data or len(data) > MAX_XML_BYTES:
         raise ParseError("XML byte size is outside the closed resource limit")
-    if data.startswith((b"\xff\xfe", b"\xfe\xff", b"\x00")):
+    if data.startswith((b"\xef\xbb\xbf", b"\xff\xfe", b"\xfe\xff", b"\x00")):
         raise ParseError("canonical XML must use UTF-8")
+    if b"\r" in data:
+        raise ParseError("canonical XML must use LF line endings")
+    if data.startswith(b"<?xml") and not data.startswith(
+            b'<?xml version="1.0" encoding="UTF-8"?>'):
+        raise ParseError(
+            "canonical XML declaration must select XML 1.0 and UTF-8")
     try:
         text = data.decode("utf-8")
     except UnicodeDecodeError as exc:
@@ -259,6 +266,32 @@ def _resource_and_semantic_checks(root: ET.Element, kind: str) -> dict[str, str]
                 projection.get("profile") != definition["projectionProfile"] or \
                 projection.get("noticeVersion") != definition["noticeVersion"]:
             raise ParseError("content-document profile controls do not match the XML")
+        content = root.find(namespace + "content")
+        if content is None:
+            raise ParseError("content-document item surface is absent")
+        declared_metadata = definition["itemMetadataFields"]
+        item_ids = []
+        for node in content.iter():
+            identifier = node.get(XML_ID)
+            if identifier is None:
+                continue
+            if _STABLE_ITEM_ID.fullmatch(identifier) is None:
+                raise ParseError(
+                    "content item identity is outside the stable-ID profile")
+            local = node.tag.rsplit("}", 1)[-1]
+            permitted = declared_metadata.get(local)
+            if permitted is None:
+                raise ParseError(
+                    "content item type is outside the closed profile: %s" % local)
+            metadata = sorted(
+                name.rsplit("}", 1)[-1] for name in node.attrib
+                if name != XML_ID)
+            if not set(metadata).issubset(permitted):
+                raise ParseError(
+                    "content item metadata is outside its closed type: %s" % local)
+            item_ids.append(identifier)
+        if not item_ids or len(item_ids) != len(set(item_ids)):
+            raise ParseError("content-document item identity census is not exact")
     elif kind == "authored-document":
         projection_profile = load_projection_profile()
         if profile != "authored-markdown-v1":

@@ -171,6 +171,16 @@ class SecureParser(unittest.TestCase):
         self.assertRejected(CONTENT.replace(b"frag-paragraph", b"frag-heading"))
         self.assertRejected(CONTENT.replace(b"Alpha", "A\u0301lpha".encode("utf-8")))
 
+    def test_utf8_xml10_and_lf_lexical_contract_fails_closed(self):
+        self.assertRejected(b"\xef\xbb\xbf" + CONTENT)
+        self.assertRejected(CONTENT.replace(b"\n", b"\r\n"))
+        self.assertRejected(CONTENT.replace(
+            b'<?xml version="1.0" encoding="UTF-8"?>',
+            b'<?xml version="1.1" encoding="UTF-8"?>'))
+        self.assertRejected(CONTENT.replace(
+            b'<?xml version="1.0" encoding="UTF-8"?>',
+            b'<?xml version="1.0" encoding="ISO-8859-1"?>'))
+
     def test_size_depth_node_attribute_and_text_limits_are_enforced(self):
         with mock.patch.object(parser, "MAX_XML_BYTES", len(CONTENT) - 1):
             self.assertRejected(CONTENT)

@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from unittest import mock
 
+from navigator.lib.snapshot import RepositorySnapshot
 from structured_source.control import canonical_json
 from structured_source.errors import StructuredSourceError
 from structured_source.registry import (AUTHORITY_SCHEMES, consumer_edge,
@@ -23,7 +24,7 @@ def registry_fixture():
          "role": "consumer-dependency"},
         {"fileId": "file-pdf", "path": "content/evidence.pdf",
          "role": "stored-evidence"},
-        {"fileId": "file-pdf-manifest", "path": "content/evidence.manifest.json",
+        {"fileId": "file-pdf-manifest", "path": "content/source-manifest.json",
          "role": "source-manifest"},
         {"fileId": "file-pdf-md", "path": "content/evidence.md",
          "role": "generated-markdown"},
@@ -103,8 +104,12 @@ class RegistryContract(unittest.TestCase):
             consumer_edge(value, "example-consumer", "authored-doc")
             ["inputRepresentation"], "xml")
 
-    def test_retired_coverage_and_digest_fields_fail(self):
-        for field in ("coverageFile", "sourceDigest"):
+    def test_retired_record_and_derived_state_fields_fail(self):
+        for field in (
+                "approvalRecord", "attestationFile", "auditExport",
+                "compatibilityAlias", "coverageFile", "lineageFile",
+                "migrationReader", "receiptFile", "reviewerRecord",
+                "sourceDigest", "verificationRecord"):
             with self.subTest(field=field):
                 value = registry_fixture()
                 value["packages"][0][field] = "retired"
@@ -195,9 +200,16 @@ class RegistryContract(unittest.TestCase):
                 handle.write(b"old")
             context = VerificationContext(root, registry=registry_fixture())
             context.reader.read("content/authored.md")
+            def derive(unused_package):
+                context._derived_package_state["authored-doc"] = {
+                    "representations": {
+                        "markdown": b"authority\n", "xml": b"new"},
+                    "surface": None,
+                }
+                return "content/authored.xml", b"new", {}
             with mock.patch.object(
                     context, "_derive",
-                    return_value=("content/authored.xml", b"new", {})):
+                    side_effect=derive):
                 result = context.regenerate("authored-doc")
             self.assertEqual(result["status"], "conformant")
             with open(output, "rb") as handle:
@@ -212,9 +224,21 @@ class RegistryContract(unittest.TestCase):
                     ("consumer.json", b"dependency")):
                 with open(os.path.join(root, "content", name), "wb") as handle:
                     handle.write(data)
-            context = VerificationContext(root, registry=registry_fixture())
-            resolved = context.read_for_consumer(
-                "example-consumer", "authored-doc")
+            snapshot = RepositorySnapshot.capture(root, retain_bytes=True)
+            context = VerificationContext(
+                root, registry=registry_fixture(),
+                byte_source=snapshot.byte_source(),
+                repository_snapshot=snapshot)
+            context.reader.read("content/authored.xml")
+            context._validated_package_state["authored-doc"] = {
+                "representations": {"xml": b"xml", "markdown": b"markdown"},
+                "surface": None,
+                "validationPaths": ("content/authored.xml",),
+            }
+            with mock.patch.object(context, "check") as check:
+                resolved = context.read_for_consumer(
+                    "example-consumer", "authored-doc")
+            check.assert_called_once_with("authored-doc")
             self.assertEqual(resolved["bytes"], b"xml")
             self.assertEqual(resolved["dependencies"], {
                 "content/consumer.json": b"dependency"})

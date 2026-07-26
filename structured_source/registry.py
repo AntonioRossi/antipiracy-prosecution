@@ -51,10 +51,17 @@ _FILE_ROLES = frozenset({
     "stored-evidence",
     "transcription-xml",
 })
-_FORBIDDEN_FIELD_PARTS = ("approval", "coverage", "digest", "export")
+_FORBIDDEN_FIELD_PARTS = (
+    "approval", "attestation", "audit", "compatibility", "coverage",
+    "digest", "export", "lineage", "migration", "receipt", "reviewer",
+    "verificationrecord",
+)
 _FORBIDDEN_PATH_PARTS = (
-    "/approvals/", "/compatibility/", "/exports/", "/migration/",
-    ".coverage.json",
+    "/approvals/", "/attestations/", "/audit-exports/", "/compatibility/",
+    "/exports/", "/lineage/", "/migration/", "/receipts/",
+    "/verification-records/", ".attestation.json", ".audit.json",
+    ".coverage.json", ".lineage.json", ".receipt.json",
+    ".verification.json",
     "structured-source-markdown_implementation-register",
 )
 
@@ -196,6 +203,13 @@ def validate_registry(value):
                     "PDF package requires one stored source and one manifest")
             _validate_file_reference(
                 file_by_id, manifest, {"source-manifest"}, "source manifest")
+            if not file_by_id[stored[0]]["path"].casefold().endswith(".pdf") or \
+                    not file_by_id[xml_file]["path"].casefold().endswith(".xml") or \
+                    not file_by_id[markdown_file]["path"].casefold().endswith(".md") or \
+                    file_by_id[manifest]["path"].rsplit("/", 1)[-1] != \
+                    "source-manifest.json":
+                raise StructuredSourceError(
+                    "PDF package file types/names are not current")
         elif manifest is not None or stored or convenience or assets:
             raise StructuredSourceError(
                 "package contains files forbidden by its authority scheme")
@@ -209,6 +223,13 @@ def validate_registry(value):
     if len(owned_files) != len(set(owned_files)):
         raise StructuredSourceError(
             "a package-owned file has more than one package owner")
+    package_owned_roles = _FILE_ROLES - {"consumer-dependency", "router"}
+    registered_package_files = {
+        entry["fileId"] for entry in files
+        if entry["role"] in package_owned_roles}
+    if set(owned_files) != registered_package_files:
+        raise StructuredSourceError(
+            "package/file ownership census is not bidirectionally exact")
 
     routers = value.get("routers")
     if not isinstance(routers, list):
@@ -236,6 +257,13 @@ def validate_registry(value):
             len(router_paths) != len({path.casefold() for path in router_paths}):
         raise StructuredSourceError(
             "router identities/paths are not unique and sorted")
+    registered_router_files = {
+        entry["fileId"] for entry in files if entry["role"] == "router"}
+    resolved_router_files = {
+        entry["fileId"] for entry in files if entry["path"] in router_paths}
+    if registered_router_files != resolved_router_files:
+        raise StructuredSourceError(
+            "router/file ownership census is not bidirectionally exact")
 
     consumers = value.get("consumers")
     if not isinstance(consumers, list):
@@ -284,6 +312,15 @@ def validate_registry(value):
             len(edge_pairs) != len(set(edge_pairs)):
         raise StructuredSourceError(
             "consumer identities/edges are not unique and sorted")
+    registered_consumer_dependencies = {
+        entry["fileId"] for entry in files
+        if entry["role"] == "consumer-dependency"}
+    declared_consumer_dependencies = {
+        file_id for consumer in consumers for edge in consumer["edges"]
+        for file_id in edge["dependencies"]}
+    if registered_consumer_dependencies != declared_consumer_dependencies:
+        raise StructuredSourceError(
+            "consumer dependency/file census is not bidirectionally exact")
     taxonomy = value.get("taxonomy")
     if not isinstance(taxonomy, dict) or set(taxonomy) != _TAXONOMY_FIELDS:
         raise StructuredSourceError("path taxonomy is malformed")
