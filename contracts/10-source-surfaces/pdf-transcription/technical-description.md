@@ -71,7 +71,7 @@ Every applicable property has one closed representation:
 | Provenance | Page or region evidence bound to the stored PDF for every transcribed content item |
 | Uncertainty | Present when known and typed by the current schema/profile |
 | Dependencies and assets | Exact registered references when applicable |
-| Semantic digest | Snapshot-computed, item-local digest covering identity, type, profile, content, and substantive metadata |
+| Content-sensitive digest | Item-local digest of the closed typed record, used only when exact item content is referenced |
 | Relation endpoints | Inapplicable to this content scheme; relations are owned by a relation package |
 
 Stable identity, source numbering, mechanical ordering, and display labels are separate. Insertion,
@@ -81,12 +81,14 @@ reference.
 
 The current profile is the exclusive executable inventory of document metadata, the item identity
 attribute, item types and their permitted metadata, document order, source-number treatment,
-provenance fields, dependency kinds, and item-digest inputs. The XSD and profile must agree exactly;
-neither independently authorizes a field omitted by the other.
+provenance fields, dependency kinds, readable XML storage, and typed-item digest inputs. The XSD and
+profile must agree exactly; neither independently authorizes a field omitted by the other.
 
-Each dependency declares one kind, subject identity, and digest. Asset dependencies resolve by raw
-stored-byte digest; document and relation-package dependencies resolve by canonical semantic digest.
-The dependency and asset censuses must be unique and exact, their kinds must agree with the target
+Each dependency declares one kind and subject identity. Asset dependencies resolve by the exact
+registered raw-byte digest. Document and relation-package dependencies resolve through their
+registered validated interfaces; when exact content matters, the reference names the stable item
+and its typed-item digest. No whole-XML digest substitutes for item-level content sensitivity. The
+dependency and asset censuses must be unique and exact, their kinds must agree with the target
 authority, and a dependency cycle fails.
 
 ### Controlled semantic and metadata evolution
@@ -102,17 +104,33 @@ source-domain semantics to a generated representation.
 
 ## 4. XML and manifest contract
 
-Transcription XML uses the exact current namespace, XSD, and profile; UTF-8 XML 1.0 without a byte
-order mark; LF line endings with no carriage returns; NFC text; and the secure parser. An XML
-declaration may be absent; when present it is exactly `<?xml version="1.0" encoding="UTF-8"?>`.
-DTDs, non-predefined entities, external resources, XInclude, XLink, comments, processing
-instructions, CDATA, `xml:base`, recovery, duplicate IDs, unknown fields or versions, aliases, and
-resource-limit violations fail closed.
+Transcription XML uses the exact current namespace, XSD, profile, secure parser, and readable
+storage law. Every registered XML file must equal deterministic serialization of its validated
+typed tree with:
 
-Each artifact receives a raw stored-byte digest and a domain-separated canonical semantic digest
-computed from the immutable snapshot. Item digests cover stable identity, type, profile, semantic
-content, and substantive metadata while excluding presentation, paths, unrelated document
-metadata, generator versions, and sibling items.
+- the exact `<?xml version="1.0" encoding="UTF-8"?>` declaration;
+- UTF-8 without a byte order mark, NFC text, LF only, and one final newline;
+- required namespace declarations on the root, default first and named prefixes lexicographically;
+- two-space indentation, no tabs or blank structural lines, and one child per structural line;
+- each container start and end tag on its own line and each text-only leaf on one unwrapped line;
+- attributes ordered by expanded name and empty elements written exactly as `<name />`.
+
+Parse-to-typed-tree-to-serialization must reproduce the stored bytes. Structural indentation is not
+typed content; text-leaf whitespace remains exact. Minified structural XML, alternate indentation,
+line wrapping, attribute order, namespace placement, or empty-element spelling fails. `check`
+enforces this law but never rewrites the manually maintained XML.
+
+Integrity is deliberately narrow. Stored PDFs, assets, and convenience derivatives retain raw
+SHA-256 bindings because their exact bytes matter. Generated representations use fresh byte
+comparison, not stored digests. A content-sensitive item digest is
+`sha256/typed-item-v1:<64-lowercase-hex>`, computed over one `c1` JSON record containing exactly
+`digestDomain="aa11393:ssp:typed-item:v1"`, `authorityScheme`, `schemaProfile`, `documentId`,
+`itemId`, `itemType`, `typedContent`, and `substantiveMetadata`. `c1` uses UTF-8 JSON, NFC keys and
+strings, standard JSON escaping with non-ASCII preserved, object keys in Unicode code-point order,
+semantic array order, integers within ±9,007,199,254,740,991, compact separators, no floats, and one
+final LF. XML formatting, paths, mechanical envelope fields, unrelated document metadata,
+generator versions, and sibling items are excluded. No XML-wide semantic digest is kept merely
+because an artifact was parsed.
 
 The canonical manifest binds the stored PDF path, raw digest, byte size, evidentiary role, copy
 status, extraction method, assets, and each declared convenience derivative. A convenience
@@ -136,10 +154,11 @@ Coverage is computed from the current snapshot and proves:
 - every used asset is declared exactly by the manifest and package.
 
 The verifier independently recomputes the complete ordered field census from the validated XML; a
-renderer-produced coverage value does not attest to itself. The recomputed census checks the source
-and Markdown digests, field identity and origin, classification, anchors, line regions, and each
-required derivation or justification. Together with the item/provenance and dependency/asset
-censuses, a missing, extra, duplicate, reordered, or stale field or projection fails.
+renderer-produced coverage value does not attest to itself. The recomputed census checks readable
+serialization, manifest raw bindings, typed-item digests, Markdown byte identity, field identity
+and origin, classification, anchors, line regions, and each required derivation or justification.
+Together with the item/provenance and dependency/asset censuses, a missing, extra, duplicate,
+reordered, or stale field or projection fails.
 
 Coverage is validation evidence, not a stored package companion. An undeclared coverage file or a
 missing or stale generated view fails.
@@ -149,8 +168,9 @@ missing or stale generated view fails.
 A declared consumer edge selects exactly one registered representation, `xml` or `markdown`, and
 cannot read the other representation through an undeclared dependency. An XML handoff supplies the
 authority scheme, transcription role, complete typed item surface, metadata, provenance,
-uncertainty, dependencies, assets, hierarchy, order, and digests. A Markdown handoff supplies only
-the declared review representation and receives no XML item surface or source assets.
+uncertainty, dependencies, assets, hierarchy, order, manifest raw bindings, and typed-item digests.
+A Markdown handoff supplies only the declared review representation and receives no XML item
+surface or source assets.
 
 An acceptable immutable snapshot supplies a nonempty digest, the checkout root, a closed path
 inventory, and retained bytes addressable through that inventory. A digest string, pass result, or
@@ -160,11 +180,11 @@ snapshot bytes exactly.
 
 Trust attaches only to the validated item graph over the exact immutable snapshot bytes. Before a
 consumer constructs a semantic model or writes an output, package, schema/profile, item/field
-census, hierarchy, order, provenance, dependencies, assets, digests, generated representation, and
-coverage must all pass. The consumer receives those same validated bytes and may mechanically look
-up items, traverse declared hierarchy and order, select declared fields, and resolve registered
-dependencies. It may not reopen a different path, accept a detached pass token, or infer missing
-semantics.
+census, hierarchy, order, provenance, dependencies, assets, manifest raw bindings, typed-item
+digests, generated representation, and coverage must all pass. The consumer receives those same
+validated bytes and may mechanically look up items, traverse declared hierarchy and order, select
+declared fields, and resolve registered dependencies. It may not reopen a different path, accept a
+detached pass token, or infer missing semantics.
 
 Package validation constructs and freezes the representation bytes and complete typed surface
 before handoff. The handoff uses that validated state without reopening even the same live path or

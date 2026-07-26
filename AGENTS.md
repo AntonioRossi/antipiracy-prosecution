@@ -30,6 +30,10 @@ After changing claims, verify claim count, dependency, antecedent basis, support
 
 ## Commit & Pull Request Guidelines
 
+Repository agents do not stage files or create, amend, sign, tag, or otherwise manage commits. The
+repository owner alone manages the Git index and history. Agents leave worktree changes unstaged and
+report the validated change scope and any suggested commit subject for the owner's use.
+
 Recent commits use imperative subjects such as `Refine`, `Update`, and `Add`. Keep each commit to one coherent document or prosecution objective. In a pull request, identify the strategy/version, summarize the current-state result, disclose whether claim text or matrix scores changed, list validation commands, and flag unresolved counsel gates. Include rendered evidence only when a table, figure, or layout materially changes.
 
 ## Confidentiality & Filing Controls

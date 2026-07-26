@@ -32,10 +32,15 @@ Every package declares `authorityScheme="authored-markdown-v1"` and has exactly 
 `markdownFile` and one generated `xmlFile`. It has no stored PDF, source manifest, generated review
 Markdown companion, or manually maintained XML region.
 
+Package/file, router/file, and consumer-dependency/file ownership each close in both directions.
+Every registered file in those classes has exactly one applicable owner or declaration, and every
+owner or declaration resolves exactly one registered file of the required role. An unowned
+registered file and a declaration without its reciprocal file both fail.
+
 Authoritative Markdown contains the package's stable `ssp-*` anchors and every adopted
 content-bearing structure and substantive metadata field. XML preserves those semantics and may
 add only classified mechanical envelope fields: schema/profile/version declarations, authority
-binding and raw digest, deterministic ordinals, and generated semantic digests.
+binding and raw digest, deterministic ordinals, and typed-item digests.
 
 Stable IDs are not derived from line numbers, heading slugs, XML positions, array indexes, visible
 text, or current ordering. Unknown fields, untyped extension maps, hidden content, competing
@@ -57,13 +62,26 @@ file. Every applicable property has one closed representation:
 | Metadata | Only closed typed fields originating in authoritative Markdown or classified mechanical envelope fields |
 | Provenance | Exact Markdown authority path, raw digest, and size at the document binding |
 | Dependencies | Exact supported links and registered dependencies when applicable |
-| Semantic digest | Snapshot-computed, item-local digest covering identity, type, profile, content, and substantive metadata |
+| Content-sensitive digest | Item-local digest of the closed typed record, used only when exact item content is referenced |
 | Relation endpoints | Inapplicable to this content scheme; relations are owned by a relation package |
 
 Stable identity, source-owned numbering, mechanical ordinals, and display labels are separate.
 Insertion, deletion, or reordering may change a mechanical ordinal but cannot silently rename an
 item. A heading slug, array position, generated anchor carrier, or presentation label cannot become
 a machine reference.
+
+The current GFM profile is the exclusive executable inventory of Pandoc version and API, reader and
+writer, supported and top-level constructors, stable-anchor syntax and XML identity policy, link
+schemes, line endings and final newline, list and table style, and permitted presentational
+normalizations. The XSD, converter, and profile must agree exactly; none independently authorizes a
+construct or field omitted by another.
+
+An authored link is Markdown-owned semantic content subject to the profile's link rules; it is not
+silently promoted to a package dependency. A consumer dependency is a separately registered file
+reference selected by the declared edge, cannot bypass that edge's representation, and is handed
+over only as an exact snapshot byte. A semantic cross-package dependency requires an explicit
+schema, profile, and registry binding; when exact content matters, it names the stable item and its
+typed-item digest rather than inferring a dependency from a link.
 
 ### Controlled semantic and metadata evolution
 
@@ -79,20 +97,44 @@ closed. Mechanical envelope fields remain closed and cannot carry authored meani
 
 ## 4. Markdown profile and generated XML
 
-Markdown uses the pinned GFM reader, one stable-anchor syntax, LF line endings, final newline, NFC,
-closed link schemes, and only the current profile's supported constructors. Unsupported raw HTML,
-unpaired or duplicate anchors, unsafe links, lossy structures, ambiguous claims, and constructs
-outside the profile fail before generation.
+Markdown uses the pinned GFM reader, one stable-anchor syntax, UTF-8 without a byte order mark, LF
+line endings with no carriage returns, final newline, NFC, closed link schemes, and only the current
+profile's supported constructors. Unsupported raw HTML, unpaired or duplicate anchors, unsafe
+links, lossy structures, ambiguous claims, and constructs outside the profile fail before
+generation.
 
-Generated XML uses the exact current namespace, XSD, and profile; UTF-8 XML 1.0; NFC text; and the
-secure parser. DTDs, non-predefined entities, external resources, XInclude, XLink, comments,
-processing instructions, CDATA, `xml:base`, recovery, duplicate IDs, unknown fields or versions,
-aliases, and resource-limit violations fail closed.
+Generated XML uses the exact current namespace, XSD, profile, secure parser, and readable storage
+law. Every registered XML file must equal deterministic serialization of its validated typed tree
+with:
 
-The XML authority binding records the exact Markdown path, raw digest, and size. Raw and
-domain-separated canonical semantic digests are computed from the immutable snapshot. Item digests
-cover stable identity, type, profile, semantic content, and substantive metadata while excluding
-presentation, paths, unrelated document metadata, generator versions, and sibling items.
+- the exact `<?xml version="1.0" encoding="UTF-8"?>` declaration;
+- UTF-8 without a byte order mark, NFC text, LF only, and one final newline;
+- required namespace declarations on the root, default first and named prefixes lexicographically;
+- two-space indentation, no tabs or blank structural lines, and one child per structural line;
+- each container start and end tag on its own line and each text-only leaf on one unwrapped line;
+- attributes ordered by expanded name and empty elements written exactly as `<name />`.
+
+Parse-to-typed-tree-to-serialization must reproduce the registered bytes. Structural indentation is
+not typed content; text-leaf whitespace remains exact. Minified structural XML, alternate
+indentation, line wrapping, attribute order, namespace placement, or empty-element spelling fails,
+and regeneration always emits the required readable form.
+
+The XML authority binding records the exact Markdown path, raw SHA-256 digest, and size because
+those authority bytes matter. Generated XML integrity uses fresh byte comparison, not a stored XML
+digest. A content-sensitive item digest is `sha256/typed-item-v1:<64-lowercase-hex>`, computed over
+one `c1` JSON record containing exactly `digestDomain="aa11393:ssp:typed-item:v1"`, authority
+scheme, schema profile, document ID, item ID, item type, typed content tree, and substantive
+metadata under keys `authorityScheme`, `schemaProfile`, `documentId`, `itemId`, `itemType`,
+`typedContent`, and `substantiveMetadata`. `c1` uses UTF-8 JSON, NFC keys and strings, standard JSON
+escaping with non-ASCII preserved, object keys in Unicode code-point order, semantic array order,
+integers within ±9,007,199,254,740,991, compact separators, no floats, and one final LF. XML
+formatting, paths, mechanical envelope fields, unrelated document metadata, generator versions,
+and sibling items are excluded. No XML-wide semantic digest is kept merely because an artifact was
+generated.
+
+Successful parsing, conversion, and round-trip comparison prove only preservation within the
+supported profile. They do not prove authorial intent, substantive correctness, human attention,
+legal correctness, approval, filing readiness, or filing authorization.
 
 ## 5. Conversion, semantic back-render, and coverage
 
@@ -106,24 +148,42 @@ escaping, and final newline. A normalization cannot add, remove, reorder, or rew
 content-bearing node.
 
 Coverage is computed from the current snapshot and maps every authoritative Markdown item to its
-generated XML item, semantic digest, and back-rendered semantic node. Neither the back-render nor a
-package-level coverage artifact is stored.
+generated XML item, typed-item digest, and back-rendered semantic node. Neither the back-render nor
+a package-level coverage artifact is stored.
+
+The verifier independently recomputes the complete ordered coverage census from the authoritative
+Markdown AST and validated XML rather than accepting converter-reported identities or digests as
+self-attestation. The census checks each stable anchor, semantic path, authority binding, readable
+XML item and field, typed-item digest, back-render node, dependency, generated-byte identity,
+hierarchy, and order. A missing, extra, duplicate, reordered, lossy, stale, or non-readable item,
+field, or representation fails.
 
 ## 6. Snapshot-bound consumer-neutral handoff
 
 A declared consumer edge selects exactly one registered representation, `xml` or `markdown`, and
 cannot read the other representation through an undeclared dependency. An XML handoff supplies the
 authority scheme, generated role, complete typed item surface, hierarchy, source order, exact
-content, metadata, dependencies, authority binding, and digests. A Markdown handoff supplies the
-authority bytes directly.
+content, metadata, dependencies, authority raw binding, and typed-item digests. A Markdown handoff
+supplies the authority bytes directly and receives no generated XML surface.
+
+An acceptable immutable snapshot supplies a nonempty digest, the checkout root, a closed path
+inventory, and retained bytes addressable through that inventory. A digest string, pass result, or
+other detached token is not a snapshot. Every package-validation and declared-dependency path in a
+handoff must occur in the snapshot inventory, and its validated bytes must equal the retained
+snapshot bytes exactly.
 
 Trust attaches only to the validated item graph over the exact immutable snapshot bytes. Before a
 consumer constructs a semantic model or writes an output, Markdown profile, conversion,
-item/field census, hierarchy, order, authority binding, digests, generated XML, semantic
-back-render, dependencies, and coverage must all pass. The consumer receives those same validated
-bytes and may mechanically look up items, traverse declared hierarchy and order, select declared
-fields, and resolve registered dependencies. It may not reopen a different path, accept a detached
-pass token, or infer missing semantics.
+item/field census, hierarchy, order, authority raw binding, typed-item digests, generated XML,
+semantic back-render, dependencies, and coverage must all pass. The consumer receives those same
+validated bytes and may mechanically look up items, traverse declared hierarchy and order, select
+declared fields, and resolve registered dependencies. It may not reopen a different path, accept a
+detached pass token, or infer missing semantics.
+
+Package validation constructs and freezes the authority and generated representation bytes and the
+complete typed surface before handoff. The handoff uses that validated state without reopening even
+the same live path or reconstructing semantics from a later read, and exposes the exact
+validation-read census for the edge.
 
 Selection of XML never promotes it above Markdown authority. A consumer may not repair generated
 XML, infer missing authored content, add source-domain fields, reparse an undeclared representation,
@@ -141,7 +201,9 @@ For this scheme, `check` validates one package and its declared dependencies wit
 package's generated XML; `regenerate-controls` replaces only derived routers and the three
 acceptance table regions; and `verify-current` participates in one memoized whole-corpus pass.
 Markdown authority and externally changed bytes are never overwritten. Coverage and back-render
-evidence are computed and never persisted.
+evidence are computed and never persisted. After an atomic generated-XML replacement, every
+pre-replacement representation and surface state is discarded and the replacement is read back and
+validated anew.
 
 The repository-global gate owns immutable snapshot bracketing, registered isolated tests, final
 snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
@@ -151,7 +213,9 @@ statuses without defining any consumer product outcome.
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
 content registry's authored-Markdown slice, current schemas and profiles, converter, focused tests,
-and registered packages are the complete live implementation.
+item-surface builder, immutable-snapshot handoff, registered consumers, and registered packages are
+the complete live implementation. The immutable repository snapshot must contain the exact named
+domain artifacts and every required shared implementation path.
 
 No alternate converter, editable generated owner, compatibility or migration reader, approval or
 reviewer record, stored receipt, digest ledger, persisted back-render, coverage store, export path,

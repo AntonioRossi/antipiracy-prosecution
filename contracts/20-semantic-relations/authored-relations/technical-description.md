@@ -20,7 +20,8 @@ applicant-authored relation XML authority ──deterministic projection──�
 Relation XML is the sole owner of each applicant-authored cross-document assertion. It owns the
 stable relation identity, semantic owner, type, direction, ordered fields, and exact endpoints. An
 endpoint supplies the assertion's evidence basis or subject but never adopts, authorizes, or owns
-the assertion. Generated Markdown is a review representation and never becomes another owner.
+the assertion. Only relation categories enumerated by the current schema and profile may use this
+authority scheme. Generated Markdown is a review representation and never becomes another owner.
 
 Machine validation proves schema and profile validity, identity, semantic ownership, role and
 direction constraints, exact digest-bound endpoint resolution, coverage, and deterministic
@@ -32,6 +33,12 @@ or authorized for filing.
 Every package declares `authorityScheme="authored-relations-v1"` and has exactly one authoritative
 `xmlFile` and one generated review `markdownFile`. It has no stored PDF, source manifest, generated
 XML, second relation owner, or package-level coverage artifact.
+
+The existing structured-source registry is the sole package registry. Its package/file roles,
+router membership, consumer edges, and dependency files close exactly against registered relation
+packages and endpoint documents; no parallel authority registry is permitted. Relation XML owns
+semantic endpoints, while a consumer dependency authorizes one declared read. An endpoint does not
+grant consumer access, and a dependency does not create an assertion, endpoint, or authority.
 
 Every relation declares one stable relation identity, one semantic owner, one profile-enumerated
 type and direction, ordered profile-enumerated assertion fields, and profile-conforming endpoints.
@@ -54,18 +61,25 @@ Every applicable property has one closed representation:
 | Content and metadata | One semantic owner and only profile-enumerated ordered assertion fields |
 | Provenance and dependencies | Exact registered endpoint documents and their authority roles |
 | Cross-references | Role-bearing `(documentId, fragmentId, fragmentContentDigest)` endpoints |
-| Semantic digest | Snapshot-computed relation digest covering identity, profile, owner, type, direction, ordered fields, and endpoints |
+| Content-sensitive integrity | Each endpoint carries the target item's typed-content digest; relation XML has no self or formatting-derived digest |
 
 Stable relation identity, authored numbers, mechanical ordinals, and display labels are separate.
 Insertion, deletion, or reordering may change a mechanical ordinal but cannot silently rename an
 assertion. A table row number, XML position, endpoint position, or generated anchor cannot become a
 relation identity.
 
+The relation profile registry is exclusive. Each profile enumerates its one relation type,
+directions, endpoint roles and required-role set, and assertion-field vocabulary; the schema,
+target-item digest rule, readable XML storage law, and projection contract close the remaining
+interface behavior. A partial
+profile change, alternate vocabulary, alias, extension map, or consumer-defined relation field
+fails closed.
+
 ### Controlled semantic and metadata evolution
 
 Adding or changing a relation type, direction, role, assertion field, or endpoint property requires
 one coherent current-state update to the relation XML owner, schema/profile, parser and resolver,
-relation-digest rule, generated review projection, computed coverage, declared consumer
+target-item digest rule, generated review projection, computed coverage, declared consumer
 requirements, and focused positive and negative tests. Every newly referenceable content field must
 already have one owner and stable item identity in its content package.
 
@@ -75,10 +89,21 @@ undeclared assertion or make endpoint content its semantic owner.
 
 ## 4. XML and endpoint contract
 
-Relation XML uses the exact current namespace, XSD, and profile; UTF-8 XML 1.0; NFC text; and the
-secure parser. DTDs, non-predefined entities, external resources, XInclude, XLink, comments,
-processing instructions, CDATA, `xml:base`, recovery, duplicate IDs, unknown fields, types,
-directions or versions, aliases, and resource-limit violations fail closed.
+Relation XML uses the exact current namespace, XSD, profile, secure parser, and readable storage
+law. Every registered XML file must equal deterministic serialization of its validated typed tree
+with:
+
+- the exact `<?xml version="1.0" encoding="UTF-8"?>` declaration;
+- UTF-8 without a byte order mark, NFC text, LF only, and one final newline;
+- required namespace declarations on the root, default first and named prefixes lexicographically;
+- two-space indentation, no tabs or blank structural lines, and one child per structural line;
+- each container start and end tag on its own line and each text-only leaf on one unwrapped line;
+- attributes ordered by expanded name and empty elements written exactly as `<name />`.
+
+Parse-to-typed-tree-to-serialization must reproduce the stored bytes. Structural indentation is not
+typed content; text-leaf whitespace remains exact. Minified structural XML, alternate indentation,
+line wrapping, attribute order, namespace placement, or empty-element spelling fails. `check`
+enforces this law but never rewrites the authoritative relation XML.
 
 Each endpoint binds the exact `(documentId, fragmentId, fragmentContentDigest)` of a registered
 validated content item. Each relation profile declares its permitted roles and required-role set.
@@ -86,10 +111,17 @@ Repeated endpoint targets inside one assertion, missing required roles, unknown 
 stale digests, ambiguous targets, undeclared documents, relation-to-relation endpoints, inferred
 retargeting, and endpoint-driven authority promotion fail.
 
-Raw and domain-separated canonical semantic digests are computed from the immutable snapshot.
-Relation XML does not self-bind its own digest. Relation digests cover the assertion identity,
-profile, owner, type, direction, ordered fields, and endpoints; endpoint fragment digests remain
-item-local so unrelated sibling changes do not stale the relation.
+Integrity is deliberately narrow. `fragmentContentDigest` is the target content item's
+`sha256/typed-item-v1:<64-lowercase-hex>`, computed over one `c1` JSON record containing exactly
+`digestDomain="aa11393:ssp:typed-item:v1"`, the target authority scheme, schema profile, document
+ID, item ID, item type, typed content tree, and substantive metadata under keys `authorityScheme`,
+`schemaProfile`, `documentId`, `itemId`, `itemType`, `typedContent`, and `substantiveMetadata`. `c1`
+uses UTF-8 JSON, NFC keys and strings, standard JSON escaping with non-ASCII preserved, object keys
+in Unicode code-point order, semantic array order, integers within ±9,007,199,254,740,991, compact
+separators, no floats, and one final LF. XML formatting, paths, mechanical envelope fields,
+unrelated document metadata, generator versions, and sibling items are excluded. Relation XML has
+no self or whole-XML semantic digest, and generated Markdown integrity uses fresh byte comparison
+rather than a stored digest.
 
 ## 5. Projection and computed coverage
 
@@ -98,26 +130,28 @@ Markdown bytes must equal fresh rendering. The view exposes the authority scheme
 assertion identity and ownership, ordered fields, stable anchors, current endpoint excerpts,
 evidence basis, and forward and reverse links. It does not become a second assertion owner.
 
-Coverage is computed from the current snapshot and includes every relation assertion, assertion
-field, exact endpoint, generated anchor, excerpt, and link. Reuse of one endpoint across distinct
-assertions is valid; duplicate semantic ownership of the same assertion is not. Coverage is not a
-stored package companion.
+Coverage is independently recomputed from the current authoritative XML, resolved validated
+content interfaces, and freshly rendered Markdown. Its ordered census includes every assertion,
+field, exact endpoint and target-item digest, generated anchor, excerpt, and forward and reverse link;
+missing, extra, duplicate, reordered, or stale members fail. Renderer or resolver self-report is
+not evidence, and coverage is never stored as a package companion, receipt, or digest ledger.
 
 ## 6. Snapshot-bound consumer-neutral handoff
 
-A declared consumer edge selects exactly one registered representation, `xml` or `markdown`, and
-cannot read the other representation through an undeclared dependency. An XML handoff supplies the
-authority scheme, authoritative role, complete typed relation surface, owners, directions, ordered
-fields, endpoints, and resolved identities and digests. A Markdown handoff supplies only the
-declared review view.
+A production semantic consumer edge selects `xml`; an explicitly review-only edge may select
+`markdown`. Neither may read the other representation through an undeclared dependency. The XML
+handoff supplies the authority scheme, authoritative role, frozen complete typed relation surface,
+owners, directions, ordered fields, endpoints, and resolved identities and target-item digests. The
+Markdown handoff supplies only review-view bytes and no typed relation surface.
 
-Trust attaches only to the validated relation graph over the exact immutable snapshot bytes. Before
-a consumer constructs a semantic model or writes an output, relation schema/profile,
+Trust attaches only to the validated relation graph over one identified repository root, complete
+snapshot path inventory, and exact retained bytes for every validation and handoff path. Before a
+consumer constructs a semantic model or writes an output, relation schema/profile,
 assertion/field/endpoint census, identities, owners, roles, directions, endpoint targets and
-digests, generated view, and coverage must all pass. The consumer receives those same validated
-bytes and may mechanically look up assertions, traverse authored order, select declared fields,
-and resolve exact endpoints. It may not reopen a different path, accept a detached pass token,
-infer a relation, or repair a target.
+target-item digests, generated view, and coverage must all pass. The consumer receives those same
+validated bytes and may mechanically look up assertions, traverse authored order, select declared
+fields, and resolve exact endpoints. It may not reopen a different path, accept a detached pass
+token, infer a relation, or repair a target.
 
 A consumer may not copy or rewrite an assertion, infer or retarget an endpoint, change a role or
 direction, add source-domain fields, silently fall back, or promote endpoint content into assertion
@@ -131,11 +165,13 @@ The shared structured-source command surface remains exactly `check <subject-id>
 <subject-id>`, `regenerate-controls`, and `verify-current`.
 
 For this scheme, `check` validates one relation package and its exact endpoint dependencies without
-writing; `regenerate` validates relation authority and endpoint bytes before atomically replacing
-only that package's generated Markdown; `regenerate-controls` replaces only derived routers and
-the three acceptance table regions; and `verify-current` participates in one memoized whole-corpus
-pass. Relation authority, endpoint documents, and externally changed bytes are never overwritten.
-Coverage is computed and never persisted.
+writing or repeating a whole-corpus pass. `regenerate` validates the proposed Markdown before
+atomically replacing only that package's generated view, discards pre-write derived state, rereads
+the output, and revalidates the target and dependencies. `regenerate-controls` replaces only
+derived routers and the three acceptance table regions; `verify-current` rebuilds fresh shared
+indexes and participates in one whole-corpus pass over one unchanged snapshot. No pre-test index
+crosses the test boundary. Relation authority, endpoint documents, and externally changed bytes
+are never overwritten; coverage is computed and never persisted.
 
 The repository-global gate owns immutable snapshot bracketing, registered isolated tests, final
 snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
@@ -144,8 +180,10 @@ statuses without defining any consumer product outcome.
 ## 8. Live implementation closure
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
-content registry's authored-relations slice, current schemas and profiles, resolver, renderer,
-focused tests, and registered packages are the complete live implementation.
+content registry's authored-relations slice, current schema/profile, parser, typed relation-surface
+builder, endpoint resolver, renderer, consumer handoff, focused tests, and registered packages are
+the exact live implementation census. Closure uses these existing controls and introduces no
+parallel registry, generic ownership framework, or generic reachability subsystem.
 
 No alternate assertion owner or reader, compatibility or migration reader, approval or reviewer
 record, stored receipt, digest ledger, coverage store, export path, or inactive domain artifact
