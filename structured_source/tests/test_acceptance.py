@@ -18,40 +18,75 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 
 class AcceptanceContract(unittest.TestCase):
     def setUp(self):
-        self.registry = acceptance.load_registry(ROOT)
+        self.registries = acceptance.load_registries(ROOT)
 
-    def test_registry_is_ordered_current_criteria_data_only(self):
-        self.assertEqual(set(self.registry), {"acceptanceVersion", "criteria"})
-        self.assertEqual(self.registry["acceptanceVersion"], "2")
+    def test_registries_are_ordered_current_domain_criteria_data_only(self):
         self.assertEqual(
-            [entry["code"] for entry in self.registry["criteria"]],
-            list(acceptance.CRITERIA))
-        self.assertTrue(all(set(entry) == {
-            "code", "evidence", "id", "outcome"}
-            for entry in self.registry["criteria"]))
+            tuple(registry["domain"] for registry in self.registries),
+            tuple(contract["domain"] for contract in acceptance.CONTRACTS))
+        self.assertEqual(
+            tuple(entry["code"]
+                  for registry in self.registries
+                  for entry in registry["criteria"]),
+            acceptance.CRITERIA)
+        for contract, registry in zip(acceptance.CONTRACTS, self.registries):
+            self.assertEqual(set(registry), {
+                "acceptanceVersion", "authorityScheme", "criteria", "domain"})
+            self.assertEqual(registry["acceptanceVersion"], "1")
+            self.assertEqual(
+                registry["authorityScheme"], contract["authorityScheme"])
+            self.assertTrue(all(set(entry) == {
+                "code", "evidence", "id", "outcome"}
+                for entry in registry["criteria"]))
 
-    def test_acceptance_table_is_the_exact_registry_projection(self):
-        path = os.path.join(
-            ROOT, "AA11393US-structured-source-markdown_acceptance-criteria.md")
-        with open(path, encoding="utf-8") as handle:
-            text = handle.read()
-        start = "<!-- SSM-AC-TABLE:START -->\n"
-        end = "<!-- SSM-AC-TABLE:END -->"
-        self.assertEqual(
-            text.split(start, 1)[1].split(end, 1)[0],
-            acceptance.render_table(self.registry))
+    def test_acceptance_tables_are_exact_domain_registry_projections(self):
+        for contract, registry in zip(acceptance.CONTRACTS, self.registries):
+            path = os.path.join(ROOT, contract["contractPath"])
+            with self.subTest(domain=contract["domain"]), \
+                    open(path, encoding="utf-8") as handle:
+                text = handle.read()
+            self.assertEqual(
+                text.split(contract["tableStart"], 1)[1].split(
+                    contract["tableEnd"], 1)[0],
+                acceptance.render_table(registry))
+
+    def test_contract_split_is_exact_and_consumer_product_agnostic(self):
+        old_paths = (
+            "AA11393US-structured-source-markdown_technical-description.md",
+            "AA11393US-structured-source-markdown_acceptance-criteria.md",
+            "structured_source/registry/acceptance.json",
+        )
+        self.assertTrue(all(not os.path.exists(os.path.join(ROOT, path))
+                            for path in old_paths))
+        paths = []
+        for contract in acceptance.CONTRACTS:
+            paths.extend((
+                contract["contractPath"],
+                contract["contractPath"].replace(
+                    "_acceptance-criteria.md", "_technical-description.md"),
+            ))
+        self.assertEqual(len(paths), 6)
+        for path in paths:
+            with self.subTest(path=path), \
+                    open(os.path.join(ROOT, path), encoding="utf-8") as handle:
+                folded = handle.read().casefold()
+            self.assertNotIn("navigator", folded)
+            self.assertNotIn("html5", folded)
+            self.assertNotIn(".html", folded)
 
     def test_runner_and_callback_metadata_fail_closed(self):
+        registry = self.registries[0]
+        domain = registry["domain"]
         for field, value in (("runner", {}), ("namespace", "ssp")):
-            malformed = copy.deepcopy(self.registry)
+            malformed = copy.deepcopy(registry)
             malformed[field] = value
             with self.subTest(field=field), self.assertRaises(
                     StructuredSourceError):
-                acceptance.validate_registry(malformed)
-        malformed = copy.deepcopy(self.registry)
+                acceptance.validate_registry(malformed, domain)
+        malformed = copy.deepcopy(registry)
         malformed["criteria"][0]["callbacks"] = ["retired"]
         with self.assertRaises(StructuredSourceError):
-            acceptance.validate_registry(malformed)
+            acceptance.validate_registry(malformed, domain)
 
     def test_parser_is_the_exact_command_surface(self):
         actions = _parser()._subparsers._group_actions[0].choices
@@ -68,7 +103,7 @@ class AcceptanceContract(unittest.TestCase):
                 "structured_source.verify.VerificationContext") as context_type:
             context = context_type.return_value
             context.verify_all.return_value = {
-                "criteria": 10,
+                "criteria": len(acceptance.CRITERIA),
                 "globalPasses": 1,
                 "status": "conformant",
             }
@@ -79,6 +114,11 @@ class AcceptanceContract(unittest.TestCase):
             {"id": criterion, "status": "passed"}
             for criterion in acceptance.CRITERIA
         ])
+        self.assertEqual(
+            [entry["domain"] for entry in result["domains"]],
+            [contract["domain"] for contract in acceptance.CONTRACTS])
+        self.assertTrue(all(entry["criteria"] == 6
+                            for entry in result["domains"]))
         self.assertTrue(all(
             set(entry) == {"id", "status"} for entry in result["results"]))
 
@@ -95,7 +135,9 @@ class AcceptanceContract(unittest.TestCase):
         }
         with mock.patch.object(
                 context, "_control_closure",
-                return_value={"criteria": [{}] * 10}), \
+                return_value=tuple(
+                    {"criteria": [{}] * 6}
+                    for unused_contract in acceptance.CONTRACTS)), \
                 mock.patch.object(
                     context, "check",
                     side_effect=lambda package_id: package_results[package_id]

@@ -6,7 +6,7 @@ import argparse
 import os
 import sys
 
-from .acceptance import load_registry as load_acceptance_registry, render_table
+from .acceptance import CONTRACTS, load_registries, render_table
 from .atomic import publish_set
 from .control import canonical_json
 from .environment import verify_environment
@@ -15,9 +15,6 @@ from .routers import render_all
 from .verify import VerificationContext, run_acceptance
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ACCEPTANCE_PATH = "AA11393US-structured-source-markdown_acceptance-criteria.md"
-_TABLE_START = "<!-- SSM-AC-TABLE:START -->\n"
-_TABLE_END = "<!-- SSM-AC-TABLE:END -->"
 COMMANDS = ("check", "regenerate", "regenerate-controls", "verify-current")
 
 
@@ -35,28 +32,34 @@ def _parser():
 def _regenerate_controls():
     context = VerificationContext(ROOT)
     content_registry = context.registry
-    acceptance_registry = load_acceptance_registry(
+    acceptance_registries = load_registries(
         ROOT, context.reader.read_absolute)
     outputs = render_all(content_registry)
-    acceptance_before = context.reader.read(ACCEPTANCE_PATH)
-    try:
-        acceptance_text = acceptance_before.decode("utf-8")
-    except UnicodeDecodeError as exc:
-        raise StructuredSourceError(
-            "acceptance contract is not UTF-8") from exc
-    if acceptance_text.count(_TABLE_START) != 1 or \
-            acceptance_text.count(_TABLE_END) != 1:
-        raise StructuredSourceError(
-            "acceptance table marker census is not exact")
-    prefix, remainder = acceptance_text.split(_TABLE_START, 1)
-    unused_region, suffix = remainder.split(_TABLE_END, 1)
-    acceptance_after = (
-        prefix + _TABLE_START + render_table(acceptance_registry) +
-        _TABLE_END + suffix).encode("utf-8")
-    outputs[ACCEPTANCE_PATH] = acceptance_after
+    acceptance_before = {}
+    for contract, registry in zip(CONTRACTS, acceptance_registries):
+        path = contract["contractPath"]
+        before = context.reader.read(path)
+        acceptance_before[path] = before
+        try:
+            text = before.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise StructuredSourceError(
+                "%s acceptance contract is not UTF-8" %
+                contract["domain"]) from exc
+        start = contract["tableStart"]
+        end = contract["tableEnd"]
+        if text.count(start) != 1 or text.count(end) != 1:
+            raise StructuredSourceError(
+                "%s acceptance table marker census is not exact" %
+                contract["domain"])
+        prefix, remainder = text.split(start, 1)
+        unused_region, suffix = remainder.split(end, 1)
+        outputs[path] = (
+            prefix + start + render_table(registry) + end + suffix
+        ).encode("utf-8")
     expected = {
-        path: acceptance_before if path == ACCEPTANCE_PATH else
-        context.reader.optional(path)
+        path: (acceptance_before[path] if path in acceptance_before else
+               context.reader.optional(path))
         for path in outputs
     }
     guards = {

@@ -17,7 +17,7 @@ import os
 import re
 
 from . import CONTENT_NAMESPACE, RELATIONS_NAMESPACE
-from .acceptance import CRITERIA, load_registry as load_acceptance_registry
+from .acceptance import CONTRACTS, CRITERIA, load_registries, render_table
 from .atomic import publish_set
 from .canonical import raw_digest
 from .control import canonical_json, parse_json
@@ -29,8 +29,6 @@ C = "{%s}" % CONTENT_NAMESPACE
 R = "{%s}" % RELATIONS_NAMESPACE
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ACCEPTANCE_PATH = "AA11393US-structured-source-markdown_acceptance-criteria.md"
-
 _ANCHOR = re.compile(br'id="ssp-([A-Za-z][A-Za-z0-9_.:-]*)"')
 _RETIRED_PATH_PATTERNS = (
     re.compile(r"(?:^|/)structured_source/approvals(?:/|$)"),
@@ -665,21 +663,23 @@ class VerificationContext:
                    for item in repository_paths):
                 raise StructuredSourceError(
                     "forbidden current path remains: %s" % path)
-        acceptance = load_acceptance_registry(
+        acceptance = load_registries(
             self.root, self.reader.read_absolute)
-        from .acceptance import render_table
         from .routers import render_all
         for path, expected in render_all(self.registry).items():
             if self.reader.read(path) != expected:
                 raise StructuredSourceError(
                     "registered package router is stale: %s" % path)
-        text = self.reader.read(ACCEPTANCE_PATH).decode("utf-8")
-        start = "<!-- SSM-AC-TABLE:START -->\n"
-        end = "<!-- SSM-AC-TABLE:END -->"
-        if text.count(start) != 1 or text.count(end) != 1 or \
-                text.split(start, 1)[1].split(end, 1)[0] != \
-                render_table(acceptance):
-            raise StructuredSourceError("operative acceptance table is stale")
+        for contract, registry in zip(CONTRACTS, acceptance):
+            text = self.reader.read(contract["contractPath"]).decode("utf-8")
+            start = contract["tableStart"]
+            end = contract["tableEnd"]
+            if text.count(start) != 1 or text.count(end) != 1 or \
+                    text.split(start, 1)[1].split(end, 1)[0] != \
+                    render_table(registry):
+                raise StructuredSourceError(
+                    "%s operative acceptance table is stale" %
+                    contract["domain"])
         return acceptance
 
     def verify_all(self):
@@ -698,7 +698,8 @@ class VerificationContext:
             "computedCoveredItems": covered,
             "consumerEdges": sum(len(consumer["edges"])
                                  for consumer in self.registry["consumers"]),
-            "criteria": len(acceptance["criteria"]),
+            "criteria": sum(len(registry["criteria"])
+                            for registry in acceptance),
             "globalPasses": self._global_passes,
             "retiredResidue": 0,
         }
@@ -720,9 +721,18 @@ def run_acceptance(root=ROOT, *, byte_source=None, repository_snapshot=None,
         raise StructuredSourceError(
             "structured-source verification did not prove the current criteria")
     return {
-        "verificationResultVersion": "2",
+        "verificationResultVersion": "3",
         "repositorySnapshot": getattr(repository_snapshot, "digest", None),
         "status": "conformant",
+        "domains": [
+            {
+                "authorityScheme": contract["authorityScheme"],
+                "criteria": len(contract["criteria"]),
+                "domain": contract["domain"],
+                "status": "conformant",
+            }
+            for contract in CONTRACTS
+        ],
         "results": [
             {"id": criterion, "status": "passed"}
             for criterion in CRITERIA
