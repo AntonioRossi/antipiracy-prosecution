@@ -4,7 +4,8 @@
 >
 > This document defines the two current, standalone claims-to-specification navigator
 > products and the architecture that generates them. It states current required behavior
-> only. The executable acceptance contract is `navigator/schema/acceptance.json`.
+> only. The coupled [`acceptance criteria`](acceptance-criteria_DRAFT.md) are projected in
+> [`navigator/schema/acceptance.json`](../../../navigator/schema/acceptance.json).
 
 The navigator uses **XML as the one uniform machine interface** to the repository content it
 consumes. XML supplies stable item identities, hierarchy, typed metadata, provenance, semantic

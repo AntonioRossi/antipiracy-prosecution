@@ -50,20 +50,22 @@ class AcceptanceContract(unittest.TestCase):
                     contract["tableEnd"], 1)[0],
                 acceptance.render_table(registry))
 
-    def test_contract_split_is_exact_and_consumer_product_agnostic(self):
-        old_paths = (
-            "AA11393US-structured-source-markdown_technical-description.md",
-            "AA11393US-structured-source-markdown_acceptance-criteria.md",
-            "structured_source/registry/acceptance.json",
+    def test_contract_layout_is_exact_and_consumer_product_agnostic(self):
+        acceptance_paths = (
+            "contracts/10-source-surfaces/pdf-transcription/acceptance-criteria.md",
+            "contracts/10-source-surfaces/authored-markdown/acceptance-criteria.md",
+            "contracts/20-semantic-relations/authored-relations/acceptance-criteria.md",
         )
-        self.assertTrue(all(not os.path.exists(os.path.join(ROOT, path))
-                            for path in old_paths))
+        self.assertEqual(
+            tuple(contract["contractPath"] for contract in acceptance.CONTRACTS),
+            acceptance_paths)
         paths = []
         for contract in acceptance.CONTRACTS:
             paths.extend((
                 contract["contractPath"],
-                contract["contractPath"].replace(
-                    "_acceptance-criteria.md", "_technical-description.md"),
+                os.path.join(
+                    os.path.dirname(contract["contractPath"]),
+                    "technical-description.md"),
             ))
         self.assertEqual(len(paths), 6)
         for path in paths:

@@ -4,7 +4,7 @@
 >
 > This document defines the current authored-relation authority scheme and its consumer-neutral XML
 > handoff. The coupled acceptance contract is
-> [`AA11393US-structured-source-authored-relations_acceptance-criteria.md`](AA11393US-structured-source-authored-relations_acceptance-criteria.md).
+> [`acceptance criteria`](acceptance-criteria.md).
 
 ## 1. Purpose and authority boundary
 
@@ -39,7 +39,41 @@ IDs are not derived from line numbers, XML positions, array indexes, visible tex
 ordering. Copying one assertion into another package, assigning competing semantic owners, or
 restating an assertion only for a consumer feature fails.
 
-## 3. XML and endpoint contract
+## 3. Required relation item surface
+
+The authoritative XML is an itemized semantic relation graph, not merely a table serialization.
+Every applicable property has one closed representation:
+
+| Property | Authored-relations requirement |
+|---|---|
+| Document identity | One stable `relationSetId` matching the registered package |
+| Item identity | One unique relation XML-maintained `relationId` for every assertion |
+| Item type | One profile-enumerated relation type and direction |
+| Hierarchy and order | Relation-set containment plus authored relation, field, and endpoint order |
+| Numbering | A visible row, claim, or source number is an authored field when substantive; a mechanical ordinal may express order but is never identity |
+| Content and metadata | One semantic owner and only profile-enumerated ordered assertion fields |
+| Provenance and dependencies | Exact registered endpoint documents and their authority roles |
+| Cross-references | Role-bearing `(documentId, fragmentId, fragmentContentDigest)` endpoints |
+| Semantic digest | Snapshot-computed relation digest covering identity, profile, owner, type, direction, ordered fields, and endpoints |
+
+Stable relation identity, authored numbers, mechanical ordinals, and display labels are separate.
+Insertion, deletion, or reordering may change a mechanical ordinal but cannot silently rename an
+assertion. A table row number, XML position, endpoint position, or generated anchor cannot become a
+relation identity.
+
+### Controlled semantic and metadata evolution
+
+Adding or changing a relation type, direction, role, assertion field, or endpoint property requires
+one coherent current-state update to the relation XML owner, schema/profile, parser and resolver,
+relation-digest rule, generated review projection, computed coverage, declared consumer
+requirements, and focused positive and negative tests. Every newly referenceable content field must
+already have one owner and stable item identity in its content package.
+
+Unknown relation semantics, arbitrary extension maps, untyped assertion fields, copied consumer
+interpretations, and renderer-only relations fail closed. A consumer need cannot create an
+undeclared assertion or make endpoint content its semantic owner.
+
+## 4. XML and endpoint contract
 
 Relation XML uses the exact current namespace, XSD, and profile; UTF-8 XML 1.0; NFC text; and the
 secure parser. DTDs, non-predefined entities, external resources, XInclude, XLink, comments,
@@ -57,7 +91,7 @@ Relation XML does not self-bind its own digest. Relation digests cover the asser
 profile, owner, type, direction, ordered fields, and endpoints; endpoint fragment digests remain
 item-local so unrelated sibling changes do not stale the relation.
 
-## 4. Projection and computed coverage
+## 5. Projection and computed coverage
 
 The current renderer deterministically projects validated relation XML to Markdown. The registered
 Markdown bytes must equal fresh rendering. The view exposes the authority scheme and role,
@@ -69,19 +103,29 @@ field, exact endpoint, generated anchor, excerpt, and link. Reuse of one endpoin
 assertions is valid; duplicate semantic ownership of the same assertion is not. Coverage is not a
 stored package companion.
 
-## 5. Consumer-neutral handoff
+## 6. Snapshot-bound consumer-neutral handoff
 
 A declared consumer edge selects exactly one registered representation, `xml` or `markdown`, and
 cannot read the other representation through an undeclared dependency. An XML handoff supplies the
-authority scheme, authoritative role, typed assertions, owners, directions, fields, endpoints, and
-resolved identities and digests. A Markdown handoff supplies only the declared review view.
+authority scheme, authoritative role, complete typed relation surface, owners, directions, ordered
+fields, endpoints, and resolved identities and digests. A Markdown handoff supplies only the
+declared review view.
+
+Trust attaches only to the validated relation graph over the exact immutable snapshot bytes. Before
+a consumer constructs a semantic model or writes an output, relation schema/profile,
+assertion/field/endpoint census, identities, owners, roles, directions, endpoint targets and
+digests, generated view, and coverage must all pass. The consumer receives those same validated
+bytes and may mechanically look up assertions, traverse authored order, select declared fields,
+and resolve exact endpoints. It may not reopen a different path, accept a detached pass token,
+infer a relation, or repair a target.
 
 A consumer may not copy or rewrite an assertion, infer or retarget an endpoint, change a role or
 direction, add source-domain fields, silently fall back, or promote endpoint content into assertion
-authority. Product behavior, presentation, interaction, security, release, and delivery are
+authority. The XML contains no consumer-specific layout, styling, interaction, control-flow, or
+release fields. Product behavior, presentation, interaction, security, release, and delivery are
 outside this contract.
 
-## 6. Commands, writes, and aggregate verification
+## 7. Commands, writes, and aggregate verification
 
 The shared structured-source command surface remains exactly `check <subject-id>`, `regenerate
 <subject-id>`, `regenerate-controls`, and `verify-current`.
@@ -97,7 +141,7 @@ The repository-global gate owns immutable snapshot bracketing, registered isolat
 snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
 statuses without defining any consumer product outcome.
 
-## 7. Live implementation closure
+## 8. Live implementation closure
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
 content registry's authored-relations slice, current schemas and profiles, resolver, renderer,

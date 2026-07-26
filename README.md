@@ -22,11 +22,7 @@ This corpus supports the prosecution of the invention with one organizing discip
 | [`structured_source/`](structured_source/) | Closed authority-scheme registry, XML schemas and profiles, converters, reference resolution, and recurring validation |
 | [`navigator/`](navigator/RUNBOOK-content-sync-and-regeneration.md) | Edition-blind HTML5 navigator source, secure XML gateway, authoritative NA/AF relations and wording, tests, runbook, and committed current products |
 | [`STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md`](STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md) | High-level authority and uniform XML-interface rules |
-| [`AA11393US-structured-source-pdf-transcription_technical-description.md`](AA11393US-structured-source-pdf-transcription_technical-description.md) / [acceptance criteria](AA11393US-structured-source-pdf-transcription_acceptance-criteria.md) | Normative PDF-evidence transcription contract pair |
-| [`AA11393US-structured-source-authored-markdown_technical-description.md`](AA11393US-structured-source-authored-markdown_technical-description.md) / [acceptance criteria](AA11393US-structured-source-authored-markdown_acceptance-criteria.md) | Normative authored-Markdown-to-XML contract pair |
-| [`AA11393US-structured-source-authored-relations_technical-description.md`](AA11393US-structured-source-authored-relations_technical-description.md) / [acceptance criteria](AA11393US-structured-source-authored-relations_acceptance-criteria.md) | Normative authored-relation-XML contract pair |
-| [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) | Normative navigator contract; controls over the non-normative runbook |
-| [`AA11393US-claims-navigator_acceptance-criteria_DRAFT.md`](AA11393US-claims-navigator_acceptance-criteria_DRAFT.md) | Succinct navigator acceptance contract, coupled to the technical description and executable registry |
+| [`contracts/`](contracts/README.md) | Dependency-phased normative contracts: source surfaces, semantic relations, and navigator product generation |
 
 ## Artifact taxonomy
 

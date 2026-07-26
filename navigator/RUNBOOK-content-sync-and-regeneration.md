@@ -3,9 +3,9 @@
 > **CURRENT OPERATING PROCEDURE · INTERNAL COUNSEL-REVIEW SYSTEM**
 
 This runbook applies the normative contract in
-[`../AA11393US-claims-navigator_technical-description_DRAFT.md`](../AA11393US-claims-navigator_technical-description_DRAFT.md)
+[`technical description`](../contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md)
 and its
-[`acceptance criteria`](../AA11393US-claims-navigator_acceptance-criteria_DRAFT.md).
+[`acceptance criteria`](../contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md).
 Those documents control any conflict. This runbook supplies the shortest supported update path;
 it creates no exception or alternative release path.
 

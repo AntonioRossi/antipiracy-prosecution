@@ -3,10 +3,10 @@
 > **INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.**
 
 This document is the succinct acceptance half of the navigator documentation pair. The
-[`technical description`](AA11393US-claims-navigator_technical-description_DRAFT.md) defines the
+[`technical description`](technical-description_DRAFT.md) defines the
 system; this document defines the outcomes that the current implementation must prove. The
 machine-readable counterpart is
-[`navigator/schema/acceptance.json`](navigator/schema/acceptance.json).
+[`navigator/schema/acceptance.json`](../../../navigator/schema/acceptance.json).
 
 All twenty criteria are mandatory. An `edition` criterion passes independently for both `na` and
 `af`; a `shared` criterion passes once for the common implementation; the `bundle` criterion

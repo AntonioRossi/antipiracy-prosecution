@@ -8,7 +8,10 @@ from . import canon
 
 
 ACCEPTANCE_PATH = "navigator/schema/acceptance.json"
-CONTRACT_PATH = "AA11393US-claims-navigator_acceptance-criteria_DRAFT.md"
+CONTRACT_PATH = (
+    "contracts/30-product-generation/claims-navigator/"
+    "acceptance-criteria_DRAFT.md"
+)
 CRITERIA = tuple("AC-%02d" % number for number in range(1, 21))
 TEST_COVERAGE = {
     "navigator.tests.test_canon": frozenset({"AC-15", "AC-16"}),

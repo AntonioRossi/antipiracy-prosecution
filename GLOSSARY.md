@@ -75,10 +75,10 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 
 | Term | Current meaning | Controlling document |
 |---|---|---|
-| **Authority scheme** | The package declaration that identifies whether source fidelity is governed by a stored PDF, authored content by Markdown, or authored assertions by relation XML; file type and consumer choice cannot change it | [`PDF transcription`](AA11393US-structured-source-pdf-transcription_technical-description.md) §1; [`authored Markdown`](AA11393US-structured-source-authored-markdown_technical-description.md) §1; [`authored relations`](AA11393US-structured-source-authored-relations_technical-description.md) §1 |
+| **Authority scheme** | The package declaration that identifies whether source fidelity is governed by a stored PDF, authored content by Markdown, or authored assertions by relation XML; file type and consumer choice cannot change it | [`PDF transcription`](contracts/10-source-surfaces/pdf-transcription/technical-description.md) §1; [`authored Markdown`](contracts/10-source-surfaces/authored-markdown/technical-description.md) §1; [`authored relations`](contracts/20-semantic-relations/authored-relations/technical-description.md) §1 |
 | **Uniform XML machine interface** | The one registered, typed, item-addressable XML representation exposed by every package; interface uniformity does not make XML universally authoritative | same, §§1–3 |
 | **Computed coverage** | Validation derived from the current immutable snapshot that proves the applicable authority-to-representation, item, provenance, and endpoint mappings; it is not a stored package artifact | same, §§2 and 5 |
-| **Substantive-origin tracing** | A validation-time derivation that resolves substantive and security-relevant navigator values to their declared XML item, registered control, typed state, or closed mechanical derivation; it is not a stored lineage inventory | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §2.4 |
+| **Substantive-origin tracing** | A validation-time derivation that resolves substantive and security-relevant navigator values to their declared XML item, registered control, typed state, or closed mechanical derivation; it is not a stored lineage inventory | [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §2.4 |
 | **Repository audit unit** | Exact clean Git commit and checkout with supplied history, the current documentation pairs and executable registries, and the unchanged-snapshot `validate-current` result | same, §10 |
 
 ## Filing and record terms
@@ -113,12 +113,12 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 
 | Term | Current meaning | Controlling document |
 |---|---|---|
-| **Repository snapshot** | Immutable capture of the complete repository tree with retained bytes; validation reads the captured bytes and rejects a changed final tree | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §10 |
+| **Repository snapshot** | Immutable capture of the complete repository tree with retained bytes; validation reads the captured bytes and rejects a changed final tree | [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §10 |
 | **Secure XML gateway** | The sole read-only production entry point for registered semantic content; it validates each package according to its authority scheme and rejects undeclared, unsafe, stale, or ambiguous input | same, §2.2 |
 | **Immutable edition model** | The sealed typed representation produced by the gateway and consumed by the edition-blind renderer; it cannot repair, infer, retarget, or persist semantic content | same, §§2.2 and 4 |
 | **Technical-preview product** | The sole current navigator product class, carrying the exact technical-preview label and making no claim of observed browser, operating-system, print-engine, or assistive-technology behavior | same, §§1 and 3 |
-| **Executable acceptance registry** | The current machine-readable projection of the ordered `AC-01` through `AC-20` IDs, scopes, and criterion text; every criterion must pass in the invoking validation process | [`AA11393US-claims-navigator_acceptance-criteria_DRAFT.md`](AA11393US-claims-navigator_acceptance-criteria_DRAFT.md) |
-| **Delivery bundle** | The deterministic five-member STORE ZIP containing both sealed HTML products, their detached checksums, and `MANIFEST.txt`; its own detached checksum remains beside the ZIP | [`AA11393US-claims-navigator_technical-description_DRAFT.md`](AA11393US-claims-navigator_technical-description_DRAFT.md) §9 |
+| **Executable acceptance registry** | The current machine-readable projection of the ordered `AC-01` through `AC-20` IDs, scopes, and criterion text; every criterion must pass in the invoking validation process | [`claims navigator acceptance criteria`](contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md) |
+| **Delivery bundle** | The deterministic five-member STORE ZIP containing both sealed HTML products, their detached checksums, and `MANIFEST.txt`; its own detached checksum remains beside the ZIP | [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §9 |
 
 ## Status suffixes and outcome labels
 
