@@ -44,6 +44,11 @@ The registry resolves every file through its exact file ID and role. It contains
 transcription owner, generated-file authority, coverage-artifact field, cached package digest,
 approval field, or consumer-specific semantic content.
 
+Package/file, router/file, and consumer-dependency/file ownership each close in both directions.
+Every registered file in those classes has exactly one applicable owner or declaration, and every
+owner or declaration resolves exactly one registered file of the required role. An unowned
+registered file and a declaration without its reciprocal file both fail.
+
 The XML maintains stable document and item IDs. IDs are not derived from page number, line number,
 XPath position, array index, visible text, heading slug, or sort order. Every transcribed content
 item has page or region provenance tied to the manifest-bound PDF. Any known transcription
@@ -74,6 +79,16 @@ deletion, or reordering may change a mechanical ordinal but cannot silently rena
 number or generated anchor can assist review but cannot substitute for the item ID in a machine
 reference.
 
+The current profile is the exclusive executable inventory of document metadata, the item identity
+attribute, item types and their permitted metadata, document order, source-number treatment,
+provenance fields, dependency kinds, and item-digest inputs. The XSD and profile must agree exactly;
+neither independently authorizes a field omitted by the other.
+
+Each dependency declares one kind, subject identity, and digest. Asset dependencies resolve by raw
+stored-byte digest; document and relation-package dependencies resolve by canonical semantic digest.
+The dependency and asset censuses must be unique and exact, their kinds must agree with the target
+authority, and a dependency cycle fails.
+
 ### Controlled semantic and metadata evolution
 
 Adding or changing a transcription field requires one coherent current-state update to its
@@ -87,10 +102,12 @@ source-domain semantics to a generated representation.
 
 ## 4. XML and manifest contract
 
-Transcription XML uses the exact current namespace, XSD, and profile; UTF-8 XML 1.0; LF line
-endings; NFC text; and the secure parser. DTDs, non-predefined entities, external resources,
-XInclude, XLink, comments, processing instructions, CDATA, `xml:base`, recovery, duplicate IDs,
-unknown fields or versions, aliases, and resource-limit violations fail closed.
+Transcription XML uses the exact current namespace, XSD, and profile; UTF-8 XML 1.0 without a byte
+order mark; LF line endings with no carriage returns; NFC text; and the secure parser. An XML
+declaration may be absent; when present it is exactly `<?xml version="1.0" encoding="UTF-8"?>`.
+DTDs, non-predefined entities, external resources, XInclude, XLink, comments, processing
+instructions, CDATA, `xml:base`, recovery, duplicate IDs, unknown fields or versions, aliases, and
+resource-limit violations fail closed.
 
 Each artifact receives a raw stored-byte digest and a domain-separated canonical semantic digest
 computed from the immutable snapshot. Item digests cover stable identity, type, profile, semantic
@@ -100,7 +117,10 @@ metadata, generator versions, and sibling items.
 The canonical manifest binds the stored PDF path, raw digest, byte size, evidentiary role, copy
 status, extraction method, assets, and each declared convenience derivative. A convenience
 derivative is expressly non-authoritative and cannot supply transcription content or provenance.
-No command writes the PDF, transcription XML, manifest, or registered source asset.
+The registered stored-source path ends in `.pdf`, its bytes begin with the PDF format signature,
+and the manifest has the exact current source-manifest name. Those checks prove only container and
+registration consistency; they do not prove PDF authenticity, source fidelity, or transcription
+fidelity. No command writes the PDF, transcription XML, manifest, or registered source asset.
 
 ## 5. Projection and computed coverage
 
@@ -115,6 +135,12 @@ Coverage is computed from the current snapshot and proves:
 - every transcribed content item appears under its stable generated Markdown anchor; and
 - every used asset is declared exactly by the manifest and package.
 
+The verifier independently recomputes the complete ordered field census from the validated XML; a
+renderer-produced coverage value does not attest to itself. The recomputed census checks the source
+and Markdown digests, field identity and origin, classification, anchors, line regions, and each
+required derivation or justification. Together with the item/provenance and dependency/asset
+censuses, a missing, extra, duplicate, reordered, or stale field or projection fails.
+
 Coverage is validation evidence, not a stored package companion. An undeclared coverage file or a
 missing or stale generated view fails.
 
@@ -124,7 +150,13 @@ A declared consumer edge selects exactly one registered representation, `xml` or
 cannot read the other representation through an undeclared dependency. An XML handoff supplies the
 authority scheme, transcription role, complete typed item surface, metadata, provenance,
 uncertainty, dependencies, assets, hierarchy, order, and digests. A Markdown handoff supplies only
-the declared review representation.
+the declared review representation and receives no XML item surface or source assets.
+
+An acceptable immutable snapshot supplies a nonempty digest, the checkout root, a closed path
+inventory, and retained bytes addressable through that inventory. A digest string, pass result, or
+other detached token is not a snapshot. Every package-validation and declared-dependency path in a
+handoff must occur in the snapshot inventory, and its validated bytes must equal the retained
+snapshot bytes exactly.
 
 Trust attaches only to the validated item graph over the exact immutable snapshot bytes. Before a
 consumer constructs a semantic model or writes an output, package, schema/profile, item/field
@@ -133,6 +165,11 @@ coverage must all pass. The consumer receives those same validated bytes and may
 up items, traverse declared hierarchy and order, select declared fields, and resolve registered
 dependencies. It may not reopen a different path, accept a detached pass token, or infer missing
 semantics.
+
+Package validation constructs and freezes the representation bytes and complete typed surface
+before handoff. The handoff uses that validated state without reopening even the same live path or
+reconstructing semantics from a later read, and exposes the exact validation-read census for the
+edge.
 
 Selection of a representation never changes authority. The consumer may not reparse the PDF or an
 OCR derivative as a substitute, infer missing content, add source-domain fields, silently fall
@@ -150,7 +187,8 @@ For this scheme, `check` validates one package and its declared dependencies wit
 generated Markdown; `regenerate-controls` replaces only derived routers and the three acceptance
 table regions; and `verify-current` participates in one memoized whole-corpus pass. Authority files
 and externally changed bytes are never overwritten. Coverage is always computed and never
-persisted.
+persisted. After an atomic generated-output replacement, every pre-replacement representation and
+surface state is discarded and the replacement is read back and validated anew.
 
 The repository-global gate owns immutable snapshot bracketing, registered isolated tests, final
 snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
@@ -160,7 +198,9 @@ statuses without defining any consumer product outcome.
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
 content registry's PDF-transcription slice, current schemas and profiles, manifest validator,
-renderer, focused tests, and registered packages are the complete live implementation.
+renderer, item-surface builder, immutable-snapshot handoff, focused tests, registered consumers,
+and registered packages are the complete live implementation. The immutable repository snapshot
+must contain the exact named domain artifacts and every required shared implementation path.
 
 No alternate transcription, OCR-authority path, compatibility or migration reader, approval or
 reviewer record, stored receipt, digest ledger, coverage store, export path, or inactive domain
