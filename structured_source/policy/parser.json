@@ -4,8 +4,6 @@
   "encoding": "UTF-8",
   "unicodeNormalization": "NFC",
   "xsdVersion": "1.1",
-  "canonicalizationVersion": "xc1",
-  "digestDomainVersion": "ssp-xd1",
   "forbiddenConstructs": [
     "CDATA",
     "DOCTYPE",

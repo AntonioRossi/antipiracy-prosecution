@@ -80,20 +80,22 @@ def _assert_only_outputs_changed(before, outputs, label):
 
 def cmd_preview(edition_id):
     frozen = _snapshot()
-    currentstate.verify_structured_source(
+    inputs = currentstate.verify_structured_source(
         frozen, ("navigator-" + edition_id,))
     unused_model, html_bytes, unused_lock = currentstate.derive(
-        edition_id, "preview", frozen.byte_source())
+        edition_id, "preview", frozen,
+        inputs["navigator-" + edition_id])
     _assert_unchanged(frozen, "preview")
     return html_bytes
 
 
 def cmd_candidate(edition_id):
     frozen = _snapshot()
-    currentstate.verify_structured_source(
+    inputs = currentstate.verify_structured_source(
         frozen, ("navigator-" + edition_id,))
     edition_model, html_bytes, content_lock = currentstate.derive(
-        edition_id, "candidate", frozen.byte_source())
+        edition_id, "candidate", frozen,
+        inputs["navigator-" + edition_id])
     name = release.candidate_name(edition_model.artifact_name)
     _assert_unchanged(frozen, "candidate derivation")
     outputs = {name: html_bytes}
@@ -111,10 +113,11 @@ def cmd_candidate(edition_id):
 
 def cmd_release(edition_id):
     frozen = _snapshot()
-    currentstate.verify_structured_source(
+    inputs = currentstate.verify_structured_source(
         frozen, ("navigator-" + edition_id,))
     edition_model, html_bytes, content_lock = currentstate.derive(
-        edition_id, "release", frozen.byte_source())
+        edition_id, "release", frozen,
+        inputs["navigator-" + edition_id])
     candidate = release.candidate_name(edition_model.artifact_name)
     try:
         stored_candidate = frozen.read_bytes("navigator/dist/" + candidate)
@@ -145,9 +148,10 @@ def cmd_release(edition_id):
 
 def cmd_bundle():
     frozen = _snapshot()
-    currentstate.verify_structured_source(
+    inputs = currentstate.verify_structured_source(
         frozen, ("navigator-na", "navigator-af"))
-    bundle_state = currentstate.build_bundle_state(frozen.byte_source())
+    states = currentstate._derive_editions(frozen, inputs)
+    bundle_state = currentstate.build_bundle_state(frozen, states)
     name = bundle_state["config"]["name"]
     checksum_name = name + ".sha256"
     checksum = release.checksum_text(name, bundle_state["zip"])

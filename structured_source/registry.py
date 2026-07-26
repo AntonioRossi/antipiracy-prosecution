@@ -6,6 +6,7 @@ an approval database, digest ledger, coverage store, or migration inventory.
 
 from __future__ import annotations
 
+from collections import Counter
 import os
 import re
 
@@ -315,10 +316,12 @@ def validate_registry(value):
     registered_consumer_dependencies = {
         entry["fileId"] for entry in files
         if entry["role"] == "consumer-dependency"}
-    declared_consumer_dependencies = {
+    declared_consumer_dependencies = [
         file_id for consumer in consumers for edge in consumer["edges"]
-        for file_id in edge["dependencies"]}
-    if registered_consumer_dependencies != declared_consumer_dependencies:
+        for file_id in edge["dependencies"]]
+    declared_dependency_counts = Counter(declared_consumer_dependencies)
+    if registered_consumer_dependencies != set(declared_dependency_counts) or \
+            any(count != 1 for count in declared_dependency_counts.values()):
         raise StructuredSourceError(
             "consumer dependency/file census is not bidirectionally exact")
     taxonomy = value.get("taxonomy")

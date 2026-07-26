@@ -1,15 +1,21 @@
-"""Focused contract tests for the XML-only typed navigator model."""
+"""Focused contract tests for the handoff-backed typed navigator model."""
 
 from dataclasses import FrozenInstanceError, replace
 import os
 import re
+from types import MappingProxyType
 import unittest
+from unittest import mock
 
 from navigator.lib.gateway import ContentGateway, GatewayError
 from navigator.lib.claims import ClaimsParseError, dependency_references
 from navigator.lib.model import EditionModel, ModelError, bundle_manifest_text
-from navigator.lib import bundlezip, canon, projections
+from navigator.lib import bundlezip, canon, currentstate, projections
+from navigator.lib.snapshot import RepositorySnapshot
 from navigator.lib.validate import validate_edition
+from structured_source.canonical import raw_digest
+from structured_source.parser import PARSER_CONTROL_PATHS
+from structured_source.pdf_transcription import PDFTranscriptionSurface
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -19,12 +25,21 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
 class XMLModelTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.snapshot = RepositorySnapshot.capture(ROOT, retain_bytes=True)
+        cls.inputs = currentstate.verify_structured_source(
+            cls.snapshot, ("navigator-na", "navigator-af"))
         cls.models = {
-            edition: EditionModel(
-                ContentGateway(ROOT),
-                "navigator/editions/%s.json" % edition)
+            edition: cls.build_model(edition)
             for edition in ("na", "af")
         }
+
+    @classmethod
+    def build_model(cls, edition, byte_source=None):
+        return EditionModel(
+            ContentGateway(
+                ROOT, byte_source=byte_source or cls.snapshot.byte_source()),
+            "navigator/editions/%s.json" % edition,
+            cls.inputs["navigator-" + edition])
 
     def test_live_editions_have_exact_claim_and_mapping_census(self):
         expected = {"na": (30, 77), "af": (23, 61)}
@@ -69,11 +84,56 @@ class XMLModelTests(unittest.TestCase):
                 self.assertTrue(all(item.registered_path.endswith(".source.xml")
                                     for item in model.source_documents))
                 paths = {path for path, _digest in model.read_inventory}
-                self.assertFalse(any(path.endswith((".md", ".pdf"))
-                                     for path in paths))
+                self.assertTrue(set(PARSER_CONTROL_PATHS).issubset(paths))
+                self.assertTrue(any(path.endswith(".pdf") for path in paths))
+                self.assertTrue(any(path.endswith(".md") for path in paths))
                 self.assertFalse(any(path.startswith(("navigator/dist/",
                                                       "navigator/records/"))
                                      for path in paths))
+
+    def test_each_edition_has_exactly_two_dependency_free_handoffs(self):
+        for edition in ("na", "af"):
+            with self.subTest(edition=edition):
+                consumer = self.inputs["navigator-" + edition]
+                claim_id = "aa11393us-%s-us-claim-set" % edition
+                self.assertEqual(
+                    set(consumer.handoffs),
+                    {claim_id, "pct-as-filed-dossier"})
+                claim = consumer.handoffs[claim_id]
+                pct = consumer.handoffs["pct-as-filed-dossier"]
+                self.assertTrue(all(
+                    handoff["inputRepresentation"] == "xml" and
+                    not handoff["dependencies"]
+                    for handoff in (claim, pct)))
+                self.assertEqual(
+                    (claim["authorityScheme"], claim["representationRole"]),
+                    ("authored-markdown-v1", "generated-xml"))
+                self.assertIsNone(claim["surface"])
+                self.assertFalse(claim["assets"])
+                self.assertEqual(
+                    (pct["authorityScheme"], pct["representationRole"]),
+                    ("pdf-evidence-transcription-v1", "transcription-xml"))
+                self.assertIsInstance(pct["surface"], PDFTranscriptionSurface)
+                self.assertEqual(
+                    set(pct["assets"]),
+                    {asset.path for asset in pct["surface"].assets})
+                self.assertEqual(len(pct["assets"]), 4)
+
+    def test_authored_handoff_uses_handed_xml_and_retained_controls_only(self):
+        handoff = self.inputs["navigator-na"].handoffs[
+            "aa11393us-na-us-claim-set"]
+        self.assertEqual(handoff["inputRepresentation"], "xml")
+        self.assertEqual(handoff["representationRole"], "generated-xml")
+        self.assertIsNone(handoff["surface"])
+        with mock.patch(
+                "structured_source.markdown.convert_authored_markdown",
+                side_effect=AssertionError("consumer reconverted Markdown")), \
+                mock.patch(
+                    "structured_source.parser._default_parser_controls",
+                    side_effect=AssertionError("consumer used default controls")):
+            model = self.build_model("na")
+        self.assertEqual(
+            model.source_documents[0].xml_role, "generated-xml")
 
     def test_pct_boundary_assets_and_code_are_typed(self):
         model = self.models["na"]
@@ -99,7 +159,7 @@ class XMLModelTests(unittest.TestCase):
             model.edition_id = "na"
         self.assertFalse(hasattr(model, "gw"))
         self.assertFalse(hasattr(model, "registry"))
-        self.assertIsNone(model._document_artifacts)
+        self.assertIsNone(model._document_item_digests)
         changed_lock = model.content_lock
         changed_lock["reads"].clear()
         self.assertTrue(model.content_lock["reads"])
@@ -193,6 +253,34 @@ class XMLModelTests(unittest.TestCase):
         with self.assertRaises(GatewayError):
             exact.read_bytes("GLOSSARY.md")
 
+        for package_id in (
+                "pct-as-filed-dossier", "aa11393us-na-us-claim-set"):
+            with self.subTest(package_id=package_id):
+                handed = ContentGateway(
+                    ROOT, byte_source=self.snapshot.byte_source())
+                handoff = self.inputs["navigator-na"].handoffs[package_id]
+                handed.bind_consumer_handoff(handoff)
+                with self.assertRaises(GatewayError):
+                    handed.read_bytes(handoff["path"])
+                changed = handoff["bytes"] + b"changed"
+                conflicting = dict(handoff)
+                conflicting["bytes"] = changed
+                conflicting["validationReads"] = tuple(
+                    (path, raw_digest(changed)
+                     if path == handoff["path"] else digest)
+                    for path, digest in handoff["validationReads"])
+                with self.assertRaisesRegex(GatewayError, "different bytes"):
+                    handed.bind_consumer_handoff(
+                        MappingProxyType(conflicting))
+
+    def test_model_rejects_a_handoff_detached_from_its_snapshot(self):
+        detached = replace(
+            self.inputs["navigator-na"],
+            snapshot_digest="sha256/c1:" + "0" * 64)
+        with self.assertRaisesRegex(
+                currentstate.CurrentStateError, "does not match"):
+            currentstate.build_model("na", self.snapshot, detached)
+
     def test_dependency_grammar_is_exactly_singular(self):
         self.assertEqual(
             dependency_references("The method of claim 12, wherein"), (12,))
@@ -213,7 +301,7 @@ class XMLModelTests(unittest.TestCase):
                 data = handle.read()
             if absolute.endswith(relation_suffix):
                 match = re.search(
-                    rb'fragmentContentDigest="sha256/xc1/ssp-xd1:([0-9a-f]{64})"',
+                    rb'fragmentContentDigest="sha256/typed-item-v1:([0-9a-f]{64})"',
                     data)
                 self.assertIsNotNone(match)
                 position = match.start(1)
@@ -222,20 +310,33 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            EditionModel(
-                ContentGateway(ROOT, byte_source=tampered_source),
-                "navigator/editions/na.json")
+            self.build_model("na", tampered_source)
+
+    def test_navigator_relations_reject_upstream_relation_references(self):
+        relation_suffix = os.path.join(
+            "navigator", "relations", "na__pct.relations.xml")
+
+        def tampered_source(absolute):
+            with open(absolute, "rb") as handle:
+                data = handle.read()
+            if absolute.endswith(relation_suffix):
+                data = data.replace(
+                    b'<mapping relationId=',
+                    b'<mapping upstreamRelationId="assertion-1" relationId=',
+                    1)
+            return data
+
+        with self.assertRaisesRegex(GatewayError, "closed XSD"):
+            self.build_model("na", tampered_source)
 
     def test_validator_recomputes_dependency_projection(self):
-        model = EditionModel(
-            ContentGateway(ROOT), "navigator/editions/na.json")
+        model = self.build_model("na")
         object.__setattr__(model, "parents", {})
         defects = validate_edition(model)
         self.assertTrue(any(code == "dependencies" for code, _message in defects))
 
     def test_validator_rejects_overlapping_phrases_and_cross_target_repeats(self):
-        model = EditionModel(
-            ContentGateway(ROOT), "navigator/editions/na.json")
+        model = self.build_model("na")
         phrases = list(model.relations.phrase_mappings)
         first = phrases[0]
         unit = model.units_by_fragment[first.parent.fragment_id]
@@ -250,8 +351,7 @@ class XMLModelTests(unittest.TestCase):
         self.assertTrue(any("overlaps" in message
                             for _code, message in defects))
 
-        model = EditionModel(
-            ContentGateway(ROOT), "navigator/editions/na.json")
+        model = self.build_model("na")
         mappings = list(model.relations.mappings)
         index = next(index for index, item in enumerate(mappings)
                      if len(item.targets) > 1)
@@ -280,9 +380,7 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            EditionModel(
-                ContentGateway(ROOT, byte_source=wrong_origin),
-                "navigator/editions/na.json")
+            self.build_model("na", wrong_origin)
 
         shared_suffix = os.path.join(
             "navigator", "wording", "shared.wording.xml")
@@ -306,9 +404,7 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            EditionModel(
-                ContentGateway(ROOT, byte_source=moved_to_wrong_scope),
-                "navigator/editions/na.json")
+            self.build_model("na", moved_to_wrong_scope)
 
         live = self.models["na"]
         editorial = next(node for node in live.disclosure_index.values()
@@ -334,9 +430,7 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            EditionModel(
-                ContentGateway(ROOT, byte_source=editorial_target),
-                "navigator/editions/na.json")
+            self.build_model("na", editorial_target)
 
 
 if __name__ == "__main__":

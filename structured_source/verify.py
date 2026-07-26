@@ -15,6 +15,7 @@ import ast
 import importlib
 import os
 import re
+from types import MappingProxyType
 
 from . import CONTENT_NAMESPACE, RELATIONS_NAMESPACE
 from .acceptance import CONTRACTS, CRITERIA, load_registries, render_table
@@ -60,13 +61,23 @@ _OFFICIAL_COPY_STATUSES = frozenset({
 _PDF_LIVE_IMPLEMENTATION = frozenset({
     "contracts/10-source-surfaces/pdf-transcription/acceptance-criteria.md",
     "contracts/10-source-surfaces/pdf-transcription/technical-description.md",
+    "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
+    "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
+    "navigator/RUNBOOK-content-sync-and-regeneration.md",
     "navigator/build.py",
     "navigator/lib/currentstate.py",
     "navigator/lib/gateway.py",
     "navigator/lib/model.py",
+    "navigator/lib/projections.py",
     "navigator/lib/registry.py",
+    "navigator/lib/release.py",
+    "navigator/lib/render.py",
     "navigator/lib/snapshot.py",
+    "navigator/lib/validate.py",
+    "navigator/schema/acceptance.json",
+    "navigator/schema/navigator-relations.xsd",
     "navigator/tests/test_current_pipeline.py",
+    "navigator/tests/test_render_current.py",
     "navigator/tests/test_xml_model.py",
     "structured_source/__init__.py",
     "structured_source/__main__.py",
@@ -76,6 +87,7 @@ _PDF_LIVE_IMPLEMENTATION = frozenset({
     "structured_source/control.py",
     "structured_source/environment.py",
     "structured_source/errors.py",
+    "structured_source/markdown.py",
     "structured_source/parser.py",
     "structured_source/pdf_transcription.py",
     "structured_source/policy/environment.json",
@@ -89,6 +101,8 @@ _PDF_LIVE_IMPLEMENTATION = frozenset({
     "structured_source/render.py",
     "structured_source/routers.py",
     "structured_source/schemas/content.xsd",
+    "structured_source/schemas/authored.xsd",
+    "structured_source/schemas/relations.xsd",
     "structured_source/schemas/xml.xsd",
     "structured_source/tests/test_acceptance.py",
     "structured_source/tests/test_atomic.py",
@@ -105,13 +119,61 @@ _PDF_NAMED_PATHS = frozenset({
     "structured_source/registry/acceptance-pdf-transcription.json",
     "structured_source/tests/test_pdf_transcription.py",
 })
+_STRUCTURED_SOURCE_LIVE_PATHS = frozenset({
+    "structured_source/PACKAGES.md",
+    "structured_source/__init__.py",
+    "structured_source/__main__.py",
+    "structured_source/acceptance.py",
+    "structured_source/atomic.py",
+    "structured_source/canonical.py",
+    "structured_source/control.py",
+    "structured_source/environment.py",
+    "structured_source/errors.py",
+    "structured_source/markdown.py",
+    "structured_source/parser.py",
+    "structured_source/pdf_transcription.py",
+    "structured_source/policy/environment.json",
+    "structured_source/policy/parser.json",
+    "structured_source/profiles.py",
+    "structured_source/profiles/gfm-v1.json",
+    "structured_source/profiles/xml-v1.json",
+    "structured_source/registry.py",
+    "structured_source/registry/acceptance-authored-markdown.json",
+    "structured_source/registry/acceptance-authored-relations.json",
+    "structured_source/registry/acceptance-pdf-transcription.json",
+    "structured_source/registry/content.json",
+    "structured_source/render.py",
+    "structured_source/routers.py",
+    "structured_source/schemas/authored.xsd",
+    "structured_source/schemas/content.xsd",
+    "structured_source/schemas/relations.xsd",
+    "structured_source/schemas/xml.xsd",
+    "structured_source/tests/__init__.py",
+    "structured_source/tests/test_acceptance.py",
+    "structured_source/tests/test_atomic.py",
+    "structured_source/tests/test_conversion.py",
+    "structured_source/tests/test_pdf_transcription.py",
+    "structured_source/tests/test_registry.py",
+    "structured_source/tests/test_xml_contract.py",
+    "structured_source/verify.py",
+})
+_OBSOLETE_LIVE_TOKENS = (
+    b"Exact semantic " + b"digest",
+    b"canonical " + b"XML",
+    b"semantic" + b"Digest",
+    b"semantic" + b"_digest",
+    b"sha256/" + b"xc1:",
+    b"ssp-" + b"xd1",
+)
+_LIVE_TEXT_SUFFIXES = (
+    ".html", ".json", ".md", ".py", ".xml", ".xsd")
 
 
-def _parse_artifact(data, kind):
+def _parse_artifact(data, kind, *, controls=None):
     # Keep registry/acceptance controls usable before the locked XML runtime is
     # imported; conversion paths still fail immediately if it is unavailable.
     from .parser import parse_artifact
-    return parse_artifact(data, kind)
+    return parse_artifact(data, kind, controls=controls)
 
 
 def _render_content(*args, **kwargs):
@@ -245,6 +307,19 @@ class VerificationContext:
         self._checking = set()
         self._global_result = None
         self._global_passes = 0
+        self._parser_controls = None
+        self._snapshot_identity_validated = False
+
+    def _controls(self):
+        if self._parser_controls is None:
+            from .parser import load_parser_controls
+            self._parser_controls = load_parser_controls(self.reader.read)
+        return self._parser_controls
+
+    @property
+    def parser_controls(self):
+        """Return the retained controls used by this validation context."""
+        return self._controls()
 
     def file_path(self, file_id):
         try:
@@ -266,7 +341,8 @@ class VerificationContext:
             "authored-relations-v1": "relation-set",
         }[package["authorityScheme"]]
         artifact = _parse_artifact(
-            self.reader.read(self.file_path(package["xmlFile"])), kind)
+            self.reader.read(self.file_path(package["xmlFile"])), kind,
+            controls=self._controls())
         if kind == "relation-set":
             identity = artifact.root.find(R + "identity")
             actual = identity.get("relationSetId") if identity is not None else None
@@ -390,7 +466,8 @@ class VerificationContext:
             raise StructuredSourceError(
                 "PDF XML/manifest asset census is not exact")
         return _render_content(
-            artifact, self.file_path(package["markdownFile"]), assets)
+            artifact, self.file_path(package["markdownFile"]), assets,
+            projection_profile=self._controls().projection_profile)
 
     def _resolve_pdf_dependencies(self, package_id, artifact, manifest):
         from .pdf_transcription import DependencyBinding
@@ -401,36 +478,47 @@ class VerificationContext:
         for entry in dependencies.findall(C + "dependency"):
             kind = entry.get("kind")
             subject_id = entry.get("subjectId")
+            item_id = entry.get("itemId")
             declared_digest = entry.get("digest")
             if kind == "asset":
-                actual_digest = asset_digests.get(subject_id)
-            elif kind in {"document", "relation-set"}:
+                actual_digest = (asset_digests.get(subject_id)
+                                 if item_id is None else None)
+            elif kind == "document":
                 dependency_package = self.packages.get(subject_id)
-                expected_scheme = ("authored-relations-v1"
-                                   if kind == "relation-set" else None)
                 if dependency_package is None or \
-                        (expected_scheme is not None and
-                         dependency_package["authorityScheme"] != expected_scheme) or \
-                        (kind == "document" and
-                         dependency_package["authorityScheme"] ==
-                         "authored-relations-v1"):
-                    actual_digest = None
+                        dependency_package["authorityScheme"] == \
+                        "authored-relations-v1":
+                    actual_digest = "invalid"
                 else:
                     self.check(subject_id)
-                    actual_digest = self._artifact(subject_id).semantic_digest
+                    actual_digest = (self._artifact(
+                        subject_id).fragment_digests.get(item_id)
+                                     if item_id is not None else None)
+            elif kind == "relation-set":
+                dependency_package = self.packages.get(subject_id)
+                if dependency_package is None or \
+                        dependency_package["authorityScheme"] != \
+                        "authored-relations-v1" or item_id is not None or \
+                        declared_digest is not None:
+                    actual_digest = "invalid"
+                else:
+                    self.check(subject_id)
+                    actual_digest = None
             else:
                 actual_digest = None
             if actual_digest != declared_digest:
                 raise StructuredSourceError(
                     "PDF registered dependency digest is stale: %s" % package_id)
             resolved.append(DependencyBinding(
-                kind=kind, subject_id=subject_id, digest=declared_digest))
+                kind=kind, subject_id=subject_id, item_id=item_id,
+                digest=declared_digest))
         return tuple(resolved)
 
     def _render_relation(self, package, artifact):
         views = {}
         assertions = set()
         relation_ids = []
+        endpoint_package_ids = set()
         field_count = 0
         for relation in artifact.root.findall(R + "relation"):
             relation_ids.append(relation.get("relationId"))
@@ -458,6 +546,7 @@ class VerificationContext:
                         "relation endpoint document is not a content package")
                 self.check(document_id)
                 self._artifact(document_id)
+                endpoint_package_ids.add(document_id)
                 fragment = self._fragments.get((document_id, fragment_id))
                 if fragment is None or fragment["digest"] != digest:
                     raise StructuredSourceError(
@@ -469,10 +558,12 @@ class VerificationContext:
         if len(relation_ids) != len(set(relation_ids)):
             raise StructuredSourceError("relation identity is duplicated")
         markdown = _render_relations(
-            artifact, self.file_path(package["markdownFile"]), views).markdown
+            artifact, self.file_path(package["markdownFile"]), views,
+            projection_profile=self._controls().projection_profile).markdown
         return markdown, len(assertions), field_count, sum(
             len(relation.findall(R + "endpoint"))
-            for relation in artifact.root.findall(R + "relation"))
+            for relation in artifact.root.findall(R + "relation")), tuple(
+                sorted(endpoint_package_ids))
 
     def _derive(self, package_id):
         package = self.packages[package_id]
@@ -481,8 +572,13 @@ class VerificationContext:
         markdown_path = self.file_path(package["markdownFile"])
         if scheme == "authored-markdown-v1":
             markdown = self.reader.read(markdown_path)
-            conversion = self._markdown_converter()(
-                markdown, markdown_path, package_id)
+            converter = self._markdown_converter()
+            if self.markdown_adapter is None:
+                conversion = converter(
+                    markdown, markdown_path, package_id,
+                    parser_controls=self._controls())
+            else:
+                conversion = converter(markdown, markdown_path, package_id)
             xml = _conversion_value(conversion, "xml")
             item_ids = _conversion_value(conversion, "item_ids")
             generated_markdown = _conversion_value(conversion, "markdown")
@@ -490,8 +586,6 @@ class VerificationContext:
                 conversion, "source_raw_digest")
             generated_markdown_digest = _conversion_value(
                 conversion, "generated_markdown_raw_digest")
-            conversion_semantic_digest = _conversion_value(
-                conversion, "semantic_digest")
             conversion_fragments = _conversion_value(
                 conversion, "fragment_digests")
             if not isinstance(xml, bytes) or \
@@ -502,13 +596,13 @@ class VerificationContext:
                         generated_markdown):
                 raise StructuredSourceError(
                     "authored Markdown conversion is incomplete")
-            artifact = _parse_artifact(xml, "authored-document")
+            artifact = _parse_artifact(
+                xml, "authored-document", controls=self._controls())
             identity = artifact.root.find(C + "documentIdentity")
             if identity is None or identity.get("documentId") != package_id:
                 raise StructuredSourceError(
                     "generated authored XML identity is stale")
-            if artifact.semantic_digest != conversion_semantic_digest or \
-                    artifact.fragment_digests != conversion_fragments or \
+            if artifact.fragment_digests != conversion_fragments or \
                     set(artifact.fragment_digests) != set(item_ids) or \
                     len(item_ids) != len(set(item_ids)):
                 raise StructuredSourceError(
@@ -550,8 +644,8 @@ class VerificationContext:
                 "storedSources": 1,
             }
 
-        generated, assertions, fields, endpoints = self._render_relation(
-            package, artifact)
+        generated, assertions, fields, endpoints, endpoint_package_ids = \
+            self._render_relation(package, artifact)
         anchors = {
             match.group(1).decode("ascii") for match in _ANCHOR.finditer(generated)}
         relation_ids = {
@@ -565,6 +659,7 @@ class VerificationContext:
                 "xml": artifact.raw_bytes,
             },
             "surface": None,
+            "validationPackageIds": endpoint_package_ids,
         }
         return markdown_path, generated, {
             "scheme": scheme, "coveredItems": assertions + fields,
@@ -604,19 +699,25 @@ class VerificationContext:
             if package["sourceManifestFile"] is not None:
                 owned_ids.append(package["sourceManifestFile"])
             validation_paths = {self.file_path(file_id) for file_id in owned_ids}
+            if self._parser_controls is not None:
+                from .parser import PARSER_CONTROL_PATHS
+                validation_paths.update(PARSER_CONTROL_PATHS)
             if REGISTRY_PATH in self.reader.read_log:
                 validation_paths.add(REGISTRY_PATH)
             surface = state.get("surface")
+            validation_package_ids = set(
+                state.get("validationPackageIds", ()))
             if surface is not None:
                 for dependency in surface.dependencies:
                     if dependency.kind in {"document", "relation-set"}:
-                        dependency_state = self._validated_package_state.get(
-                            dependency.subject_id)
-                        if dependency_state is None:
-                            raise StructuredSourceError(
-                                "validated package dependency state is incomplete")
-                        validation_paths.update(
-                            dependency_state["validationPaths"])
+                        validation_package_ids.add(dependency.subject_id)
+            for dependency_id in validation_package_ids:
+                dependency_state = self._validated_package_state.get(
+                    dependency_id)
+                if dependency_state is None:
+                    raise StructuredSourceError(
+                        "validated package dependency state is incomplete")
+                validation_paths.update(dependency_state["validationPaths"])
             if not validation_paths.issubset(self.reader.read_log):
                 raise StructuredSourceError(
                     "package validation read census is incomplete")
@@ -658,19 +759,33 @@ class VerificationContext:
 
     def read_for_consumer(self, consumer_id, package_id):
         """Return one fully validated snapshot handoff, with no fallback."""
+        from navigator.lib.snapshot import RepositorySnapshot
+
         edge = consumer_edge(self.registry, consumer_id, package_id)
         snapshot = self.repository_snapshot
         snapshot_entries = getattr(snapshot, "entries", None)
-        snapshot_read = getattr(snapshot, "read_bytes", None)
         snapshot_root = getattr(snapshot, "root", None)
+        retained_bytes = getattr(snapshot, "retained_bytes", None)
         if self.reader.byte_source is None or not isinstance(
+                snapshot, RepositorySnapshot) or not isinstance(
                 getattr(snapshot, "digest", None), str) or \
                 not snapshot.digest or not isinstance(snapshot_entries, tuple) or \
-                not callable(snapshot_read) or not isinstance(snapshot_root, str) or \
+                not isinstance(snapshot_root, str) or \
                 os.path.abspath(snapshot_root) != self.root:
             raise StructuredSourceError(
                 "consumer handoff requires one identified immutable snapshot")
+        if not self._snapshot_identity_validated:
+            try:
+                snapshot.validate_retained()
+            except Exception as exc:
+                raise StructuredSourceError(
+                    "consumer snapshot retained-byte identity is invalid") from exc
+            self._snapshot_identity_validated = True
         snapshot_paths = self._snapshot_paths()
+        if snapshot_paths != set(retained_bytes) or any(
+                not isinstance(data, bytes) for data in retained_bytes.values()):
+            raise StructuredSourceError(
+                "consumer snapshot retained-byte inventory is not exact")
         self.check(package_id)
         package = self.packages[package_id]
         representation = edge["inputRepresentation"]
@@ -681,9 +796,13 @@ class VerificationContext:
             raise StructuredSourceError(
                 "consumer handoff has no validated package state")
         data = state["representations"][representation]
-        dependencies = {
-            self.file_path(file_id): self.reader.read(self.file_path(file_id))
-            for file_id in edge["dependencies"]}
+        dependencies = {}
+        for dependency_file_id in edge["dependencies"]:
+            dependency_path = self.file_path(dependency_file_id)
+            dependencies[dependency_path] = (
+                self.reader.validated(dependency_path)
+                if dependency_path in self.reader.read_log
+                else self.reader.read(dependency_path))
         surface = state["surface"]
         handed_surface = surface if representation == "xml" else None
         assets = ({asset.path: self.reader.validated(asset.path)
@@ -695,15 +814,15 @@ class VerificationContext:
                 raise StructuredSourceError(
                     "validated consumer byte is absent from the snapshot")
             try:
-                retained = snapshot_read(validated_path)
-            except (KeyError, OSError, RuntimeError) as exc:
+                retained = retained_bytes[validated_path]
+            except KeyError as exc:
                 raise StructuredSourceError(
                     "consumer snapshot byte is unavailable") from exc
             if not isinstance(retained, bytes) or \
                     retained != self.reader.validated(validated_path):
                 raise StructuredSourceError(
                     "validated consumer byte differs from the snapshot")
-        return {
+        return MappingProxyType({
             "consumerId": consumer_id,
             "packageId": package_id,
             "authorityScheme": package["authorityScheme"],
@@ -711,13 +830,13 @@ class VerificationContext:
             "representationRole": self.files[file_id]["role"],
             "path": path,
             "bytes": data,
-            "dependencies": dependencies,
-            "assets": assets,
+            "dependencies": MappingProxyType(dependencies),
+            "assets": MappingProxyType(assets),
             "surface": handed_surface,
             "validationReads": tuple(
                 (path, self.reader.read_log[path])
                 for path in sorted(handoff_paths)),
-        }
+        })
 
     def _snapshot_paths(self):
         if self.repository_snapshot is None:
@@ -797,6 +916,31 @@ class VerificationContext:
                     raise StructuredSourceError(
                         "retired structured-source import remains: %s" % path)
 
+    def _reject_obsolete_live_residue(self, repository_paths):
+        """Reject superseded storage/digest mechanisms in current text surfaces."""
+        snapshot_paths = self._snapshot_paths()
+        candidates = snapshot_paths if snapshot_paths is not None else repository_paths
+        for path in sorted(
+                item for item in candidates
+                if item.endswith(_LIVE_TEXT_SUFFIXES)):
+            data = self.reader.read(path)
+            token = next((item for item in _OBSOLETE_LIVE_TOKENS
+                          if item in data), None)
+            if token is not None:
+                raise StructuredSourceError(
+                    "obsolete storage/digest residue remains in %s" % path)
+
+    def _reject_alternate_structured_source_paths(self, repository_paths):
+        actual = {
+            path for path in repository_paths
+            if path.startswith("structured_source/")}
+        if actual != _STRUCTURED_SOURCE_LIVE_PATHS:
+            raise StructuredSourceError(
+                "structured-source live implementation inventory differs: "
+                "missing=%s extra=%s" % (
+                    sorted(_STRUCTURED_SOURCE_LIVE_PATHS - actual)[:10],
+                    sorted(actual - _STRUCTURED_SOURCE_LIVE_PATHS)[:10]))
+
     def _package_artifact_paths(self, repository_paths):
         """Discover package-like paths without inventorying unrelated files."""
         controlled_roots = self.registry["taxonomy"]["controlledRoots"]
@@ -860,6 +1004,8 @@ class VerificationContext:
             raise StructuredSourceError(
                 "retired structured-source path remains: %s" % retired[:10])
         self._reject_retired_imports(repository_paths)
+        self._reject_alternate_structured_source_paths(repository_paths)
+        self._reject_obsolete_live_residue(repository_paths)
         registered = {entry["path"] for entry in self.registry["files"]}
         if self.repository_snapshot is not None:
             missing = registered - repository_paths
@@ -906,6 +1052,13 @@ class VerificationContext:
         self._global_passes += 1
         acceptance = self._control_closure()
         results = [self.check(package_id) for package_id in sorted(self.packages)]
+        handoffs = 0
+        if self.repository_snapshot is not None:
+            for consumer in self.registry["consumers"]:
+                for edge in consumer["edges"]:
+                    self.read_for_consumer(
+                        consumer["consumerId"], edge["packageId"])
+                    handoffs += 1
         schemes = Counter(result["authorityScheme"] for result in results)
         covered = sum(result["computedCoverage"].get("coveredItems", 0)
                       for result in results)
@@ -916,6 +1069,7 @@ class VerificationContext:
             "computedCoveredItems": covered,
             "consumerEdges": sum(len(consumer["edges"])
                                  for consumer in self.registry["consumers"]),
+            "consumerHandoffs": handoffs,
             "criteria": sum(len(registry["criteria"])
                             for registry in acceptance),
             "globalPasses": self._global_passes,

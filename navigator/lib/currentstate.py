@@ -8,9 +8,10 @@ import re
 import subprocess
 import sys
 import tempfile
+from types import MappingProxyType
 
 from . import acceptance, bundlezip, canon, gateway, model
-from . import projections, release, render, snapshot, validate
+from . import projections, registry as registry_mod, release, render, snapshot, validate
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -98,13 +99,25 @@ def load_bundle_config(byte_source=None):
         raise CurrentStateError("bundle configuration is invalid: %s" % exc) from exc
 
 
-def build_model(edition_id, byte_source=None):
-    """Construct the sole immutable edition model through one XML gateway."""
+def build_model(edition_id, repository_snapshot, consumer_input=None):
+    """Construct one model from a retained structured-source handoff."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
+        raise CurrentStateError("model construction requires a repository snapshot")
+    if consumer_input is None:
+        inputs = verify_structured_source(
+            repository_snapshot, ("navigator-" + edition_id,))
+        consumer_input = inputs["navigator-" + edition_id]
+    if not isinstance(consumer_input, registry_mod.ConsumerInput) or \
+            consumer_input.snapshot_digest != repository_snapshot.digest or \
+            consumer_input.consumer_id != "navigator-" + edition_id:
+        raise CurrentStateError(
+            "model consumer handoff does not match the repository snapshot")
     path = edition_path(edition_id)
     content_gateway = gateway.ContentGateway(
-        ROOT, byte_source=byte_source, allowlist=None)
+        ROOT, byte_source=repository_snapshot.byte_source(), allowlist=None)
     try:
-        edition_model = model.EditionModel(content_gateway, path)
+        edition_model = model.EditionModel(
+            content_gateway, path, consumer_input)
     except (gateway.GatewayError, model.ModelError) as exc:
         raise CurrentStateError(
             "%s typed model could not be constructed: %s" %
@@ -134,7 +147,7 @@ def _validate_model_metadata(edition_model):
         raise CurrentStateError("typed model product label is not the exact current label")
 
 
-def derive(edition_id, mode, byte_source=None):
+def derive(edition_id, mode, repository_snapshot, consumer_input=None):
     """Return ``(model, html_bytes, content_lock)`` for one current edition.
 
     ``release`` intentionally renders the candidate projection: release seals
@@ -142,7 +155,8 @@ def derive(edition_id, mode, byte_source=None):
     """
     if mode not in {"preview", "candidate", "release"}:
         raise CurrentStateError("derivation mode is not current")
-    edition_model = build_model(edition_id, byte_source)
+    edition_model = build_model(
+        edition_id, repository_snapshot, consumer_input)
     problems = validate.validate_edition(edition_model)
     if not isinstance(problems, tuple) or any(
             not isinstance(problem, tuple) or len(problem) != 2 or
@@ -176,11 +190,15 @@ def _artifact_bytes(name, byte_source=None):
     return _read_path(relpath, byte_source)
 
 
-def _derive_editions(byte_source=None):
+def _derive_editions(repository_snapshot, consumer_inputs=None):
+    if consumer_inputs is None:
+        consumer_inputs = verify_structured_source(
+            repository_snapshot, ("navigator-na", "navigator-af"))
     states = {}
     for edition_id in EDITION_IDS:
         edition_model, html_bytes, content_lock = derive(
-            edition_id, "candidate", byte_source)
+            edition_id, "candidate", repository_snapshot,
+            consumer_inputs["navigator-" + edition_id])
         states[edition_id] = {
             "model": edition_model,
             "html": html_bytes,
@@ -214,10 +232,14 @@ def _manifest_bytes(config, states, artifact_members):
     return ("\n".join(lines) + "\n").encode("utf-8")
 
 
-def build_bundle_state(byte_source=None, states=None):
+def build_bundle_state(repository_snapshot, states=None):
     """Resolve and reproduce the exact current five-member delivery bundle."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
+        raise CurrentStateError("bundle construction requires a repository snapshot")
+    byte_source = repository_snapshot.byte_source()
     config = load_bundle_config(byte_source)
-    states = _derive_editions(byte_source) if states is None else states
+    states = (_derive_editions(repository_snapshot)
+              if states is None else states)
     if set(states) != set(EDITION_IDS):
         raise CurrentStateError("bundle edition state is incomplete")
     for edition_id in EDITION_IDS:
@@ -300,8 +322,9 @@ def _bundle_reproduction_projection(bundle_state):
 def _fresh_bundle_projection(timeout=900):
     script = (
         "import sys\n"
-        "from navigator.lib import canon,currentstate\n"
-        "s=currentstate.build_bundle_state()\n"
+        "from navigator.lib import canon,currentstate,snapshot\n"
+        "r=snapshot.RepositorySnapshot.capture(currentstate.ROOT,retain_bytes=True)\n"
+        "s=currentstate.build_bundle_state(r)\n"
         "p=currentstate._bundle_reproduction_projection(s)\n"
         "sys.stdout.buffer.write(canon.canonical_json(p)+b'\\n')\n"
     )
@@ -361,18 +384,42 @@ def _structured_source_result(repository_snapshot):
     try:
         from structured_source.errors import StructuredSourceError
         from structured_source.verify import run_acceptance
-        return run_acceptance(
+        result = run_acceptance(
             ROOT, byte_source=repository_snapshot.byte_source(),
             repository_snapshot=repository_snapshot)
+        domains = result.get("domains") if isinstance(result, dict) else None
+        expected = (
+            ("pdf-transcription", "pdf-evidence-transcription-v1"),
+            ("authored-markdown", "authored-markdown-v1"),
+            ("authored-relations", "authored-relations-v1"),
+        )
+        if not isinstance(result, dict) or \
+                result.get("status") != "conformant" or \
+                result.get("repositorySnapshot") != repository_snapshot.digest or \
+                not isinstance(domains, list) or \
+                any(not isinstance(item, dict) for item in domains) or tuple(
+                    (item.get("domain"), item.get("authorityScheme"))
+                    for item in domains) != expected or \
+                any(item.get("status") != "conformant" for item in domains):
+            raise StructuredSourceError(
+                "structured-source domain acceptance inventory is not exact")
+        return result
     except (ImportError, OSError, StructuredSourceError) as exc:
         raise CurrentStateError(
             "structured-source current gate failed: %s" % exc) from exc
 
 
-def verify_structured_source(repository_snapshot, consumer_ids):
-    """Prove only the requested consumers' authority/conversion closure."""
+def _construct_structured_source_handoffs(
+        repository_snapshot, consumer_ids, structured_result):
+    """Construct exact frozen handoffs after aggregate acceptance has passed."""
     if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
         raise CurrentStateError("structured-source proof requires a repository snapshot")
+    if not isinstance(structured_result, dict) or \
+            structured_result.get("status") != "conformant" or \
+            structured_result.get("repositorySnapshot") != \
+            repository_snapshot.digest:
+        raise CurrentStateError(
+            "structured-source handoffs require same-snapshot aggregate acceptance")
     consumers = tuple(consumer_ids)
     if not consumers or len(consumers) != len(set(consumers)) or \
             not set(consumers).issubset({"navigator-na", "navigator-af"}):
@@ -385,28 +432,43 @@ def verify_structured_source(repository_snapshot, consumer_ids):
             repository_snapshot=repository_snapshot)
         by_id = {item["consumerId"]: item
                  for item in context.registry["consumers"]}
-        results = []
+        inputs = {}
         for consumer_id in consumers:
             consumer = by_id.get(consumer_id)
             if consumer is None or len(consumer["edges"]) != 2:
                 raise StructuredSourceError(
                     "navigator consumer edge inventory is not exact")
+            handoffs = {}
             for edge in consumer["edges"]:
                 if edge["inputRepresentation"] != "xml" or \
                         edge["dependencies"] != []:
                     raise StructuredSourceError(
                         "navigator consumer does not use direct current XML")
-                checked = context.check(edge["packageId"])
-                context.read_for_consumer(consumer_id, edge["packageId"])
-                results.append({
-                    "consumerId": consumer_id,
-                    "packageId": edge["packageId"],
-                    "status": checked["status"],
-                })
-        return {"results": results, "status": "conformant"}
+                context.check(edge["packageId"])
+                handoffs[edge["packageId"]] = context.read_for_consumer(
+                    consumer_id, edge["packageId"])
+            inputs[consumer_id] = registry_input = \
+                registry_mod.ConsumerInput(
+                    consumer_id=consumer_id,
+                    snapshot_digest=repository_snapshot.digest,
+                    handoffs=MappingProxyType(handoffs),
+                    parser_controls=context.parser_controls)
+            if registry_input.consumer_id != consumer_id:
+                raise StructuredSourceError(
+                    "navigator consumer handoff set is malformed")
+        return MappingProxyType(inputs)
     except (ImportError, OSError, StructuredSourceError) as exc:
         raise CurrentStateError(
             "structured-source consumer closure failed: %s" % exc) from exc
+
+
+def verify_structured_source(repository_snapshot, consumer_ids):
+    """Pass all source domains, then return exact declared consumer handoffs."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
+        raise CurrentStateError("structured-source proof requires a repository snapshot")
+    structured_result = _structured_source_result(repository_snapshot)
+    return _construct_structured_source_handoffs(
+        repository_snapshot, consumer_ids, structured_result)
 
 
 def _verify_current_closure(repository_snapshot, *, reproduce=False):
@@ -414,7 +476,10 @@ def _verify_current_closure(repository_snapshot, *, reproduce=False):
     _verify_navigator_input_inventory(repository_snapshot)
     structured_result = _structured_source_result(repository_snapshot)
     registry = acceptance.load_registry(ROOT, byte_source)
-    states = _derive_editions(byte_source)
+    consumer_inputs = _construct_structured_source_handoffs(
+        repository_snapshot, ("navigator-na", "navigator-af"),
+        structured_result)
+    states = _derive_editions(repository_snapshot, consumer_inputs)
     expected_dist = set()
     editions = {}
     for edition_id in EDITION_IDS:
@@ -440,7 +505,7 @@ def _verify_current_closure(repository_snapshot, *, reproduce=False):
             "contentLockDigest": item["lock"]["lockDigest"],
         }
 
-    bundle_state = build_bundle_state(byte_source, states)
+    bundle_state = build_bundle_state(repository_snapshot, states)
     if reproduce and _fresh_bundle_projection() != \
             _bundle_reproduction_projection(bundle_state):
         raise CurrentStateError(

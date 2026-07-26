@@ -1,4 +1,4 @@
-"""Immutable XML-only semantic model for one navigator edition."""
+"""Immutable semantic model built from frozen package handoffs."""
 
 from __future__ import annotations
 
@@ -9,6 +9,8 @@ import re
 from types import MappingProxyType
 
 from structured_source.canonical import raw_digest
+from structured_source.pdf_transcription import (
+    PDFTranscriptionSurface, TypedContentNode)
 
 from . import canon, claims as claims_mod, depgraph, projections
 from . import registry as registry_mod, schema_validate
@@ -95,7 +97,7 @@ class ContentNode:
     kind: str
     text: str
     level: int | None
-    attributes: tuple[tuple[str, str], ...]
+    attributes: tuple[tuple[str, str | int | bool], ...]
     children: tuple["ContentNode", ...]
     content_digest: str | None
     editorial: bool
@@ -169,7 +171,6 @@ class Disposition:
 class RelationDocument:
     role: str
     document_id: str
-    semantic_digest: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -250,77 +251,96 @@ def _local(element):
     return element.tag.rsplit("}", 1)[-1]
 
 
-def _plain_text(element) -> str:
-    if _local(element) == "codeBlock":
-        return canon.canon_code(element.text or "")
+def _typed_plain_text(node: TypedContentNode) -> str:
+    if node.element == "codeBlock":
+        return canon.canon_code(node.text or "")
     parts = []
 
-    def visit(node):
-        local = _local(node)
-        if local == "text":
-            parts.append(node.text or "")
+    def visit(item):
+        if item.element == "text":
+            parts.append(item.text or "")
             return
-        if local == "space":
+        if item.element == "space":
             parts.append(" ")
             return
-        if local in {"softBreak", "lineBreak"}:
+        if item.element in {"softBreak", "lineBreak"}:
             parts.append("\n")
             return
-        if local == "image":
-            parts.append(node.get("alt", ""))
+        if item.element == "image":
+            alt = dict(item.attributes).get("alt", "")
+            if not isinstance(alt, str):
+                raise ModelError("typed image alternative text is malformed")
+            parts.append(alt)
             return
-        for child in node:
+        for child in item.children:
             visit(child)
 
-    visit(element)
+    visit(node)
     return canon.canon_prose("".join(parts))
 
 
-def _content_node(element, fragment_digests, editorial_ids, inherited=False):
-    identifier = element.get(XML_ID)
+def _typed_content_node(node, fragment_digests, editorial_ids,
+                        inherited=False):
+    if not isinstance(node, TypedContentNode):
+        raise ModelError("PCT handoff contains a non-typed content node")
+    identifier = node.item_id
     editorial = inherited or identifier in editorial_ids
-    attributes = tuple(sorted(
-        (name.rsplit("}", 1)[-1], value)
-        for name, value in element.attrib.items() if name != XML_ID))
+    attributes = tuple(node.attributes)
     level = None
-    if _local(element) == "heading":
-        try:
-            level = int(element.get("level"))
-        except (TypeError, ValueError) as exc:
-            raise ModelError("disclosure heading level is invalid") from exc
+    if node.element == "heading":
+        level = dict(attributes).get("level")
+        if not isinstance(level, int) or isinstance(level, bool):
+            raise ModelError("disclosure heading level is invalid")
     digest = fragment_digests.get(identifier) if identifier else None
     if identifier and digest is None:
-        raise ModelError("addressable disclosure node has no semantic digest")
+        raise ModelError("addressable disclosure node has no typed-item digest")
     return ContentNode(
         fragment_id=identifier,
-        kind=_local(element),
-        text=_plain_text(element),
+        kind=node.element,
+        text=_typed_plain_text(node),
         level=level,
         attributes=attributes,
-        children=tuple(_content_node(
+        children=tuple(_typed_content_node(
             child, fragment_digests, editorial_ids, editorial)
-            for child in element),
+            for child in node.children),
         content_digest=digest,
         editorial=editorial,
     )
 
 
-def _disclosure(content_root, fragment_digests):
-    blocks = list(content_root)
+def _walk_typed(node):
+    yield node
+    for child in node.children:
+        yield from _walk_typed(child)
+
+
+def _disclosure(surface):
+    if not isinstance(surface, PDFTranscriptionSurface):
+        raise ModelError("PCT consumer input is not a transcription surface")
+    blocks = list(surface.document_item.typed_content)
+    handed_ids = [node.item_id for block in blocks for node in _walk_typed(block)
+                  if node.item_id]
+    items = {item.item_id: item for item in surface.items}
+    if len(handed_ids) != len(set(handed_ids)) or set(handed_ids) != set(items):
+        raise ModelError("PCT handoff item hierarchy is not exact")
+    fragment_digests = {
+        surface.document_item.item_id: surface.document_item.content_digest}
+    fragment_digests.update(
+        {item.item_id: item.content_digest for item in surface.items})
     wrappers = [index for index, block in enumerate(blocks)
-                if _local(block) == "heading" and
-                _plain_text(block) == "5. International Application Text"]
+                if block.element == "heading" and
+                _typed_plain_text(block) == "5. International Application Text"]
     if len(wrappers) != 1 or wrappers[0] + 1 >= len(blocks):
         raise ModelError("PCT filed-text render boundary is not exact")
     filed = blocks[wrappers[0] + 1:]
-    texts = [_plain_text(block) for block in filed]
-    if _local(filed[0]) != "paragraph" or not texts[0].startswith(
+    texts = [_typed_plain_text(block) for block in filed]
+    if filed[0].element != "paragraph" or not texts[0].startswith(
             "AI – DRIVEN SYSTEM AND METHOD"):
         raise ModelError("PCT filed title is absent at the render boundary")
 
     def one_heading(text):
         found = [index for index, block in enumerate(filed)
-                 if _local(block) == "heading" and texts[index] == text]
+                 if block.element == "heading" and texts[index] == text]
         if len(found) != 1:
             raise ModelError("PCT section heading is not exact: %s" % text)
         return found[0]
@@ -332,7 +352,7 @@ def _disclosure(content_root, fragment_digests):
     if not 0 < description < claims_heading < abstract < drawings:
         raise ModelError("PCT title/description/claims/abstract/drawings order is stale")
     examples = [text for index, text in enumerate(texts)
-                if _local(filed[index]) == "heading" and
+                if filed[index].element == "heading" and
                 re.fullmatch(r"Example [1-5]", text)]
     if examples != ["Example %d" % number for number in range(1, 6)]:
         raise ModelError("PCT Example 1..5 heading inventory is not exact")
@@ -346,28 +366,31 @@ def _disclosure(content_root, fragment_digests):
 
     drawing_blocks = filed[drawings + 1:]
     image_positions = [index for index, block in enumerate(drawing_blocks)
-                       if any(_local(node) == "image" for node in block.iter())]
-    image_ids = [node.get("assetId") for block in drawing_blocks
-                 for node in block.iter() if _local(node) == "image"]
+                       if any(node.element == "image"
+                              for node in _walk_typed(block))]
+    image_ids = [dict(node.attributes).get("assetId")
+                 for block in drawing_blocks for node in _walk_typed(block)
+                 if node.element == "image"]
     if image_ids != ["asset-fig-%d-png" % number for number in range(1, 5)] or \
             len(image_positions) != 4:
         raise ModelError("PCT figure inventory is not exactly figures 1..4")
-    if not drawing_blocks or _local(drawing_blocks[0]) != "blockQuotation":
+    if not drawing_blocks or drawing_blocks[0].element != "blockQuotation":
         raise ModelError("PCT drawing transcription note is absent")
-    editorial_ids = {drawing_blocks[0].get(XML_ID)}
+    editorial_ids = {drawing_blocks[0].item_id}
     for position in image_positions:
         if position + 1 >= len(drawing_blocks) or \
-                _local(drawing_blocks[position + 1]) != "paragraph":
+                drawing_blocks[position + 1].element != "paragraph":
             raise ModelError("PCT drawing reference caption is absent")
-        editorial_ids.add(drawing_blocks[position + 1].get(XML_ID))
-    if _local(drawing_blocks[-1]) != "paragraph" or \
-            not _plain_text(drawing_blocks[-1]).startswith("Application: PCT/"):
+        editorial_ids.add(drawing_blocks[position + 1].item_id)
+    if drawing_blocks[-1].element != "paragraph" or \
+            not _typed_plain_text(drawing_blocks[-1]).startswith(
+                "Application: PCT/"):
         raise ModelError("PCT editorial filing footer is absent")
-    editorial_ids.add(drawing_blocks[-1].get(XML_ID))
+    editorial_ids.add(drawing_blocks[-1].item_id)
     if None in editorial_ids or len(editorial_ids) != 6:
         raise ModelError("PCT editorial marker inventory is not exact")
 
-    nodes = tuple(_content_node(
+    nodes = tuple(_typed_content_node(
         block, fragment_digests, editorial_ids) for block in filed)
     index = {}
 
@@ -381,7 +404,8 @@ def _disclosure(content_root, fragment_digests):
 
     for node in nodes:
         add(node)
-    return nodes, MappingProxyType(index), frozenset(editorial_ids)
+    return (nodes, MappingProxyType(index), frozenset(editorial_ids),
+            MappingProxyType(fragment_digests))
 
 
 def _source_items(authored_root, fragment_digests):
@@ -454,8 +478,7 @@ def _unique_span(text, exact):
 
 def _parse_relations(root, units_by_fragment):
     documents = tuple(RelationDocument(
-        role=item.get("role"), document_id=item.get("documentId"),
-        semantic_digest=item.get("semanticDigest"))
+        role=item.get("role"), document_id=item.get("documentId"))
         for item in root.findall(R + "documents/" + R + "document"))
     gates = []
     for item in root.findall(R + "gateDefinitions/" + R + "gate"):
@@ -558,7 +581,11 @@ class EditionModel:
             raise AttributeError("EditionModel is immutable after construction")
         object.__setattr__(self, name, value)
 
-    def __init__(self, gw, edition_path):
+    def __init__(self, gw, edition_path, consumer_input):
+        try:
+            registry = registry_mod.Registry(gw, consumer_input)
+        except registry_mod.RegistryError as exc:
+            raise ModelError("structured-source handoff is invalid") from exc
         try:
             config = canon.parse_json(gw.read_text(edition_path))
             edition_schema = canon.parse_json(gw.read_text(EDITION_SCHEMA))
@@ -599,15 +626,13 @@ class EditionModel:
         self._edition_path = edition_path
         self._relation_path = config["relationPath"]
         self._edition_wording_path = config["editionWordingPath"]
+        self._handoff_validation_paths = registry.validation_paths
 
-        registry = registry_mod.Registry(gw)
         claim_package, pct_package = registry.consumer_packages(
             config["consumerId"], config["claimPackageId"])
         claim_document, claim_artifact = registry.load_document(claim_package)
-        pct_document, pct_artifact = registry.load_document(pct_package)
+        pct_document, pct_surface = registry.load_document(pct_package)
         self.source_documents = (claim_document, pct_document)
-        self._document_artifacts = MappingProxyType({
-            claim_package: claim_artifact, pct_package: pct_artifact})
         self._documents = MappingProxyType({
             item.document_id: item for item in self.source_documents})
 
@@ -625,17 +650,20 @@ class EditionModel:
         self.aggregate_hashes = graph.aggregate_hashes
         self.chain_hashes = graph.chain_hashes
 
-        content = pct_artifact.root.find(C + "content")
-        if content is None:
-            raise ModelError("PCT XML omits typed content")
-        self.disclosure_blocks, self.disclosure_index, self._editorial_ids = \
-            _disclosure(content, pct_artifact.fragment_digests)
+        (self.disclosure_blocks, self.disclosure_index, self._editorial_ids,
+         pct_digests) = _disclosure(pct_surface)
+        self._document_item_digests = MappingProxyType({
+            claim_package: MappingProxyType(dict(
+                claim_artifact.fragment_digests)),
+            pct_package: pct_digests,
+        })
         self.assets = self._load_assets(
-            pct_artifact.root, pct_package, registry, gw)
+            pct_surface, registry.handoff(pct_package))
 
         relation_root = gw.read_validated_xml(
             self._relation_path, RELATION_SCHEMA,
-            expected_namespace=RELATION_NAMESPACE, expected_root="relations")
+            expected_namespace=RELATION_NAMESPACE, expected_root="relations",
+            parser_controls=registry.parser_controls)
         self.relations = _parse_relations(relation_root, self.units_by_fragment)
         self.relation_set_id = self.relations.relation_set_id
         self._validate_relations(claim_package, pct_package)
@@ -643,10 +671,12 @@ class EditionModel:
         shared_bytes = gw.read_bytes(SHARED_WORDING)
         shared_root = gw.read_validated_xml(
             SHARED_WORDING, WORDING_SCHEMA,
-            expected_namespace=WORDING_NAMESPACE, expected_root="wording")
+            expected_namespace=WORDING_NAMESPACE, expected_root="wording",
+            parser_controls=registry.parser_controls)
         edition_root = gw.read_validated_xml(
             self._edition_wording_path, WORDING_SCHEMA,
-            expected_namespace=WORDING_NAMESPACE, expected_root="wording")
+            expected_namespace=WORDING_NAMESPACE, expected_root="wording",
+            parser_controls=registry.parser_controls)
         wording = _parse_wording(shared_root, "shared")
         edition_wording = _parse_wording(edition_root, self.edition_id)
         collision = set(wording) & set(edition_wording)
@@ -696,37 +726,42 @@ class EditionModel:
             self._edition_wording_path,
             WORDING_SCHEMA,
         }
-        expected_reads.update(document.registered_path
-                              for document in self.source_documents)
-        expected_reads.update(asset.path for asset in self.assets.values())
+        expected_reads.update(self._handoff_validation_paths)
         gw.seal(expected_reads)
         self._read_inventory = tuple(sorted(gw.read_log.items()))
         lock = gw.lock()
         self._content_lock_digest = lock["lockDigest"]
         self.origin_inventory = projections.origin_inventory(self)
-        # Parsed XML roots and their resolver are construction details.  No
-        # mutable tree or generic repository reader survives into rendering.
-        self._document_artifacts = None
+        # Parsed claim XML and the resolver are construction details.  The
+        # navigator retains only immutable typed values from both handoffs.
+        self._document_item_digests = None
         object.__setattr__(self, "_sealed", True)
 
     @staticmethod
-    def _load_assets(pct_root, package_id, registry, gw):
-        dependencies = {}
-        parent = pct_root.find(C + "dependencies")
-        if parent is None:
-            raise ModelError("PCT XML omits registered asset dependencies")
-        for item in parent.findall(C + "dependency"):
-            if item.get("kind") == "asset":
-                dependencies[item.get("subjectId")] = item.get("digest")
+    def _load_assets(surface, handoff):
+        if not isinstance(surface, PDFTranscriptionSurface) or \
+                handoff.get("surface") is not surface:
+            raise ModelError("PCT asset handoff has no frozen surface")
+        dependencies = {
+            item.subject_id: item.digest for item in surface.dependencies
+            if item.kind == "asset"}
         assets = {}
-        for path in registry.asset_paths(package_id):
+        for binding in surface.assets:
+            path = binding.path
             match = re.fullmatch(r".*/Fig-([1-4])[.]png", path)
             if match is None:
                 raise ModelError("registered PCT asset path is outside the figure set")
-            asset_id = "asset-fig-%s-png" % match.group(1)
-            data = gw.read_bytes(path)
+            asset_id = binding.asset_id
+            if asset_id != "asset-fig-%s-png" % match.group(1):
+                raise ModelError("registered PCT asset identity is stale")
+            try:
+                data = handoff["assets"][path]
+            except KeyError as exc:
+                raise ModelError("registered PCT asset byte is absent") from exc
             digest = raw_digest(data)
-            if dependencies.get(asset_id) != digest:
+            if not data.startswith(b"\x89PNG\r\n\x1a\n") or \
+                    binding.raw_digest != digest or binding.size != len(data) or \
+                    dependencies.get(asset_id) != digest:
                 raise ModelError("PCT asset digest does not match its XML dependency")
             assets[asset_id] = Asset(
                 asset_id=asset_id, path=path, media_type="image/png",
@@ -747,8 +782,8 @@ class EditionModel:
     def _validate_endpoint(self, endpoint, expected_document, *, target=False):
         if endpoint.document_id != expected_document:
             raise ModelError("relation endpoint document identity is stale")
-        artifact = self._document_artifacts[expected_document]
-        if artifact.fragment_digests.get(endpoint.fragment_id) != \
+        digests = self._document_item_digests[expected_document]
+        if digests.get(endpoint.fragment_id) != \
                 endpoint.content_digest:
             raise ModelError("relation endpoint ID/digest does not resolve exactly")
         if target:
@@ -768,10 +803,8 @@ class EditionModel:
             raise ModelError("relation document role inventory is not exact")
         for role, document_id in (("subject", claim_document),
                                   ("target", pct_document)):
-            metadata = self._documents[document_id]
-            if declared[role].document_id != document_id or \
-                    declared[role].semantic_digest != metadata.semantic_digest:
-                raise ModelError("relation document semantic binding is stale")
+            if declared[role].document_id != document_id:
+                raise ModelError("relation document identity binding is stale")
 
         mapped = []
         for mapping in self.relations.mappings:
@@ -902,7 +935,7 @@ class EditionModel:
             "documentId": document.document_id,
             "authorityScheme": document.authority_scheme,
             "xmlRole": document.xml_role,
-            "semanticDigest": document.semantic_digest,
+            "xmlRawDigest": document.xml_raw_digest,
             "registeredPath": document.registered_path,
         })
 

@@ -15,8 +15,9 @@ it creates no exception or alternative release path.
   another worktree, an external directory, a symlink, a cache, or the network.
 - Preserve each package's declared authority direction. XML is the uniform machine interface, not
   a universal replacement authority.
-- Navigator production reads semantic content only through the secure XML gateway. The renderer
-  consumes only the immutable typed model produced by that gateway.
+- Navigator production receives registered packages only through the frozen structured-source
+  handoff. Its read-only gateway binds that validation census without reopening handed paths and
+  reads only navigator-owned controls. The renderer consumes only the resulting immutable model.
 - Keep only current schemas, current content, current relations, current wording, tests, and
   generated products. Git retains history.
 - Coverage and substantive-origin tracing are computed during validation and are not committed as

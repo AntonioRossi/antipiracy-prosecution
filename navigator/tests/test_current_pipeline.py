@@ -58,6 +58,50 @@ class CurrentPipelineTests(unittest.TestCase):
         with self.assertRaises(build.CommandError):
             build._dispatch(["preview", "na", "--callback"])
 
+    def test_all_source_domains_pass_before_handoffs_are_constructed(self):
+        frozen = currentstate.snapshot.RepositorySnapshot(
+            ROOT, (), "sha256/snapshot:test")
+        aggregate = {
+            "repositorySnapshot": frozen.digest,
+            "status": "conformant",
+        }
+        handoffs = object()
+        events = []
+
+        def accepted(unused_snapshot):
+            events.append("aggregate")
+            return aggregate
+
+        def constructed(unused_snapshot, unused_consumers, unused_result):
+            events.append("handoffs")
+            return handoffs
+
+        with mock.patch.object(
+                currentstate, "_structured_source_result",
+                side_effect=accepted) as source_acceptance, \
+                mock.patch.object(
+                    currentstate, "_construct_structured_source_handoffs",
+                    side_effect=constructed) as constructor:
+            result = currentstate.verify_structured_source(
+                frozen, ("navigator-na",))
+
+        self.assertIs(result, handoffs)
+        self.assertEqual(events, ["aggregate", "handoffs"])
+        source_acceptance.assert_called_once_with(frozen)
+        constructor.assert_called_once_with(
+            frozen, ("navigator-na",), aggregate)
+
+        malformed = {
+            "repositorySnapshot": frozen.digest,
+            "status": "conformant",
+            "domains": [],
+        }
+        with mock.patch(
+                "structured_source.verify.run_acceptance",
+                return_value=malformed), self.assertRaisesRegex(
+                    currentstate.CurrentStateError, "domain acceptance"):
+            currentstate._structured_source_result(frozen)
+
     def test_acceptance_registry_is_exact_text_only_contract(self):
         registry = acceptance.load_registry(ROOT)
         self.assertEqual(
@@ -112,9 +156,11 @@ class CurrentPipelineTests(unittest.TestCase):
                 return source
 
         frozen = Frozen()
+        consumer_input = object()
         with mock.patch.object(build, "_snapshot", return_value=frozen), \
                 mock.patch.object(
-                    build.currentstate, "verify_structured_source") as upstream, \
+                    build.currentstate, "verify_structured_source",
+                    return_value={"navigator-na": consumer_input}) as upstream, \
                 mock.patch.object(
                     build.currentstate, "derive",
                     return_value=(object(), b"<html>preview</html>", {})) \
@@ -128,7 +174,8 @@ class CurrentPipelineTests(unittest.TestCase):
 
         self.assertEqual(result, b"<html>preview</html>")
         upstream.assert_called_once_with(frozen, ("navigator-na",))
-        derive.assert_called_once_with("na", "preview", source)
+        derive.assert_called_once_with(
+            "na", "preview", frozen, consumer_input)
         unchanged.assert_called_once_with(frozen, "preview")
         output_check.assert_not_called()
         write.assert_not_called()

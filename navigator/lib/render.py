@@ -58,7 +58,7 @@ UI = MappingProxyType({
     "preambleLabel": "preamble",
     "previous": "Previous",
     "provenanceDocument": "Source document",
-    "provenanceDigest": "Semantic digest",
+    "provenanceDigest": "XML byte digest",
     "provenanceRelationSet": "Relation set",
     "reverseBadge": "Show {count} related claim fragments for {label}",
     "reverseCounts": "{fragments} fragments across {claims} claims",
@@ -591,7 +591,10 @@ def _block_html(model, node, target_document_id: str, reverse: dict,
         return '<blockquote class="dblock%s"%s>%s%s%s</blockquote>' % (
             editorial_class, id_attr, chrome, badge, nested)
     if node.kind == "list":
-        tag = "ol" if _attributes(node).get("ordered") == "true" else "ul"
+        ordered = _attributes(node).get("ordered")
+        if not isinstance(ordered, bool):
+            raise RenderError("typed list ordering metadata is invalid")
+        tag = "ol" if ordered else "ul"
         nested = "".join(_block_html(
             model, child, target_document_id, reverse,
             parent_editorial=node.editorial) for child in node.children)
@@ -702,7 +705,7 @@ def _provenance(model, profile_label: str) -> tuple[dict, str]:
             "documentId": source.document_id,
             "authorityScheme": source.authority_scheme,
             "xmlRole": source.xml_role,
-            "semanticDigest": source.semantic_digest,
+            "xmlRawDigest": source.xml_raw_digest,
             "registeredPath": source.registered_path,
         }
         documents.append(item)
@@ -710,7 +713,7 @@ def _provenance(model, profile_label: str) -> tuple[dict, str]:
             '<tr><th scope="row">%s</th><td>%s</td><td>%s</td>'
             '<td><code>%s</code></td><td>%s</td></tr>' % (
                 _esc(source.document_id), _esc(source.authority_scheme),
-                _esc(source.xml_role), _esc(source.semantic_digest),
+                _esc(source.xml_role), _esc(source.xml_raw_digest),
                 _esc(source.registered_path)))
     assets = [{
         "assetId": asset.asset_id,

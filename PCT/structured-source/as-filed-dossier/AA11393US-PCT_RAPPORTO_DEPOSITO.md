@@ -1,4 +1,4 @@
-<!-- GENERATED REVIEW PROJECTION — source pct-as-filed-dossier; digest sha256/xc1/ssp-xd1:fea45714d5093a6988fdbc8f97eb8c44995f14f99ee81f2b9b39d6bfe3fb2bbf; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate pct-as-filed-dossier`; edit the XML source, never this Markdown. -->
+<!-- GENERATED REVIEW PROJECTION — source pct-as-filed-dossier; byte digest sha256/raw:c04ea1ea8075d396b5186142b6e21a090c31b25860c7e5ecd8f2ed14a87ca820; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate pct-as-filed-dossier`; edit the XML source, never this Markdown. -->
 <a id="ssp-pct-as-filed-dossier-root"></a>
 
 <a id="ssp-pct-as-filed-dossier-header-00001"></a>
@@ -1424,7 +1424,7 @@ The invention introduces an advanced AI-driven anti-piracy system that safeguard
 <a id="ssp-review-dependencies"></a>
 ## Dependencies
 
-| Kind | Subject | Exact semantic digest |
+| Kind | Subject | Exact binding digest |
 |---|---|---|
 | asset | asset-fig-1-png | `sha256/raw:1c9cf63e1e8db8927cacd1234ddd08c829c85d04985c88751f27293eb77c3de0` |
 | asset | asset-fig-2-png | `sha256/raw:9aab63149557260ab536c6827bea0d25d161c1ef6c549db53a9e075a028eb7c4` |

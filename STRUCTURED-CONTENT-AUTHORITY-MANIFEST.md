@@ -25,7 +25,7 @@ validated XML machine interface
 registered consumers → derived products
 ```
 
-The interface provides stable identities, closed metadata, provenance, semantic digests,
+The interface provides stable identities, closed metadata, provenance, typed-item digests,
 dependencies, and exact cross-reference endpoints. Uniform means one registry slot, resolver,
 identity model, and validation boundary for XML; it does not require one universal namespace,
 schema, or conversion direction.
@@ -76,7 +76,7 @@ Each XML representation exposes the fields applicable to its scheme:
 - item type, hierarchy, order, and exact content;
 - closed typed metadata;
 - provenance and uncertainty where applicable;
-- semantic digests;
+- typed-item digests;
 - declared dependencies; and
 - typed relation endpoints where applicable.
 
@@ -94,8 +94,8 @@ Every metadata field must be classified by its actual origin:
 - Substantive metadata about authored Markdown must either be expressed in the authoritative
   Markdown or placed in a separate authoritative relation/metadata XML document.
 - Generator versions, derived ordinals, and similar envelope fields belong to the deterministic
-  generator. Raw and semantic verification digests belong to the validator unless a digest is
-  substantive assertion data, such as a relation's target-content digest.
+  generator. Raw verification digests and typed-item digests are computed by the validator. A
+  relation endpoint records the target typed-item digest only as an exact content reference.
 - No substantive information may exist only in generated XML.
 
 Do not preserve manually edited metadata by merging it into regenerated XML. That creates mixed
@@ -125,14 +125,14 @@ Cross-references use document and entry IDs, never file line numbers, generated 
 positions, or XPath expressions dependent on incidental layout.
 
 A semantic assertion that depends on the exact target content also records the target entry's
-semantic digest. Navigational links may use IDs alone.
+typed-item digest. Navigational links may use IDs alone.
 
-Entry semantic digests cover stable identity, item type, schema/profile, semantic content, and
+Entry typed-item digests cover stable identity, item type, schema/profile, typed content, and
 substantive item metadata. They exclude presentation formatting, file paths, unrelated document
 metadata, generator versions, and sibling entries so that unrelated changes do not invalidate
 references.
 
-Duplicate IDs, unresolved targets, stale semantic digests, ambiguous owners, and unsupported
+Duplicate IDs, unresolved targets, stale typed-item digests, ambiguous owners, and unsupported
 reference types fail validation.
 
 ## 5. Conversion requirements
@@ -179,7 +179,7 @@ Such XML must:
 - identify one semantic owner for every assertion;
 - use typed and directional relations;
 - reference exact document and entry IDs;
-- detect content-sensitive target changes through semantic digests; and
+- detect content-sensitive target changes through typed-item digests; and
 - generate any human-readable view deterministically.
 
 Endpoint documents do not become authorities for assertions made about them.
@@ -201,7 +201,7 @@ representation fallbacks. Consuming a representation or producing a derivative n
 above the package's authority.
 
 For example, a fixture builder may select schema-typed requirement and example items and emit
-fixtures that retain their exact source IDs and semantic digests. An HTML renderer may map the same
+fixtures that retain their exact source IDs and typed-item digests. An HTML renderer may map the same
 interface to accessible navigation. Neither output becomes authority, and neither use case may add
 consumer-specific structure to core XML. Output behavior, presentation, framework syntax, QA, and
 release requirements belong in the consumer's own contract.

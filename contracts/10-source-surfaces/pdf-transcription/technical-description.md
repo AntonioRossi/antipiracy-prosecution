@@ -62,6 +62,7 @@ Every applicable property has one closed representation:
 | Property | PDF-transcription requirement |
 |---|---|
 | Document identity | One stable `documentId` matching the registered package |
+| Document item | One addressable root item bound to the stored source and the exact ordered content tree |
 | Item identity | One unique XML-maintained item ID for every addressable transcribed unit |
 | Item type | One schema-enumerated content type |
 | Hierarchy and order | Typed XML containment and document order preserve the asserted source structure |
@@ -79,10 +80,18 @@ deletion, or reordering may change a mechanical ordinal but cannot silently rena
 number or generated anchor can assist review but cannot substitute for the item ID in a machine
 reference.
 
-The current profile is the exclusive executable inventory of document metadata, the item identity
-attribute, item types and their permitted metadata, document order, source-number treatment,
-provenance fields, dependency kinds, readable XML storage, and typed-item digest inputs. The XSD and
-profile must agree exactly; neither independently authorizes a field omitted by the other.
+Each surface has exactly one typed document item. Its stable ID is the root `xml:id`, its type is
+`document`, its children are the top-level content-item IDs in document order, its typed content is
+the exact ordered content tree, its substantive metadata is empty, and its source binding is the
+manifest-bound stored PDF. Its typed-item digest follows the item-digest law; it is not a whole-XML
+digest and excludes envelope metadata, provenance, paths, formatting, and parser controls.
+
+The current profile is the exclusive executable inventory of the document item, document and
+provenance metadata with their scalar types, item identity, item types and metadata, every reachable
+typed-content node with its typed attributes and text/children/empty value model, document order,
+source-number treatment, dependency target and digest rules, origin, readable XML storage, and
+typed-item digest inputs. The XSD and profile must agree exactly; neither independently authorizes
+a field, type, value model, or rule omitted by the other.
 
 Each dependency declares one kind and subject identity. Asset dependencies resolve by the exact
 registered raw-byte digest. Document and relation-package dependencies resolve through their
@@ -105,8 +114,12 @@ source-domain semantics to a generated representation.
 ## 4. XML and manifest contract
 
 Transcription XML uses the exact current namespace, XSD, profile, secure parser, and readable
-storage law. Every registered XML file must equal deterministic serialization of its validated
-typed tree with:
+storage law. The parser policy, projection profile, XML profile, shared XML schema, and artifact
+XSDs are loaded through the retained-snapshot reader as one transitively immutable control set.
+Every production parse uses validators constructed from that set; live or default controls and
+ambient validator caches cannot satisfy snapshot-bound validation.
+
+Every registered XML file must equal deterministic serialization of its validated typed tree with:
 
 - the exact `<?xml version="1.0" encoding="UTF-8"?>` declaration;
 - UTF-8 without a byte order mark, NFC text, LF only, and one final newline;
@@ -186,10 +199,10 @@ validated bytes and may mechanically look up items, traverse declared hierarchy 
 declared fields, and resolve registered dependencies. It may not reopen a different path, accept a
 detached pass token, or infer missing semantics.
 
-Package validation constructs and freezes the representation bytes and complete typed surface
-before handoff. The handoff uses that validated state without reopening even the same live path or
-reconstructing semantics from a later read, and exposes the exact validation-read census for the
-edge.
+Package validation constructs and transitively freezes the representation bytes, complete typed
+surface, nested typed content and metadata, dependencies, assets, and handoff mappings. The handoff
+uses that validated state without reopening even the same live path or reconstructing semantics
+from a later read, and exposes the exact validation-read census for the edge.
 
 Selection of a representation never changes authority. The consumer may not reparse the PDF or an
 OCR derivative as a substitute, infer missing content, add source-domain fields, silently fall
@@ -214,6 +227,11 @@ The repository-global gate owns immutable snapshot bracketing, registered isolat
 snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
 statuses without defining any consumer product outcome.
 
+Aggregate verification constructs exactly one conformant handoff for every declared consumer edge;
+resolving or counting an edge does not prove it. The declared-edge and constructed-handoff censuses
+must agree exactly. At the consumption boundary, the handoff census is bound before ordinary reads;
+an ordinary read of a handed path or conflicting bytes for the same path fails.
+
 ## 8. Live implementation closure
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
@@ -222,6 +240,7 @@ renderer, item-surface builder, immutable-snapshot handoff, focused tests, regis
 and registered packages are the complete live implementation. The immutable repository snapshot
 must contain the exact named domain artifacts and every required shared implementation path.
 
-No alternate transcription, OCR-authority path, compatibility or migration reader, approval or
-reviewer record, stored receipt, digest ledger, coverage store, export path, or inactive domain
-artifact remains operative. Git alone retains implementation history.
+No alternate transcription, OCR-authority path, production parser-control bypass, second
+item-surface builder, mutable handoff, compatibility or migration reader, approval or reviewer
+record, stored receipt, digest ledger, coverage store, export path, or inactive domain artifact
+remains operative. Git alone retains implementation history.

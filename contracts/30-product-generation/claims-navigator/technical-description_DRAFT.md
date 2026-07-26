@@ -8,8 +8,8 @@
 > [`navigator/schema/acceptance.json`](../../../navigator/schema/acceptance.json).
 
 The navigator uses **XML as the one uniform machine interface** to the repository content it
-consumes. XML supplies stable item identities, hierarchy, typed metadata, provenance, semantic
-digests, dependencies, and exact relation endpoints. XML does not become universal source
+consumes. XML supplies stable item identities, hierarchy, typed metadata, provenance, typed-item
+digests, declared dependencies, and exact relation endpoints. XML does not become universal source
 authority: each package retains the authority direction declared for its content class.
 
 ## 1. Purpose and legal boundary
@@ -49,59 +49,74 @@ no browser, operating-system, print-engine, or assistive-technology compatibilit
 The machine path is uniform while authority direction remains explicit:
 
 ```text
-package-specific authority
+package-specific authorities
         │
         ▼
-validated current XML ──read-only──▶ navigator gateway
-                                         │
-                                         ▼
-                              immutable typed model
-                                         │
-                                         ▼
-                              deterministic HTML5
+all three structured-source domains pass aggregate acceptance
+        │
+        ▼
+exactly two dependency-free XML handoffs per edition
+(authored claim bytes; PCT typed surface and assets)
+        │
+        ▼
+navigator read-only gateway binds the handoff census and reads navigator controls
+        │
+        ▼
+immutable typed model ──deterministic projection──▶ HTML5
 ```
 
 | Content class | Governing authority | XML role |
 |---|---|---|
 | PDF-derived package | Stored source PDF for fidelity | Asserted transcription and validated runtime representation |
 | Authored-content package | Authored Markdown | Generated, round-trip-validated runtime representation |
-| Upstream authored relation package | Applicant-authored relation XML | Authoritative upstream assertions and validated runtime representation |
+| Upstream authored relation package | Applicant-authored relation XML | Aggregate validation prerequisite only; no navigator edge or runtime input |
 | Navigator relation package | Navigator-owned relation XML | Authority for navigator-only associations |
 | Navigator wording package | Navigator-owned wording XML | Authority only for controlled semantic or security-relevant wording |
 | Typed model and HTML5 | No independent authority | Ephemeral model and deterministic products |
 
 For PDF-derived packages, generated Markdown is a human review view derived from the XML and is
-not a runtime source. For authored packages, conversion completeness and semantic round-trip are
-proved between authoritative Markdown and generated XML before the navigator consumes the XML.
+not a runtime source. For authored packages, the pinned Markdown profile, exact generated-XML
+bytes, complete item/field census, and back-rendered ordered Pandoc AST under only declared
+presentation normalizations must agree before the navigator consumes the XML.
 
-Every navigator semantic consumer edge declares XML as its input representation. Choosing XML
-selects the machine-readable bytes; it never changes the governing authority. Generated HTML
-provenance preserves the package authority scheme and XML role.
+Each navigator has exactly two semantic consumer edges, both selecting XML: its edition claim set
+and `pct-as-filed-dossier`. Choosing XML selects the machine-readable bytes; it never changes the
+governing authority. Generated HTML provenance preserves the package authority scheme and XML role.
 
 A defect is corrected at its authority:
 
 - authored content is corrected in Markdown and XML is regenerated;
 - a PDF transcription or provenance defect is corrected in transcription XML against the PDF;
-- an upstream relation is corrected in its authoritative relation XML; and
 - navigator-only relations or controlled wording are corrected in navigator XML.
 
 Generated XML, the typed model, and HTML5 are never patched to conceal an upstream defect.
 
-### 2.2 One read-only gateway
+### 2.2 Snapshot-bound handoff and one read-only gateway
 
-All production semantic reads pass through one registered gateway. For one immutable repository
-snapshot, the gateway:
+Production uses one immutable repository snapshot. Before either handoff is constructed, aggregate
+structured-source acceptance validates the complete current PDF-transcription, authored-Markdown,
+and authored-relation domains. The verifier then resolves exactly two dependency-free edges for
+the edition: its authored claim package and `pct-as-filed-dossier`, both through XML.
 
-1. resolves the declared consumer inputs and their package authority schemes and XML roles;
-2. secure-parses only registered current XML;
-3. validates schemas, namespaces, versions, identities, hierarchy, metadata, semantic digests,
-   dependencies, relation endpoints, assets, wording entries, and controlled slot origins;
-4. records the ephemeral exact read set; and
-5. constructs and seals one immutable in-memory model before rendering.
+The authored-claim handoff contains the exact generated XML bytes, generated-XML role, authority
+scheme, empty dependency and asset mappings, `surface=None`, and exact validation reads. The
+consumer input pairs the handoff set with the same-context retained parser controls. The PCT
+handoff contains the exact transcription XML bytes, transcription role, authority scheme, the same
+frozen `PDFTranscriptionSurface` validated upstream, its exact four asset-byte entries, no
+dependencies, and exact validation reads. No authored-relation edge or handoff exists. The navigator
+secure-parses only the handed claim XML under the retained controls, never reconverts Markdown or
+loads default controls, and never reopens a handed path.
 
-The gateway rejects undeclared files, symlinks, path escapes, external resources, unknown fields
-or versions, duplicate IDs or semantic owners, digest drift, unresolved dependencies, stale or
-ambiguous endpoints, invalid wording slots, and representation fallbacks.
+The navigator gateway first binds those validation reads without reopening them. It then reads
+only navigator-owned edition, relation, wording, and schema controls from the same retained-byte
+snapshot, validates them with the retained parser controls, records the combined ephemeral exact
+read set, and seals one immutable in-memory model before rendering. An ordinary read of a handed
+path fails.
+
+The handoff and gateway reject undeclared files, symlinks, path escapes, external resources,
+unknown fields or versions, duplicate IDs or semantic owners, digest drift, unresolved
+dependencies, stale or ambiguous endpoints, invalid wording slots, detached handoff state, and
+representation fallbacks.
 
 The model exposes one narrow typed API equivalent to:
 
@@ -131,9 +146,10 @@ navigator/relations/af__pct.relations.xml
 ```
 
 They use `schemaProfile="navigator-claim-pct-relations-v1"`; each file's `relationSetId` and
-`edition` declare its navigator ownership scope. They own only navigator-specific associations and
-may reference an upstream assertion by stable relation ID; they do not restate or override
-source-level support, priority, prior-art, comparison, mapping, or crosswalk assertions.
+`edition` declare its navigator ownership scope. This grammar is distinct from
+`authored-relations-v1` and has no field for an upstream relation reference. These files own only
+navigator-specific claim-to-PCT candidate associations; they neither consume, copy, restate, nor
+override source-level support, priority, prior-art, comparison, mapping, or crosswalk assertions.
 
 Controlled navigator wording is owned by:
 
@@ -212,21 +228,32 @@ Edition rules are closed:
 
 ## 4. Item, claim, and relation model
 
-Every consumed XML item preserves its stable scheme-defined identity, type, hierarchy, order,
-exact content, typed metadata, provenance, semantic digest, dependencies, and relation endpoints
-where applicable. `itemId` is API shorthand for the serialized scheme identity, such as
-`fragmentId`, `relationId`, or `wordingId`; it is not another stored identifier.
+The complete claim XML item surface and complete frozen PCT transcription surface validate before
+construction, including their addressable document roots, closed item hierarchy, typed metadata,
+provenance, dependencies/assets, and complete typed-item-digest census. The immutable product model
+retains only its declared product subset: claim text, structure, dependencies, fragment identities
+and digests; disclosure content, structure, identities, digests, and editorial state; source-package
+authority and XML-byte bindings; and the exact four figure assets. It does not retain either complete
+upstream surface, its document-root record, or its full item-digest map after construction.
+
+Within that retained source subset, `itemId` is API shorthand for the serialized `fragmentId`; it
+is not another stored identifier.
 
 Item IDs map mechanically to deterministic, collision-safe DOM locators. Line numbers, heading
 slugs, XPath positions, visible text, array indexes, and current ordering are never identities.
 Internal navigator anchor labels are navigation aids only. The filed application has no official
 paragraph numbering, and navigator labels must not be cited in prosecution documents.
 
-Relations bind exact `(documentId, fragmentId, fragmentContentDigest)` endpoints. Each relation
-has one semantic owner, stable identity, direction, type, ordered fields, and declared navigator
-contexts. Forward and reverse navigation and displayed excerpts resolve from the same relation.
-Copied assertions, duplicate ownership, stale or ambiguous targets, inferred links, silent
-retargeting, and endpoint-driven authority promotion fail validation.
+Each edition's navigator relation-set envelope owns one `relationSetId` and `edition`; it is a
+product-control envelope, not a source typed item, and has no typed-item digest. Its two declared
+documents fix one claim-set `subject` and `pct-as-filed-dossier` `target`. The closed grammar contains
+gate definitions, one status-bearing mapping per claim unit, optional exact-text phrase mappings,
+typed candidate roles and notes, scoped cautions, and gate dispositions. Mapping, phrase, gate, and
+disposition identities are stable within that package. Every endpoint binds exact
+`(documentId, fragmentId, fragmentContentDigest)` values, where the digest is a typed-item digest.
+Forward navigation, mechanically derived reverse navigation, and displayed excerpts resolve from
+the same package. Upstream relation references, copied assertions, duplicate ownership, stale or
+ambiguous targets, inferred links, silent retargeting, and endpoint-driven authority promotion fail.
 
 Claims preserve exact visible text, number, order, dependency, grouping, and fragment identity.
 Each claim is divided into selectable preamble and limitation units; selected exact, contiguous,
@@ -344,7 +371,8 @@ copy remains in templates or code and is tested there for clarity, neutrality, a
 escaping, and determinism.
 
 Each artifact exposes a provenance panel identifying its edition, claim-set version, source
-packages, governing authority direction, semantic digests, relation set, and generation profile.
+packages, governing authority direction, XML byte bindings, typed-item endpoint digests, relation
+set, and generation profile.
 It does not expose internal QA-only paths or claim that generated XML supersedes its PDF or
 Markdown authority.
 
@@ -431,19 +459,35 @@ current sources.
 
 ## 10. Validation, audit, and implementation closure
 
+Every product command uses this fixed same-snapshot order:
+
+1. capture and retain one complete repository snapshot;
+2. pass the aggregate eighteen-criterion acceptance of the PDF-transcription,
+   authored-Markdown, and authored-relation domains;
+3. construct exactly the two declared dependency-free XML handoffs for each requested edition;
+4. bind their exact `validationReads`, secure-parse the handed claim bytes with the retained
+   controls, and read the closed navigator-owned control inventory through the navigator gateway;
+5. seal one immutable product model per edition and derive the HTML, checksums, manifest, and ZIP
+   mechanically; and
+6. for the global gate, execute the registered tests and document/source checks and accept only an
+   unchanged exact clean Git commit.
+
+No preview, candidate, release, bundle, or validation command may reverse or omit the aggregate-
+acceptance and handoff stages; product model construction accepts only the exact same-snapshot
+consumer handoff set.
+
 The sole repository-global gate is:
 
 ```sh
 uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
-It captures one repository snapshot, validates the structured-source XML contract, builds the
-gateway indexes once per phase, exercises the complete registered test and acceptance suite in an
-isolated materialized checkout, regenerates and compares both editions and the bundle, checks
-whole-tree whitespace, renders every tracked Markdown document, verifies source-PDF checksums,
-revalidates live bytes after tests, and accepts only an unchanged final snapshot. Skipped tests,
-unknown acceptance criteria, validation failures, stale products, undeclared reads or writes,
-dirty state, and snapshot drift fail.
+It applies that order to both editions, builds the navigator-owned gateway indexes once per phase,
+exercises the complete registered test and acceptance suite in an isolated materialized checkout,
+regenerates and compares both editions and the bundle, checks whole-tree whitespace, renders every
+tracked Markdown document, verifies source-PDF checksums, revalidates live bytes after tests, and
+accepts only an unchanged final snapshot. Skipped tests, unknown acceptance criteria, validation
+failures, stale products, undeclared reads or writes, dirty state, and snapshot drift fail.
 
 The audit unit is:
 
@@ -451,8 +495,9 @@ The audit unit is:
 exact clean Git commit
 → repository checkout
 → current documentation and executable acceptance registry
-→ registered XML and navigator controls
-→ read-only gateway, immutable model, and deterministic products
+→ all three preparatory domain contracts and registries pass aggregate acceptance
+→ exactly two declared XML handoffs per edition and registered navigator controls
+→ read-only navigator gateway, immutable model, and deterministic products
 → unchanged-snapshot validate-current result
 ```
 
@@ -462,10 +507,25 @@ stored lineage or coverage inventories, compatibility readers, alternate semanti
 semantic cache, fallback, generated handoff archive, or duplicate relation owner. The product ZIP
 in Section 9 is a delivery product, not an audit package.
 
-The accepted implementation has one XML semantic ingestion path, one immutable typed model, one
-edition-blind rendering kernel, current schemas and controls, and only tests and products required
-by this contract. Unsupported inputs and obsolete formats fail closed before writes; no backward-
+The accepted implementation has one snapshot-bound structured-source handoff path, one
+navigator-owned control gateway, one immutable typed model, one edition-blind rendering kernel,
+current schemas and controls, and only tests and products required by this contract. Unsupported
+inputs and obsolete formats fail closed before writes; no backward-
 compatibility branch or implicit upgrade path is permitted.
+
+The exact live navigator implementation census is:
+
+| Layer | Current files |
+|---|---|
+| Product contract | `contracts/30-product-generation/claims-navigator/{technical-description_DRAFT.md,acceptance-criteria_DRAFT.md}` and `navigator/schema/acceptance.json` |
+| Package and commands | `navigator/__init__.py`, `navigator/__main__.py`, `navigator/build.py` |
+| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
+| Closed navigator controls | `navigator/bundles/na-af-2026.json`; `navigator/editions/{af,na}.json`; `navigator/relations/{af__pct,na__pct}.relations.xml`; `navigator/schema/{edition.schema.json,navigator-relations.xsd,wording.xsd}`; and `navigator/wording/{af,na,shared}.wording.xml` |
+| Registered navigator tests | `navigator.tests.{test_canon,test_current_pipeline,test_render_current,test_xml_model}` |
+| Registered structured-source tests | `structured_source.tests.{test_acceptance,test_atomic,test_conversion,test_pdf_transcription,test_registry,test_xml_contract}` |
+
+The control-input census is also enforced path-for-path by `NAVIGATOR_INPUT_PATHS`; an extra,
+missing, renamed, or alternate navigator control fails before derivation.
 
 The executable acceptance registry contains only the ordered current IDs, scopes, and criterion
 text. The global gate and registered tests check user-visible content, semantic DOM, identity,

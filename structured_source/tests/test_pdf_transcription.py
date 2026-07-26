@@ -1,6 +1,6 @@
 """Focused PDF-transcription authority, surface, coverage, and handoff tests."""
 
-from dataclasses import FrozenInstanceError
+from dataclasses import FrozenInstanceError, replace
 import copy
 import json
 import os
@@ -17,6 +17,7 @@ from structured_source.canonical import raw_digest
 from structured_source.control import canonical_json
 from structured_source.errors import StructuredSourceError
 from structured_source.render import render_content
+from structured_source.render import Projection
 from structured_source.registry import validate_registry
 from structured_source.tests.test_registry import registry_fixture
 from structured_source.tests.test_xml_contract import CONTENT
@@ -33,12 +34,14 @@ def fixture_xml():
             .replace(b"doc-alpha", b"pdf-doc")
             .replace(b"US/prior-art/A1/source.pdf", b"content/evidence.pdf")
             .replace(
-                b'fragmentId="frag-heading" sourcePath=',
-                b'fragmentId="frag-heading" region="heading region" sourcePath=')
+                b'fragmentId="frag-heading" page="1" sourcePath="content/evidence.pdf"',
+                b'fragmentId="frag-heading" page="1" region="heading region" '
+                b'sourcePath="content/evidence.pdf"')
             .replace(
-                b'fragmentId="frag-paragraph" sourcePath=',
-                b'fragmentId="frag-paragraph" region="paragraph region" '
-                b'uncertainty="line break reviewed from image" sourcePath='))
+                b'fragmentId="frag-paragraph" page="1" sourcePath="content/evidence.pdf"',
+                b'fragmentId="frag-paragraph" page="1" region="paragraph region" '
+                b'sourcePath="content/evidence.pdf" '
+                b'uncertainty="line break reviewed from image"'))
 
 
 def fixture_manifest(pdf_bytes=PDF_BYTES):
@@ -60,6 +63,10 @@ def fixture_manifest(pdf_bytes=PDF_BYTES):
 
 def write_fixture(root, *, xml=None, manifest_change=None, markdown_change=None):
     root = Path(root)
+    for control_path in parser.PARSER_CONTROL_PATHS:
+        target = root / control_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((ROOT / control_path).read_bytes())
     content = root / "content"
     content.mkdir(parents=True)
     xml = fixture_xml() if xml is None else xml
@@ -119,7 +126,16 @@ class PDFItemSurface(unittest.TestCase):
              for item in surface.items],
             [("frag-heading", "heading", None, 1),
              ("frag-paragraph", "paragraph", None, 2)])
-        self.assertEqual(surface.item("frag-heading").metadata, (("level", "1"),))
+        self.assertEqual(surface.item("frag-heading").metadata, (("level", 1),))
+        self.assertEqual(
+            (surface.document_item.item_id, surface.document_item.item_type,
+             surface.document_item.child_ids),
+            ("pdf-doc-root", "document",
+             ("frag-heading", "frag-paragraph")))
+        self.assertEqual(surface.item("pdf-doc-root"), surface.document_item)
+        self.assertEqual(
+            surface.children("pdf-doc-root"), surface.items)
+        self.assertEqual(surface.document_item.source, surface.source)
         self.assertEqual(surface.item("frag-paragraph").provenance.uncertainty,
                          "line break reviewed from image")
         self.assertEqual(surface.children(), surface.items)
@@ -127,14 +143,26 @@ class PDFItemSurface(unittest.TestCase):
         self.assertEqual(handoff["assets"], {})
         with self.assertRaises(FrozenInstanceError):
             surface.items[0].ordinal = 9
+        with self.assertRaises(TypeError):
+            handoff["surface"] = None
+        with self.assertRaises(TypeError):
+            handoff["assets"]["changed"] = b"changed"
         with self.assertRaisesRegex(StructuredSourceError, "resolve exactly"):
             surface.item("missing")
 
     def test_insert_delete_reorder_and_source_number_do_not_rename_items(self):
-        heading = (b'    <heading xml:id="frag-heading" level="1"><text>Alpha</text>'
-                   b'<space/><strong><text>Beta</text></strong></heading>')
-        paragraph = (b'    <paragraph xml:id="frag-paragraph"><text>One &lt; two</text>'
-                     b'<lineBreak/><code>x &amp; y</code></paragraph>')
+        heading = b'''    <heading level="1" xml:id="frag-heading">
+      <text>Alpha</text>
+      <space />
+      <strong>
+        <text>Beta</text>
+      </strong>
+    </heading>'''
+        paragraph = b'''    <paragraph xml:id="frag-paragraph">
+      <text>One &lt; two</text>
+      <lineBreak />
+      <code>x &amp; y</code>
+    </paragraph>'''
         original = parser.parse_artifact(CONTENT, "content-document")
         reordered = parser.parse_artifact(
             CONTENT.replace(heading + b"\n" + paragraph,
@@ -142,16 +170,18 @@ class PDFItemSurface(unittest.TestCase):
             "content-document")
         inserted_xml = CONTENT.replace(
             b"  </provenance>",
-            b'    <fragmentEvidence fragmentId="stable-new" '
-            b'sourcePath="US/prior-art/A1/source.pdf" page="1"/>\n'
+            b'    <fragmentEvidence fragmentId="stable-new" page="1" '
+            b'sourcePath="US/prior-art/A1/source.pdf" />\n'
             b"  </provenance>").replace(
                 paragraph, paragraph +
-                b'\n    <paragraph xml:id="stable-new"><text>Inserted</text></paragraph>')
+                b'''\n    <paragraph xml:id="stable-new">
+      <text>Inserted</text>
+    </paragraph>''')
         inserted = parser.parse_artifact(inserted_xml, "content-document")
         deleted_xml = (CONTENT
                        .replace(
-                           b'    <fragmentEvidence fragmentId="frag-heading" '
-                           b'sourcePath="US/prior-art/A1/source.pdf" page="1"/>\n', b"")
+                           b'    <fragmentEvidence fragmentId="frag-heading" page="1" '
+                           b'sourcePath="US/prior-art/A1/source.pdf" />\n', b"")
                        .replace(heading + b"\n", b""))
         deleted = parser.parse_artifact(deleted_xml, "content-document")
         numbered = parser.parse_artifact(
@@ -169,6 +199,9 @@ class PDFItemSurface(unittest.TestCase):
             self.assertEqual(
                 changed.fragment_digests["frag-paragraph"],
                 original.fragment_digests["frag-paragraph"])
+            self.assertNotEqual(
+                changed.fragment_digests["doc-alpha-root"],
+                original.fragment_digests["doc-alpha-root"])
         self.assertEqual(set(reordered.fragment_digests),
                          set(original.fragment_digests))
         self.assertIn("stable-new", inserted.fragment_digests)
@@ -197,8 +230,8 @@ class PDFItemSurface(unittest.TestCase):
 
     def test_missing_and_duplicate_item_provenance_fail_closed(self):
         evidence = (
-            b'    <fragmentEvidence fragmentId="frag-heading" region="heading region" '
-            b'sourcePath="content/evidence.pdf" page="1"/>\n')
+            b'    <fragmentEvidence fragmentId="frag-heading" page="1" '
+            b'region="heading region" sourcePath="content/evidence.pdf" />\n')
         mutations = (
             fixture_xml().replace(evidence, b""),
             fixture_xml().replace(evidence, evidence + evidence),
@@ -208,6 +241,22 @@ class PDFItemSurface(unittest.TestCase):
                 registry = write_fixture(root, xml=xml)
                 with self.assertRaises(StructuredSourceError):
                     VerificationContext(root, registry=registry).check("pdf-doc")
+
+    def test_missing_wrong_kind_and_cyclic_document_dependencies_fail(self):
+        for subject_id, message in (
+                ("missing-doc", "digest is stale"),
+                ("relation-doc", "digest is stale"),
+                ("pdf-doc", "cycle")):
+            dependency = (
+                '<dependencies>\n    <dependency kind="document" '
+                'subjectId="%s" />\n  </dependencies>' % subject_id).encode()
+            xml = fixture_xml().replace(b"<dependencies />", dependency)
+            with self.subTest(subject_id=subject_id), \
+                    tempfile.TemporaryDirectory() as root:
+                registry = write_fixture(root, xml=xml)
+                with self.assertRaisesRegex(StructuredSourceError, message):
+                    VerificationContext(
+                        root, registry=registry).check("pdf-doc")
 
 
 class PDFEvidenceAndCoverage(unittest.TestCase):
@@ -288,6 +337,67 @@ class PDFEvidenceAndCoverage(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr.decode())
         self.assertEqual(completed.stdout, expected)
 
+    def test_renderer_coverage_self_report_cannot_attest_to_its_region(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root)
+            artifact = parser.parse_artifact(fixture_xml(), "content-document")
+            projection = render_content(artifact, "content/evidence.md", {})
+            coverage = copy.deepcopy(projection.coverage)
+            field = next(item for item in coverage["fields"]
+                         if item["regions"] and
+                         item["classification"] == "review-visible")
+            region = field["regions"][0]
+            self.assertGreater(region["endLine"], region["startLine"])
+            anchor_line = projection.markdown.decode().splitlines().index(
+                '<a id="%s"></a>' % field["anchors"][0]) + 1
+            self.assertLessEqual(region["startLine"], anchor_line)
+            self.assertGreaterEqual(region["endLine"], anchor_line)
+            region["endLine"] = region["startLine"]
+            tampered = Projection(
+                markdown=projection.markdown,
+                markdown_digest=projection.markdown_digest,
+                coverage=coverage)
+            with mock.patch(
+                    "structured_source.verify._render_content",
+                    return_value=tampered), self.assertRaisesRegex(
+                        StructuredSourceError, "region is stale"):
+                VerificationContext(root, registry=registry).check("pdf-doc")
+
+    def test_renderer_cannot_add_an_unowned_stable_anchor(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root)
+            artifact = parser.parse_artifact(fixture_xml(), "content-document")
+            projection = render_content(artifact, "content/evidence.md", {})
+            markdown = projection.markdown.replace(
+                b'<a id="ssp-review-metadata"></a>',
+                b'<a id="ssp-unowned"></a>\n\n'
+                b'<a id="ssp-review-metadata"></a>', 1)
+            coverage = copy.deepcopy(projection.coverage)
+            coverage["markdownDigest"] = raw_digest(markdown)
+            tampered = Projection(
+                markdown=markdown, markdown_digest=raw_digest(markdown),
+                coverage=coverage)
+            with mock.patch(
+                    "structured_source.verify._render_content",
+                    return_value=tampered), self.assertRaisesRegex(
+                        StructuredSourceError, "anchor census"):
+                VerificationContext(root, registry=registry).check("pdf-doc")
+
+    def test_whitespace_only_leaf_text_remains_in_computed_field_census(self):
+        original = parser.parse_artifact(fixture_xml(), "content-document")
+        whitespace = parser.parse_artifact(
+            fixture_xml().replace(b"One &lt; two", b" "),
+            "content-document")
+        counts = []
+        for artifact in (original, whitespace):
+            fields = render_content(
+                artifact, "content/evidence.md", {}).coverage["fields"]
+            counts.append(sum(
+                item["classification"] == "review-visible" and
+                item["fieldId"].endswith(":text")
+                for item in fields))
+        self.assertEqual(counts[0], counts[1])
+
 
 class PDFSnapshotHandoff(unittest.TestCase):
     def test_validation_precedes_handoff_and_no_representation_fallback_exists(self):
@@ -303,6 +413,20 @@ class PDFSnapshotHandoff(unittest.TestCase):
                     root, registry=registry,
                     byte_source=lambda absolute: Path(absolute).read_bytes(),
                     repository_snapshot=detached).read_for_consumer(
+                        "example-consumer", "pdf-doc")
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root)
+            snapshot = RepositorySnapshot.capture(root, retain_bytes=True)
+            with self.assertRaises(TypeError):
+                snapshot.retained_bytes["content/evidence.xml"] = b"changed"
+            stale_identity = replace(
+                snapshot, digest="sha256/c1:" + "0" * 64)
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "retained-byte identity"):
+                VerificationContext(
+                    root, registry=registry,
+                    byte_source=stale_identity.byte_source(),
+                    repository_snapshot=stale_identity).read_for_consumer(
                         "example-consumer", "pdf-doc")
         with tempfile.TemporaryDirectory() as root:
             registry = write_fixture(
@@ -336,7 +460,37 @@ class PDFSnapshotHandoff(unittest.TestCase):
         self.assertEqual(set(dict(handoff["validationReads"])), {
             "content/evidence.md", "content/evidence.pdf",
             "content/evidence.xml", "content/source-manifest.json",
+            *parser.PARSER_CONTROL_PATHS,
         })
+
+    def test_prevalidated_declared_dependency_is_not_reopened_for_handoff(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root)
+            dependency_path = Path(root) / "content/consumer.json"
+            dependency_path.write_bytes(b"declared dependency\n")
+            authored_edge, pdf_edge, unused_relation_edge = \
+                registry["consumers"][0]["edges"]
+            authored_edge["dependencies"] = []
+            pdf_edge["dependencies"] = ["file-dependency"]
+            calls = {}
+
+            snapshot = RepositorySnapshot.capture(root, retain_bytes=True)
+
+            def byte_source(absolute):
+                relative = os.path.relpath(absolute, root).replace(os.sep, "/")
+                calls[relative] = calls.get(relative, 0) + 1
+                return snapshot.read_bytes(relative)
+
+            context = VerificationContext(
+                root, registry=registry, byte_source=byte_source,
+                repository_snapshot=snapshot)
+            context.reader.read("content/consumer.json")
+            before = dict(calls)
+            handoff = context.read_for_consumer("example-consumer", "pdf-doc")
+        self.assertEqual(calls["content/consumer.json"],
+                         before["content/consumer.json"])
+        self.assertEqual(handoff["dependencies"], {
+            "content/consumer.json": b"declared dependency\n"})
 
     def test_handoff_rejects_valid_live_bytes_that_differ_from_the_snapshot(self):
         with tempfile.TemporaryDirectory() as root:
@@ -348,6 +502,24 @@ class PDFSnapshotHandoff(unittest.TestCase):
             Path(root, "content/evidence.pdf").write_bytes(changed_pdf)
             Path(root, "content/source-manifest.json").write_bytes(
                 canonical_json(fixture_manifest(changed_pdf)))
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "differs from the snapshot"):
+                context.read_for_consumer("example-consumer", "pdf-doc")
+
+    def test_handoff_rejects_validation_controls_outside_retained_snapshot(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root)
+            snapshot = RepositorySnapshot.capture(root, retain_bytes=True)
+            schema_path = Path(root) / parser.SCHEMA_PATHS["content-document"]
+            schema_path.write_bytes(
+                schema_path.read_bytes().replace(
+                    b'<xs:complexType name="pdfOrigin"/>',
+                    b'<xs:complexType name="pdfOrigin">\n'
+                    b'    <xs:sequence />\n  </xs:complexType>'))
+            context = VerificationContext(
+                root, registry=registry,
+                byte_source=lambda absolute: Path(absolute).read_bytes(),
+                repository_snapshot=snapshot)
             with self.assertRaisesRegex(
                     StructuredSourceError, "differs from the snapshot"):
                 context.read_for_consumer("example-consumer", "pdf-doc")

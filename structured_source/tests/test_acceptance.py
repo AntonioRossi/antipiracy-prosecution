@@ -150,6 +150,42 @@ class AcceptanceContract(unittest.TestCase):
         self.assertEqual(first["globalPasses"], 1)
         self.assertEqual(check.call_count, len(context.packages))
 
+    def test_global_pass_constructs_every_declared_consumer_handoff(self):
+        context = VerificationContext(
+            ROOT, registry=registry_fixture(), repository_snapshot=object())
+        package_results = {
+            package_id: {
+                "packageId": package_id,
+                "authorityScheme": package["authorityScheme"],
+                "status": "conformant",
+                "computedCoverage": {"coveredItems": 1},
+            }
+            for package_id, package in context.packages.items()
+        }
+        expected = [
+            (consumer["consumerId"], edge["packageId"])
+            for consumer in context.registry["consumers"]
+            for edge in consumer["edges"]]
+        with mock.patch.object(
+                context, "_control_closure",
+                return_value=tuple(
+                    {"criteria": [{}] * 6}
+                    for unused_contract in acceptance.CONTRACTS)), \
+                mock.patch.object(
+                    context, "check",
+                    side_effect=lambda package_id: package_results[package_id]), \
+                mock.patch.object(
+                    context, "read_for_consumer",
+                    side_effect=lambda consumer_id, package_id: {
+                        "consumerId": consumer_id, "packageId": package_id,
+                    }) as handoff:
+            result = context.verify_all()
+        self.assertEqual(handoff.call_args_list, [
+            mock.call(consumer_id, package_id)
+            for consumer_id, package_id in expected])
+        self.assertEqual(result["consumerEdges"], len(expected))
+        self.assertEqual(result["consumerHandoffs"], len(expected))
+
     def test_targeted_retired_import_scan_fails_closed(self):
         for statement in (
                 b"from structured_source import approvals\n",
@@ -164,6 +200,33 @@ class AcceptanceContract(unittest.TestCase):
                 with self.assertRaisesRegex(StructuredSourceError, "retired"):
                     context._reject_retired_imports({
                         "structured_source/legacy.py"})
+
+    def test_obsolete_storage_and_digest_residue_fails_closed(self):
+        token = b"semantic" + b"Digest"
+        with tempfile.TemporaryDirectory() as root:
+            path = os.path.join(root, "obsolete.md")
+            with open(path, "wb") as handle:
+                handle.write(b"# Current surface\n\n" + token + b"\n")
+            context = VerificationContext(root, registry=registry_fixture())
+            with self.assertRaisesRegex(StructuredSourceError, "residue"):
+                context._reject_obsolete_live_residue({"obsolete.md"})
+
+    def test_structured_source_path_inventory_has_no_alternate_reader(self):
+        paths = set()
+        source_root = os.path.join(ROOT, "structured_source")
+        for directory, dirnames, filenames in os.walk(source_root):
+            dirnames[:] = [name for name in dirnames if name != "__pycache__"]
+            paths.update(
+                os.path.relpath(os.path.join(directory, name), ROOT)
+                .replace(os.sep, "/") for name in filenames)
+        context = VerificationContext(ROOT, registry=registry_fixture())
+        context._reject_alternate_structured_source_paths(paths)
+        for changed in (
+                paths | {"structured_source/alternate_reader.py"},
+                paths - {"structured_source/parser.py"}):
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "inventory differs"):
+                context._reject_alternate_structured_source_paths(changed)
 
 
 if __name__ == "__main__":

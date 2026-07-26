@@ -135,6 +135,12 @@ class RegistryContract(unittest.TestCase):
         with self.assertRaisesRegex(StructuredSourceError, "bypasses"):
             validate_registry(value)
 
+    def test_consumer_dependency_has_exactly_one_declaring_edge(self):
+        value = registry_fixture()
+        value["consumers"][0]["edges"][1]["dependencies"] = ["file-dependency"]
+        with self.assertRaisesRegex(StructuredSourceError, "bidirectionally"):
+            validate_registry(value)
+
     def test_unknown_representation_fails_but_review_only_package_is_valid(self):
         value = registry_fixture()
         value["consumers"][0]["edges"][0]["inputRepresentation"] = "auto"
@@ -246,6 +252,44 @@ class RegistryContract(unittest.TestCase):
                 "content/authored.xml", "content/consumer.json"})
             with self.assertRaisesRegex(StructuredSourceError, "resolve exactly"):
                 context.read_for_consumer("missing", "authored-doc")
+
+    def test_relation_handoff_is_bytes_only_and_binds_validation_census(self):
+        with tempfile.TemporaryDirectory() as root:
+            os.makedirs(os.path.join(root, "content"))
+            relation_xml = b"<relations />"
+            endpoint_xml = b"<source />"
+            for name, data in (
+                    ("relations.xml", relation_xml),
+                    ("endpoint.xml", endpoint_xml)):
+                with open(os.path.join(root, "content", name), "wb") as handle:
+                    handle.write(data)
+            snapshot = RepositorySnapshot.capture(root, retain_bytes=True)
+            context = VerificationContext(
+                root, registry=registry_fixture(),
+                byte_source=snapshot.byte_source(),
+                repository_snapshot=snapshot)
+            context.reader.read("content/relations.xml")
+            context.reader.read("content/endpoint.xml")
+            context._validated_package_state["relation-set"] = {
+                "representations": {
+                    "xml": relation_xml, "markdown": b"review"},
+                "surface": None,
+                "validationPaths": (
+                    "content/endpoint.xml", "content/relations.xml"),
+            }
+            with mock.patch.object(context, "check") as check:
+                resolved = context.read_for_consumer(
+                    "example-consumer", "relation-set")
+            check.assert_called_once_with("relation-set")
+            self.assertEqual(resolved["bytes"], relation_xml)
+            self.assertEqual(resolved["representationRole"], "relation-xml")
+            self.assertIsNone(resolved["surface"])
+            self.assertEqual(resolved["assets"], {})
+            self.assertEqual(resolved["dependencies"], {})
+            self.assertEqual(set(dict(resolved["validationReads"])), {
+                "content/endpoint.xml", "content/relations.xml"})
+            with self.assertRaises(TypeError):
+                resolved["surface"] = object()
 
 
 if __name__ == "__main__":

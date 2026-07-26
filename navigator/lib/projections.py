@@ -73,7 +73,7 @@ def origin_inventory(model):
     for document in model.source_documents:
         add("document:" + document.document_id, "source-document",
             document.registered_path, document.document_id,
-            document.semantic_digest)
+            document.xml_raw_digest)
     for fragment_id, item in sorted(model._source_items.items()):
         add("source-item:%s#%s" % (claim_document.document_id, fragment_id),
             "source-item", claim_document.registered_path, fragment_id,

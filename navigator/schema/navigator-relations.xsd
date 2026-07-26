@@ -12,9 +12,9 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="semanticDigestType">
+  <xs:simpleType name="typedItemDigestType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="sha256/xc1/ssp-xd1:[0-9a-f]{64}" />
+      <xs:pattern value="sha256/typed-item-v1:[0-9a-f]{64}" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -64,7 +64,7 @@
   <xs:complexType name="endpointType">
     <xs:attribute name="documentId" type="r:stableIdType" use="required" />
     <xs:attribute name="fragmentId" type="r:stableIdType" use="required" />
-    <xs:attribute name="fragmentContentDigest" type="r:semanticDigestType" use="required" />
+    <xs:attribute name="fragmentContentDigest" type="r:typedItemDigestType" use="required" />
   </xs:complexType>
 
   <xs:complexType name="documentType">
@@ -77,7 +77,6 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attribute name="documentId" type="r:stableIdType" use="required" />
-    <xs:attribute name="semanticDigest" type="r:semanticDigestType" use="required" />
   </xs:complexType>
 
   <xs:complexType name="cautionType">

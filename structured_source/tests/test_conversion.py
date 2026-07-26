@@ -16,6 +16,7 @@ from structured_source.markdown import (
     xml_to_pandoc_ast,
 )
 from structured_source.tests.test_xml_contract import RELATIONS
+from structured_source.verify import VerificationContext
 
 C = "{%s}" % CONTENT_NAMESPACE
 R = "{%s}" % RELATIONS_NAMESPACE
@@ -92,13 +93,68 @@ class AuthoredMarkdownConversion(unittest.TestCase):
 
         artifact = parser.parse_artifact(first.xml, "authored-document")
         self.assertEqual(artifact.profile, "authored-markdown-v1")
-        self.assertEqual(artifact.semantic_digest, first.semantic_digest)
         self.assertEqual(artifact.fragment_digests, first.fragment_digests)
         self.assertEqual(set(artifact.fragment_digests), set(first.item_ids))
         binding = artifact.root.find(C + "markdownBinding")
         self.assertEqual(binding.get("path"), "US/common/example.md")
         self.assertEqual(binding.get("rawDigest"), raw_digest(SIMPLE))
         self.assertEqual(binding.get("size"), str(len(SIMPLE)))
+
+    def test_document_root_is_exact_and_digest_excludes_the_envelope(self):
+        first = convert_authored_markdown(
+            SIMPLE, "US/common/example.md", "example-document")
+        moved = convert_authored_markdown(
+            SIMPLE, "US/common/moved.md", "example-document")
+        changed = convert_authored_markdown(
+            SIMPLE.replace(b"Exact title", b"Changed title"),
+            "US/common/example.md", "example-document")
+        artifact = parser.parse_artifact(first.xml, "authored-document")
+        root = artifact.typed_item_records["example-document-root"]
+        self.assertEqual(root["itemType"], "document")
+        self.assertEqual(root["substantiveMetadata"], {})
+        self.assertIsInstance(root["typedContent"], list)
+        self.assertEqual(
+            first.fragment_digests["example-document-root"],
+            moved.fragment_digests["example-document-root"])
+        self.assertNotEqual(first.xml, moved.xml)
+        self.assertNotEqual(
+            first.fragment_digests["example-document-root"],
+            changed.fragment_digests["example-document-root"])
+
+    def test_authored_xsd_profile_and_value_grammar_agree_exactly(self):
+        controls = {
+            path: (ROOT / path).read_bytes()
+            for path in parser.PARSER_CONTROL_PATHS}
+        authored_path = parser.SCHEMA_PATHS["authored-document"]
+        profile_path = parser.PROJECTION_PROFILE_PATH
+        mutations = (
+            (authored_path,
+             b'<xs:enumeration value="AlignCenter"/>',
+             b'<xs:enumeration value="AUnsupported"/>\n'
+             b'      <xs:enumeration value="AlignCenter"/>',
+             "constructor inventories differ"),
+            (authored_path,
+             b'<xs:element name="number" type="xs:decimal"/>',
+             b'<xs:element name="number" type="xs:string"/>',
+             "value grammar differs"),
+            (authored_path,
+             b'<xs:enumeration value="block"/>',
+             b'<xs:enumeration value="alternate"/>\n'
+             b'      <xs:enumeration value="block"/>',
+             "identity or fragment grammar differs"),
+            (profile_path,
+             b'"supportedBlockConstructors": ["BlockQuote"',
+             b'"supportedBlockConstructors": ["AUnsupported", "BlockQuote"',
+             "constructor inventories differ"),
+        )
+        for path, current, replacement, message in mutations:
+            with self.subTest(path=path, message=message):
+                changed = dict(controls)
+                changed[path] = changed[path].replace(
+                    current, replacement, 1)
+                self.assertNotEqual(changed[path], controls[path])
+                with self.assertRaisesRegex(SchemaError, message):
+                    parser.load_parser_controls(changed.__getitem__)
 
     def test_xml_preserves_full_ast_and_back_rendered_semantics(self):
         conversion = convert_authored_markdown(
@@ -279,11 +335,45 @@ class AuthoredMarkdownConversion(unittest.TestCase):
                     referenced.add((document_id, fragment_id))
         self.assertEqual(len(referenced), 71)
 
-    def test_existing_pdf_content_and_relation_parsers_remain_supported(self):
-        self.assertEqual(parser._schema("content-document").name, "content.xsd")
+    def test_current_pdf_content_and_relation_parsers_are_closed(self):
+        self.assertEqual(
+            parser._schema("content-document").target_namespace,
+            "urn:aa11393:ssp:content:1")
         self.assertEqual(
             parser.parse_artifact(RELATIONS, "relation-set").kind,
             "relation-set")
+
+
+class AuthoredRelations(unittest.TestCase):
+    def test_endpoint_package_validation_reads_are_transitively_closed(self):
+        package_id = "aa11393us-na-priority-support-map"
+        context = VerificationContext(ROOT)
+        context.check(package_id)
+        artifact = context._artifact(package_id)
+        endpoint_package_ids = {
+            endpoint.get("documentId")
+            for endpoint in artifact.root.findall(".//" + R + "endpoint")}
+        state = context._validated_package_state[package_id]
+        endpoint_paths = set().union(*(
+            set(context._validated_package_state[endpoint_id]["validationPaths"])
+            for endpoint_id in endpoint_package_ids))
+        self.assertIsNone(state["surface"])
+        self.assertEqual(
+            set(state["validationPackageIds"]), endpoint_package_ids)
+        self.assertTrue(endpoint_paths.issubset(state["validationPaths"]))
+
+    def test_live_registry_declares_no_relation_consumer_edge(self):
+        registry = json.loads(
+            (ROOT / "structured_source/registry/content.json").read_text())
+        relation_packages = {
+            package["packageId"] for package in registry["packages"]
+            if package["authorityScheme"] == "authored-relations-v1"}
+        relation_edges = [
+            (consumer["consumerId"], edge["packageId"])
+            for consumer in registry["consumers"]
+            for edge in consumer["edges"]
+            if edge["packageId"] in relation_packages]
+        self.assertEqual(relation_edges, [])
 
 
 if __name__ == "__main__":

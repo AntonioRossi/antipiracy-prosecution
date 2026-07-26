@@ -54,6 +54,7 @@ file. Every applicable property has one closed representation:
 | Property | Authored-Markdown requirement |
 |---|---|
 | Document identity | One stable `documentId` matching the registered package |
+| Document item | One Markdown-owned root item bound to the complete ordered semantic document |
 | Item identity | One unique Markdown-owned item ID preserved from its `ssp-*` anchor |
 | Item type | One profile-supported typed Markdown/Pandoc construct or declared fragment type |
 | Hierarchy and order | Exact authored AST containment and source order |
@@ -70,11 +71,19 @@ Insertion, deletion, or reordering may change a mechanical ordinal but cannot si
 item. A heading slug, array position, generated anchor carrier, or presentation label cannot become
 a machine reference.
 
+The exact first stable anchor is `<a id="ssp-<documentId>-root"></a>`. It owns one document item
+with ID `<documentId>-root`, type `document`, semantic path `$`, the complete ordered supported
+Pandoc block tree as typed content, and empty substantive metadata. Its typed-item digest follows
+the item-digest law; it is not an XML-wide digest and excludes the Markdown path and raw binding,
+generated envelope, formatting, parser controls, and presentation-only anchor placement.
+
 The current GFM profile is the exclusive executable inventory of Pandoc version and API, reader and
 writer, supported and top-level constructors, stable-anchor syntax and XML identity policy, link
 schemes, line endings and final newline, list and table style, and permitted presentational
-normalizations. The XSD, converter, and profile must agree exactly; none independently authorizes a
-construct or field omitted by another.
+normalizations. The XSD, converter, and profile agree exactly on those inventories and on Pandoc
+value models, fragment kinds and fields, authority binding, document identity, and generated
+envelope shape; none independently authorizes a construct, scalar, container, field, or rule
+omitted by another.
 
 An authored link is Markdown-owned semantic content subject to the profile's link rules; it is not
 silently promoted to a package dependency. A consumer dependency is a separately registered file
@@ -104,8 +113,13 @@ links, lossy structures, ambiguous claims, and constructs outside the profile fa
 generation.
 
 Generated XML uses the exact current namespace, XSD, profile, secure parser, and readable storage
-law. Every registered XML file must equal deterministic serialization of its validated typed tree
-with:
+law. The parser policy, GFM and XML profiles, shared XML schema, and artifact XSDs are loaded through
+the retained-snapshot reader as one transitively immutable control set. Every production
+conversion, generated-XML parse, and back-render uses the retained profile and validators from that
+set; live or default controls and ambient validator caches cannot satisfy snapshot-bound
+validation.
+
+Every registered XML file must equal deterministic serialization of its validated typed tree with:
 
 - the exact `<?xml version="1.0" encoding="UTF-8"?>` declaration;
 - UTF-8 without a byte order mark, NFC text, LF only, and one final newline;
@@ -162,9 +176,11 @@ field, or representation fails.
 
 A declared consumer edge selects exactly one registered representation, `xml` or `markdown`, and
 cannot read the other representation through an undeclared dependency. An XML handoff supplies the
-authority scheme, generated role, complete typed item surface, hierarchy, source order, exact
-content, metadata, dependencies, authority raw binding, and typed-item digests. A Markdown handoff
-supplies the authority bytes directly and receives no generated XML surface.
+authority scheme, generated role, exact validated generated-XML bytes, dependencies, and exact read
+census; it carries no prebuilt source surface or assets. A consumer that constructs a semantic model
+receives the retained parser controls from the same validation context and secure-parses only those
+handed XML bytes. A Markdown handoff supplies the authority bytes directly and receives no generated
+XML state.
 
 An acceptable immutable snapshot supplies a nonempty digest, the checkout root, a closed path
 inventory, and retained bytes addressable through that inventory. A digest string, pass result, or
@@ -176,14 +192,16 @@ Trust attaches only to the validated item graph over the exact immutable snapsho
 consumer constructs a semantic model or writes an output, Markdown profile, conversion,
 item/field census, hierarchy, order, authority raw binding, typed-item digests, generated XML,
 semantic back-render, dependencies, and coverage must all pass. The consumer receives those same
-validated bytes and may mechanically look up items, traverse declared hierarchy and order, select
-declared fields, and resolve registered dependencies. It may not reopen a different path, accept a
-detached pass token, or infer missing semantics.
+validated bytes and, for XML, uses the supplied retained controls to construct one immutable typed
+model before mechanically looking up items, traversing declared hierarchy and order, selecting
+declared fields, or resolving dependencies. It may not reopen a path, accept a detached pass token,
+rerun Markdown conversion, or infer missing semantics.
 
-Package validation constructs and freezes the authority and generated representation bytes and the
-complete typed surface before handoff. The handoff uses that validated state without reopening even
-the same live path or reconstructing semantics from a later read, and exposes the exact
-validation-read census for the edge.
+Package validation constructs and transitively freezes the authority and generated representation
+bytes, dependency and handoff mappings, and retained control profiles. It validates the complete
+typed-item record and digest census without handing over a prebuilt source surface. The handoff uses
+that validated state without reopening even the same live path or reconstructing semantics from a
+later read, and exposes the exact validation-read census for the edge.
 
 Selection of XML never promotes it above Markdown authority. A consumer may not repair generated
 XML, infer missing authored content, add source-domain fields, reparse an undeclared representation,
@@ -209,14 +227,22 @@ The repository-global gate owns immutable snapshot bracketing, registered isolat
 snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
 statuses without defining any consumer product outcome.
 
+Aggregate verification constructs exactly one conformant handoff for every declared consumer edge;
+resolving or counting an edge does not prove it. The declared-edge and constructed-handoff censuses
+must agree exactly. At the consumption boundary, the handoff census is bound before ordinary reads;
+an ordinary read of a handed path or conflicting bytes for the same path fails.
+
 ## 8. Live implementation closure
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
 content registry's authored-Markdown slice, current schemas and profiles, converter, focused tests,
-item-surface builder, immutable-snapshot handoff, registered consumers, and registered packages are
-the complete live implementation. The immutable repository snapshot must contain the exact named
-domain artifacts and every required shared implementation path.
+typed-item record and digest builder, generated-XML validator, semantic back-render, immutable
+snapshot handoff, registered consumers, and registered packages are the complete live implementation.
+The immutable repository snapshot must contain the exact named domain artifacts and every required
+shared implementation path.
 
-No alternate converter, editable generated owner, compatibility or migration reader, approval or
-reviewer record, stored receipt, digest ledger, persisted back-render, coverage store, export path,
-or inactive domain artifact remains operative. Git alone retains implementation history.
+No alternate converter, editable generated owner, production parser-control bypass, consumer-side
+Markdown reconverter, alternate generated-XML reader, mutable handoff, compatibility or migration
+reader, approval or reviewer record, stored receipt, digest ledger, persisted back-render, coverage
+store, export path, or inactive domain artifact remains operative. Git alone retains implementation
+history.

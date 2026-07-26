@@ -8,6 +8,7 @@ anchor; the index is never a second editable content owner.
 
 from __future__ import annotations
 
+from contextvars import ContextVar
 from dataclasses import dataclass
 import json
 import math
@@ -19,7 +20,8 @@ from urllib.parse import urlsplit
 from xml.etree import ElementTree as ET
 
 from . import CONTENT_NAMESPACE, SCHEMA_VERSION
-from .canonical import raw_digest
+from .canonical import (raw_digest, readable_xml_bytes, typed_item_digest,
+                        typed_item_record)
 from .errors import StructuredSourceError
 from .parser import MAX_XML_BYTES, parse_artifact
 from .profiles import load_projection_profile
@@ -32,6 +34,9 @@ _ANCHOR_OPEN = re.compile(r'<a id="(ssp-[a-z][a-z0-9-]{0,155})">\Z')
 _CLAIM_ID = re.compile(r"claim-[1-9][0-9]*\Z")
 _CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 _DROP = object()
+_ACTIVE_PROFILE = ContextVar("structured_source_projection_profile", default=None)
+_ACTIVE_PARSER_CONTROLS = ContextVar(
+    "structured_source_parser_controls", default=None)
 
 
 @dataclass(frozen=True)
@@ -42,7 +47,6 @@ class AuthoredConversion:
     markdown: bytes
     source_raw_digest: str
     generated_markdown_raw_digest: str
-    semantic_digest: str
     item_ids: tuple[str, ...]
     fragment_digests: dict[str, str]
 
@@ -59,10 +63,18 @@ class _AnchorOccurrence:
 class _Analysis:
     semantic_model: dict
     fragments: tuple[dict[str, str], ...]
+    item_bindings: tuple[object, ...]
 
 
 def _profile() -> dict:
-    return load_projection_profile()
+    active = _ACTIVE_PROFILE.get()
+    return active if active is not None else load_projection_profile()
+
+
+def _maximum_input_bytes() -> int:
+    controls = _ACTIVE_PARSER_CONTROLS.get()
+    return (controls.limits["bytes"] if controls is not None
+            else MAX_XML_BYTES)
 
 
 def _canonical_repo_path(path: str) -> str:
@@ -76,7 +88,7 @@ def _canonical_repo_path(path: str) -> str:
 def _source_text(markdown: bytes) -> str:
     if not isinstance(markdown, bytes):
         raise TypeError("authored Markdown input must be bytes")
-    if not markdown or len(markdown) > MAX_XML_BYTES or markdown.startswith(
+    if not markdown or len(markdown) > _maximum_input_bytes() or markdown.startswith(
             (b"\xef\xbb\xbf", b"\xff\xfe", b"\xfe\xff")):
         raise StructuredSourceError("authored Markdown byte size or encoding is invalid")
     try:
@@ -115,7 +127,8 @@ def _read_pandoc(markdown: bytes) -> dict:
         raise StructuredSourceError("Pandoc emitted malformed JSON") from exc
     if not isinstance(ast, dict) or set(ast) != {
             "pandoc-api-version", "meta", "blocks"} or \
-            ast["pandoc-api-version"] != profile["pandocApiVersion"] or \
+            tuple(ast["pandoc-api-version"]) != \
+            tuple(profile["pandocApiVersion"]) or \
             ast["meta"] != {} or not isinstance(ast["blocks"], list) or \
             not ast["blocks"]:
         raise StructuredSourceError(
@@ -592,6 +605,7 @@ def _analyse_ast(ast: dict, document_id: str) -> _Analysis:
             cleaned_blocks[target_position]))
 
     fragments: list[dict[str, str]] = []
+    item_bindings = []
     for index, occurrence in enumerate(occurrences):
         if index == 0:
             kind = "document"
@@ -626,6 +640,7 @@ def _analyse_ast(ast: dict, document_id: str) -> _Analysis:
             "bindingDigest": _binding_digest(binding),
             "excerpt": _plain_excerpt(binding),
         })
+        item_bindings.append(binding)
 
     return _Analysis(
         semantic_model={
@@ -635,7 +650,50 @@ def _analyse_ast(ast: dict, document_id: str) -> _Analysis:
             "fragments": fragments,
         },
         fragments=tuple(fragments),
+        item_bindings=tuple(item_bindings),
     )
+
+
+def _typed_pandoc_value(value: object):
+    """Represent Pandoc's typed JSON tree without c1-prohibited floats."""
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise StructuredSourceError("Pandoc typed item contains a non-finite number")
+        return {"decimal": format(value, ".17f").rstrip("0").rstrip(".")}
+    if isinstance(value, list):
+        return [_typed_pandoc_value(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _typed_pandoc_value(item) for key, item in value.items()}
+    return value
+
+
+def authored_typed_items(root: ET.Element) -> tuple[dict[str, str], dict[str, dict]]:
+    """Recompute exact authored item records from the preserved Pandoc AST."""
+    document_id, ast = _decode_authored_root(root)
+    analysis = _analyse_ast(ast, document_id)
+    records = {}
+    for fragment, binding in zip(analysis.fragments, analysis.item_bindings):
+        item_id = fragment["id"]
+        records[item_id] = typed_item_record(
+            authority_scheme=AUTHORED_PROFILE,
+            schema_profile=AUTHORED_PROFILE,
+            document_id=document_id,
+            item_id=item_id,
+            item_type=fragment["bindingKind"],
+            typed_content=_typed_pandoc_value(binding),
+            substantive_metadata={},
+        )
+    digests = {
+        item_id: typed_item_digest(
+            authority_scheme=record["authorityScheme"],
+            schema_profile=record["schemaProfile"],
+            document_id=record["documentId"], item_id=record["itemId"],
+            item_type=record["itemType"],
+            typed_content=record["typedContent"],
+            substantive_metadata=record["substantiveMetadata"])
+        for item_id, record in records.items()
+    }
+    return digests, records
 
 
 def normalized_pandoc_ast(markdown: bytes, document_id: str) -> dict:
@@ -704,10 +762,7 @@ def _xml_bytes(ast: dict, analysis: _Analysis, markdown: bytes,
         block = ET.SubElement(pandoc, C + "block", {"constructor": constructor})
         if "c" in entry:
             _value_element(block, content)
-    ET.indent(root, space="  ")
-    body = ET.tostring(root, encoding="unicode", short_empty_elements=True)
-    return ('<?xml version="1.0" encoding="UTF-8"?>\n' + body + "\n").encode(
-        "utf-8")
+    return readable_xml_bytes(root)
 
 
 def _element_value(element: ET.Element) -> object:
@@ -755,7 +810,7 @@ def _decode_authored_root(root: ET.Element) -> tuple[str, dict]:
     if not blocks:
         raise StructuredSourceError("authored XML contains no Pandoc blocks")
     return document_id, {
-        "pandoc-api-version": _profile()["pandocApiVersion"],
+        "pandoc-api-version": list(_profile()["pandocApiVersion"]),
         "meta": {},
         "blocks": blocks,
     }
@@ -789,7 +844,8 @@ def _validate_authored_root(root: ET.Element) -> None:
 
 
 def _document_from_xml(xml: bytes) -> tuple[object, str, dict, _Analysis]:
-    artifact = parse_artifact(xml, "authored-document")
+    artifact = parse_artifact(
+        xml, "authored-document", controls=_ACTIVE_PARSER_CONTROLS.get())
     document_id, ast = _decode_authored_root(artifact.root)
     return artifact, document_id, ast, _analyse_ast(ast, document_id)
 
@@ -827,8 +883,8 @@ def xml_to_markdown(xml: bytes) -> bytes:
     return markdown
 
 
-def convert_authored_markdown(markdown: bytes, markdown_path: str,
-                              document_id: str) -> AuthoredConversion:
+def _convert_authored_markdown(markdown: bytes, markdown_path: str,
+                               document_id: str) -> AuthoredConversion:
     """Generate current XML and prove its semantic GFM round trip."""
     ast = _read_pandoc(markdown)
     analysis = _analyse_ast(ast, document_id)
@@ -849,7 +905,21 @@ def convert_authored_markdown(markdown: bytes, markdown_path: str,
         markdown=generated,
         source_raw_digest=raw_digest(markdown),
         generated_markdown_raw_digest=raw_digest(generated),
-        semantic_digest=artifact.semantic_digest,
         item_ids=tuple(item["id"] for item in analysis.fragments),
         fragment_digests=dict(artifact.fragment_digests),
     )
+
+
+def convert_authored_markdown(
+        markdown: bytes, markdown_path: str, document_id: str, *,
+        parser_controls=None) -> AuthoredConversion:
+    """Convert using controls retained by the validating snapshot when supplied."""
+    if parser_controls is None:
+        return _convert_authored_markdown(markdown, markdown_path, document_id)
+    profile_token = _ACTIVE_PROFILE.set(parser_controls.projection_profile)
+    controls_token = _ACTIVE_PARSER_CONTROLS.set(parser_controls)
+    try:
+        return _convert_authored_markdown(markdown, markdown_path, document_id)
+    finally:
+        _ACTIVE_PARSER_CONTROLS.reset(controls_token)
+        _ACTIVE_PROFILE.reset(profile_token)

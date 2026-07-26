@@ -140,9 +140,10 @@ def fresh_candidate(root, edition_id, timeout=600):
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     script = (
         "import sys\n"
-        "from navigator.lib import currentstate\n"
+        "from navigator.lib import currentstate,snapshot\n"
+        "r=snapshot.RepositorySnapshot.capture(currentstate.ROOT,retain_bytes=True)\n"
         "unused_model,data,unused_lock=currentstate.derive(sys.argv[1],"
-        "'candidate')\n"
+        "'candidate',r)\n"
         "sys.stdout.buffer.write(data)\n"
     )
     try:

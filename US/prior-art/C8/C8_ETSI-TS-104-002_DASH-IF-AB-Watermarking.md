@@ -1,4 +1,4 @@
-<!-- GENERATED REVIEW PROJECTION — source us-prior-art-c8; digest sha256/xc1/ssp-xd1:1138e39c0edf57250962d7cfbecbf27ece05ff45def065b03531e5ff341744cd; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate us-prior-art-c8`; edit the XML source, never this Markdown. -->
+<!-- GENERATED REVIEW PROJECTION — source us-prior-art-c8; byte digest sha256/raw:cd4423369edba03b23ca827374217884d37c92ee552247bb7a3c04202f72ab67; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate us-prior-art-c8`; edit the XML source, never this Markdown. -->
 <a id="ssp-us-prior-art-c8-root"></a>
 
 <a id="ssp-us-prior-art-c8-header-00001"></a>
@@ -2743,7 +2743,7 @@ V1.1.1 August 2023 Publication
 <a id="ssp-review-dependencies"></a>
 ## Dependencies
 
-| Kind | Subject | Exact semantic digest |
+| Kind | Subject | Exact binding digest |
 |---|---|---|
 | None | — | — |
 

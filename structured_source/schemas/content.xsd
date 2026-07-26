@@ -36,13 +36,13 @@
       <xs:pattern value="sha256/raw:[0-9a-f]{64}"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="semanticDigest">
+  <xs:simpleType name="typedItemDigest">
     <xs:restriction base="xs:string">
-      <xs:pattern value="sha256/xc1/ssp-xd1:[0-9a-f]{64}"/>
+      <xs:pattern value="sha256/typed-item-v1:[0-9a-f]{64}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="dependencyDigest">
-    <xs:union memberTypes="c:rawDigest c:semanticDigest"/>
+    <xs:union memberTypes="c:rawDigest c:typedItemDigest"/>
   </xs:simpleType>
 
   <xs:complexType name="inlineContainer">
@@ -312,7 +312,9 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attribute name="subjectId" type="c:stableId" use="required"/>
-    <xs:attribute name="digest" type="c:dependencyDigest" use="required"/>
+    <xs:attribute name="itemId" type="c:stableId"/>
+    <xs:attribute name="digest" type="c:dependencyDigest"/>
+    <xs:assert test="if (@kind = 'asset') then (exists(@digest) and starts-with(string(@digest), 'sha256/raw:') and not(exists(@itemId))) else if (@kind = 'document') then (exists(@itemId) = exists(@digest) and (not(exists(@digest)) or starts-with(string(@digest), 'sha256/typed-item-v1:'))) else (not(exists(@itemId)) and not(exists(@digest)))"/>
   </xs:complexType>
   <xs:complexType name="dependencies">
     <xs:sequence>

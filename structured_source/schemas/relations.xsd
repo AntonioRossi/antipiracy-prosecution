@@ -16,9 +16,9 @@
       <xs:maxLength value="160"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="semanticDigest">
+  <xs:simpleType name="typedItemDigest">
     <xs:restriction base="xs:string">
-      <xs:pattern value="sha256/xc1/ssp-xd1:[0-9a-f]{64}"/>
+      <xs:pattern value="sha256/typed-item-v1:[0-9a-f]{64}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="identity">
@@ -32,7 +32,7 @@
     <xs:attribute name="role" type="r:stableId" use="required"/>
     <xs:attribute name="documentId" type="r:stableId" use="required"/>
     <xs:attribute name="fragmentId" type="r:stableId" use="required"/>
-    <xs:attribute name="fragmentContentDigest" type="r:semanticDigest" use="required"/>
+    <xs:attribute name="fragmentContentDigest" type="r:typedItemDigest" use="required"/>
   </xs:complexType>
   <xs:complexType name="assertionField">
     <xs:simpleContent>

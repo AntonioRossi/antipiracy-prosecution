@@ -1,4 +1,4 @@
-<!-- GENERATED REVIEW PROJECTION — source us-prior-art-c3; digest sha256/xc1/ssp-xd1:89d82ce15e257228fadb4cc62948c1e118aadb2257c84490f1c34d86c566c547; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate us-prior-art-c3`; edit the XML source, never this Markdown. -->
+<!-- GENERATED REVIEW PROJECTION — source us-prior-art-c3; byte digest sha256/raw:d64b1d36b23b641e1162df3c822055bce0945761c87b0416eb7bf7677b6ddaf1; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate us-prior-art-c3`; edit the XML source, never this Markdown. -->
 <a id="ssp-us-prior-art-c3-root"></a>
 
 <a id="ssp-us-prior-art-c3-header-00001"></a>
@@ -2574,7 +2574,7 @@ Proc. of the 1983 IEEE Symposium on Security
 <a id="ssp-review-dependencies"></a>
 ## Dependencies
 
-| Kind | Subject | Exact semantic digest |
+| Kind | Subject | Exact binding digest |
 |---|---|---|
 | None | — | — |
 

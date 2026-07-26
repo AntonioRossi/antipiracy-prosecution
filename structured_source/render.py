@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+from contextvars import ContextVar
 from dataclasses import dataclass
 import posixpath
 import re
@@ -18,10 +20,7 @@ C = "{%s}" % CONTENT_NAMESPACE
 R = "{%s}" % RELATIONS_NAMESPACE
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 _SAFE_ANCHOR = re.compile(r"[A-Za-z][A-Za-z0-9_.:-]*\Z")
-_PROJECTION = load_projection_profile()
-_ANCHOR_LINE = re.compile(
-    r'<a id="%s[A-Za-z][A-Za-z0-9_.:-]*"></a>' %
-    re.escape(_PROJECTION["stableAnchorPrefix"]))
+_ACTIVE_PROFILE = ContextVar("structured_source_render_profile", default=None)
 
 
 @dataclass(frozen=True)
@@ -31,10 +30,27 @@ class Projection:
     coverage: dict
 
 
+def _profile() -> dict:
+    active = _ACTIVE_PROFILE.get()
+    return active if active is not None else load_projection_profile()
+
+
+def _anchor_line_pattern():
+    return re.compile(
+        r'<a id="%s[A-Za-z][A-Za-z0-9_.:-]*"></a>' %
+        re.escape(_profile()["stableAnchorPrefix"]))
+
+
+def _anchor_id_pattern():
+    return re.compile(
+        r'<a id="%s([A-Za-z][A-Za-z0-9_.:-]*)"></a>' %
+        re.escape(_profile()["stableAnchorPrefix"]))
+
+
 def _anchor(identifier: str) -> str:
     if not isinstance(identifier, str) or _SAFE_ANCHOR.fullmatch(identifier) is None:
         raise StructuredSourceError("fragment identity cannot form a stable review anchor")
-    return _PROJECTION["stableAnchorPrefix"] + identifier
+    return _profile()["stableAnchorPrefix"] + identifier
 
 
 def _anchor_element(identifier: str) -> str:
@@ -63,7 +79,7 @@ def _relative_target(target: str, output_path: str) -> str:
         parsed = urlsplit(target)
     except ValueError as exc:
         raise StructuredSourceError("projection link target is malformed") from exc
-    if parsed.scheme in set(_PROJECTION["externalSchemes"]):
+    if parsed.scheme in set(_profile()["externalSchemes"]):
         return urlunsplit((
             parsed.scheme, parsed.netloc,
             quote(parsed.path, safe="/%:@-._~"),
@@ -268,11 +284,11 @@ class _Renderer:
                 if item_anchor:
                     leading.append(item_anchor)
                 while nested and re.fullmatch(
-                    _ANCHOR_LINE,
+                    _anchor_line_pattern(),
                         nested[0]):
                     leading.append(nested.pop(0))
                 marker = (("%d. " if delimiter == "period" else "%d) ") % number
-                          if ordered else _PROJECTION["unorderedListMarker"] + " ")
+                          if ordered else _profile()["unorderedListMarker"] + " ")
                 continuation = " " * max(4, len(marker))
                 first_child = next(iter(item), None)
                 if first_child is not None and first_child.tag == C + "list":
@@ -392,12 +408,14 @@ class _Renderer:
         dependencies = root.find(C + "dependencies")
         self.emit(_anchor_element("review-dependencies"),
                   "## Dependencies", "",
-                  "| Kind | Subject | Exact semantic digest |", "|---|---|---|")
+                  "| Kind | Subject | Exact binding digest |", "|---|---|---|")
         entries = dependencies.findall(C + "dependency")
         if entries:
             for item in entries:
-                self.emit("| %s | %s | `%s` |" % (
-                    item.get("kind"), item.get("subjectId"), item.get("digest")))
+                digest = item.get("digest")
+                self.emit("| %s | %s | %s |" % (
+                    item.get("kind"), item.get("subjectId"),
+                    ("`%s`" % digest) if digest else "—"))
         else:
             self.emit("| None | — | — |")
         self.emit("")
@@ -424,13 +442,13 @@ class _Renderer:
         identity = root.find(C + "documentIdentity")
         subject = identity.get("documentId")
         notice = (
-            "<!-- GENERATED REVIEW PROJECTION — source %s; digest %s; "
+            "<!-- GENERATED REVIEW PROJECTION — source %s; byte digest %s; "
             "source profile %s; projection profile %s/%s; regenerate with "
             "`uv --no-cache --offline run --locked "
             "--no-sync python -m structured_source regenerate %s`; edit the XML source, "
             "never this Markdown. -->" %
-            (subject, self.artifact.semantic_digest, self.artifact.profile,
-             _PROJECTION["profileId"], _PROJECTION["generatedNoticeVersion"], subject))
+            (subject, self.artifact.raw_digest, self.artifact.profile,
+             _profile()["profileId"], _profile()["generatedNoticeVersion"], subject))
         self.emit(notice, self.anchor_line(root.get(XML_ID)), "")
         content = root.find(C + "content")
         for node in content:
@@ -459,7 +477,7 @@ def _typed_field_census(root: ET.Element, regions: dict[str, tuple[int, int]],
         fragment = node.get(XML_ID) or nearest_fragment
         local = node.tag.rsplit("}", 1)[-1]
         node_ref = "%s:n%d:%s" % (subject_id, sequence, local)
-        if plane == "content" and fragment:
+        if plane in {"content", "document"} and fragment:
             classification = "review-visible"
             anchors = [_anchor(fragment)] if fragment else []
             line_regions = ([{"startLine": regions[fragment][0],
@@ -471,13 +489,15 @@ def _typed_field_census(root: ET.Element, regions: dict[str, tuple[int, int]],
             line_regions = []
         elif plane in {"dependencies", "provenance", "metadata"}:
             classification = "review-scheduled"
-            anchor_name = {
-                "dependencies": _anchor("review-dependencies"),
-                "provenance": _anchor("review-provenance"),
-                "metadata": _anchor("review-metadata"),
+            region_id = {
+                "dependencies": "review-dependencies",
+                "provenance": "review-provenance",
+                "metadata": "review-metadata",
             }[plane]
+            anchor_name = _anchor(region_id)
             anchors = [anchor_name]
-            line_regions = []
+            line_regions = [{"startLine": regions[region_id][0],
+                             "endLine": regions[region_id][1]}]
         elif plane == "projection":
             classification = "mechanically-derived"
             anchors = []
@@ -511,7 +531,7 @@ def _typed_field_census(root: ET.Element, regions: dict[str, tuple[int, int]],
                 **({"justification": "schema-envelope-control"}
                    if classification == "internal-justified" else {}),
             })
-        if node.text is not None and node.text.strip():
+        if node.text is not None:
             fields.append({
                 "fieldId": node_ref + ":text",
                 "origin": {"subjectId": subject_id, "nodeRef": node_ref,
@@ -535,27 +555,82 @@ def _typed_field_census(root: ET.Element, regions: dict[str, tuple[int, int]],
                 }.get(child_local, "internal")
             visit(child, None if node is root else fragment, child_plane)
 
-    visit(root, None, "internal")
+    visit(root, root.get(XML_ID), "document")
     return fields
 
 
-def render_content(artifact: ParsedArtifact, output_path: str,
-                   asset_paths: dict[str, str] | None = None) -> Projection:
+def _render_content(artifact: ParsedArtifact, output_path: str,
+                    asset_paths: dict[str, str] | None = None) -> Projection:
     if artifact.kind != "content-document":
         raise StructuredSourceError("content renderer received a non-content artifact")
     renderer = _Renderer(artifact, output_path, asset_paths or {})
     markdown = renderer.render_content()
+    markdown_lines = markdown.decode("utf-8").splitlines()
+    anchor_lines = {}
+    for line_number, line in enumerate(markdown_lines, start=1):
+        for match in _anchor_id_pattern().finditer(line):
+            identifier = match.group(1)
+            if identifier in anchor_lines:
+                raise StructuredSourceError(
+                    "projection coverage anchor is duplicated")
+            anchor_lines[identifier] = line_number
+    review_lines = {}
+    for identifier in ("review-metadata", "review-dependencies",
+                       "review-provenance"):
+        anchor = _anchor_element(identifier)
+        positions = [index for index, line in enumerate(markdown_lines, start=1)
+                     if line == anchor]
+        if len(positions) != 1:
+            raise StructuredSourceError(
+                "projection review section anchor is not exact")
+        review_lines[identifier] = positions[0]
+    coverage_regions = {
+        "review-metadata": (
+            review_lines["review-metadata"],
+            review_lines["review-dependencies"] - 1),
+        "review-dependencies": (
+            review_lines["review-dependencies"],
+            review_lines["review-provenance"] - 1),
+        "review-provenance": (
+            review_lines["review-provenance"], len(markdown_lines)),
+    }
+    content = artifact.root.find(C + "content")
+    top_level = list(content)
+    top_ids = [node.get(XML_ID) for node in top_level]
+    try:
+        starts = [anchor_lines[item_id] for item_id in top_ids]
+    except KeyError as exc:
+        raise StructuredSourceError(
+            "projection coverage top-level anchor is absent") from exc
+    if starts != sorted(set(starts)) or \
+            (starts and starts[-1] >= review_lines["review-metadata"]):
+        raise StructuredSourceError(
+            "projection coverage block order is not exact")
+    ends = [*([start - 1 for start in starts[1:]]),
+            review_lines["review-metadata"] - 1]
+    for node, start, end in zip(top_level, starts, ends):
+        region = (start, end)
+        for descendant in node.iter():
+            item_id = descendant.get(XML_ID)
+            if item_id:
+                coverage_regions[item_id] = region
+    root_id = artifact.root.get(XML_ID)
+    if root_id not in anchor_lines:
+        raise StructuredSourceError(
+            "projection coverage document-item anchor is absent")
+    coverage_regions[root_id] = (
+        anchor_lines[root_id], review_lines["review-metadata"] - 1)
     identity = artifact.root.find(C + "documentIdentity")
     subject = identity.get("documentId")
     coverage_value = {
         "coverageVersion": "1",
         "subjectId": subject,
-        "sourceDigest": artifact.semantic_digest,
+        "sourceRawDigest": artifact.raw_digest,
         "sourceProfile": artifact.profile,
-        "projectionProfile": _PROJECTION["profileId"],
+        "projectionProfile": _profile()["profileId"],
         "markdownDigest": raw_digest(markdown),
         "fields": _typed_field_census(
-            artifact.root, renderer.regions, subject),
+            artifact.root, coverage_regions, subject),
     }
     return Projection(
         markdown=markdown,
@@ -564,8 +639,8 @@ def render_content(artifact: ParsedArtifact, output_path: str,
     )
 
 
-def render_relations(artifact: ParsedArtifact, output_path: str,
-                     endpoint_views: dict[tuple[str, str, str], object]) -> Projection:
+def _render_relations(artifact: ParsedArtifact, output_path: str,
+                      endpoint_views: dict[tuple[str, str, str], object]) -> Projection:
     """Render one relation owner and current endpoint excerpts mechanically."""
     if artifact.kind != "relation-set":
         raise StructuredSourceError("relation renderer received a non-relation artifact")
@@ -574,13 +649,13 @@ def render_relations(artifact: ParsedArtifact, output_path: str,
     identity = root.find(R + "identity")
     subject = identity.get("relationSetId")
     renderer.emit(
-        "<!-- GENERATED RELATION REVIEW PROJECTION — relation set %s; digest %s; "
+        "<!-- GENERATED RELATION REVIEW PROJECTION — relation set %s; byte digest %s; "
         "source profile %s; projection profile %s/%s; regenerate with "
         "`uv --no-cache --offline run --locked "
         "--no-sync python -m structured_source regenerate %s`; edit the relation XML, "
         "never this Markdown. -->" %
-        (subject, artifact.semantic_digest, artifact.profile,
-         _PROJECTION["profileId"], _PROJECTION["generatedNoticeVersion"], subject), "",
+        (subject, artifact.raw_digest, artifact.profile,
+         _profile()["profileId"], _profile()["generatedNoticeVersion"], subject), "",
         _anchor_element("relation-metadata"),
         "# Relation-set review metadata", "",
         "| Field | Current value |", "|---|---|",
@@ -670,7 +745,7 @@ def render_relations(artifact: ParsedArtifact, output_path: str,
         for field_name in ["element"] + [
                 "attribute:" + name.rsplit("}", 1)[-1]
                 for name in sorted(node.attrib)] + \
-                (["text"] if node.text and node.text.strip() else []):
+                (["text"] if node.text is not None else []):
             entry = dict(common)
             entry["fieldId"] = node_ref + ":" + field_name
             entry["origin"] = {**common["origin"], "field": field_name}
@@ -686,10 +761,38 @@ def render_relations(artifact: ParsedArtifact, output_path: str,
     census(root, "internal", None)
     coverage_value = {
         "coverageVersion": "1", "subjectId": subject,
-        "sourceDigest": artifact.semantic_digest,
+        "sourceRawDigest": artifact.raw_digest,
         "sourceProfile": artifact.profile,
-        "projectionProfile": _PROJECTION["profileId"],
+        "projectionProfile": _profile()["profileId"],
         "markdownDigest": raw_digest(markdown), "fields": fields,
     }
     return Projection(markdown=markdown, markdown_digest=raw_digest(markdown),
                       coverage=coverage_value)
+
+
+def render_content(artifact: ParsedArtifact, output_path: str,
+                   asset_paths: dict[str, str] | None = None, *,
+                   projection_profile=None) -> Projection:
+    """Render with the retained projection profile when one is supplied."""
+    profile = projection_profile or load_projection_profile()
+    if not isinstance(profile, Mapping):
+        raise StructuredSourceError("renderer projection profile is malformed")
+    token = _ACTIVE_PROFILE.set(profile)
+    try:
+        return _render_content(artifact, output_path, asset_paths)
+    finally:
+        _ACTIVE_PROFILE.reset(token)
+
+
+def render_relations(artifact: ParsedArtifact, output_path: str,
+                     endpoint_views: dict[tuple[str, str, str], object], *,
+                     projection_profile=None) -> Projection:
+    """Render relations with the retained projection profile when supplied."""
+    profile = projection_profile or load_projection_profile()
+    if not isinstance(profile, Mapping):
+        raise StructuredSourceError("renderer projection profile is malformed")
+    token = _ACTIVE_PROFILE.set(profile)
+    try:
+        return _render_relations(artifact, output_path, endpoint_views)
+    finally:
+        _ACTIVE_PROFILE.reset(token)

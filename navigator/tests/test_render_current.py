@@ -13,6 +13,7 @@ import unittest
 
 from navigator.lib.gateway import ContentGateway
 from navigator.lib.claims import Claim, ClaimUnit
+from navigator.lib import currentstate
 from navigator.lib.model import (
     ContentNode, EditionModel, Endpoint, Mapping, RelationSet, Target,
 )
@@ -20,6 +21,7 @@ from navigator.lib.projections import RelationRef
 from navigator.lib.render import (
     EXACT_CSP, FORBIDDEN_SCRIPT_TOKENS, JS, UI, RenderError, render,
 )
+from navigator.lib.snapshot import RepositorySnapshot
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -83,23 +85,23 @@ class FakeModel:
             SimpleNamespace(
                 document_id="claim-doc", authority_scheme="authored-markdown-v1",
                 xml_role="generated-xml",
-                semantic_digest="sha256/xc1/ssp-xd1:" + "1" * 64,
+                xml_raw_digest="sha256/raw:" + "1" * 64,
                 registered_path='claims/"source".xml'),
             SimpleNamespace(
                 document_id="pct-doc", authority_scheme="pdf-evidence-transcription-v1",
                 xml_role="transcription-xml",
-                semantic_digest="sha256/xc1/ssp-xd1:" + "2" * 64,
+                xml_raw_digest="sha256/raw:" + "2" * 64,
                 registered_path="pct/source.xml"),
         )
         unit = ClaimUnit(
             fragment_id="claim-1", claim_number=1, unit_kind="preamble",
             unit_index=0, text="A </script><svg onload=boom> system",
             text_digest="sha256/c1:" + "3" * 64,
-            content_digest="sha256/xc1/ssp-xd1:" + "4" * 64)
+            content_digest="sha256/typed-item-v1:" + "4" * 64)
         claim = Claim(
             number=1, group="Only <group>", units=(unit,), dependencies=(),
             fragment_id="claim-1",
-            content_digest="sha256/xc1/ssp-xd1:" + "5" * 64)
+            content_digest="sha256/typed-item-v1:" + "5" * 64)
         self.claims = (claim,)
         self.claims_by_number = MappingProxyType({1: claim})
         self.units_by_fragment = MappingProxyType({unit.fragment_id: unit})
@@ -111,7 +113,7 @@ class FakeModel:
                     fragment_id=None, kind="text", text="Target <A>",
                     level=None, attributes=(), children=(),
                     content_digest=None, editorial=False),),
-                content_digest="sha256/xc1/ssp-xd1:" + "6" * 64,
+                content_digest="sha256/typed-item-v1:" + "6" * 64,
                 editorial=False),
             ContentNode(
                 fragment_id="target-b", kind="paragraph", text="Target & B",
@@ -119,7 +121,7 @@ class FakeModel:
                     fragment_id=None, kind="text", text="Target & B",
                     level=None, attributes=(), children=(),
                     content_digest=None, editorial=False),),
-                content_digest="sha256/xc1/ssp-xd1:" + "7" * 64,
+                content_digest="sha256/typed-item-v1:" + "7" * 64,
                 editorial=False),
         )
         self.disclosure_blocks = nodes
@@ -184,10 +186,14 @@ class FakeModel:
 class CurrentRenderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        frozen = RepositorySnapshot.capture(ROOT, retain_bytes=True)
+        inputs = currentstate.verify_structured_source(
+            frozen, ("navigator-na", "navigator-af"))
         cls.models = {
             edition: EditionModel(
-                ContentGateway(ROOT),
-                "navigator/editions/%s.json" % edition)
+                ContentGateway(ROOT, byte_source=frozen.byte_source()),
+                "navigator/editions/%s.json" % edition,
+                inputs["navigator-" + edition])
             for edition in ("na", "af")
         }
         cls.artifacts = {

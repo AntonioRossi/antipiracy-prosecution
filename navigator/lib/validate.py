@@ -1,4 +1,4 @@
-"""Computed validation for the current XML-only navigator model.
+"""Computed validation for the current handoff-backed navigator model.
 
 Construction proves syntax, XSD conformance, registered-source identity, and
 endpoint currency.  This module checks the remaining cross-document semantic
@@ -15,7 +15,7 @@ from .model import ModelError
 
 
 _C1_DIGEST = re.compile(r"sha256/c1:[0-9a-f]{64}\Z")
-_XML_DIGEST = re.compile(r"sha256/xc1/ssp-xd1:[0-9a-f]{64}\Z")
+_XML_RAW_DIGEST = re.compile(r"sha256/raw:[0-9a-f]{64}\Z")
 _BASE_WORDING = frozenset({
     "artifact-label-technical-preview",
     "artifact-watermark-technical-preview",
@@ -71,8 +71,8 @@ def _sources(model, error):
         if not document.registered_path.endswith(".source.xml"):
             error("sources", "%s is not resolved through registered XML" %
                   document.document_id)
-        if _XML_DIGEST.fullmatch(document.semantic_digest) is None:
-            error("sources", "%s has a malformed semantic digest" %
+        if _XML_RAW_DIGEST.fullmatch(document.xml_raw_digest) is None:
+            error("sources", "%s has a malformed XML raw digest" %
                   document.document_id)
         if model.get_document(document.document_id) != document:
             error("sources", "%s does not round-trip through the typed lookup" %
@@ -80,7 +80,7 @@ def _sources(model, error):
         metadata = model.get_metadata(document.document_id)
         if set(metadata) != {
                 "documentId", "authorityScheme", "xmlRole",
-                "semanticDigest", "registeredPath"}:
+                "xmlRawDigest", "registeredPath"}:
             error("sources", "%s metadata projection is not closed" %
                   document.document_id)
 
@@ -358,21 +358,18 @@ def _origins(model, error):
     expected_paths = {
         model._edition_path,
         "navigator/schema/edition.schema.json",
-        "structured_source/registry/content.json",
         model._relation_path,
         "navigator/schema/navigator-relations.xsd",
         "navigator/wording/shared.wording.xml",
         model._edition_wording_path,
         "navigator/schema/wording.xsd",
     }
-    expected_paths.update(document.registered_path
-                          for document in model.source_documents)
-    expected_paths.update(asset.path for asset in model.assets.values())
+    expected_paths.update(model._handoff_validation_paths)
     reads = dict(model.read_inventory)
     if set(reads) != expected_paths:
         error("origins", "gateway reads are not the exact computed input closure")
-    forbidden = [path for path in reads if path.endswith((".md", ".pdf")) or
-                 path.startswith(("navigator/dist/", "navigator/records/"))]
+    forbidden = [path for path in reads
+                 if path.startswith(("navigator/dist/", "navigator/records/"))]
     if forbidden:
         error("origins", "semantic model read forbidden source or derived paths: %r" %
               sorted(forbidden))

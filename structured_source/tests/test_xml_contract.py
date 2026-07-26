@@ -1,38 +1,52 @@
 """Secure parsing, XSD 1.1, canonicalization, and environment tests."""
 
 import os
+from pathlib import Path
+from types import MappingProxyType
 import unittest
 from unittest import mock
 
 from structured_source import canonical, environment, parser
-from structured_source.errors import ParseError, SchemaError
+from structured_source.errors import ParseError, SchemaError, StructuredSourceError
 
 
 CONTENT = b'''<?xml version="1.0" encoding="UTF-8"?>
-<source xmlns="urn:aa11393:ssp:content:1" xml:id="doc-alpha-root" schemaProfile="pdf-evidence-transcription-v1" schemaVersion="1">
-  <documentIdentity documentId="doc-alpha" artifactFamily="counsel-briefing" jurisdiction="US" scope="shared" status="draft" language="en">
+<source xmlns="urn:aa11393:ssp:content:1" schemaProfile="pdf-evidence-transcription-v1" schemaVersion="1" xml:id="doc-alpha-root">
+  <documentIdentity artifactFamily="counsel-briefing" documentId="doc-alpha" jurisdiction="US" language="en" scope="shared" status="draft">
     <title>Alpha &amp; Beta</title>
   </documentIdentity>
-  <origin><pdfDerivative/></origin>
-  <dependencies/>
+  <origin>
+    <pdfDerivative />
+  </origin>
+  <dependencies />
   <provenance>
-    <fragmentEvidence fragmentId="frag-heading" sourcePath="US/prior-art/A1/source.pdf" page="1"/>
-    <fragmentEvidence fragmentId="frag-paragraph" sourcePath="US/prior-art/A1/source.pdf" page="1"/>
+    <fragmentEvidence fragmentId="frag-heading" page="1" sourcePath="US/prior-art/A1/source.pdf" />
+    <fragmentEvidence fragmentId="frag-paragraph" page="1" sourcePath="US/prior-art/A1/source.pdf" />
   </provenance>
   <content>
-    <heading xml:id="frag-heading" level="1"><text>Alpha</text><space/><strong><text>Beta</text></strong></heading>
-    <paragraph xml:id="frag-paragraph"><text>One &lt; two</text><lineBreak/><code>x &amp; y</code></paragraph>
+    <heading level="1" xml:id="frag-heading">
+      <text>Alpha</text>
+      <space />
+      <strong>
+        <text>Beta</text>
+      </strong>
+    </heading>
+    <paragraph xml:id="frag-paragraph">
+      <text>One &lt; two</text>
+      <lineBreak />
+      <code>x &amp; y</code>
+    </paragraph>
   </content>
-  <projectionPolicy profile="gfm-v1" noticeVersion="generated-v1"/>
+  <projectionPolicy noticeVersion="generated-v1" profile="gfm-v1" />
 </source>
 '''
 
 RELATIONS = b'''<?xml version="1.0" encoding="UTF-8"?>
 <relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="support-map-v1" schemaVersion="1">
-  <identity relationSetId="relations-alpha" profile="support-map-v1" owner="Applicant" scope="NA" status="draft"/>
-  <relation xml:id="rel-fragment-one" relationId="relation-one" type="claim-support" direction="forward" semanticOwner="Applicant">
-    <endpoint role="subject" documentId="claim-doc" fragmentId="claim-one" fragmentContentDigest="sha256/xc1/ssp-xd1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
-    <endpoint role="evidence" documentId="pct-doc" fragmentId="support-one" fragmentContentDigest="sha256/xc1/ssp-xd1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"/>
+  <identity owner="Applicant" profile="support-map-v1" relationSetId="relations-alpha" scope="NA" status="draft" />
+  <relation direction="forward" relationId="relation-one" semanticOwner="Applicant" type="claim-support" xml:id="rel-fragment-one">
+    <endpoint documentId="claim-doc" fragmentContentDigest="sha256/typed-item-v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" fragmentId="claim-one" role="subject" />
+    <endpoint documentId="pct-doc" fragmentContentDigest="sha256/typed-item-v1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" fragmentId="support-one" role="evidence" />
     <assertionField name="posture">direct</assertionField>
   </relation>
 </relations>
@@ -69,53 +83,238 @@ class CanonicalContract(unittest.TestCase):
         relations = parser.parse_artifact(RELATIONS, "relation-set")
         self.assertEqual(
             content.raw_digest,
-            "sha256/raw:d7252092d874b6ee09c17f4c54aa9d023fc67945a1b25de4225de390b70ff35a")
-        self.assertEqual(
-            content.semantic_digest,
-            "sha256/xc1/ssp-xd1:8df46194ee093f326228ff72ad719d6ce4433d19c90ae3fb87be2b832bb2a57c")
+            "sha256/raw:d066b26bf72ec20a639dd51938f7ba925cbbbcdf3e120fbd7c23e2013cb34cb9")
         self.assertEqual(
             content.fragment_digests,
             {
-                "doc-alpha-root": "sha256/xc1/ssp-xd1:b513a8540f6b4bd5ea86f250aa741c5714da4065ce14a7580c783a4a72f30c9b",
-                "frag-heading": "sha256/xc1/ssp-xd1:07f7f12eb5abb1dad174e5378803cda9dc200cea5dfb7a4aa5c083798673cdce",
-                "frag-paragraph": "sha256/xc1/ssp-xd1:0839835cf2fc7428f005cb22a691da15083395819d2a8917c424d29a981ff20b",
+                "doc-alpha-root": "sha256/typed-item-v1:4addd5f971a904b3a56ca1ad0b930add16b45435f0af1fe8c087f1e12c4a2ecc",
+                "frag-heading": "sha256/typed-item-v1:dab46ff5d9987c433930138c730e9003542d930a6c883baedc336f82903a128d",
+                "frag-paragraph": "sha256/typed-item-v1:e4b2e8890cea75f97a8f16ed845112455ad79222a31a9722bc83e5ca8f3322db",
             })
-        self.assertEqual(
-            relations.semantic_digest,
-            "sha256/xc1/ssp-xd1:f5cec40556bd937b88e472046568574663c74f9557da45860c2e7c74a4f42de6")
-        self.assertEqual(
-            relations.fragment_digests,
-            {"rel-fragment-one": "sha256/xc1/ssp-xd1:b42d04def07e7d30065ed6f70d28612a0dfe5414e371bcfe3ee3da5502939c6e"})
+        self.assertEqual(relations.fragment_digests, {})
+        self.assertEqual(relations.typed_item_records, {})
 
-    def test_attribute_order_and_xml_declaration_do_not_change_semantics(self):
-        first = parser.parse_artifact(CONTENT, "content-document")
+    def test_non_readable_attribute_order_and_missing_declaration_fail_closed(self):
         changed = CONTENT.replace(
             b'schemaProfile="pdf-evidence-transcription-v1" schemaVersion="1"',
             b'schemaVersion="1" schemaProfile="pdf-evidence-transcription-v1"').replace(
                 b'<?xml version="1.0" encoding="UTF-8"?>\n', b'')
-        second = parser.parse_artifact(changed, "content-document")
-        self.assertNotEqual(first.raw_digest, second.raw_digest)
-        self.assertEqual(first.semantic_digest, second.semantic_digest)
+        with self.assertRaises(ParseError):
+            parser.parse_artifact(changed, "content-document")
 
-    def test_semantic_change_changes_fragment_and_document_digests(self):
+    def test_every_readable_storage_spelling_is_exact(self):
+        prefixed = CONTENT.replace(
+            b'<source xmlns="urn:aa11393:ssp:content:1"',
+            b'<c:source xmlns:c="urn:aa11393:ssp:content:1"').replace(
+                b'</source>\n', b'</c:source>\n')
+        mutations = (
+            CONTENT.replace(b"\n", b""),
+            CONTENT.replace(b"  <documentIdentity", b"    <documentIdentity", 1),
+            CONTENT.replace(b"  <documentIdentity", b"\t<documentIdentity", 1),
+            CONTENT.replace(b"<dependencies />", b"<dependencies/>", 1),
+            CONTENT.replace(
+                b' artifactFamily="counsel-briefing" documentId="doc-alpha"',
+                b'\n    artifactFamily="counsel-briefing" documentId="doc-alpha"', 1),
+            prefixed,
+        )
+        for payload in mutations:
+            with self.subTest(payload=payload[:100]), self.assertRaises(ParseError):
+                parser.parse_artifact(payload, "content-document")
+
+    def test_text_leaf_whitespace_is_typed_content_not_indentation(self):
+        first = parser.parse_artifact(CONTENT, "content-document")
+        second = parser.parse_artifact(
+            CONTENT.replace(b"One &lt; two", b" One &lt; two"),
+            "content-document")
+        self.assertNotEqual(first.raw_digest, second.raw_digest)
+        self.assertNotEqual(first.fragment_digests["frag-paragraph"],
+                            second.fragment_digests["frag-paragraph"])
+        self.assertEqual(first.fragment_digests["frag-heading"],
+                         second.fragment_digests["frag-heading"])
+
+    def test_text_leaf_controls_are_escaped_without_wrapping(self):
+        for character, entity in ((b"\t", b"&#x9;"), (b"\n", b"&#xA;")):
+            with self.subTest(character=character):
+                literal = CONTENT.replace(
+                    b"<text>Alpha</text>",
+                    b"<text>Alpha" + character + b"Beta</text>")
+                with self.assertRaises(StructuredSourceError):
+                    parser.parse_artifact(literal, "content-document")
+                escaped = CONTENT.replace(
+                    b"<text>Alpha</text>",
+                    b"<text>Alpha" + entity + b"Beta</text>")
+                artifact = parser.parse_artifact(escaped, "content-document")
+                self.assertIn(character.decode(),
+                              artifact.root.find(".//{*}text").text)
+                self.assertEqual(artifact.raw_bytes, escaped)
+
+    def test_parser_controls_are_one_closed_xsd_profile_snapshot(self):
+        controls = {
+            path: (Path(parser.ROOT) / path).read_bytes()
+            for path in parser.PARSER_CONTROL_PATHS}
+        calls = []
+
+        def read(path):
+            calls.append(path)
+            return controls[path]
+
+        loaded = parser.load_parser_controls(read)
+        self.assertEqual(calls, list(parser.PARSER_CONTROL_PATHS))
+        with self.assertRaises(TypeError):
+            loaded.projection_profile["profileId"] = "changed"
+        with self.assertRaises(TypeError):
+            loaded.xml_profiles["contentDocuments"][
+                "pdf-evidence-transcription-v1"]["itemOrder"] = "changed"
+        with self.assertRaises(TypeError):
+            loaded.xml_profiles["relationSets"]["support-map-v1"][
+                "directions"][0] = "changed"
+        parser.parse_artifact(
+            CONTENT, "content-document", controls=loaded)
+
+        changed = dict(controls)
+        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
+            parser.SCHEMA_PATHS["content-document"]].replace(
+                b'<xs:attribute ref="xml:id" use="required"/>',
+                b'<xs:attribute ref="xml:id" use="required"/>'
+                b'<xs:attribute name="extension" type="xs:string"/>', 1)
+        with self.assertRaisesRegex(SchemaError, "metadata differ"):
+            parser.load_parser_controls(changed.__getitem__)
+
+        changed = dict(controls)
+        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
+            parser.SCHEMA_PATHS["content-document"]].replace(
+                b'<xs:attribute name="title" type="xs:string"/>',
+                b'<xs:attribute name="title" type="xs:string"/>'
+                b'<xs:attribute name="extension" type="xs:string"/>', 1)
+        with self.assertRaisesRegex(SchemaError, "typed-content fields differ"):
+            parser.load_parser_controls(changed.__getitem__)
+
+        changed = dict(controls)
+        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
+            parser.SCHEMA_PATHS["content-document"]].replace(
+                b'<xs:element name="text" type="xs:string"/>',
+                b'<xs:element name="text" type="c:inlineContainer"/>', 1)
+        with self.assertRaisesRegex(SchemaError, "value models differ"):
+            parser.load_parser_controls(changed.__getitem__)
+
+        changed = dict(controls)
+        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
+            parser.SCHEMA_PATHS["content-document"]].replace(
+                b'<xs:attribute name="page" type="xs:positiveInteger" '
+                b'use="required"/>',
+                b'<xs:attribute name="page" type="xs:string" '
+                b'use="required"/>', 1)
+        with self.assertRaisesRegex(SchemaError, "provenance fields differ"):
+            parser.load_parser_controls(changed.__getitem__)
+
+    def test_relation_xsd_profile_and_value_grammar_agree_exactly(self):
+        controls = {
+            path: (Path(parser.ROOT) / path).read_bytes()
+            for path in parser.PARSER_CONTROL_PATHS}
+        relation_path = parser.SCHEMA_PATHS["relation-set"]
+        mutations = (
+            (
+                b'<xs:attribute name="semanticOwner" type="xs:string" '
+                b'use="required"/>',
+                b'<xs:attribute name="semanticOwner" type="xs:string" '
+                b'use="required"/>\n'
+                b'    <xs:attribute name="extension" type="xs:string"/>',
+                "relation grammar differs",
+            ),
+            (
+                b'<xs:element name="endpoint" type="r:endpoint" '
+                b'minOccurs="2" maxOccurs="32"/>',
+                b'<xs:element name="endpoint" type="r:endpoint" '
+                b'minOccurs="2" maxOccurs="31"/>',
+                "relation grammar differs",
+            ),
+            (
+                b'sha256/typed-item-v1:[0-9a-f]{64}',
+                b'sha256/typed-item-v1:[0-9A-Fa-f]{64}',
+                "scalar grammar differs",
+            ),
+        )
+        for current, replacement, message in mutations:
+            with self.subTest(message=message):
+                changed = dict(controls)
+                changed[relation_path] = changed[relation_path].replace(
+                    current, replacement, 1)
+                self.assertNotEqual(changed[relation_path], controls[relation_path])
+                with self.assertRaisesRegex(SchemaError, message):
+                    parser.load_parser_controls(changed.__getitem__)
+
+        changed = dict(controls)
+        changed[parser.XML_PROFILE_PATH] = changed[
+            parser.XML_PROFILE_PATH].replace(
+                b'"directions": ["forward"]',
+                b'"directions": ["Forward"]', 1)
+        self.assertNotEqual(
+            changed[parser.XML_PROFILE_PATH], controls[parser.XML_PROFILE_PATH])
+        with self.assertRaisesRegex(
+                StructuredSourceError, "profile vocabulary is malformed"):
+            parser.load_parser_controls(changed.__getitem__)
+
+    def test_typed_item_record_is_exact_and_excludes_envelope_fields(self):
+        first = parser.parse_artifact(CONTENT, "content-document")
+        record = first.typed_item_records["frag-heading"]
+        self.assertEqual(set(record), {
+            "authorityScheme", "digestDomain", "documentId", "itemId",
+            "itemType", "schemaProfile", "substantiveMetadata",
+            "typedContent",
+        })
+        self.assertEqual(record["digestDomain"],
+                         "aa11393:ssp:typed-item:v1")
+        self.assertEqual(record["substantiveMetadata"], {"level": 1})
+        envelope_changed = parser.parse_artifact(
+            CONTENT.replace(b'status="draft"', b'status="review"').replace(
+                b'page="1" sourcePath="US/prior-art/A1/source.pdf"',
+                b'page="2" sourcePath="US/prior-art/A2/source.pdf"'),
+            "content-document")
+        self.assertNotEqual(first.raw_digest, envelope_changed.raw_digest)
+        self.assertEqual(first.fragment_digests,
+                         envelope_changed.fragment_digests)
+
+    def test_dependency_digest_rules_exclude_whole_xml_substitution(self):
+        typed = "sha256/typed-item-v1:" + "a" * 64
+        raw = "sha256/raw:" + "b" * 64
+        valid = CONTENT.replace(
+            b"<dependencies />",
+            ('<dependencies>\n    <dependency digest="%s" itemId="item-one" '
+             'kind="document" subjectId="doc-one" />\n  </dependencies>' %
+             typed).encode())
+        parser.parse_artifact(valid, "content-document")
+        invalid_entries = (
+            '<dependency digest="%s" kind="document" subjectId="doc-one" />' % typed,
+            '<dependency itemId="item-one" kind="document" subjectId="doc-one" />',
+            '<dependency digest="%s" kind="document" subjectId="doc-one" />' % raw,
+            '<dependency digest="%s" kind="relation-set" subjectId="rels-one" />' % typed,
+        )
+        for entry in invalid_entries:
+            payload = CONTENT.replace(
+                b"<dependencies />",
+                ("<dependencies>\n    %s\n  </dependencies>" % entry).encode())
+            with self.subTest(entry=entry), self.assertRaises(SchemaError):
+                parser.parse_artifact(payload, "content-document")
+
+    def test_semantic_change_changes_only_the_affected_typed_item_and_raw_bytes(self):
         first = parser.parse_artifact(CONTENT, "content-document")
         changed = parser.parse_artifact(
             CONTENT.replace(b"One &lt; two", b"One &lt; three"),
             "content-document")
-        self.assertNotEqual(first.semantic_digest, changed.semantic_digest)
+        self.assertNotEqual(first.raw_digest, changed.raw_digest)
         self.assertEqual(first.fragment_digests["frag-heading"],
                          changed.fragment_digests["frag-heading"])
         self.assertNotEqual(first.fragment_digests["frag-paragraph"],
                             changed.fragment_digests["frag-paragraph"])
 
-    def test_domain_separation_changes_digest(self):
+    def test_typed_item_and_raw_byte_digest_domains_are_separate(self):
         artifact = parser.parse_artifact(CONTENT, "content-document")
-        fragment = artifact.root.find(
-            ".//{urn:aa11393:ssp:content:1}paragraph")
         self.assertNotEqual(
-            artifact.semantic_digest,
-            canonical.semantic_digest(
-                fragment, "content-fragment", "pdf-evidence-transcription-v1"))
+            artifact.fragment_digests["frag-paragraph"],
+            artifact.raw_digest)
+        self.assertTrue(artifact.fragment_digests["frag-paragraph"].startswith(
+            "sha256/typed-item-v1:"))
+        self.assertTrue(artifact.raw_digest.startswith("sha256/raw:"))
 
 
 class SecureParser(unittest.TestCase):
@@ -142,7 +341,7 @@ class SecureParser(unittest.TestCase):
 
     def test_unknown_elements_attributes_and_profiles_fail_closed(self):
         self.assertRejected(
-            CONTENT.replace(b"<dependencies/>", b"<dependencies/><unknown/>"),
+            CONTENT.replace(b"<dependencies />", b"<dependencies /><unknown />"),
             SchemaError)
         self.assertRejected(
             CONTENT.replace(b'<content>', b'<content unknown="value">'),
@@ -182,16 +381,26 @@ class SecureParser(unittest.TestCase):
             b'<?xml version="1.0" encoding="ISO-8859-1"?>'))
 
     def test_size_depth_node_attribute_and_text_limits_are_enforced(self):
-        with mock.patch.object(parser, "MAX_XML_BYTES", len(CONTENT) - 1):
-            self.assertRejected(CONTENT)
-        with mock.patch.object(parser, "MAX_DEPTH", 2):
-            self.assertRejected(CONTENT)
-        with mock.patch.object(parser, "MAX_NODES", 2):
-            self.assertRejected(CONTENT)
-        with mock.patch.object(parser, "MAX_ATTRIBUTES", 1):
-            self.assertRejected(CONTENT)
-        with mock.patch.object(parser, "MAX_TEXT_LENGTH", 2):
-            self.assertRejected(CONTENT)
+        base = parser._default_parser_controls()
+        cases = {
+            "bytes": len(CONTENT) - 1,
+            "depth": 2,
+            "nodes": 2,
+            "attributesPerElement": 1,
+            "textNodeCharacters": 2,
+        }
+        for field, value in cases.items():
+            with self.subTest(field=field):
+                limits = dict(base.limits)
+                limits[field] = value
+                controls = parser.ParserControls(
+                    limits=MappingProxyType(limits),
+                    projection_profile=base.projection_profile,
+                    xml_profiles=base.xml_profiles,
+                    schemas=base.schemas)
+                with self.assertRaises(ParseError):
+                    parser.parse_artifact(
+                        CONTENT, "content-document", controls=controls)
 
     def test_consumer_xml_uses_the_same_closed_secure_parser(self):
         root = parser.parse_validated_xml(

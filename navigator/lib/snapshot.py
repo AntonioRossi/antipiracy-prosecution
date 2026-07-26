@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 import os
 import stat as statlib
+from types import MappingProxyType
 
 from . import canon
 
@@ -113,7 +114,34 @@ class RepositorySnapshot:
         records = [entry.as_record() for entry in entries]
         digest = canon.composite_digest(
             "aa11393:lock:c1", {"repositorySnapshot": records})
-        return cls(root, tuple(entries), digest, retained)
+        return cls(
+            root, tuple(entries), digest,
+            None if retained is None else MappingProxyType(retained))
+
+    def validate_retained(self):
+        """Prove that retained bytes still equal this snapshot's full identity."""
+        if self.retained_bytes is None or not isinstance(
+                self.retained_bytes, MappingProxyType):
+            raise SnapshotError("repository snapshot has no immutable retained bytes")
+        paths = [entry.path for entry in self.entries]
+        if paths != sorted(set(paths)) or set(paths) != set(self.retained_bytes):
+            raise SnapshotError("repository snapshot retained inventory is not exact")
+        records = []
+        for entry in self.entries:
+            if not isinstance(entry, SnapshotEntry):
+                raise SnapshotError("repository snapshot entry is malformed")
+            data = self.retained_bytes[entry.path]
+            if not isinstance(data, bytes) or len(data) != entry.size or \
+                    canon.bytes_digest(data) != entry.digest:
+                raise SnapshotError(
+                    "repository snapshot retained byte binding is stale: %s" %
+                    entry.path)
+            records.append(entry.as_record())
+        expected = canon.composite_digest(
+            "aa11393:lock:c1", {"repositorySnapshot": records})
+        if expected != self.digest:
+            raise SnapshotError("repository snapshot digest is stale")
+        return self
 
     def by_path(self):
         return {entry.path: entry for entry in self.entries}

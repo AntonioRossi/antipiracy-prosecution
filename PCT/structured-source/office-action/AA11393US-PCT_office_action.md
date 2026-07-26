@@ -1,4 +1,4 @@
-<!-- GENERATED REVIEW PROJECTION — source pct-office-action; digest sha256/xc1/ssp-xd1:7065387a37518f537820c9a13c7219f2ddd4678aa74d36bed3dc1dda3043351e; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate pct-office-action`; edit the XML source, never this Markdown. -->
+<!-- GENERATED REVIEW PROJECTION — source pct-office-action; byte digest sha256/raw:e50293a9969a07e119dad777f060b9716ffa342119314180a87e7b9d700ba0b2; source profile pdf-evidence-transcription-v1; projection profile gfm-v1/generated-v1; regenerate with `uv --no-cache --offline run --locked --no-sync python -m structured_source regenerate pct-office-action`; edit the XML source, never this Markdown. -->
 <a id="ssp-pct-office-action-root"></a>
 
 <a id="ssp-pct-office-action-header-00001"></a>
@@ -803,7 +803,7 @@ The ISR cites two prior-art documents, both re-attached in full to this office a
 <a id="ssp-review-dependencies"></a>
 ## Dependencies
 
-| Kind | Subject | Exact semantic digest |
+| Kind | Subject | Exact binding digest |
 |---|---|---|
 | asset | asset-cn-fig-1-png | `sha256/raw:c54f5b3da36ef5575df77538adc7d9bfcd67a755b74e55f0ed4f508fdad4ad27` |
 | asset | asset-cn-fig-2-png | `sha256/raw:02fd717aa14ea98aaca03e024b6aea13e06848fb96695481902920ec17b38e1f` |

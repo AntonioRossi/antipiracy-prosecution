@@ -14,7 +14,7 @@ The current direction is:
 applicant-authored relation XML authority ──deterministic projection──▶ generated Markdown review view
                   │
                   ├──exact endpoint resolution──▶ registered validated content items
-                  └──validated, read-only────────▶ declared consumer interface
+                  └──validated, read-only────────▶ shared declared-edge resolver
 ```
 
 Relation XML is the sole owner of each applicant-authored cross-document assertion. It owns the
@@ -46,34 +46,37 @@ IDs are not derived from line numbers, XML positions, array indexes, visible tex
 ordering. Copying one assertion into another package, assigning competing semantic owners, or
 restating an assertion only for a consumer feature fails.
 
-## 3. Required relation item surface
+## 3. Required relation graph
 
-The authoritative XML is an itemized semantic relation graph, not merely a table serialization.
-Every applicable property has one closed representation:
+The authoritative XML is a schema- and profile-validated relation graph, not a table serialization
+or a prebuilt typed-item surface. Every applicable property has one closed representation:
 
 | Property | Authored-relations requirement |
 |---|---|
-| Document identity | One stable `relationSetId` matching the registered package |
-| Item identity | One unique relation XML-maintained `relationId` for every assertion |
-| Item type | One profile-enumerated relation type and direction |
+| Envelope identity | One stable `relationSetId` matching the registered `packageId` |
+| Assertion identity | One unique relation XML-maintained `relationId` for every assertion |
+| Projection identity | One unique `xml:id` anchor carrier for every assertion, distinct from `relationId` |
+| Assertion type | One profile-enumerated relation type and direction |
 | Hierarchy and order | Relation-set containment plus authored relation, field, and endpoint order |
 | Numbering | A visible row, claim, or source number is an authored field when substantive; a mechanical ordinal may express order but is never identity |
-| Content and metadata | One semantic owner and only profile-enumerated ordered assertion fields |
+| Content and metadata | One semantic owner and only profile-enumerated ordered field names with schema-bound text values |
 | Provenance and dependencies | Exact registered endpoint documents and their authority roles |
 | Cross-references | Role-bearing `(documentId, fragmentId, fragmentContentDigest)` endpoints |
 | Content-sensitive integrity | Each endpoint carries the target item's typed-content digest; relation XML has no self or formatting-derived digest |
 
-Stable relation identity, authored numbers, mechanical ordinals, and display labels are separate.
-Insertion, deletion, or reordering may change a mechanical ordinal but cannot silently rename an
-assertion. A table row number, XML position, endpoint position, or generated anchor cannot become a
-relation identity.
+The relation-set root is an envelope, not a typed item: it has no `xml:id`, typed-item record, or
+typed-item digest. `relationId` alone is the semantic assertion identity; `xml:id` carries the stable
+review anchor and cannot replace it. Stable relation identity, authored numbers, mechanical
+ordinals, and display labels remain separate. Insertion, deletion, or reordering may change a
+mechanical ordinal but cannot silently rename an assertion.
 
 The relation profile registry is exclusive. Each profile enumerates its one relation type,
 directions, endpoint roles and required-role set, and assertion-field vocabulary; the schema,
 target-item digest rule, readable XML storage law, and projection contract close the remaining
-interface behavior. A partial
-profile change, alternate vocabulary, alias, extension map, or consumer-defined relation field
-fails closed.
+interface behavior. The relation XSD and every exclusive profile must agree exactly on the complete
+envelope, assertion, endpoint, field, identity, order, cardinality, scalar, and digest grammar. A
+partial profile change, alternate vocabulary, alias, extension map, consumer-defined relation
+field, or unprofiled scalar interpretation fails closed.
 
 ### Controlled semantic and metadata evolution
 
@@ -104,6 +107,12 @@ Parse-to-typed-tree-to-serialization must reproduce the stored bytes. Structural
 typed content; text-leaf whitespace remains exact. Minified structural XML, alternate indentation,
 line wrapping, attribute order, namespace placement, or empty-element spelling fails. `check`
 enforces this law but never rewrites the authoritative relation XML.
+
+The parser policy, GFM projection profile, XML profile registry, shared XML schema, and relation XSD
+are loaded exactly once through the validation context's retained-byte reader. Control loading
+proves the complete relation XSD/profile agreement before package parsing. The retained policy,
+profiles, and schema mapping are transitively immutable; a package parser or consumer cannot use a
+default, later-opened, substituted, partial, or consumer-local control.
 
 Each endpoint binds the exact `(documentId, fragmentId, fragmentContentDigest)` of a registered
 validated content item. Each relation profile declares its permitted roles and required-role set.
@@ -138,20 +147,26 @@ not evidence, and coverage is never stored as a package companion, receipt, or d
 
 ## 6. Snapshot-bound consumer-neutral handoff
 
-A production semantic consumer edge selects `xml`; an explicitly review-only edge may select
-`markdown`. Neither may read the other representation through an undeclared dependency. The XML
-handoff supplies the authority scheme, authoritative role, frozen complete typed relation surface,
-owners, directions, ordered fields, endpoints, and resolved identities and target-item digests. The
-Markdown handoff supplies only review-view bytes and no typed relation surface.
+The current registry declares no authored-relation consumer edge; the current authored-relation
+edge and constructed-handoff censuses are therefore both zero. The shared declared-edge resolver
+nevertheless has one closed relation-package shape: an XML edge hands the authoritative retained
+bytes, authority scheme, relation-XML role, declared dependency bytes, and exact validation-read
+census; a Markdown edge hands review bytes only. Neither shape carries a prebuilt relation surface
+or assets, and neither may read the other representation through an undeclared dependency.
 
 Trust attaches only to the validated relation graph over one identified repository root, complete
 snapshot path inventory, and exact retained bytes for every validation and handoff path. Before a
-consumer constructs a semantic model or writes an output, relation schema/profile,
-assertion/field/endpoint census, identities, owners, roles, directions, endpoint targets and
-target-item digests, generated view, and coverage must all pass. The consumer receives those same
-validated bytes and may mechanically look up assertions, traverse authored order, select declared
-fields, and resolve exact endpoints. It may not reopen a different path, accept a detached pass
-token, infer a relation, or repair a target.
+handoff, relation schema/profile, assertion/field/endpoint census, identities, owners, roles,
+directions, endpoint targets and target-item digests, generated view, and coverage must all pass.
+The validation-read census includes the relation package, registry, retained parser controls, and
+every resolved endpoint package's transitive validation paths. That census is validation evidence,
+not read authority: endpoint documents require their own declared consumer edges.
+
+The consumer construction boundary receives the same-context retained parser controls alongside
+the handoff set and secure-parses only the handed XML bytes. Handoff and dependency mappings,
+validation-read tuples, and retained controls are transitively immutable. The consumer may not use
+a default control, reopen a path, accept a detached pass token, infer a relation, repair a target,
+or expose a mutable parse tree as a trusted final model.
 
 A consumer may not copy or rewrite an assertion, infer or retarget an endpoint, change a role or
 direction, add source-domain fields, silently fall back, or promote endpoint content into assertion
@@ -180,11 +195,13 @@ statuses without defining any consumer product outcome.
 ## 8. Live implementation closure
 
 This technical description, its acceptance criteria, its data-only acceptance registry, the
-content registry's authored-relations slice, current schema/profile, parser, typed relation-surface
-builder, endpoint resolver, renderer, consumer handoff, focused tests, and registered packages are
-the exact live implementation census. Closure uses these existing controls and introduces no
-parallel registry, generic ownership framework, or generic reachability subsystem.
+content registry's authored-relations slice, current schema/profile agreement checker, parser,
+validated package state, endpoint resolver, renderer, shared declared-edge resolver, focused tests,
+and registered packages are the exact live implementation census. No authored-relation consumer is
+registered. Closure uses these existing controls and contains no parallel registry, generic
+ownership framework, or generic reachability subsystem.
 
 No alternate assertion owner or reader, compatibility or migration reader, approval or reviewer
-record, stored receipt, digest ledger, coverage store, export path, or inactive domain artifact
-remains operative. Git alone retains implementation history.
+record, stored receipt, digest ledger, coverage store, mutable handoff, parser-control bypass,
+consumer reconstructor, export path, or inactive domain artifact remains operative. Git alone
+retains implementation history.
