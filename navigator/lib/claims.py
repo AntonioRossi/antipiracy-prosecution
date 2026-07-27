@@ -45,24 +45,6 @@ class ClaimUnit:
     text_digest: str
     content_digest: str
 
-    @property
-    def id(self):
-        return self.fragment_id
-
-    @property
-    def claim(self):
-        return self.claim_number
-
-    @property
-    def index(self):
-        return self.unit_index
-
-    @property
-    def label(self):
-        return ("preamble" if self.unit_kind == "preamble" else
-                "limitation %d" % self.unit_index)
-
-
 @dataclass(frozen=True, slots=True)
 class Claim:
     number: int
@@ -71,11 +53,6 @@ class Claim:
     dependencies: tuple[int, ...]
     fragment_id: str
     content_digest: str
-
-    @property
-    def text(self):
-        return " ".join(unit.text for unit in self.units)
-
 
 @dataclass(frozen=True, slots=True)
 class ClaimSet:
@@ -329,9 +306,3 @@ def parse_claims(authored_root, fragment_digests) -> ClaimSet:
         units_by_fragment=MappingProxyType(unit_map),
         groups=tuple((label, tuple(numbers)) for label, numbers in groups),
     )
-
-
-def census(claims):
-    sequence = claims.claims if isinstance(claims, ClaimSet) else tuple(claims)
-    return len(sequence), sum(len(claim.units) for claim in sequence), \
-        MappingProxyType({claim.number: len(claim.units) for claim in sequence})

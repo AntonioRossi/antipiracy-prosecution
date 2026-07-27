@@ -34,11 +34,15 @@ class XMLModelTests(unittest.TestCase):
 
     @classmethod
     def build_model(cls, edition, byte_source=None):
+        spec = cls.plan.edition(edition)
         return EditionModel(
             ContentGateway(
                 ROOT, byte_source=byte_source or cls.snapshot.byte_source()),
-            "navigator/editions/%s.json" % edition,
-            cls.inputs["navigator-" + edition])
+            spec.path,
+            cls.inputs["navigator-" + edition],
+            capture_token=cls.snapshot.capture_token,
+            plan_token=spec.plan_token,
+            derivation_token=object())
 
     def test_live_editions_have_exact_claim_and_mapping_census(self):
         expected = {"na": (30, 77), "af": (23, 61)}
@@ -153,6 +157,10 @@ class XMLModelTests(unittest.TestCase):
             unit.text = "changed"
         with self.assertRaises(TypeError):
             model.units_by_fragment[unit.fragment_id] = unit
+        with self.assertRaises(FrozenInstanceError):
+            model.content_lock.lock_digest = "changed"
+        with self.assertRaises(TypeError):
+            model.content_lock.reads[0] = model.content_lock.reads[0]
         with self.assertRaises(TypeError):
             model.reverse_index["new-target"] = ()
         with self.assertRaises(AttributeError):
@@ -160,9 +168,8 @@ class XMLModelTests(unittest.TestCase):
         self.assertFalse(hasattr(model, "gw"))
         self.assertFalse(hasattr(model, "registry"))
         self.assertIsNone(model._document_item_digests)
-        changed_lock = model.content_lock
-        changed_lock["reads"].clear()
-        self.assertTrue(model.content_lock["reads"])
+        self.assertIs(model.content_lock, model.content_lock)
+        self.assertTrue(model.content_lock.reads)
         self.assertNotEqual(
             model.dom_id("a", "b-c"), model.dom_id("a-b", "c"))
 
@@ -281,9 +288,83 @@ class XMLModelTests(unittest.TestCase):
             self.inputs["navigator-na"],
             snapshot_digest="sha256/c1:" + "0" * 64)
         with self.assertRaisesRegex(
-                currentstate.CurrentStateError, "does not match"):
+                currentstate.CurrentStateError, "do not match"):
             currentstate.build_model(
-                self.plan.edition("na"), self.snapshot, detached)
+                self.plan.edition("na"), self.snapshot, detached, object())
+
+    def test_equal_byte_captures_cannot_reuse_plan_sources_or_states(self):
+        equal_bytes = replace(self.snapshot)
+        self.assertEqual(equal_bytes.digest, self.snapshot.digest)
+        self.assertIsNot(equal_bytes.capture_token, self.snapshot.capture_token)
+        equal_plan = currentstate.load_product_plan(equal_bytes)
+        with self.assertRaisesRegex(
+                currentstate.CurrentStateError, "handoffs differ"):
+            currentstate.bind_sources_to_plan(equal_plan, self.sources)
+
+        states = currentstate.derive_editions(
+            self.snapshot, self.plan.editions, self.sources)
+        with self.assertRaisesRegex(
+                currentstate.CurrentStateError,
+                "capture, plan, or derivation"):
+            currentstate.build_bundle_state(equal_bytes, equal_plan, states)
+
+    def test_candidate_proof_binds_the_complete_fresh_projection(self):
+        edition = self.plan.edition("na")
+        state = currentstate.derive(
+            edition, "candidate", self.snapshot,
+            self.sources.input_for(edition.consumer_id), object())
+        projection = currentstate.product_reproduction_projection(
+            MappingProxyType({"na": state}))
+        proof = currentstate.prove_candidate(
+            state, state.html, projection)
+        self.assertEqual(proof.digest, canon.bytes_digest(state.html))
+        with self.assertRaises(FrozenInstanceError):
+            state.html = b"changed"
+        with self.assertRaises(FrozenInstanceError):
+            proof.digest = "changed"
+
+        for field in (
+                "artifactName", "contentLockDigest", "htmlDigest",
+                "originInventoryDigest"):
+            changed = canon.parse_json(canon.canonical_json(projection))
+            changed["editions"]["na"][field] = "sha256/c1:" + "0" * 64
+            with self.subTest(field=field), self.assertRaisesRegex(
+                    currentstate.CurrentStateError,
+                    "fresh candidate projection differs"):
+                currentstate.prove_candidate(state, state.html, changed)
+        with self.assertRaisesRegex(
+                currentstate.CurrentStateError, "stored candidate is stale"):
+            currentstate.prove_candidate(state, state.html + b"x", projection)
+
+    def test_model_lookups_require_explicit_nonempty_identities(self):
+        model = self.models["na"]
+        relation = model.relations.mappings[0]
+        self.assertIs(model.resolve_relation(relation.relation_id), relation)
+        self.assertIn(
+            relation,
+            model.relations_for(
+                relation.subject.document_id, relation.subject.fragment_id))
+        target_document = model.source_documents[1].document_id
+        unrelated = next(
+            fragment_id for fragment_id in model.disclosure_index
+            if (target_document, fragment_id) not in
+            model._relations_by_endpoint)
+        self.assertEqual(model.relations_for(target_document, unrelated), ())
+        with self.assertRaises(ModelError):
+            model.relations_for(target_document, "absent-item")
+        calls = (
+            (model.get_document, (None,)),
+            (model.get_metadata, ("",)),
+            (model.get_item, (relation.subject.document_id, [])),
+            (model.controlled_text, ("",)),
+            (model.resolve_relation, ({},)),
+            (model.relations_for, (relation.subject.document_id, "")),
+            (model.dom_id, ("", relation.subject.fragment_id)),
+        )
+        for function, arguments in calls:
+            with self.subTest(function=function.__name__), \
+                    self.assertRaises(ModelError):
+                function(*arguments)
 
     def test_dependency_grammar_is_exactly_singular(self):
         self.assertEqual(

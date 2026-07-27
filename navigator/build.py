@@ -4,15 +4,10 @@ from __future__ import annotations
 
 import os
 import sys
+from types import MappingProxyType
 
-
-if __package__ in {None, ""}:
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    from lib import acceptance, bundlezip, canon, currentstate, gateway
-    from lib import release, snapshot
-else:
-    from .lib import acceptance, bundlezip, canon, currentstate, gateway
-    from .lib import release, snapshot
+from .lib import acceptance, bundlezip, canon, currentstate, gateway
+from .lib import release, snapshot
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,6 +31,16 @@ def _snapshot():
         return snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
     except snapshot.SnapshotError as exc:
         raise CommandError("repository snapshot could not be captured") from exc
+
+
+def _product_context():
+    """Construct the sole retained-byte product command boundary."""
+    frozen = _snapshot()
+    currentstate.validate_product_contract(frozen)
+    plan = currentstate.load_product_plan(frozen)
+    sources = currentstate.validate_structured_corpus(frozen)
+    currentstate.bind_sources_to_plan(plan, sources)
+    return frozen, plan, sources
 
 
 def _assert_unchanged(before, label):
@@ -81,36 +86,30 @@ def _assert_only_outputs_changed(before, outputs, label):
 
 
 def cmd_preview(edition_id):
-    frozen = _snapshot()
-    currentstate.validate_product_contract(frozen)
-    plan = currentstate.load_product_plan(frozen)
+    frozen, plan, sources = _product_context()
     edition = plan.edition(edition_id)
-    sources = currentstate.validate_structured_corpus(frozen)
-    currentstate.bind_sources_to_plan(plan, sources)
-    unused_model, html_bytes, unused_lock = currentstate.derive(
-        edition, "preview", frozen, sources.input_for(edition.consumer_id))
+    state = currentstate.derive(
+        edition, "preview", frozen, sources.input_for(edition.consumer_id),
+        object())
     _assert_unchanged(frozen, "preview")
-    return html_bytes
+    return state.html
 
 
 def cmd_candidate(edition_id):
-    frozen = _snapshot()
-    currentstate.validate_product_contract(frozen)
-    plan = currentstate.load_product_plan(frozen)
+    frozen, plan, sources = _product_context()
     edition = plan.edition(edition_id)
-    sources = currentstate.validate_structured_corpus(frozen)
-    currentstate.bind_sources_to_plan(plan, sources)
-    edition_model, html_bytes, content_lock = currentstate.derive(
-        edition, "candidate", frozen, sources.input_for(edition.consumer_id))
-    name = release.candidate_name(edition_model.artifact_name)
+    state = currentstate.derive(
+        edition, "candidate", frozen, sources.input_for(edition.consumer_id),
+        object())
+    name = state.candidate_name
     _assert_unchanged(frozen, "candidate derivation")
-    outputs = {name: html_bytes}
+    outputs = MappingProxyType({name: state.html})
     written = release.write_outputs_atomic(DIST, outputs)
     _assert_only_outputs_changed(frozen, outputs, "candidate")
     return {
         "command": "candidate",
         "commandResultVersion": "2",
-        "contentLockDigest": content_lock["lockDigest"],
+        "contentLockDigest": state.content_lock.lock_digest,
         "edition": edition_id,
         "outputs": written,
         "status": "generated",
@@ -118,38 +117,34 @@ def cmd_candidate(edition_id):
 
 
 def cmd_release(edition_id):
-    frozen = _snapshot()
-    currentstate.validate_product_contract(frozen)
-    plan = currentstate.load_product_plan(frozen)
+    frozen, plan, sources = _product_context()
     edition = plan.edition(edition_id)
-    sources = currentstate.validate_structured_corpus(frozen)
-    currentstate.bind_sources_to_plan(plan, sources)
-    edition_model, html_bytes, content_lock = currentstate.derive(
-        edition, "release", frozen, sources.input_for(edition.consumer_id))
-    candidate = release.candidate_name(edition_model.artifact_name)
+    state = currentstate.derive(
+        edition, "release", frozen, sources.input_for(edition.consumer_id),
+        object())
+    candidate = state.candidate_name
     try:
         stored_candidate = frozen.read_bytes("navigator/dist/" + candidate)
     except snapshot.SnapshotError as exc:
         raise CommandError("current candidate is unavailable") from exc
     reproduced = currentstate.fresh_product_projection(
         ROOT, currentstate.ReproductionRequest((edition_id,), False))
-    candidate_digest = release.prove_candidate(
-        html_bytes, stored_candidate,
-        reproduced["editions"][edition_id]["htmlDigest"])
-    checksum_name = edition_model.artifact_name + ".sha256"
-    checksum = release.checksum_text(edition_model.artifact_name, html_bytes)
+    proof = currentstate.prove_candidate(
+        state, stored_candidate, reproduced)
+    checksum_name = state.model.artifact_name + ".sha256"
+    checksum = release.checksum_text(state.model.artifact_name, state.html)
     _assert_unchanged(frozen, "release proof")
-    outputs = {
-        edition_model.artifact_name: html_bytes,
+    outputs = MappingProxyType({
+        state.model.artifact_name: state.html,
         checksum_name: checksum,
-    }
+    })
     written = release.write_outputs_atomic(DIST, outputs)
     _assert_only_outputs_changed(frozen, outputs, "release")
     return {
-        "candidateDigest": candidate_digest,
+        "candidateDigest": proof.digest,
         "command": "release",
         "commandResultVersion": "2",
-        "contentLockDigest": content_lock["lockDigest"],
+        "contentLockDigest": state.content_lock.lock_digest,
         "edition": edition_id,
         "outputs": written,
         "status": "sealed",
@@ -157,28 +152,24 @@ def cmd_release(edition_id):
 
 
 def cmd_bundle():
-    frozen = _snapshot()
-    currentstate.validate_product_contract(frozen)
-    plan = currentstate.load_product_plan(frozen)
-    sources = currentstate.validate_structured_corpus(frozen)
-    currentstate.bind_sources_to_plan(plan, sources)
+    frozen, plan, sources = _product_context()
     states = currentstate.derive_editions(frozen, plan.editions, sources)
     bundle_state = currentstate.build_bundle_state(frozen, plan, states)
     currentstate.verify_stored_artifact_members(frozen, bundle_state)
-    name = bundle_state["config"]["name"]
+    name = bundle_state.config["name"]
     checksum_name = name + ".sha256"
-    checksum = release.checksum_text(name, bundle_state["zip"])
+    checksum = release.checksum_text(name, bundle_state.zip_bytes)
     _assert_unchanged(frozen, "bundle derivation")
-    outputs = {
-        name: bundle_state["zip"],
+    outputs = MappingProxyType({
+        name: bundle_state.zip_bytes,
         checksum_name: checksum,
-    }
+    })
     written = release.write_outputs_atomic(DIST, outputs)
     _assert_only_outputs_changed(frozen, outputs, "bundle")
     return {
         "command": "bundle",
         "commandResultVersion": "2",
-        "members": [member for member, unused_data in bundle_state["members"]],
+        "members": [member for member, unused_data in bundle_state.members],
         "outputs": written,
         "status": "generated",
     }

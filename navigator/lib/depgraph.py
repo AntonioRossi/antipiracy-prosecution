@@ -16,19 +16,19 @@ class DepGraphError(ValueError):
 class DependencyGraph:
     parents: object
     children: object
-    roots: tuple[int, ...]
     aggregate_hashes: object
     chain_hashes: object
 
-    def ancestor_chain(self, number: int) -> tuple[int, ...]:
-        if number not in self.parents:
-            raise DepGraphError("unknown claim %r" % number)
-        chain = []
-        current = number
-        while current is not None:
-            chain.append(current)
-            current = self.parents[current]
-        return tuple(reversed(chain))
+
+def _ancestor_chain(parents, number):
+    chain = []
+    current = number
+    while current is not None:
+        if current not in parents or current in chain:
+            raise DepGraphError("invalid dependency chain for claim %r" % number)
+        chain.append(current)
+        current = parents[current]
+    return tuple(reversed(chain))
 
 
 def build(claims, independent_claims) -> DependencyGraph:
@@ -77,44 +77,16 @@ def build(claims, independent_claims) -> DependencyGraph:
         for claim in sequence
     }
 
-    def ancestors(number):
-        found = []
-        current = number
-        while current is not None:
-            if current in found:
-                raise DepGraphError("dependency graph contains a cycle")
-            found.append(current)
-            current = parents[current]
-        return tuple(reversed(found))
-
     chain_hashes = {
         number: canon.composite_digest(
             "aa11393:dep-chain:c1",
-            [aggregate[item] for item in ancestors(number)])
+            [aggregate[item] for item in _ancestor_chain(parents, number)])
         for number in numbers
     }
     return DependencyGraph(
         parents=MappingProxyType(parents),
         children=MappingProxyType({
             number: tuple(children[number]) for number in numbers}),
-        roots=roots,
         aggregate_hashes=MappingProxyType(aggregate),
         chain_hashes=MappingProxyType(chain_hashes),
     )
-
-
-def ancestor_chain(parents, number):
-    chain = []
-    current = number
-    while current is not None:
-        if current not in parents or current in chain:
-            raise DepGraphError("invalid dependency chain for claim %r" % number)
-        chain.append(current)
-        current = parents[current]
-    return tuple(reversed(chain))
-
-
-def chain_hash(parents, aggregate_hashes, number):
-    return canon.composite_digest(
-        "aa11393:dep-chain:c1",
-        [aggregate_hashes[item] for item in ancestor_chain(parents, number)])

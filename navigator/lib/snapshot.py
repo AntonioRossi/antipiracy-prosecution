@@ -55,9 +55,14 @@ class RepositorySnapshot:
     entries: tuple
     digest: str
     # Captured file bytes, present only when requested at capture time.  The
-    # mapping is excluded from equality and representation: snapshot identity
-    # is the entry set and its digest, not a second copy of every byte.
+    # mapping is excluded from equality and representation: captured-byte
+    # identity is the entry set and digest, not a second copy of every byte.
     retained_bytes: object = field(default=None, compare=False, repr=False)
+    # Runtime identity is deliberately stronger than byte identity.  Objects
+    # derived from two distinct captures may not be mixed even when both
+    # captures contain equal bytes.
+    capture_token: object = field(
+        default_factory=object, init=False, compare=False, repr=False)
 
     @classmethod
     def capture(cls, root, retain_bytes=False):

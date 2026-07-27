@@ -32,7 +32,7 @@ def validation_session():
         states = currentstate.derive_editions(frozen, plan.editions, sources)
         _validation_session = MappingProxyType({
             "models": MappingProxyType({
-                edition_id: states[edition_id]["model"]
+                edition_id: states[edition_id].model
                 for edition_id in plan.edition_ids
             }),
             "plan": plan,

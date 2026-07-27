@@ -19,10 +19,6 @@ class SchemaError(ValueError):
     """The schema itself violates the meta-rules."""
 
 
-class ValidationError(ValueError):
-    pass
-
-
 def check_schema(schema):
     """Reject unsupported or malformed schema declarations.
 

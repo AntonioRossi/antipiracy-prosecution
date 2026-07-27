@@ -13,9 +13,11 @@ from unittest import mock
 
 from navigator import build
 from navigator.lib import (
-    acceptance, bundlezip, canon, currentstate, release, schema_validate,
+    acceptance, bundlezip, canon, claims, currentstate, depgraph, model,
+    registry, release, schema_validate,
 )
 from structured_source import __main__ as structured_source_main
+from structured_source.parser import load_parser_controls
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -25,6 +27,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
 def _json(relative):
     with open(os.path.join(ROOT, *relative.split("/")), "rb") as handle:
         return canon.parse_json(handle.read())
+
+
+def _bytes(relative):
+    with open(os.path.join(ROOT, *relative.split("/")), "rb") as handle:
+        return handle.read()
 
 
 class CurrentPipelineTests(unittest.TestCase):
@@ -101,9 +108,20 @@ class CurrentPipelineTests(unittest.TestCase):
             "navigator/relations/na__pct.relations.xml",
             "navigator/wording/na.wording.xml",
         }
+        capture_token = object()
+        plan_token = object()
+        edition = currentstate.EditionSpec(
+            capture_token=capture_token, plan_token=plan_token,
+            edition_id="na", path="navigator/editions/na.json",
+            consumer_id="navigator-na", claim_package_id="claim",
+            relation_path="navigator/relations/na__pct.relations.xml",
+            wording_path="navigator/wording/na.wording.xml",
+            artifact_name="na.html",
+            declared_timestamp="2026-01-01T00:00:00Z")
         plan = currentstate.ProductPlan(
-            snapshot_digest="sha256/test", bundle_config=MappingProxyType({}),
-            editions=(), by_id=MappingProxyType({}),
+            snapshot_digest="sha256/test", capture_token=capture_token,
+            plan_token=plan_token, bundle_config=MappingProxyType({}),
+            editions=(edition,), by_id=MappingProxyType({"na": edition}),
             input_paths=frozenset(expected))
         currentstate._verify_navigator_input_inventory(Snapshot(expected), plan)
         for paths in (
@@ -208,6 +226,12 @@ class CurrentPipelineTests(unittest.TestCase):
         self.assertEqual(structured_source_main.COMMANDS, (
             "check", "regenerate", "regenerate-controls"))
         self.assertNotIn("verify-current", structured_source_main.COMMANDS)
+        self.assertNotIn("__package__", inspect.getsource(build))
+        with open(os.path.join(ROOT, "navigator", "tests", "test_canon.py"),
+                  encoding="utf-8") as handle:
+            canon_test_source = handle.read()
+        self.assertNotIn("sys.path", canon_test_source)
+        self.assertNotIn("from lib", canon_test_source)
 
     def test_root_validation_launcher_is_exact_and_executable(self):
         path = os.path.join(ROOT, "validate.sh")
@@ -588,7 +612,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
         corpus = type("Corpus", (), {
             "consumer_handoffs": MappingProxyType({
                 "navigator-na": raw_handoffs}),
-            "parser_controls": object(),
+            "parser_controls": load_parser_controls(_bytes),
             "public_result": lambda unused_self: public,
         })()
         with mock.patch(
@@ -646,6 +670,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
                     inspect.signature(function).parameters[parameter].default,
                     inspect.Parameter.empty)
         self.assertFalse(hasattr(release, "fresh_candidate"))
+        self.assertFalse(hasattr(release, "prove_candidate"))
         self.assertFalse(hasattr(currentstate, "_fresh_bundle_projection"))
         self.assertNotIn(
             "_artifact_bytes", inspect.getsource(currentstate.build_bundle_state))
@@ -664,6 +689,24 @@ exec uv --no-cache --offline run --locked --no-sync \\
                 if "VerificationContext(" in handle.read():
                     constructors.append(name)
         self.assertEqual(constructors, [])
+
+        # The current pipeline exposes no compatibility properties, duplicate
+        # dependency traversal, or unreachable helper surface.
+        for owner, names in (
+                (claims.ClaimUnit, ("id", "claim", "index", "label")),
+                (claims.Claim, ("text",)),
+                (claims, ("census",)),
+                (depgraph.DependencyGraph, ("ancestor_chain", "roots")),
+                (depgraph, ("ancestor_chain", "chain_hash")),
+                (model, ("_local",)),
+                (registry.Registry, ("get_document", "documents")),
+                (schema_validate, ("ValidationError",)),
+                (currentstate, ("DIST",))):
+            for name in names:
+                with self.subTest(owner=owner, name=name):
+                    self.assertFalse(hasattr(owner, name))
+        self.assertEqual(
+            inspect.getsource(depgraph).count("while current is not None:"), 1)
 
     def test_acceptance_registry_names_outcomes_and_independent_enforcers(self):
         registry = acceptance.load_registry(ROOT)
@@ -735,6 +778,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
 
         frozen = Frozen()
         edition = currentstate.EditionSpec(
+            capture_token=object(), plan_token=object(),
             edition_id="na", path="navigator/editions/na.json",
             consumer_id="navigator-na", claim_package_id="claim",
             relation_path="navigator/relations/na__pct.relations.xml",
@@ -758,7 +802,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
                     build.currentstate, "bind_sources_to_plan") as bind_sources, \
                 mock.patch.object(
                     build.currentstate, "derive",
-                    return_value=(object(), b"<html>preview</html>", {})) \
+                    return_value=type("State", (), {
+                        "html": b"<html>preview</html>"})()) \
                 as derive, \
                 mock.patch.object(build, "_assert_unchanged") as unchanged, \
                 mock.patch.object(build, "_assert_only_outputs_changed") \
@@ -773,7 +818,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
         upstream.assert_called_once_with(frozen)
         bind_sources.assert_called_once_with(plan, sources)
         derive.assert_called_once_with(
-            edition, "preview", frozen, consumer_input)
+            edition, "preview", frozen, consumer_input, mock.ANY)
         unchanged.assert_called_once_with(frozen, "preview")
         output_check.assert_not_called()
         write.assert_not_called()
@@ -810,7 +855,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
     def test_generated_writes_are_atomic_generated_only_and_safe(self):
         with tempfile.TemporaryDirectory(
                 prefix="aa11393-current-products-") as directory:
-            outputs = {"b.html": b"second", "a.html": b"first"}
+            outputs = MappingProxyType({
+                "b.html": b"second", "a.html": b"first"})
             written = release.write_outputs_atomic(directory, outputs)
             self.assertEqual(
                 [item["name"] for item in written], ["a.html", "b.html"])
@@ -825,7 +871,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
                 handle.write(b"operative")
             with self.assertRaises(release.ReleaseError):
                 release.write_outputs_atomic(
-                    directory, {"a.html": b"staged", "c.html": "not-bytes"})
+                    directory, MappingProxyType({
+                        "a.html": b"staged", "c.html": "not-bytes"}))
             with open(a_path, "rb") as handle:
                 self.assertEqual(handle.read(), b"operative")
             self.assertFalse(any(name.startswith(".")
@@ -834,7 +881,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
             with mock.patch.object(
                     release.os, "chmod", side_effect=OSError("chmod failed")):
                 with self.assertRaises(OSError):
-                    release.write_outputs_atomic(directory, {"d.html": b"x"})
+                    release.write_outputs_atomic(
+                        directory, MappingProxyType({"d.html": b"x"}))
             self.assertFalse(any(name.startswith(".")
                                  for name in os.listdir(directory)))
             self.assertFalse(os.path.exists(os.path.join(directory, "d.html")))
@@ -842,7 +890,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
             for name in ("../escape", "/absolute", "nested/file", "CON"):
                 with self.subTest(name=name), \
                         self.assertRaises(release.ReleaseError):
-                    release.write_outputs_atomic(directory, {name: b"x"})
+                    release.write_outputs_atomic(
+                        directory, MappingProxyType({name: b"x"}))
 
         with tempfile.TemporaryDirectory(
                 prefix="aa11393-current-products-link-") as container:
@@ -851,7 +900,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
             os.mkdir(real)
             os.symlink(real, link)
             with self.assertRaises(release.ReleaseError):
-                release.write_outputs_atomic(link, {"x.html": b"x"})
+                release.write_outputs_atomic(
+                    link, MappingProxyType({"x.html": b"x"}))
 
     def test_configured_member_bundle_and_checksums_are_deterministic(self):
         na = b"<html>NA</html>"

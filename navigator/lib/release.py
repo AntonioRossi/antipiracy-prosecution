@@ -5,12 +5,13 @@ from __future__ import annotations
 import os
 import re
 import tempfile
+from types import MappingProxyType
 
 from . import canon
 
 
 class ReleaseError(RuntimeError):
-    """A candidate cannot be reproduced or a generated write is unsafe."""
+    """A generated product name, checksum, read, or write is unsafe."""
 
 
 _OUTPUT_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,239}\Z")
@@ -79,7 +80,7 @@ def write_outputs_atomic(root, outputs):
     under the supplied generated-product directory.  Abrupt termination may
     leave a mixed generated set; current-state validation rejects that set.
     """
-    if not isinstance(outputs, dict) or not outputs:
+    if not isinstance(outputs, MappingProxyType) or not outputs:
         raise ReleaseError("generated output set is empty or malformed")
     root = os.path.abspath(root)
     os.makedirs(root, exist_ok=True)
@@ -127,15 +128,3 @@ def write_outputs_atomic(root, outputs):
                 os.unlink(temporary)
             except FileNotFoundError:
                 pass
-
-
-def prove_candidate(derived, stored, reproduced_digest):
-    if not all(isinstance(value, bytes)
-               for value in (derived, stored)) or \
-            not isinstance(reproduced_digest, str):
-        raise ReleaseError("candidate proof inputs are malformed")
-    if stored != derived:
-        raise ReleaseError("stored candidate is stale")
-    if reproduced_digest != canon.bytes_digest(derived):
-        raise ReleaseError("candidate is not reproducible across interpreters")
-    return canon.bytes_digest(derived)

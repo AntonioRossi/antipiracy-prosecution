@@ -379,8 +379,10 @@ def _origins(model, error):
     if rebuilt != model.origin_inventory:
         error("origins", "substantive origin inventory is not the computed projection")
     lock = model.content_lock
-    lock_reads = {item["path"]: item["digest"] for item in lock["reads"]}
-    if lock_reads != reads or _C1_DIGEST.fullmatch(lock["lockDigest"]) is None:
+    lock_reads = {item.path: item.digest for item in lock.reads}
+    if lock_reads != reads or \
+            _C1_DIGEST.fullmatch(lock.lock_digest) is None or \
+            lock.canon_version != canon.CANON_VERSION:
         error("origins", "gateway lock does not bind the exact read inventory")
 
 

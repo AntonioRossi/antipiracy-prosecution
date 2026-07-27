@@ -22,7 +22,6 @@ from . import schema_validate
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DIST = os.path.join(ROOT, "navigator", "dist")
 PROFILE_WORDING_ID = "artifact-label-technical-preview"
 TECHNICAL_PREVIEW_LABEL = (
     "TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA "
@@ -140,8 +139,22 @@ class ValidatedNavigatorSources:
     """One snapshot-bound structured corpus and its frozen navigator inputs."""
 
     snapshot_digest: str
+    capture_token: object
     corpus: object
     consumer_inputs: MappingProxyType
+
+    def __post_init__(self):
+        if not isinstance(self.snapshot_digest, str) or \
+                not self.snapshot_digest or self.capture_token is None or \
+                not isinstance(self.consumer_inputs, MappingProxyType) or \
+                not self.consumer_inputs or any(
+                    not isinstance(value, registry_mod.ConsumerInput) or
+                    key != value.consumer_id or
+                    value.snapshot_digest != self.snapshot_digest or
+                    value.capture_token is not self.capture_token
+                    for key, value in self.consumer_inputs.items()):
+            raise CurrentStateError(
+                "validated navigator sources are not one frozen capture")
 
     def input_for(self, consumer_id):
         try:
@@ -152,11 +165,16 @@ class ValidatedNavigatorSources:
         if value.snapshot_digest != self.snapshot_digest:
             raise CurrentStateError(
                 "navigator consumer handoff belongs to another snapshot")
+        if value.capture_token is not self.capture_token:
+            raise CurrentStateError(
+                "navigator consumer handoff belongs to another capture")
         return value
 
 
 @dataclass(frozen=True, slots=True)
 class EditionSpec:
+    capture_token: object
+    plan_token: object
     edition_id: str
     path: str
     consumer_id: str
@@ -166,16 +184,49 @@ class EditionSpec:
     artifact_name: str
     declared_timestamp: str
 
+    def __post_init__(self):
+        values = (
+            self.edition_id, self.path, self.consumer_id,
+            self.claim_package_id, self.relation_path, self.wording_path,
+            self.artifact_name, self.declared_timestamp,
+        )
+        if self.capture_token is None or self.plan_token is None or any(
+                not isinstance(value, str) or not value for value in values):
+            raise CurrentStateError("edition specification is incomplete")
+
 
 @dataclass(frozen=True, slots=True)
 class ProductPlan:
     """Closed product inventory resolved from current bundle and edition data."""
 
     snapshot_digest: str
+    capture_token: object
+    plan_token: object
     bundle_config: MappingProxyType
     editions: tuple
     by_id: MappingProxyType
     input_paths: frozenset
+
+    def __post_init__(self):
+        malformed_editions = not isinstance(self.editions, tuple) or \
+            not self.editions or any(
+                not isinstance(item, EditionSpec) for item in self.editions)
+        edition_ids = () if malformed_editions else tuple(
+            item.edition_id for item in self.editions)
+        if not isinstance(self.snapshot_digest, str) or \
+                not self.snapshot_digest or self.capture_token is None or \
+                self.plan_token is None or \
+                not isinstance(self.bundle_config, MappingProxyType) or \
+                malformed_editions or \
+                len(edition_ids) != len(set(edition_ids)) or \
+                not isinstance(self.by_id, MappingProxyType) or \
+                not isinstance(self.input_paths, frozenset) or \
+                set(self.by_id) != set(edition_ids) or \
+                any(item.capture_token is not self.capture_token or
+                    item.plan_token is not self.plan_token or
+                    self.by_id.get(item.edition_id) is not item
+                    for item in self.editions):
+            raise CurrentStateError("product plan is not one closed capture")
 
     def edition(self, edition_id):
         try:
@@ -190,6 +241,89 @@ class ProductPlan:
     @property
     def consumer_ids(self):
         return tuple(item.consumer_id for item in self.editions)
+
+
+@dataclass(frozen=True, slots=True)
+class EditionState:
+    """One immutable edition derivation owned by one capture and plan."""
+
+    capture_token: object
+    plan_token: object
+    derivation_token: object
+    model: model.EditionModel
+    html: bytes
+    content_lock: gateway.ContentLock
+    candidate_name: str
+
+    def __post_init__(self):
+        if self.capture_token is None or self.plan_token is None or \
+                self.derivation_token is None or \
+                not isinstance(self.model, model.EditionModel) or \
+                self.model._capture_token is not self.capture_token or \
+                self.model._plan_token is not self.plan_token or \
+                self.model._derivation_token is not self.derivation_token or \
+                not isinstance(self.html, bytes) or \
+                not isinstance(self.content_lock, gateway.ContentLock) or \
+                self.model.content_lock is not self.content_lock or \
+                not isinstance(self.candidate_name, str) or \
+                self.candidate_name != release.candidate_name(
+                    self.model.artifact_name):
+            raise CurrentStateError("edition state is not one immutable derivation")
+
+
+@dataclass(frozen=True, slots=True)
+class BundleState:
+    """One immutable delivery-bundle derivation over one edition state set."""
+
+    capture_token: object
+    plan_token: object
+    derivation_token: object
+    bundle_token: object
+    config: MappingProxyType
+    config_digest: str
+    manifest: bytes
+    members: tuple
+    origin_inventory: tuple
+    states: MappingProxyType
+    zip_bytes: bytes
+
+    def __post_init__(self):
+        if self.capture_token is None or self.plan_token is None or \
+                self.derivation_token is None or self.bundle_token is None or \
+                not isinstance(self.config, MappingProxyType) or \
+                not isinstance(self.config_digest, str) or \
+                not isinstance(self.manifest, bytes) or \
+                not isinstance(self.members, tuple) or \
+                any(not isinstance(item, tuple) or len(item) != 2 or
+                    not isinstance(item[0], str) or not isinstance(item[1], bytes)
+                    for item in self.members) or \
+                not isinstance(self.origin_inventory, tuple) or \
+                not isinstance(self.states, MappingProxyType) or \
+                not self.states or \
+                not isinstance(self.zip_bytes, bytes) or \
+                any(not isinstance(state, EditionState) or
+                    state.capture_token is not self.capture_token or
+                    state.plan_token is not self.plan_token or
+                    state.derivation_token is not self.derivation_token
+                    for state in self.states.values()):
+            raise CurrentStateError("bundle state is not one immutable derivation")
+
+
+@dataclass(frozen=True, slots=True)
+class CandidateProof:
+    """Ephemeral authorization bound to one exact edition derivation."""
+
+    capture_token: object
+    plan_token: object
+    derivation_token: object
+    digest: str
+
+    def __post_init__(self):
+        if self.capture_token is None or self.plan_token is None or \
+                self.derivation_token is None or \
+                re.fullmatch(r"sha256/c1:[0-9a-f]{64}", self.digest or "") \
+                is None:
+            raise CurrentStateError("candidate proof is malformed")
 
 
 @dataclass(frozen=True, slots=True)
@@ -270,6 +404,7 @@ def load_product_plan(repository_snapshot):
         entry["edition"]: entry["name"] for entry in config["members"]
         if entry["kind"] == "sealed"
     }
+    plan_token = object()
     editions = []
     for edition_id in config["editions"]:
         path = "navigator/editions/%s.json" % edition_id
@@ -297,6 +432,8 @@ def load_product_plan(repository_snapshot):
                 "edition, consumer, source, artifact, or bundle identity differs: %s" %
                 edition_id)
         editions.append(EditionSpec(
+            capture_token=repository_snapshot.capture_token,
+            plan_token=plan_token,
             edition_id=edition_id, path=path,
             consumer_id=value["consumerId"],
             claim_package_id=value["claimPackageId"],
@@ -318,33 +455,51 @@ def load_product_plan(repository_snapshot):
     by_id = MappingProxyType({item.edition_id: item for item in editions})
     return ProductPlan(
         snapshot_digest=repository_snapshot.digest,
+        capture_token=repository_snapshot.capture_token,
+        plan_token=plan_token,
         bundle_config=_freeze_json(config), editions=tuple(editions),
         by_id=by_id, input_paths=frozenset(input_paths))
 
 
-def build_model(edition, repository_snapshot, consumer_input):
+def build_model(edition, repository_snapshot, consumer_input,
+                derivation_token):
     """Construct one model from a retained structured-source handoff."""
     if not isinstance(edition, EditionSpec) or \
-            not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
+            not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
+            derivation_token is None:
         raise CurrentStateError(
             "model construction requires an edition specification and snapshot")
     if not isinstance(consumer_input, registry_mod.ConsumerInput) or \
             consumer_input.snapshot_digest != repository_snapshot.digest or \
-            consumer_input.consumer_id != edition.consumer_id:
+            consumer_input.consumer_id != edition.consumer_id or \
+            edition.capture_token is not repository_snapshot.capture_token or \
+            consumer_input.capture_token is not repository_snapshot.capture_token or \
+            edition.plan_token is None:
         raise CurrentStateError(
-            "model consumer handoff does not match the repository snapshot")
+            "model inputs do not match one repository capture and product plan")
     content_gateway = gateway.ContentGateway(
         ROOT, byte_source=repository_snapshot.byte_source(), allowlist=None)
     try:
         edition_model = model.EditionModel(
-            content_gateway, edition.path, consumer_input)
+            content_gateway, edition.path, consumer_input,
+            capture_token=repository_snapshot.capture_token,
+            plan_token=edition.plan_token,
+            derivation_token=derivation_token)
     except (gateway.GatewayError, model.ModelError) as exc:
             raise CurrentStateError(
                 "%s typed model could not be constructed: %s" %
                 (edition.edition_id, exc)) from exc
     if getattr(edition_model, "edition_id", None) != edition.edition_id or \
-            edition_model.artifact_name != edition.artifact_name:
-        raise CurrentStateError("typed model edition identity does not match request")
+            edition_model.artifact_name != edition.artifact_name or \
+            edition_model._edition_path != edition.path or \
+            edition_model._consumer_id != edition.consumer_id or \
+            edition_model._claim_package_id != edition.claim_package_id or \
+            edition_model._relation_path != edition.relation_path or \
+            edition_model._edition_wording_path != edition.wording_path or \
+            edition_model.declared_release_timestamp != \
+            edition.declared_timestamp:
+        raise CurrentStateError(
+            "typed model does not match the exact edition specification")
     return edition_model
 
 
@@ -368,17 +523,19 @@ def _validate_model_metadata(edition_model):
         raise CurrentStateError("typed model product label is not the exact current label")
 
 
-def derive(edition, mode, repository_snapshot, consumer_input):
-    """Return ``(model, html_bytes, content_lock)`` for one current edition.
+def derive(edition, mode, repository_snapshot, consumer_input,
+           derivation_token):
+    """Return one capture-bound immutable state for a current edition.
 
     ``release`` intentionally renders the candidate projection: release seals
     those exact bytes rather than creating a second semantic output mode.
     """
     if mode not in {"preview", "candidate", "release"}:
         raise CurrentStateError("derivation mode is not current")
-    if not isinstance(edition, EditionSpec):
+    if not isinstance(edition, EditionSpec) or derivation_token is None:
         raise CurrentStateError("derivation requires a current edition specification")
-    edition_model = build_model(edition, repository_snapshot, consumer_input)
+    edition_model = build_model(
+        edition, repository_snapshot, consumer_input, derivation_token)
     problems = validate.validate_edition(edition_model)
     if not isinstance(problems, tuple) or any(
             not isinstance(problem, tuple) or len(problem) != 2 or
@@ -400,11 +557,19 @@ def derive(edition, mode, repository_snapshot, consumer_input):
     if not isinstance(html_bytes, bytes) or not html_bytes.startswith(b"<!DOCTYPE html>"):
         raise CurrentStateError("renderer did not return a complete HTML5 byte product")
     content_lock = edition_model.content_lock
-    if not isinstance(content_lock, dict) or \
-            not isinstance(content_lock.get("lockDigest"), str) or \
-            not isinstance(content_lock.get("reads"), list):
+    if not isinstance(content_lock, gateway.ContentLock) or \
+            not isinstance(content_lock.lock_digest, str) or \
+            not isinstance(content_lock.reads, tuple):
         raise CurrentStateError("gateway content lock is malformed")
-    return edition_model, html_bytes, content_lock
+    return EditionState(
+        capture_token=repository_snapshot.capture_token,
+        plan_token=edition.plan_token,
+        derivation_token=derivation_token,
+        model=edition_model,
+        html=html_bytes,
+        content_lock=content_lock,
+        candidate_name=release.candidate_name(edition_model.artifact_name),
+    )
 
 
 def _artifact_bytes(name, byte_source):
@@ -419,26 +584,25 @@ def derive_editions(repository_snapshot, editions, sources):
             any(not isinstance(item, EditionSpec) for item in editions) or \
             len(editions) != len(set(item.edition_id for item in editions)) or \
             not isinstance(sources, ValidatedNavigatorSources) or \
-            sources.snapshot_digest != repository_snapshot.digest:
+            sources.snapshot_digest != repository_snapshot.digest or \
+            sources.capture_token is not repository_snapshot.capture_token or \
+            any(item.capture_token is not repository_snapshot.capture_token
+                for item in editions) or \
+            len({id(item.plan_token) for item in editions}) != 1:
         raise CurrentStateError("edition derivation inputs are incomplete")
+    derivation_token = object()
     states = {}
     for edition in editions:
-        edition_model, html_bytes, content_lock = derive(
+        state = derive(
             edition, "candidate", repository_snapshot,
-            sources.input_for(edition.consumer_id))
-        states[edition.edition_id] = MappingProxyType({
-            "model": edition_model,
-            "html": html_bytes,
-            "lock": content_lock,
-            "candidateName": release.candidate_name(
-                edition_model.artifact_name),
-        })
+            sources.input_for(edition.consumer_id), derivation_token)
+        states[edition.edition_id] = state
     return MappingProxyType(states)
 
 
 def _manifest_bytes(product_plan, states, artifact_members):
     config = product_plan.bundle_config
-    models = [states[edition_id]["model"]
+    models = [states[edition_id].model
               for edition_id in product_plan.edition_ids]
     if any(item.profile_label != TECHNICAL_PREVIEW_LABEL for item in models):
         raise CurrentStateError("editions do not share the current product profile")
@@ -464,7 +628,8 @@ def build_bundle_state(repository_snapshot, product_plan, states):
     """Resolve and reproduce the exact configured delivery bundle."""
     if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
             not isinstance(product_plan, ProductPlan) or \
-            product_plan.snapshot_digest != repository_snapshot.digest:
+            product_plan.snapshot_digest != repository_snapshot.digest or \
+            product_plan.capture_token is not repository_snapshot.capture_token:
         raise CurrentStateError(
             "bundle construction requires one snapshot-bound product plan")
     byte_source = repository_snapshot.byte_source()
@@ -473,9 +638,18 @@ def build_bundle_state(repository_snapshot, product_plan, states):
         raise CurrentStateError("bundle construction requires frozen edition states")
     if set(states) != set(product_plan.edition_ids):
         raise CurrentStateError("bundle edition state is incomplete")
+    derivation_tokens = {id(item.derivation_token) for item in states.values()
+                         if isinstance(item, EditionState)}
+    if len(derivation_tokens) != 1 or any(
+            not isinstance(item, EditionState) or
+            item.capture_token is not repository_snapshot.capture_token or
+            item.plan_token is not product_plan.plan_token
+            for item in states.values()):
+        raise CurrentStateError(
+            "bundle edition states cross a capture, plan, or derivation boundary")
     for edition_id in product_plan.edition_ids:
         item = states[edition_id]
-        if item["model"].declared_release_timestamp != config["declaredTimestamp"]:
+        if item.model.declared_release_timestamp != config["declaredTimestamp"]:
             raise CurrentStateError(
                 "%s release timestamp differs from bundle timestamp" % edition_id)
 
@@ -485,11 +659,11 @@ def build_bundle_state(repository_snapshot, product_plan, states):
         name = entry["name"]
         if entry["kind"] == "sealed":
             edition_id = entry["edition"]
-            edition_model = states[edition_id]["model"]
+            edition_model = states[edition_id].model
             if name != edition_model.artifact_name:
                 raise CurrentStateError(
                     "%s sealed artifact name differs from its edition" % edition_id)
-            stored = states[edition_id]["html"]
+            stored = states[edition_id].html
             artifacts[name] = stored
         else:
             artifact = entry["artifact"]
@@ -502,7 +676,7 @@ def build_bundle_state(repository_snapshot, product_plan, states):
         ordered_artifact_members.append((name, stored))
 
     manifest = _manifest_bytes(product_plan, states, ordered_artifact_members)
-    members = ordered_artifact_members + [("MANIFEST.txt", manifest)]
+    members = tuple(ordered_artifact_members + [("MANIFEST.txt", manifest)])
     try:
         zip_bytes = bundlezip.build_zip(members, config["declaredTimestamp"])
     except bundlezip.BundleError as exc:
@@ -510,27 +684,32 @@ def build_bundle_state(repository_snapshot, product_plan, states):
     config_digest = canon.bytes_digest(
         _read_path(bundlezip.BUNDLE_CONFIG_PATH, byte_source))
     bundle_origins = projections.bundle_origin_inventory(
-        (states[edition_id]["model"] for edition_id in product_plan.edition_ids),
+        (states[edition_id].model for edition_id in product_plan.edition_ids),
         config, config_digest, bundlezip.BUNDLE_CONFIG_PATH)
-    return MappingProxyType({
-        "config": config,
-        "configDigest": config_digest,
-        "manifest": manifest,
-        "members": members,
-        "originInventory": bundle_origins,
-        "states": states,
-        "zip": zip_bytes,
-    })
+    return BundleState(
+        capture_token=repository_snapshot.capture_token,
+        plan_token=product_plan.plan_token,
+        derivation_token=states[product_plan.edition_ids[0]].derivation_token,
+        bundle_token=object(),
+        config=config,
+        config_digest=config_digest,
+        manifest=manifest,
+        members=members,
+        origin_inventory=bundle_origins,
+        states=states,
+        zip_bytes=zip_bytes,
+    )
 
 
 def verify_stored_artifact_members(repository_snapshot, bundle_state):
     """Require stored sealed/checksum bytes to equal one derived bundle state."""
     if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
-            not isinstance(bundle_state, MappingProxyType):
+            not isinstance(bundle_state, BundleState) or \
+            bundle_state.capture_token is not repository_snapshot.capture_token:
         raise CurrentStateError(
             "stored bundle-member verification inputs are malformed")
     byte_source = repository_snapshot.byte_source()
-    for name, expected in bundle_state["members"][:-1]:
+    for name, expected in bundle_state.members[:-1]:
         actual = _artifact_bytes(name, byte_source)
         if actual != expected:
             raise CurrentStateError(
@@ -542,10 +721,21 @@ def product_reproduction_projection(states, bundle_state=None):
     """Return the canonical digest projection for one explicit product set."""
     if not isinstance(states, MappingProxyType) or not states:
         raise CurrentStateError("product projection requires frozen edition states")
+    if any(not isinstance(state, EditionState) or
+           edition_id != state.model.edition_id
+           for edition_id, state in states.items()) or \
+            len({id(state.capture_token) for state in states.values()}) != 1 or \
+            len({id(state.plan_token) for state in states.values()}) != 1 or \
+            len({id(state.derivation_token) for state in states.values()}) != 1:
+        raise CurrentStateError("product projection edition state is malformed")
+    if bundle_state is not None and (
+            not isinstance(bundle_state, BundleState) or
+            bundle_state.states is not states):
+        raise CurrentStateError("product projection bundle state is detached")
     editions = {}
     origins = {}
     for edition_id, state in states.items():
-        inventory = state["model"].origin_inventory
+        inventory = state.model.origin_inventory
         encoded = [[
             item.value_id, item.kind, item.owner_path,
             item.owner_ref, item.owner_digest,
@@ -553,26 +743,47 @@ def product_reproduction_projection(states, bundle_state=None):
         origin_digest = canon.bytes_digest(canon.canonical_json(encoded))
         origins[edition_id] = origin_digest
         editions[edition_id] = {
-            "artifactName": state["model"].artifact_name,
-            "contentLockDigest": state["lock"]["lockDigest"],
-            "htmlDigest": canon.bytes_digest(state["html"]),
+            "artifactName": state.model.artifact_name,
+            "contentLockDigest": state.content_lock.lock_digest,
+            "htmlDigest": canon.bytes_digest(state.html),
             "originInventoryDigest": origin_digest,
         }
     bundle = None if bundle_state is None else {
         "bundleOriginInventoryDigest": canon.bytes_digest(canon.canonical_json([
             [item.value_id, item.kind, item.owner_path,
              item.owner_ref, item.owner_digest]
-            for item in bundle_state["originInventory"]
+            for item in bundle_state.origin_inventory
         ])),
-        "manifestDigest": canon.bytes_digest(bundle_state["manifest"]),
+        "manifestDigest": canon.bytes_digest(bundle_state.manifest),
         "memberDigests": [
             {"digest": canon.bytes_digest(data), "name": name}
-            for name, data in bundle_state["members"]
+            for name, data in bundle_state.members
         ],
         "originInventoryDigests": origins,
-        "zipDigest": canon.bytes_digest(bundle_state["zip"]),
+        "zipDigest": canon.bytes_digest(bundle_state.zip_bytes),
     }
     return {"bundle": bundle, "editions": editions}
+
+
+def prove_candidate(state, stored_candidate, fresh_projection):
+    """Bind candidate authorization to one complete fresh projection."""
+    if not isinstance(state, EditionState) or \
+            not isinstance(stored_candidate, bytes) or \
+            not isinstance(fresh_projection, dict):
+        raise CurrentStateError("candidate proof inputs are malformed")
+    expected_projection = product_reproduction_projection(
+        MappingProxyType({state.model.edition_id: state}))
+    if fresh_projection != expected_projection:
+        raise CurrentStateError(
+            "fresh candidate projection differs from the retained derivation")
+    if stored_candidate != state.html:
+        raise CurrentStateError("stored candidate is stale")
+    return CandidateProof(
+        capture_token=state.capture_token,
+        plan_token=state.plan_token,
+        derivation_token=state.derivation_token,
+        digest=canon.bytes_digest(state.html),
+    )
 
 
 def derive_reproduction_projection(repository_snapshot, product_plan, sources,
@@ -581,8 +792,10 @@ def derive_reproduction_projection(repository_snapshot, product_plan, sources,
     if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
             not isinstance(product_plan, ProductPlan) or \
             product_plan.snapshot_digest != repository_snapshot.digest or \
+            product_plan.capture_token is not repository_snapshot.capture_token or \
             not isinstance(sources, ValidatedNavigatorSources) or \
             sources.snapshot_digest != repository_snapshot.digest or \
+            sources.capture_token is not repository_snapshot.capture_token or \
             not isinstance(request, ReproductionRequest) or \
             not set(request.edition_ids).issubset(product_plan.by_id) or \
             (request.include_bundle and
@@ -720,6 +933,7 @@ def validate_structured_corpus(repository_snapshot):
             inputs[consumer_id] = registry_input = registry_mod.ConsumerInput(
                 consumer_id=consumer_id,
                 snapshot_digest=repository_snapshot.digest,
+                capture_token=repository_snapshot.capture_token,
                 handoffs=handoffs,
                 parser_controls=corpus.parser_controls)
             if registry_input.consumer_id != consumer_id:
@@ -727,6 +941,7 @@ def validate_structured_corpus(repository_snapshot):
                     "navigator consumer handoff set is malformed")
         return ValidatedNavigatorSources(
             snapshot_digest=repository_snapshot.digest,
+            capture_token=repository_snapshot.capture_token,
             corpus=corpus,
             consumer_inputs=MappingProxyType(inputs),
         )
@@ -740,6 +955,7 @@ def bind_sources_to_plan(product_plan, sources):
     if not isinstance(product_plan, ProductPlan) or \
             not isinstance(sources, ValidatedNavigatorSources) or \
             product_plan.snapshot_digest != sources.snapshot_digest or \
+            product_plan.capture_token is not sources.capture_token or \
             set(sources.consumer_inputs) != set(product_plan.consumer_ids):
         raise CurrentStateError(
             "configured product consumers and validated handoffs differ")
@@ -776,28 +992,28 @@ def verify_current_closure(repository_snapshot, reproduction_root):
     editions = {}
     for edition_id in product_plan.edition_ids:
         item = states[edition_id]
-        candidate_name = item["candidateName"]
+        candidate_name = item.candidate_name
         candidate = _artifact_bytes(candidate_name, byte_source)
-        if candidate != item["html"]:
+        if candidate != item.html:
             raise CurrentStateError(
                 "%s stored candidate is stale" % edition_id)
         expected_dist.add(candidate_name)
         editions[edition_id] = {
-            "artifact": item["model"].artifact_name,
-            "candidateDigest": canon.bytes_digest(item["html"]),
-            "claimSetVersion": item["model"].claim_set_version,
-            "contentLockDigest": item["lock"]["lockDigest"],
+            "artifact": item.model.artifact_name,
+            "candidateDigest": canon.bytes_digest(item.html),
+            "claimSetVersion": item.model.claim_set_version,
+            "contentLockDigest": item.content_lock.lock_digest,
         }
 
-    config = bundle_state["config"]
-    expected_dist.update(name for name, unused_data in bundle_state["members"][:-1])
+    config = bundle_state.config
+    expected_dist.update(name for name, unused_data in bundle_state.members[:-1])
     expected_dist.add(config["name"])
     expected_dist.add(config["name"] + ".sha256")
     stored_zip = _artifact_bytes(config["name"], byte_source)
-    if stored_zip != bundle_state["zip"]:
+    if stored_zip != bundle_state.zip_bytes:
         raise CurrentStateError("stored delivery bundle is stale")
     try:
-        if bundlezip.read_zip_members(stored_zip) != bundle_state["members"]:
+        if tuple(bundlezip.read_zip_members(stored_zip)) != bundle_state.members:
             raise CurrentStateError("delivery bundle member bytes are stale")
         release.verify_checksum(
             _artifact_bytes(config["name"] + ".sha256", byte_source),
@@ -814,14 +1030,14 @@ def verify_current_closure(repository_snapshot, reproduction_root):
         "acceptanceRegistry": registry,
         "bundle": {
             "digest": canon.bytes_digest(stored_zip),
-            "members": [name for name, unused_data in bundle_state["members"]],
+            "members": [name for name, unused_data in bundle_state.members],
             "name": config["name"],
         },
         "editions": editions,
         "structuredSource": sources.corpus.public_result(),
         "testSession": MappingProxyType({
             "models": MappingProxyType({
-                edition_id: states[edition_id]["model"]
+                edition_id: states[edition_id].model
                 for edition_id in product_plan.edition_ids
             }),
             "plan": product_plan,

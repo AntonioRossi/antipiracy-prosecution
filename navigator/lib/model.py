@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
-import os
 import re
 from types import MappingProxyType
 
@@ -12,8 +10,9 @@ from structured_source.canonical import raw_digest
 from structured_source.pdf_transcription import (
     PDFTranscriptionSurface, TypedContentNode)
 
-from . import canon, claims as claims_mod, depgraph, projections
+from . import bundlezip, canon, claims as claims_mod, depgraph, projections
 from . import registry as registry_mod, schema_validate
+from .gateway import ContentLock
 
 C = "{urn:aa11393:ssp:content:1}"
 R = "{urn:aa11393:navigator:relations:1}"
@@ -26,8 +25,6 @@ WORDING_SCHEMA = "navigator/schema/wording.xsd"
 SHARED_WORDING = "navigator/wording/shared.wording.xml"
 EDITION_SCHEMA = "navigator/schema/edition.schema.json"
 _STABLE_ID = re.compile(r"[A-Za-z][A-Za-z0-9._:-]*\Z")
-_TIMESTAMP = re.compile(
-    r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z\Z")
 _WORDING_CONTRACT = {
     "counsel-legend": ("legend", "counsel-legend"),
     "standing-disclaimer": ("disclaimer", "standing-disclaimer"),
@@ -77,7 +74,6 @@ class SourceItem:
     fragment_id: str
     text: str
     content_digest: str
-    binding_kind: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -233,9 +229,12 @@ def _render_wording_entry(entry, values):
             if slot.scalar_type == "stable-id" and \
                     _STABLE_ID.fullmatch(value) is None:
                 raise ModelError("controlled wording stable-id slot is invalid")
-            if slot.scalar_type == "timestamp" and \
-                    _TIMESTAMP.fullmatch(value) is None:
-                raise ModelError("controlled wording timestamp slot is invalid")
+            if slot.scalar_type == "timestamp":
+                try:
+                    bundlezip.parse_utc_second(value)
+                except bundlezip.BundleError as exc:
+                    raise ModelError(
+                        "controlled wording timestamp slot is invalid") from exc
         token = "{%s}" % name
         if text.count(token) != 1:
             raise ModelError("controlled wording slot occurrence is stale")
@@ -243,10 +242,6 @@ def _render_wording_entry(entry, values):
     if re.search(r"\{[A-Za-z][A-Za-z0-9._:-]*\}", text):
         raise ModelError("controlled wording retains an unresolved slot")
     return text
-
-
-def _local(element):
-    return element.tag.rsplit("}", 1)[-1]
 
 
 def _typed_plain_text(node: TypedContentNode) -> str:
@@ -421,7 +416,6 @@ def _source_items(authored_root, fragment_digests):
             fragment_id=identifier,
             text=excerpt.text,
             content_digest=fragment_digests[identifier],
-            binding_kind=fragment.get("bindingKind"),
         )
     return MappingProxyType(items)
 
@@ -579,7 +573,14 @@ class EditionModel:
             raise AttributeError("EditionModel is immutable after construction")
         object.__setattr__(self, name, value)
 
-    def __init__(self, gw, edition_path, consumer_input):
+    def __init__(self, gw, edition_path, consumer_input, *, capture_token,
+                 plan_token, derivation_token):
+        if capture_token is None or plan_token is None or \
+                derivation_token is None or \
+                not isinstance(consumer_input, registry_mod.ConsumerInput) or \
+                consumer_input.capture_token is not capture_token:
+            raise ModelError(
+                "typed model inputs do not belong to one retained derivation")
         try:
             registry = registry_mod.Registry(gw, consumer_input)
         except registry_mod.RegistryError as exc:
@@ -603,15 +604,17 @@ class EditionModel:
                     "navigator/wording/%s.wording.xml" % config["editionId"]):
             raise ModelError("edition identity/path bindings are not exact")
         try:
-            parsed_timestamp = datetime.fromisoformat(
-                config["declaredReleaseTimestamp"].replace("Z", "+00:00"))
-        except ValueError as exc:
-            raise ModelError("declared release timestamp is invalid") from exc
-        if not _TIMESTAMP.fullmatch(config["declaredReleaseTimestamp"]) or \
-                parsed_timestamp.utcoffset().total_seconds() != 0:
-            raise ModelError("declared release timestamp is not a UTC second")
+            bundlezip.parse_utc_second(config["declaredReleaseTimestamp"])
+        except bundlezip.BundleError as exc:
+            raise ModelError(
+                "declared release timestamp is not a UTC second") from exc
 
         self.edition_id = config["editionId"]
+        self._consumer_id = config["consumerId"]
+        self._claim_package_id = config["claimPackageId"]
+        self._capture_token = capture_token
+        self._plan_token = plan_token
+        self._derivation_token = derivation_token
         self.display_name = config["displayName"]
         self.strategy_name = config["strategyName"]
         self.strategy_prefix = config["strategyPrefix"]
@@ -728,7 +731,9 @@ class EditionModel:
         gw.seal(expected_reads)
         self._read_inventory = tuple(sorted(gw.read_log.items()))
         lock = gw.lock()
-        self._content_lock_digest = lock["lockDigest"]
+        if not isinstance(lock, ContentLock):
+            raise ModelError("gateway did not construct an immutable content lock")
+        self._content_lock = lock
         self.origin_inventory = projections.origin_inventory(self)
         # Parsed claim XML and the resolver are construction details.  The
         # navigator retains only immutable typed values from both handoffs.
@@ -891,13 +896,14 @@ class EditionModel:
 
     @property
     def content_lock(self):
-        reads = [{"path": path, "digest": digest}
-                 for path, digest in self._read_inventory]
-        return {
-            "canonVersion": canon.CANON_VERSION,
-            "reads": reads,
-            "lockDigest": self._content_lock_digest,
-        }
+        return self._content_lock
+
+    @staticmethod
+    def _require_identity(value, label):
+        if type(value) is not str or not value or \
+                canon.normalize_nfc(value) != value:
+            raise ModelError("%s must be one explicit nonempty identity" % label)
+        return value
 
     def _origin_value(self, origin_ref):
         values = {
@@ -914,6 +920,7 @@ class EditionModel:
                 "controlled wording origin is not edition-resolvable") from exc
 
     def controlled_text(self, wording_id):
+        wording_id = self._require_identity(wording_id, "wording identity")
         entry = self._wording.get(wording_id)
         if entry is None:
             raise ModelError("controlled wording identity does not resolve")
@@ -922,6 +929,7 @@ class EditionModel:
         return _render_wording_entry(entry, values)
 
     def get_document(self, document_id):
+        document_id = self._require_identity(document_id, "document identity")
         document = self._documents.get(document_id)
         if document is None:
             raise ModelError("source document does not resolve")
@@ -938,6 +946,8 @@ class EditionModel:
         })
 
     def get_item(self, document_id, fragment_id):
+        document_id = self._require_identity(document_id, "document identity")
+        fragment_id = self._require_identity(fragment_id, "item identity")
         if document_id == self.source_documents[0].document_id:
             unit = self.units_by_fragment.get(fragment_id)
             if unit is not None:
@@ -955,19 +965,24 @@ class EditionModel:
         return item
 
     def resolve_relation(self, relation_id):
+        relation_id = self._require_identity(relation_id, "relation identity")
         relation = self._relations_by_id.get(relation_id)
         if relation is None:
             raise ModelError("relation identity does not resolve")
         return relation
 
     def relations_for(self, document_id, fragment_id):
+        document_id = self._require_identity(document_id, "document identity")
+        fragment_id = self._require_identity(fragment_id, "item identity")
         self.get_item(document_id, fragment_id)
         return self._relations_by_endpoint.get((document_id, fragment_id), ())
 
     @staticmethod
     def dom_id(document_id, fragment_id):
-        if not isinstance(document_id, str) or not isinstance(fragment_id, str):
-            raise ModelError("DOM identity inputs must be strings")
+        document_id = EditionModel._require_identity(
+            document_id, "DOM document identity")
+        fragment_id = EditionModel._require_identity(
+            fragment_id, "DOM item identity")
         framed = (document_id + "\x00" + fragment_id).encode("utf-8")
         return "n-" + canon.bytes_digest(framed).rsplit(":", 1)[1]
 

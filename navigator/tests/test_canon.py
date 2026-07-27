@@ -3,12 +3,10 @@
 import json
 import os
 import random
-import sys
 import unicodedata
 import unittest
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from lib import canon  # noqa: E402
+from navigator.lib import canon
 
 HERE = os.path.dirname(__file__)
 

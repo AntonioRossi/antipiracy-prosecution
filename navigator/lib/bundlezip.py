@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 import io
 import re
 import stat
-import unicodedata
 import zipfile
 
 from . import release
@@ -16,7 +15,6 @@ BUNDLE_CONFIG_PATH = "navigator/bundles/current.json"
 BUNDLE_VERSION = "5"
 BUNDLE_WORDING_ID = "bundle-manifest-neutral"
 
-_BASENAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,239}\Z")
 _EDITION_ID = re.compile(r"[a-z][a-z0-9-]{0,31}\Z")
 _TIMESTAMP = re.compile(
     r"(19[89][0-9]|20[0-9]{2}|21[0-9]{2})-"
@@ -32,16 +30,11 @@ class BundleError(ValueError):
 
 
 def validate_member_name(value):
-    stem = value.split(".", 1)[0].casefold() \
-        if isinstance(value, str) else ""
-    reserved = {"con", "prn", "aux", "nul"} | {
-        "%s%d" % (prefix, number)
-        for prefix in ("com", "lpt") for number in range(1, 10)}
-    if not isinstance(value, str) or _BASENAME.fullmatch(value) is None or \
-            unicodedata.normalize("NFC", value) != value or \
-            value in {".", ".."} or value.endswith(".") or stem in reserved:
-        raise BundleError("bundle member must be one canonical safe basename")
-    return value
+    try:
+        return release.validate_output_name(value)
+    except release.ReleaseError as exc:
+        raise BundleError(
+            "bundle member must be one canonical safe basename") from exc
 
 
 def parse_utc_second(value):

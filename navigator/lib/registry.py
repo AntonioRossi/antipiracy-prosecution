@@ -8,8 +8,7 @@ from types import MappingProxyType
 
 from structured_source import CONTENT_NAMESPACE
 from structured_source.canonical import raw_digest
-from structured_source.parser import (PARSER_CONTROL_PATHS, ParserControls,
-                                      parse_artifact)
+from structured_source.parser import ParserControls, parse_artifact
 from structured_source.pdf_transcription import (
     PDFTranscriptionSurface, AUTHORITY_SCHEME as PDF_AUTHORITY_SCHEME)
 
@@ -37,8 +36,18 @@ class ConsumerInput:
 
     consumer_id: str
     snapshot_digest: str
+    capture_token: object
     handoffs: MappingProxyType
     parser_controls: ParserControls
+
+    def __post_init__(self):
+        if not isinstance(self.consumer_id, str) or not self.consumer_id or \
+                not isinstance(self.snapshot_digest, str) or \
+                not self.snapshot_digest or self.capture_token is None or \
+                not isinstance(self.handoffs, MappingProxyType) or \
+                not isinstance(self.parser_controls, ParserControls):
+            raise RegistryError(
+                "navigator consumer input is not one frozen capture")
 
 
 class Registry:
@@ -50,6 +59,7 @@ class Registry:
                              consumer_input.consumer_id or "") is None or \
                 not isinstance(consumer_input.snapshot_digest, str) or \
                 not consumer_input.snapshot_digest or \
+                consumer_input.capture_token is None or \
                 not isinstance(consumer_input.handoffs, MappingProxyType) or \
                 not isinstance(consumer_input.parser_controls, ParserControls):
             raise RegistryError("navigator consumer input is not a frozen handoff set")
@@ -137,15 +147,6 @@ class Registry:
             return self._handoffs[package_id]
         except KeyError as exc:
             raise RegistryError("handed package does not resolve") from exc
-
-    def get_document(self, document_id: str) -> SourceDocument:
-        if document_id not in self._documents:
-            self.load_document(document_id)
-        return self._documents[document_id]
-
-    @property
-    def documents(self):
-        return tuple(self._documents[key] for key in sorted(self._documents))
 
     @property
     def parser_controls(self):

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import os
 import posixpath
 import re
@@ -18,6 +19,19 @@ _RAW_DIGEST = re.compile(r"sha256/raw:([0-9a-f]{64})\Z")
 
 class GatewayError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True, slots=True)
+class ContentRead:
+    path: str
+    digest: str
+
+
+@dataclass(frozen=True, slots=True)
+class ContentLock:
+    canon_version: str
+    reads: tuple[ContentRead, ...]
+    lock_digest: str
 
 
 def _canonical_path(value: str) -> str:
@@ -212,13 +226,19 @@ class ContentGateway:
             raise GatewayError(
                 "registered XML input failed its closed XSD: %s" % relative) from exc
 
-    def lock(self) -> dict:
-        reads = tuple(
-            {"path": path, "digest": self._reads[path]}
-            for path in sorted(self._reads))
-        payload = {"canonVersion": canon.CANON_VERSION, "reads": reads}
-        return {
+    def lock(self) -> ContentLock:
+        if not self._sealed:
+            raise GatewayError("content lock requires a sealed gateway")
+        reads = tuple(ContentRead(path, self._reads[path])
+                      for path in sorted(self._reads))
+        payload = {
             "canonVersion": canon.CANON_VERSION,
-            "reads": list(reads),
-            "lockDigest": canon.composite_digest("aa11393:lock:c1", payload),
+            "reads": tuple({"path": item.path, "digest": item.digest}
+                           for item in reads),
         }
+        return ContentLock(
+            canon_version=canon.CANON_VERSION,
+            reads=reads,
+            lock_digest=canon.composite_digest(
+                "aa11393:lock:c1", payload),
+        )
