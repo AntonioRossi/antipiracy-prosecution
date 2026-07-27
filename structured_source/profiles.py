@@ -41,6 +41,9 @@ _PDF_READABLE_STORAGE = {
     "unicodeNormalization": "NFC",
 }
 _SCALAR_TYPES = frozenset({"boolean", "positive-integer", "string"})
+_CONTENT_AUTHORITY_SCHEMES = frozenset({
+    "authored-markdown-v1", "pdf-evidence-transcription-v1",
+})
 
 
 def _field_map(value, label, *, nonempty=True):
@@ -199,7 +202,7 @@ def load_projection_profile():
 def _validate_xml_profiles(value, projection):
     if not isinstance(value, dict) or set(value) != {
             "profileVersion", "contentDocuments", "relationSets"} or \
-            value.get("profileVersion") != "2":
+            value.get("profileVersion") != "3":
         raise StructuredSourceError("XML profile registry shape/version is not current")
     content = value.get("contentDocuments")
     if not isinstance(content, dict) or set(content) != {
@@ -214,7 +217,8 @@ def _validate_xml_profiles(value, projection):
     for profile_id, profile in relations.items():
         if _ID.fullmatch(profile_id) is None or not isinstance(profile, dict) or \
                 set(profile) != {"relationType", "directions", "endpointRoles",
-                                 "requiredEndpointRoles", "assertionFields"} or \
+                                 "requiredEndpointRoles", "assertionFields",
+                                 "endpointRoleTargets"} or \
                 _ID.fullmatch(profile.get("relationType", "")) is None:
             raise StructuredSourceError("relation-set profile is malformed: %s" % profile_id)
         for field in ("directions", "endpointRoles", "requiredEndpointRoles",
@@ -226,6 +230,16 @@ def _validate_xml_profiles(value, projection):
                     profile_id)
         if not set(profile["requiredEndpointRoles"]).issubset(profile["endpointRoles"]):
             raise StructuredSourceError("relation required roles are outside its profile")
+        targets = profile.get("endpointRoleTargets")
+        if not isinstance(targets, dict) or \
+                set(targets) != set(profile["endpointRoles"]):
+            raise StructuredSourceError(
+                "relation endpoint-role targets are outside its profile")
+        for role, schemes in targets.items():
+            _string_set(schemes, "%s %s targets" % (profile_id, role))
+            if not set(schemes).issubset(_CONTENT_AUTHORITY_SCHEMES):
+                raise StructuredSourceError(
+                    "relation endpoint-role target scheme is not current")
     return value
 
 
@@ -242,4 +256,4 @@ def parse_xml_profiles(data: bytes, projection):
 @lru_cache(maxsize=1)
 def load_xml_profiles():
     return _validate_xml_profiles(
-        _read("xml-v2.json"), load_projection_profile())
+        _read("xml-v3.json"), load_projection_profile())

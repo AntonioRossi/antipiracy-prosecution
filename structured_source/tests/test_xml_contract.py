@@ -362,6 +362,15 @@ class CanonicalContract(unittest.TestCase):
                 StructuredSourceError, "profile vocabulary is malformed"):
             parser.load_parser_controls(changed.__getitem__)
 
+        changed = dict(controls)
+        changed_profile = parse_json(changed[parser.XML_PROFILE_PATH])
+        changed_profile["relationSets"]["support-map-v1"][
+            "endpointRoleTargets"].pop("subject")
+        changed[parser.XML_PROFILE_PATH] = canonical_json(changed_profile)
+        with self.assertRaisesRegex(
+                StructuredSourceError, "endpoint-role targets"):
+            parser.load_parser_controls(changed.__getitem__)
+
     def test_typed_item_record_is_exact_and_excludes_envelope_fields(self):
         first = parser.parse_artifact(CONTENT, "content-document")
         record = first.typed_item_records["frag-heading"]
@@ -468,11 +477,29 @@ class SecureParser(unittest.TestCase):
                               b'type="unknown"'),
             RELATIONS.replace(b'role="evidence"', b'role="unknown"'),
             RELATIONS.replace(b'name="posture"', b'name="unknown"'),
+            RELATIONS.replace(b'role="subject"', b'role="evidence"', 1),
         )
         for payload in mutations:
             with self.subTest(payload=payload[-300:]):
                 with self.assertRaises(ParseError):
                     parser.parse_artifact(payload, "relation-set")
+
+    def test_relation_semantic_identity_and_owner_are_exact(self):
+        root = parser._parse_tree(RELATIONS)
+        relation = copy.deepcopy(root.find(
+            "{%s}relation" % parser.RELATIONS_NAMESPACE))
+        relation.set(
+            "{http://www.w3.org/XML/1998/namespace}id",
+            "rel-fragment-two")
+        root.append(relation)
+        canonical.strip_structural_whitespace(root)
+        duplicate_identity = canonical.readable_xml_bytes(root)
+        competing_owner = RELATIONS.replace(
+            b'semanticOwner="Applicant"', b'semanticOwner="Other"', 1)
+        for payload in (duplicate_identity, competing_owner):
+            with self.subTest(payload=payload[-300:]), \
+                    self.assertRaises(ParseError):
+                parser.parse_artifact(payload, "relation-set")
 
     def test_duplicate_ids_and_non_nfc_fail_closed(self):
         self.assertRejected(CONTENT.replace(b"frag-paragraph", b"frag-heading"))

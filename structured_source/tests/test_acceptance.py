@@ -15,6 +15,7 @@ from structured_source.__main__ import COMMANDS, _parser
 from structured_source.artifact_policy import (ArtifactClass, artifact_policy,
                                                classify_artifacts)
 from structured_source.atomic import publish_set
+from structured_source.canonical import raw_digest
 from structured_source.control import canonical_json
 from structured_source.errors import StructuredSourceError
 from structured_source.markdown import convert_authored_markdown
@@ -268,6 +269,68 @@ class AcceptanceContract(unittest.TestCase):
         self.assertIsNot(new_state, old_state)
         self.assertIsNot(new_handoff, old_handoff)
 
+    def test_authored_verifier_rejects_converter_self_report_as_authority(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = _write_authored_fixture(root)
+            original_xml = Path(root, "content/authored.xml").read_bytes()
+            original = convert_authored_markdown(
+                AUTHORED_MARKDOWN, "content/authored.md", "authored-doc")
+
+            changed_authority = AUTHORED_MARKDOWN.replace(
+                b"Exact body.", b"Changed body.")
+            Path(root, "content/authored.md").write_bytes(changed_authority)
+
+            def stale_adapter(markdown, unused_path, unused_document_id):
+                return {
+                    "xml": original_xml,
+                    "markdown": original.markdown,
+                    "source_raw_digest": raw_digest(markdown),
+                    "generated_markdown_raw_digest":
+                        original.generated_markdown_raw_digest,
+                    "item_ids": original.item_ids,
+                    "fragment_digests": original.fragment_digests,
+                }
+
+            context = VerificationContext(
+                root, registry=registry, markdown_adapter=stale_adapter)
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "deterministic authority conversion"):
+                context.check("authored-doc")
+
+            Path(root, "content/authored.md").write_bytes(AUTHORED_MARKDOWN)
+            false_reports = (
+                {
+                    "markdown": b"fabricated back-render\n",
+                    "generated_markdown_raw_digest":
+                        raw_digest(b"fabricated back-render\n"),
+                },
+                {"item_ids": tuple(reversed(original.item_ids))},
+            )
+            for report in false_reports:
+                def false_adapter(
+                        unused_markdown, unused_path, unused_document_id,
+                        report=report):
+                    value = {
+                        "xml": original.xml,
+                        "markdown": original.markdown,
+                        "source_raw_digest": original.source_raw_digest,
+                        "generated_markdown_raw_digest":
+                            original.generated_markdown_raw_digest,
+                        "item_ids": original.item_ids,
+                        "fragment_digests": original.fragment_digests,
+                    }
+                    value.update(report)
+                    return value
+
+                with self.subTest(report=report):
+                    context = VerificationContext(
+                        root, registry=registry,
+                        markdown_adapter=false_adapter)
+                    with self.assertRaisesRegex(
+                            StructuredSourceError,
+                            "report differs from independent coverage"):
+                        context.check("authored-doc")
+
     def test_authored_regenerate_rolls_back_failed_fresh_validation(self):
         with tempfile.TemporaryDirectory() as root:
             registry = _write_authored_fixture(root)
@@ -281,6 +344,29 @@ class AcceptanceContract(unittest.TestCase):
                     self.assertRaisesRegex(
                         StructuredSourceError,
                         "replacement authored XML is invalid"):
+                context.regenerate("authored-doc")
+
+            self.assertEqual(output.read_bytes(), before)
+            self.assertNotIn("authored-doc", context._package_results)
+            self.assertNotIn("authored-doc", context._derived_package_state)
+            self.assertNotIn("authored-doc", context._validated_package_state)
+
+    def test_authored_regenerate_rejects_pre_replacement_conversion_reuse(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry = _write_authored_fixture(root)
+            output = Path(root, "content/authored.xml")
+            before = output.read_bytes()
+            retained_conversion = convert_authored_markdown(
+                AUTHORED_MARKDOWN, "content/authored.md", "authored-doc")
+
+            def caching_adapter(
+                    unused_markdown, unused_path, unused_document_id):
+                return retained_conversion
+
+            context = VerificationContext(
+                root, registry=registry, markdown_adapter=caching_adapter)
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "crossed a validation lifetime"):
                 context.regenerate("authored-doc")
 
             self.assertEqual(output.read_bytes(), before)

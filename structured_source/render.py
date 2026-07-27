@@ -677,7 +677,7 @@ def _render_content(artifact: ParsedArtifact, output_path: str,
 
 
 def _render_relations(artifact: ParsedArtifact, output_path: str,
-                      endpoint_views: dict[tuple[str, str, str], object]) -> Projection:
+                      endpoint_views: Mapping) -> Projection:
     """Render one relation owner and current endpoint excerpts mechanically."""
     if artifact.kind != "relation-set":
         raise StructuredSourceError("relation renderer received a non-relation artifact")
@@ -728,7 +728,8 @@ def _render_relations(artifact: ParsedArtifact, output_path: str,
             if isinstance(view, str):
                 excerpt = view
                 target = "#" + _anchor(endpoint.get("fragmentId"))
-            elif isinstance(view, dict) and set(view) == {"excerpt", "markdownPath"}:
+            elif isinstance(view, Mapping) and set(view) == {
+                    "excerpt", "markdownPath"}:
                 excerpt = view["excerpt"]
                 target = (_relative_target(view["markdownPath"], output_path) +
                           "#" + _anchor(endpoint.get("fragmentId")))
@@ -822,7 +823,7 @@ def render_content(artifact: ParsedArtifact, output_path: str,
 
 
 def render_relations(artifact: ParsedArtifact, output_path: str,
-                     endpoint_views: dict[tuple[str, str, str], object], *,
+                     endpoint_views: Mapping, *,
                      projection_profile=None) -> Projection:
     """Render relations with the retained projection profile when supplied."""
     profile = projection_profile or load_projection_profile()

@@ -30,7 +30,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEMA_DIRECTORY = os.path.join(ROOT, "structured_source", "schemas")
 PARSER_POLICY_PATH = "structured_source/policy/parser.json"
 PROJECTION_PROFILE_PATH = "structured_source/profiles/gfm-v1.json"
-XML_PROFILE_PATH = "structured_source/profiles/xml-v2.json"
+XML_PROFILE_PATH = "structured_source/profiles/xml-v3.json"
 XML_SCHEMA_PATH = "structured_source/schemas/xml.xsd"
 SCHEMA_PATHS = MappingProxyType({
     "content-document": "structured_source/schemas/content.xsd",
@@ -906,11 +906,16 @@ def _validate_relation_xsd_profile(schema_data: bytes, profiles: dict) -> None:
             (profile_id,), (definition["relationType"],),
             definition["directions"], definition["endpointRoles"],
             definition["requiredEndpointRoles"],
-            definition["assertionFields"])
+            definition["assertionFields"],
+            *(tuple(schemes) for schemes in
+              definition["endpointRoleTargets"].values()))
         if any(
                 _STABLE_ITEM_ID.fullmatch(value) is None
                 for vocabulary in vocabularies for value in vocabulary):
             raise SchemaError("relation XSD/profile vocabulary differs")
+        if set(definition["endpointRoleTargets"]) != set(
+                definition["endpointRoles"]):
+            raise SchemaError("relation XSD/profile endpoint roles differ")
 
 
 def load_parser_controls(read_bytes) -> ParserControls:
@@ -1237,11 +1242,15 @@ def _resource_and_profile_checks(
             raise ParseError("relation-set schema profile is unsupported")
         namespace = "{%s}" % RELATIONS_NAMESPACE
         identity = root.find(namespace + "identity")
-        if identity is None or identity.get("profile") != profile:
+        if identity is None or identity.get("profile") != profile or \
+                not (identity.get("owner") or "").strip():
             raise ParseError("relation-set identity profile is stale")
+        relation_ids = []
         for relation in root.findall(namespace + "relation"):
+            relation_ids.append(relation.get("relationId"))
             if relation.get("type") != definition["relationType"] or \
-                    relation.get("direction") not in definition["directions"]:
+                    relation.get("direction") not in definition["directions"] or \
+                    relation.get("semanticOwner") != identity.get("owner"):
                 raise ParseError("relation type/direction is outside its closed profile")
             roles = [item.get("role") for item in relation.findall(namespace + "endpoint")]
             if not set(roles).issubset(definition["endpointRoles"]) or \
@@ -1252,6 +1261,8 @@ def _resource_and_profile_checks(
             if len(fields) != len(set(fields)) or \
                     not set(fields).issubset(definition["assertionFields"]):
                 raise ParseError("relation assertion field is outside its closed profile")
+        if len(relation_ids) != len(set(relation_ids)):
+            raise ParseError("relation semantic identity census is not exact")
 
 
 def _typed_scalar(field_type: str, value: str):

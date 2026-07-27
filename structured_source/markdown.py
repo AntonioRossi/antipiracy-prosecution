@@ -8,6 +8,7 @@ anchor; the index is never a second editable content owner.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from contextvars import ContextVar
 from dataclasses import dataclass
 import json
@@ -15,12 +16,14 @@ import math
 import os
 import re
 import subprocess
+from types import MappingProxyType
 import unicodedata
 from urllib.parse import urlsplit
 from xml.etree import ElementTree as ET
 
 from . import CONTENT_NAMESPACE, SCHEMA_VERSION
-from .canonical import (raw_digest, readable_xml_bytes, typed_item_digest,
+from .canonical import (RAW_DIGEST_PREFIX, TYPED_ITEM_DIGEST_PREFIX, raw_digest,
+                        readable_xml_bytes, typed_item_digest,
                         typed_item_record)
 from .errors import StructuredSourceError
 from .parser import MAX_XML_BYTES, parse_artifact
@@ -39,7 +42,7 @@ _ACTIVE_PARSER_CONTROLS = ContextVar(
     "structured_source_parser_controls", default=None)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class AuthoredConversion:
     """One fully checked generated representation and semantic back-render."""
 
@@ -48,7 +51,77 @@ class AuthoredConversion:
     source_raw_digest: str
     generated_markdown_raw_digest: str
     item_ids: tuple[str, ...]
-    fragment_digests: dict[str, str]
+    fragment_digests: Mapping[str, str]
+
+    def __post_init__(self):
+        if not isinstance(self.xml, bytes) or not isinstance(
+                self.markdown, bytes) or not isinstance(
+                self.source_raw_digest, str) or not isinstance(
+                self.generated_markdown_raw_digest, str) or not isinstance(
+                self.item_ids, tuple) or not self.item_ids or not all(
+                isinstance(item, str) and _DOCUMENT_ID.fullmatch(item)
+                for item in self.item_ids) or \
+                len(self.item_ids) != len(set(self.item_ids)) or \
+                not isinstance(self.fragment_digests, Mapping):
+            raise TypeError("authored conversion result is malformed")
+        digests = dict(self.fragment_digests)
+        if tuple(digests) != self.item_ids or any(
+                not isinstance(value, str) or not value.startswith(
+                    TYPED_ITEM_DIGEST_PREFIX) or re.fullmatch(
+                        r"[0-9a-f]{64}",
+                        value[len(TYPED_ITEM_DIGEST_PREFIX):]) is None
+                for value in digests.values()) or any(
+                    not value.startswith(RAW_DIGEST_PREFIX) or re.fullmatch(
+                        r"[0-9a-f]{64}", value[len(RAW_DIGEST_PREFIX):]) is None
+                    for value in (
+                        self.source_raw_digest,
+                        self.generated_markdown_raw_digest)):
+            raise TypeError("authored conversion identity/digest census is malformed")
+        object.__setattr__(
+            self, "fragment_digests",
+            MappingProxyType(digests))
+
+
+@dataclass(frozen=True, slots=True)
+class AuthoredCoverageItem:
+    """One independently matched authority/XML/back-render item."""
+
+    fragment_id: str
+    binding_kind: str
+    semantic_path: str
+    binding_digest: str
+    typed_item_digest: str
+    back_render_binding_digest: str
+
+
+@dataclass(frozen=True, slots=True)
+class AuthoredCoverage:
+    """Ephemeral independently recomputed authored-package coverage."""
+
+    markdown: bytes
+    items: tuple[AuthoredCoverageItem, ...]
+    fragment_digests: Mapping[str, str]
+
+    def __post_init__(self):
+        if not isinstance(self.markdown, bytes) or not isinstance(
+                self.items, tuple) or not self.items or not all(
+                isinstance(item, AuthoredCoverageItem) for item in self.items) or \
+                not isinstance(self.fragment_digests, Mapping):
+            raise TypeError("authored coverage result is malformed")
+        digests = dict(self.fragment_digests)
+        item_ids = tuple(item.fragment_id for item in self.items)
+        if tuple(digests) != item_ids or len(item_ids) != len(set(item_ids)) or any(
+                item.typed_item_digest != digests[item.fragment_id] or
+                item.binding_digest != item.back_render_binding_digest
+                for item in self.items):
+            raise TypeError("authored coverage identity/digest census is malformed")
+        object.__setattr__(
+            self, "fragment_digests",
+            MappingProxyType(digests))
+
+    @property
+    def item_ids(self) -> tuple[str, ...]:
+        return tuple(item.fragment_id for item in self.items)
 
 
 @dataclass(frozen=True)
@@ -881,6 +954,75 @@ def xml_to_markdown(xml: bytes) -> bytes:
         raise StructuredSourceError(
             "authored XML back-render changed ordered Pandoc semantics")
     return markdown
+
+
+def _validate_authored_coverage(
+        markdown: bytes, markdown_path: str, document_id: str,
+        xml: bytes) -> AuthoredCoverage:
+    """Independently match authority, deterministic XML, and back-render."""
+    source_ast = _read_pandoc(markdown)
+    source_analysis = _analyse_ast(source_ast, document_id)
+    expected_xml = _xml_bytes(
+        source_ast, source_analysis, markdown, markdown_path, document_id)
+    if xml != expected_xml:
+        raise StructuredSourceError(
+            "authored XML does not equal deterministic authority conversion")
+
+    artifact, decoded_document_id, decoded_ast, decoded_analysis = \
+        _document_from_xml(xml)
+    if decoded_document_id != document_id or decoded_ast != source_ast or \
+            decoded_analysis.semantic_model != source_analysis.semantic_model:
+        raise StructuredSourceError(
+            "authored XML changed the ordered Pandoc semantic model")
+
+    generated = _write_pandoc(decoded_ast)
+    back_analysis = _analyse_ast(_read_pandoc(generated), document_id)
+    if back_analysis.semantic_model != source_analysis.semantic_model:
+        raise StructuredSourceError(
+            "authored XML back-render changed ordered Pandoc semantics")
+    if len(source_analysis.fragments) != len(back_analysis.fragments):
+        raise StructuredSourceError(
+            "authored Markdown coverage item census is incomplete")
+
+    items = []
+    for source, back_render in zip(
+            source_analysis.fragments, back_analysis.fragments):
+        fragment_id = source["id"]
+        if source != back_render or fragment_id not in artifact.fragment_digests:
+            raise StructuredSourceError(
+                "authored Markdown coverage item does not resolve exactly")
+        items.append(AuthoredCoverageItem(
+            fragment_id=fragment_id,
+            binding_kind=source["bindingKind"],
+            semantic_path=source["semanticPath"],
+            binding_digest=source["bindingDigest"],
+            typed_item_digest=artifact.fragment_digests[fragment_id],
+            back_render_binding_digest=back_render["bindingDigest"],
+        ))
+    if {item.fragment_id for item in items} != set(
+            artifact.fragment_digests):
+        raise StructuredSourceError(
+            "authored Markdown coverage item census is incomplete")
+    return AuthoredCoverage(
+        markdown=generated, items=tuple(items),
+        fragment_digests=artifact.fragment_digests)
+
+
+def validate_authored_coverage(
+        markdown: bytes, markdown_path: str, document_id: str, xml: bytes, *,
+        parser_controls=None) -> AuthoredCoverage:
+    """Recompute complete coverage under retained controls when supplied."""
+    if parser_controls is None:
+        return _validate_authored_coverage(
+            markdown, markdown_path, document_id, xml)
+    profile_token = _ACTIVE_PROFILE.set(parser_controls.projection_profile)
+    controls_token = _ACTIVE_PARSER_CONTROLS.set(parser_controls)
+    try:
+        return _validate_authored_coverage(
+            markdown, markdown_path, document_id, xml)
+    finally:
+        _ACTIVE_PARSER_CONTROLS.reset(controls_token)
+        _ACTIVE_PROFILE.reset(profile_token)
 
 
 def _convert_authored_markdown(markdown: bytes, markdown_path: str,

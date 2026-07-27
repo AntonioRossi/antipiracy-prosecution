@@ -697,7 +697,7 @@ class PDFSnapshotHandoff(unittest.TestCase):
 
     def test_partial_profile_field_update_fails_closed(self):
         xml_profile = json.loads(
-            (ROOT / "structured_source/profiles/xml-v2.json").read_text())
+            (ROOT / "structured_source/profiles/xml-v3.json").read_text())
         gfm_profile = json.loads(
             (ROOT / "structured_source/profiles/gfm-v1.json").read_text())
         changed = copy.deepcopy(xml_profile)
@@ -705,7 +705,7 @@ class PDFSnapshotHandoff(unittest.TestCase):
             "itemMetadataFields"]["paragraph"] = ["extension"]
 
         def read_profile(name):
-            return changed if name == "xml-v2.json" else gfm_profile
+            return changed if name == "xml-v3.json" else gfm_profile
 
         profiles.load_xml_profiles.cache_clear()
         try:

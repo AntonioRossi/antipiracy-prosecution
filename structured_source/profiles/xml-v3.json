@@ -2161,7 +2161,7 @@
       }
     }
   },
-  "profileVersion": "2",
+  "profileVersion": "3",
   "relationSets": {
     "claim-crosswalk-v1": {
       "assertionFields": [
@@ -2185,6 +2185,14 @@
         "evidence",
         "subject"
       ],
+      "endpointRoleTargets": {
+        "evidence": [
+          "pdf-evidence-transcription-v1"
+        ],
+        "subject": [
+          "authored-markdown-v1"
+        ]
+      },
       "relationType": "claim-crosswalk",
       "requiredEndpointRoles": [
         "subject"
@@ -2257,6 +2265,14 @@
         "evidence",
         "subject"
       ],
+      "endpointRoleTargets": {
+        "evidence": [
+          "pdf-evidence-transcription-v1"
+        ],
+        "subject": [
+          "authored-markdown-v1"
+        ]
+      },
       "relationType": "claim-document-map",
       "requiredEndpointRoles": [
         "subject"
@@ -2308,6 +2324,14 @@
         "evidence",
         "subject"
       ],
+      "endpointRoleTargets": {
+        "evidence": [
+          "pdf-evidence-transcription-v1"
+        ],
+        "subject": [
+          "authored-markdown-v1"
+        ]
+      },
       "relationType": "claim-prior-art-comparison",
       "requiredEndpointRoles": [
         "subject"
@@ -2364,6 +2388,14 @@
         "evidence",
         "subject"
       ],
+      "endpointRoleTargets": {
+        "evidence": [
+          "pdf-evidence-transcription-v1"
+        ],
+        "subject": [
+          "authored-markdown-v1"
+        ]
+      },
       "relationType": "claim-support",
       "requiredEndpointRoles": [
         "subject"

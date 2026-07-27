@@ -77,12 +77,13 @@ ordinals, and display labels remain separate. Insertion, deletion, or reordering
 mechanical ordinal but cannot silently rename an assertion.
 
 The relation profile registry is exclusive. Each profile enumerates its one relation type,
-directions, endpoint roles and required-role set, and assertion-field vocabulary; the schema,
-target-item digest rule, readable XML storage law, and projection contract close the remaining
-interface behavior. The relation XSD and every exclusive profile must agree exactly on the complete
-envelope, assertion, endpoint, field, identity, order, cardinality, scalar, and digest grammar. A
-partial profile change, alternate vocabulary, alias, extension map, consumer-defined relation
-field, or unprofiled scalar interpretation fails closed.
+directions, endpoint roles and required-role set, the exact content-authority schemes each role may
+target, and assertion-field vocabulary; the schema, target-item digest rule, readable XML storage
+law, and projection contract close the remaining interface behavior. The relation XSD and every
+exclusive profile must agree exactly on the complete envelope, assertion, endpoint, field,
+identity, order, cardinality, scalar, and digest grammar. A partial profile change, alternate
+vocabulary, alias, extension map, consumer-defined relation field, or unprofiled scalar
+interpretation fails closed.
 
 ### Controlled semantic and metadata evolution
 
@@ -123,11 +124,12 @@ use a default, later-opened, substituted, partial, or consumer-local control.
 
 Each endpoint supplies one nonempty `(documentId, fragmentId, fragmentContentDigest)` and resolves
 that exact tuple once through a registered validated content item. Each relation profile declares
-its permitted roles and required-role set. An omitted, null, empty, malformed, ambiguous, or
-unresolved identity cannot become an inferred target, default result, empty excerpt, or fallback
-link. Repeated endpoint targets inside one assertion, missing required roles, unknown or swapped
-roles, stale digests, undeclared documents, relation-to-relation endpoints, inferred retargeting,
-and endpoint-driven authority promotion fail.
+its permitted roles, required-role set, and exact content-authority-scheme set for every role. A
+role whose target package has a different authority scheme is swapped and fails. An omitted, null,
+empty, malformed, ambiguous, or unresolved identity cannot become an inferred target, default
+result, empty excerpt, or fallback link. Repeated endpoint targets inside one assertion, missing
+required roles, unknown or swapped roles, stale digests, undeclared documents,
+relation-to-relation endpoints, inferred retargeting, and endpoint-driven authority promotion fail.
 
 Integrity is deliberately narrow. `fragmentContentDigest` is the target content item's
 `sha256/typed-item-v1:<64-lowercase-hex>`, computed over one `c1` JSON record containing exactly
@@ -270,7 +272,7 @@ consumer reconstructor, export path, or inactive domain artifact remains operati
 retains implementation history.
 
 The focused negative suite rejects at least: a duplicate assertion identity or semantic owner; a
-missing, swapped, duplicated, or unprofiled endpoint role; an absent fragment or stale target digest;
+missing, swapped, or unprofiled endpoint role; a duplicated role-bearing endpoint; an absent fragment or stale target digest;
 an unresolved endpoint represented as an empty or default target;
 an omitted, additional, reordered, or displaced generated field, endpoint, link, excerpt, or anchor;
 renderer self-report offered for defective Markdown; attempted publication of invalid candidate

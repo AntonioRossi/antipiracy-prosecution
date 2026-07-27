@@ -94,6 +94,17 @@ class ValidatedCorpus:
                 for identifier in self.result_ids
             ],
         }
+
+
+@dataclass(frozen=True, slots=True)
+class _RelationDerivation:
+    """Fresh relation-only state retained through one output lifetime."""
+
+    artifact: object
+    projection: object
+    coverage: object
+    endpoint_views: MappingProxyType
+    endpoint_package_ids: tuple
 _LIVE_IMPLEMENTATION = frozenset({
     "AGENTS.md",
     "GLOSSARY.md",
@@ -157,7 +168,7 @@ _LIVE_IMPLEMENTATION = frozenset({
     "structured_source/policy/parser.json",
     "structured_source/profiles.py",
     "structured_source/profiles/gfm-v1.json",
-    "structured_source/profiles/xml-v2.json",
+    "structured_source/profiles/xml-v3.json",
     "structured_source/registry.py",
     "structured_source/registry/acceptance-authored-markdown.json",
     "structured_source/registry/acceptance-authored-relations.json",
@@ -219,7 +230,7 @@ _STRUCTURED_SOURCE_LIVE_PATHS = frozenset({
     "structured_source/policy/parser.json",
     "structured_source/profiles.py",
     "structured_source/profiles/gfm-v1.json",
-    "structured_source/profiles/xml-v2.json",
+    "structured_source/profiles/xml-v3.json",
     "structured_source/registry.py",
     "structured_source/registry/acceptance-authored-markdown.json",
     "structured_source/registry/acceptance-authored-relations.json",
@@ -413,6 +424,24 @@ class VerificationContext:
         self._parser_controls = None
         self._snapshot_identity_validated = False
         self._consumer_handoffs = {}
+        self._authored_conversion_objects = []
+        self._relation_artifact_objects = []
+        self._relation_endpoint_view_objects = []
+        self._relation_projection_objects = []
+        self._relation_coverage_objects = []
+        self._relation_derivation_objects = []
+        self._relation_derived_state_objects = []
+        self._relation_validated_state_objects = []
+        self._relation_package_result_objects = []
+        self._relation_handoff_objects = []
+
+    @staticmethod
+    def _retain_fresh_relation_object(value, retained, label):
+        if any(value is previous for previous in retained):
+            raise StructuredSourceError(
+                "%s crossed a generated-view validation lifetime" % label)
+        retained.append(value)
+        return value
 
     def _controls(self):
         if self._parser_controls is None:
@@ -448,6 +477,9 @@ class VerificationContext:
             self.reader.read(self.file_path(package["xmlFile"])), kind,
             controls=self._controls())
         if kind == "relation-set":
+            self._retain_fresh_relation_object(
+                artifact, self._relation_artifact_objects,
+                "relation parsed artifact")
             identity = artifact._validated_root().find(R + "identity")
             actual = identity.get("relationSetId") if identity is not None else None
         else:
@@ -465,11 +497,11 @@ class VerificationContext:
                     key = (package_id, identifier)
                     if key in self._fragments:
                         raise StructuredSourceError("fragment identity is duplicated")
-                    self._fragments[key] = {
+                    self._fragments[key] = MappingProxyType({
                         "digest": artifact.fragment_digests[identifier],
                         "excerpt": _plain_text(node),
                         "markdownPath": markdown_path,
-                    }
+                    })
         return artifact
 
     def _markdown_converter(self):
@@ -623,7 +655,23 @@ class VerificationContext:
         assertions = set()
         relation_ids = []
         endpoint_package_ids = set()
-        for relation in artifact._validated_root().findall(R + "relation"):
+        root = artifact._validated_root()
+        identity = root.find(R + "identity")
+        if identity is None or (
+                identity.get("relationSetId"), identity.get("owner"),
+                identity.get("scope"), identity.get("status")) != (
+                    package["packageId"], package["owner"],
+                    package["scope"], package["status"]):
+            raise StructuredSourceError(
+                "relation package identity and ownership do not close exactly")
+        try:
+            relation_profile = self._controls().xml_profiles[
+                "relationSets"][artifact.profile]
+            role_targets = relation_profile["endpointRoleTargets"]
+        except KeyError as exc:
+            raise StructuredSourceError(
+                "relation endpoint-role profile does not resolve") from exc
+        for relation in root.findall(R + "relation"):
             relation_ids.append(relation.get("relationId"))
             fields = tuple((entry.get("name"), entry.text or "")
                            for entry in relation.findall(R + "assertionField"))
@@ -640,12 +688,16 @@ class VerificationContext:
             assertions.add(assertion)
             if len({endpoint[1:] for endpoint in endpoints}) != len(endpoints):
                 raise StructuredSourceError("relation endpoint is duplicated")
-            for unused_role, document_id, fragment_id, digest in endpoints:
-                if document_id not in self.packages or \
-                        self.packages[document_id]["authorityScheme"] == \
+            for role, document_id, fragment_id, digest in endpoints:
+                endpoint_package = self.packages.get(document_id)
+                if endpoint_package is None or \
+                        endpoint_package["authorityScheme"] == \
                         "authored-relations-v1":
                     raise StructuredSourceError(
                         "relation endpoint document is not a content package")
+                if endpoint_package["authorityScheme"] not in role_targets[role]:
+                    raise StructuredSourceError(
+                        "relation endpoint role and target authority are swapped")
                 self.check(document_id)
                 self._artifact(document_id)
                 endpoint_package_ids.add(document_id)
@@ -653,22 +705,56 @@ class VerificationContext:
                 if fragment is None or fragment["digest"] != digest:
                     raise StructuredSourceError(
                         "relation endpoint does not resolve exactly")
-                views[(document_id, fragment_id, digest)] = {
-                    "excerpt": fragment["excerpt"],
-                    "markdownPath": fragment["markdownPath"],
-                }
+                key = (document_id, fragment_id, digest)
+                if key not in views:
+                    view = MappingProxyType({
+                        "excerpt": fragment["excerpt"],
+                        "markdownPath": fragment["markdownPath"],
+                    })
+                    self._retain_fresh_relation_object(
+                        view, self._relation_endpoint_view_objects,
+                        "resolved relation endpoint view")
+                    views[key] = view
         if len(relation_ids) != len(set(relation_ids)):
             raise StructuredSourceError("relation identity is duplicated")
+        endpoint_views = MappingProxyType(views)
+        self._retain_fresh_relation_object(
+            endpoint_views, self._relation_endpoint_view_objects,
+            "resolved relation endpoint-view mapping")
         profile = self._controls().projection_profile
         projection = _render_relations(
-            artifact, self.file_path(package["markdownFile"]), views,
+            artifact, self.file_path(package["markdownFile"]), endpoint_views,
             projection_profile=profile)
-        from .relation_projection import validate_relation_projection
+        from .render import Projection
+        if type(projection) is not Projection:
+            raise StructuredSourceError(
+                "relation renderer did not construct an immutable projection")
+        self._retain_fresh_relation_object(
+            projection, self._relation_projection_objects,
+            "relation projection")
+        from .relation_projection import (RelationCoverage,
+                                          validate_relation_projection)
         coverage = validate_relation_projection(
             artifact, projection.markdown,
-            self.file_path(package["markdownFile"]), views,
+            self.file_path(package["markdownFile"]), endpoint_views,
             projection_profile=profile)
-        return projection.markdown, coverage, tuple(sorted(endpoint_package_ids))
+        if type(coverage) is not RelationCoverage:
+            raise StructuredSourceError(
+                "relation coverage did not construct an immutable census")
+        self._retain_fresh_relation_object(
+            coverage, self._relation_coverage_objects,
+            "relation coverage")
+        derivation = _RelationDerivation(
+            artifact=artifact,
+            projection=projection,
+            coverage=coverage,
+            endpoint_views=endpoint_views,
+            endpoint_package_ids=tuple(sorted(endpoint_package_ids)),
+        )
+        self._retain_fresh_relation_object(
+            derivation, self._relation_derivation_objects,
+            "relation derivation")
+        return derivation
 
     def _derive(self, package_id):
         package = self.packages[package_id]
@@ -684,6 +770,11 @@ class VerificationContext:
                     parser_controls=self._controls())
             else:
                 conversion = converter(markdown, markdown_path, package_id)
+            if any(conversion is previous
+                   for previous in self._authored_conversion_objects):
+                raise StructuredSourceError(
+                    "authored Markdown conversion object crossed a validation lifetime")
+            self._authored_conversion_objects.append(conversion)
             xml = _conversion_value(conversion, "xml")
             item_ids = _conversion_value(conversion, "item_ids")
             generated_markdown = _conversion_value(conversion, "markdown")
@@ -693,31 +784,31 @@ class VerificationContext:
                 conversion, "generated_markdown_raw_digest")
             conversion_fragments = _conversion_value(
                 conversion, "fragment_digests")
-            if not isinstance(xml, bytes) or \
-                    not isinstance(item_ids, tuple) or not item_ids or \
-                    not isinstance(generated_markdown, bytes) or \
-                    source_digest != raw_digest(markdown) or \
-                    generated_markdown_digest != raw_digest(
-                        generated_markdown):
+            if not isinstance(xml, bytes):
                 raise StructuredSourceError(
                     "authored Markdown conversion is incomplete")
-            artifact = _parse_artifact(
-                xml, "authored-document", controls=self._controls())
-            identity = artifact._validated_root().find(C + "documentIdentity")
-            if identity is None or identity.get("documentId") != package_id:
+            from .markdown import validate_authored_coverage
+            coverage = validate_authored_coverage(
+                markdown, markdown_path, package_id, xml,
+                parser_controls=self._controls())
+            if not isinstance(item_ids, tuple) or \
+                    item_ids != coverage.item_ids or \
+                    not isinstance(generated_markdown, bytes) or \
+                    generated_markdown != coverage.markdown or \
+                    source_digest != raw_digest(markdown) or \
+                    generated_markdown_digest != raw_digest(
+                        coverage.markdown) or \
+                    not isinstance(conversion_fragments, Mapping) or \
+                    dict(conversion_fragments) != dict(
+                        coverage.fragment_digests):
                 raise StructuredSourceError(
-                    "generated authored XML identity is stale")
-            if artifact.fragment_digests != conversion_fragments or \
-                    set(artifact.fragment_digests) != set(item_ids) or \
-                    len(item_ids) != len(set(item_ids)):
-                raise StructuredSourceError(
-                    "authored Markdown computed item/XML coverage is incomplete")
+                    "authored Markdown converter report differs from independent coverage")
             self._derived_package_state[package_id] = {
                 "representations": {"markdown": markdown, "xml": xml},
                 "surface": None,
             }
             return xml_path, xml, {
-                "scheme": scheme, "coveredItems": len(item_ids),
+                "scheme": scheme, "coveredItems": len(coverage.items),
                 "backRender": "equal",
             }
 
@@ -749,21 +840,31 @@ class VerificationContext:
                 "storedSources": 1,
             }
 
-        generated, coverage, endpoint_package_ids = \
-            self._render_relation(package, artifact)
-        self._derived_package_state[package_id] = {
-            "representations": {
-                "markdown": generated,
+        derivation = self._render_relation(package, artifact)
+        coverage = derivation.coverage
+        state = MappingProxyType({
+            "representations": MappingProxyType({
+                "markdown": derivation.projection.markdown,
                 "xml": artifact.raw_bytes,
-            },
+            }),
             "surface": None,
-            "validationPackageIds": endpoint_package_ids,
-        }
-        return markdown_path, generated, {
+            "validationPackageIds": derivation.endpoint_package_ids,
+            "relationArtifact": artifact,
+            "relationProjection": derivation.projection,
+            "relationCoverage": coverage,
+            "endpointViews": derivation.endpoint_views,
+        })
+        self._retain_fresh_relation_object(
+            state, self._relation_derived_state_objects,
+            "relation derived package state")
+        self._derived_package_state[package_id] = state
+        return markdown_path, derivation.projection.markdown, {
             "scheme": scheme,
-            "coveredItems": coverage["assertions"] +
-                coverage["assertionFields"],
-            **dict(coverage),
+            "coveredItems": coverage.assertion_count +
+                coverage.assertion_field_count,
+            "assertions": coverage.assertion_count,
+            "assertionFields": coverage.assertion_field_count,
+            "endpoints": coverage.endpoint_count,
         }
 
     def check(self, package_id):
@@ -782,8 +883,11 @@ class VerificationContext:
                 raise StructuredSourceError(
                     "generated representation is stale: %s" % package_id)
             state = self._derived_package_state.get(package_id)
-            if not isinstance(state, dict) or \
-                    state.get("representations", {}).get(
+            representations = (state.get("representations")
+                               if isinstance(state, Mapping) else None)
+            if not isinstance(state, Mapping) or \
+                    not isinstance(representations, Mapping) or \
+                    representations.get(
                         "markdown" if output_path == self.file_path(
                             self.packages[package_id]["markdownFile"]) else "xml") \
                     != current:
@@ -820,15 +924,28 @@ class VerificationContext:
             if not validation_paths.issubset(self.reader.read_log):
                 raise StructuredSourceError(
                     "package validation read census is incomplete")
-            state["validationPaths"] = tuple(sorted(validation_paths))
-            self._validated_package_state[package_id] = state
+            validated_state = MappingProxyType({
+                **dict(state),
+                "representations": MappingProxyType(dict(representations)),
+                "validationPaths": tuple(sorted(validation_paths)),
+            })
+            if package["authorityScheme"] == "authored-relations-v1":
+                self._retain_fresh_relation_object(
+                    validated_state, self._relation_validated_state_objects,
+                    "relation validated package state")
+            self._validated_package_state[package_id] = validated_state
             result = {
                 "packageId": package_id,
                 "authorityScheme": self.packages[package_id]["authorityScheme"],
                 "status": "passed",
                 "computedCoverage": evidence,
             }
-            self._package_results[package_id] = _freeze_result(result)
+            frozen_result = _freeze_result(result)
+            if package["authorityScheme"] == "authored-relations-v1":
+                self._retain_fresh_relation_object(
+                    frozen_result, self._relation_package_result_objects,
+                    "relation package result")
+            self._package_results[package_id] = frozen_result
             return _copy_result(self._package_results[package_id])
         finally:
             self._checking.remove(package_id)
@@ -861,6 +978,20 @@ class VerificationContext:
             nonlocal replacement_result
             discard_generated_state()
             replacement_result = self.check(package_id)
+            state = self._validated_package_state.get(package_id)
+            cached_result = self._package_results.get(package_id)
+            if state is None or cached_result is None or \
+                    replacement_result != _copy_result(cached_result):
+                raise StructuredSourceError(
+                    "replacement validation did not rebuild package state")
+            if self.packages[package_id]["authorityScheme"] == \
+                    "authored-relations-v1" and (
+                        not any(state is item for item in
+                                self._relation_validated_state_objects) or
+                        not any(cached_result is item for item in
+                                self._relation_package_result_objects)):
+                raise StructuredSourceError(
+                    "replacement relation state is not fresh")
 
         try:
             publish_set(
@@ -959,6 +1090,10 @@ class VerificationContext:
                 (path, self.reader.read_log[path])
                 for path in sorted(handoff_paths)),
         })
+        if package["authorityScheme"] == "authored-relations-v1":
+            self._retain_fresh_relation_object(
+                handoff, self._relation_handoff_objects,
+                "relation consumer handoff")
         self._consumer_handoffs[(consumer_id, package_id)] = handoff
         return handoff
 
@@ -1250,6 +1385,17 @@ class VerificationContext:
         return candidates
 
     def _control_closure(self):
+        relation_packages = {
+            package_id for package_id, package in self.packages.items()
+            if package["authorityScheme"] == "authored-relations-v1"}
+        relation_edges = [
+            (consumer["consumerId"], edge["packageId"])
+            for consumer in self.registry["consumers"]
+            for edge in consumer["edges"]
+            if edge["packageId"] in relation_packages]
+        if relation_edges:
+            raise StructuredSourceError(
+                "current authored-relation consumer-edge census is not zero")
         repository_paths = self._disk_paths()
         snapshot_paths = self._snapshot_paths()
         if snapshot_paths is not None and not _LIVE_IMPLEMENTATION.issubset(

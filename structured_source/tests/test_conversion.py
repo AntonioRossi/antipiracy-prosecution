@@ -1,18 +1,23 @@
 """Authored-Markdown authority, addressing, and round-trip tests."""
 
+import copy
 import json
+from dataclasses import FrozenInstanceError
 from pathlib import Path
 import re
+import tempfile
 import unittest
 from unittest import mock
 from xml.etree import ElementTree as ET
 
 from structured_source import CONTENT_NAMESPACE, RELATIONS_NAMESPACE, parser
-from structured_source.canonical import raw_digest
+from structured_source.canonical import (raw_digest, readable_xml_bytes,
+                                          strip_structural_whitespace)
 from structured_source.errors import ParseError, SchemaError, StructuredSourceError
 from structured_source.markdown import (
     convert_authored_markdown,
     normalized_pandoc_ast,
+    validate_authored_coverage,
     xml_to_markdown,
     xml_to_pandoc_ast,
 )
@@ -20,6 +25,7 @@ from structured_source.profiles import load_projection_profile
 from structured_source.relation_projection import validate_relation_projection
 from structured_source.render import Projection, render_relations
 from structured_source.tests.test_registry import registry_fixture
+from structured_source.tests.test_pdf_transcription import write_fixture
 from structured_source.tests.test_xml_contract import CONTENT, RELATIONS
 from structured_source.verify import VerificationContext
 
@@ -77,12 +83,47 @@ Returning an exact result.
 **2.** The method of claim 1, further comprising storage.
 '''
 
+RELATION_AUTHORED = b'''<a id="ssp-authored-doc-root"></a>
+<a id="ssp-claim-one"></a>
+# Claim one
+
+Exact subject.
+'''
+
 
 def _serialize(root: ET.Element) -> bytes:
     ET.register_namespace("", CONTENT_NAMESPACE)
     ET.indent(root, space="  ")
     return ('<?xml version="1.0" encoding="UTF-8"?>\n' +
             ET.tostring(root, encoding="unicode") + "\n").encode("utf-8")
+
+
+def _write_relation_fixture(root):
+    registry = write_fixture(root)
+    content = Path(root, "content")
+    (content / "authored.md").write_bytes(RELATION_AUTHORED)
+    conversion = convert_authored_markdown(
+        RELATION_AUTHORED, "content/authored.md", "authored-doc")
+    (content / "authored.xml").write_bytes(conversion.xml)
+    pdf_artifact = parser.parse_artifact(
+        Path(root, "content/evidence.xml").read_bytes(), "content-document")
+    relation_xml = (RELATIONS.replace(
+        b'relationSetId="relations-alpha" scope="NA"',
+        b'relationSetId="relation-set" scope="shared"').replace(
+        b' documentId="claim-doc"', b' documentId="authored-doc"').replace(
+        b' documentId="pct-doc"', b' documentId="pdf-doc"').replace(
+        b'fragmentId="support-one"', b'fragmentId="frag-heading"').replace(
+        ("sha256/typed-item-v1:" + "a" * 64).encode(),
+        conversion.fragment_digests["claim-one"].encode()).replace(
+        ("sha256/typed-item-v1:" + "b" * 64).encode(),
+        pdf_artifact.fragment_digests["frag-heading"].encode()))
+    (content / "relations.xml").write_bytes(relation_xml)
+    context = VerificationContext(root, registry=registry)
+    artifact = context._artifact("relation-set")
+    derivation = context._render_relation(
+        context.packages["relation-set"], artifact)
+    (content / "relations.md").write_bytes(derivation.projection.markdown)
+    return registry, relation_xml, derivation
 
 
 class AuthoredMarkdownConversion(unittest.TestCase):
@@ -104,6 +145,29 @@ class AuthoredMarkdownConversion(unittest.TestCase):
         self.assertEqual(binding.get("path"), "US/common/example.md")
         self.assertEqual(binding.get("rawDigest"), raw_digest(SIMPLE))
         self.assertEqual(binding.get("size"), str(len(SIMPLE)))
+
+    def test_conversion_result_is_transitively_immutable(self):
+        conversion = convert_authored_markdown(
+            SIMPLE, "US/common/example.md", "example-document")
+        with self.assertRaises(TypeError):
+            conversion.fragment_digests["title"] = "changed"
+        self.assertEqual(
+            parser.parse_artifact(
+                conversion.xml, "authored-document").fragment_digests,
+            conversion.fragment_digests)
+
+        coverage = validate_authored_coverage(
+            SIMPLE, "US/common/example.md", "example-document",
+            conversion.xml)
+        self.assertEqual(coverage.item_ids, conversion.item_ids)
+        self.assertEqual(coverage.markdown, conversion.markdown)
+        self.assertTrue(all(
+            item.binding_digest == item.back_render_binding_digest
+            for item in coverage.items))
+        with self.assertRaises(TypeError):
+            coverage.fragment_digests["title"] = "changed"
+        with self.assertRaises(FrozenInstanceError):
+            coverage.items[0].semantic_path = "changed"
 
     def test_document_root_is_exact_and_digest_excludes_the_envelope(self):
         first = convert_authored_markdown(
@@ -391,8 +455,23 @@ class AuthoredRelations(unittest.TestCase):
         coverage = validate_relation_projection(
             artifact, projection.markdown, output_path, views,
             projection_profile=profile)
-        self.assertEqual(dict(coverage), {
-            "assertions": 1, "assertionFields": 1, "endpoints": 2})
+        self.assertEqual(
+            (coverage.assertion_count, coverage.assertion_field_count,
+             coverage.endpoint_count),
+            (1, 1, 2))
+        self.assertEqual(coverage.anchor_inventory, (
+            "ssp-relation-metadata", "ssp-relation-schedule",
+            "ssp-rel-fragment-one"))
+        assertion = coverage.assertions[0]
+        self.assertEqual(
+            (assertion.relation_id, assertion.xml_id,
+             assertion.endpoints[0].role,
+             assertion.endpoints[0].fragment_content_digest,
+             assertion.fields[0].name),
+            ("relation-one", "rel-fragment-one", "subject",
+             "sha256/typed-item-v1:" + "a" * 64, "posture"))
+        with self.assertRaises(FrozenInstanceError):
+            assertion.relation_id = "changed"
 
         mutations = (
             projection.markdown.replace(
@@ -401,6 +480,16 @@ class AuthoredRelations(unittest.TestCase):
                 b'<a id="ssp-relation-schedule"></a>', 1),
             projection.markdown.replace(b"| posture | direct |\n", b"", 1),
             projection.markdown.replace(b"Claim \\| one", b"Changed", 1),
+            projection.markdown.replace(
+                b"# Exact relations\n", b"# Exact relations\nunowned line\n", 1),
+            projection.markdown.replace(
+                b"GENERATED RELATION REVIEW PROJECTION",
+                b"ALTERED RELATION REVIEW PROJECTION", 1),
+            projection.markdown.replace(
+                b"### Assertion fields\n\n| Field | Current value |\n"
+                b"|---|---|\n| posture | direct |",
+                b"| posture | direct |\n\n### Assertion fields\n\n"
+                b"| Field | Current value |\n|---|---|", 1),
         )
         for changed in mutations:
             with self.subTest(changed=changed[:80]), self.assertRaisesRegex(
@@ -411,6 +500,8 @@ class AuthoredRelations(unittest.TestCase):
 
     def test_relation_endpoint_resolution_rejects_a_stale_exact_digest(self):
         relation_xml = RELATIONS.replace(
+            b'relationSetId="relations-alpha" scope="NA"',
+            b'relationSetId="relation-set" scope="shared"').replace(
             b' documentId="claim-doc"', b' documentId="authored-doc"').replace(
                 b' documentId="pct-doc"', b' documentId="pdf-doc"')
         artifact = parser.parse_artifact(relation_xml, "relation-set")
@@ -431,6 +522,12 @@ class AuthoredRelations(unittest.TestCase):
         with mock.patch.object(context, "check"), \
                 mock.patch.object(context, "_artifact"):
             context._render_relation(package, artifact)
+            misbound = parser.parse_artifact(
+                relation_xml.replace(b'scope="shared"', b'scope="NA"', 1),
+                "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "identity and ownership"):
+                context._render_relation(package, misbound)
             stale = parser.parse_artifact(
                 relation_xml.replace(
                     ("sha256/typed-item-v1:" + "a" * 64).encode(),
@@ -440,8 +537,59 @@ class AuthoredRelations(unittest.TestCase):
                     StructuredSourceError, "resolve exactly"):
                 context._render_relation(package, stale)
 
+            swapped = parser.parse_artifact(
+                relation_xml.replace(
+                    b'role="subject"', b'role="temporary"', 1).replace(
+                    b'role="evidence"', b'role="subject"', 1).replace(
+                    b'role="temporary"', b'role="evidence"', 1),
+                "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "role and target authority"):
+                context._render_relation(package, swapped)
+
+            missing = parser.parse_artifact(
+                relation_xml.replace(
+                    b'fragmentId="claim-one"', b'fragmentId="missing"', 1),
+                "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "resolve exactly"):
+                context._render_relation(package, missing)
+
+            relation_target = parser.parse_artifact(
+                relation_xml.replace(
+                    b'documentId="authored-doc"',
+                    b'documentId="relation-set"', 1),
+                "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "not a content package"):
+                context._render_relation(package, relation_target)
+
+            root = ET.fromstring(relation_xml)
+            relation = root.find(R + "relation")
+            relation.insert(1, copy.deepcopy(relation.find(R + "endpoint")))
+            strip_structural_whitespace(root)
+            duplicate_endpoint = parser.parse_artifact(
+                readable_xml_bytes(root), "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "endpoint is duplicated"):
+                context._render_relation(package, duplicate_endpoint)
+
+            root = ET.fromstring(relation_xml)
+            duplicate = copy.deepcopy(root.find(R + "relation"))
+            duplicate.set("relationId", "relation-two")
+            duplicate.set(XML_ID, "rel-fragment-two")
+            root.append(duplicate)
+            strip_structural_whitespace(root)
+            duplicate_assertion = parser.parse_artifact(
+                readable_xml_bytes(root), "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "duplicate semantic ownership"):
+                context._render_relation(package, duplicate_assertion)
+
     def test_invalid_relation_projection_cannot_reach_publication(self):
         relation_xml = RELATIONS.replace(
+            b'relationSetId="relations-alpha" scope="NA"',
+            b'relationSetId="relation-set" scope="shared"').replace(
             b' documentId="claim-doc"', b' documentId="authored-doc"').replace(
                 b' documentId="pct-doc"', b' documentId="pdf-doc"')
         artifact = parser.parse_artifact(relation_xml, "relation-set")
@@ -469,6 +617,90 @@ class AuthoredRelations(unittest.TestCase):
                 self.assertRaisesRegex(StructuredSourceError, "projection"):
             context.regenerate("relation-set")
         publish.assert_not_called()
+
+    def test_relation_regenerate_rebuilds_equal_byte_state(self):
+        with tempfile.TemporaryDirectory() as root:
+            registry, unused_xml, unused_derivation = \
+                _write_relation_fixture(root)
+            context = VerificationContext(root, registry=registry)
+            old_result = context.check("relation-set")
+            old_state = context._validated_package_state["relation-set"]
+            old_artifact = old_state["relationArtifact"]
+            old_projection = old_state["relationProjection"]
+            old_coverage = old_state["relationCoverage"]
+            old_views = old_state["endpointViews"]
+            old_cached_result = context._package_results["relation-set"]
+            output = Path(root, "content/relations.md")
+            before = output.read_bytes()
+
+            result = context.regenerate("relation-set")
+            after = output.read_bytes()
+            new_state = context._validated_package_state["relation-set"]
+            new_views = new_state["endpointViews"]
+
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(after, before)
+        self.assertIsNot(result, old_result)
+        self.assertIsNot(new_state, old_state)
+        self.assertIsNot(new_state["relationArtifact"], old_artifact)
+        self.assertIsNot(new_state["relationProjection"], old_projection)
+        self.assertIsNot(new_state["relationCoverage"], old_coverage)
+        self.assertIsNot(new_views, old_views)
+        self.assertTrue(all(
+            new_views[key] is not old_views[key]
+            for key in new_views.keys() & old_views.keys()))
+        self.assertIsNot(
+            context._package_results["relation-set"], old_cached_result)
+        with self.assertRaises(TypeError):
+            new_views[next(iter(new_views))]["excerpt"] = "changed"
+        with self.assertRaises(TypeError):
+            new_state["validationPaths"] = ()
+
+    def test_relation_regenerate_rejects_pre_replacement_object_reuse(self):
+        from structured_source import verify as verify_module
+
+        cases = ("parsed artifact", "projection", "coverage")
+        for case in cases:
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as root:
+                registry, relation_xml, derivation = \
+                    _write_relation_fixture(root)
+                context = VerificationContext(root, registry=registry)
+                output = Path(root, "content/relations.md")
+                before = output.read_bytes()
+                stack = []
+                if case == "parsed artifact":
+                    actual_parse = verify_module._parse_artifact
+                    retained = parser.parse_artifact(
+                        relation_xml, "relation-set")
+
+                    def caching_parse(data, kind, *, controls):
+                        if kind == "relation-set":
+                            return retained
+                        return actual_parse(data, kind, controls=controls)
+
+                    stack.append(mock.patch(
+                        "structured_source.verify._parse_artifact",
+                        side_effect=caching_parse))
+                elif case == "projection":
+                    stack.append(mock.patch(
+                        "structured_source.verify._render_relations",
+                        return_value=derivation.projection))
+                else:
+                    stack.append(mock.patch(
+                        "structured_source.relation_projection."
+                        "validate_relation_projection",
+                        return_value=derivation.coverage))
+
+                with stack[0], self.assertRaisesRegex(
+                        StructuredSourceError,
+                        "crossed a generated-view validation lifetime"):
+                    context.regenerate("relation-set")
+
+                self.assertEqual(output.read_bytes(), before)
+                self.assertNotIn("relation-set", context._package_results)
+                self.assertNotIn("relation-set", context._derived_package_state)
+                self.assertNotIn(
+                    "relation-set", context._validated_package_state)
 
     def test_endpoint_package_validation_reads_are_transitively_closed(self):
         package_id = "aa11393us-na-priority-support-map"
