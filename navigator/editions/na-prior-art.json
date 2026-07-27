@@ -1,0 +1,27 @@
+{
+  "productVersion": "1",
+  "productId": "na-prior-art",
+  "productKind": "prior-art",
+  "editionVersion": "2",
+  "editionId": "na",
+  "displayName": "AA11393US claims-to-prior-art navigator — NA edition",
+  "strategyName": "normal-allowance claim strategy",
+  "strategyPrefix": "NA",
+  "consumerId": "navigator-na-prior-art",
+  "claimPackageId": "aa11393us-na-us-claim-set",
+  "claimSetVersion": "NA-2026-07-22-v4",
+  "priorArtWordingPath": "navigator/wording/prior-art.wording.xml",
+  "comparisonPackageId": "aa11393us-na-prior-art-comparison-matrix",
+  "passageMapPackageId": "aa11393us-na-claim-prior-art-passage-map",
+  "documentCensus": 33,
+  "artifactName": "AA11393US-NA-claims-prior-art-navigator_NA-2026-07-22-v4.html",
+  "declaredReleaseTimestamp": "2026-07-23T00:00:00Z",
+  "independentClaims": [1, 9, 16, 22],
+  "census": {"claims": 30, "units": 77},
+  "groups": [
+    "Production / mate-generation system",
+    "Distribution / recipient-association system",
+    "Detection / recipient-resolution system",
+    "End-to-end method"
+  ]
+}

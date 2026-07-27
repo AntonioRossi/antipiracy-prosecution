@@ -879,7 +879,7 @@ def _validate_relation_xsd_profile(schema_data: bytes, profiles: dict) -> None:
 
     if sequence_contract("relation") != {
             "elements": (
-                ("endpoint", "r:endpoint", "2", "32"),
+                ("endpoint", "r:endpoint", "1", "32"),
                 ("assertionField", "r:assertionField", "1", "64")),
             "attributes": (
                 (None, "xml:id", None, "required", None),
@@ -1253,7 +1253,8 @@ def _resource_and_profile_checks(
                     relation.get("semanticOwner") != identity.get("owner"):
                 raise ParseError("relation type/direction is outside its closed profile")
             roles = [item.get("role") for item in relation.findall(namespace + "endpoint")]
-            if not set(roles).issubset(definition["endpointRoles"]) or \
+            if len(roles) < definition["minimumEndpoints"] or \
+                    not set(roles).issubset(definition["endpointRoles"]) or \
                     not set(definition["requiredEndpointRoles"]).issubset(roles):
                 raise ParseError("relation endpoint role is outside its closed profile")
             fields = [item.get("name") for item in relation.findall(

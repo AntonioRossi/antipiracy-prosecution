@@ -152,10 +152,10 @@ class RegistryContract(unittest.TestCase):
         with self.assertRaisesRegex(StructuredSourceError, "resolve exactly"):
             consumer_edge(value, "example-consumer", "relation-set")
 
-    def test_current_control_closure_requires_zero_relation_edges(self):
+    def test_current_control_closure_requires_exact_relation_edges(self):
         context = VerificationContext(registry=registry_fixture())
         with self.assertRaisesRegex(
-                StructuredSourceError, "consumer-edge census is not zero"):
+                StructuredSourceError, "consumer-edge census is not exact"):
             context._control_closure()
 
     def test_loader_requires_canonical_current_bytes(self):

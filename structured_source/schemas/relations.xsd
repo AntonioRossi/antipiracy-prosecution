@@ -43,7 +43,7 @@
   </xs:complexType>
   <xs:complexType name="relation">
     <xs:sequence>
-      <xs:element name="endpoint" type="r:endpoint" minOccurs="2" maxOccurs="32"/>
+      <xs:element name="endpoint" type="r:endpoint" minOccurs="1" maxOccurs="32"/>
       <xs:element name="assertionField" type="r:assertionField" minOccurs="1" maxOccurs="64"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>

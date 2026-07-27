@@ -28,7 +28,7 @@ _STABLE_ID = re.compile(r"[A-Za-z][A-Za-z0-9._:-]*\Z")
 _WORDING_CONTRACT = {
     "counsel-legend": ("legend", "counsel-legend"),
     "standing-disclaimer": ("disclaimer", "standing-disclaimer"),
-    "authority-pct-as-filed": ("provenance", "authority-provenance"),
+    "authority-target-sources": ("provenance", "authority-provenance"),
     "source-input-provenance": ("provenance", "source-input-provenance"),
     "provenance-summary": ("provenance", "provenance-summary"),
     "editorial-not-filed": ("editorial", "editorial-label"),
@@ -56,7 +56,7 @@ _SLOT_CONTRACT = {
          "edition.declaredReleaseTimestamp"),
         ("claims", "integer", "closed-derivation", "edition.claimCount"),
         ("units", "integer", "closed-derivation", "edition.unitCount"),
-        ("blocks", "integer", "closed-derivation", "pct.blockCount"),
+        ("targets", "integer", "closed-derivation", "target.blockCount"),
     ),
     "bundle-manifest-neutral": (
         ("editionSchedule", "text", "closed-derivation",
@@ -551,7 +551,7 @@ def _parse_wording(root, expected_scope):
         contract = _wording_contract(identifier)
         expected_slots = _SLOT_CONTRACT.get(identifier, ())
         scope_is_current = (
-            (expected_scope == "shared" and
+            (expected_scope in {"shared", "prior-art"} and
              not identifier.startswith("gate-label-")) or
             (expected_scope != "shared" and
              identifier.startswith("gate-label-%s-" % expected_scope))
@@ -594,7 +594,7 @@ class EditionModel:
             raise ModelError("edition control is unreadable or invalid") from exc
         if problems:
             raise ModelError("edition control is invalid: %s" % "; ".join(problems))
-        expected_path = "navigator/editions/%s.json" % config["editionId"]
+        expected_path = "navigator/editions/%s.json" % config["productId"]
         if edition_path != expected_path or \
                 config["consumerId"] != "navigator-" + config["editionId"] or \
                 config["strategyPrefix"].casefold() != config["editionId"] or \
@@ -610,6 +610,11 @@ class EditionModel:
                 "declared release timestamp is not a UTC second") from exc
 
         self.edition_id = config["editionId"]
+        if config["productKind"] != "specification" or \
+                config["productId"] != self.edition_id + "-specification":
+            raise ModelError("edition control is not a specification product")
+        self.product_id = config["productId"]
+        self.product_kind = config["productKind"]
         self._consumer_id = config["consumerId"]
         self._claim_package_id = config["claimPackageId"]
         self._capture_token = capture_token
@@ -621,6 +626,10 @@ class EditionModel:
         self.artifact_name = config["artifactName"]
         self.declared_release_timestamp = config["declaredReleaseTimestamp"]
         self.claim_set_version = config["claimSetVersion"]
+        self.target_pane_label = "PCT as-filed disclosure"
+        self.authority_header = "PCT as filed"
+        self.forward_mode_label = "Claims → Specification"
+        self.reverse_mode_label = "Specification → Claims"
         self.independent_claims = tuple(config["independentClaims"])
         self._expected_census = MappingProxyType(dict(config["census"]))
         self._expected_groups = tuple(config["groups"])
@@ -911,7 +920,7 @@ class EditionModel:
             "edition.declaredReleaseTimestamp": self.declared_release_timestamp,
             "edition.claimCount": len(self.claims),
             "edition.unitCount": len(self.units_by_fragment),
-            "pct.blockCount": len(self.disclosure_blocks),
+            "target.blockCount": len(self.disclosure_blocks),
         }
         try:
             return values[origin_ref]
@@ -990,16 +999,15 @@ class EditionModel:
 def bundle_manifest_text(models):
     """Resolve shared bundle wording from every configured edition origin."""
     models = tuple(models)
-    if not models or any(not isinstance(item, EditionModel) for item in models) or \
-            len({item.edition_id for item in models}) != len(models) or \
-            len({item.shared_wording_digest for item in models}) != 1:
-        raise ModelError("bundle wording models are not one exact edition set")
+    if not models or any(not hasattr(item, "controlled_text") for item in models) or \
+            len({item.product_id for item in models}) != len(models):
+        raise ModelError("bundle wording models are not one exact product set")
     entries = tuple(item._wording.get("bundle-manifest-neutral")
                     for item in models)
     if entries[0] is None or any(item != entries[0] for item in entries[1:]):
         raise ModelError("bundle wording differs between edition models")
     schedule = "; ".join(
-        "%s edition (claim set %s)" %
-        (item.strategy_prefix, item.claim_set_version)
+        "%s %s product (claim set %s)" %
+        (item.strategy_prefix, item.product_kind, item.claim_set_version)
         for item in models)
     return _render_wording_entry(entries[0], {"editionSchedule": schedule})

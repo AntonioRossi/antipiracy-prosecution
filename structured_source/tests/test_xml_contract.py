@@ -331,9 +331,9 @@ class CanonicalContract(unittest.TestCase):
             ),
             (
                 b'<xs:element name="endpoint" type="r:endpoint" '
-                b'minOccurs="2" maxOccurs="32"/>',
+                b'minOccurs="1" maxOccurs="32"/>',
                 b'<xs:element name="endpoint" type="r:endpoint" '
-                b'minOccurs="2" maxOccurs="31"/>',
+                b'minOccurs="1" maxOccurs="31"/>',
                 "relation grammar differs",
             ),
             (

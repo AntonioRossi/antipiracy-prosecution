@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wording xmlns="urn:aa11393:navigator:wording:1" schemaVersion="1" schemaProfile="navigator-controlled-wording-v1" wordingSetId="shared" locale="en-US" scope="shared">
+<wording xmlns="urn:aa11393:navigator:wording:1" schemaVersion="1" schemaProfile="navigator-controlled-wording-v1" wordingSetId="prior-art" locale="en-US" scope="prior-art">
   <entry wordingId="counsel-legend" category="legend">
     <usage context="counsel-legend" />
-    <text>CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED FOR US COUNSEL REVIEW. This navigator presents unfiled draft claim-strategy material relating to PCT/IB2025/051755 (published as WO 2025/181623 A1). Do not distribute outside the engagement.</text>
+    <text>CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED FOR US COUNSEL REVIEW. This navigator presents unfiled draft claim-strategy and prior-art passage associations. Do not distribute outside the engagement.</text>
   </entry>
   <entry wordingId="standing-disclaimer" category="disclaimer">
     <usage context="standing-disclaimer" />
-    <text>Draft navigation aid generated from claim-set {editionVersion} and PCT/IB2025/051755 as filed (WO 2025/181623 A1). Mappings are author-recorded candidate associations for counsel review — not a written-description, priority, or any other legal opinion. Fragments marked "counsel review required" carry no recorded candidate passage. Claim-level gates concern the complete claim and are quoted from the claim-set document. Anchor references are internal navigation labels, not official numbering, and must not be cited. This edition presents one candidate strategy; it does not compare strategies or recommend a filing choice.</text>
+    <text>Draft navigation aid generated from claim-set {editionVersion}, the current prior-art comparison scope, and exact asserted XML transcription passages. Mappings are applicant-recorded candidates for counsel review — not a novelty, obviousness, disclosure, claim-construction, validity, patentability, or legal opinion. “No candidate passage recorded” states only that this passage map contains no association; it does not state that the limitation is absent from the document or the prior art. PDF source evidence remains the fidelity authority, and transcription uncertainty remains visible. This product presents one claim strategy and does not recommend a filing choice.</text>
     <slots>
       <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
     </slots>
   </entry>
   <entry wordingId="mapping-status-mapped" category="mapping-status">
     <usage context="mapping-status" />
-    <text>Candidate passages recorded</text>
+    <text>Candidate prior-art passages recorded</text>
   </entry>
   <entry wordingId="mapping-status-counsel-review-required" category="mapping-status">
     <usage context="mapping-status" />
-    <text>No candidate passage recorded — counsel review required</text>
+    <text>No candidate prior-art passage recorded — counsel review required</text>
   </entry>
   <entry wordingId="mapping-role-specific" category="mapping-role">
     <usage context="mapping-role" />
@@ -31,37 +31,9 @@
     <usage context="mapping-role" />
     <text>combination</text>
   </entry>
-  <entry wordingId="caution-type-source-gate" category="caution">
-    <usage context="caution-type" />
-    <text>Gate (quoted from the claim-set document)</text>
-  </entry>
-  <entry wordingId="caution-type-generalization-note" category="caution">
-    <usage context="caution-type" />
-    <text>Author observation</text>
-  </entry>
-  <entry wordingId="caution-scope-target" category="caution">
-    <usage context="caution-scope" />
-    <text>on this passage</text>
-  </entry>
-  <entry wordingId="caution-scope-fragment" category="caution">
-    <usage context="caution-scope" />
-    <text>on this limitation</text>
-  </entry>
-  <entry wordingId="caution-scope-claim" category="caution">
-    <usage context="caution-scope" />
-    <text>on the complete claim</text>
-  </entry>
-  <entry wordingId="gate-disposition-carried-at-required-scope" category="disposition">
-    <usage context="gate-disposition" />
-    <text>Gate recorded at its required scope</text>
-  </entry>
-  <entry wordingId="generalization-beyond-literal-example" category="caution">
-    <usage context="generalization-caution" />
-    <text>The recorded passage supports this language by example; the claim wording is broader than the literal example.</text>
-  </entry>
   <entry wordingId="authority-target-sources" category="provenance">
     <usage context="authority-provenance" />
-    <text>PCT/IB2025/051755 · WO 2025/181623 A1</text>
+    <text>Registered prior-art XML transcriptions · canonical source PDFs remain fidelity authority</text>
   </entry>
   <entry wordingId="source-input-provenance" category="provenance">
     <usage context="source-input-provenance" />
@@ -69,21 +41,13 @@
   </entry>
   <entry wordingId="provenance-summary" category="provenance">
     <usage context="provenance-summary" />
-    <text>Declared release timestamp {timestamp} · {claims} claims / {units} units / {targets} disclosure blocks</text>
+    <text>Declared release timestamp {timestamp} · {claims} claims / {units} units / {targets} prior-art documents in current matrix scope</text>
     <slots>
       <slot name="timestamp" scalarType="timestamp" originKind="registered-control" originRef="edition.declaredReleaseTimestamp" />
       <slot name="claims" scalarType="integer" originKind="closed-derivation" originRef="edition.claimCount" />
       <slot name="units" scalarType="integer" originKind="closed-derivation" originRef="edition.unitCount" />
       <slot name="targets" scalarType="integer" originKind="closed-derivation" originRef="target.blockCount" />
     </slots>
-  </entry>
-  <entry wordingId="editorial-not-filed" category="editorial">
-    <usage context="editorial-label" />
-    <text>editorial (not filed text)</text>
-  </entry>
-  <entry wordingId="claim-set-guidance" category="editorial">
-    <usage context="guidance-label" />
-    <text>Guidance note from the claim-set document (not claim text)</text>
   </entry>
   <entry wordingId="artifact-label-technical-preview" category="release-profile">
     <usage context="artifact-label" />

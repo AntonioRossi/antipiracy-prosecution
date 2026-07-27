@@ -2,14 +2,16 @@
 
 > **CURRENT OPERATING PROCEDURE · INTERNAL COUNSEL-REVIEW SYSTEM**
 
-This runbook applies the normative contract in
+This runbook applies the normative claims-to-specification
 [`technical description`](../contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md)
-and its
-[`acceptance criteria`](../contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md).
-Those documents control any conflict. This runbook supplies the shortest supported update path;
-it creates no exception or alternative release path.
+and [`acceptance criteria`](../contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md),
+and the claims-to-prior-art
+[`technical description`](../contracts/30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md)
+and [`acceptance criteria`](../contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md).
+Those pairs control any conflict. This runbook supplies the shortest supported update path; it
+creates no exception or alternative release path.
 
-The product contract pair, `navigator/schema/acceptance.json`, structured-source contracts and
+Both product contract pairs, both navigator acceptance registries, structured-source contracts and
 registries, navigator implementation and workflow, controls, tests and vectors, generated
 representations, handoffs, and stored products are one current state. No documentation-only,
 registry-only, implementation-only, workflow-only, control-only, test-only, or product-only state
@@ -40,17 +42,17 @@ The navigator exposes exactly these five commands:
 
 | Command | Effect |
 |---|---|
-| `preview <edition>` | Writes one non-persistent HTML preview to standard output |
-| `candidate <edition>` | Regenerates the edition's current candidate HTML |
-| `release <edition>` | Reproduces the candidate and atomically writes the sealed HTML and detached checksum |
-| `bundle` | Regenerates the configured-edition delivery ZIP and its detached checksum |
+| `preview <product>` | Writes one non-persistent HTML preview to standard output |
+| `candidate <product>` | Regenerates the product's current candidate HTML |
+| `release <product>` | Reproduces the candidate and atomically writes the sealed HTML and detached checksum |
+| `bundle` | Regenerates the configured-product delivery ZIP and its detached checksum |
 | `validate-current` | Sole aggregate, read-only validation of one unchanged retained worktree capture |
 
-`<edition>` must be an exact member of `navigator/bundles/current.json`; the current members are
-`na` and `af`. Adding an edition changes that one inventory and adds its exact edition-owned
-controls; it requires no aggregate-code branch. There are no command aliases or upgrade paths.
+`<product>` must be an exact member of `navigator/bundles/current.json`: `na-specification`,
+`af-specification`, `na-prior-art`, or `af-prior-art`. There are no shorter command identities or
+implicit product choices.
 
-Every command validates the product contract pair, acceptance registry, exact implementation
+Every command validates both product contract pairs, both acceptance registries, the exact implementation
 census, product plan, structured-source closure, and applicable retained inputs before model
 construction or publication. Stop if those inputs describe different behavior; no later check or
 rollback repairs a split state.
@@ -73,7 +75,7 @@ provenance is incomplete, a relation endpoint is unresolved, or a consumer would
 
 ## 3. Update navigator-owned XML
 
-Edit only the configured edition relation file or controlled-wording file that owns the changed
+Edit only the configured product relation file or controlled-wording file that owns the changed
 semantic value. The current paths are:
 
 ```text
@@ -82,6 +84,7 @@ navigator/relations/af__pct.relations.xml
 navigator/wording/shared.wording.xml
 navigator/wording/na.wording.xml
 navigator/wording/af.wording.xml
+navigator/wording/prior-art.wording.xml
 ```
 
 Keep ordinary interface labels and layout instructions in the renderer. Put only substantive,
@@ -94,43 +97,53 @@ edition's mapping into the other, reuse a stale digest, or use visible text, ord
 heading slug as identity. A fragment with no recorded candidate remains explicitly
 `counsel-review-required`.
 
-## 4. Inspect and generate the configured editions
+For a claims-to-prior-art change, edit the strategy-owned passage-map relation XML, declare every
+referenced prior-art transcription XML consumer edge, regenerate the map Markdown review view, and
+leave every unit without an exact candidate in `counsel-review-required` state.
+
+## 4. Inspect and generate the configured products
 
 A preview is read-only and writes HTML to standard output:
 
 ```sh
-uv --no-cache --offline run --locked --no-sync python -m navigator preview na
-uv --no-cache --offline run --locked --no-sync python -m navigator preview af
+uv --no-cache --offline run --locked --no-sync python -m navigator preview na-specification
+uv --no-cache --offline run --locked --no-sync python -m navigator preview af-specification
+uv --no-cache --offline run --locked --no-sync python -m navigator preview na-prior-art
+uv --no-cache --offline run --locked --no-sync python -m navigator preview af-prior-art
 ```
 
-Inspect the changed edition visually, including forward and reverse navigation, no-candidate
+Inspect each changed product visually, including forward and reverse navigation, no-candidate
 states, cautions and gates, disclosure figures, keyboard focus, the no-JavaScript document order,
 and print content. Visual inspection is useful product review, not a stored authorization step.
 
-Regenerate every edition in the current bundle inventory so shared-input drift cannot remain
-hidden. The current inventory contains `na` and `af`:
+Regenerate every product in the current bundle inventory so shared-input drift cannot remain
+hidden:
 
 ```sh
-uv --no-cache --offline run --locked --no-sync python -m navigator candidate na
-uv --no-cache --offline run --locked --no-sync python -m navigator candidate af
+uv --no-cache --offline run --locked --no-sync python -m navigator candidate na-specification
+uv --no-cache --offline run --locked --no-sync python -m navigator candidate af-specification
+uv --no-cache --offline run --locked --no-sync python -m navigator candidate na-prior-art
+uv --no-cache --offline run --locked --no-sync python -m navigator candidate af-prior-art
 ```
 
-Stop if either edition reads the other's private input, any semantic source bypasses the XML
+Stop if any product reads another product's private input, any semantic source bypasses the XML
 gateway, a relation or wording entry is unused or unresolved, or regeneration is not byte-stable.
 
 ## 5. Seal and bundle
 
-Release reproduces the requested edition through one fresh product-set worker before replacing
+Release reproduces the requested product through one fresh product-set worker before replacing
 only its generated product and detached checksum:
 
 ```sh
-uv --no-cache --offline run --locked --no-sync python -m navigator release na
-uv --no-cache --offline run --locked --no-sync python -m navigator release af
+uv --no-cache --offline run --locked --no-sync python -m navigator release na-specification
+uv --no-cache --offline run --locked --no-sync python -m navigator release af-specification
+uv --no-cache --offline run --locked --no-sync python -m navigator release na-prior-art
+uv --no-cache --offline run --locked --no-sync python -m navigator release af-prior-art
 uv --no-cache --offline run --locked --no-sync python -m navigator bundle
 ```
 
 The bundle must contain one sealed HTML and corresponding detached-checksum pair for every current
-configured edition, in configured order, followed by `MANIFEST.txt`. Its own detached checksum
+configured product, in configured order, followed by `MANIFEST.txt`. Its own detached checksum
 stays beside the ZIP. The ZIP is only a delivery product. `navigator/dist/` contains exactly the
 configured candidates, sealed HTML/checksum pairs, bundle, and bundle checksum; a missing or
 additional product fails aggregate validation.

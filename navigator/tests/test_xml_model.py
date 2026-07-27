@@ -30,22 +30,27 @@ class XMLModelTests(unittest.TestCase):
         cls.plan = session["plan"]
         cls.sources = session["sources"]
         cls.inputs = cls.sources.consumer_inputs
-        cls.models = session["models"]
+        cls.all_models = session["models"]
+        cls.models = MappingProxyType({
+            key: value for key, value in cls.all_models.items()
+            if value.product_kind == "specification"})
+        cls.product_ids = tuple(cls.models)
 
     @classmethod
-    def build_model(cls, edition, byte_source=None):
-        spec = cls.plan.edition(edition)
+    def build_model(cls, product_id, byte_source=None):
+        spec = cls.plan.product(product_id)
         return EditionModel(
             ContentGateway(
                 ROOT, byte_source=byte_source or cls.snapshot.byte_source()),
             spec.path,
-            cls.inputs["navigator-" + edition],
+            cls.inputs[spec.consumer_id],
             capture_token=cls.snapshot.capture_token,
             plan_token=spec.plan_token,
             derivation_token=object())
 
     def test_live_editions_have_exact_claim_and_mapping_census(self):
-        expected = {"na": (30, 77), "af": (23, 61)}
+        expected = {"na-specification": (30, 77),
+                    "af-specification": (23, 61)}
         for edition, model in self.models.items():
             with self.subTest(edition=edition):
                 claims, units = expected[edition]
@@ -95,9 +100,9 @@ class XMLModelTests(unittest.TestCase):
                                      for path in paths))
 
     def test_each_edition_has_exactly_two_dependency_free_handoffs(self):
-        for edition in self.plan.edition_ids:
+        for edition in self.product_ids:
             with self.subTest(edition=edition):
-                spec = self.plan.edition(edition)
+                spec = self.plan.product(edition)
                 consumer = self.inputs[spec.consumer_id]
                 claim_id = spec.claim_package_id
                 self.assertEqual(
@@ -135,12 +140,12 @@ class XMLModelTests(unittest.TestCase):
                 mock.patch(
                     "structured_source.parser._default_parser_controls",
                     side_effect=AssertionError("consumer used default controls")):
-            model = self.build_model("na")
+            model = self.build_model("na-specification")
         self.assertEqual(
             model.source_documents[0].xml_role, "generated-xml")
 
     def test_pct_boundary_assets_and_code_are_typed(self):
-        model = self.models["na"]
+        model = self.models["na-specification"]
         self.assertEqual(set(model.assets), {
             "asset-fig-1-png", "asset-fig-2-png",
             "asset-fig-3-png", "asset-fig-4-png"})
@@ -151,7 +156,7 @@ class XMLModelTests(unittest.TestCase):
         self.assertTrue(all(node.text.strip() for node in code))
 
     def test_typed_values_and_indexes_are_immutable(self):
-        model = self.models["af"]
+        model = self.models["af-specification"]
         unit = next(iter(model.units_by_fragment.values()))
         with self.assertRaises(FrozenInstanceError):
             unit.text = "changed"
@@ -174,7 +179,7 @@ class XMLModelTests(unittest.TestCase):
             model.dom_id("a", "b-c"), model.dom_id("a-b", "c"))
 
     def test_controlled_wording_has_exact_slots(self):
-        model = self.models["na"]
+        model = self.models["na-specification"]
         self.assertEqual(
             model.profile_label,
             model.controlled_text("artifact-label-technical-preview"))
@@ -183,9 +188,9 @@ class XMLModelTests(unittest.TestCase):
         with self.assertRaises(ModelError):
             model.controlled_text("bundle-manifest-neutral")
         bundle = bundle_manifest_text(
-            self.models[item] for item in self.plan.edition_ids)
-        self.assertIn(self.models["na"].claim_set_version, bundle)
-        self.assertIn(self.models["af"].claim_set_version, bundle)
+            self.all_models[item] for item in self.plan.product_ids)
+        self.assertIn(self.models["na-specification"].claim_set_version, bundle)
+        self.assertIn(self.models["af-specification"].claim_set_version, bundle)
 
     def test_substantive_origins_are_computed_and_non_persistent(self):
         expected_controls = {
@@ -222,17 +227,21 @@ class XMLModelTests(unittest.TestCase):
             config_bytes = handle.read()
         config = canon.parse_json(config_bytes)
         bundle_origins = projections.bundle_origin_inventory(
-            (self.models[item] for item in self.plan.edition_ids), config,
+            (self.all_models[item] for item in self.plan.product_ids), config,
             canon.bytes_digest(config_bytes), bundlezip.BUNDLE_CONFIG_PATH)
-        self.assertEqual(len(bundle_origins), 12)
+        self.assertEqual(len(bundle_origins), 18)
         self.assertEqual(
             {item.value_id for item in bundle_origins
              if item.value_id.startswith("wording:")},
             {
                 "wording:bundle-manifest-neutral:slot:"
-                "editionSchedule:edition:na",
+                "editionSchedule:product:na-specification",
                 "wording:bundle-manifest-neutral:slot:"
-                "editionSchedule:edition:af",
+                "editionSchedule:product:af-specification",
+                "wording:bundle-manifest-neutral:slot:"
+                "editionSchedule:product:na-prior-art",
+                "wording:bundle-manifest-neutral:slot:"
+                "editionSchedule:product:af-prior-art",
             })
 
     def test_gateway_rejects_unsafe_or_changing_inputs(self):
@@ -290,7 +299,8 @@ class XMLModelTests(unittest.TestCase):
         with self.assertRaisesRegex(
                 currentstate.CurrentStateError, "do not match"):
             currentstate.build_model(
-                self.plan.edition("na"), self.snapshot, detached, object())
+                self.plan.product("na-specification"), self.snapshot,
+                detached, object())
 
     def test_equal_byte_captures_cannot_reuse_plan_sources_or_states(self):
         equal_bytes = replace(self.snapshot)
@@ -301,20 +311,20 @@ class XMLModelTests(unittest.TestCase):
                 currentstate.CurrentStateError, "handoffs differ"):
             currentstate.bind_sources_to_plan(equal_plan, self.sources)
 
-        states = currentstate.derive_editions(
-            self.snapshot, self.plan.editions, self.sources)
+        states = currentstate.derive_products(
+            self.snapshot, self.plan.products, self.sources)
         with self.assertRaisesRegex(
                 currentstate.CurrentStateError,
                 "capture, plan, or derivation"):
             currentstate.build_bundle_state(equal_bytes, equal_plan, states)
 
     def test_candidate_proof_binds_the_complete_fresh_projection(self):
-        edition = self.plan.edition("na")
+        edition = self.plan.product("na-specification")
         state = currentstate.derive(
             edition, "candidate", self.snapshot,
             self.sources.input_for(edition.consumer_id), object())
         projection = currentstate.product_reproduction_projection(
-            MappingProxyType({"na": state}))
+            MappingProxyType({"na-specification": state}))
         proof = currentstate.prove_candidate(
             state, state.html, projection)
         self.assertEqual(proof.digest, canon.bytes_digest(state.html))
@@ -327,7 +337,8 @@ class XMLModelTests(unittest.TestCase):
                 "artifactName", "contentLockDigest", "htmlDigest",
                 "originInventoryDigest"):
             changed = canon.parse_json(canon.canonical_json(projection))
-            changed["editions"]["na"][field] = "sha256/c1:" + "0" * 64
+            changed["products"]["na-specification"][field] = \
+                "sha256/c1:" + "0" * 64
             with self.subTest(field=field), self.assertRaisesRegex(
                     currentstate.CurrentStateError,
                     "fresh candidate projection differs"):
@@ -337,7 +348,7 @@ class XMLModelTests(unittest.TestCase):
             currentstate.prove_candidate(state, state.html + b"x", projection)
 
     def test_model_lookups_require_explicit_nonempty_identities(self):
-        model = self.models["na"]
+        model = self.models["na-specification"]
         relation = model.relations.mappings[0]
         self.assertIs(model.resolve_relation(relation.relation_id), relation)
         self.assertIn(
@@ -395,7 +406,7 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            self.build_model("na", tampered_source)
+            self.build_model("na-specification", tampered_source)
 
     def test_navigator_relations_reject_upstream_relation_references(self):
         relation_suffix = os.path.join(
@@ -412,16 +423,16 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaisesRegex(GatewayError, "closed XSD"):
-            self.build_model("na", tampered_source)
+            self.build_model("na-specification", tampered_source)
 
     def test_validator_recomputes_dependency_projection(self):
-        model = self.build_model("na")
+        model = self.build_model("na-specification")
         object.__setattr__(model, "parents", {})
         defects = validate_edition(model)
         self.assertTrue(any(code == "dependencies" for code, _message in defects))
 
     def test_validator_rejects_overlapping_phrases_and_cross_target_repeats(self):
-        model = self.build_model("na")
+        model = self.build_model("na-specification")
         phrases = list(model.relations.phrase_mappings)
         first = phrases[0]
         unit = model.units_by_fragment[first.parent.fragment_id]
@@ -436,7 +447,7 @@ class XMLModelTests(unittest.TestCase):
         self.assertTrue(any("overlaps" in message
                             for _code, message in defects))
 
-        model = self.build_model("na")
+        model = self.build_model("na-specification")
         mappings = list(model.relations.mappings)
         index = next(index for index, item in enumerate(mappings)
                      if len(item.targets) > 1)
@@ -465,7 +476,7 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            self.build_model("na", wrong_origin)
+            self.build_model("na-specification", wrong_origin)
 
         shared_suffix = os.path.join(
             "navigator", "wording", "shared.wording.xml")
@@ -489,9 +500,9 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            self.build_model("na", moved_to_wrong_scope)
+            self.build_model("na-specification", moved_to_wrong_scope)
 
-        live = self.models["na"]
+        live = self.models["na-specification"]
         editorial = next(node for node in live.disclosure_index.values()
                          if node.editorial)
         pct_id = live.source_documents[1].document_id.encode("utf-8")
@@ -515,7 +526,7 @@ class XMLModelTests(unittest.TestCase):
             return data
 
         with self.assertRaises(ModelError):
-            self.build_model("na", editorial_target)
+            self.build_model("na-specification", editorial_target)
 
 
 if __name__ == "__main__":

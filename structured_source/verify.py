@@ -120,6 +120,8 @@ _LIVE_IMPLEMENTATION = frozenset({
     "contracts/20-semantic-relations/authored-relations/technical-description.md",
     "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
     "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
+    "contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md",
+    "contracts/30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md",
     "navigator/RUNBOOK-content-sync-and-regeneration.md",
     "navigator/__init__.py",
     "navigator/__main__.py",
@@ -134,6 +136,7 @@ _LIVE_IMPLEMENTATION = frozenset({
     "navigator/lib/gateway.py",
     "navigator/lib/model.py",
     "navigator/lib/projections.py",
+    "navigator/lib/priorart.py",
     "navigator/lib/registry.py",
     "navigator/lib/release.py",
     "navigator/lib/render.py",
@@ -142,11 +145,13 @@ _LIVE_IMPLEMENTATION = frozenset({
     "navigator/lib/unicode15_1.py",
     "navigator/lib/validate.py",
     "navigator/schema/acceptance.json",
+    "navigator/schema/prior-art-acceptance.json",
     "navigator/schema/edition.schema.json",
     "navigator/schema/navigator-relations.xsd",
     "navigator/schema/wording.xsd",
     "navigator/tests/test_canon.py",
     "navigator/tests/test_current_pipeline.py",
+    "navigator/tests/test_prior_art.py",
     "navigator/tests/__init__.py",
     "navigator/tests/test_render_current.py",
     "navigator/tests/test_xml_model.py",
@@ -1393,9 +1398,19 @@ class VerificationContext:
             for consumer in self.registry["consumers"]
             for edge in consumer["edges"]
             if edge["packageId"] in relation_packages]
-        if relation_edges:
+        expected_relation_edges = [
+            ("navigator-af-prior-art",
+             "aa11393us-af-claim-prior-art-passage-map"),
+            ("navigator-af-prior-art",
+             "aa11393us-af-prior-art-comparison-matrix"),
+            ("navigator-na-prior-art",
+             "aa11393us-na-claim-prior-art-passage-map"),
+            ("navigator-na-prior-art",
+             "aa11393us-na-prior-art-comparison-matrix"),
+        ]
+        if relation_edges != expected_relation_edges:
             raise StructuredSourceError(
-                "current authored-relation consumer-edge census is not zero")
+                "current authored-relation consumer-edge census is not exact")
         repository_paths = self._disk_paths()
         snapshot_paths = self._snapshot_paths()
         if snapshot_paths is not None and not _LIVE_IMPLEMENTATION.issubset(

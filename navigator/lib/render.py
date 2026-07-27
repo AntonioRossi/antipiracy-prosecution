@@ -223,19 +223,20 @@ def _disposition_view(model, disposition) -> dict:
     }
 
 
-def _target_view(model, target, target_document_id: str) -> dict:
+def _target_view(model, target) -> dict:
     if target.role not in _ROLE_RANK or not isinstance(target.note, str) or \
             not target.note.strip():
         raise RenderError("target role and descriptive note are not exact")
     endpoint_ids = tuple(
         model.dom_id(endpoint.document_id, endpoint.fragment_id)
         for endpoint in target.endpoints)
-    if not endpoint_ids or any(
-            endpoint.document_id != target_document_id
-            for endpoint in target.endpoints):
-        raise RenderError("target is empty or crosses the disclosure document")
-    labels = tuple(_anchor_label(endpoint.fragment_id)
-                   for endpoint in target.endpoints)
+    if not endpoint_ids:
+        raise RenderError("target is empty")
+    labels = tuple(
+        ((endpoint.document_id.removeprefix("us-prior-art-").upper() + " · ")
+         if model.product_kind == "prior-art" else "") +
+        _anchor_label(endpoint.fragment_id)
+        for endpoint in target.endpoints)
     return {
         "role": target.role,
         "roleLabel": _wording(model, "mapping-role-" + target.role),
@@ -248,19 +249,18 @@ def _target_view(model, target, target_document_id: str) -> dict:
     }
 
 
-def _sorted_target_views(model, targets, target_document_id: str) -> list[dict]:
+def _sorted_target_views(model, targets) -> list[dict]:
     if any(target.role not in _ROLE_RANK for target in targets):
         raise RenderError("target role is outside the closed rank")
     ranked = sorted(enumerate(targets),
                     key=lambda pair: (_ROLE_RANK[pair[1].role], pair[0]))
-    return [_target_view(model, target, target_document_id)
+    return [_target_view(model, target)
             for _, target in ranked]
 
 
 def _relation_data(model) -> tuple[dict, dict, dict]:
     """Compute render relations, reverse links, gates, and dispositions."""
     claim_document_id = model.source_documents[0].document_id
-    target_document_id = model.source_documents[1].document_id
     relations = {}
 
     for mapping in model.relations.mappings:
@@ -280,8 +280,7 @@ def _relation_data(model) -> tuple[dict, dict, dict]:
             "subjectDomId": source_dom,
             "subjectControlId": _control_id(model, relation_id),
             "subjectLabel": _unit_context(model, unit),
-            "targets": _sorted_target_views(
-                model, mapping.targets, target_document_id),
+            "targets": _sorted_target_views(model, mapping.targets),
             "caution": _caution_view(model, mapping.caution, "fragment"),
             "dispositions": [
                 _disposition_view(model, item) for item in dispositions],
@@ -301,15 +300,14 @@ def _relation_data(model) -> tuple[dict, dict, dict]:
             "subjectDomId": _control_id(model, relation_id),
             "subjectControlId": _control_id(model, relation_id),
             "subjectLabel": _phrase_context(model, phrase, unit),
-            "targets": _sorted_target_views(
-                model, phrase.targets, target_document_id),
+            "targets": _sorted_target_views(model, phrase.targets),
             "caution": None,
             "dispositions": [],
         }
 
     reverse = {}
-    for fragment_id, references in model.reverse_index.items():
-        dom_id = model.dom_id(target_document_id, fragment_id)
+    for (document_id, fragment_id), references in model.reverse_index.items():
+        dom_id = model.dom_id(document_id, fragment_id)
         ordered = []
         seen = set()
         for reference in references:
@@ -620,6 +618,49 @@ def _block_html(model, node, target_document_id: str, reverse: dict,
 
 
 def _disclosure_html(model, reverse: dict) -> str:
+    if model.product_kind == "prior-art":
+        by_document = {}
+        for passage in model.prior_art_passages:
+            by_document.setdefault(passage.document_id, []).append(passage)
+        output = []
+        for document in model.prior_art_scope:
+            passages = by_document.get(document.document_id, ())
+            output.append(
+                '<section class="prior-art-document"><h2>%s · %s</h2>' % (
+                    _esc(document.label), _esc(document.document_id)))
+            if not passages:
+                output.append(
+                    '<p class="state-note">No mapped passage from this document is present in the current passage map.</p>')
+            for passage in passages:
+                dom_id = model.dom_id(
+                    passage.document_id, passage.fragment_id)
+                references = reverse.get(dom_id, ())
+                badge = ""
+                if references:
+                    badge = (
+                        '<button type="button" class="reverse-badge" '
+                        'id="reverse-control-%s" data-block="%s" '
+                        'aria-label="%s">◂ %d</button>' % (
+                            _esc(dom_id), _esc(dom_id),
+                            _esc(_fmt(UI["reverseBadge"],
+                                     count=len(references),
+                                     label=_anchor_label(
+                                         passage.fragment_id))),
+                            len(references)))
+                metadata = "page %d" % passage.page
+                if passage.region:
+                    metadata += " · " + passage.region
+                if passage.uncertainty:
+                    metadata += " · transcription uncertainty: " + passage.uncertainty
+                output.append(
+                    '<article class="dblock prior-art-passage" id="%s">'
+                    '<span class="anchor-label" aria-hidden="true">%s</span>%s'
+                    '<p class="passage-meta">%s</p><p>%s</p></article>' % (
+                        _esc(dom_id),
+                        _esc(_anchor_label(passage.fragment_id)), badge,
+                        _esc(metadata), _esc(passage.text)))
+            output.append("</section>")
+        return "".join(output)
     target_document_id = model.source_documents[1].document_id
     return "".join(_block_html(
         model, node, target_document_id, reverse)
@@ -732,7 +773,7 @@ def _provenance(model, profile_label: str) -> tuple[dict, str]:
         "summary": summary,
     }
     source_label = _wording(model, "source-input-provenance")
-    authority = _wording(model, "authority-pct-as-filed")
+    authority = _wording(model, "authority-target-sources")
     markup = (
         '<section id="about"><h2>%s</h2><p><strong>%s</strong></p>'
         '<p>%s</p><p>%s</p>'
@@ -776,8 +817,11 @@ def render(model, mode="candidate") -> bytes:
         raise RenderError(
             "application script uses forbidden browser capabilities: %s" %
             ", ".join(forbidden))
+    ui = dict(UI)
+    ui["forwardMode"] = model.forward_mode_label
+    ui["reverseMode"] = model.reverse_mode_label
     navigation = {
-        "ui": dict(UI),
+        "ui": ui,
         "edition": {
             "id": model.edition_id,
             "prefix": model.strategy_prefix,
@@ -802,11 +846,11 @@ def render(model, mode="candidate") -> bytes:
             model.strategy_prefix, model.strategy_name)),
         claim_set_label=_esc(UI["claimSetLabel"]),
         version=_esc(model.claim_set_version),
-        authority=_esc(UI["authorityHeader"]),
+        authority=_esc(model.authority_header),
         aux_label=_esc(UI["aboutScheduleToggle"]),
         disclaimer=_esc(disclaimer),
         claims_label=_esc(UI["candidateClaimsLabel"]),
-        disclosure_label=_esc(UI["asFiledDisclosureLabel"]),
+        disclosure_label=_esc(model.target_pane_label),
         claims=_claims_html(model, relations, claim_gates),
         disclosure=_disclosure_html(model, reverse),
         schedule=_schedule_html(model, relations, claim_gates),

@@ -64,7 +64,11 @@ class Registry:
                 not isinstance(consumer_input.parser_controls, ParserControls):
             raise RegistryError("navigator consumer input is not a frozen handoff set")
         handoffs = consumer_input.handoffs
-        if len(handoffs) != 2 or "pct-as-filed-dossier" not in handoffs:
+        is_prior_art = consumer_input.consumer_id.endswith("-prior-art")
+        if (is_prior_art and (len(handoffs) < 3 or
+                              "pct-as-filed-dossier" in handoffs)) or \
+                (not is_prior_art and (len(handoffs) != 2 or
+                                       "pct-as-filed-dossier" not in handoffs)):
             raise RegistryError("navigator consumer handoff inventory is not exact")
         validation_paths = set()
         for package_id, handoff in handoffs.items():
@@ -94,6 +98,18 @@ class Registry:
             raise RegistryError(
                 "navigator consumer must resolve exactly claim and PCT handoffs")
         return claim_package, "pct-as-filed-dossier"
+
+    def prior_art_packages(self, consumer_id: str, claim_package: str,
+                           comparison_package: str,
+                           passage_map_package: str) -> tuple[str, ...]:
+        required = {claim_package, comparison_package, passage_map_package}
+        if consumer_id != self._consumer_id or \
+                not consumer_id.endswith("-prior-art") or \
+                not required.issubset(self._handoffs):
+            raise RegistryError(
+                "prior-art navigator must resolve exactly claim, scope, and passage-map handoffs")
+        return (claim_package, comparison_package, passage_map_package,
+                *tuple(sorted(set(self._handoffs) - required)))
 
     def load_document(self, package_id: str):
         if package_id in self._semantic_inputs:
@@ -138,6 +154,39 @@ class Registry:
         document = SourceDocument(
             document_id=package_id, authority_scheme=scheme, xml_role=role,
             xml_raw_digest=xml_digest, registered_path=path)
+        self._documents[package_id] = document
+        self._semantic_inputs[package_id] = semantic_input
+        return document, semantic_input
+
+    def load_relation(self, package_id: str):
+        if package_id in self._semantic_inputs:
+            semantic_input = self._semantic_inputs[package_id]
+            if not hasattr(semantic_input, "_validated_root"):
+                raise RegistryError("cached relation handoff is malformed")
+            return self._documents[package_id], semantic_input
+        handoff = self._handoffs.get(package_id)
+        if handoff is None or \
+                handoff.get("authorityScheme") != "authored-relations-v1" or \
+                handoff.get("representationRole") != "relation-xml" or \
+                handoff.get("surface") is not None or handoff.get("assets"):
+            raise RegistryError("authored relation handoff is malformed")
+        try:
+            semantic_input = parse_artifact(
+                handoff["bytes"], "relation-set",
+                controls=self._parser_controls)
+        except Exception as exc:
+            raise RegistryError(
+                "handed relation XML failed its retained controls") from exc
+        identity = semantic_input._validated_root().find(
+            "{urn:aa11393:ssp:relations:1}identity")
+        if identity is None or identity.get("relationSetId") != package_id:
+            raise RegistryError("handed relation XML identity is stale")
+        document = SourceDocument(
+            document_id=package_id,
+            authority_scheme="authored-relations-v1",
+            xml_role="relation-xml",
+            xml_raw_digest=semantic_input.raw_digest,
+            registered_path=handoff["path"])
         self._documents[package_id] = document
         self._semantic_inputs[package_id] = semantic_input
         return document, semantic_input

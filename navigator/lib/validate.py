@@ -19,7 +19,7 @@ _XML_RAW_DIGEST = re.compile(r"sha256/raw:[0-9a-f]{64}\Z")
 _BASE_WORDING = frozenset({
     "artifact-label-technical-preview",
     "artifact-watermark-technical-preview",
-    "authority-pct-as-filed",
+    "authority-target-sources",
     "bundle-manifest-neutral",
     "claim-set-guidance",
     "counsel-legend",
@@ -407,3 +407,90 @@ def validate_edition(model):
                 GatewayError, ModelError, RuntimeError) as exc:
             error(code, "validation could not prove the current invariant: %s" % exc)
     return tuple(sorted(set(errors)))
+
+
+def validate_prior_art(model):
+    """Validate the closed claims-to-prior-art product invariants."""
+    errors = []
+
+    def error(code, message):
+        errors.append((str(code), str(message)))
+
+    try:
+        if model.product_id != model.edition_id + "-prior-art" or \
+                model.product_kind != "prior-art" or \
+                model.strategy_prefix.casefold() != model.edition_id or \
+                model.relation_set_id != model._passage_map_package_id:
+            error("metadata", "prior-art product identities are not closed")
+        if not model.artifact_name.endswith(
+                "_%s.html" % model.claim_set_version):
+            error("metadata", "artifact name is not claim-version bound")
+        if len(model.source_documents) < 3 or \
+                [item.authority_scheme for item in model.source_documents[:3]] != [
+                    "authored-markdown-v1", "authored-relations-v1",
+                    "authored-relations-v1"]:
+            error("sources", "claim, scope, and passage-map handoffs are not exact")
+        if any(item.authority_scheme != "pdf-evidence-transcription-v1"
+               for item in model.source_documents[3:]):
+            error("sources", "mapped passage handoff is not a PDF transcription")
+        if len(model.prior_art_scope) != model._expected_document_census or \
+                len({item.document_id for item in model.prior_art_scope}) != \
+                len(model.prior_art_scope):
+            error("scope", "comparison-matrix document scope is not exact")
+        _claims(model, error)
+        if set(model.mappings_by_unit) != set(model.units_by_fragment) or any(
+                len(value) != 1 for value in model.mappings_by_unit.values()):
+            error("relations", "passage-map state coverage is not one per unit")
+        for mapping in model.relations.mappings:
+            if mapping.status == "mapped" and not (
+                    mapping.targets or model.phrases_by_unit.get(
+                        mapping.subject.fragment_id)):
+                error("relations", "mapped state has no candidate passage")
+            if mapping.status == "counsel-review-required" and (
+                    mapping.targets or model.phrases_by_unit.get(
+                        mapping.subject.fragment_id)):
+                error("relations", "review-required state has candidate passages")
+        expected_relation_ids = {
+            item.relation_id for item in
+            (*model.relations.mappings, *model.candidate_relations)}
+        if set(model._relations_by_id) != expected_relation_ids or \
+                len(expected_relation_ids) != \
+                len(model.relations.mappings) + len(model.candidate_relations):
+            error("relations", "state and candidate relation identities are not exact")
+        expected_wording = {
+            "artifact-label-technical-preview",
+            "artifact-watermark-technical-preview",
+            "authority-target-sources", "bundle-manifest-neutral",
+            "counsel-legend", "mapping-role-combination",
+            "mapping-role-context", "mapping-role-specific",
+            "mapping-status-counsel-review-required",
+            "mapping-status-mapped", "provenance-summary",
+            "source-input-provenance", "standing-disclaimer",
+        }
+        if set(model._wording) != expected_wording:
+            error("wording", "prior-art controlled wording inventory is not exact")
+        model.controlled_text("standing-disclaimer")
+        model.controlled_text("provenance-summary")
+        reads = dict(model.read_inventory)
+        expected_reads = {
+            model._edition_path, "navigator/schema/edition.schema.json",
+            "structured_source/registry/content.json",
+            "navigator/wording/prior-art.wording.xml",
+            "navigator/schema/wording.xsd",
+        } | set(model._handoff_validation_paths)
+        if set(reads) != expected_reads:
+            error("origins", "prior-art gateway read closure is not exact")
+        if projections.origin_inventory(model) != model.origin_inventory:
+            error("origins", "prior-art origin inventory is not computed")
+    except (AttributeError, KeyError, TypeError, ValueError,
+            GatewayError, ModelError, RuntimeError) as exc:
+        error("model", "validation could not prove prior-art invariants: %s" % exc)
+    return tuple(sorted(set(errors)))
+
+
+def validate_product(model):
+    if getattr(model, "product_kind", None) == "specification":
+        return validate_edition(model)
+    if getattr(model, "product_kind", None) == "prior-art":
+        return validate_prior_art(model)
+    return (("metadata", "product kind is unsupported"),)

@@ -29,11 +29,11 @@ def validation_session():
         plan = currentstate.load_product_plan(frozen)
         sources = currentstate.validate_structured_corpus(frozen)
         currentstate.bind_sources_to_plan(plan, sources)
-        states = currentstate.derive_editions(frozen, plan.editions, sources)
+        states = currentstate.derive_products(frozen, plan.products, sources)
         _validation_session = MappingProxyType({
             "models": MappingProxyType({
                 edition_id: states[edition_id].model
-                for edition_id in plan.edition_ids
+                for edition_id in plan.product_ids
             }),
             "plan": plan,
             "snapshot": frozen,

@@ -12,7 +12,7 @@ from . import release
 
 
 BUNDLE_CONFIG_PATH = "navigator/bundles/current.json"
-BUNDLE_VERSION = "5"
+BUNDLE_VERSION = "6"
 BUNDLE_WORDING_ID = "bundle-manifest-neutral"
 
 _EDITION_ID = re.compile(r"[a-z][a-z0-9-]{0,31}\Z")
@@ -20,8 +20,8 @@ _TIMESTAMP = re.compile(
     r"(19[89][0-9]|20[0-9]{2}|21[0-9]{2})-"
     r"(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T"
     r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z\Z")
-_EDITION_ARTIFACT = re.compile(
-    r"AA11393US-([A-Z][A-Z0-9-]{0,31})-claims-spec-navigator_"
+_PRODUCT_ARTIFACT = re.compile(
+    r"AA11393US-([A-Z][A-Z0-9-]{0,31})-claims-(spec|prior-art)-navigator_"
     r"([A-Z][A-Z0-9-]*-[A-Za-z0-9.-]+)\.html\Z")
 
 
@@ -86,11 +86,11 @@ def _validated_members(members):
         if not artifact_name.endswith(".html") or \
                 checksum_name != artifact_name + ".sha256":
             raise BundleError(
-                "each configured edition must contribute one HTML/checksum pair")
+                "each configured product must contribute one HTML/checksum pair")
         if checksum_bytes != release.checksum_text(
                 artifact_name, artifact_bytes):
             raise BundleError(
-                "configured edition checksum bytes do not match its HTML")
+                "configured product checksum bytes do not match its HTML")
     return normalized
 
 
@@ -145,17 +145,17 @@ def read_zip_members(data):
 
 def validate_bundle_config(value):
     if not isinstance(value, dict) or set(value) != {
-            "bundleVersion", "declaredTimestamp", "editions",
+            "bundleVersion", "declaredTimestamp", "products",
             "manifestWordingId", "members", "name"} or \
             value.get("bundleVersion") != BUNDLE_VERSION or \
             value.get("manifestWordingId") != BUNDLE_WORDING_ID:
         raise BundleError("bundle configuration shape/version is not current")
-    editions = value.get("editions")
-    if not isinstance(editions, list) or not editions or \
-            any(not isinstance(edition, str) or
-                _EDITION_ID.fullmatch(edition) is None for edition in editions) or \
-            len(editions) != len(set(editions)):
-        raise BundleError("bundle edition inventory is not canonical and unique")
+    products = value.get("products")
+    if not isinstance(products, list) or not products or \
+            any(not isinstance(product, str) or
+                _EDITION_ID.fullmatch(product) is None for product in products) or \
+            len(products) != len(set(products)):
+        raise BundleError("bundle product inventory is not canonical and unique")
     _zip_datetime(value.get("declaredTimestamp"))
     name = validate_member_name(value.get("name"))
     if not name.endswith("_TECHNICAL-PREVIEW.zip"):
@@ -163,24 +163,24 @@ def validate_bundle_config(value):
 
     members = value.get("members")
     if not isinstance(members, list) or \
-            len(members) != len(editions) * 2 + 1:
+            len(members) != len(products) * 2 + 1:
         raise BundleError(
             "bundle configuration must enumerate each edition pair and manifest")
     expected_kinds = tuple(
-        kind for unused_edition in editions
+        kind for unused_product in products
         for kind in ("sealed", "artifact-checksum")) + ("manifest",)
     seen_names = []
     for index, (entry, expected_kind) in enumerate(zip(members, expected_kinds)):
         if not isinstance(entry, dict) or entry.get("kind") != expected_kind:
             raise BundleError("bundle member %d has the wrong kind" % index)
         if expected_kind == "sealed":
-            if set(entry) != {"edition", "kind", "name"} or \
-                    entry.get("edition") != editions[index // 2] or \
+            if set(entry) != {"product", "kind", "name"} or \
+                    entry.get("product") != products[index // 2] or \
                     not entry.get("name", "").endswith(".html"):
                 raise BundleError("sealed bundle member is malformed")
         elif expected_kind == "artifact-checksum":
-            if set(entry) != {"artifact", "edition", "kind", "name"} or \
-                    entry.get("edition") != editions[index // 2] or \
+            if set(entry) != {"artifact", "product", "kind", "name"} or \
+                    entry.get("product") != products[index // 2] or \
                     entry.get("artifact") != members[index - 1].get("name") or \
                     entry.get("name") != entry.get("artifact") + ".sha256":
                 raise BundleError("artifact-checksum member is malformed")
@@ -190,17 +190,20 @@ def validate_bundle_config(value):
         seen_names.append(validate_member_name(entry.get("name")))
     if len(seen_names) != len(set(name.casefold() for name in seen_names)):
         raise BundleError("bundle configuration has duplicate member names")
-    versions = []
-    for index, edition in enumerate(editions):
+    schedule = []
+    for index, product in enumerate(products):
         entry = members[index * 2]
-        match = _EDITION_ARTIFACT.fullmatch(entry["name"])
+        match = _PRODUCT_ARTIFACT.fullmatch(entry["name"])
         if match is None:
-            raise BundleError("sealed member name is not bound to its edition")
-        if match.group(1) != edition.upper():
-            raise BundleError("sealed member name is not bound to its edition")
-        versions.append(match.group(2))
-    expected_name = "AA11393US-claims-navigators_%s_TECHNICAL-PREVIEW.zip" % \
-        "_".join(versions)
+            raise BundleError("sealed member name is not bound to its product")
+        strategy, kind, version = match.groups()
+        expected_product = strategy.casefold() + "-" + (
+            "specification" if kind == "spec" else "prior-art")
+        if product != expected_product:
+            raise BundleError("sealed member name is not bound to its product")
+        schedule.append(product + "-" + version)
+    expected_name = "AA11393US-claims-evidence-navigators_%s_TECHNICAL-PREVIEW.zip" % \
+        "_".join(schedule)
     if name != expected_name:
-        raise BundleError("bundle name is not derived from the exact editions")
+        raise BundleError("bundle name is not derived from the exact products")
     return value

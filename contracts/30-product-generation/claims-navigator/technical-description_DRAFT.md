@@ -116,9 +116,10 @@ scheme, empty dependency and asset mappings, `surface=None`, and exact validatio
 consumer input pairs the handoff set with the same-context retained parser controls. The PCT
 handoff contains the exact transcription XML bytes, transcription role, authority scheme, the same
 frozen `PDFTranscriptionSurface` validated upstream, its exact four asset-byte entries, no
-dependencies, and exact validation reads. No authored-relation edge or handoff exists. The navigator
-secure-parses only the handed claim XML under the retained controls, never reconverts Markdown or
-loads default controls, and never reopens a handed path.
+dependencies, and exact validation reads. No authored-relation edge or handoff exists for either
+claims-to-specification consumer. Each specification navigator secure-parses only the handed claim
+XML under the retained controls, never reconverts Markdown or loads default controls, and never
+reopens a handed path.
 
 Markdown and PDF paths can occur in a handoff's inherited validation-read census because upstream
 validation proves generated XML against its authority and binds transcription XML to stored evidence.
@@ -458,36 +459,39 @@ locked inputs produce byte-identical HTML, detached checksums, manifest, ZIP, an
 inventory. Ordering, line endings, locale, timestamps, member metadata, paths, and other runtime
 variation are fixed by closed mechanical rules or excluded.
 
-The current bundle is:
+The current shared four-product bundle is:
 
 ```text
-AA11393US-claims-navigators_NA-2026-07-22-v4_AF-2026-07-22-v6_TECHNICAL-PREVIEW.zip
+AA11393US-claims-evidence-navigators_na-specification-NA-2026-07-22-v4_af-specification-AF-2026-07-22-v6_na-prior-art-NA-2026-07-22-v4_af-prior-art-AF-2026-07-22-v6_TECHNICAL-PREVIEW.zip
 ```
 
-For the current two configured editions it is a deterministic STORE ZIP containing these five
-members in configured-edition order:
+It is a deterministic STORE ZIP containing these nine members in configured-product order:
 
 1. `AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html`
 2. `AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html.sha256`
 3. `AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html`
 4. `AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html.sha256`
-5. `MANIFEST.txt`
+5. `AA11393US-NA-claims-prior-art-navigator_NA-2026-07-22-v4.html`
+6. `AA11393US-NA-claims-prior-art-navigator_NA-2026-07-22-v4.html.sha256`
+7. `AA11393US-AF-claims-prior-art-navigator_AF-2026-07-22-v6.html`
+8. `AA11393US-AF-claims-prior-art-navigator_AF-2026-07-22-v6.html.sha256`
+9. `MANIFEST.txt`
 
 The ZIP has its own detached `.sha256` beside it, not inside it. The manifest carries the exact
 technical-preview label in Section 1, identifies the configured products as alternative
 counsel-review editions without preference or recommendation, and lists checksums for every
 non-manifest member. It contains no compatibility authorization, deferred-control registry, or
 future release profile. The bundle implementation admits only the general shape of one HTML and
-checksum pair per configured edition followed by the manifest; it has no two-edition special case.
+checksum pair per configured product followed by the manifest; it has no product-kind branch.
 
-Either HTML artifact remains independently usable. Member names, order, bytes, checksums, ZIP
+Each HTML artifact remains independently usable. Member names, order, bytes, checksums, ZIP
 metadata, and neutral manifest text are deterministic and validation-enforced.
 
-Input validation is read-only. Every product command validates the product contract pair,
-machine-readable acceptance registry, exact live implementation census, product plan, structured-
-source closure, and applicable stored inputs from the same retained bytes before model construction
-or product publication. Each command constructs one closed map of declared generated-product paths
-and bytes, validates the complete candidate map before the first write, stages every output, and
+Input validation is read-only. Every product command validates both product contract pairs, both
+machine-readable acceptance registries, the exact live implementation census, product plan,
+structured-source closure, and applicable stored inputs from the same retained bytes before model
+construction or product publication. Each command constructs one closed map of declared generated-
+product paths and bytes, validates the complete candidate map before the first write, stages every output, and
 atomically replaces each owned file. Before success, it exact-reads every declared output and proves
 that only those paths changed with the required bytes, modes, names, checksums, and complete-set
 membership. Candidate, release, and bundle publication are unreachable from a split or
@@ -497,15 +501,15 @@ cannot modify a semantic XML authority.
 Publication is per-output atomic and does not claim multi-file rollback. An interruption, partial
 replacement, readback mismatch, or mixed generated set is not current and must be regenerated from
 the same retained inputs; a valid individual member cannot rescue an incomplete set. Candidate
-proof binds the exact edition, product plan, retained capture, derived HTML, stored candidate bytes,
+proof binds the exact product, product plan, retained capture, derived HTML, stored candidate bytes,
 content-lock digest, and fresh-worker digest. A matching digest or detached prior proof alone cannot
 authorize release. Bundle construction is a pure function of the explicit product plan and derived
-edition states; a separate exact verifier compares every stored sealed/checksum member before the
+product states; a separate exact verifier compares every stored sealed/checksum member before the
 bundle command writes or aggregate validation passes.
 
 ## 10. Worktree validation and implementation closure
 
-This technical description, its acceptance criteria, `navigator/schema/acceptance.json`, the exact
+Both phase-30 technical descriptions, their acceptance criteria and data registries, the exact
 implementation and workflow census, structured-source boundary, navigator controls, registered
 tests and vectors, and stored products form one indivisible current implementation. Navigator code,
 workflow, controls, tests, or products constitute no accepted state independently of this closure.
@@ -517,14 +521,14 @@ affected member of this closure coherently in one retained current-state candida
 repository history, and external approval records cannot establish or repair that agreement.
 
 Every product command captures retained bytes, resolves one closed product plan from the current
-bundle and edition controls, validates the complete structured corpus once, binds the plan to the
+bundle and product controls, validates the complete structured corpus once, binds the plan to the
 same-snapshot immutable consumer handoffs, and derives only from those explicit inputs. Model,
-edition, and bundle builders accept no missing-input default and cannot construct a verifier or
+product, and bundle builders accept no missing-input default and cannot construct a verifier or
 reopen a structured-source path.
 
-The bundle edition inventory controls aggregate iteration. Each edition entry must agree exactly
-with its edition file, consumer, claim package, relation and wording controls, sealed artifact,
-checksum member, and declared timestamp. Unknown, duplicate, incomplete, or unowned editions fail
+The bundle product inventory controls aggregate iteration. Each product entry must agree exactly
+with its control file, consumer, claim package, relation and wording controls, sealed artifact,
+checksum member, and declared timestamp. Unknown, duplicate, incomplete, or unowned products fail
 before model construction. The renderer and bundle builder contain no edition-specific aggregate
 branch.
 
@@ -535,7 +539,7 @@ The aggregate gate uses this fixed dependency order inside the retained isolated
 2. concurrently execute the two independent read-only expensive branches: (a) render every
    retained Markdown document with three bounded Pandoc workers and resolve every local path and
    fragment in deterministic path order; and (b) validate all three structured-source domains once,
-   freeze their parser controls and declared consumer handoffs, derive every configured edition,
+   freeze their parser controls and declared consumer handoffs, derive every configured product,
    build the configured manifest, checksums, origin inventory, and ZIP once while exactly one fresh
    interpreter concurrently repeats that complete source/product derivation once for canonical
    digest comparison;
@@ -574,21 +578,21 @@ in Section 9 is only a delivery product.
 
 The accepted implementation has one retained-worktree structured-source validation path, one
 snapshot-bound immutable handoff result, one configuration-resolved product plan, one
-navigator-owned control gateway, one immutable typed model per configured edition, one
+navigator-owned control gateway, one immutable typed model per configured product, one
 edition-blind rendering kernel, and one fresh product-set reproduction worker. Unsupported inputs
 and obsolete formats fail closed before writes; no backward-compatibility branch, implicit upgrade
 path, optional validation fallback, or retired reproduction worker is permitted.
 
 The executable closure requires exact retained-capture agreement across all product and shared code,
-the product contract pair, acceptance registry, schemas, launchers, workflows, controls, registered
-tests, required vectors, declared XML inputs, edition products, checksums, manifest, and bundle.
+both product contract pairs, both acceptance registries, schemas, launchers, workflows, controls,
+registered tests, required vectors, declared XML inputs, products, checksums, manifest, and bundle.
 Missing, additional, alternate, inactive, or contradictory members fail. The readable navigator
 inventory below is supplemental and cannot replace capture-wide classification and exact census
 enforcement; import success, runtime reachability, a generated artifact, or a detached pass result
 cannot establish closure alone.
 
 The focused negative boundary rejects Markdown or PDF used as navigator semantic input; an
-authored-relation runtime handoff; a missing, additional, dependency-bearing, or non-XML structured-
+authored-relation runtime handoff in a specification product; a missing, additional, dependency-bearing, or non-XML structured-
 source handoff; an omitted or unresolved model identity; an unresolved item represented as an empty
 relation set; a model, content lock, candidate proof, bundle state, or reproduction projection from
 another capture; a partial, mixed, stale, mismatched, or unreadable candidate, release, checksum,
@@ -598,18 +602,18 @@ The exact live navigator implementation census is:
 
 | Layer | Current files |
 |---|---|
-| Product contract | `contracts/30-product-generation/claims-navigator/{technical-description_DRAFT.md,acceptance-criteria_DRAFT.md}` and `navigator/schema/acceptance.json` |
+| Product contracts | Both phase-30 contract pairs and `navigator/schema/{acceptance.json,prior-art-acceptance.json}` |
 | Authority and workflow guidance | `AGENTS.md`, `README.md`, `GLOSSARY.md`, `STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md`, `contracts/README.md`, and `navigator/RUNBOOK-content-sync-and-regeneration.md` |
 | Package and commands | `navigator/__init__.py`, `navigator/__main__.py`, `navigator/build.py` |
-| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
-| Closed navigator controls | `navigator/bundles/current.json`; the edition, relation, and edition-wording files selected by that bundle control; `navigator/schema/{edition.schema.json,navigator-relations.xsd,wording.xsd}`; and `navigator/wording/shared.wording.xml` |
-| Registered navigator tests | `navigator.tests.{test_canon,test_current_pipeline,test_render_current,test_xml_model}` |
+| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `priorart.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
+| Closed navigator controls | `navigator/bundles/current.json`; the product, relation, and wording files selected by that bundle control; `navigator/schema/{acceptance.json,prior-art-acceptance.json,edition.schema.json,navigator-relations.xsd,wording.xsd}`; and current shared/prior-art wording XML |
+| Registered navigator tests | `navigator.tests.{test_canon,test_current_pipeline,test_prior_art,test_render_current,test_xml_model}` |
 | Registered structured-source tests | `structured_source.tests.{test_acceptance,test_atomic,test_conversion,test_pdf_transcription,test_registry,test_xml_contract}` |
 
 The control-input census is derived path-for-path from the configuration-resolved product plan;
 an extra, missing, renamed, or alternate navigator control fails before derivation.
 
-The executable acceptance registry contains only the ordered current IDs, scopes, outcomes, and
+The executable acceptance registries contain only the ordered current IDs, scopes, outcomes, and
 independent enforcers. The aggregate gate and registered tests check user-visible content, semantic DOM, identity,
 relations, static navigation and interaction instructions, accessibility markup, no-script and
 print structure, security, deterministic output, products, and bundle requirements from current

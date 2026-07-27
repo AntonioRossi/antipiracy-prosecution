@@ -15,6 +15,7 @@
   <xs:simpleType name="scopeType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="shared" />
+      <xs:enumeration value="prior-art" />
       <xs:enumeration value="na" />
       <xs:enumeration value="af" />
     </xs:restriction>

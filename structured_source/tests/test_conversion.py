@@ -422,7 +422,7 @@ class AuthoredMarkdownConversion(unittest.TestCase):
                     self.assertNotIn("ssp-", fragment_id)
                     self.assertIn(fragment_id, inventories[document_id])
                     referenced.add((document_id, fragment_id))
-        self.assertEqual(len(referenced), 71)
+        self.assertEqual(len(referenced), 197)
 
     def test_current_pdf_content_and_relation_parsers_are_closed(self):
         self.assertEqual(
@@ -719,7 +719,7 @@ class AuthoredRelations(unittest.TestCase):
             set(state["validationPackageIds"]), endpoint_package_ids)
         self.assertTrue(endpoint_paths.issubset(state["validationPaths"]))
 
-    def test_live_registry_declares_no_relation_consumer_edge(self):
+    def test_live_registry_declares_exact_relation_consumer_edges(self):
         registry = json.loads(
             (ROOT / "structured_source/registry/content.json").read_text())
         relation_packages = {
@@ -730,7 +730,16 @@ class AuthoredRelations(unittest.TestCase):
             for consumer in registry["consumers"]
             for edge in consumer["edges"]
             if edge["packageId"] in relation_packages]
-        self.assertEqual(relation_edges, [])
+        self.assertEqual(relation_edges, [
+            ("navigator-af-prior-art",
+             "aa11393us-af-claim-prior-art-passage-map"),
+            ("navigator-af-prior-art",
+             "aa11393us-af-prior-art-comparison-matrix"),
+            ("navigator-na-prior-art",
+             "aa11393us-na-claim-prior-art-passage-map"),
+            ("navigator-na-prior-art",
+             "aa11393us-na-prior-art-comparison-matrix"),
+        ])
 
 
 if __name__ == "__main__":

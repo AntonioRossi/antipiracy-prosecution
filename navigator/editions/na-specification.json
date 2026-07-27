@@ -1,4 +1,7 @@
 {
+  "productVersion": "1",
+  "productId": "na-specification",
+  "productKind": "specification",
   "editionVersion": "2",
   "editionId": "na",
   "displayName": "AA11393US claims-to-specification navigator — NA edition",

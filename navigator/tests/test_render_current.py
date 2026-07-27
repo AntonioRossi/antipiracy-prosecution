@@ -69,12 +69,18 @@ class FakeModel:
 
     def __init__(self):
         self.edition_id = "na"
+        self.product_id = "na-specification"
+        self.product_kind = "specification"
         self.display_name = 'Hostile </title><img src=x onerror="boom">'
         self.strategy_name = "test & strategy"
         self.strategy_prefix = "NA"
         self.artifact_name = "fake.html"
         self.declared_release_timestamp = "2026-07-23T00:00:00Z"
         self.claim_set_version = "NA-test-v1"
+        self.target_pane_label = "PCT as-filed disclosure"
+        self.authority_header = "PCT as filed"
+        self.forward_mode_label = "Claims → Specification"
+        self.reverse_mode_label = "Specification → Claims"
         self.independent_claims = (1,)
         self.relation_set_id = "na-pct"
         self.profile_label = "TECHNICAL PREVIEW <profile>"
@@ -146,7 +152,8 @@ class FakeModel:
         self.dispositions_by_subject = MappingProxyType({})
         reference = (RelationRef("mapping", "relation-one", "claim-1"),)
         self.reverse_index = MappingProxyType({
-            "target-a": reference, "target-b": reference})
+            ("pct-doc", "target-a"): reference,
+            ("pct-doc", "target-b"): reference})
         self.assets = MappingProxyType({})
         self.origin_inventory = ()
 
@@ -160,7 +167,7 @@ class FakeModel:
             "counsel-legend": "CONFIDENTIAL <legend>",
             "artifact-label-technical-preview": self.profile_label,
             "source-input-provenance": "Source inputs",
-            "authority-pct-as-filed": "PCT as filed",
+            "authority-target-sources": "PCT as filed",
         }
         if wording_id == "standing-disclaimer":
             return "Disclaimer " + self.claim_set_version
@@ -184,7 +191,10 @@ class FakeModel:
 class CurrentRenderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.models = validation_session()["models"]
+        cls.models = MappingProxyType({
+            key: value for key, value in
+            validation_session()["models"].items()
+            if value.product_kind == "specification"})
         cls.artifacts = {
             edition: render(model)
             for edition, model in cls.models.items()
@@ -196,7 +206,8 @@ class CurrentRenderTests(unittest.TestCase):
         return parser
 
     def test_live_products_are_complete_self_contained_and_accessible(self):
-        expected = {"na": (30, 77), "af": (23, 61)}
+        expected = {"na-specification": (30, 77),
+                    "af-specification": (23, 61)}
         for edition, artifact in self.artifacts.items():
             with self.subTest(edition=edition):
                 model = self.models[edition]
@@ -411,8 +422,8 @@ class CurrentRenderTests(unittest.TestCase):
                     navigation["claimGates"], expected_claim_gates)
 
     def test_preview_is_candidate_plus_only_the_controlled_watermark(self):
-        model = self.models["na"]
-        candidate = self.artifacts["na"].decode("utf-8")
+        model = self.models["na-specification"]
+        candidate = self.artifacts["na-specification"].decode("utf-8")
         preview = render(model, mode="preview").decode("utf-8")
         watermark = model.controlled_text(
             "artifact-watermark-technical-preview")
@@ -446,7 +457,7 @@ class CurrentRenderTests(unittest.TestCase):
             "mapping-status-mapped", "mapping-role-combination",
             "counsel-legend", "standing-disclaimer",
             "artifact-label-technical-preview",
-            "source-input-provenance", "authority-pct-as-filed",
+            "source-input-provenance", "authority-target-sources",
             "provenance-summary",
         }.issubset(called))
 

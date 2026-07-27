@@ -14,9 +14,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "navigator", "dist")
 COMMANDS = ("preview", "candidate", "release", "bundle", "validate-current")
 USAGE = {
-    "preview": "python -m navigator preview <edition>",
-    "candidate": "python -m navigator candidate <edition>",
-    "release": "python -m navigator release <edition>",
+    "preview": "python -m navigator preview <product>",
+    "candidate": "python -m navigator candidate <product>",
+    "release": "python -m navigator release <product>",
     "bundle": "python -m navigator bundle",
     "validate-current": "python -m navigator validate-current",
 }
@@ -85,9 +85,9 @@ def _assert_only_outputs_changed(before, outputs, label):
                                (label, name))
 
 
-def cmd_preview(edition_id):
+def cmd_preview(product_id):
     frozen, plan, sources = _product_context()
-    edition = plan.edition(edition_id)
+    edition = plan.product(product_id)
     state = currentstate.derive(
         edition, "preview", frozen, sources.input_for(edition.consumer_id),
         object())
@@ -95,9 +95,9 @@ def cmd_preview(edition_id):
     return state.html
 
 
-def cmd_candidate(edition_id):
+def cmd_candidate(product_id):
     frozen, plan, sources = _product_context()
-    edition = plan.edition(edition_id)
+    edition = plan.product(product_id)
     state = currentstate.derive(
         edition, "candidate", frozen, sources.input_for(edition.consumer_id),
         object())
@@ -110,15 +110,15 @@ def cmd_candidate(edition_id):
         "command": "candidate",
         "commandResultVersion": "2",
         "contentLockDigest": state.content_lock.lock_digest,
-        "edition": edition_id,
+        "product": product_id,
         "outputs": written,
         "status": "generated",
     }
 
 
-def cmd_release(edition_id):
+def cmd_release(product_id):
     frozen, plan, sources = _product_context()
-    edition = plan.edition(edition_id)
+    edition = plan.product(product_id)
     state = currentstate.derive(
         edition, "release", frozen, sources.input_for(edition.consumer_id),
         object())
@@ -128,7 +128,7 @@ def cmd_release(edition_id):
     except snapshot.SnapshotError as exc:
         raise CommandError("current candidate is unavailable") from exc
     reproduced = currentstate.fresh_product_projection(
-        ROOT, currentstate.ReproductionRequest((edition_id,), False))
+        ROOT, currentstate.ReproductionRequest((product_id,), False))
     proof = currentstate.prove_candidate(
         state, stored_candidate, reproduced)
     checksum_name = state.model.artifact_name + ".sha256"
@@ -145,7 +145,7 @@ def cmd_release(edition_id):
         "command": "release",
         "commandResultVersion": "2",
         "contentLockDigest": state.content_lock.lock_digest,
-        "edition": edition_id,
+        "product": product_id,
         "outputs": written,
         "status": "sealed",
     }
@@ -153,7 +153,7 @@ def cmd_release(edition_id):
 
 def cmd_bundle():
     frozen, plan, sources = _product_context()
-    states = currentstate.derive_editions(frozen, plan.editions, sources)
+    states = currentstate.derive_products(frozen, plan.products, sources)
     bundle_state = currentstate.build_bundle_state(frozen, plan, states)
     currentstate.verify_stored_artifact_members(frozen, bundle_state)
     name = bundle_state.config["name"]

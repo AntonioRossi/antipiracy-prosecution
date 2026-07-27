@@ -1,4 +1,7 @@
 {
+  "productVersion": "1",
+  "productId": "af-specification",
+  "productKind": "specification",
   "editionVersion": "2",
   "editionId": "af",
   "displayName": "AA11393US claims-to-specification navigator — AF edition",

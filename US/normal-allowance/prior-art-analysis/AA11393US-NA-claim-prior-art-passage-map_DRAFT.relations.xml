@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="claim-prior-art-passage-map-v1" schemaVersion="1">
+  <identity owner="Applicant — Antonio Rossi" profile="claim-prior-art-passage-map-v1" relationSetId="aa11393us-na-claim-prior-art-passage-map" scope="NA" status="draft" />
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00001">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00002">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e211cbecd4f817ab9b3e8d36d5d6b34b2c9663ddee16c7dcf6ff32f213d03d03" fragmentId="claim-1-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00003">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:498c5abbe5e04394826390d679af44d507948bd8d5562cdcd83e2b4c86539efb" fragmentId="claim-1-limitation-2" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00004" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00004">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:2715db60c47788b42107a5051b1018bc69b921dd61567d904faa6e33159675eb" fragmentId="claim-1-limitation-3" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00005">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:2878946245f97289447ff541fe338792eea75305d18b87d8e1f5227d4a494d16" fragmentId="claim-1-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00006">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:dd18836a6b135ed5b0c0a18345869700c74529e93a693c12a7e6cada3a143eb7" fragmentId="claim-1-limitation-5" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00007">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:cee374c133416c7c92638054a77f9f34a232936247562aa486bad9ff570cb2d2" fragmentId="claim-1-limitation-6" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00008">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c83860cc62b9b53969aa5c3c7460036aa49d18b19470725b30f8b79394047f79" fragmentId="claim-2-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00009">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a11f3dc01eb85a4d55f38e90dc899a421ee93fef9ddb871ec983bb610d82dd7a" fragmentId="claim-3-limitation-1" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00010">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:03eb03adc092152ec80ef05b2c9efdf95d918b836d6025ddfc9f461816f45207" fragmentId="claim-4-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00011">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:035fa29306e303cddbf2a4ad3c65efc8b3d91f79cb9adddc89c8daab1331720b" fragmentId="claim-5-limitation-1" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00012">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f3cad01b2deda7b19adccb2261d3e2052149becbe9a6c3e0464b49305dcbabc8" fragmentId="claim-6-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00013">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f134162f66b6b73ec767503bf8c3a615c39fae69215129457ef93724c297ad70" fragmentId="claim-7-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00014">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b30c0d9e7352e79874ee759735840b4a56f0b17cf1672aed6d31adb22a63d868" fragmentId="claim-8-limitation-1" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00015">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4c1c41703ceeb9505396a8eccf7661e98a3a39373ecf710c6fd609609e866b9b" fragmentId="claim-9" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00016">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d0b68277ce6d122d9eff4636c97416e030daf6c782d895a945bf81ef39154b47" fragmentId="claim-9-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00017">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:7681788d8269241f46053deadeba6ac3a541e6aebee9d2d736df7b7ab2d6720b" fragmentId="claim-9-limitation-2" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00018">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:df332ec7dc326e0b6dcf644ac874397f0ab9829f73b2d02b22e3e2954b9b91df" fragmentId="claim-9-limitation-3" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00019">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6734831dec5fadbb7703a1245b497b65cad4a1475ce9e4ffd69b770044a2d29c" fragmentId="claim-9-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00020">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:feac64f6141d76db93d377500b5c881baceef548cdf9f79d861270cba4763ffd" fragmentId="claim-9-limitation-5" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00021">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e6b6753cf4a8d7ad7a169ac6d668c1ada49c3b045b51919755886c97394e936f" fragmentId="claim-9-limitation-6" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00022">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:770b406ad15e57a63a7f75834aa709397d948a1e4f48feecb5667458e007faea" fragmentId="claim-9-limitation-7" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00023">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c3faad333c550cd3441bee492c33423bd9395d5fd5c1da7829cb77c97f3e2f14" fragmentId="claim-9-limitation-8" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00024">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fba743401ee1305db7527f36f0ae030ba0ea56a9342ce03394c2f99066e79fb3" fragmentId="claim-10-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00025">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4b19d2ff3a66cbd0f6bd86d554e95d7fbda4acd9a6072ad161b7746b10a88180" fragmentId="claim-11-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00026">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:afe16c282bb7b278e7521ae8d40ccfa03a12a506dd7e61102c25fe7dbc9a1951" fragmentId="claim-12-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00027">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8a8c245e6f7ebdf88c436a739b9ab195965361be301332e06972c11016116462" fragmentId="claim-13" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00028">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:9dbc106a33e27e6e0fc6240bb1a78b5efed7267f34189f5f018e5ba70822672e" fragmentId="claim-13-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00029">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4a3a06a249f96dac137ec13ec102f1c02d47327ad81b82d35916cef9ef501954" fragmentId="claim-13-limitation-2" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00030">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:70bae042ed4d264739e24edc1502769940b4172ba034a2591e0a5b97c88fb255" fragmentId="claim-13-limitation-3" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00031">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e8cb238d47f7dc6128c58a139dcb598c7dbfd00c6fe806a1b116fe59698e261e" fragmentId="claim-13-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00032">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:24ee9b4459a1d5180ba8d76e88ec7a6b7de61eb9677a92f63d100bdfdeee5645" fragmentId="claim-13-limitation-5" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00033">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:272eb778d952b57d2b9d321b73d20b6897125c80c45dd1dc8d2cd85b9d55e948" fragmentId="claim-14-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00034">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:84d10a9259dcd8011f91557d23e0d4bdefb2bffc8ec5b1dbac78544aa751dafe" fragmentId="claim-15-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00035">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00036">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4baa09990a8b6c0d610584c06db0f0d5279f00343e1c4c478220826d598ae3bf" fragmentId="claim-16-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00037">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:87469c9e20fd49d188316fbb03b150034ee8c91f15d0125fb7dba024d32d8060" fragmentId="claim-16-limitation-2" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00038">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e3cd28094e7e2aedfc7195d576afaabd1f818e6c368097d9317143e11d1050fd" fragmentId="claim-16-limitation-3" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00039">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c074232d9e68db8d562529de51b475fe0127d940233e8019bbd2bbf8fbb4dbd2" fragmentId="claim-16-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00040">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:835f037136b0578eef5039c2f28daf7f998f39109c3275e26c422582a705638d" fragmentId="claim-16-limitation-5" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00041">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:28876c7a8d5f3c4ff017c234f28e2d903d05abe7aca67e3585ed2211ebb1fc1a" fragmentId="claim-16-limitation-6" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00042">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1074cb8be4b3ee260ebad4cb9893012d1ddc1e858127c4925371f92502bbc2fa" fragmentId="claim-17-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00043">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:05cd0a8c06416b3be9b19c0a64ca3bfbd5bf8fb5d4beec0b7a6e35abc8cd3251" fragmentId="claim-18-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00044">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26bc53f7a0869fa79e2d6a0acf0eb251f5e9825a7852549b3e4e242e1a805f77" fragmentId="claim-19" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00045">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:aeee08c809bcc8e457d33322e658b17849ae35dd96a1694d64e5801b28a3b124" fragmentId="claim-19-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00046">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b3dbbd24c285e9a45dbc632264ebba53cd31d535939523052d15fd2b09df4bae" fragmentId="claim-19-limitation-2" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00047">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:21eb29243a216e104590285f3556e3edf209c2a28d12efc156eb6f3ec23f8a73" fragmentId="claim-19-limitation-3" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00048">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:9f347ddc0f8148b1901b6e7d190c6710b9d55ad5c8f159e373c92a170b6f35f8" fragmentId="claim-19-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00049">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6f2afdba46326413536ed2796a0752c542f77ea32fe2a79183534af0568eed45" fragmentId="claim-20-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00050">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:cccef39d6704ab734187044992d60673a2789584219b84aaef3f2e4e042c0dd9" fragmentId="claim-21-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00051">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:99173f7e147fc5352aba383d701cc953e4a8963424b6aa0f90ca4c625d306193" fragmentId="claim-22" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00052">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fce26571a174aa6808a122598471e8631b7e1af34f112d3f1fab7e8efa471af3" fragmentId="claim-22-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00053">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1ae13c8937a17d60326ac97dcf333325c998e683ec5a461979ad6102aee25ed6" fragmentId="claim-22-limitation-2" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00054">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d0a999053b35f651dc442f86ec9a1dd4348045929f17f551784b9415fd7840be" fragmentId="claim-22-limitation-3" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00055">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1dcf06c6c4475d353e235ddb90ad585ef936972fba42816ba8ff02ae367be93c" fragmentId="claim-22-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00056" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00056">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:61bca277e813edbb28ba5d130d20b186710d0ad229ec4dc63cac42b155db255f" fragmentId="claim-22-limitation-5" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00057" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00057">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e787c910f77a58daf99350faaf8ff077e632f20969f465cc396fe518ae3508b1" fragmentId="claim-22-limitation-6" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00058" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00058">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:20f0740ba2a561bb22e32abcaa5c3bb52d1b87138a54371bab138ed7fc9dc853" fragmentId="claim-22-limitation-7" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00059" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00059">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e134bf26b177a90dd93fc9c19e479e9ecaf4a48c533ec3d0413f826bdb07ae96" fragmentId="claim-22-limitation-8" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00060" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00060">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b992bff3b96a393e289a5d8ad5670f64d4c0087825b64d723134fbc276044515" fragmentId="claim-22-limitation-9" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00061">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:387b0abc7cf0d762085de7cb81d612e44e3e832a0bd444054d06008d545103f2" fragmentId="claim-22-limitation-10" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00062">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8908b5240edad4c4504c37ab4bd19a291453279b77f0e5ac440688d3d4843368" fragmentId="claim-22-limitation-11" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00063" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00063">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e414f41968d366fa7e0217691c4ca8e8e08d4aa5842ab59554f2e11f7bff97e4" fragmentId="claim-22-limitation-12" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00064" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00064">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f54cbf2187aa9087aa565f6c305d0079a0f4f6fac89ded8a28d24ad51118043d" fragmentId="claim-22-limitation-13" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00065" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00065">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fbbd20061a00ae30726075a16b394f2e36549290fcea2b157c0c1db5f45b3016" fragmentId="claim-23-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00066" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00066">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:463f26e34afd150f6fe7558d569b0cba589e1bb792477976d37b1e2835fb8c7d" fragmentId="claim-24-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00067" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00067">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b45c65767ebb4892d6161e1f84259ce048d3b611a4a1de74aa3ce65ff58d7d61" fragmentId="claim-25" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00068" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00068">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0d77ad835138131c6e7590829d71c15d3ebc8f9bbf657f13b759e06405d2701d" fragmentId="claim-25-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00069" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00069">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0c548ec65a83c7cde849165ab7c90228ddc344c768ced90a318e3374c8872437" fragmentId="claim-25-limitation-2" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00070" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00070">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:255f61e9cf3b9bd87e968291ad1ac997032a9e34136472e7173aca28aa932145" fragmentId="claim-25-limitation-3" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00071" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00071">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:93968fb1eab4c76afdadc34adf3e2b274d207ea8ae083a3256db8035a4aa479b" fragmentId="claim-25-limitation-4" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00072" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00072">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:393574bee8cf4d0af19ab8788f3b99231efe0a4f5f97b791d1a69582a0a510ef" fragmentId="claim-25-limitation-5" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00073" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00073">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b945c93400542751b9082881e814b3f65cd6f33c5074c66bfb523a318c8909b8" fragmentId="claim-26-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00074" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00074">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3aaa60e7f24457fa0611a34f05fe9287ef56cd17fe210dbb501df99d31273a09" fragmentId="claim-27-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00075" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00075">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1778a546e5b3efa393a40bc600bb9e7309bc5a66ba1eac3271e7b9d95dc176da" fragmentId="claim-28-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00076" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00076">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:bf1ed0624c72aafdd1a21b261e7edcc9f30670c5f94642961e388e6a86018184" fragmentId="claim-29-limitation-1" role="subject" />
+    <assertionField name="mapping-status">mapped</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-state-00077" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-state-00077">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:68a3d4cfefa3bca5cab238c1ce717d35685b1174a26b8b5d96d4a34ec916aee7" fragmentId="claim-30-limitation-1" role="subject" />
+    <assertionField name="mapping-status">counsel-review-required</assertionField>
+    <assertionField name="record-kind">state</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00001">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The EDL, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00002">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e211cbecd4f817ab9b3e8d36d5d6b34b2c9663ddee16c7dcf6ff32f213d03d03" fragmentId="claim-1-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A20 paragraph 00129 is recorded for counsel comparison of edit-decision-list source, time-code, transition, cut, and duration instructions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00003">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:498c5abbe5e04394826390d679af44d507948bd8d5562cdcd83e2b4c86539efb" fragmentId="claim-1-limitation-2" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00004" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00004">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:2715db60c47788b42107a5051b1018bc69b921dd61567d904faa6e33159675eb" fragmentId="claim-1-limitation-3" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00005">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:2878946245f97289447ff541fe338792eea75305d18b87d8e1f5227d4a494d16" fragmentId="claim-1-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00006">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:dd18836a6b135ed5b0c0a18345869700c74529e93a693c12a7e6cada3a143eb7" fragmentId="claim-1-limitation-5" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00007">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:cee374c133416c7c92638054a77f9f34a232936247562aa486bad9ff570cb2d2" fragmentId="claim-1-limitation-6" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00008">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c83860cc62b9b53969aa5c3c7460036aa49d18b19470725b30f8b79394047f79" fragmentId="claim-2-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:5d6cdbf5be2023722eb6305cfe8036b693eab302841e665dfc5205097ec965fb" fragmentId="us-prior-art-b9-para-00274" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00274 is recorded as context for optional time desynchronization and unicast, multicast, or broadcast delivery.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00009">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:03eb03adc092152ec80ef05b2c9efdf95d918b836d6025ddfc9f461816f45207" fragmentId="claim-4-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A20 paragraph 00129 is recorded for counsel comparison of edit-decision-list source, time-code, transition, cut, and duration instructions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00010">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f3cad01b2deda7b19adccb2261d3e2052149becbe9a6c3e0464b49305dcbabc8" fragmentId="claim-6-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00011">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f134162f66b6b73ec767503bf8c3a615c39fae69215129457ef93724c297ad70" fragmentId="claim-7-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">The EDL, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00012">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4c1c41703ceeb9505396a8eccf7661e98a3a39373ecf710c6fd609609e866b9b" fragmentId="claim-9" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, SWITCHSEQ, TRACK passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00013">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d0b68277ce6d122d9eff4636c97416e030daf6c782d895a945bf81ef39154b47" fragmentId="claim-9-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00014">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:7681788d8269241f46053deadeba6ac3a541e6aebee9d2d736df7b7ab2d6720b" fragmentId="claim-9-limitation-2" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00015">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:df332ec7dc326e0b6dcf644ac874397f0ab9829f73b2d02b22e3e2954b9b91df" fragmentId="claim-9-limitation-3" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00016">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6734831dec5fadbb7703a1245b497b65cad4a1475ce9e4ffd69b770044a2d29c" fragmentId="claim-9-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00017">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:feac64f6141d76db93d377500b5c881baceef548cdf9f79d861270cba4763ffd" fragmentId="claim-9-limitation-5" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00018">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e6b6753cf4a8d7ad7a169ac6d668c1ada49c3b045b51919755886c97394e936f" fragmentId="claim-9-limitation-6" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00019">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:770b406ad15e57a63a7f75834aa709397d948a1e4f48feecb5667458e007faea" fragmentId="claim-9-limitation-7" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00020">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c3faad333c550cd3441bee492c33423bd9395d5fd5c1da7829cb77c97f3e2f14" fragmentId="claim-9-limitation-8" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A20 paragraph 00140 is recorded for counsel comparison of EDL identifiers and tracking an associated consumer.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00021">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fba743401ee1305db7527f36f0ae030ba0ea56a9342ce03394c2f99066e79fb3" fragmentId="claim-10-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00022">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4b19d2ff3a66cbd0f6bd86d554e95d7fbda4acd9a6072ad161b7746b10a88180" fragmentId="claim-11-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, SWITCHSEQ passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00023">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:afe16c282bb7b278e7521ae8d40ccfa03a12a506dd7e61102c25fe7dbc9a1951" fragmentId="claim-12-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A20 paragraph 00140 is recorded for counsel comparison of EDL identifiers and tracking an associated consumer.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00024">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8a8c245e6f7ebdf88c436a739b9ab195965361be301332e06972c11016116462" fragmentId="claim-13" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00025">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:9dbc106a33e27e6e0fc6240bb1a78b5efed7267f34189f5f018e5ba70822672e" fragmentId="claim-13-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00026">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4a3a06a249f96dac137ec13ec102f1c02d47327ad81b82d35916cef9ef501954" fragmentId="claim-13-limitation-2" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00027">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:70bae042ed4d264739e24edc1502769940b4172ba034a2591e0a5b97c88fb255" fragmentId="claim-13-limitation-3" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00028">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e8cb238d47f7dc6128c58a139dcb598c7dbfd00c6fe806a1b116fe59698e261e" fragmentId="claim-13-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00029">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:24ee9b4459a1d5180ba8d76e88ec7a6b7de61eb9677a92f63d100bdfdeee5645" fragmentId="claim-13-limitation-5" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00030">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:272eb778d952b57d2b9d321b73d20b6897125c80c45dd1dc8d2cd85b9d55e948" fragmentId="claim-14-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:5d6cdbf5be2023722eb6305cfe8036b693eab302841e665dfc5205097ec965fb" fragmentId="us-prior-art-b9-para-00274" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00274 is recorded as delivery context because it addresses unicast, multicast, and broadcast transmission.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00031">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:84d10a9259dcd8011f91557d23e0d4bdefb2bffc8ec5b1dbac78544aa751dafe" fragmentId="claim-15-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The IDENTIFY, SWITCHSEQ passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00032">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:98bfee059433b3c232d8c8c54ecccb438e9159fa34f83f3182d30b052fc89622" fragmentId="us-prior-art-a21-para-00126" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:a1e4b33f05cbe5a8956a05240280edaa6fd511be2dc141bc8043b2a180fe0360" fragmentId="us-prior-art-a21-para-00127" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:aeb35af96207fc65d5bf264823c71a1a309328241975cb766e372b5f6eb8702b" fragmentId="us-prior-art-a21-para-00143" role="evidence" />
+    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:195a5ddab6d55cb2043395c1347eea040e7536de488e8dd2579dcb6e0d95d640" fragmentId="us-prior-art-a21-para-00174" role="evidence" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, CUT, RECON, EQUALITY, IDENTIFY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00033">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4baa09990a8b6c0d610584c06db0f0d5279f00343e1c4c478220826d598ae3bf" fragmentId="claim-16-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, IDENTIFY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00034">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c074232d9e68db8d562529de51b475fe0127d940233e8019bbd2bbf8fbb4dbd2" fragmentId="claim-16-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:98bfee059433b3c232d8c8c54ecccb438e9159fa34f83f3182d30b052fc89622" fragmentId="us-prior-art-a21-para-00126" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:a1e4b33f05cbe5a8956a05240280edaa6fd511be2dc141bc8043b2a180fe0360" fragmentId="us-prior-art-a21-para-00127" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:aeb35af96207fc65d5bf264823c71a1a309328241975cb766e372b5f6eb8702b" fragmentId="us-prior-art-a21-para-00143" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">A21 paragraphs 00126, 00127, and 00143 are recorded together for counsel comparison of shot-boundary detection and deriving change time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00035">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:835f037136b0578eef5039c2f28daf7f998f39109c3275e26c422582a705638d" fragmentId="claim-16-limitation-5" role="subject" />
+    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A13 paragraph 00153 is recorded for counsel comparison of using segment identifiers to generate or reconstruct a playable manifest.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00036">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:28876c7a8d5f3c4ff017c234f28e2d903d05abe7aca67e3585ed2211ebb1fc1a" fragmentId="claim-16-limitation-6" role="subject" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:195a5ddab6d55cb2043395c1347eea040e7536de488e8dd2579dcb6e0d95d640" fragmentId="us-prior-art-a21-para-00174" role="evidence" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The EQUALITY, IDENTIFY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00037">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1074cb8be4b3ee260ebad4cb9893012d1ddc1e858127c4925371f92502bbc2fa" fragmentId="claim-17-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:b91267f07ead688368f45b42cde4b4c3865f95f7c69339811ea6ebf86f830699" fragmentId="us-prior-art-a5-plain-00034" role="evidence" />
+    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:23d6707a11443fc1966f441cf4a0cdc24c0a49b8e47e1a4526a095fa5a5de168" fragmentId="us-prior-art-a5-plain-00038" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">A5 page-5 fragments 00034 and 00038 are recorded together for counsel comparison of perceptual video signatures, image hashing, shot detection, and hash-distance matching.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00038">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:05cd0a8c06416b3be9b19c0a64ca3bfbd5bf8fb5d4beec0b7a6e35abc8cd3251" fragmentId="claim-18-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:b91267f07ead688368f45b42cde4b4c3865f95f7c69339811ea6ebf86f830699" fragmentId="us-prior-art-a5-plain-00034" role="evidence" />
+    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:23d6707a11443fc1966f441cf4a0cdc24c0a49b8e47e1a4526a095fa5a5de168" fragmentId="us-prior-art-a5-plain-00038" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A5 page-5 fragments 00034 and 00038 are recorded together for counsel comparison of perceptual video signatures, image hashing, shot detection, and hash-distance matching.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00039">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26bc53f7a0869fa79e2d6a0acf0eb251f5e9825a7852549b3e4e242e1a805f77" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The SWITCH, MANIFEST passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00040">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:aeee08c809bcc8e457d33322e658b17849ae35dd96a1694d64e5801b28a3b124" fragmentId="claim-19-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00041">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b3dbbd24c285e9a45dbc632264ebba53cd31d535939523052d15fd2b09df4bae" fragmentId="claim-19-limitation-2" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00042">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:21eb29243a216e104590285f3556e3edf209c2a28d12efc156eb6f3ec23f8a73" fragmentId="claim-19-limitation-3" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00043">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:9f347ddc0f8148b1901b6e7d190c6710b9d55ad5c8f159e373c92a170b6f35f8" fragmentId="claim-19-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00044">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6f2afdba46326413536ed2796a0752c542f77ea32fe2a79183534af0568eed45" fragmentId="claim-20-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The IDENTIFY, SWITCHSEQ, RECON passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00045">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:cccef39d6704ab734187044992d60673a2789584219b84aaef3f2e4e042c0dd9" fragmentId="claim-21-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:09bdb4beb718a7e07c30140fd6775181ad7756f750fa1d976126b907bae04ee9" fragmentId="us-prior-art-a6-para-00009" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A6 paragraph 00009 is recorded as context for a user-associated sequence of differing transmitted segments and identifying the requesting device, user, or transaction.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00046">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:99173f7e147fc5352aba383d701cc953e4a8963424b6aa0f90ca4c625d306193" fragmentId="claim-22" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:98bfee059433b3c232d8c8c54ecccb438e9159fa34f83f3182d30b052fc89622" fragmentId="us-prior-art-a21-para-00126" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:a1e4b33f05cbe5a8956a05240280edaa6fd511be2dc141bc8043b2a180fe0360" fragmentId="us-prior-art-a21-para-00127" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:aeb35af96207fc65d5bf264823c71a1a309328241975cb766e372b5f6eb8702b" fragmentId="us-prior-art-a21-para-00143" role="evidence" />
+    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:195a5ddab6d55cb2043395c1347eea040e7536de488e8dd2579dcb6e0d95d640" fragmentId="us-prior-art-a21-para-00174" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The EDL, SWITCH, MANIFEST, TRACK, CUT, RECON, EQUALITY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00047">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fce26571a174aa6808a122598471e8631b7e1af34f112d3f1fab7e8efa471af3" fragmentId="claim-22-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A20 paragraph 00129 is recorded for counsel comparison of edit-decision-list source, time-code, transition, cut, and duration instructions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00048">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1ae13c8937a17d60326ac97dcf333325c998e683ec5a461979ad6102aee25ed6" fragmentId="claim-22-limitation-2" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A20 paragraph 00129 is recorded for counsel comparison of edit-decision-list source, time-code, transition, cut, and duration instructions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00049">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d0a999053b35f651dc442f86ec9a1dd4348045929f17f551784b9415fd7840be" fragmentId="claim-22-limitation-3" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00050">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1dcf06c6c4475d353e235ddb90ad585ef936972fba42816ba8ff02ae367be93c" fragmentId="claim-22-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00051">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:61bca277e813edbb28ba5d130d20b186710d0ad229ec4dc63cac42b155db255f" fragmentId="claim-22-limitation-5" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00052">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e787c910f77a58daf99350faaf8ff077e632f20969f465cc396fe518ae3508b1" fragmentId="claim-22-limitation-6" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00053">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:20f0740ba2a561bb22e32abcaa5c3bb52d1b87138a54371bab138ed7fc9dc853" fragmentId="claim-22-limitation-7" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00054">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e134bf26b177a90dd93fc9c19e479e9ecaf4a48c533ec3d0413f826bdb07ae96" fragmentId="claim-22-limitation-8" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00055">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b992bff3b96a393e289a5d8ad5670f64d4c0087825b64d723134fbc276044515" fragmentId="claim-22-limitation-9" role="subject" />
+    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A20 paragraph 00140 is recorded for counsel comparison of EDL identifiers and tracking an associated consumer.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00056" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00056">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8908b5240edad4c4504c37ab4bd19a291453279b77f0e5ac440688d3d4843368" fragmentId="claim-22-limitation-11" role="subject" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:98bfee059433b3c232d8c8c54ecccb438e9159fa34f83f3182d30b052fc89622" fragmentId="us-prior-art-a21-para-00126" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:a1e4b33f05cbe5a8956a05240280edaa6fd511be2dc141bc8043b2a180fe0360" fragmentId="us-prior-art-a21-para-00127" role="evidence" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:aeb35af96207fc65d5bf264823c71a1a309328241975cb766e372b5f6eb8702b" fragmentId="us-prior-art-a21-para-00143" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">A21 paragraphs 00126, 00127, and 00143 are recorded together for counsel comparison of shot-boundary detection and deriving change time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00057" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00057">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e414f41968d366fa7e0217691c4ca8e8e08d4aa5842ab59554f2e11f7bff97e4" fragmentId="claim-22-limitation-12" role="subject" />
+    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A13 paragraph 00153 is recorded for counsel comparison of using segment identifiers to generate or reconstruct a playable manifest.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00058" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00058">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f54cbf2187aa9087aa565f6c305d0079a0f4f6fac89ded8a28d24ad51118043d" fragmentId="claim-22-limitation-13" role="subject" />
+    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:195a5ddab6d55cb2043395c1347eea040e7536de488e8dd2579dcb6e0d95d640" fragmentId="us-prior-art-a21-para-00174" role="evidence" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The EQUALITY, IDENTIFY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00059" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00059">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fbbd20061a00ae30726075a16b394f2e36549290fcea2b157c0c1db5f45b3016" fragmentId="claim-23-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:5d6cdbf5be2023722eb6305cfe8036b693eab302841e665dfc5205097ec965fb" fragmentId="us-prior-art-b9-para-00274" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00274 is recorded as context for optional time desynchronization and unicast, multicast, or broadcast delivery.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00060" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00060">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:463f26e34afd150f6fe7558d569b0cba589e1bb792477976d37b1e2835fb8c7d" fragmentId="claim-24-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00061">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b45c65767ebb4892d6161e1f84259ce048d3b611a4a1de74aa3ce65ff58d7d61" fragmentId="claim-25" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">The MANIFEST, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00062">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0d77ad835138131c6e7590829d71c15d3ebc8f9bbf657f13b759e06405d2701d" fragmentId="claim-25-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00063" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00063">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0c548ec65a83c7cde849165ab7c90228ddc344c768ced90a318e3374c8872437" fragmentId="claim-25-limitation-2" role="subject" />
+    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">A4 paragraph 00039 is recorded for counsel comparison of adaptive streaming, customized manifests, and selected content-fragment versions.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00064" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00064">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:255f61e9cf3b9bd87e968291ad1ac997032a9e34136472e7173aca28aa932145" fragmentId="claim-25-limitation-3" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00065" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00065">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:93968fb1eab4c76afdadc34adf3e2b274d207ea8ae083a3256db8035a4aa479b" fragmentId="claim-25-limitation-4" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00066" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00066">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:393574bee8cf4d0af19ab8788f3b99231efe0a4f5f97b791d1a69582a0a510ef" fragmentId="claim-25-limitation-5" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
+    <assertionField name="candidate-role">specific</assertionField>
+    <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00067" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00067">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b945c93400542751b9082881e814b3f65cd6f33c5074c66bfb523a318c8909b8" fragmentId="claim-26-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:b91267f07ead688368f45b42cde4b4c3865f95f7c69339811ea6ebf86f830699" fragmentId="us-prior-art-a5-plain-00034" role="evidence" />
+    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:23d6707a11443fc1966f441cf4a0cdc24c0a49b8e47e1a4526a095fa5a5de168" fragmentId="us-prior-art-a5-plain-00038" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">A5 page-5 fragments 00034 and 00038 are recorded together for counsel comparison of perceptual video signatures, image hashing, shot detection, and hash-distance matching.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00068" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00068">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3aaa60e7f24457fa0611a34f05fe9287ef56cd17fe210dbb501df99d31273a09" fragmentId="claim-27-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:5d6cdbf5be2023722eb6305cfe8036b693eab302841e665dfc5205097ec965fb" fragmentId="us-prior-art-b9-para-00274" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">B9 paragraph 00274 is recorded as delivery context because it addresses unicast, multicast, and broadcast transmission.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00069" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00069">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1778a546e5b3efa393a40bc600bb9e7309bc5a66ba1eac3271e7b9d95dc176da" fragmentId="claim-28-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:09bdb4beb718a7e07c30140fd6775181ad7756f750fa1d976126b907bae04ee9" fragmentId="us-prior-art-a6-para-00009" role="evidence" />
+    <assertionField name="candidate-role">context</assertionField>
+    <assertionField name="proposition">A6 paragraph 00009 is recorded as context for a user-associated sequence of differing transmitted segments and identifying the requesting device, user, or transaction.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00070" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00070">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:bf1ed0624c72aafdd1a21b261e7edcc9f30670c5f94642961e388e6a86018184" fragmentId="claim-29-limitation-1" role="subject" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
+    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
+    <assertionField name="candidate-role">combination</assertionField>
+    <assertionField name="proposition">B9 paragraphs 00267 and 00270 are recorded together for counsel comparison of user-distinguishing switching sequences and switching at different exchangeable time points.</assertionField>
+    <assertionField name="record-kind">candidate</assertionField>
+  </relation>
+</relations>

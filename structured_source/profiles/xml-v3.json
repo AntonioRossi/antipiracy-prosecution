@@ -2196,7 +2196,8 @@
       "relationType": "claim-crosswalk",
       "requiredEndpointRoles": [
         "subject"
-      ]
+      ],
+      "minimumEndpoints": 2
     },
     "claim-document-map-v1": {
       "assertionFields": [
@@ -2276,7 +2277,8 @@
       "relationType": "claim-document-map",
       "requiredEndpointRoles": [
         "subject"
-      ]
+      ],
+      "minimumEndpoints": 2
     },
     "prior-art-map-v1": {
       "assertionFields": [
@@ -2335,7 +2337,8 @@
       "relationType": "claim-prior-art-comparison",
       "requiredEndpointRoles": [
         "subject"
-      ]
+      ],
+      "minimumEndpoints": 2
     },
     "support-map-v1": {
       "assertionFields": [
@@ -2397,6 +2400,36 @@
         ]
       },
       "relationType": "claim-support",
+      "requiredEndpointRoles": [
+        "subject"
+      ],
+      "minimumEndpoints": 2
+    },
+    "claim-prior-art-passage-map-v1": {
+      "assertionFields": [
+        "candidate-role",
+        "mapping-status",
+        "proposition",
+        "record-kind",
+        "subject-exact-text"
+      ],
+      "directions": [
+        "forward"
+      ],
+      "endpointRoles": [
+        "evidence",
+        "subject"
+      ],
+      "endpointRoleTargets": {
+        "evidence": [
+          "pdf-evidence-transcription-v1"
+        ],
+        "subject": [
+          "authored-markdown-v1"
+        ]
+      },
+      "minimumEndpoints": 1,
+      "relationType": "claim-prior-art-passage-map",
       "requiredEndpointRoles": [
         "subject"
       ]

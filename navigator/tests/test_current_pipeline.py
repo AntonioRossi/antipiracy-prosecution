@@ -37,9 +37,9 @@ def _bytes(relative):
 class CurrentPipelineTests(unittest.TestCase):
     def _lightweight_validation(self, root, during_closure=None):
         closure = {
-            "acceptanceRegistry": object(),
+            "acceptanceRegistries": (object(), object()),
             "bundle": {"name": "bundle.zip"},
-            "editions": {},
+            "products": {},
             "structuredSource": {
                 "domains": [],
                 "results": [],
@@ -104,24 +104,27 @@ class CurrentPipelineTests(unittest.TestCase):
                 self.entries = tuple(Entry(path) for path in paths)
 
         expected = currentstate.NAVIGATOR_FIXED_INPUT_PATHS | {
-            "navigator/editions/na.json",
+            "navigator/editions/na-specification.json",
             "navigator/relations/na__pct.relations.xml",
             "navigator/wording/na.wording.xml",
         }
         capture_token = object()
         plan_token = object()
-        edition = currentstate.EditionSpec(
+        edition = currentstate.ProductSpec(
             capture_token=capture_token, plan_token=plan_token,
-            edition_id="na", path="navigator/editions/na.json",
+            product_id="na-specification", product_kind="specification",
+            edition_id="na", path="navigator/editions/na-specification.json",
             consumer_id="navigator-na", claim_package_id="claim",
             relation_path="navigator/relations/na__pct.relations.xml",
             wording_path="navigator/wording/na.wording.xml",
             artifact_name="na.html",
-            declared_timestamp="2026-01-01T00:00:00Z")
+            declared_timestamp="2026-01-01T00:00:00Z",
+            comparison_package_id=None, passage_map_package_id=None)
         plan = currentstate.ProductPlan(
             snapshot_digest="sha256/test", capture_token=capture_token,
             plan_token=plan_token, bundle_config=MappingProxyType({}),
-            editions=(edition,), by_id=MappingProxyType({"na": edition}),
+            products=(edition,), by_id=MappingProxyType({
+                "na-specification": edition}),
             input_paths=frozenset(expected))
         currentstate._verify_navigator_input_inventory(Snapshot(expected), plan)
         for paths in (
@@ -135,6 +138,7 @@ class CurrentPipelineTests(unittest.TestCase):
 
     def test_product_plan_is_derived_from_an_arbitrary_edition_inventory(self):
         editions = ("alpha", "beta", "gamma")
+        products = tuple(item + "-specification" for item in editions)
         timestamp = "2026-07-28T00:00:00Z"
         with tempfile.TemporaryDirectory() as root:
             for path in ("navigator/bundles", "navigator/editions",
@@ -147,19 +151,22 @@ class CurrentPipelineTests(unittest.TestCase):
                                    "edition.schema.json"), "wb") as handle:
                 handle.write(schema_bytes)
             members = []
-            for edition in editions:
+            for edition, product in zip(editions, products):
                 prefix = edition.upper()
                 version = prefix + "-2026-07-27-v1"
                 artifact = ("AA11393US-%s-claims-spec-navigator_%s.html" %
                             (prefix, version))
                 members.extend((
-                    {"edition": edition, "kind": "sealed",
+                    {"product": product, "kind": "sealed",
                      "name": artifact},
-                    {"artifact": artifact, "edition": edition,
+                    {"artifact": artifact, "product": product,
                      "kind": "artifact-checksum",
                      "name": artifact + ".sha256"},
                 ))
                 control = {
+                    "productVersion": "1",
+                    "productId": product,
+                    "productKind": "specification",
                     "artifactName": artifact,
                     "census": {"claims": 1, "units": 1},
                     "claimPackageId": (
@@ -180,19 +187,19 @@ class CurrentPipelineTests(unittest.TestCase):
                     "strategyPrefix": prefix,
                 }
                 with open(os.path.join(root, "navigator", "editions",
-                                       edition + ".json"), "wb") as handle:
+                                       product + ".json"), "wb") as handle:
                     handle.write(canon.canonical_json(control) + b"\n")
             members.append({"kind": "manifest", "name": "MANIFEST.txt"})
             config = {
                 "bundleVersion": bundlezip.BUNDLE_VERSION,
                 "declaredTimestamp": timestamp,
-                "editions": list(editions),
+                "products": list(products),
                 "manifestWordingId": bundlezip.BUNDLE_WORDING_ID,
                 "members": members,
-                "name": ("AA11393US-claims-navigators_%s_"
+                "name": ("AA11393US-claims-evidence-navigators_%s_"
                          "TECHNICAL-PREVIEW.zip" % "_".join(
-                             item.upper() + "-2026-07-27-v1"
-                             for item in editions)),
+                             product + "-" + item.upper() + "-2026-07-27-v1"
+                             for item, product in zip(editions, products))),
             }
             bundle_path = os.path.join(
                 root, *bundlezip.BUNDLE_CONFIG_PATH.split("/"))
@@ -202,13 +209,13 @@ class CurrentPipelineTests(unittest.TestCase):
                 root, retain_bytes=True)
             with mock.patch.object(currentstate, "ROOT", root):
                 plan = currentstate.load_product_plan(frozen)
-            self.assertEqual(plan.edition_ids, editions)
+            self.assertEqual(plan.product_ids, products)
             self.assertEqual(
                 plan.consumer_ids,
                 tuple("navigator-" + item for item in editions))
             self.assertTrue(all(
                 "navigator/editions/%s.json" % item in plan.input_paths
-                for item in editions))
+                for item in products))
 
     def test_command_boundary_is_exact_and_legacy_commands_are_rejected(self):
         self.assertEqual(build.COMMANDS, (
@@ -572,9 +579,9 @@ exec uv --no-cache --offline run --locked --no-sync \\
         with open(os.path.join(ROOT, "contracts", "README.md"),
                   encoding="utf-8") as handle:
             router = handle.read()
-        self.assertIn("zero navigator consumer edges", router)
+        self.assertIn("exactly four authored-relation XML handoffs", router)
         self.assertIn(
-            "exactly two structured-source XML handoffs per edition", router)
+            "exactly two structured-source XML handoffs per specification product", router)
         self.assertNotIn("committed artifacts", router.casefold())
 
         with open(os.path.join(
@@ -640,7 +647,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
         frozen = object()
         plan = object()
         sources = object()
-        projection = {"bundle": {}, "editions": {}}
+        projection = {"bundle": {}, "products": {}}
         with mock.patch.object(
                 currentstate.snapshot.RepositorySnapshot, "capture",
                 return_value=frozen) as capture, mock.patch.object(
@@ -660,7 +667,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
         required = (
             (currentstate.build_model, "consumer_input"),
             (currentstate.derive, "consumer_input"),
-            (currentstate.derive_editions, "sources"),
+            (currentstate.derive_products, "sources"),
             (currentstate.build_bundle_state, "states"),
             (currentstate.verify_stored_artifact_members, "bundle_state"),
         )
@@ -709,7 +716,8 @@ exec uv --no-cache --offline run --locked --no-sync \\
             inspect.getsource(depgraph).count("while current is not None:"), 1)
 
     def test_acceptance_registry_names_outcomes_and_independent_enforcers(self):
-        registry = acceptance.load_registry(ROOT)
+        registries = acceptance.load_registries(ROOT)
+        registry = registries[0]
         self.assertEqual(
             [item["id"] for item in registry["criteria"]],
             ["AC-%02d" % number for number in range(1, 21)])
@@ -761,9 +769,9 @@ exec uv --no-cache --offline run --locked --no-sync \\
             acceptance.load_registry(ROOT, mismatched_contract)
         with self.assertRaises(acceptance.AcceptanceError):
             acceptance.passed_result(
-                registry, tuple(sorted(acceptance.TEST_COVERAGE))[:-1])
+                registries, tuple(sorted(acceptance.TEST_COVERAGE))[:-1])
         result = acceptance.passed_result(
-            registry, tuple(sorted(acceptance.TEST_COVERAGE)))
+            registries, tuple(sorted(acceptance.TEST_COVERAGE)))
         self.assertEqual(
             [item["id"] for item in result["results"]],
             list(acceptance.CRITERIA))
@@ -777,14 +785,16 @@ exec uv --no-cache --offline run --locked --no-sync \\
                 return source
 
         frozen = Frozen()
-        edition = currentstate.EditionSpec(
+        edition = currentstate.ProductSpec(
             capture_token=object(), plan_token=object(),
-            edition_id="na", path="navigator/editions/na.json",
+            product_id="na-specification", product_kind="specification",
+            edition_id="na", path="navigator/editions/na-specification.json",
             consumer_id="navigator-na", claim_package_id="claim",
             relation_path="navigator/relations/na__pct.relations.xml",
             wording_path="navigator/wording/na.wording.xml",
-            artifact_name="na.html", declared_timestamp="2026-01-01T00:00:00Z")
-        plan = type("Plan", (), {"edition": lambda unused_self, unused_id: edition})()
+            artifact_name="na.html", declared_timestamp="2026-01-01T00:00:00Z",
+            comparison_package_id=None, passage_map_package_id=None)
+        plan = type("Plan", (), {"product": lambda unused_self, unused_id: edition})()
         consumer_input = object()
         sources = type("Sources", (), {
             "input_for": lambda unused_self, unused_id: consumer_input})()
@@ -810,7 +820,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
                 as output_check, \
                 mock.patch.object(build.release, "write_outputs_atomic") \
                 as write:
-            result = build.cmd_preview("na")
+            result = build.cmd_preview("na-specification")
 
         self.assertEqual(result, b"<html>preview</html>")
         contract.assert_called_once_with(frozen)
@@ -930,26 +940,28 @@ exec uv --no-cache --offline run --locked --no-sync \\
 
     def test_bundle_config_accepts_an_arbitrary_configured_edition_census(self):
         editions = ("alpha", "beta", "gamma")
+        products = tuple(item + "-specification" for item in editions)
         versions = tuple(item.upper() + "-2026-07-27-v1"
                          for item in editions)
         members = []
-        for edition, version in zip(editions, versions):
+        for edition, product, version in zip(editions, products, versions):
             name = ("AA11393US-%s-claims-spec-navigator_%s.html" %
                     (edition.upper(), version))
             members.extend((
-                {"edition": edition, "kind": "sealed", "name": name},
-                {"artifact": name, "edition": edition,
+                {"product": product, "kind": "sealed", "name": name},
+                {"artifact": name, "product": product,
                  "kind": "artifact-checksum", "name": name + ".sha256"},
             ))
         members.append({"kind": "manifest", "name": "MANIFEST.txt"})
         config = {
             "bundleVersion": bundlezip.BUNDLE_VERSION,
             "declaredTimestamp": "2026-07-28T00:00:00Z",
-            "editions": list(editions),
+            "products": list(products),
             "manifestWordingId": bundlezip.BUNDLE_WORDING_ID,
             "members": members,
-            "name": ("AA11393US-claims-navigators_%s_TECHNICAL-PREVIEW.zip" %
-                     "_".join(versions)),
+            "name": ("AA11393US-claims-evidence-navigators_%s_TECHNICAL-PREVIEW.zip" %
+                     "_".join(product + "-" + version
+                              for product, version in zip(products, versions))),
         }
         self.assertIs(bundlezip.validate_bundle_config(config), config)
         wrong = dict(config)
@@ -961,7 +973,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
 
     def test_closed_configs_reject_removed_fields_and_surfaces_are_absent(self):
         schema = _json("navigator/schema/edition.schema.json")
-        edition = _json("navigator/editions/na.json")
+        edition = _json("navigator/editions/na-specification.json")
         schema_validate.check_schema(schema)
         self.assertEqual(schema_validate.validate(edition, schema), [])
         for field in (

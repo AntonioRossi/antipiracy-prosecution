@@ -10,22 +10,26 @@ names; repository-local contract filenames use their directory context instead.
 ```text
 phase 10 validated XML item surfaces
         ├──exact endpoint resolution──▶ phase 20 authored relations
-        │                                  │ aggregate prerequisite only
-        │                                  │ zero navigator handoffs
-        │                                  ▼
-        └──exactly two XML handoffs───▶ phase 30 claims navigator
-                                           │ + navigator-owned XML controls
-                                           ▼
-                                  stored deterministic products
+        │                                  └──four relation XML handoffs
+        │                                                     │
+        ├──two specification XML handoffs
+        │                                                     │
+        └──claim and declared passage-target XML handoffs─────┤
+                                                              ▼
+                                             phase 30 navigator products
+                                                              │
+                                                              ▼
+                                                stored deterministic products
 ```
 
 The two source-surface contracts at phase 10 are independently applicable. Phase 20 consumes
 validated, stable item identities only to resolve its exact authored-relation endpoints. Complete
-phase-20 acceptance is an aggregate prerequisite for phase 30, but current authored-relation
-packages have zero navigator consumer edges and supply no navigator runtime handoff. Phase 30
-consumes exactly two structured-source XML handoffs per edition and separately governed
-navigator-owned relation, wording, edition, and schema controls. Product generation does not
-repair, reinterpret, copy, or silently retarget upstream semantics.
+phase-20 acceptance is an aggregate prerequisite for phase 30. The two prior-art consumers receive
+exactly four authored-relation XML handoffs: one comparison matrix and one passage map per strategy.
+The specification side receives exactly two structured-source XML handoffs per specification product;
+navigator-owned relation controls remain separate. Each prior-art product consumes its claim, relation, and
+declared passage-target XML handoffs. Product generation does not repair, reinterpret, copy, or
+silently retarget upstream semantics.
 
 | Phase | Contract pair | Current role |
 |---|---|---|
@@ -33,6 +37,7 @@ repair, reinterpret, copy, or silently retarget upstream semantics.
 | 10 | [Authored Markdown technical description](10-source-surfaces/authored-markdown/technical-description.md) / [acceptance criteria](10-source-surfaces/authored-markdown/acceptance-criteria.md) | Governs Markdown-authoritative packages, generated XML, and the non-stored back-render check. |
 | 20 | [Authored relations technical description](20-semantic-relations/authored-relations/technical-description.md) / [acceptance criteria](20-semantic-relations/authored-relations/acceptance-criteria.md) | Governs relation-XML authority, exact cross-reference endpoints, and generated Markdown review views. |
 | 30 | [Claims navigator technical description](30-product-generation/claims-navigator/technical-description_DRAFT.md) / [acceptance criteria](30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md) | Governs edition-blind model construction, rendering, verification, and stored navigator products. |
+| 30 | [Claims-to-prior-art navigator technical description](30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md) / [acceptance criteria](30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md) | Governs matrix-scoped claim-unit and phrase mappings to exact prior-art transcription passages and the two additional HTML5 products. |
 
 Each linked pair is normative for its stated domain.
 

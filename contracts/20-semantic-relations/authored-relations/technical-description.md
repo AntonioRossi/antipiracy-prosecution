@@ -14,7 +14,7 @@ The current direction is:
 applicant-authored relation XML authority ──deterministic projection──▶ generated Markdown review view
                   │
                   ├──exact endpoint resolution──▶ registered validated content items
-                  └──aggregate acceptance prerequisite; current consumer-edge census = 0
+                  └──declared immutable XML handoffs──▶ claims-to-prior-art navigator products
 ```
 
 Relation XML is the sole owner of each applicant-authored cross-document assertion. It owns the
@@ -23,11 +23,10 @@ endpoint supplies the assertion's evidence basis or subject but never adopts, au
 the assertion. Only relation categories enumerated by the current schema and profile may use this
 authority scheme. Generated Markdown is a review representation and never becomes another owner.
 
-These packages do not supply the current navigator's relation semantics. The navigator-owned files
-under `navigator/relations/` use the distinct `navigator-claim-pct-relations-v1` profile and own only
-the current product's claim-to-PCT candidate associations. No navigator edge, runtime handoff,
-upstream-relation reference, copy, restatement, or inheritance connects those product relations to an
-`authored-relations-v1` package.
+The claims-to-specification products use navigator-owned `navigator-claim-pct-relations-v1` files.
+The claims-to-prior-art products instead consume the exact declared comparison-matrix and
+claim-unit-to-passage-map relation XML handoffs. They do not copy, restate, infer, retarget, or take
+ownership of those authored assertions.
 
 Machine validation proves schema and profile validity, identity, semantic ownership, role and
 direction constraints, exact digest-bound endpoint resolution, coverage, and deterministic
@@ -78,7 +77,7 @@ mechanical ordinal but cannot silently rename an assertion.
 
 The relation profile registry is exclusive. Each profile enumerates its one relation type,
 directions, endpoint roles and required-role set, the exact content-authority schemes each role may
-target, and assertion-field vocabulary; the schema, target-item digest rule, readable XML storage
+target, its minimum endpoint count, and assertion-field vocabulary; the schema, target-item digest rule, readable XML storage
 law, and projection contract close the remaining interface behavior. The relation XSD and every
 exclusive profile must agree exactly on the complete envelope, assertion, endpoint, field,
 identity, order, cardinality, scalar, and digest grammar. A partial profile change, alternate
@@ -162,10 +161,10 @@ companion, receipt, or digest ledger.
 
 ## 6. Retained-worktree consumer-neutral handoff
 
-The current registry declares no authored-relation consumer edge; the current authored-relation
-edge and constructed-handoff censuses are therefore both exactly zero. The shared declared-edge
-resolver acts only on a declared edge and consequently constructs no current relation handoff. Its
-closed relation-package behavior remains representation-exact: an XML edge hands authoritative
+The current registry declares exactly four authored-relation consumer edges: each AF and NA
+claims-to-prior-art consumer receives its strategy's comparison matrix and passage map. The shared
+declared-edge resolver constructs exactly those four relation handoffs. Its closed relation-package
+behavior is representation-exact: an XML edge hands authoritative
 retained bytes, authority scheme, relation-XML role, declared dependency bytes, and the exact
 validation-read census; a Markdown edge hands review bytes only. Neither behavior carries a
 prebuilt relation surface or assets or reads the other representation through an undeclared
@@ -243,12 +242,12 @@ statuses without defining any consumer product outcome.
 This technical description, its acceptance criteria, its data-only acceptance registry, the
 content registry's authored-relations slice, current schema/profile agreement checker, parser,
 validated package state, endpoint resolver, renderer, shared declared-edge resolver, focused tests,
-and registered packages are the exact live implementation census. No authored-relation consumer is
-registered. Closure uses these existing controls and contains no parallel registry, generic
+and registered packages are the exact live implementation census. Exactly the two prior-art
+navigator consumers and their four relation edges are registered. Closure uses these existing controls and contains no parallel registry, generic
 ownership framework, or generic reachability subsystem.
 
 The contract pair, data-only acceptance registry, registry slice, controls, implementation,
-focused tests and vectors, generated review state, and zero-edge handoff census are accepted only
+focused tests and vectors, generated review state, and exact four-edge handoff census are accepted only
 as one retained current state. A contract-only, registry-only, implementation-only, test-only,
 generated-only, or edge-only state fails. Any operative relation field, endpoint, storage law,
 command, or projection change must update every affected member of that state coherently.
@@ -277,7 +276,7 @@ an unresolved endpoint represented as an empty or default target;
 an omitted, additional, reordered, or displaced generated field, endpoint, link, excerpt, or anchor;
 renderer self-report offered for defective Markdown; attempted publication of invalid candidate
 Markdown or parser controls; replacement-byte mismatch or fresh replacement validation failure
-without complete rollback; any current authored-relation consumer edge or handoff; a missing or
+without complete rollback; any missing, additional, or retargeted current authored-relation consumer edge or handoff; a missing or
 extra shared module, contract, registry, schema, launcher, registered test, or vector anywhere in the
 retained capture; and reuse of a pre-replacement parsed artifact, endpoint view, projection, coverage
 result, package result, handoff mapping, semantic object, or validation state even when replacement

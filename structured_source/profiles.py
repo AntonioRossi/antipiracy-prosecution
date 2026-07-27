@@ -218,7 +218,9 @@ def _validate_xml_profiles(value, projection):
         if _ID.fullmatch(profile_id) is None or not isinstance(profile, dict) or \
                 set(profile) != {"relationType", "directions", "endpointRoles",
                                  "requiredEndpointRoles", "assertionFields",
-                                 "endpointRoleTargets"} or \
+                                 "endpointRoleTargets", "minimumEndpoints"} or \
+                type(profile.get("minimumEndpoints")) is not int or \
+                not 1 <= profile["minimumEndpoints"] <= 32 or \
                 _ID.fullmatch(profile.get("relationType", "")) is None:
             raise StructuredSourceError("relation-set profile is malformed: %s" % profile_id)
         for field in ("directions", "endpointRoles", "requiredEndpointRoles",
@@ -230,6 +232,10 @@ def _validate_xml_profiles(value, projection):
                     profile_id)
         if not set(profile["requiredEndpointRoles"]).issubset(profile["endpointRoles"]):
             raise StructuredSourceError("relation required roles are outside its profile")
+        if profile["minimumEndpoints"] < len(
+                profile["requiredEndpointRoles"]):
+            raise StructuredSourceError(
+                "relation minimum endpoints cannot satisfy its required roles")
         targets = profile.get("endpointRoleTargets")
         if not isinstance(targets, dict) or \
                 set(targets) != set(profile["endpointRoles"]):

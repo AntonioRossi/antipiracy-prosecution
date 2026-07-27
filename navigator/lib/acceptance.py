@@ -13,7 +13,14 @@ CONTRACT_PATH = (
     "contracts/30-product-generation/claims-navigator/"
     "acceptance-criteria_DRAFT.md"
 )
-CRITERIA = tuple("AC-%02d" % number for number in range(1, 21))
+PRIOR_ACCEPTANCE_PATH = "navigator/schema/prior-art-acceptance.json"
+PRIOR_CONTRACT_PATH = (
+    "contracts/30-product-generation/claims-prior-art-navigator/"
+    "acceptance-criteria_DRAFT.md"
+)
+SPEC_CRITERIA = tuple("AC-%02d" % number for number in range(1, 21))
+PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 13))
+CRITERIA = SPEC_CRITERIA + PRIOR_CRITERIA
 TEST_COVERAGE = {
     "navigator.tests.test_canon": frozenset({"AC-15", "AC-16"}),
     "navigator.tests.test_current_pipeline": frozenset({
@@ -28,12 +35,19 @@ TEST_COVERAGE = {
         "AC-01", "AC-02", "AC-03", "AC-04", "AC-05", "AC-06", "AC-07",
         "AC-08", "AC-18",
     }),
+    "navigator.tests.test_prior_art": frozenset(PRIOR_CRITERIA),
 }
 
 _SCOPES = {
     **{"AC-%02d" % number: "edition" for number in range(1, 19)},
     "AC-19": "shared",
     "AC-20": "bundle",
+    **{"PA-AC-%02d" % number: "product"
+       for number in range(1, 9)},
+    "PA-AC-09": "shared",
+    "PA-AC-10": "product",
+    "PA-AC-11": "bundle",
+    "PA-AC-12": "shared",
 }
 
 
@@ -67,15 +81,21 @@ def _resolve_enforcer(path):
 
 
 def validate_registry(value):
+    identifiers = ([entry.get("id") for entry in value.get("criteria", [])]
+                   if isinstance(value, dict) and
+                   isinstance(value.get("criteria"), list) else [])
+    expected_criteria = (SPEC_CRITERIA if identifiers[:1] == ["AC-01"]
+                         else PRIOR_CRITERIA)
+    expected_version = "6" if expected_criteria is SPEC_CRITERIA else "1"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
-            value.get("acceptanceVersion") != "6":
+            value.get("acceptanceVersion") != expected_version:
         raise AcceptanceError(
             "acceptance registry shape/version is not current")
     criteria = value.get("criteria")
-    if not isinstance(criteria, list) or len(criteria) != len(CRITERIA) or \
+    if not isinstance(criteria, list) or len(criteria) != len(expected_criteria) or \
             [entry.get("id") for entry in criteria
-             if isinstance(entry, dict)] != list(CRITERIA):
+             if isinstance(entry, dict)] != list(expected_criteria):
         raise AcceptanceError("acceptance criterion census/order is not exact")
     for criterion in criteria:
         if not isinstance(criterion, dict) or set(criterion) != {
@@ -101,8 +121,9 @@ def validate_registry(value):
     return value
 
 
-def load_registry(root, byte_source=None):
-    absolute = os.path.join(root, *ACCEPTANCE_PATH.split("/"))
+def _load_one(root, registry_path, contract_path, table_start,
+              table_end, byte_source=None):
+    absolute = os.path.join(root, *registry_path.split("/"))
     try:
         if byte_source is None:
             with open(absolute, "rb") as handle:
@@ -118,7 +139,7 @@ def load_registry(root, byte_source=None):
     if data != canon.canonical_json(value) + b"\n":
         raise AcceptanceError("acceptance registry bytes are not canonical")
     registry = validate_registry(value)
-    contract_absolute = os.path.join(root, *CONTRACT_PATH.split("/"))
+    contract_absolute = os.path.join(root, *contract_path.split("/"))
     try:
         if byte_source is None:
             with open(contract_absolute, "rb") as handle:
@@ -128,14 +149,31 @@ def load_registry(root, byte_source=None):
         contract = contract_data.decode("utf-8")
     except (OSError, KeyError, UnicodeDecodeError) as exc:
         raise AcceptanceError("acceptance contract is unreadable") from exc
-    start = "<!-- NAV-AC-TABLE:START -->\n"
-    end = "<!-- NAV-AC-TABLE:END -->"
+    start = table_start + "\n"
+    end = table_end
     if contract.count(start) != 1 or contract.count(end) != 1 or \
             contract.split(start, 1)[1].split(end, 1)[0] != \
             render_table(registry):
         raise AcceptanceError(
             "acceptance contract and registry text differ")
     return registry
+
+
+def load_registry(root, byte_source=None):
+    return _load_one(
+        root, ACCEPTANCE_PATH, CONTRACT_PATH,
+        "<!-- NAV-AC-TABLE:START -->",
+        "<!-- NAV-AC-TABLE:END -->", byte_source)
+
+
+def load_registries(root, byte_source=None):
+    return (
+        load_registry(root, byte_source),
+        _load_one(
+            root, PRIOR_ACCEPTANCE_PATH, PRIOR_CONTRACT_PATH,
+            "<!-- PA-NAV-AC-TABLE:START -->",
+            "<!-- PA-NAV-AC-TABLE:END -->", byte_source),
+    )
 
 
 def render_table(registry):
@@ -152,14 +190,18 @@ def render_table(registry):
     return "\n".join(lines) + "\n"
 
 
-def passed_result(registry, test_modules):
+def passed_result(registries, test_modules):
     """Create ephemeral technical status after the named current checks pass.
 
     The result deliberately carries no identity, timestamp, signature, source
     digest, or authorization semantics.  Its only lifetime is the invoking
     validation process.
     """
-    validate_registry(registry)
+    registries = tuple(registries)
+    if len(registries) != 2:
+        raise AcceptanceError("ephemeral acceptance requires both registries")
+    for registry in registries:
+        validate_registry(registry)
     modules = tuple(test_modules)
     if len(modules) != len(set(modules)) or \
             set(modules) != set(TEST_COVERAGE):
