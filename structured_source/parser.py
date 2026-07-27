@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 from functools import lru_cache
 import os
@@ -20,6 +21,8 @@ from .canonical import (raw_digest, readable_xml_bytes,
                         typed_item_record)
 from .control import parse_json
 from .errors import ParseError, SchemaError, StructuredSourceError
+from .grammar import (ContentGrammar, parse_content_grammar,
+                      render_content_xsd)
 from .profiles import (load_projection_profile, load_xml_profiles,
                        parse_projection_profile, parse_xml_profiles)
 
@@ -27,7 +30,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEMA_DIRECTORY = os.path.join(ROOT, "structured_source", "schemas")
 PARSER_POLICY_PATH = "structured_source/policy/parser.json"
 PROJECTION_PROFILE_PATH = "structured_source/profiles/gfm-v1.json"
-XML_PROFILE_PATH = "structured_source/profiles/xml-v1.json"
+XML_PROFILE_PATH = "structured_source/profiles/xml-v2.json"
 XML_SCHEMA_PATH = "structured_source/schemas/xml.xsd"
 SCHEMA_PATHS = MappingProxyType({
     "content-document": "structured_source/schemas/content.xsd",
@@ -94,25 +97,55 @@ _FORBIDDEN_LEXICAL = (
 _NAMED_ENTITY = re.compile(br"&([A-Za-z_:][A-Za-z0-9_.:-]*);")
 _ALLOWED_ENTITIES = {b"amp", b"lt", b"gt", b"apos", b"quot"}
 _STABLE_ITEM_ID = re.compile(r"[a-z][a-z0-9-]{0,159}\Z")
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, init=False)
 class ParsedArtifact:
+    """One parse result whose validated state cannot be changed by callers."""
+
     kind: str
     profile: str
-    root: ET.Element
+    _root: ET.Element
     raw_bytes: bytes
     raw_digest: str
-    fragment_digests: dict[str, str]
-    typed_item_records: dict[str, dict]
+    fragment_digests: Mapping[str, str]
+    typed_item_records: Mapping[str, Mapping]
+
+    def __init__(self, *, kind, profile, root, raw_bytes, raw_digest,
+                 fragment_digests, typed_item_records):
+        if not isinstance(root, ET.Element):
+            raise TypeError("parsed artifact root must be an XML element")
+        object.__setattr__(self, "kind", kind)
+        object.__setattr__(self, "profile", profile)
+        object.__setattr__(self, "_root", copy.deepcopy(root))
+        object.__setattr__(self, "raw_bytes", raw_bytes)
+        object.__setattr__(self, "raw_digest", raw_digest)
+        object.__setattr__(
+            self, "fragment_digests", _deep_freeze(fragment_digests))
+        object.__setattr__(
+            self, "typed_item_records", _deep_freeze(typed_item_records))
+
+    @property
+    def root(self) -> ET.Element:
+        """Return a defensive tree copy, never the retained validated tree."""
+        return copy.deepcopy(self._root)
+
+    def _validated_root(self) -> ET.Element:
+        """Return the retained tree to trusted validation implementation only."""
+        return self._root
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, init=False)
 class ParserControls:
     """Validated policy, profiles, and schemas from one byte source."""
 
     limits: Mapping[str, int]
     projection_profile: Mapping
     xml_profiles: Mapping
+    content_grammar: ContentGrammar
     schemas: Mapping[str, tuple[bytes, bytes]]
+
+    def __init__(self, *args, **kwargs):
+        raise TypeError(
+            "parser controls must be constructed by the validated loader")
 
 
 def _deep_freeze(value):
@@ -165,6 +198,103 @@ def _xsd_attribute_type(attribute: ET.Element) -> str:
     return "string"
 
 
+_PDF_SEMANTIC_PARTICLES = {
+    "inlineContainer": (("group", "inline", "", "0", "unbounded"),),
+    "noteInline": (("group", "block", "", "1", "unbounded"),),
+    "quotationBlock": (("group", "block", "", "1", "unbounded"),),
+    "listItem": (("group", "block", "", "1", "unbounded"),),
+    "listBlock": (("element", "item", "listItem", "1", "10000"),),
+    "tableCell": (("group", "block", "", "0", "unbounded"),),
+    "tableRow": (("element", "cell", "tableCell", "1", "256"),),
+    "tableSection": (("element", "row", "tableRow", "1", "10000"),),
+    "tableBlock": (
+        ("element", "caption", "inlineContainer", "0", "1"),
+        ("element", "head", "tableSection", "1", "1"),
+        ("element", "body", "tableSection", "0", "1"),
+    ),
+    "claimBlock": (
+        ("element", "dependency", "stableId", "0", "32"),
+        ("element", "preamble", "inlineContainer", "1", "1"),
+        ("element", "limitation", "limitation", "1", "256"),
+    ),
+    "advisoryBlock": (("group", "block", "", "1", "unbounded"),),
+    "figureBlock": (("element", "caption", "inlineContainer", "0", "1"),),
+    "divisionBlock": (("group", "block", "", "1", "unbounded"),),
+    "content": (("group", "block", "", "1", "100000"),),
+}
+_PDF_SEMANTIC_GROUPS = {
+    "inline": (
+        ("text", "string"), ("emphasis", "styledInline"),
+        ("strong", "styledInline"), ("strikeout", "styledInline"),
+        ("superscript", "styledInline"), ("subscript", "styledInline"),
+        ("definedTerm", "styledInline"), ("quotation", "styledInline"),
+        ("reviewMark", "reviewMarkInline"), ("code", "codeInline"),
+        ("math", "codeInline"), ("link", "linkInline"),
+        ("image", "imageInline"), ("citation", "citationInline"),
+        ("note", "noteInline"), ("space", ""), ("softBreak", ""),
+        ("lineBreak", ""),
+    ),
+    "block": (
+        ("heading", "headingBlock"),
+        ("paragraph", "fragmentInlineBlock"),
+        ("plain", "fragmentInlineBlock"), ("codeBlock", "codeBlock"),
+        ("blockQuotation", "quotationBlock"), ("list", "listBlock"),
+        ("table", "tableBlock"), ("claim", "claimBlock"),
+        ("noteBlock", "advisoryBlock"), ("caution", "advisoryBlock"),
+        ("action", "advisoryBlock"), ("figure", "figureBlock"),
+        ("division", "divisionBlock"), ("separator", "separatorBlock"),
+    ),
+}
+
+
+def _validate_pdf_semantic_grammar(schema_data: bytes) -> None:
+    """Keep generated syntax aligned with independent semantic handlers."""
+    namespace = "{http://www.w3.org/2001/XMLSchema}"
+    root = _parse_tree(schema_data)
+    complex_types = {
+        node.get("name"): node for node in root.findall(namespace + "complexType")
+        if node.get("name")}
+
+    def group_bindings(name):
+        group = _xsd_named(root, "group", name)
+        choices = group.findall(namespace + "choice")
+        if len(choices) != 1 or len(group) != 1:
+            return ()
+        nodes = list(choices[0])
+        if any(node.tag != namespace + "element" or list(node) or
+               set(node.attrib) - {"name", "type"} for node in nodes):
+            raise SchemaError("PDF semantic group declaration is unsupported")
+        return tuple(
+            (node.get("name") or "", _xsd_local(node.get("type")))
+            for node in nodes)
+
+    def particles(node):
+        sequences = node.findall(namespace + "sequence")
+        if len(sequences) != 1:
+            return ()
+        result = []
+        for child in sequences[0]:
+            kind = child.tag.rsplit("}", 1)[-1]
+            if kind not in {"element", "group"}:
+                raise SchemaError("PDF semantic particle kind is unsupported")
+            identity = child.get("name") or _xsd_local(child.get("ref"))
+            result.append((
+                kind, identity or "", _xsd_local(child.get("type")),
+                child.get("minOccurs", "1"), child.get("maxOccurs", "1")))
+        return tuple(result)
+
+    actual = {
+        name: particles(complex_types.get(name))
+        for name in _PDF_SEMANTIC_PARTICLES
+        if complex_types.get(name) is not None}
+    actual_groups = {
+        name: group_bindings(name) for name in _PDF_SEMANTIC_GROUPS}
+    if actual != _PDF_SEMANTIC_PARTICLES or \
+            actual_groups != _PDF_SEMANTIC_GROUPS:
+        raise SchemaError(
+            "generated content XSD differs from semantic child/group invariants")
+
+
 def _validate_pdf_xsd_profile(schema_data: bytes, profile: dict) -> None:
     """Prove that the PDF XSD and exclusive executable profile agree."""
     namespace = "{http://www.w3.org/2001/XMLSchema}"
@@ -178,45 +308,6 @@ def _validate_pdf_xsd_profile(schema_data: bytes, profile: dict) -> None:
     simple_types = {
         node.get("name") for node in root.findall(namespace + "simpleType")
         if node.get("name")}
-    block = _xsd_named(root, "group", "block")
-    block_elements = block.findall(
-        namespace + "choice/" + namespace + "element")
-    bindings = {
-        node.get("name"): _xsd_local(node.get("type"))
-        for node in block_elements}
-    nested_contract = {
-        "item": ("listBlock", "listItem"),
-        "limitation": ("claimBlock", "limitation"),
-        "row": ("tableSection", "tableRow"),
-    }
-    for item_name, (parent_type, item_type) in nested_contract.items():
-        parent = complex_types.get(parent_type)
-        matches = ([] if parent is None else [
-            node for node in parent.findall(".//" + namespace + "element")
-            if node.get("name") == item_name and
-            _xsd_local(node.get("type")) == item_type])
-        if len(matches) != 1:
-            raise SchemaError(
-                "PDF XSD nested item binding is not exact: %s" % item_name)
-        bindings[item_name] = item_type
-    if set(bindings) != set(profile["itemMetadataFields"]):
-        raise SchemaError("PDF XSD/profile item-type inventories differ")
-    actual_metadata = {}
-    for item_type, type_name in bindings.items():
-        node = complex_types.get(type_name)
-        if node is None:
-            raise SchemaError("PDF item XSD type is absent: %s" % type_name)
-        attributes = node.findall(".//" + namespace + "attribute")
-        xml_ids = [attribute for attribute in attributes
-                   if attribute.get("ref") == "xml:id"]
-        if len(xml_ids) != 1 or xml_ids[0].get("use") != "required":
-            raise SchemaError("PDF XSD item identity is not exact: %s" % item_type)
-        actual_metadata[item_type] = {
-            attribute.get("name"): _xsd_attribute_type(attribute)
-            for attribute in attributes if attribute.get("name")}
-    if actual_metadata != profile["itemMetadataFields"]:
-        raise SchemaError("PDF XSD/profile item metadata differ")
-
     groups = {
         node.get("name"): node for node in root.findall(namespace + "group")
         if node.get("name")}
@@ -293,6 +384,24 @@ def _validate_pdf_xsd_profile(schema_data: bytes, profile: dict) -> None:
         for name, type_name in sorted(typed_bindings.items())}
     if actual_typed_fields != profile["typedContentNodeFields"]:
         raise SchemaError("PDF XSD/profile typed-content fields differ")
+    item_names = set(profile["itemMetadataFields"])
+    if not item_names.issubset(typed_bindings):
+        raise SchemaError("PDF XSD/profile item-type inventories differ")
+    actual_item_metadata = {}
+    for item_name in sorted(item_names):
+        type_name = typed_bindings[item_name]
+        node = complex_types.get(type_name)
+        if node is None:
+            raise SchemaError("PDF item XSD type is absent: %s" % type_name)
+        xml_ids = [attribute for attribute in node.findall(
+            ".//" + namespace + "attribute")
+            if attribute.get("ref") == "xml:id"]
+        if len(xml_ids) != 1 or xml_ids[0].get("use") != "required":
+            raise SchemaError(
+                "PDF XSD item identity is not exact: %s" % item_name)
+        actual_item_metadata[item_name] = typed_attributes(type_name)
+    if actual_item_metadata != profile["itemMetadataFields"]:
+        raise SchemaError("PDF XSD/profile item metadata differ")
 
     def typed_value_kind(type_name, active=frozenset()):
         if not type_name:
@@ -811,9 +920,15 @@ def load_parser_controls(read_bytes) -> ParserControls:
     policy = _parse_policy(read_bytes(PARSER_POLICY_PATH))
     projection = parse_projection_profile(read_bytes(PROJECTION_PROFILE_PATH))
     xml_profiles = parse_xml_profiles(read_bytes(XML_PROFILE_PATH), projection)
+    pdf_profile = xml_profiles["contentDocuments"][
+        "pdf-evidence-transcription-v1"]
+    content_grammar = parse_content_grammar(pdf_profile["contentGrammar"])
     xml_schema_data = read_bytes(XML_SCHEMA_PATH)
     schema_data = {
         kind: read_bytes(path) for kind, path in SCHEMA_PATHS.items()}
+    if schema_data["content-document"] != render_content_xsd(content_grammar):
+        raise SchemaError(
+            "generated content XSD differs from the authoritative profile")
     xsd_namespace = "http://www.w3.org/2001/XMLSchema"
     for data in (xml_schema_data, *schema_data.values()):
         _preflight(data, policy["limits"])
@@ -823,6 +938,7 @@ def load_parser_controls(read_bytes) -> ParserControls:
     _validate_pdf_xsd_profile(
         schema_data["content-document"],
         xml_profiles["contentDocuments"]["pdf-evidence-transcription-v1"])
+    _validate_pdf_semantic_grammar(schema_data["content-document"])
     _validate_authored_xsd_profile(
         schema_data["authored-document"], projection)
     _validate_relation_xsd_profile(
@@ -836,12 +952,15 @@ def load_parser_controls(read_bytes) -> ParserControls:
     schemas = {
         kind: (data, xml_schema_data)
         for kind, data in schema_data.items()}
-    return ParserControls(
-        limits=MappingProxyType(dict(policy["limits"])),
-        projection_profile=_deep_freeze(projection),
-        xml_profiles=_deep_freeze(xml_profiles),
-        schemas=MappingProxyType(schemas),
-    )
+    controls = object.__new__(ParserControls)
+    object.__setattr__(
+        controls, "limits", MappingProxyType(dict(policy["limits"])))
+    object.__setattr__(
+        controls, "projection_profile", _deep_freeze(projection))
+    object.__setattr__(controls, "xml_profiles", _deep_freeze(xml_profiles))
+    object.__setattr__(controls, "content_grammar", content_grammar)
+    object.__setattr__(controls, "schemas", MappingProxyType(schemas))
+    return controls
 
 
 @lru_cache(maxsize=1)
@@ -853,14 +972,6 @@ def _default_parser_controls() -> ParserControls:
         except OSError as exc:
             raise ParseError("parser control is unreadable: %s" % path) from exc
     return load_parser_controls(read)
-
-
-def _schema(kind: str) -> xmlschema.XMLSchema11:
-    try:
-        schema_data, xml_schema_data = _default_parser_controls().schemas[kind]
-    except KeyError as exc:
-        raise ParseError("unsupported XML artifact kind %s" % kind) from exc
-    return _schema_from_bytes(kind, schema_data, xml_schema_data)
 
 
 def _active_limits(limits=None):
@@ -972,6 +1083,8 @@ def parse_validated_xml(data: bytes, schema: bytes, *,
     prohibited. The same lexical and resource limits used for package XML
     apply before strict schema validation.
     """
+    if controls is not None and type(controls) is not ParserControls:
+        raise TypeError("consumer XML controls are not validated parser controls")
     limits = controls.limits if controls is not None else None
     _preflight(data, limits)
     _preflight(schema, limits)
@@ -1161,6 +1274,81 @@ def _typed_scalar(field_type: str, value: str):
     raise ParseError("typed item metadata type is outside the profile")
 
 
+_INLINE_ELEMENTS = frozenset(
+    name for name, unused_type in _PDF_SEMANTIC_GROUPS["inline"])
+_BLOCK_ELEMENTS = frozenset(
+    name for name, unused_type in _PDF_SEMANTIC_GROUPS["block"])
+_INLINE_CONTAINERS = frozenset({
+    "caption", "citation", "definedTerm", "emphasis", "heading", "limitation",
+    "link", "paragraph", "plain", "preamble", "quotation", "reviewMark",
+    "strikeout", "strong", "subscript", "superscript",
+})
+_REQUIRED_BLOCK_CONTAINERS = frozenset({
+    "action", "blockQuotation", "caution", "division", "item", "note",
+    "noteBlock",
+})
+_SEMANTIC_CHILD_HANDLERS = frozenset({
+    *_INLINE_CONTAINERS, *_REQUIRED_BLOCK_CONTAINERS,
+    "body", "cell", "claim", "figure", "head", "list", "row", "table",
+})
+
+
+def _bounded_children(names, permitted, minimum, maximum, label):
+    if len(names) < minimum or len(names) > maximum or \
+            any(name not in permitted for name in names):
+        raise ParseError("PDF semantic child grammar differs: %s" % label)
+
+
+def _validate_semantic_children(item_type: str, children: list[ET.Element]) -> None:
+    """Independently enforce the typed surface's current child invariants."""
+    names = [child.tag.rsplit("}", 1)[-1] for child in children]
+    if item_type in _INLINE_CONTAINERS:
+        _bounded_children(names, _INLINE_ELEMENTS, 0, 100000, item_type)
+        return
+    if item_type in _REQUIRED_BLOCK_CONTAINERS:
+        _bounded_children(names, _BLOCK_ELEMENTS, 1, 100000, item_type)
+        return
+    if item_type == "cell":
+        _bounded_children(names, _BLOCK_ELEMENTS, 0, 100000, item_type)
+        return
+    if item_type == "list":
+        _bounded_children(names, {"item"}, 1, 10000, item_type)
+        return
+    if item_type in {"head", "body"}:
+        _bounded_children(names, {"row"}, 1, 10000, item_type)
+        return
+    if item_type == "row":
+        _bounded_children(names, {"cell"}, 1, 256, item_type)
+        return
+    if item_type == "figure":
+        if names not in ([], ["caption"]):
+            raise ParseError("PDF semantic child grammar differs: figure")
+        return
+    if item_type == "table":
+        candidate = list(names)
+        if candidate[:1] == ["caption"]:
+            candidate.pop(0)
+        if candidate[:1] != ["head"]:
+            raise ParseError("PDF semantic child grammar differs: table")
+        candidate.pop(0)
+        if candidate not in ([], ["body"]):
+            raise ParseError("PDF semantic child grammar differs: table")
+        return
+    if item_type == "claim":
+        index = 0
+        while index < len(names) and names[index] == "dependency":
+            index += 1
+        if index > 32 or index >= len(names) or names[index] != "preamble":
+            raise ParseError("PDF semantic child grammar differs: claim")
+        limitations = names[index + 1:]
+        if not 1 <= len(limitations) <= 256 or any(
+                name != "limitation" for name in limitations):
+            raise ParseError("PDF semantic child grammar differs: claim")
+        return
+    raise ParseError(
+        "PDF typed-content child node has no semantic handler: %s" % item_type)
+
+
 def _typed_content_node(
         node: ET.Element, node_fields, text_elements, child_elements) -> dict:
     attributes = {}
@@ -1176,6 +1364,7 @@ def _typed_content_node(
     elif item_type in child_elements:
         if node.text is not None:
             raise ParseError("PDF typed-content container has untyped text")
+        _validate_semantic_children(item_type, children)
     elif node.text is not None or children:
         raise ParseError("PDF typed-content empty node has content")
     for qname, value in node.attrib.items():
@@ -1212,6 +1401,13 @@ def _pdf_typed_items(
     node_fields = definition["typedContentNodeFields"]
     text_elements = frozenset(definition["typedContentTextElements"])
     child_elements = frozenset(definition["typedContentChildElements"])
+    if child_elements != _SEMANTIC_CHILD_HANDLERS:
+        raise ParseError(
+            "PDF typed-content semantic handler census is incomplete")
+    top_level = list(content)
+    _bounded_children(
+        [child.tag.rsplit("}", 1)[-1] for child in top_level],
+        _BLOCK_ELEMENTS, 1, 100000, "content")
     records = {}
     root_id = root.get(XML_ID)
     document_item = definition["documentItem"]
@@ -1224,7 +1420,7 @@ def _pdf_typed_items(
         typed_content=[
             _typed_content_node(
                 child, node_fields, text_elements, child_elements)
-            for child in content],
+            for child in top_level],
         substantive_metadata={},
     )
     for node in content.iter():
@@ -1272,7 +1468,10 @@ def parse_artifact(
         data: bytes, kind: str, *,
         controls: ParserControls | None = None) -> ParsedArtifact:
     """Securely parse, XSD-validate, and digest one package."""
-    active_controls = controls or _default_parser_controls()
+    if controls is not None and type(controls) is not ParserControls:
+        raise TypeError("artifact controls are not validated parser controls")
+    active_controls = (controls if controls is not None
+                       else _default_parser_controls())
     limits = active_controls.limits
     _preflight(data, limits)
     root = _parse_tree(data)

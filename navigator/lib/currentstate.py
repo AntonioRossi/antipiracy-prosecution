@@ -2,26 +2,59 @@
 
 from __future__ import annotations
 
+import io
 import os
 import posixpath
 import re
 import subprocess
 import sys
 import tempfile
+import unittest
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from html.parser import HTMLParser
 from types import MappingProxyType
+from urllib.parse import unquote, urlsplit
 
 from . import acceptance, bundlezip, canon, gateway, model
 from . import projections, registry as registry_mod, release, render, snapshot, validate
+from . import schema_validate
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DIST = os.path.join(ROOT, "navigator", "dist")
-EDITION_IDS = ("na", "af")
 PROFILE_WORDING_ID = "artifact-label-technical-preview"
 TECHNICAL_PREVIEW_LABEL = (
     "TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA "
     "is deferred; browser and assistive-technology compatibility is not "
     "validated."
+)
+VALIDATION_PURPOSE = (
+    "Technical coherence and deterministic reproducibility of the current "
+    "package for independent inventor and counsel review."
+)
+TECHNICAL_SCOPE = (
+    "closed package, artifact, internal-link, reference, and dependency inventories",
+    "strict parser, schema, profile, identity, provenance, and digest bindings",
+    "deterministic generated representations and delivery products",
+    "declared consumer reads and retained handoffs",
+    "registered tests executed in an isolated materialization",
+    "one unchanged retained worktree capture",
+)
+NON_PROOF_BOUNDARY = (
+    "source authenticity",
+    "transcription fidelity",
+    "factual or legal correctness",
+    "completeness of prior-art or support analysis",
+    "inventor confirmation",
+    "counsel approval",
+    "filing readiness or authorization",
+    "entitlement to rely on the package without reviewing its evidence",
+)
+HUMAN_REVIEW_BOUNDARY = (
+    "Human review of source evidence and substantive analysis remains "
+    "authoritative; uncertainty, disputed conclusions, draft status, and "
+    "not-for-filing labels remain operative."
 )
 STRUCTURED_TEST_MODULES = (
     "structured_source.tests.test_acceptance",
@@ -31,6 +64,9 @@ STRUCTURED_TEST_MODULES = (
     "structured_source.tests.test_registry",
     "structured_source.tests.test_xml_contract",
 )
+PREFLIGHT_TEST_MODULES = (
+    "structured_source.tests.test_acceptance",
+)
 NAVIGATOR_INPUT_ROOTS = (
     "navigator/bundles/",
     "navigator/editions/",
@@ -38,18 +74,12 @@ NAVIGATOR_INPUT_ROOTS = (
     "navigator/schema/",
     "navigator/wording/",
 )
-NAVIGATOR_INPUT_PATHS = frozenset({
-    "navigator/bundles/na-af-2026.json",
-    "navigator/editions/af.json",
-    "navigator/editions/na.json",
-    "navigator/relations/af__pct.relations.xml",
-    "navigator/relations/na__pct.relations.xml",
+NAVIGATOR_FIXED_INPUT_PATHS = frozenset({
+    bundlezip.BUNDLE_CONFIG_PATH,
     "navigator/schema/acceptance.json",
     "navigator/schema/edition.schema.json",
     "navigator/schema/navigator-relations.xsd",
     "navigator/schema/wording.xsd",
-    "navigator/wording/af.wording.xml",
-    "navigator/wording/na.wording.xml",
     "navigator/wording/shared.wording.xml",
 })
 
@@ -57,14 +87,126 @@ NAVIGATOR_INPUT_PATHS = frozenset({
 class CurrentStateError(RuntimeError):
     """The live checkout does not express one exact current navigator state."""
 
+    def __init__(self, message, *, phase=None, check_id=None, subject=None,
+                 expected=None, actual=None, remediation=None):
+        super().__init__(message)
+        self.phase = phase
+        self.check_id = check_id
+        self.subject = subject
+        self.expected = expected
+        self.actual = actual
+        self.remediation = remediation
 
-def edition_path(edition_id):
-    if edition_id not in EDITION_IDS:
-        raise CurrentStateError("edition must be exactly 'na' or 'af'")
-    return "navigator/editions/%s.json" % edition_id
+    def __str__(self):
+        message = super().__str__()
+        if self.phase is None:
+            return message
+        return ("phase=%s check=%s subject=%s expected=%s actual=%s action=%s: %s" %
+                (self.phase, self.check_id, self.subject, self.expected,
+                 self.actual, self.remediation, message))
 
 
-def _read_path(relpath, byte_source=None):
+def failure_diagnostic(error):
+    """Return one stable actionable projection for a validation failure."""
+    if not isinstance(error, CurrentStateError):
+        raise TypeError("failure diagnostic requires CurrentStateError")
+    return {
+        "actual": error.actual or str(error),
+        "checkId": error.check_id or "unclassifiedFailure",
+        "error": str(error.args[0]) if error.args else str(error),
+        "expected": error.expected or "the current validation contract passes",
+        "phase": error.phase or "validation",
+        "remediation": error.remediation or "correct the reported current-state defect",
+        "subject": error.subject or "current governed worktree",
+    }
+
+
+@dataclass(frozen=True, slots=True)
+class ValidationIssue:
+    check_id: str
+    subject: str
+    expected: str
+    actual: str
+    remediation: str
+
+    def render(self):
+        return ("check=%s subject=%s expected=%s actual=%s action=%s" %
+                (self.check_id, self.subject, self.expected, self.actual,
+                 self.remediation))
+
+
+@dataclass(frozen=True, slots=True)
+class ValidatedNavigatorSources:
+    """One snapshot-bound structured corpus and its frozen navigator inputs."""
+
+    snapshot_digest: str
+    corpus: object
+    consumer_inputs: MappingProxyType
+
+    def input_for(self, consumer_id):
+        try:
+            value = self.consumer_inputs[consumer_id]
+        except KeyError as exc:
+            raise CurrentStateError(
+                "configured navigator consumer has no validated handoff") from exc
+        if value.snapshot_digest != self.snapshot_digest:
+            raise CurrentStateError(
+                "navigator consumer handoff belongs to another snapshot")
+        return value
+
+
+@dataclass(frozen=True, slots=True)
+class EditionSpec:
+    edition_id: str
+    path: str
+    consumer_id: str
+    claim_package_id: str
+    relation_path: str
+    wording_path: str
+    artifact_name: str
+    declared_timestamp: str
+
+
+@dataclass(frozen=True, slots=True)
+class ProductPlan:
+    """Closed product inventory resolved from current bundle and edition data."""
+
+    snapshot_digest: str
+    bundle_config: MappingProxyType
+    editions: tuple
+    by_id: MappingProxyType
+    input_paths: frozenset
+
+    def edition(self, edition_id):
+        try:
+            return self.by_id[edition_id]
+        except KeyError as exc:
+            raise CurrentStateError("edition is absent from the current product plan") from exc
+
+    @property
+    def edition_ids(self):
+        return tuple(item.edition_id for item in self.editions)
+
+    @property
+    def consumer_ids(self):
+        return tuple(item.consumer_id for item in self.editions)
+
+
+@dataclass(frozen=True, slots=True)
+class ReproductionRequest:
+    edition_ids: tuple
+    include_bundle: bool
+
+    def __post_init__(self):
+        if not isinstance(self.edition_ids, tuple) or not self.edition_ids or \
+                any(not isinstance(item, str) or not item
+                    for item in self.edition_ids) or \
+                len(self.edition_ids) != len(set(self.edition_ids)) or \
+                type(self.include_bundle) is not bool:
+            raise CurrentStateError("reproduction request is malformed")
+
+
+def _read_path(relpath, byte_source):
     if not isinstance(relpath, str) or not relpath or \
             posixpath.normpath(relpath) != relpath or \
             relpath.startswith("/") or "\\" in relpath or \
@@ -72,15 +214,12 @@ def _read_path(relpath, byte_source=None):
         raise CurrentStateError("current-state path is not canonical")
     absolute = os.path.join(ROOT, *relpath.split("/"))
     try:
-        if byte_source is None:
-            with open(absolute, "rb") as handle:
-                return handle.read()
         return byte_source(absolute)
-    except (OSError, KeyError) as exc:
+    except (OSError, KeyError, TypeError) as exc:
         raise CurrentStateError("current-state path is unreadable: %s" % relpath) from exc
 
 
-def _load_json(relpath, byte_source=None):
+def _load_json(relpath, byte_source):
     data = _read_path(relpath, byte_source)
     try:
         value = canon.parse_json(data)
@@ -91,7 +230,7 @@ def _load_json(relpath, byte_source=None):
     return value
 
 
-def load_bundle_config(byte_source=None):
+def load_bundle_config(byte_source):
     value = _load_json(bundlezip.BUNDLE_CONFIG_PATH, byte_source)
     try:
         return bundlezip.validate_bundle_config(value)
@@ -99,30 +238,112 @@ def load_bundle_config(byte_source=None):
         raise CurrentStateError("bundle configuration is invalid: %s" % exc) from exc
 
 
-def build_model(edition_id, repository_snapshot, consumer_input=None):
-    """Construct one model from a retained structured-source handoff."""
+def _parsed_json(relpath, byte_source):
+    try:
+        return canon.parse_json(_read_path(relpath, byte_source))
+    except (ValueError, canon.CanonError) as exc:
+        raise CurrentStateError("control is not strict JSON: %s" % relpath) from exc
+
+
+def _freeze_json(value):
+    if isinstance(value, dict):
+        return MappingProxyType({key: _freeze_json(item)
+                                 for key, item in value.items()})
+    if isinstance(value, list):
+        return tuple(_freeze_json(item) for item in value)
+    return value
+
+
+def load_product_plan(repository_snapshot):
+    """Resolve the exact current edition and product inventory from retained data."""
     if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
-        raise CurrentStateError("model construction requires a repository snapshot")
-    if consumer_input is None:
-        inputs = verify_structured_source(
-            repository_snapshot, ("navigator-" + edition_id,))
-        consumer_input = inputs["navigator-" + edition_id]
+        raise CurrentStateError("product plan requires a repository snapshot")
+    byte_source = repository_snapshot.byte_source()
+    config = load_bundle_config(byte_source)
+    schema_path = "navigator/schema/edition.schema.json"
+    schema = _parsed_json(schema_path, byte_source)
+    try:
+        schema_validate.check_schema(schema)
+    except schema_validate.SchemaError as exc:
+        raise CurrentStateError("edition schema is invalid") from exc
+    sealed = {
+        entry["edition"]: entry["name"] for entry in config["members"]
+        if entry["kind"] == "sealed"
+    }
+    editions = []
+    for edition_id in config["editions"]:
+        path = "navigator/editions/%s.json" % edition_id
+        value = _parsed_json(path, byte_source)
+        problems = schema_validate.validate(value, schema)
+        if problems:
+            raise CurrentStateError(
+                "edition configuration is invalid: %s: %s" %
+                (path, "; ".join(problems[:20])))
+        expected_consumer = "navigator-" + edition_id
+        if value["editionId"] != edition_id or \
+                value["consumerId"] != expected_consumer or \
+                value["strategyPrefix"].casefold() != edition_id or \
+                value["claimPackageId"] != \
+                "aa11393us-%s-us-claim-set" % edition_id or \
+                not value["claimSetVersion"].startswith(
+                    value["strategyPrefix"] + "-") or \
+                value["relationPath"] != \
+                "navigator/relations/%s__pct.relations.xml" % edition_id or \
+                value["editionWordingPath"] != \
+                "navigator/wording/%s.wording.xml" % edition_id or \
+                value["artifactName"] != sealed.get(edition_id) or \
+                value["declaredReleaseTimestamp"] != config["declaredTimestamp"]:
+            raise CurrentStateError(
+                "edition, consumer, source, artifact, or bundle identity differs: %s" %
+                edition_id)
+        editions.append(EditionSpec(
+            edition_id=edition_id, path=path,
+            consumer_id=value["consumerId"],
+            claim_package_id=value["claimPackageId"],
+            relation_path=value["relationPath"],
+            wording_path=value["editionWordingPath"],
+            artifact_name=value["artifactName"],
+            declared_timestamp=value["declaredReleaseTimestamp"],
+        ))
+    consumer_ids = [item.consumer_id for item in editions]
+    artifact_names = [item.artifact_name for item in editions]
+    if len(consumer_ids) != len(set(consumer_ids)) or \
+            len(artifact_names) != len(set(name.casefold()
+                                           for name in artifact_names)):
+        raise CurrentStateError(
+            "product plan contains duplicate consumers or artifact identities")
+    input_paths = set(NAVIGATOR_FIXED_INPUT_PATHS)
+    for item in editions:
+        input_paths.update((item.path, item.relation_path, item.wording_path))
+    by_id = MappingProxyType({item.edition_id: item for item in editions})
+    return ProductPlan(
+        snapshot_digest=repository_snapshot.digest,
+        bundle_config=_freeze_json(config), editions=tuple(editions),
+        by_id=by_id, input_paths=frozenset(input_paths))
+
+
+def build_model(edition, repository_snapshot, consumer_input):
+    """Construct one model from a retained structured-source handoff."""
+    if not isinstance(edition, EditionSpec) or \
+            not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
+        raise CurrentStateError(
+            "model construction requires an edition specification and snapshot")
     if not isinstance(consumer_input, registry_mod.ConsumerInput) or \
             consumer_input.snapshot_digest != repository_snapshot.digest or \
-            consumer_input.consumer_id != "navigator-" + edition_id:
+            consumer_input.consumer_id != edition.consumer_id:
         raise CurrentStateError(
             "model consumer handoff does not match the repository snapshot")
-    path = edition_path(edition_id)
     content_gateway = gateway.ContentGateway(
         ROOT, byte_source=repository_snapshot.byte_source(), allowlist=None)
     try:
         edition_model = model.EditionModel(
-            content_gateway, path, consumer_input)
+            content_gateway, edition.path, consumer_input)
     except (gateway.GatewayError, model.ModelError) as exc:
-        raise CurrentStateError(
-            "%s typed model could not be constructed: %s" %
-            (edition_id, exc)) from exc
-    if getattr(edition_model, "edition_id", None) != edition_id:
+            raise CurrentStateError(
+                "%s typed model could not be constructed: %s" %
+                (edition.edition_id, exc)) from exc
+    if getattr(edition_model, "edition_id", None) != edition.edition_id or \
+            edition_model.artifact_name != edition.artifact_name:
         raise CurrentStateError("typed model edition identity does not match request")
     return edition_model
 
@@ -147,7 +368,7 @@ def _validate_model_metadata(edition_model):
         raise CurrentStateError("typed model product label is not the exact current label")
 
 
-def derive(edition_id, mode, repository_snapshot, consumer_input=None):
+def derive(edition, mode, repository_snapshot, consumer_input):
     """Return ``(model, html_bytes, content_lock)`` for one current edition.
 
     ``release`` intentionally renders the candidate projection: release seals
@@ -155,8 +376,9 @@ def derive(edition_id, mode, repository_snapshot, consumer_input=None):
     """
     if mode not in {"preview", "candidate", "release"}:
         raise CurrentStateError("derivation mode is not current")
-    edition_model = build_model(
-        edition_id, repository_snapshot, consumer_input)
+    if not isinstance(edition, EditionSpec):
+        raise CurrentStateError("derivation requires a current edition specification")
+    edition_model = build_model(edition, repository_snapshot, consumer_input)
     problems = validate.validate_edition(edition_model)
     if not isinstance(problems, tuple) or any(
             not isinstance(problem, tuple) or len(problem) != 2 or
@@ -166,14 +388,15 @@ def derive(edition_id, mode, repository_snapshot, consumer_input=None):
     if problems:
         detail = "; ".join("[%s] %s" % problem for problem in problems)
         raise CurrentStateError(
-            "%s edition validation failed: %s" % (edition_id, detail))
+            "%s edition validation failed: %s" %
+            (edition.edition_id, detail))
     _validate_model_metadata(edition_model)
     render_mode = "preview" if mode == "preview" else "candidate"
     try:
         html_bytes = render.render(edition_model, mode=render_mode)
     except (KeyError, model.ModelError, RuntimeError, ValueError) as exc:
         raise CurrentStateError(
-            "%s renderer failed: %s" % (edition_id, exc)) from exc
+            "%s renderer failed: %s" % (edition.edition_id, exc)) from exc
     if not isinstance(html_bytes, bytes) or not html_bytes.startswith(b"<!DOCTYPE html>"):
         raise CurrentStateError("renderer did not return a complete HTML5 byte product")
     content_lock = edition_model.content_lock
@@ -184,42 +407,47 @@ def derive(edition_id, mode, repository_snapshot, consumer_input=None):
     return edition_model, html_bytes, content_lock
 
 
-def _artifact_bytes(name, byte_source=None):
+def _artifact_bytes(name, byte_source):
     release.validate_output_name(name)
     relpath = "navigator/dist/" + name
     return _read_path(relpath, byte_source)
 
 
-def _derive_editions(repository_snapshot, consumer_inputs=None):
-    if consumer_inputs is None:
-        consumer_inputs = verify_structured_source(
-            repository_snapshot, ("navigator-na", "navigator-af"))
+def derive_editions(repository_snapshot, editions, sources):
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
+            not isinstance(editions, tuple) or not editions or \
+            any(not isinstance(item, EditionSpec) for item in editions) or \
+            len(editions) != len(set(item.edition_id for item in editions)) or \
+            not isinstance(sources, ValidatedNavigatorSources) or \
+            sources.snapshot_digest != repository_snapshot.digest:
+        raise CurrentStateError("edition derivation inputs are incomplete")
     states = {}
-    for edition_id in EDITION_IDS:
+    for edition in editions:
         edition_model, html_bytes, content_lock = derive(
-            edition_id, "candidate", repository_snapshot,
-            consumer_inputs["navigator-" + edition_id])
-        states[edition_id] = {
+            edition, "candidate", repository_snapshot,
+            sources.input_for(edition.consumer_id))
+        states[edition.edition_id] = MappingProxyType({
             "model": edition_model,
             "html": html_bytes,
             "lock": content_lock,
             "candidateName": release.candidate_name(
                 edition_model.artifact_name),
-        }
-    return states
+        })
+    return MappingProxyType(states)
 
 
-def _manifest_bytes(config, states, artifact_members):
-    models = [states[edition_id]["model"] for edition_id in EDITION_IDS]
+def _manifest_bytes(product_plan, states, artifact_members):
+    config = product_plan.bundle_config
+    models = [states[edition_id]["model"]
+              for edition_id in product_plan.edition_ids]
     if any(item.profile_label != TECHNICAL_PREVIEW_LABEL for item in models):
         raise CurrentStateError("editions do not share the current product profile")
-    if models[0].shared_wording_digest != models[1].shared_wording_digest:
+    if len({item.shared_wording_digest for item in models}) != 1:
         raise CurrentStateError("editions resolved different shared wording bytes")
     if config["manifestWordingId"] != "bundle-manifest-neutral":
         raise CurrentStateError("bundle manifest wording identity is not current")
     try:
-        manifest_text = model.bundle_manifest_text(
-            states["na"]["model"], states["af"]["model"])
+        manifest_text = model.bundle_manifest_text(models)
     except model.ModelError as exc:
         raise CurrentStateError(
             "neutral bundle wording could not be resolved") from exc
@@ -232,17 +460,20 @@ def _manifest_bytes(config, states, artifact_members):
     return ("\n".join(lines) + "\n").encode("utf-8")
 
 
-def build_bundle_state(repository_snapshot, states=None):
-    """Resolve and reproduce the exact current five-member delivery bundle."""
-    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
-        raise CurrentStateError("bundle construction requires a repository snapshot")
+def build_bundle_state(repository_snapshot, product_plan, states):
+    """Resolve and reproduce the exact configured delivery bundle."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
+            not isinstance(product_plan, ProductPlan) or \
+            product_plan.snapshot_digest != repository_snapshot.digest:
+        raise CurrentStateError(
+            "bundle construction requires one snapshot-bound product plan")
     byte_source = repository_snapshot.byte_source()
-    config = load_bundle_config(byte_source)
-    states = (_derive_editions(repository_snapshot)
-              if states is None else states)
-    if set(states) != set(EDITION_IDS):
+    config = product_plan.bundle_config
+    if not isinstance(states, MappingProxyType):
+        raise CurrentStateError("bundle construction requires frozen edition states")
+    if set(states) != set(product_plan.edition_ids):
         raise CurrentStateError("bundle edition state is incomplete")
-    for edition_id in EDITION_IDS:
+    for edition_id in product_plan.edition_ids:
         item = states[edition_id]
         if item["model"].declared_release_timestamp != config["declaredTimestamp"]:
             raise CurrentStateError(
@@ -252,27 +483,25 @@ def build_bundle_state(repository_snapshot, states=None):
     ordered_artifact_members = []
     for entry in config["members"][:-1]:
         name = entry["name"]
-        stored = _artifact_bytes(name, byte_source)
         if entry["kind"] == "sealed":
             edition_id = entry["edition"]
             edition_model = states[edition_id]["model"]
-            if name != edition_model.artifact_name or \
-                    stored != states[edition_id]["html"]:
+            if name != edition_model.artifact_name:
                 raise CurrentStateError(
-                    "%s sealed artifact is not the current candidate" % edition_id)
+                    "%s sealed artifact name differs from its edition" % edition_id)
+            stored = states[edition_id]["html"]
             artifacts[name] = stored
         else:
             artifact = entry["artifact"]
             if artifact not in artifacts:
                 raise CurrentStateError(
                     "artifact checksum precedes or mismatches its artifact")
-            try:
-                release.verify_checksum(stored, artifact, artifacts[artifact])
-            except release.ReleaseError as exc:
-                raise CurrentStateError(str(exc)) from exc
+            expected_checksum = release.checksum_text(
+                artifact, artifacts[artifact])
+            stored = expected_checksum
         ordered_artifact_members.append((name, stored))
 
-    manifest = _manifest_bytes(config, states, ordered_artifact_members)
+    manifest = _manifest_bytes(product_plan, states, ordered_artifact_members)
     members = ordered_artifact_members + [("MANIFEST.txt", manifest)]
     try:
         zip_bytes = bundlezip.build_zip(members, config["declaredTimestamp"])
@@ -281,9 +510,9 @@ def build_bundle_state(repository_snapshot, states=None):
     config_digest = canon.bytes_digest(
         _read_path(bundlezip.BUNDLE_CONFIG_PATH, byte_source))
     bundle_origins = projections.bundle_origin_inventory(
-        states["na"]["model"], states["af"]["model"], config,
-        config_digest, bundlezip.BUNDLE_CONFIG_PATH)
-    return {
+        (states[edition_id]["model"] for edition_id in product_plan.edition_ids),
+        config, config_digest, bundlezip.BUNDLE_CONFIG_PATH)
+    return MappingProxyType({
         "config": config,
         "configDigest": config_digest,
         "manifest": manifest,
@@ -291,19 +520,45 @@ def build_bundle_state(repository_snapshot, states=None):
         "originInventory": bundle_origins,
         "states": states,
         "zip": zip_bytes,
-    }
+    })
 
 
-def _bundle_reproduction_projection(bundle_state):
+def verify_stored_artifact_members(repository_snapshot, bundle_state):
+    """Require stored sealed/checksum bytes to equal one derived bundle state."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
+            not isinstance(bundle_state, MappingProxyType):
+        raise CurrentStateError(
+            "stored bundle-member verification inputs are malformed")
+    byte_source = repository_snapshot.byte_source()
+    for name, expected in bundle_state["members"][:-1]:
+        actual = _artifact_bytes(name, byte_source)
+        if actual != expected:
+            raise CurrentStateError(
+                "stored bundle member differs from derived bytes: %s" % name)
+    return bundle_state
+
+
+def product_reproduction_projection(states, bundle_state=None):
+    """Return the canonical digest projection for one explicit product set."""
+    if not isinstance(states, MappingProxyType) or not states:
+        raise CurrentStateError("product projection requires frozen edition states")
+    editions = {}
     origins = {}
-    for edition_id in EDITION_IDS:
-        inventory = bundle_state["states"][edition_id]["model"].origin_inventory
+    for edition_id, state in states.items():
+        inventory = state["model"].origin_inventory
         encoded = [[
             item.value_id, item.kind, item.owner_path,
             item.owner_ref, item.owner_digest,
         ] for item in inventory]
-        origins[edition_id] = canon.bytes_digest(canon.canonical_json(encoded))
-    return {
+        origin_digest = canon.bytes_digest(canon.canonical_json(encoded))
+        origins[edition_id] = origin_digest
+        editions[edition_id] = {
+            "artifactName": state["model"].artifact_name,
+            "contentLockDigest": state["lock"]["lockDigest"],
+            "htmlDigest": canon.bytes_digest(state["html"]),
+            "originInventoryDigest": origin_digest,
+        }
+    bundle = None if bundle_state is None else {
         "bundleOriginInventoryDigest": canon.bytes_digest(canon.canonical_json([
             [item.value_id, item.kind, item.owner_path,
              item.owner_ref, item.owner_digest]
@@ -317,39 +572,81 @@ def _bundle_reproduction_projection(bundle_state):
         "originInventoryDigests": origins,
         "zipDigest": canon.bytes_digest(bundle_state["zip"]),
     }
+    return {"bundle": bundle, "editions": editions}
 
 
-def _fresh_bundle_projection(timeout=900):
+def derive_reproduction_projection(repository_snapshot, product_plan, sources,
+                                   request):
+    """Derive one requested product projection without implicit work."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
+            not isinstance(product_plan, ProductPlan) or \
+            product_plan.snapshot_digest != repository_snapshot.digest or \
+            not isinstance(sources, ValidatedNavigatorSources) or \
+            sources.snapshot_digest != repository_snapshot.digest or \
+            not isinstance(request, ReproductionRequest) or \
+            not set(request.edition_ids).issubset(product_plan.by_id) or \
+            (request.include_bundle and
+             request.edition_ids != product_plan.edition_ids):
+        raise CurrentStateError(
+            "reproduction request does not match the current product plan")
+    bind_sources_to_plan(product_plan, sources)
+    editions = tuple(product_plan.edition(item)
+                     for item in request.edition_ids)
+    states = derive_editions(repository_snapshot, editions, sources)
+    bundle_state = (build_bundle_state(
+        repository_snapshot, product_plan, states)
+        if request.include_bundle else None)
+    return product_reproduction_projection(states, bundle_state)
+
+
+def reproduce_materialized(request):
+    """Execute one complete reproduction session in the current interpreter."""
+    if not isinstance(request, ReproductionRequest):
+        raise CurrentStateError("materialized reproduction request is malformed")
+    repository_snapshot = snapshot.RepositorySnapshot.capture(
+        ROOT, retain_bytes=True)
+    product_plan = load_product_plan(repository_snapshot)
+    sources = validate_structured_corpus(repository_snapshot)
+    return derive_reproduction_projection(
+        repository_snapshot, product_plan, sources, request)
+
+
+def fresh_product_projection(root, request, timeout=900):
+    """Derive one explicit product set in exactly one fresh interpreter."""
+    if not isinstance(request, ReproductionRequest):
+        raise CurrentStateError("fresh reproduction request is malformed")
     script = (
         "import sys\n"
-        "from navigator.lib import canon,currentstate,snapshot\n"
-        "r=snapshot.RepositorySnapshot.capture(currentstate.ROOT,retain_bytes=True)\n"
-        "s=currentstate.build_bundle_state(r)\n"
-        "p=currentstate._bundle_reproduction_projection(s)\n"
+        "from navigator.lib import canon,currentstate\n"
+        "request=currentstate.ReproductionRequest("
+        "tuple(sys.argv[1].split(',')),sys.argv[2]=='bundle')\n"
+        "p=currentstate.reproduce_materialized(request)\n"
         "sys.stdout.buffer.write(canon.canonical_json(p)+b'\\n')\n"
     )
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     try:
         result = subprocess.run(
-            [sys.executable, "-B", "-c", script], cwd=ROOT,
+            [sys.executable, "-B", "-c", script,
+             ",".join(request.edition_ids),
+             "bundle" if request.include_bundle else "editions"], cwd=root,
             capture_output=True, timeout=timeout, env=environment)
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise CurrentStateError(
-            "fresh-process bundle derivation could not complete") from exc
+            "fresh-process product derivation could not complete") from exc
     if result.returncode:
         raise CurrentStateError(
-            "fresh-process bundle derivation failed: %s" %
+            "fresh-process product derivation failed: %s" %
             (result.stderr.decode("utf-8", "replace")[-4000:] or
              "no diagnostic"))
     try:
         value = canon.parse_json(result.stdout)
     except (ValueError, canon.CanonError) as exc:
         raise CurrentStateError(
-            "fresh-process bundle projection is malformed") from exc
+            "fresh-process product projection is malformed") from exc
     if result.stdout != canon.canonical_json(value) + b"\n":
         raise CurrentStateError(
-            "fresh-process bundle projection is not canonical")
+            "fresh-process product projection is not canonical")
     return value
 
 
@@ -367,26 +664,33 @@ def _dist_inventory(repository_snapshot):
     return set(names)
 
 
-def _verify_navigator_input_inventory(repository_snapshot):
+def _verify_navigator_input_inventory(repository_snapshot, product_plan):
     """Refuse any missing or unowned live navigator semantic/control file."""
+    if not isinstance(product_plan, ProductPlan):
+        raise CurrentStateError("navigator input inventory requires a product plan")
     actual = {
         entry.path for entry in repository_snapshot.entries
         if entry.path.startswith(NAVIGATOR_INPUT_ROOTS)
     }
-    if actual != NAVIGATOR_INPUT_PATHS:
+    if actual != product_plan.input_paths:
         raise CurrentStateError(
             "navigator live-input inventory differs: missing=%s extra=%s" %
-            (sorted(NAVIGATOR_INPUT_PATHS - actual),
-             sorted(actual - NAVIGATOR_INPUT_PATHS)))
+            (sorted(product_plan.input_paths - actual),
+             sorted(actual - product_plan.input_paths)))
 
 
-def _structured_source_result(repository_snapshot):
+def validate_structured_corpus(repository_snapshot):
+    """Validate all source domains once and freeze every declared handoff."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
+        raise CurrentStateError(
+            "structured-source validation requires a repository snapshot")
     try:
         from structured_source.errors import StructuredSourceError
-        from structured_source.verify import run_acceptance
-        result = run_acceptance(
+        from structured_source.verify import validate_corpus
+        corpus = validate_corpus(
             ROOT, byte_source=repository_snapshot.byte_source(),
             repository_snapshot=repository_snapshot)
+        result = corpus.public_result()
         domains = result.get("domains") if isinstance(result, dict) else None
         expected = (
             ("pdf-transcription", "pdf-evidence-transcription-v1"),
@@ -394,109 +698,89 @@ def _structured_source_result(repository_snapshot):
             ("authored-relations", "authored-relations-v1"),
         )
         if not isinstance(result, dict) or \
-                result.get("status") != "conformant" or \
-                result.get("repositorySnapshot") != repository_snapshot.digest or \
+                result.get("status") != "passed" or \
+                result.get("snapshotDigest") != repository_snapshot.digest or \
                 not isinstance(domains, list) or \
                 any(not isinstance(item, dict) for item in domains) or tuple(
                     (item.get("domain"), item.get("authorityScheme"))
                     for item in domains) != expected or \
-                any(item.get("status") != "conformant" for item in domains):
+                any(item.get("status") != "passed" for item in domains):
             raise StructuredSourceError(
                 "structured-source domain acceptance inventory is not exact")
-        return result
+        inputs = {}
+        for consumer_id, handoffs in corpus.consumer_handoffs.items():
+            if len(handoffs) != 2:
+                raise StructuredSourceError(
+                    "navigator consumer edge inventory is not exact")
+            for handoff in handoffs.values():
+                if handoff["inputRepresentation"] != "xml" or \
+                        handoff["dependencies"]:
+                    raise StructuredSourceError(
+                        "navigator consumer does not use direct current XML")
+            inputs[consumer_id] = registry_input = registry_mod.ConsumerInput(
+                consumer_id=consumer_id,
+                snapshot_digest=repository_snapshot.digest,
+                handoffs=handoffs,
+                parser_controls=corpus.parser_controls)
+            if registry_input.consumer_id != consumer_id:
+                raise StructuredSourceError(
+                    "navigator consumer handoff set is malformed")
+        return ValidatedNavigatorSources(
+            snapshot_digest=repository_snapshot.digest,
+            corpus=corpus,
+            consumer_inputs=MappingProxyType(inputs),
+        )
     except (ImportError, OSError, StructuredSourceError) as exc:
         raise CurrentStateError(
             "structured-source current gate failed: %s" % exc) from exc
 
 
-def _construct_structured_source_handoffs(
-        repository_snapshot, consumer_ids, structured_result):
-    """Construct exact frozen handoffs after aggregate acceptance has passed."""
-    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
-        raise CurrentStateError("structured-source proof requires a repository snapshot")
-    if not isinstance(structured_result, dict) or \
-            structured_result.get("status") != "conformant" or \
-            structured_result.get("repositorySnapshot") != \
-            repository_snapshot.digest:
+def bind_sources_to_plan(product_plan, sources):
+    """Require exact same-snapshot agreement between products and handoffs."""
+    if not isinstance(product_plan, ProductPlan) or \
+            not isinstance(sources, ValidatedNavigatorSources) or \
+            product_plan.snapshot_digest != sources.snapshot_digest or \
+            set(sources.consumer_inputs) != set(product_plan.consumer_ids):
         raise CurrentStateError(
-            "structured-source handoffs require same-snapshot aggregate acceptance")
-    consumers = tuple(consumer_ids)
-    if not consumers or len(consumers) != len(set(consumers)) or \
-            not set(consumers).issubset({"navigator-na", "navigator-af"}):
-        raise CurrentStateError("structured-source consumer proof request is invalid")
-    try:
-        from structured_source.errors import StructuredSourceError
-        from structured_source.verify import VerificationContext
-        context = VerificationContext(
-            ROOT, byte_source=repository_snapshot.byte_source(),
-            repository_snapshot=repository_snapshot)
-        by_id = {item["consumerId"]: item
-                 for item in context.registry["consumers"]}
-        inputs = {}
-        for consumer_id in consumers:
-            consumer = by_id.get(consumer_id)
-            if consumer is None or len(consumer["edges"]) != 2:
-                raise StructuredSourceError(
-                    "navigator consumer edge inventory is not exact")
-            handoffs = {}
-            for edge in consumer["edges"]:
-                if edge["inputRepresentation"] != "xml" or \
-                        edge["dependencies"] != []:
-                    raise StructuredSourceError(
-                        "navigator consumer does not use direct current XML")
-                context.check(edge["packageId"])
-                handoffs[edge["packageId"]] = context.read_for_consumer(
-                    consumer_id, edge["packageId"])
-            inputs[consumer_id] = registry_input = \
-                registry_mod.ConsumerInput(
-                    consumer_id=consumer_id,
-                    snapshot_digest=repository_snapshot.digest,
-                    handoffs=MappingProxyType(handoffs),
-                    parser_controls=context.parser_controls)
-            if registry_input.consumer_id != consumer_id:
-                raise StructuredSourceError(
-                    "navigator consumer handoff set is malformed")
-        return MappingProxyType(inputs)
-    except (ImportError, OSError, StructuredSourceError) as exc:
+            "configured product consumers and validated handoffs differ")
+    return sources
+
+
+def verify_current_closure(repository_snapshot, reproduction_root):
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot) or \
+            not isinstance(reproduction_root, str) or not reproduction_root:
         raise CurrentStateError(
-            "structured-source consumer closure failed: %s" % exc) from exc
-
-
-def verify_structured_source(repository_snapshot, consumer_ids):
-    """Pass all source domains, then return exact declared consumer handoffs."""
-    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
-        raise CurrentStateError("structured-source proof requires a repository snapshot")
-    structured_result = _structured_source_result(repository_snapshot)
-    return _construct_structured_source_handoffs(
-        repository_snapshot, consumer_ids, structured_result)
-
-
-def _verify_current_closure(repository_snapshot, *, reproduce=False):
+            "current closure requires a snapshot and isolated reproduction root")
     byte_source = repository_snapshot.byte_source()
-    _verify_navigator_input_inventory(repository_snapshot)
-    structured_result = _structured_source_result(repository_snapshot)
+    product_plan = load_product_plan(repository_snapshot)
+    _verify_navigator_input_inventory(repository_snapshot, product_plan)
     registry = acceptance.load_registry(ROOT, byte_source)
-    consumer_inputs = _construct_structured_source_handoffs(
-        repository_snapshot, ("navigator-na", "navigator-af"),
-        structured_result)
-    states = _derive_editions(repository_snapshot, consumer_inputs)
+    request = ReproductionRequest(product_plan.edition_ids, True)
+    with ThreadPoolExecutor(max_workers=1) as fresh_pool:
+        fresh_future = fresh_pool.submit(
+            fresh_product_projection, reproduction_root, request)
+        sources = validate_structured_corpus(repository_snapshot)
+        bind_sources_to_plan(product_plan, sources)
+        states = derive_editions(
+            repository_snapshot, product_plan.editions, sources)
+        bundle_state = build_bundle_state(
+            repository_snapshot, product_plan, states)
+        verify_stored_artifact_members(repository_snapshot, bundle_state)
+        current_projection = product_reproduction_projection(
+            states, bundle_state)
+        fresh_projection = fresh_future.result()
+    if fresh_projection != current_projection:
+        raise CurrentStateError(
+            "fresh-process editions, manifest, origins, or ZIP differ")
     expected_dist = set()
     editions = {}
-    for edition_id in EDITION_IDS:
+    for edition_id in product_plan.edition_ids:
         item = states[edition_id]
         candidate_name = item["candidateName"]
         candidate = _artifact_bytes(candidate_name, byte_source)
         if candidate != item["html"]:
             raise CurrentStateError(
-                "%s committed candidate is stale" % edition_id)
-        if reproduce:
-            try:
-                fresh = release.fresh_candidate(ROOT, edition_id)
-                release.prove_candidate(item["html"], candidate, fresh)
-            except release.ReleaseError as exc:
-                raise CurrentStateError(
-                    "%s fresh-process candidate differs: %s" %
-                    (edition_id, exc)) from exc
+                "%s stored candidate is stale" % edition_id)
         expected_dist.add(candidate_name)
         editions[edition_id] = {
             "artifact": item["model"].artifact_name,
@@ -505,18 +789,13 @@ def _verify_current_closure(repository_snapshot, *, reproduce=False):
             "contentLockDigest": item["lock"]["lockDigest"],
         }
 
-    bundle_state = build_bundle_state(repository_snapshot, states)
-    if reproduce and _fresh_bundle_projection() != \
-            _bundle_reproduction_projection(bundle_state):
-        raise CurrentStateError(
-            "fresh-process manifest, ZIP, or origin inventory differs")
     config = bundle_state["config"]
     expected_dist.update(name for name, unused_data in bundle_state["members"][:-1])
     expected_dist.add(config["name"])
     expected_dist.add(config["name"] + ".sha256")
     stored_zip = _artifact_bytes(config["name"], byte_source)
     if stored_zip != bundle_state["zip"]:
-        raise CurrentStateError("committed delivery bundle is stale")
+        raise CurrentStateError("stored delivery bundle is stale")
     try:
         if bundlezip.read_zip_members(stored_zip) != bundle_state["members"]:
             raise CurrentStateError("delivery bundle member bytes are stale")
@@ -539,24 +818,26 @@ def _verify_current_closure(repository_snapshot, *, reproduce=False):
             "name": config["name"],
         },
         "editions": editions,
-        "structuredSource": structured_result,
+        "structuredSource": sources.corpus.public_result(),
+        "testSession": MappingProxyType({
+            "models": MappingProxyType({
+                edition_id: states[edition_id]["model"]
+                for edition_id in product_plan.edition_ids
+            }),
+            "plan": product_plan,
+            "snapshot": repository_snapshot,
+            "sources": sources,
+        }),
     }
 
 
-def _subprocess_detail(result):
-    return "\n".join(
-        part.strip() for part in (result.stdout, result.stderr) if part.strip())
+def _registered_test_modules():
+    return STRUCTURED_TEST_MODULES + tuple(sorted(acceptance.TEST_COVERAGE))
 
 
-def _run_discovered_tests(root):
-    environment = dict(os.environ)
-    environment["PYTHONDONTWRITEBYTECODE"] = "1"
-    reports = []
-    total = 0
-    modules = STRUCTURED_TEST_MODULES + tuple(sorted(acceptance.TEST_COVERAGE))
-    expected_files = {
-        module.replace(".", "/") + ".py" for module in modules
-    }
+def _verify_test_module_census(root):
+    modules = _registered_test_modules()
+    expected_files = {module.replace(".", "/") + ".py" for module in modules}
     actual_files = set()
     for test_root in ("structured_source/tests", "navigator/tests"):
         absolute = os.path.join(root, *test_root.split("/"))
@@ -571,213 +852,659 @@ def _run_discovered_tests(root):
             "current test-module census differs: missing=%s extra=%s" %
             (sorted(expected_files - actual_files),
              sorted(actual_files - expected_files)))
+
+
+def _run_discovered_tests(root, modules=None, verify_census=True,
+                          validation_session=None):
+    reports = []
+    total = 0
+    registered = _registered_test_modules()
+    modules = registered if modules is None else tuple(modules)
+    if not modules or len(modules) != len(set(modules)) or \
+            not set(modules).issubset(registered):
+        raise CurrentStateError("requested test-module set is not registered")
+    if verify_census:
+        _verify_test_module_census(root)
+    if os.path.realpath(root) != os.path.realpath(ROOT):
+        raise CurrentStateError(
+            "registered tests must execute in the active isolated materialization")
+    if validation_session is not None:
+        from navigator import tests as navigator_tests
+        from structured_source import tests as structured_source_tests
+        navigator_tests.install_validation_session(validation_session)
+        structured_source_tests.install_validated_corpus(
+            validation_session["sources"].corpus)
     for module in modules:
+        output = io.StringIO()
+        suite = unittest.defaultTestLoader.loadTestsFromName(module)
+        count = suite.countTestCases()
+        if count < 1:
+            raise CurrentStateError(
+                "registered test census is unavailable for %s" % module)
         try:
-            with tempfile.TemporaryDirectory(
-                    prefix="aa11393-test-pycache-") as pycache:
-                result = subprocess.run(
-                    [sys.executable, "-B", "-X", "pycache_prefix=" + pycache,
-                     "-m", "unittest", module],
-                    cwd=root, capture_output=True, text=True, timeout=1800,
-                    env=environment)
-        except (OSError, subprocess.TimeoutExpired) as exc:
+            result = unittest.TextTestRunner(
+                stream=output, verbosity=1, failfast=False).run(suite)
+        except BaseException as exc:
+            if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+                raise
             raise CurrentStateError(
                 "registered tests could not complete for %s" % module) from exc
-        detail = _subprocess_detail(result)
-        if result.returncode:
+        detail = output.getvalue()
+        if not result.wasSuccessful():
             raise CurrentStateError(
                 "registered tests failed for %s: %s" %
                 (module, detail[-8000:] or "no diagnostic"))
-        if any(marker in detail for marker in (
-                "skipped=", "expected failures=", "unexpected successes=")):
+        if result.skipped or result.expectedFailures or \
+                result.unexpectedSuccesses:
             raise CurrentStateError(
                 "registered tests may not skip or xfail: %s" % module)
-        match = re.search(r"Ran ([0-9]+) tests? in [^\n]+", detail)
-        if match is None or int(match.group(1)) < 1:
+        if result.testsRun != count:
             raise CurrentStateError(
-                "registered test census is unavailable for %s" % module)
-        count = int(match.group(1))
+                "registered test execution count differs for %s" % module)
         total += count
         reports.append({"count": count, "module": module})
     return {"count": total, "modules": reports, "status": "passed"}
 
 
-def _git_audit_unit(repository_snapshot):
-    """Return the exact clean commit or refuse a non-HEAD live tree."""
-    commands = {
-        "commit": ["git", "rev-parse", "--verify", "HEAD^{commit}"],
-        "status": ["git", "status", "--porcelain=v1", "-z",
-                   "--untracked-files=all"],
-        "tracked": ["git", "ls-files", "-z", "--cached"],
-        "diff": ["git", "diff", "--quiet", "HEAD", "--"],
+def _combine_test_results(*results):
+    modules = [item for result in results for item in result["modules"]]
+    if len({item["module"] for item in modules}) != len(modules):
+        raise CurrentStateError("registered test module executed more than once")
+    return {
+        "count": sum(result["count"] for result in results),
+        "modules": modules,
+        "status": "passed",
     }
-    results = {}
-    for name, command in commands.items():
+
+
+_TEXT_SUFFIXES = frozenset({
+    ".css", ".html", ".json", ".lock", ".md", ".py", ".sh",
+    ".toml", ".txt", ".xml", ".xsd", ".yaml", ".yml",
+})
+_TEXT_FILENAMES = frozenset({".gitignore", ".gitattributes"})
+_TRAILING_WHITESPACE_EXEMPT_SUFFIXES = frozenset({".md"})
+_TRAILING_WHITESPACE_EXEMPT_ROOTS = ("PCT/office action pct/",)
+_LOWER_CONTRACT_DOCUMENTS = (
+    "contracts/10-source-surfaces/pdf-transcription/acceptance-criteria.md",
+    "contracts/10-source-surfaces/pdf-transcription/technical-description.md",
+    "contracts/10-source-surfaces/authored-markdown/acceptance-criteria.md",
+    "contracts/10-source-surfaces/authored-markdown/technical-description.md",
+    "contracts/20-semantic-relations/authored-relations/acceptance-criteria.md",
+    "contracts/20-semantic-relations/authored-relations/technical-description.md",
+)
+_SHARED_AGGREGATE_LINK = "](../../README.md#aggregate-validation-boundary)"
+_PRODUCT_CONTRACT_DOCUMENTS = (
+    "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
+    "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
+)
+
+
+def _contract_preflight_problems(repository_snapshot):
+    """Return all cheap structural contract-boundary defects."""
+    issues = []
+    for path in _LOWER_CONTRACT_DOCUMENTS:
         try:
-            results[name] = subprocess.run(
-                command, cwd=ROOT, capture_output=True, timeout=120)
-        except (OSError, subprocess.TimeoutExpired) as exc:
-            raise CurrentStateError(
-                "Git audit command %s could not complete: %s" %
-                (name, exc)) from exc
-    if results["commit"].returncode or results["diff"].returncode or \
-            results["status"].returncode or results["status"].stdout:
-        detail = (results["status"].stdout + results["status"].stderr +
-                  results["diff"].stderr).decode("utf-8", "replace")
+            text = repository_snapshot.read_bytes(path).decode("utf-8")
+        except (KeyError, UnicodeDecodeError, snapshot.SnapshotError) as exc:
+            issues.append(ValidationIssue(
+                "contract-aggregate-reference", path,
+                "one readable shared aggregate-boundary link", str(exc),
+                "restore the current contract document and shared link"))
+            continue
+        count = text.count(_SHARED_AGGREGATE_LINK)
+        if count != 1:
+            issues.append(ValidationIssue(
+                "contract-aggregate-reference", path,
+                "exactly one %s link" % _SHARED_AGGREGATE_LINK,
+                "%d links" % count,
+                "link this domain contract once to contracts/README.md"))
+        command_count = text.casefold().count(
+            "python -m navigator validate-current")
+        if command_count:
+            issues.append(ValidationIssue(
+                "contract-command-ownership", path,
+                "no duplicated aggregate command", "%d command copies" % command_count,
+                "retain only the shared contract-router reference"))
+    router_path = "contracts/README.md"
+    try:
+        router = repository_snapshot.read_bytes(router_path).decode("utf-8")
+    except (KeyError, UnicodeDecodeError, snapshot.SnapshotError) as exc:
+        issues.append(ValidationIssue(
+            "contract-router-boundary", router_path,
+            "one readable aggregate boundary", str(exc),
+            "restore the current contract router"))
+    else:
+        heading = "## Aggregate validation boundary"
+        target = "](../README.md#validation)"
+        required_router_rules = (
+            "zero navigator consumer edges",
+            "exactly two structured-source XML handoffs per edition",
+            "No pair or implementation component is accepted independently.",
+        )
+        missing_router_rules = tuple(
+            rule for rule in required_router_rules if router.count(rule) != 1)
+        if router.count(heading) != 1 or router.count(target) != 1 or \
+                missing_router_rules:
+            issues.append(ValidationIssue(
+                "contract-router-boundary", router_path,
+                "one aggregate heading, root Validation link, and exact dependency law",
+                "headings=%d links=%d missing=%s" %
+                (router.count(heading), router.count(target),
+                 missing_router_rules),
+                "restore the single current aggregate boundary"))
+    start = "<!-- CURRENT-VALIDATION-BOUNDARY:START -->"
+    end = "<!-- CURRENT-VALIDATION-BOUNDARY:END -->"
+    regions = []
+    for path in _PRODUCT_CONTRACT_DOCUMENTS:
+        try:
+            text = repository_snapshot.read_bytes(path).decode("utf-8")
+        except (KeyError, UnicodeDecodeError, snapshot.SnapshotError) as exc:
+            issues.append(ValidationIssue(
+                "product-validation-boundary", path,
+                "one readable current validation region", str(exc),
+                "restore the current product contract pair"))
+            continue
+        if text.count(start) != 1 or text.count(end) != 1:
+            issues.append(ValidationIssue(
+                "product-validation-boundary", path,
+                "one start marker and one end marker",
+                "starts=%d ends=%d" % (text.count(start), text.count(end)),
+                "restore the one current marked validation region"))
+            continue
+        region = text.split(start, 1)[1].split(end, 1)[0]
+        regions.append((path, region))
+        if path.endswith("technical-description_DRAFT.md") and text.count(
+                "form one indivisible current implementation") != 1:
+            issues.append(ValidationIssue(
+                "product-implementation-closure", path,
+                "one operative indivisible-current-implementation rule",
+                "%d rules" % text.count(
+                    "form one indivisible current implementation"),
+                "restore the product contract implementation-closure rule"))
+        command = ("uv --no-cache --offline run --locked --no-sync "
+                   "python -m navigator validate-current")
+        normalized = " ".join(region.split())
+        missing = [phrase for phrase in NON_PROOF_BOUNDARY
+                   if phrase not in normalized]
+        if region.count(command) != 1 or missing:
+            issues.append(ValidationIssue(
+                "product-validation-boundary", path,
+                "one aggregate command and the complete non-proof boundary",
+                "commands=%d missing=%s" % (region.count(command), missing),
+                "restore the exact current validation boundary wording"))
+    if len(regions) == len(_PRODUCT_CONTRACT_DOCUMENTS) and \
+            any(region != regions[0][1] for unused_path, region in regions[1:]):
+        issues.append(ValidationIssue(
+            "product-validation-boundary", "phase-30 contract pair",
+            "byte-identical marked regions", "regions differ",
+            "project one exact current boundary into both documents"))
+    return issues
+
+
+def validate_product_contract(repository_snapshot):
+    """Bind the operative product pair and registry before any product work."""
+    if not isinstance(repository_snapshot, snapshot.RepositorySnapshot):
         raise CurrentStateError(
-            "audit unit is not one exact clean HEAD commit: %s" %
-            (detail.replace("\x00", "; ").strip() or "tracked bytes differ"))
-    if results["tracked"].returncode:
-        raise CurrentStateError("Git tracked-path census failed")
-    try:
-        tracked = {
-            item.decode("utf-8")
-            for item in results["tracked"].stdout.split(b"\x00") if item
-        }
-        commit = results["commit"].stdout.decode("ascii").strip()
-    except UnicodeDecodeError as exc:
-        raise CurrentStateError("Git audit identities are not canonical text") from exc
-    snapshot_paths = {entry.path for entry in repository_snapshot.entries}
-    if tracked != snapshot_paths:
+            "product contract validation requires retained repository bytes")
+    issues = _contract_preflight_problems(repository_snapshot)
+    if issues:
+        issue = issues[0]
         raise CurrentStateError(
-            "snapshot differs from tracked HEAD paths: missing=%s extra=%s" %
-            (sorted(tracked - snapshot_paths)[:20],
-             sorted(snapshot_paths - tracked)[:20]))
-    if re.fullmatch(r"[0-9a-f]{40,64}", commit) is None:
-        raise CurrentStateError("Git commit identity is malformed")
-    return commit
-
-
-def _git_whitespace_problems():
+            "product contract preflight failed: %s" % issue.render(),
+            phase="preflight", check_id=issue.check_id,
+            subject=issue.subject, expected=issue.expected,
+            actual=issue.actual, remediation=issue.remediation)
     try:
-        empty = subprocess.run(
-            ["git", "hash-object", "-t", "tree", "--stdin"], cwd=ROOT,
-            input=b"", capture_output=True, timeout=60)
-        if empty.returncode:
-            return ["Git empty-tree identity is unavailable"]
-        empty_tree = empty.stdout.decode("ascii").strip()
-        result = subprocess.run(
-            ["git", "diff", "--check", empty_tree, "HEAD", "--"], cwd=ROOT,
-            capture_output=True, text=True, timeout=120)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return ["git whitespace check could not complete: %s" % exc]
-    if result.returncode:
-        return ["git whitespace check failed: %s" %
-                (_subprocess_detail(result)[-4000:] or "no diagnostic")]
-    return []
-
-
-def _tracked_markdown_paths():
-    result = subprocess.run(
-        ["git", "ls-files", "-z", "--", "*.md"], cwd=ROOT,
-        capture_output=True, timeout=60)
-    if result.returncode:
+        return acceptance.load_registry(
+            ROOT, repository_snapshot.byte_source())
+    except acceptance.AcceptanceError as exc:
         raise CurrentStateError(
-            "tracked-Markdown listing failed: %s" %
-            ((result.stdout + result.stderr)[-4000:] or b"no diagnostic"))
-    try:
-        return sorted(
-            item.decode("utf-8") for item in result.stdout.split(b"\0") if item)
-    except UnicodeDecodeError as exc:
-        raise CurrentStateError("tracked Markdown path is not UTF-8") from exc
+            "product acceptance pair and registry differ: %s" % exc,
+            phase="preflight", check_id="product-acceptance-closure",
+            subject="phase-30 contract pair and acceptance registry",
+            expected="one exact current acceptance projection",
+            actual=str(exc),
+            remediation="align the registry and generated acceptance table") \
+            from exc
 
 
-def _tracked_markdown_problems():
-    try:
-        paths = _tracked_markdown_paths()
-    except (OSError, subprocess.TimeoutExpired, CurrentStateError) as exc:
-        return [str(exc)]
+class _RenderedMarkdownInventory(HTMLParser):
+    """Collect link targets and anchors from Pandoc's rendered bytes."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.anchors = set()
+        self.links = []
+
+    def handle_starttag(self, unused_tag, attrs):
+        values = dict(attrs)
+        identifier = values.get("id")
+        if isinstance(identifier, str) and identifier:
+            self.anchors.add(identifier)
+        target = values.get("href")
+        if isinstance(target, str) and target:
+            self.links.append(target)
+
+
+def _snapshot_whitespace_problems(repository_snapshot):
+    """Check textual retained bytes without consulting repository metadata."""
     problems = []
-    for relpath in paths:
-        absolute = os.path.join(ROOT, *relpath.split("/"))
-        if not os.path.exists(absolute):
+    for entry in repository_snapshot.entries:
+        name = posixpath.basename(entry.path)
+        suffix = posixpath.splitext(name)[1]
+        if suffix not in _TEXT_SUFFIXES and name not in _TEXT_FILENAMES:
             continue
-        if os.path.islink(absolute) or not os.path.isfile(absolute):
-            problems.append("changed Markdown is not a regular file: %s" % relpath)
-            continue
+        data = repository_snapshot.read_bytes(entry.path)
         try:
-            result = subprocess.run(
-                ["pandoc", "--from=gfm", "--to=html", "--output", os.devnull,
-                 relpath], cwd=ROOT, capture_output=True, text=True, timeout=120)
-        except (OSError, subprocess.TimeoutExpired) as exc:
-            problems.append(
-                "pandoc could not render %s: %s" % (relpath, exc))
+            text = data.decode("utf-8")
+        except UnicodeDecodeError:
+            problems.append("declared text file is not UTF-8: %s" % entry.path)
             continue
-        if result.returncode:
-            problems.append(
-                "pandoc failed for %s: %s" %
-                (relpath, _subprocess_detail(result)[-4000:] or "no diagnostic"))
+        trailing_exempt = suffix in _TRAILING_WHITESPACE_EXEMPT_SUFFIXES or \
+            entry.path.startswith(_TRAILING_WHITESPACE_EXEMPT_ROOTS)
+        for number, line in enumerate(text.splitlines(), 1):
+            if not trailing_exempt and line.endswith((" ", "\t")):
+                problems.append("trailing whitespace: %s:%d" %
+                                (entry.path, number))
+            indentation = line[:len(line) - len(line.lstrip(" \t"))]
+            if " \t" in indentation:
+                problems.append("space before tab in indentation: %s:%d" %
+                                (entry.path, number))
     return problems
 
 
-def validate_current_state(run_tests=True):
-    """Certify only one final unchanged live snapshot; write nothing."""
+def _snapshot_markdown_problems(repository_snapshot, worker_count=1):
+    """Render retained Markdown bytes and resolve every local path/fragment.
+
+    The governed corpus contains several multi-megabyte generated tables.
+    Serial rendering keeps each bounded Pandoc process within its independent
+    timeout while the product-closure phase runs concurrently.
+    """
+    if type(worker_count) is not int or worker_count < 1 or worker_count > 4:
+        raise CurrentStateError("Markdown worker count must be between one and four")
+    problems = []
+    rendered = {}
+    entries = tuple(entry for entry in repository_snapshot.entries
+                    if entry.path.endswith(".md"))
+
+    def render_markdown(entry):
+        try:
+            result = subprocess.run(
+                ["pandoc", "--from=gfm", "--to=html"],
+                cwd=ROOT, input=repository_snapshot.read_bytes(entry.path),
+                capture_output=True, timeout=120)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            return None, "pandoc could not render %s: %s" % (entry.path, exc)
+        if result.returncode:
+            detail = (result.stdout + result.stderr).decode("utf-8", "replace")
+            return None, (
+                "pandoc failed for %s: %s" %
+                (entry.path, detail[-4000:].strip() or "no diagnostic"))
+        try:
+            parser = _RenderedMarkdownInventory()
+            parser.feed(result.stdout.decode("utf-8"))
+            parser.close()
+        except (UnicodeDecodeError, ValueError) as exc:
+            return None, (
+                "pandoc output could not be indexed for %s: %s" %
+                (entry.path, exc))
+        return parser, None
+
+    with ThreadPoolExecutor(max_workers=worker_count,
+                            thread_name_prefix="markdown-link") as executor:
+        futures = tuple(executor.submit(render_markdown, entry)
+                        for entry in entries)
+        for entry, future in zip(entries, futures):
+            parser, problem = future.result()
+            if problem is not None:
+                problems.append(problem)
+            else:
+                rendered[entry.path] = parser
+
+    paths = {entry.path for entry in repository_snapshot.entries}
+    directories = {
+        prefix
+        for path in paths
+        for prefix in (
+            "/".join(path.split("/")[:count]) + "/"
+            for count in range(1, len(path.split("/"))))
+    }
+    for source_path, parser in sorted(rendered.items()):
+        for raw_target in parser.links:
+            try:
+                target = urlsplit(raw_target)
+            except ValueError:
+                problems.append(
+                    "Markdown link target is malformed: %s -> %s" %
+                    (source_path, raw_target))
+                continue
+            if target.scheme or target.netloc:
+                continue
+            decoded_path = unquote(target.path)
+            fragment = unquote(target.fragment)
+            if "\\" in decoded_path or decoded_path.startswith("/"):
+                problems.append(
+                    "Markdown local link is not canonical: %s -> %s" %
+                    (source_path, raw_target))
+                continue
+            resolved = posixpath.normpath(posixpath.join(
+                posixpath.dirname(source_path), decoded_path)) \
+                if decoded_path else source_path
+            if resolved == "." or resolved == ".." or \
+                    resolved.startswith("../"):
+                problems.append(
+                    "Markdown local link escapes the worktree: %s -> %s" %
+                    (source_path, raw_target))
+                continue
+            is_directory = decoded_path.endswith("/") and \
+                resolved.rstrip("/") + "/" in directories
+            if resolved not in paths and not is_directory:
+                problems.append(
+                    "Markdown local link target is absent: %s -> %s" %
+                    (source_path, raw_target))
+                continue
+            if fragment and resolved.endswith(".md"):
+                target_inventory = rendered.get(resolved)
+                if target_inventory is None or \
+                        fragment not in target_inventory.anchors:
+                    problems.append(
+                        "Markdown local link fragment is absent: %s -> %s" %
+                        (source_path, raw_target))
+    return problems
+
+
+def _public_structured_source_result(result):
+    """Remove the internal capture binding from the ephemeral public result."""
+    return {
+        "domains": result["domains"],
+        "results": result["results"],
+        "status": result["status"],
+        "technicalValidationResultVersion": result[
+            "technicalValidationResultVersion"],
+    }
+
+
+def _run_phase(phase, check_id, subject, expected, remediation, callback):
+    try:
+        return callback()
+    except CurrentStateError as exc:
+        if exc.phase is not None:
+            raise
+        raise CurrentStateError(
+            str(exc), phase=phase, check_id=check_id, subject=subject,
+            expected=expected, actual=str(exc), remediation=remediation) from exc
+    except Exception as exc:
+        raise CurrentStateError(
+            str(exc), phase=phase, check_id=check_id, subject=subject,
+            expected=expected, actual=type(exc).__name__,
+            remediation=remediation) from exc
+
+
+def _validate_captured_worktree(initial, reproduction_root):
+    """Validate one capture using only it and its isolated materialization."""
+    if not isinstance(initial, snapshot.RepositorySnapshot) or \
+            not isinstance(reproduction_root, str) or not reproduction_root:
+        raise CurrentStateError(
+            "captured-worktree validation inputs are malformed",
+            phase="capture", check_id="capturedWorktreeInputs",
+            subject="retained worktree", expected="one retained snapshot and root",
+            actual="malformed validation inputs",
+            remediation="invoke validation through the aggregate command")
+    try:
+        initial.validate_retained()
+    except snapshot.SnapshotError as exc:
+        raise CurrentStateError(
+            "retained worktree identity is invalid", phase="capture",
+            check_id="retainedWorktreeIdentity", subject="retained worktree",
+            expected="every retained path, mode, size, and digest agrees",
+            actual=str(exc), remediation="recapture the current worktree") from exc
+    for label, check, remediation in (
+            ("capturedWhitespace", _snapshot_whitespace_problems,
+             "correct the named retained text bytes"),
+            ("contractPreflight", _contract_preflight_problems,
+             "restore the exact shared contract boundary")):
+        problems = _run_phase(
+            "preflight", label, "retained worktree", "no structural defects",
+            remediation, lambda check=check: check(initial))
+        if problems:
+            detail = problems[:50]
+            if len(problems) > len(detail):
+                detail.append("%d additional problems" %
+                              (len(problems) - len(detail)))
+            rendered = [item.render() if isinstance(item, ValidationIssue)
+                        else str(item) for item in detail]
+            raise CurrentStateError(
+                "; ".join(rendered), phase="preflight", check_id=label,
+                subject="retained worktree", expected="no structural defects",
+                actual="%d defects" % len(problems),
+                remediation=remediation)
+
+    preflight_tests = _run_phase(
+        "preflight", "acceptanceContractTests", "acceptance contract tests",
+        "the focused contract suite passes and the test census is exact",
+        "correct the named acceptance contract or test census defect",
+        lambda: _run_discovered_tests(
+            reproduction_root, PREFLIGHT_TEST_MODULES, verify_census=True))
+
+    with ThreadPoolExecutor(max_workers=2) as phase_pool:
+        markdown_future = phase_pool.submit(
+            _run_phase,
+            "markdown", "capturedMarkdownLinks", "all retained Markdown",
+            "all documents render and every local reference resolves",
+            "correct the named Markdown render or reference defect",
+            lambda: _snapshot_markdown_problems(initial))
+        closure_future = phase_pool.submit(
+            _run_phase,
+            "product-closure", "currentProductClosure",
+            "configured product set",
+            "one validated source boundary and byte-identical fresh reproduction",
+            "correct the named source, product, or reproduction defect",
+            lambda: verify_current_closure(initial, reproduction_root))
+        markdown_problems = markdown_future.result()
+        final_closure = closure_future.result()
+    if markdown_problems:
+        detail = markdown_problems[:50]
+        if len(markdown_problems) > len(detail):
+            detail.append("%d additional problems" %
+                          (len(markdown_problems) - len(detail)))
+        raise CurrentStateError(
+            "; ".join(detail), phase="markdown",
+            check_id="capturedMarkdownLinks", subject="all retained Markdown",
+            expected="all documents and references pass",
+            actual="%d defects" % len(markdown_problems),
+            remediation="correct every named Markdown defect")
+
+    remaining_tests = _run_phase(
+        "software-tests", "registeredSoftwareTests", "registered test census",
+        "every registered test passes without skips",
+        "correct the failing registered test",
+        lambda: _run_discovered_tests(
+            reproduction_root,
+            tuple(module for module in _registered_test_modules()
+                  if module not in PREFLIGHT_TEST_MODULES),
+            verify_census=False,
+            validation_session=final_closure["testSession"]))
+    test_result = _combine_test_results(preflight_tests, remaining_tests)
+
+    try:
+        final = snapshot.RepositorySnapshot.capture(ROOT)
+    except snapshot.SnapshotError as exc:
+        raise CurrentStateError(
+            "final worktree recapture failed", phase="recapture",
+            check_id="finalWorktreeCapture", subject="live governed worktree",
+            expected="a complete final recapture", actual=str(exc),
+            remediation="remove the concurrent filesystem failure and rerun") from exc
+    live_changes = initial.differences(final)
+    if live_changes:
+        raise CurrentStateError(
+            "governed worktree changed during validation: %s" %
+            "; ".join(live_changes), phase="recapture",
+            check_id="worktreeUnchanged", subject="live governed worktree",
+            expected="identical initial and final paths, modes, and bytes",
+            actual="; ".join(live_changes),
+            remediation="stop concurrent writes and validate the resulting current state")
+
+    navigator_modules = tuple(
+        item["module"] for item in test_result["modules"]
+        if item["module"].startswith("navigator.tests."))
+    return {
+        "acceptance": acceptance.passed_result(
+            final_closure["acceptanceRegistry"], navigator_modules),
+        "bundle": final_closure["bundle"],
+        "checks": {
+            "capturedMarkdownLinks": "passed",
+            "capturedWhitespace": "passed",
+            "contractPreflight": "passed",
+            "acceptanceContractTests": "passed",
+            "sourceManifests": "passed",
+            "softwareTests": test_result,
+            "worktreeInventory": "passed",
+            "worktreeUnchanged": "passed",
+        },
+        "editions": final_closure["editions"],
+        "humanReviewBoundary": HUMAN_REVIEW_BOUNDARY,
+        "nonProofBoundary": list(NON_PROOF_BOUNDARY),
+        "purpose": VALIDATION_PURPOSE,
+        "status": "passed",
+        "structuredSource": _public_structured_source_result(
+            final_closure["structuredSource"]),
+        "technicalScope": list(TECHNICAL_SCOPE),
+        "validationResultVersion": "4",
+    }
+
+
+def _validate_materialized_worktree():
+    """Run inside the retained materialization, never the live worktree."""
     try:
         initial = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
     except snapshot.SnapshotError as exc:
-        raise CurrentStateError("initial repository snapshot failed") from exc
-    commit = _git_audit_unit(initial)
-    _verify_current_closure(initial)
-
-    for label, check in (
-            ("gitWhitespace", _git_whitespace_problems),
-            ("trackedMarkdown", _tracked_markdown_problems)):
-        problems = check()
-        if problems:
-            raise CurrentStateError("%s: %s" % (label, "; ".join(problems)))
-
-    test_result = None
-    if run_tests:
-        try:
-            with tempfile.TemporaryDirectory(
-                    prefix="aa11393-current-snapshot-") as sandbox_root:
-                initial.materialize(sandbox_root)
-                sandbox_before = snapshot.RepositorySnapshot.capture(sandbox_root)
-                test_result = _run_discovered_tests(sandbox_root)
-                sandbox_after = snapshot.RepositorySnapshot.capture(sandbox_root)
-                changes = sandbox_before.differences(sandbox_after)
-                if changes:
-                    raise CurrentStateError(
-                        "discovered tests mutated their snapshot: %s" %
-                        "; ".join(changes))
-        except snapshot.SnapshotError as exc:
-            raise CurrentStateError("isolated test snapshot failed") from exc
-
-    before_final = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
-    changes = initial.differences(before_final)
-    if changes:
         raise CurrentStateError(
-            "live repository changed during validation: %s" % "; ".join(changes))
-    final_commit = _git_audit_unit(before_final)
-    if final_commit != commit:
-        raise CurrentStateError("Git commit changed during validation")
-    final_closure = _verify_current_closure(before_final, reproduce=True)
-    final = snapshot.RepositorySnapshot.capture(ROOT)
-    changes = initial.differences(final)
-    if changes:
-        raise CurrentStateError(
-            "live repository changed before certification: %s" %
-            "; ".join(changes))
+            "materialized worktree capture failed", phase="capture",
+            check_id="materializedWorktreeCapture",
+            subject="isolated retained materialization",
+            expected="one complete retained-byte capture", actual=str(exc),
+            remediation="correct the retained materialization and rerun") from exc
+    return _validate_captured_worktree(initial, ROOT)
 
-    result = {
-        "bundle": final_closure["bundle"],
-        "checks": {
-            "trackedMarkdown": "passed",
-            "gitCommit": commit,
-            "gitWhitespace": "passed",
-            "repositorySnapshot": final.digest,
-            "sourceManifests": "passed",
-        },
-        "editions": final_closure["editions"],
-        "status": "current" if run_tests else "closure-conformant",
-        "structuredSource": final_closure["structuredSource"],
-        "validationResultVersion": "2",
-    }
-    if run_tests:
-        navigator_modules = tuple(
-            item["module"] for item in test_result["modules"]
-            if item["module"].startswith("navigator.tests."))
-        result["acceptance"] = acceptance.passed_result(
-            final_closure["acceptanceRegistry"], navigator_modules)
-        result["checks"]["softwareTests"] = test_result
+
+def validate_current_state():
+    """Bracket validation of one live capture by a final live recapture."""
+    try:
+        initial = snapshot.RepositorySnapshot.capture(ROOT, retain_bytes=True)
+        initial.validate_retained()
+    except snapshot.SnapshotError as exc:
+        raise CurrentStateError(
+            "initial worktree capture failed", phase="capture",
+            check_id="initialWorktreeCapture", subject="live governed worktree",
+            expected="one complete retained-byte capture", actual=str(exc),
+            remediation="correct the unreadable path and rerun") from exc
+
+    script = (
+        "import sys\n"
+        "from navigator.lib import canon,currentstate\n"
+        "try:\n"
+        " r=currentstate._validate_materialized_worktree()\n"
+        "except currentstate.CurrentStateError as exc:\n"
+        " sys.stdout.buffer.write(canon.canonical_json("
+        "currentstate.failure_diagnostic(exc))+b'\\n')\n"
+        " raise SystemExit(1)\n"
+        "sys.stdout.buffer.write(canon.canonical_json(r)+b'\\n')\n"
+    )
+    environment = dict(os.environ)
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    validation_error = None
+    result = None
+    try:
+        with tempfile.TemporaryDirectory(
+                prefix="aa11393-current-snapshot-") as sandbox_root:
+            initial.materialize(sandbox_root)
+            completed = subprocess.run(
+                [sys.executable, "-B", "-c", script], cwd=sandbox_root,
+                capture_output=True, timeout=7200, env=environment)
+            if completed.returncode:
+                try:
+                    diagnostic = canon.parse_json(completed.stdout)
+                    if completed.stdout != canon.canonical_json(diagnostic) + b"\n" or \
+                            not isinstance(diagnostic, dict) or set(diagnostic) != {
+                                "actual", "checkId", "error", "expected", "phase",
+                                "remediation", "subject"}:
+                        raise ValueError("diagnostic shape is malformed")
+                    validation_error = CurrentStateError(
+                        diagnostic["error"], phase=diagnostic["phase"],
+                        check_id=diagnostic["checkId"],
+                        subject=diagnostic["subject"],
+                        expected=diagnostic["expected"],
+                        actual=diagnostic["actual"],
+                        remediation=diagnostic["remediation"])
+                except (ValueError, canon.CanonError):
+                    detail = (completed.stderr + completed.stdout).decode(
+                        "utf-8", "replace").strip()
+                    validation_error = CurrentStateError(
+                        "isolated retained-worktree validation failed",
+                        phase="isolated-validation",
+                        check_id="isolatedWorktreeValidation",
+                        subject="isolated retained materialization",
+                        expected="one canonical actionable result",
+                        actual=detail[-12000:] or "no diagnostic",
+                        remediation="correct the reported isolated failure and rerun")
+            else:
+                try:
+                    result = canon.parse_json(completed.stdout)
+                except (ValueError, canon.CanonError) as exc:
+                    validation_error = CurrentStateError(
+                        "isolated validation result is malformed",
+                        phase="isolated-validation",
+                        check_id="isolatedResultShape",
+                        subject="isolated validation result",
+                        expected="canonical current passed-result JSON",
+                        actual=type(exc).__name__,
+                        remediation="correct the isolated result projection")
+                    validation_error.__cause__ = exc
+                if result is not None and completed.stdout != \
+                        canon.canonical_json(result) + b"\n":
+                    validation_error = CurrentStateError(
+                        "isolated validation result is not canonical",
+                        phase="isolated-validation",
+                        check_id="isolatedResultCanonicalBytes",
+                        subject="isolated validation result",
+                        expected="one canonical JSON encoding",
+                        actual="non-canonical result bytes",
+                        remediation="emit the result through the canonical serializer")
+    except (OSError, subprocess.TimeoutExpired, snapshot.SnapshotError) as exc:
+        validation_error = CurrentStateError(
+            "isolated retained-worktree validation could not complete",
+            phase="isolated-validation",
+            check_id="isolatedWorktreeProcess",
+            subject="isolated retained materialization",
+            expected="the isolated validation process completes",
+            actual=str(exc), remediation="correct the process failure and rerun")
+        validation_error.__cause__ = exc
+
+    try:
+        final = snapshot.RepositorySnapshot.capture(ROOT)
+    except snapshot.SnapshotError as exc:
+        raise CurrentStateError(
+            "final worktree recapture failed", phase="recapture",
+            check_id="finalWorktreeCapture", subject="live governed worktree",
+            expected="a complete final recapture", actual=str(exc),
+            remediation="remove the concurrent filesystem failure and rerun") from exc
+    live_changes = initial.differences(final)
+    if live_changes:
+        raise CurrentStateError(
+            "governed worktree changed during validation: %s" %
+            "; ".join(live_changes), phase="recapture",
+            check_id="worktreeUnchanged", subject="live governed worktree",
+            expected="identical initial and final paths, modes, and bytes",
+            actual="; ".join(live_changes),
+            remediation="stop concurrent writes and validate the resulting current state") \
+            from validation_error
+    if validation_error is not None:
+        raise validation_error
+    if not isinstance(result, dict) or result.get("status") != "passed":
+        raise CurrentStateError(
+            "isolated validation did not return technical passed status",
+            phase="isolated-validation", check_id="isolatedPassedStatus",
+            subject="isolated validation result",
+            expected="ephemeral technical passed status",
+            actual=repr(result), remediation="correct the failed isolated phase")
     return result

@@ -11,21 +11,24 @@ from .atomic import publish_set
 from .control import canonical_json
 from .environment import verify_environment
 from .errors import StructuredSourceError
+from .grammar import CONTENT_XSD_PATH, parse_content_grammar, render_content_xsd
+from .parser import (PROJECTION_PROFILE_PATH, XML_PROFILE_PATH,
+                     load_parser_controls)
+from .profiles import parse_projection_profile, parse_xml_profiles
 from .routers import render_all
-from .verify import VerificationContext, run_acceptance
+from .verify import VerificationContext
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-COMMANDS = ("check", "regenerate", "regenerate-controls", "verify-current")
+COMMANDS = ("check", "regenerate", "regenerate-controls")
 
 
 def _parser():
     parser = argparse.ArgumentParser(prog="python -m structured_source")
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in COMMANDS[:2]:
+    for name in ("check", "regenerate"):
         child = commands.add_parser(name)
         child.add_argument("subject_id")
-    for name in COMMANDS[2:]:
-        commands.add_parser(name)
+    commands.add_parser("regenerate-controls")
     return parser
 
 
@@ -35,6 +38,14 @@ def _regenerate_controls():
     acceptance_registries = load_registries(
         ROOT, context.reader.read_absolute)
     outputs = render_all(content_registry)
+    projection = parse_projection_profile(
+        context.reader.read(PROJECTION_PROFILE_PATH))
+    xml_profiles = parse_xml_profiles(
+        context.reader.read(XML_PROFILE_PATH), projection)
+    content_grammar = parse_content_grammar(
+        xml_profiles["contentDocuments"][
+            "pdf-evidence-transcription-v1"]["contentGrammar"])
+    outputs[CONTENT_XSD_PATH] = render_content_xsd(content_grammar)
     acceptance_before = {}
     for contract, registry in zip(CONTRACTS, acceptance_registries):
         path = contract["contractPath"]
@@ -57,6 +68,19 @@ def _regenerate_controls():
         outputs[path] = (
             prefix + start + render_table(registry) + end + suffix
         ).encode("utf-8")
+
+    def read_candidate(path):
+        if path in outputs:
+            return outputs[path]
+        return context.reader.read(path)
+
+    candidate_controls = load_parser_controls(read_candidate)
+    if candidate_controls.content_grammar.production_paths != \
+            content_grammar.production_paths:
+        raise StructuredSourceError(
+            "candidate parser controls differ from the authoritative grammar")
+    del candidate_controls
+
     expected = {
         path: (acceptance_before[path] if path in acceptance_before else
                context.reader.optional(path))
@@ -67,7 +91,18 @@ def _regenerate_controls():
         for path in tuple(context.reader.read_log)
         if path not in outputs
     }
-    publish_set(ROOT, outputs, expected, guards)
+    def validate_readback():
+        def read(path):
+            with open(os.path.join(ROOT, *path.split("/")), "rb") as handle:
+                return handle.read()
+        if any(read(path) != expected_bytes
+               for path, expected_bytes in outputs.items()):
+            raise StructuredSourceError(
+                "regenerated parser controls failed exact readback")
+        load_parser_controls(read)
+
+    publish_set(
+        ROOT, outputs, expected, guards, postcondition=validate_readback)
     return {
         "commandResultVersion": "1",
         "command": "regenerate-controls",
@@ -85,16 +120,6 @@ def main(argv=None):
         result = VerificationContext(ROOT).regenerate(args.subject_id)
     elif args.command == "regenerate-controls":
         result = _regenerate_controls()
-    elif args.command == "verify-current":
-        from navigator.lib.snapshot import RepositorySnapshot, SnapshotError
-        try:
-            snapshot = RepositorySnapshot.capture(ROOT, retain_bytes=True)
-        except SnapshotError as exc:
-            raise StructuredSourceError(
-                "structured-source snapshot capture failed") from exc
-        result = run_acceptance(
-            ROOT, byte_source=snapshot.byte_source(),
-            repository_snapshot=snapshot)
     else:  # The exact parser surface makes this unreachable.
         raise StructuredSourceError("unsupported command")
     sys.stdout.buffer.write(canonical_json(result))

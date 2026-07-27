@@ -10,15 +10,20 @@ a coverage artifact.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from collections import Counter
 import ast
+from dataclasses import dataclass
 import importlib
 import os
 import re
 from types import MappingProxyType
+from xml.etree import ElementTree as ET
 
 from . import CONTENT_NAMESPACE, RELATIONS_NAMESPACE
 from .acceptance import CONTRACTS, CRITERIA, load_registries, render_table
+from .artifact_policy import (ArtifactClass, artifact_policy,
+                              classify_artifacts)
 from .atomic import publish_set
 from .canonical import raw_digest
 from .control import canonical_json, parse_json
@@ -30,7 +35,6 @@ C = "{%s}" % CONTENT_NAMESPACE
 R = "{%s}" % RELATIONS_NAMESPACE
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_ANCHOR = re.compile(br'id="ssp-([A-Za-z][A-Za-z0-9_.:-]*)"')
 _RETIRED_PATH_PATTERNS = (
     re.compile(r"(?:^|/)structured_source/approvals(?:/|$)"),
     re.compile(r"(?:^|/)structured_source/exports(?:/|$)"),
@@ -58,35 +62,94 @@ _OFFICIAL_COPY_STATUSES = frozenset({
     "filed-record-copy", "office-record-copy",
     "repository-stored-cited-art-copy", "repository-stored-evidence-copy",
 })
-_PDF_LIVE_IMPLEMENTATION = frozenset({
+
+
+@dataclass(frozen=True, slots=True)
+class ValidatedCorpus:
+    """One complete snapshot-bound structured-source validation result.
+
+    The object exposes only frozen consumer handoffs and retained parser
+    controls.  The mutable verification context that constructed them never
+    crosses this boundary.
+    """
+
+    snapshot_digest: str
+    domains: tuple
+    result_ids: tuple
+    package_summaries: tuple
+    consumer_handoffs: MappingProxyType
+    parser_controls: object
+    technical_validation_result_version: str = "1"
+
+    def public_result(self):
+        """Return the ephemeral plain-data result for the aggregate caller."""
+        return {
+            "technicalValidationResultVersion":
+                self.technical_validation_result_version,
+            "snapshotDigest": self.snapshot_digest,
+            "status": "passed",
+            "domains": [dict(item) for item in self.domains],
+            "results": [
+                {"id": identifier, "status": "passed"}
+                for identifier in self.result_ids
+            ],
+        }
+_LIVE_IMPLEMENTATION = frozenset({
+    "AGENTS.md",
+    "GLOSSARY.md",
+    "README.md",
+    "STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md",
+    "validate.sh",
+    "contracts/README.md",
+    "contracts/10-source-surfaces/authored-markdown/acceptance-criteria.md",
+    "contracts/10-source-surfaces/authored-markdown/technical-description.md",
     "contracts/10-source-surfaces/pdf-transcription/acceptance-criteria.md",
     "contracts/10-source-surfaces/pdf-transcription/technical-description.md",
+    "contracts/20-semantic-relations/authored-relations/acceptance-criteria.md",
+    "contracts/20-semantic-relations/authored-relations/technical-description.md",
     "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
     "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
     "navigator/RUNBOOK-content-sync-and-regeneration.md",
+    "navigator/__init__.py",
+    "navigator/__main__.py",
     "navigator/build.py",
+    "navigator/lib/__init__.py",
+    "navigator/lib/acceptance.py",
+    "navigator/lib/bundlezip.py",
+    "navigator/lib/canon.py",
+    "navigator/lib/claims.py",
     "navigator/lib/currentstate.py",
+    "navigator/lib/depgraph.py",
     "navigator/lib/gateway.py",
     "navigator/lib/model.py",
     "navigator/lib/projections.py",
     "navigator/lib/registry.py",
     "navigator/lib/release.py",
     "navigator/lib/render.py",
+    "navigator/lib/schema_validate.py",
     "navigator/lib/snapshot.py",
+    "navigator/lib/unicode15_1.py",
     "navigator/lib/validate.py",
     "navigator/schema/acceptance.json",
+    "navigator/schema/edition.schema.json",
     "navigator/schema/navigator-relations.xsd",
+    "navigator/schema/wording.xsd",
+    "navigator/tests/test_canon.py",
     "navigator/tests/test_current_pipeline.py",
+    "navigator/tests/__init__.py",
     "navigator/tests/test_render_current.py",
     "navigator/tests/test_xml_model.py",
+    "navigator/tests/vectors/canon_vectors.json",
     "structured_source/__init__.py",
     "structured_source/__main__.py",
     "structured_source/acceptance.py",
+    "structured_source/artifact_policy.py",
     "structured_source/atomic.py",
     "structured_source/canonical.py",
     "structured_source/control.py",
     "structured_source/environment.py",
     "structured_source/errors.py",
+    "structured_source/grammar.py",
     "structured_source/markdown.py",
     "structured_source/parser.py",
     "structured_source/pdf_transcription.py",
@@ -94,10 +157,13 @@ _PDF_LIVE_IMPLEMENTATION = frozenset({
     "structured_source/policy/parser.json",
     "structured_source/profiles.py",
     "structured_source/profiles/gfm-v1.json",
-    "structured_source/profiles/xml-v1.json",
+    "structured_source/profiles/xml-v2.json",
     "structured_source/registry.py",
+    "structured_source/registry/acceptance-authored-markdown.json",
+    "structured_source/registry/acceptance-authored-relations.json",
     "structured_source/registry/acceptance-pdf-transcription.json",
     "structured_source/registry/content.json",
+    "structured_source/relation_projection.py",
     "structured_source/render.py",
     "structured_source/routers.py",
     "structured_source/schemas/content.xsd",
@@ -107,6 +173,7 @@ _PDF_LIVE_IMPLEMENTATION = frozenset({
     "structured_source/tests/test_acceptance.py",
     "structured_source/tests/test_atomic.py",
     "structured_source/tests/test_conversion.py",
+    "structured_source/tests/__init__.py",
     "structured_source/tests/test_pdf_transcription.py",
     "structured_source/tests/test_registry.py",
     "structured_source/tests/test_xml_contract.py",
@@ -119,16 +186,32 @@ _PDF_NAMED_PATHS = frozenset({
     "structured_source/registry/acceptance-pdf-transcription.json",
     "structured_source/tests/test_pdf_transcription.py",
 })
+_AUTHORED_MARKDOWN_NAMED_PATHS = frozenset({
+    "contracts/10-source-surfaces/authored-markdown/acceptance-criteria.md",
+    "contracts/10-source-surfaces/authored-markdown/technical-description.md",
+    "structured_source/markdown.py",
+    "structured_source/registry/acceptance-authored-markdown.json",
+    "structured_source/schemas/authored.xsd",
+})
+_AUTHORED_RELATIONS_NAMED_PATHS = frozenset({
+    "contracts/20-semantic-relations/authored-relations/acceptance-criteria.md",
+    "contracts/20-semantic-relations/authored-relations/technical-description.md",
+    "structured_source/registry/acceptance-authored-relations.json",
+    "structured_source/relation_projection.py",
+    "structured_source/schemas/relations.xsd",
+})
 _STRUCTURED_SOURCE_LIVE_PATHS = frozenset({
     "structured_source/PACKAGES.md",
     "structured_source/__init__.py",
     "structured_source/__main__.py",
     "structured_source/acceptance.py",
+    "structured_source/artifact_policy.py",
     "structured_source/atomic.py",
     "structured_source/canonical.py",
     "structured_source/control.py",
     "structured_source/environment.py",
     "structured_source/errors.py",
+    "structured_source/grammar.py",
     "structured_source/markdown.py",
     "structured_source/parser.py",
     "structured_source/pdf_transcription.py",
@@ -136,12 +219,13 @@ _STRUCTURED_SOURCE_LIVE_PATHS = frozenset({
     "structured_source/policy/parser.json",
     "structured_source/profiles.py",
     "structured_source/profiles/gfm-v1.json",
-    "structured_source/profiles/xml-v1.json",
+    "structured_source/profiles/xml-v2.json",
     "structured_source/registry.py",
     "structured_source/registry/acceptance-authored-markdown.json",
     "structured_source/registry/acceptance-authored-relations.json",
     "structured_source/registry/acceptance-pdf-transcription.json",
     "structured_source/registry/content.json",
+    "structured_source/relation_projection.py",
     "structured_source/render.py",
     "structured_source/routers.py",
     "structured_source/schemas/authored.xsd",
@@ -157,19 +241,17 @@ _STRUCTURED_SOURCE_LIVE_PATHS = frozenset({
     "structured_source/tests/test_xml_contract.py",
     "structured_source/verify.py",
 })
-_OBSOLETE_LIVE_TOKENS = (
-    b"Exact semantic " + b"digest",
-    b"canonical " + b"XML",
-    b"semantic" + b"Digest",
-    b"semantic" + b"_digest",
-    b"sha256/" + b"xc1:",
-    b"ssp-" + b"xd1",
+_RETIRED_IDENTIFIERS = frozenset({
+    "semantic" + "Digest",
+    "semantic" + "_digest",
+})
+_RETIRED_VALUE_PREFIXES = (
+    "sha256/" + "xc1:",
+    "ssp-" + "xd1",
 )
-_LIVE_TEXT_SUFFIXES = (
-    ".html", ".json", ".md", ".py", ".xml", ".xsd")
 
 
-def _parse_artifact(data, kind, *, controls=None):
+def _parse_artifact(data, kind, *, controls):
     # Keep registry/acceptance controls usable before the locked XML runtime is
     # imported; conversion paths still fail immediately if it is unavailable.
     from .parser import parse_artifact
@@ -282,6 +364,27 @@ def _conversion_value(result, name):
     return getattr(result, name, None)
 
 
+def _freeze_result(value):
+    """Freeze cached validation data without changing its JSON value."""
+    if isinstance(value, dict):
+        return MappingProxyType({
+            key: _freeze_result(item) for key, item in value.items()})
+    if isinstance(value, list):
+        return tuple(_freeze_result(item) for item in value)
+    if isinstance(value, tuple):
+        return tuple(_freeze_result(item) for item in value)
+    return value
+
+
+def _copy_result(value):
+    """Detach public result data from the context's validated cache."""
+    if isinstance(value, Mapping):
+        return {key: _copy_result(item) for key, item in value.items()}
+    if isinstance(value, tuple):
+        return tuple(_copy_result(item) for item in value)
+    return value
+
+
 class VerificationContext:
     """Lazy target verifier; ``verify_all`` is separately memoized."""
 
@@ -309,6 +412,7 @@ class VerificationContext:
         self._global_passes = 0
         self._parser_controls = None
         self._snapshot_identity_validated = False
+        self._consumer_handoffs = {}
 
     def _controls(self):
         if self._parser_controls is None:
@@ -344,10 +448,10 @@ class VerificationContext:
             self.reader.read(self.file_path(package["xmlFile"])), kind,
             controls=self._controls())
         if kind == "relation-set":
-            identity = artifact.root.find(R + "identity")
+            identity = artifact._validated_root().find(R + "identity")
             actual = identity.get("relationSetId") if identity is not None else None
         else:
-            identity = artifact.root.find(C + "documentIdentity")
+            identity = artifact._validated_root().find(C + "documentIdentity")
             actual = identity.get("documentId") if identity is not None else None
         if actual != package_id:
             raise StructuredSourceError(
@@ -355,7 +459,7 @@ class VerificationContext:
         self._artifacts[package_id] = artifact
         if kind in {"content-document", "authored-document"}:
             markdown_path = self.file_path(package["markdownFile"])
-            for node in artifact.root.iter():
+            for node in artifact._validated_root().iter():
                 identifier = node.get(XML_ID)
                 if identifier:
                     key = (package_id, identifier)
@@ -460,7 +564,7 @@ class VerificationContext:
         assets = {entry["assetId"]: entry["path"]
                   for entry in manifest["assets"]}
         used_assets = {
-            node.get("assetId") for node in artifact.root.iter()
+            node.get("assetId") for node in artifact._validated_root().iter()
             if node.tag in {C + "image", C + "figure"}}
         if set(assets) != used_assets:
             raise StructuredSourceError(
@@ -474,7 +578,7 @@ class VerificationContext:
         asset_digests = {
             entry["assetId"]: entry["rawDigest"] for entry in manifest["assets"]}
         resolved = []
-        dependencies = artifact.root.find(C + "dependencies")
+        dependencies = artifact._validated_root().find(C + "dependencies")
         for entry in dependencies.findall(C + "dependency"):
             kind = entry.get("kind")
             subject_id = entry.get("subjectId")
@@ -519,12 +623,10 @@ class VerificationContext:
         assertions = set()
         relation_ids = []
         endpoint_package_ids = set()
-        field_count = 0
-        for relation in artifact.root.findall(R + "relation"):
+        for relation in artifact._validated_root().findall(R + "relation"):
             relation_ids.append(relation.get("relationId"))
             fields = tuple((entry.get("name"), entry.text or "")
                            for entry in relation.findall(R + "assertionField"))
-            field_count += len(fields)
             endpoints = tuple(
                 (entry.get("role"), entry.get("documentId"),
                  entry.get("fragmentId"), entry.get("fragmentContentDigest"))
@@ -557,13 +659,16 @@ class VerificationContext:
                 }
         if len(relation_ids) != len(set(relation_ids)):
             raise StructuredSourceError("relation identity is duplicated")
-        markdown = _render_relations(
+        profile = self._controls().projection_profile
+        projection = _render_relations(
             artifact, self.file_path(package["markdownFile"]), views,
-            projection_profile=self._controls().projection_profile).markdown
-        return markdown, len(assertions), field_count, sum(
-            len(relation.findall(R + "endpoint"))
-            for relation in artifact.root.findall(R + "relation")), tuple(
-                sorted(endpoint_package_ids))
+            projection_profile=profile)
+        from .relation_projection import validate_relation_projection
+        coverage = validate_relation_projection(
+            artifact, projection.markdown,
+            self.file_path(package["markdownFile"]), views,
+            projection_profile=profile)
+        return projection.markdown, coverage, tuple(sorted(endpoint_package_ids))
 
     def _derive(self, package_id):
         package = self.packages[package_id]
@@ -598,7 +703,7 @@ class VerificationContext:
                     "authored Markdown conversion is incomplete")
             artifact = _parse_artifact(
                 xml, "authored-document", controls=self._controls())
-            identity = artifact.root.find(C + "documentIdentity")
+            identity = artifact._validated_root().find(C + "documentIdentity")
             if identity is None or identity.get("documentId") != package_id:
                 raise StructuredSourceError(
                     "generated authored XML identity is stale")
@@ -644,15 +749,8 @@ class VerificationContext:
                 "storedSources": 1,
             }
 
-        generated, assertions, fields, endpoints, endpoint_package_ids = \
+        generated, coverage, endpoint_package_ids = \
             self._render_relation(package, artifact)
-        anchors = {
-            match.group(1).decode("ascii") for match in _ANCHOR.finditer(generated)}
-        relation_ids = {
-            relation.get(XML_ID) for relation in artifact.root.findall(R + "relation")}
-        if not relation_ids.issubset(anchors):
-            raise StructuredSourceError(
-                "relation computed Markdown coverage is incomplete")
         self._derived_package_state[package_id] = {
             "representations": {
                 "markdown": generated,
@@ -662,9 +760,10 @@ class VerificationContext:
             "validationPackageIds": endpoint_package_ids,
         }
         return markdown_path, generated, {
-            "scheme": scheme, "coveredItems": assertions + fields,
-            "assertions": assertions, "assertionFields": fields,
-            "endpoints": endpoints,
+            "scheme": scheme,
+            "coveredItems": coverage["assertions"] +
+                coverage["assertionFields"],
+            **dict(coverage),
         }
 
     def check(self, package_id):
@@ -672,7 +771,7 @@ class VerificationContext:
             raise StructuredSourceError("subject identity does not resolve")
         cached = self._package_results.get(package_id)
         if cached is not None:
-            return cached
+            return _copy_result(cached)
         if package_id in self._checking:
             raise StructuredSourceError("package dependency graph contains a cycle")
         self._checking.add(package_id)
@@ -726,11 +825,11 @@ class VerificationContext:
             result = {
                 "packageId": package_id,
                 "authorityScheme": self.packages[package_id]["authorityScheme"],
-                "status": "conformant",
+                "status": "passed",
                 "computedCoverage": evidence,
             }
-            self._package_results[package_id] = result
-            return result
+            self._package_results[package_id] = _freeze_result(result)
+            return _copy_result(self._package_results[package_id])
         finally:
             self._checking.remove(package_id)
 
@@ -746,22 +845,45 @@ class VerificationContext:
             for path in tuple(self.reader.read_log)
             if path != output_path
         }
-        publish_set(
-            self.root, {output_path: generated}, {output_path: current}, guards)
-        self.reader.discard(output_path)
-        self._package_results.clear()
-        self._artifacts.clear()
-        self._fragments.clear()
-        self._derived_package_state.clear()
-        self._validated_package_state.clear()
-        self._global_result = None
-        return self.check(package_id)
+        replacement_result = None
+
+        def discard_generated_state():
+            self.reader.discard(output_path)
+            self._package_results.clear()
+            self._artifacts.clear()
+            self._fragments.clear()
+            self._derived_package_state.clear()
+            self._validated_package_state.clear()
+            self._consumer_handoffs.clear()
+            self._global_result = None
+
+        def validate_readback():
+            nonlocal replacement_result
+            discard_generated_state()
+            replacement_result = self.check(package_id)
+
+        try:
+            publish_set(
+                self.root, {output_path: generated}, {output_path: current},
+                guards, postcondition=validate_readback)
+        except BaseException:
+            # Publication has restored the exact prestate when its
+            # postcondition fails.  Do not retain replacement-derived state.
+            discard_generated_state()
+            raise
+        if replacement_result is None:
+            raise StructuredSourceError(
+                "generated representation replacement was not validated")
+        return replacement_result
 
     def read_for_consumer(self, consumer_id, package_id):
         """Return one fully validated snapshot handoff, with no fallback."""
         from navigator.lib.snapshot import RepositorySnapshot
 
         edge = consumer_edge(self.registry, consumer_id, package_id)
+        cached = self._consumer_handoffs.get((consumer_id, package_id))
+        if cached is not None:
+            return cached
         snapshot = self.repository_snapshot
         snapshot_entries = getattr(snapshot, "entries", None)
         snapshot_root = getattr(snapshot, "root", None)
@@ -822,7 +944,7 @@ class VerificationContext:
                     retained != self.reader.validated(validated_path):
                 raise StructuredSourceError(
                     "validated consumer byte differs from the snapshot")
-        return MappingProxyType({
+        handoff = MappingProxyType({
             "consumerId": consumer_id,
             "packageId": package_id,
             "authorityScheme": package["authorityScheme"],
@@ -837,6 +959,8 @@ class VerificationContext:
                 (path, self.reader.read_log[path])
                 for path in sorted(handoff_paths)),
         })
+        self._consumer_handoffs[(consumer_id, package_id)] = handoff
+        return handoff
 
     def _snapshot_paths(self):
         if self.repository_snapshot is None:
@@ -916,19 +1040,124 @@ class VerificationContext:
                     raise StructuredSourceError(
                         "retired structured-source import remains: %s" % path)
 
-    def _reject_obsolete_live_residue(self, repository_paths):
-        """Reject superseded storage/digest mechanisms in current text surfaces."""
-        snapshot_paths = self._snapshot_paths()
-        candidates = snapshot_paths if snapshot_paths is not None else repository_paths
-        for path in sorted(
-                item for item in candidates
-                if item.endswith(_LIVE_TEXT_SUFFIXES)):
-            data = self.reader.read(path)
-            token = next((item for item in _OBSOLETE_LIVE_TOKENS
-                          if item in data), None)
-            if token is not None:
+    def _reject_retired_control_residue(self, repository_paths):
+        """Reject retired mechanisms only through typed artifact policy."""
+        index = classify_artifacts(set(repository_paths), self.registry)
+        policy = artifact_policy()
+        fence = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+        inline_code = re.compile(r"(?<!`)(`+)([^`\n]+)\1(?!`)")
+        link_target = re.compile(r"\]\(\s*(?:<([^>]+)>|([^\s)]+))")
+
+        def retired(value):
+            return isinstance(value, str) and (
+                value in _RETIRED_IDENTIFIERS or any(
+                    prefix in value for prefix in _RETIRED_VALUE_PREFIXES))
+
+        def inspect_json(value):
+            if isinstance(value, dict):
+                return any(retired(key) or inspect_json(item)
+                           for key, item in value.items())
+            if isinstance(value, list):
+                return any(inspect_json(item) for item in value)
+            return retired(value)
+
+        def inspect_document(data, path):
+            try:
+                text = data.decode("utf-8")
+            except UnicodeDecodeError as exc:
                 raise StructuredSourceError(
-                    "obsolete storage/digest residue remains in %s" % path)
+                    "operative documentation is not UTF-8: %s" % path) from exc
+            machine_values = []
+            fence_character = None
+            fence_length = 0
+            for line in text.splitlines():
+                match = fence.match(line)
+                if fence_character is not None:
+                    if match is not None and \
+                            match.group(1)[0] == fence_character and \
+                            len(match.group(1)) >= fence_length and \
+                            not match.group(2).strip():
+                        fence_character = None
+                        fence_length = 0
+                    else:
+                        machine_values.append(line)
+                    continue
+                if match is not None:
+                    marker = match.group(1)
+                    if marker[0] == "`" and "`" in match.group(2):
+                        machine_values.extend(
+                            value for unused_marker, value
+                            in inline_code.findall(line))
+                        continue
+                    fence_character = marker[0]
+                    fence_length = len(marker)
+                    machine_values.append(line[line.index(marker) + len(marker):])
+                    continue
+                machine_values.extend(
+                    value for unused_marker, value in inline_code.findall(line))
+                machine_values.extend(
+                    first or second
+                    for first, second in link_target.findall(line))
+            return any(retired(value) for value in machine_values)
+
+        for path, classification in index.items():
+            mode = policy[classification]
+            if mode not in {
+                    "structural-code", "structural-control",
+                    "structural-document"}:
+                continue
+            data = self.reader.read(path)
+            found = False
+            if mode == "structural-document":
+                found = inspect_document(data, path)
+            elif mode == "structural-code" and path.endswith(".py"):
+                try:
+                    tree = ast.parse(data.decode("utf-8"), filename=path)
+                except (SyntaxError, UnicodeDecodeError) as exc:
+                    raise StructuredSourceError(
+                        "implementation source is not valid UTF-8 Python: %s" %
+                        path) from exc
+                for node in ast.walk(tree):
+                    values = []
+                    if isinstance(node, ast.Name):
+                        values.append(node.id)
+                    elif isinstance(node, ast.Attribute):
+                        values.append(node.attr)
+                    elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef,
+                                           ast.ClassDef)):
+                        values.append(node.name)
+                    elif isinstance(node, ast.arg):
+                        values.append(node.arg)
+                    elif isinstance(node, ast.Constant) and isinstance(
+                            node.value, str):
+                        values.append(node.value)
+                    if any(retired(value) for value in values):
+                        found = True
+                        break
+            elif path.endswith(".json"):
+                found = inspect_json(parse_json(data))
+            elif path.endswith((".xml", ".xsd")):
+                try:
+                    root = ET.fromstring(data)
+                except (ET.ParseError, UnicodeDecodeError) as exc:
+                    raise StructuredSourceError(
+                        "executable XML control is malformed: %s" % path) from exc
+                found = any(
+                    retired(node.tag.rsplit("}", 1)[-1]) or any(
+                        retired(name.rsplit("}", 1)[-1]) or retired(value)
+                        for name, value in node.attrib.items())
+                    for node in root.iter())
+            else:
+                try:
+                    text = data.decode("utf-8")
+                except UnicodeDecodeError:
+                    continue
+                found = any(
+                    identifier in text for identifier in _RETIRED_IDENTIFIERS) or \
+                    any(prefix in text for prefix in _RETIRED_VALUE_PREFIXES)
+            if found:
+                raise StructuredSourceError(
+                    "retired implementation/control residue remains in %s" % path)
 
     def _reject_alternate_structured_source_paths(self, repository_paths):
         actual = {
@@ -940,6 +1169,46 @@ class VerificationContext:
                 "missing=%s extra=%s" % (
                     sorted(_STRUCTURED_SOURCE_LIVE_PATHS - actual)[:10],
                     sorted(actual - _STRUCTURED_SOURCE_LIVE_PATHS)[:10]))
+
+    def _reject_alternate_implementation_paths(self, repository_paths):
+        """Close captured implementation, contract, schema, and vector paths."""
+        repository_paths = set(repository_paths)
+        index = classify_artifacts(repository_paths, self.registry)
+        expected_paths = (_LIVE_IMPLEMENTATION
+                          if self.repository_snapshot is not None else
+                          _LIVE_IMPLEMENTATION & repository_paths)
+        expected_code = {
+            path for path in expected_paths
+            if path.endswith((".css", ".js", ".mjs", ".py", ".sh"))}
+        actual_code = {
+            path for path, classification in index.items()
+            if classification is ArtifactClass.IMPLEMENTATION_CODE}
+        expected_contracts = {
+            path for path in expected_paths if path.startswith("contracts/")}
+        actual_contracts = {
+            path for path in repository_paths if path.startswith("contracts/")}
+        expected_schemas = {
+            path for path in expected_paths if path.endswith(".xsd")}
+        actual_schemas = {
+            path for path in repository_paths if path.endswith(".xsd")}
+        vector_prefixes = (
+            "navigator/tests/vectors/", "structured_source/tests/vectors/")
+        expected_vectors = {
+            path for path in expected_paths
+            if path.startswith(vector_prefixes)}
+        actual_vectors = {
+            path for path, classification in index.items()
+            if classification is ArtifactClass.TEST_FIXTURE}
+        expected = (expected_code | expected_contracts | expected_schemas |
+                    expected_vectors)
+        actual = (actual_code | actual_contracts | actual_schemas |
+                  actual_vectors)
+        if actual != expected:
+            raise StructuredSourceError(
+                "live implementation/contract/schema/vector inventory differs: "
+                "missing=%s extra=%s" % (
+                    sorted(expected - actual)[:10],
+                    sorted(actual - expected)[:10]))
 
     def _package_artifact_paths(self, repository_paths):
         """Discover package-like paths without inventorying unrelated files."""
@@ -983,19 +1252,33 @@ class VerificationContext:
     def _control_closure(self):
         repository_paths = self._disk_paths()
         snapshot_paths = self._snapshot_paths()
-        if snapshot_paths is not None and not _PDF_LIVE_IMPLEMENTATION.issubset(
+        if snapshot_paths is not None and not _LIVE_IMPLEMENTATION.issubset(
                 snapshot_paths):
             raise StructuredSourceError(
-                "PDF live implementation census is incomplete")
+                "live implementation census is incomplete")
         if snapshot_paths is not None:
-            named_paths = {
-                path for path in snapshot_paths
-                if "pdf-transcription" in path.casefold() or
-                "pdf_transcription" in path.casefold()}
-            if named_paths != _PDF_NAMED_PATHS:
-                raise StructuredSourceError(
-                    "PDF named implementation/domain residue census differs")
-        for path in sorted(_PDF_LIVE_IMPLEMENTATION):
+            named_domains = (
+                ("PDF", _PDF_NAMED_PATHS, lambda path:
+                 "pdf-transcription" in path.casefold() or
+                 "pdf_transcription" in path.casefold()),
+                ("authored Markdown", _AUTHORED_MARKDOWN_NAMED_PATHS,
+                 lambda path: "authored-markdown" in path.casefold() or
+                 "authored_markdown" in path.casefold() or path in {
+                     "structured_source/markdown.py",
+                     "structured_source/schemas/authored.xsd"}),
+                ("authored relations", _AUTHORED_RELATIONS_NAMED_PATHS,
+                 lambda path: "authored-relations" in path.casefold() or
+                 "authored_relations" in path.casefold() or
+                 path.startswith("structured_source/relation_") or
+                 path == "structured_source/schemas/relations.xsd"),
+            )
+            for label, expected, applies in named_domains:
+                named_paths = {path for path in snapshot_paths if applies(path)}
+                if named_paths != expected:
+                    raise StructuredSourceError(
+                        "%s named implementation/domain residue census differs" %
+                        label)
+        for path in sorted(_LIVE_IMPLEMENTATION):
             self.reader.read(path)
         retired = sorted(
             path for path in repository_paths
@@ -1005,7 +1288,8 @@ class VerificationContext:
                 "retired structured-source path remains: %s" % retired[:10])
         self._reject_retired_imports(repository_paths)
         self._reject_alternate_structured_source_paths(repository_paths)
-        self._reject_obsolete_live_residue(repository_paths)
+        self._reject_alternate_implementation_paths(repository_paths)
+        self._reject_retired_control_residue(repository_paths)
         registered = {entry["path"] for entry in self.registry["files"]}
         if self.repository_snapshot is not None:
             missing = registered - repository_paths
@@ -1048,7 +1332,7 @@ class VerificationContext:
 
     def verify_all(self):
         if self._global_result is not None:
-            return self._global_result
+            return _copy_result(self._global_result)
         self._global_passes += 1
         acceptance = self._control_closure()
         results = [self.check(package_id) for package_id in sorted(self.packages)]
@@ -1062,8 +1346,8 @@ class VerificationContext:
         schemes = Counter(result["authorityScheme"] for result in results)
         covered = sum(result["computedCoverage"].get("coveredItems", 0)
                       for result in results)
-        self._global_result = {
-            "status": "conformant",
+        self._global_result = _freeze_result({
+            "status": "passed",
             "packages": len(results),
             "authoritySchemes": dict(sorted(schemes.items())),
             "computedCoveredItems": covered,
@@ -1074,46 +1358,57 @@ class VerificationContext:
                             for registry in acceptance),
             "globalPasses": self._global_passes,
             "retiredResidue": 0,
-        }
-        return self._global_result
+        })
+        return _copy_result(self._global_result)
 
 
-def run_acceptance(root=ROOT, *, byte_source=None, repository_snapshot=None,
-                   registry=None, markdown_adapter=None):
-    """Return ephemeral machine conformance for one supplied snapshot."""
+def validate_corpus(root, *, byte_source, repository_snapshot,
+                    registry=None, markdown_adapter=None):
+    """Validate once and return the immutable same-context consumer boundary."""
     snapshot_digest = getattr(repository_snapshot, "digest", None)
     if not isinstance(snapshot_digest, str) or not snapshot_digest or \
             not callable(byte_source):
         raise StructuredSourceError(
-            "structured-source acceptance requires retained snapshot bytes")
+            "structured-source validation requires retained snapshot bytes")
     context = VerificationContext(
         root, registry=registry, byte_source=byte_source,
         repository_snapshot=repository_snapshot,
         markdown_adapter=markdown_adapter)
     summary = context.verify_all()
     if not isinstance(summary, dict) or \
-            summary.get("status") != "conformant" or \
+            summary.get("status") != "passed" or \
             summary.get("criteria") != len(CRITERIA) or \
             summary.get("globalPasses") != 1 or \
             type(summary.get("consumerEdges")) is not int or \
             summary.get("consumerEdges") != summary.get("consumerHandoffs"):
         raise StructuredSourceError(
-            "structured-source verification did not prove the current criteria")
-    return {
-        "verificationResultVersion": "3",
-        "repositorySnapshot": snapshot_digest,
-        "status": "conformant",
-        "domains": [
-            {
-                "authorityScheme": contract["authorityScheme"],
-                "criteria": len(contract["criteria"]),
-                "domain": contract["domain"],
-                "status": "conformant",
-            }
-            for contract in CONTRACTS
-        ],
-        "results": [
-            {"id": criterion, "status": "passed"}
-            for criterion in CRITERIA
-        ],
-    }
+            "structured-source validation did not pass the current criteria")
+    handoffs = {}
+    for consumer in context.registry["consumers"]:
+        consumer_id = consumer["consumerId"]
+        handoffs[consumer_id] = MappingProxyType({
+            edge["packageId"]: context.read_for_consumer(
+                consumer_id, edge["packageId"])
+            for edge in consumer["edges"]
+        })
+    domains = tuple(MappingProxyType({
+        "authorityScheme": contract["authorityScheme"],
+        "criteria": len(contract["criteria"]),
+        "domain": contract["domain"],
+        "status": "passed",
+    }) for contract in CONTRACTS)
+    package_summaries = tuple(MappingProxyType({
+        "authorityScheme": result["authorityScheme"],
+        "coveredItems": result["computedCoverage"]["coveredItems"],
+        "packageId": result["packageId"],
+        "status": result["status"],
+    }) for unused_package_id, result in sorted(
+        context._package_results.items()))
+    return ValidatedCorpus(
+        snapshot_digest=snapshot_digest,
+        domains=domains,
+        result_ids=CRITERIA,
+        package_summaries=package_summaries,
+        consumer_handoffs=MappingProxyType(handoffs),
+        parser_controls=context.parser_controls,
+    )

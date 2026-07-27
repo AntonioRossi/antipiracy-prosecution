@@ -1,13 +1,16 @@
 """Secure parsing, XSD 1.1, canonicalization, and environment tests."""
 
+import copy
+from dataclasses import replace
 import os
 from pathlib import Path
-from types import MappingProxyType
 import unittest
 from unittest import mock
 
 from structured_source import canonical, environment, parser
+from structured_source.control import canonical_json, parse_json
 from structured_source.errors import ParseError, SchemaError, StructuredSourceError
+from structured_source.grammar import parse_content_grammar, render_content_xsd
 
 
 CONTENT = b'''<?xml version="1.0" encoding="UTF-8"?>
@@ -175,44 +178,142 @@ class CanonicalContract(unittest.TestCase):
         self.assertFalse(hasattr(loaded, "__dict__"))
         with self.assertRaises(TypeError):
             loaded.schemas["content-document"][0] = b"changed"
+        with self.assertRaises(TypeError):
+            loaded.content_grammar.root.attributes["version"] = "changed"
+        with self.assertRaisesRegex(TypeError, "validated loader"):
+            replace(loaded, limits=loaded.limits)
+        with self.assertRaisesRegex(TypeError, "validated loader"):
+            parser.ParserControls()
+        with self.assertRaisesRegex(TypeError, "validated parser controls"):
+            parser.parse_artifact(
+                CONTENT, "content-document", controls=object())
         parser.parse_artifact(
             CONTENT, "content-document", controls=loaded)
 
-        changed = dict(controls)
-        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
-            parser.SCHEMA_PATHS["content-document"]].replace(
-                b'<xs:attribute ref="xml:id" use="required"/>',
-                b'<xs:attribute ref="xml:id" use="required"/>'
-                b'<xs:attribute name="extension" type="xs:string"/>', 1)
-        with self.assertRaisesRegex(SchemaError, "metadata differ"):
-            parser.load_parser_controls(changed.__getitem__)
+        artifact = parser.parse_artifact(
+            CONTENT, "content-document", controls=loaded)
+        exposed_root = artifact.root
+        exposed_root.find(".//{*}text").text = "Changed"
+        self.assertEqual(
+            artifact.root.find(".//{*}text").text, "Alpha")
+        with self.assertRaises(TypeError):
+            artifact.fragment_digests["frag-heading"] = "changed"
+        with self.assertRaises(TypeError):
+            artifact.typed_item_records["frag-heading"]["itemType"] = \
+                "changed"
+        with self.assertRaises(TypeError):
+            artifact.typed_item_records["frag-heading"]["typedContent"][
+                "children"][0] = "changed"
 
         changed = dict(controls)
         changed[parser.SCHEMA_PATHS["content-document"]] = changed[
             parser.SCHEMA_PATHS["content-document"]].replace(
-                b'<xs:attribute name="title" type="xs:string"/>',
-                b'<xs:attribute name="title" type="xs:string"/>'
-                b'<xs:attribute name="extension" type="xs:string"/>', 1)
-        with self.assertRaisesRegex(SchemaError, "typed-content fields differ"):
+                b'maxOccurs="10000" minOccurs="1" name="item"',
+                b'maxOccurs="10000" minOccurs="0" name="item"', 1)
+        with self.assertRaisesRegex(SchemaError, "authoritative profile"):
             parser.load_parser_controls(changed.__getitem__)
 
+        profile_data = parse_json(controls[parser.XML_PROFILE_PATH])
+        grammar_data = profile_data["contentDocuments"][
+            "pdf-evidence-transcription-v1"]["contentGrammar"]
+        list_type = next(node for node in grammar_data["root"]["children"]
+                         if node["tag"] == "complexType" and
+                         node["attributes"].get("name") == "listBlock")
+        list_type["children"][0]["children"][0]["attributes"][
+            "minOccurs"] = "0"
         changed = dict(controls)
-        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
-            parser.SCHEMA_PATHS["content-document"]].replace(
-                b'<xs:element name="text" type="xs:string"/>',
-                b'<xs:element name="text" type="c:inlineContainer"/>', 1)
-        with self.assertRaisesRegex(SchemaError, "value models differ"):
+        changed[parser.XML_PROFILE_PATH] = canonical_json(profile_data)
+        with self.assertRaisesRegex(SchemaError, "authoritative profile"):
+            parser.load_parser_controls(changed.__getitem__)
+        changed[parser.SCHEMA_PATHS["content-document"]] = render_content_xsd(
+            parse_content_grammar(grammar_data))
+        with self.assertRaisesRegex(SchemaError, "semantic child/group invariants"):
             parser.load_parser_controls(changed.__getitem__)
 
+        profile_data = parse_json(controls[parser.XML_PROFILE_PATH])
+        grammar_data = profile_data["contentDocuments"][
+            "pdf-evidence-transcription-v1"]["contentGrammar"]
+        inline_group = next(
+            node for node in grammar_data["root"]["children"]
+            if node["tag"] == "group" and
+            node["attributes"].get("name") == "inline")
+        inline_group["children"][0]["children"].append({
+            "attributes": {"name": "separator", "type": "c:separatorBlock"},
+            "children": [], "tag": "element"})
         changed = dict(controls)
-        changed[parser.SCHEMA_PATHS["content-document"]] = changed[
-            parser.SCHEMA_PATHS["content-document"]].replace(
-                b'<xs:attribute name="page" type="xs:positiveInteger" '
-                b'use="required"/>',
-                b'<xs:attribute name="page" type="xs:string" '
-                b'use="required"/>', 1)
-        with self.assertRaisesRegex(SchemaError, "provenance fields differ"):
+        changed[parser.XML_PROFILE_PATH] = canonical_json(profile_data)
+        changed[parser.SCHEMA_PATHS["content-document"]] = render_content_xsd(
+            parse_content_grammar(grammar_data))
+        with self.assertRaisesRegex(SchemaError, "semantic child/group invariants"):
             parser.load_parser_controls(changed.__getitem__)
+
+    def test_every_profile_grammar_production_is_closed_and_enumerated(self):
+        profile_data = parse_json(Path(parser.ROOT, parser.XML_PROFILE_PATH).read_bytes())
+        grammar_data = profile_data["contentDocuments"][
+            "pdf-evidence-transcription-v1"]["contentGrammar"]
+        grammar = parse_content_grammar(grammar_data)
+        paths = []
+
+        def visit(node, path=()):
+            paths.append(path)
+            for index, child in enumerate(node["children"]):
+                visit(child, path + (index,))
+
+        visit(grammar_data["root"])
+        self.assertEqual(len(paths), len(grammar.production_paths))
+        self.assertEqual(
+            render_content_xsd(grammar),
+            Path(parser.ROOT, parser.SCHEMA_PATHS["content-document"]).read_bytes())
+        for path in paths:
+            with self.subTest(path=path):
+                mutation = copy.deepcopy(grammar_data)
+                node = mutation["root"]
+                for index in path:
+                    node = node["children"][index]
+                node["tag"] = "unsupported"
+                with self.assertRaisesRegex(
+                        StructuredSourceError, "unsupported"):
+                    parse_content_grammar(mutation)
+
+        occurrence_mutations = 0
+        ordering_mutations = 0
+        for path in paths:
+            node = grammar_data["root"]
+            for index in path:
+                node = node["children"][index]
+            for field in ("minOccurs", "maxOccurs"):
+                if field not in node["attributes"]:
+                    continue
+                mutation = copy.deepcopy(grammar_data)
+                changed = mutation["root"]
+                for index in path:
+                    changed = changed["children"][index]
+                current = changed["attributes"][field]
+                changed["attributes"][field] = "2" if current != "2" else "3"
+                self.assertNotEqual(
+                    render_content_xsd(parse_content_grammar(mutation)),
+                    render_content_xsd(grammar))
+                occurrence_mutations += 1
+            if len(node["children"]) >= 2:
+                mutation = copy.deepcopy(grammar_data)
+                changed = mutation["root"]
+                for index in path:
+                    changed = changed["children"][index]
+                changed["children"][0], changed["children"][1] = (
+                    changed["children"][1], changed["children"][0])
+                self.assertNotEqual(
+                    render_content_xsd(parse_content_grammar(mutation)),
+                    render_content_xsd(grammar))
+                ordering_mutations += 1
+        self.assertGreater(occurrence_mutations, 0)
+        self.assertGreater(ordering_mutations, 0)
+
+    def test_only_current_xml_profile_registry_format_is_accepted(self):
+        data = parse_json(Path(parser.ROOT, parser.XML_PROFILE_PATH).read_bytes())
+        data["profileVersion"] = "1"
+        projection = parser.load_projection_profile()
+        with self.assertRaisesRegex(StructuredSourceError, "not current"):
+            parser.parse_xml_profiles(canonical_json(data), projection)
 
     def test_relation_xsd_profile_and_value_grammar_agree_exactly(self):
         controls = {
@@ -251,10 +352,10 @@ class CanonicalContract(unittest.TestCase):
                     parser.load_parser_controls(changed.__getitem__)
 
         changed = dict(controls)
-        changed[parser.XML_PROFILE_PATH] = changed[
-            parser.XML_PROFILE_PATH].replace(
-                b'"directions": ["forward"]',
-                b'"directions": ["Forward"]', 1)
+        changed_profile = parse_json(changed[parser.XML_PROFILE_PATH])
+        changed_profile["relationSets"]["support-map-v1"]["directions"] = [
+            "Forward"]
+        changed[parser.XML_PROFILE_PATH] = canonical_json(changed_profile)
         self.assertNotEqual(
             changed[parser.XML_PROFILE_PATH], controls[parser.XML_PROFILE_PATH])
         with self.assertRaisesRegex(
@@ -377,6 +478,18 @@ class SecureParser(unittest.TestCase):
         self.assertRejected(CONTENT.replace(b"frag-paragraph", b"frag-heading"))
         self.assertRejected(CONTENT.replace(b"Alpha", "A\u0301lpha".encode("utf-8")))
 
+    def test_required_container_cardinality_fails_closed(self):
+        paragraph = b'''    <paragraph xml:id="frag-paragraph">
+      <text>One &lt; two</text>
+      <lineBreak />
+      <code>x &amp; y</code>
+    </paragraph>'''
+        empty_list = CONTENT.replace(
+            paragraph,
+            b'    <list ordered="false" xml:id="frag-paragraph" />')
+        with self.assertRaises(SchemaError):
+            parser.parse_artifact(empty_list, "content-document")
+
     def test_utf8_xml10_and_lf_lexical_contract_fails_closed(self):
         self.assertRejected(b"\xef\xbb\xbf" + CONTENT)
         self.assertRejected(CONTENT.replace(b"\n", b"\r\n"))
@@ -400,14 +513,11 @@ class SecureParser(unittest.TestCase):
             with self.subTest(field=field):
                 limits = dict(base.limits)
                 limits[field] = value
-                controls = parser.ParserControls(
-                    limits=MappingProxyType(limits),
-                    projection_profile=base.projection_profile,
-                    xml_profiles=base.xml_profiles,
-                    schemas=base.schemas)
                 with self.assertRaises(ParseError):
-                    parser.parse_artifact(
-                        CONTENT, "content-document", controls=controls)
+                    parser._preflight(CONTENT, limits)
+                    parser._closed_tree_checks(
+                        parser._parse_tree(CONTENT), parser.CONTENT_NAMESPACE,
+                        "source", limits=limits)
 
     def test_consumer_xml_uses_the_same_closed_secure_parser(self):
         root = parser.parse_validated_xml(

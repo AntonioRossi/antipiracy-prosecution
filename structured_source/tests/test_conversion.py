@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import unittest
+from unittest import mock
 from xml.etree import ElementTree as ET
 
 from structured_source import CONTENT_NAMESPACE, RELATIONS_NAMESPACE, parser
@@ -15,7 +16,11 @@ from structured_source.markdown import (
     xml_to_markdown,
     xml_to_pandoc_ast,
 )
-from structured_source.tests.test_xml_contract import RELATIONS
+from structured_source.profiles import load_projection_profile
+from structured_source.relation_projection import validate_relation_projection
+from structured_source.render import Projection, render_relations
+from structured_source.tests.test_registry import registry_fixture
+from structured_source.tests.test_xml_contract import CONTENT, RELATIONS
 from structured_source.verify import VerificationContext
 
 C = "{%s}" % CONTENT_NAMESPACE
@@ -112,7 +117,7 @@ class AuthoredMarkdownConversion(unittest.TestCase):
         root = artifact.typed_item_records["example-document-root"]
         self.assertEqual(root["itemType"], "document")
         self.assertEqual(root["substantiveMetadata"], {})
-        self.assertIsInstance(root["typedContent"], list)
+        self.assertIsInstance(root["typedContent"], tuple)
         self.assertEqual(
             first.fragment_digests["example-document-root"],
             moved.fragment_digests["example-document-root"])
@@ -289,6 +294,26 @@ class AuthoredMarkdownConversion(unittest.TestCase):
         with self.assertRaisesRegex(ParseError, "fragment index"):
             parser.parse_artifact(_serialize(root), "authored-document")
 
+    def test_invalid_authored_candidate_cannot_reach_publication(self):
+        class InvalidAdapter:
+            @staticmethod
+            def convert_authored_markdown(markdown, unused_path, unused_document_id):
+                generated = b"generated\n"
+                return {
+                    "xml": b"not XML",
+                    "markdown": generated,
+                    "source_raw_digest": raw_digest(markdown),
+                    "generated_markdown_raw_digest": raw_digest(generated),
+                    "item_ids": ("invalid-root",),
+                    "fragment_digests": {},
+                }
+
+        context = VerificationContext(ROOT, markdown_adapter=InvalidAdapter())
+        with mock.patch("structured_source.verify.publish_set") as publish, \
+                self.assertRaises(StructuredSourceError):
+            context.regenerate("aa11393us-na-us-claim-set")
+        publish.assert_not_called()
+
     def test_all_registered_authored_authorities_convert_and_relations_resolve(self):
         registry = json.loads(
             (ROOT / "structured_source/registry/content.json").read_text())
@@ -337,14 +362,114 @@ class AuthoredMarkdownConversion(unittest.TestCase):
 
     def test_current_pdf_content_and_relation_parsers_are_closed(self):
         self.assertEqual(
-            parser._schema("content-document").target_namespace,
-            "urn:aa11393:ssp:content:1")
+            parser.parse_artifact(CONTENT, "content-document").kind,
+            "content-document")
         self.assertEqual(
             parser.parse_artifact(RELATIONS, "relation-set").kind,
             "relation-set")
 
 
 class AuthoredRelations(unittest.TestCase):
+    def test_relation_projection_coverage_is_independent_and_exact(self):
+        artifact = parser.parse_artifact(RELATIONS, "relation-set")
+        views = {
+            ("claim-doc", "claim-one",
+             "sha256/typed-item-v1:" + "a" * 64): {
+                "excerpt": "Claim | one",
+                "markdownPath": "US/common/claims.md",
+            },
+            ("pct-doc", "support-one",
+             "sha256/typed-item-v1:" + "b" * 64): {
+                "excerpt": "Support one",
+                "markdownPath": "PCT/evidence.md",
+            },
+        }
+        output_path = "US/common/relations.md"
+        profile = load_projection_profile()
+        projection = render_relations(
+            artifact, output_path, views, projection_profile=profile)
+        coverage = validate_relation_projection(
+            artifact, projection.markdown, output_path, views,
+            projection_profile=profile)
+        self.assertEqual(dict(coverage), {
+            "assertions": 1, "assertionFields": 1, "endpoints": 2})
+
+        mutations = (
+            projection.markdown.replace(
+                b'<a id="ssp-relation-schedule"></a>',
+                b'<a id="ssp-extra"></a>\n'
+                b'<a id="ssp-relation-schedule"></a>', 1),
+            projection.markdown.replace(b"| posture | direct |\n", b"", 1),
+            projection.markdown.replace(b"Claim \\| one", b"Changed", 1),
+        )
+        for changed in mutations:
+            with self.subTest(changed=changed[:80]), self.assertRaisesRegex(
+                    StructuredSourceError, "projection"):
+                validate_relation_projection(
+                    artifact, changed, output_path, views,
+                    projection_profile=profile)
+
+    def test_relation_endpoint_resolution_rejects_a_stale_exact_digest(self):
+        relation_xml = RELATIONS.replace(
+            b' documentId="claim-doc"', b' documentId="authored-doc"').replace(
+                b' documentId="pct-doc"', b' documentId="pdf-doc"')
+        artifact = parser.parse_artifact(relation_xml, "relation-set")
+        context = VerificationContext(ROOT, registry=registry_fixture())
+        context._fragments = {
+            ("authored-doc", "claim-one"): {
+                "digest": "sha256/typed-item-v1:" + "a" * 64,
+                "excerpt": "Claim one",
+                "markdownPath": "content/authored.md",
+            },
+            ("pdf-doc", "support-one"): {
+                "digest": "sha256/typed-item-v1:" + "b" * 64,
+                "excerpt": "Support one",
+                "markdownPath": "content/evidence.md",
+            },
+        }
+        package = context.packages["relation-set"]
+        with mock.patch.object(context, "check"), \
+                mock.patch.object(context, "_artifact"):
+            context._render_relation(package, artifact)
+            stale = parser.parse_artifact(
+                relation_xml.replace(
+                    ("sha256/typed-item-v1:" + "a" * 64).encode(),
+                    ("sha256/typed-item-v1:" + "c" * 64).encode(), 1),
+                "relation-set")
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "resolve exactly"):
+                context._render_relation(package, stale)
+
+    def test_invalid_relation_projection_cannot_reach_publication(self):
+        relation_xml = RELATIONS.replace(
+            b' documentId="claim-doc"', b' documentId="authored-doc"').replace(
+                b' documentId="pct-doc"', b' documentId="pdf-doc"')
+        artifact = parser.parse_artifact(relation_xml, "relation-set")
+        context = VerificationContext(ROOT, registry=registry_fixture())
+        context._fragments = {
+            ("authored-doc", "claim-one"): {
+                "digest": "sha256/typed-item-v1:" + "a" * 64,
+                "excerpt": "Claim one",
+                "markdownPath": "content/authored.md",
+            },
+            ("pdf-doc", "support-one"): {
+                "digest": "sha256/typed-item-v1:" + "b" * 64,
+                "excerpt": "Support one",
+                "markdownPath": "content/evidence.md",
+            },
+        }
+        invalid = Projection(
+            markdown=b"invalid review\n", markdown_digest="ignored",
+            coverage={"selfReport": "passed"})
+        with mock.patch.object(context, "_artifact", return_value=artifact), \
+                mock.patch.object(context, "check"), \
+                mock.patch("structured_source.verify._render_relations",
+                           return_value=invalid), \
+                mock.patch("structured_source.verify.publish_set") as publish, \
+                self.assertRaisesRegex(StructuredSourceError, "projection"):
+            context.regenerate("relation-set")
+        publish.assert_not_called()
+
     def test_endpoint_package_validation_reads_are_transitively_closed(self):
         package_id = "aa11393us-na-priority-support-map"
         context = VerificationContext(ROOT)

@@ -275,6 +275,32 @@ class AtomicPublication(unittest.TestCase):
             with open(guard, "rb") as handle:
                 self.assertEqual(handle.read(), b"external-guard")
 
+    def test_failed_postcondition_rolls_back_complete_prestate(self):
+        with tempfile.TemporaryDirectory() as root:
+            paths = {
+                "one.txt": (b"old-one", b"new-one"),
+                "two.txt": (b"old-two", b"new-two"),
+            }
+            for relative, (before, unused_after) in paths.items():
+                with open(os.path.join(root, relative), "wb") as handle:
+                    handle.write(before)
+
+            def reject_replacement():
+                raise StructuredSourceError("replacement validation failed")
+
+            with self.assertRaisesRegex(
+                    StructuredSourceError, "replacement validation"):
+                publish_set(
+                    root,
+                    {path: after for path, (unused_before, after)
+                     in paths.items()},
+                    {path: before for path, (before, unused_after)
+                     in paths.items()},
+                    postcondition=reject_replacement)
+            for relative, (before, unused_after) in paths.items():
+                with open(os.path.join(root, relative), "rb") as handle:
+                    self.assertEqual(handle.read(), before)
+
     def test_failed_new_nested_output_leaves_no_directory(self):
         with tempfile.TemporaryDirectory() as root:
             with mock.patch("structured_source.atomic.os.replace",

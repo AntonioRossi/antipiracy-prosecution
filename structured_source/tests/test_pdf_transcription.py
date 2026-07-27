@@ -21,6 +21,7 @@ from structured_source.render import Projection
 from structured_source.registry import validate_registry
 from structured_source.tests.test_registry import registry_fixture
 from structured_source.tests.test_xml_contract import CONTENT
+from structured_source.tests import validated_corpus
 from structured_source.verify import VerificationContext
 
 
@@ -61,6 +62,30 @@ def fixture_manifest(pdf_bytes=PDF_BYTES):
     }
 
 
+def nested_fixture_xml():
+    paragraph = b'''    <paragraph xml:id="frag-paragraph">
+      <text>One &lt; two</text>
+      <lineBreak />
+      <code>x &amp; y</code>
+    </paragraph>'''
+    division = b'''    <division role="section" xml:id="frag-division">
+      <paragraph xml:id="frag-paragraph">
+        <text>One &lt; two</text>
+        <lineBreak />
+        <code>x &amp; y</code>
+      </paragraph>
+    </division>'''
+    paragraph_evidence = (
+        b'    <fragmentEvidence fragmentId="frag-paragraph" page="1" '
+        b'region="paragraph region" sourcePath="content/evidence.pdf" '
+        b'uncertainty="line break reviewed from image" />')
+    division_evidence = (
+        b'    <fragmentEvidence fragmentId="frag-division" page="1" '
+        b'region="division region" sourcePath="content/evidence.pdf" />\n')
+    return fixture_xml().replace(paragraph, division).replace(
+        paragraph_evidence, division_evidence + paragraph_evidence)
+
+
 def write_fixture(root, *, xml=None, manifest_change=None, markdown_change=None):
     root = Path(root)
     for control_path in parser.PARSER_CONTROL_PATHS:
@@ -99,21 +124,15 @@ def snapshot_context(root, registry, byte_source=None):
 
 class PDFItemSurface(unittest.TestCase):
     def test_every_live_pdf_package_builds_the_closed_surface(self):
-        context = VerificationContext(os.fspath(ROOT))
-        package_ids = [
-            package_id for package_id, package in context.packages.items()
-            if package["authorityScheme"] == "pdf-evidence-transcription-v1"]
-        self.assertEqual(len(package_ids), 37)
-        for package_id in package_ids:
-            with self.subTest(package_id=package_id):
-                result = context.check(package_id)
-                surface = context._validated_package_state[package_id]["surface"]
-                self.assertEqual(result["computedCoverage"]["coveredItems"],
-                                 len(surface.items))
-                self.assertGreater(surface.coverage_field_count, len(surface.items))
-                self.assertEqual(surface.package_id, package_id)
-                self.assertEqual(surface.authority_scheme,
-                                 "pdf-evidence-transcription-v1")
+        summaries = tuple(
+            item for item in validated_corpus().package_summaries
+            if item["authorityScheme"] == "pdf-evidence-transcription-v1")
+        self.assertEqual(len(summaries), 37)
+        self.assertEqual(
+            len({item["packageId"] for item in summaries}), len(summaries))
+        self.assertTrue(all(
+            item["status"] == "passed" and item["coveredItems"] > 0
+            for item in summaries))
 
     def test_surface_is_typed_ordered_immutable_and_exactly_provenanced(self):
         with tempfile.TemporaryDirectory() as root:
@@ -138,7 +157,6 @@ class PDFItemSurface(unittest.TestCase):
         self.assertEqual(surface.document_item.source, surface.source)
         self.assertEqual(surface.item("frag-paragraph").provenance.uncertainty,
                          "line break reviewed from image")
-        self.assertEqual(surface.children(), surface.items)
         self.assertEqual(handoff["bytes"], fixture_xml())
         self.assertEqual(handoff["assets"], {})
         with self.assertRaises(FrozenInstanceError):
@@ -149,6 +167,16 @@ class PDFItemSurface(unittest.TestCase):
             handoff["assets"]["changed"] = b"changed"
         with self.assertRaisesRegex(StructuredSourceError, "resolve exactly"):
             surface.item("missing")
+        with self.assertRaisesRegex(StructuredSourceError, "resolve exactly"):
+            surface.children("missing")
+        with self.assertRaisesRegex(StructuredSourceError, "stable item"):
+            surface.children(None)
+        with self.assertRaisesRegex(StructuredSourceError, "stable item"):
+            surface.children(7)
+        with self.assertRaisesRegex(StructuredSourceError, "resolve exactly"):
+            surface.children("")
+        with self.assertRaises(TypeError):
+            surface.children()
 
     def test_insert_delete_reorder_and_source_number_do_not_rename_items(self):
         heading = b'''    <heading level="1" xml:id="frag-heading">
@@ -356,6 +384,11 @@ class PDFEvidenceAndCoverage(unittest.TestCase):
             registry = write_fixture(root)
             artifact = parser.parse_artifact(fixture_xml(), "content-document")
             projection = render_content(artifact, "content/evidence.md", {})
+            exposed_coverage = projection.coverage
+            exposed_coverage["markdownDigest"] = "changed"
+            self.assertEqual(
+                projection.coverage["markdownDigest"],
+                projection.markdown_digest)
             coverage = copy.deepcopy(projection.coverage)
             field = next(item for item in coverage["fields"]
                          if item["regions"] and
@@ -396,6 +429,32 @@ class PDFEvidenceAndCoverage(unittest.TestCase):
                     return_value=tampered), self.assertRaisesRegex(
                         StructuredSourceError, "anchor census"):
                 VerificationContext(root, registry=registry).check("pdf-doc")
+
+    def test_independent_coverage_rejects_nested_anchor_outside_parent_block(self):
+        xml = nested_fixture_xml()
+        with tempfile.TemporaryDirectory() as root:
+            registry = write_fixture(root, xml=xml)
+            artifact = parser.parse_artifact(xml, "content-document")
+            projection = render_content(artifact, "content/evidence.md", {})
+            nested_anchor = b'<a id="ssp-frag-paragraph"></a>'
+            metadata_anchor = b'<a id="ssp-review-metadata"></a>'
+            markdown = projection.markdown.replace(
+                nested_anchor + b"\n", b"", 1).replace(
+                    metadata_anchor,
+                    metadata_anchor + b"\n" + nested_anchor, 1)
+            self.assertNotEqual(markdown, projection.markdown)
+            coverage = copy.deepcopy(projection.coverage)
+            coverage["markdownDigest"] = raw_digest(markdown)
+            tampered = Projection(
+                markdown=markdown, markdown_digest=raw_digest(markdown),
+                coverage=coverage)
+            Path(root, "content/evidence.md").write_bytes(markdown)
+            with mock.patch(
+                    "structured_source.verify._render_content",
+                    return_value=tampered), self.assertRaisesRegex(
+                        StructuredSourceError, "item-anchor hierarchy"):
+                VerificationContext(
+                    root, registry=registry).check("pdf-doc")
 
     def test_whitespace_only_leaf_text_remains_in_computed_field_census(self):
         original = parser.parse_artifact(fixture_xml(), "content-document")
@@ -574,7 +633,8 @@ class PDFSnapshotHandoff(unittest.TestCase):
                 byte_source=lambda absolute: Path(absolute).read_bytes(),
                 repository_snapshot=snapshot)
             with self.assertRaisesRegex(
-                    StructuredSourceError, "differs from the snapshot"):
+                    StructuredSourceError,
+                    "authoritative profile|differs from the snapshot"):
                 context.read_for_consumer("example-consumer", "pdf-doc")
 
     def test_markdown_edge_receives_only_the_declared_review_representation(self):
@@ -595,10 +655,10 @@ class PDFSnapshotHandoff(unittest.TestCase):
     def test_regenerate_writes_only_review_and_rebuilds_validated_state(self):
         with tempfile.TemporaryDirectory() as root:
             registry = write_fixture(root)
-            context = VerificationContext(root, registry=registry)
-            context.check("pdf-doc")
-            old_surface = context._validated_package_state[
-                "pdf-doc"]["surface"]
+            context = snapshot_context(root, registry)
+            old_handoff = context.read_for_consumer(
+                "example-consumer", "pdf-doc")
+            old_surface = old_handoff["surface"]
             authority_paths = (
                 "content/evidence.pdf", "content/evidence.xml",
                 "content/source-manifest.json",
@@ -612,9 +672,13 @@ class PDFSnapshotHandoff(unittest.TestCase):
                 for path in authority_paths}
             new_surface = context._validated_package_state[
                 "pdf-doc"]["surface"]
-        self.assertEqual(result["status"], "conformant")
+            new_handoff = context.read_for_consumer(
+                "example-consumer", "pdf-doc")
+        self.assertEqual(result["status"], "passed")
         self.assertEqual(after, before)
         self.assertIsNot(new_surface, old_surface)
+        self.assertIsNot(new_handoff, old_handoff)
+        self.assertIsNot(new_handoff["surface"], old_handoff["surface"])
 
     def test_pdf_package_file_and_ownership_census_is_bidirectional(self):
         registry = registry_fixture()
@@ -633,7 +697,7 @@ class PDFSnapshotHandoff(unittest.TestCase):
 
     def test_partial_profile_field_update_fails_closed(self):
         xml_profile = json.loads(
-            (ROOT / "structured_source/profiles/xml-v1.json").read_text())
+            (ROOT / "structured_source/profiles/xml-v2.json").read_text())
         gfm_profile = json.loads(
             (ROOT / "structured_source/profiles/gfm-v1.json").read_text())
         changed = copy.deepcopy(xml_profile)
@@ -641,7 +705,7 @@ class PDFSnapshotHandoff(unittest.TestCase):
             "itemMetadataFields"]["paragraph"] = ["extension"]
 
         def read_profile(name):
-            return changed if name == "xml-v1.json" else gfm_profile
+            return changed if name == "xml-v2.json" else gfm_profile
 
         profiles.load_xml_profiles.cache_clear()
         try:

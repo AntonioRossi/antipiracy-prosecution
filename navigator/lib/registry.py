@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from types import MappingProxyType
 
 from structured_source import CONTENT_NAMESPACE
@@ -45,17 +46,15 @@ class Registry:
 
     def __init__(self, gw, consumer_input):
         if not isinstance(consumer_input, ConsumerInput) or \
-                consumer_input.consumer_id not in {"navigator-na", "navigator-af"} or \
+                re.fullmatch(r"navigator-[a-z][a-z0-9-]{0,31}",
+                             consumer_input.consumer_id or "") is None or \
                 not isinstance(consumer_input.snapshot_digest, str) or \
                 not consumer_input.snapshot_digest or \
                 not isinstance(consumer_input.handoffs, MappingProxyType) or \
                 not isinstance(consumer_input.parser_controls, ParserControls):
             raise RegistryError("navigator consumer input is not a frozen handoff set")
         handoffs = consumer_input.handoffs
-        if len(handoffs) != 2 or set(handoffs) != {
-                "pct-as-filed-dossier",
-                "aa11393us-%s-us-claim-set" %
-                consumer_input.consumer_id.rsplit("-", 1)[-1]}:
+        if len(handoffs) != 2 or "pct-as-filed-dossier" not in handoffs:
             raise RegistryError("navigator consumer handoff inventory is not exact")
         validation_paths = set()
         for package_id, handoff in handoffs.items():
@@ -106,7 +105,8 @@ class Registry:
             except Exception as exc:
                 raise RegistryError(
                     "handed claim XML failed its retained controls") from exc
-            identity = semantic_input.root.find(C + "documentIdentity")
+            identity = semantic_input._validated_root().find(
+                C + "documentIdentity")
             if identity is None or identity.get("documentId") != package_id:
                 raise RegistryError("handed claim XML identity is stale")
             xml_digest = semantic_input.raw_digest

@@ -9,23 +9,22 @@ import stat
 import unicodedata
 import zipfile
 
+from . import release
 
-BUNDLE_CONFIG_PATH = "navigator/bundles/na-af-2026.json"
-BUNDLE_VERSION = "4"
+
+BUNDLE_CONFIG_PATH = "navigator/bundles/current.json"
+BUNDLE_VERSION = "5"
 BUNDLE_WORDING_ID = "bundle-manifest-neutral"
-EDITION_IDS = ("na", "af")
 
 _BASENAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,239}\Z")
+_EDITION_ID = re.compile(r"[a-z][a-z0-9-]{0,31}\Z")
 _TIMESTAMP = re.compile(
     r"(19[89][0-9]|20[0-9]{2}|21[0-9]{2})-"
     r"(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T"
     r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z\Z")
-_EDITION_ARTIFACT = {
-    "na": re.compile(
-        r"AA11393US-NA-claims-spec-navigator_(NA-[A-Za-z0-9.-]+)\.html\Z"),
-    "af": re.compile(
-        r"AA11393US-AF-claims-spec-navigator_(AF-[A-Za-z0-9.-]+)\.html\Z"),
-}
+_EDITION_ARTIFACT = re.compile(
+    r"AA11393US-([A-Z][A-Z0-9-]{0,31})-claims-spec-navigator_"
+    r"([A-Z][A-Z0-9-]*-[A-Za-z0-9.-]+)\.html\Z")
 
 
 class BundleError(ValueError):
@@ -69,8 +68,10 @@ def _zip_datetime(value):
 
 
 def _validated_members(members):
-    if not isinstance(members, (list, tuple)) or len(members) != 5:
-        raise BundleError("delivery bundle must contain exactly five members")
+    if not isinstance(members, (list, tuple)) or len(members) < 3 or \
+            len(members) % 2 != 1:
+        raise BundleError(
+            "delivery bundle must contain edition pairs and one manifest")
     normalized = []
     names = []
     for index, member in enumerate(members):
@@ -86,11 +87,22 @@ def _validated_members(members):
         raise BundleError("bundle member names are not unique")
     if names[-1] != "MANIFEST.txt":
         raise BundleError("MANIFEST.txt must be the final configured member")
+    for index in range(0, len(names) - 1, 2):
+        artifact_name, artifact_bytes = normalized[index]
+        checksum_name, checksum_bytes = normalized[index + 1]
+        if not artifact_name.endswith(".html") or \
+                checksum_name != artifact_name + ".sha256":
+            raise BundleError(
+                "each configured edition must contribute one HTML/checksum pair")
+        if checksum_bytes != release.checksum_text(
+                artifact_name, artifact_bytes):
+            raise BundleError(
+                "configured edition checksum bytes do not match its HTML")
     return normalized
 
 
 def build_zip(members, declared_timestamp):
-    """Return byte-identical ZIP_STORED bytes for five ordered members."""
+    """Return byte-identical ZIP_STORED bytes for configured ordered pairs."""
     members = _validated_members(members)
     date_time = _zip_datetime(declared_timestamp)
     output = io.BytesIO()
@@ -121,8 +133,9 @@ def read_zip_members(data):
             if archive.comment:
                 raise BundleError("bundle ZIP comment must be empty")
             infos = archive.infolist()
-            if len(infos) != 5:
-                raise BundleError("delivery bundle must contain exactly five members")
+            if len(infos) < 3 or len(infos) % 2 != 1:
+                raise BundleError(
+                    "delivery bundle must contain edition pairs and one manifest")
             members = []
             for info in infos:
                 validate_member_name(info.filename)
@@ -142,32 +155,39 @@ def validate_bundle_config(value):
             "bundleVersion", "declaredTimestamp", "editions",
             "manifestWordingId", "members", "name"} or \
             value.get("bundleVersion") != BUNDLE_VERSION or \
-            value.get("editions") != list(EDITION_IDS) or \
             value.get("manifestWordingId") != BUNDLE_WORDING_ID:
         raise BundleError("bundle configuration shape/version is not current")
+    editions = value.get("editions")
+    if not isinstance(editions, list) or not editions or \
+            any(not isinstance(edition, str) or
+                _EDITION_ID.fullmatch(edition) is None for edition in editions) or \
+            len(editions) != len(set(editions)):
+        raise BundleError("bundle edition inventory is not canonical and unique")
     _zip_datetime(value.get("declaredTimestamp"))
     name = validate_member_name(value.get("name"))
     if not name.endswith("_TECHNICAL-PREVIEW.zip"):
         raise BundleError("bundle name does not identify the current profile")
 
     members = value.get("members")
-    if not isinstance(members, list) or len(members) != 5:
-        raise BundleError("bundle configuration must enumerate five members")
-    expected_kinds = (
-        "sealed", "artifact-checksum", "sealed", "artifact-checksum",
-        "manifest")
+    if not isinstance(members, list) or \
+            len(members) != len(editions) * 2 + 1:
+        raise BundleError(
+            "bundle configuration must enumerate each edition pair and manifest")
+    expected_kinds = tuple(
+        kind for unused_edition in editions
+        for kind in ("sealed", "artifact-checksum")) + ("manifest",)
     seen_names = []
     for index, (entry, expected_kind) in enumerate(zip(members, expected_kinds)):
         if not isinstance(entry, dict) or entry.get("kind") != expected_kind:
             raise BundleError("bundle member %d has the wrong kind" % index)
         if expected_kind == "sealed":
             if set(entry) != {"edition", "kind", "name"} or \
-                    entry.get("edition") != EDITION_IDS[index // 2] or \
+                    entry.get("edition") != editions[index // 2] or \
                     not entry.get("name", "").endswith(".html"):
                 raise BundleError("sealed bundle member is malformed")
         elif expected_kind == "artifact-checksum":
             if set(entry) != {"artifact", "edition", "kind", "name"} or \
-                    entry.get("edition") != EDITION_IDS[index // 2] or \
+                    entry.get("edition") != editions[index // 2] or \
                     entry.get("artifact") != members[index - 1].get("name") or \
                     entry.get("name") != entry.get("artifact") + ".sha256":
                 raise BundleError("artifact-checksum member is malformed")
@@ -178,14 +198,16 @@ def validate_bundle_config(value):
     if len(seen_names) != len(set(name.casefold() for name in seen_names)):
         raise BundleError("bundle configuration has duplicate member names")
     versions = []
-    for edition, entry in zip(EDITION_IDS, (members[0], members[2])):
-        match = _EDITION_ARTIFACT[edition].fullmatch(entry["name"])
+    for index, edition in enumerate(editions):
+        entry = members[index * 2]
+        match = _EDITION_ARTIFACT.fullmatch(entry["name"])
         if match is None:
             raise BundleError("sealed member name is not bound to its edition")
-        versions.append(match.group(1))
-    expected_name = (
-        "AA11393US-claims-navigators_%s_%s_TECHNICAL-PREVIEW.zip" %
-        tuple(versions))
+        if match.group(1) != edition.upper():
+            raise BundleError("sealed member name is not bound to its edition")
+        versions.append(match.group(2))
+    expected_name = "AA11393US-claims-navigators_%s_TECHNICAL-PREVIEW.zip" % \
+        "_".join(versions)
     if name != expected_name:
         raise BundleError("bundle name is not derived from the exact editions")
     return value

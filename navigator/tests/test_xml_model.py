@@ -11,8 +11,8 @@ from navigator.lib.gateway import ContentGateway, GatewayError
 from navigator.lib.claims import ClaimsParseError, dependency_references
 from navigator.lib.model import EditionModel, ModelError, bundle_manifest_text
 from navigator.lib import bundlezip, canon, currentstate, projections
-from navigator.lib.snapshot import RepositorySnapshot
 from navigator.lib.validate import validate_edition
+from navigator.tests import validation_session
 from structured_source.canonical import raw_digest
 from structured_source.parser import PARSER_CONTROL_PATHS
 from structured_source.pdf_transcription import PDFTranscriptionSurface
@@ -25,13 +25,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
 class XMLModelTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.snapshot = RepositorySnapshot.capture(ROOT, retain_bytes=True)
-        cls.inputs = currentstate.verify_structured_source(
-            cls.snapshot, ("navigator-na", "navigator-af"))
-        cls.models = {
-            edition: cls.build_model(edition)
-            for edition in ("na", "af")
-        }
+        session = validation_session()
+        cls.snapshot = session["snapshot"]
+        cls.plan = session["plan"]
+        cls.sources = session["sources"]
+        cls.inputs = cls.sources.consumer_inputs
+        cls.models = session["models"]
 
     @classmethod
     def build_model(cls, edition, byte_source=None):
@@ -92,10 +91,11 @@ class XMLModelTests(unittest.TestCase):
                                      for path in paths))
 
     def test_each_edition_has_exactly_two_dependency_free_handoffs(self):
-        for edition in ("na", "af"):
+        for edition in self.plan.edition_ids:
             with self.subTest(edition=edition):
-                consumer = self.inputs["navigator-" + edition]
-                claim_id = "aa11393us-%s-us-claim-set" % edition
+                spec = self.plan.edition(edition)
+                consumer = self.inputs[spec.consumer_id]
+                claim_id = spec.claim_package_id
                 self.assertEqual(
                     set(consumer.handoffs),
                     {claim_id, "pct-as-filed-dossier"})
@@ -175,7 +175,8 @@ class XMLModelTests(unittest.TestCase):
         self.assertIn(model.claim_set_version, text)
         with self.assertRaises(ModelError):
             model.controlled_text("bundle-manifest-neutral")
-        bundle = bundle_manifest_text(self.models["na"], self.models["af"])
+        bundle = bundle_manifest_text(
+            self.models[item] for item in self.plan.edition_ids)
         self.assertIn(self.models["na"].claim_set_version, bundle)
         self.assertIn(self.models["af"].claim_set_version, bundle)
 
@@ -214,15 +215,17 @@ class XMLModelTests(unittest.TestCase):
             config_bytes = handle.read()
         config = canon.parse_json(config_bytes)
         bundle_origins = projections.bundle_origin_inventory(
-            self.models["na"], self.models["af"], config,
+            (self.models[item] for item in self.plan.edition_ids), config,
             canon.bytes_digest(config_bytes), bundlezip.BUNDLE_CONFIG_PATH)
         self.assertEqual(len(bundle_origins), 12)
         self.assertEqual(
             {item.value_id for item in bundle_origins
              if item.value_id.startswith("wording:")},
             {
-                "wording:bundle-manifest-neutral:slot:naEditionVersion",
-                "wording:bundle-manifest-neutral:slot:afEditionVersion",
+                "wording:bundle-manifest-neutral:slot:"
+                "editionSchedule:edition:na",
+                "wording:bundle-manifest-neutral:slot:"
+                "editionSchedule:edition:af",
             })
 
     def test_gateway_rejects_unsafe_or_changing_inputs(self):
@@ -279,7 +282,8 @@ class XMLModelTests(unittest.TestCase):
             snapshot_digest="sha256/c1:" + "0" * 64)
         with self.assertRaisesRegex(
                 currentstate.CurrentStateError, "does not match"):
-            currentstate.build_model("na", self.snapshot, detached)
+            currentstate.build_model(
+                self.plan.edition("na"), self.snapshot, detached)
 
     def test_dependency_grammar_is_exactly_singular(self):
         self.assertEqual(

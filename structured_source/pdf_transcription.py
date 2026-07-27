@@ -7,6 +7,7 @@ does not inspect, OCR, or infer content from the PDF.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 import re
 from xml.etree import ElementTree as ET
@@ -154,12 +155,17 @@ class PDFTranscriptionSurface:
                 "PDF transcription item does not resolve exactly")
         return matches[0]
 
-    def children(self, item_id: str | None = None) -> tuple[TranscriptionItem, ...]:
-        """Traverse the asserted hierarchy in XML document order."""
-        if item_id == self.document_item.item_id:
-            child_ids = set(self.document_item.child_ids)
-            return tuple(item for item in self.items if item.item_id in child_ids)
-        return tuple(item for item in self.items if item.parent_id == item_id)
+    def children(self, item_id: str) -> tuple[TranscriptionItem, ...]:
+        """Traverse one exactly resolved parent in XML document order."""
+        if not isinstance(item_id, str):
+            raise StructuredSourceError(
+                "PDF transcription parent is not a stable item identity")
+        parent = self.item(item_id)
+        children = tuple(self.item(child_id) for child_id in parent.child_ids)
+        if any(not isinstance(item, TranscriptionItem) for item in children):
+            raise StructuredSourceError(
+                "PDF transcription hierarchy resolves outside content items")
+        return children
 
 
 def _local(node: ET.Element) -> str:
@@ -182,13 +188,14 @@ def _metadata(identity: ET.Element) -> DocumentMetadata:
 
 
 def _freeze_typed_node(value: dict) -> TypedContentNode:
-    if not isinstance(value, dict) or set(value) not in (
+    if not isinstance(value, Mapping) or set(value) not in (
             {"attributes", "children", "element", "text"},
             {"attributes", "children", "element", "itemId", "text"}):
         raise StructuredSourceError("PDF typed content node is malformed")
     attributes = value["attributes"]
     children = value["children"]
-    if not isinstance(attributes, dict) or not isinstance(children, list):
+    if not isinstance(attributes, Mapping) or not isinstance(
+            children, (list, tuple)):
         raise StructuredSourceError("PDF typed content node is malformed")
     return TypedContentNode(
         element=value["element"], item_id=value.get("itemId"),
@@ -197,8 +204,9 @@ def _freeze_typed_node(value: dict) -> TypedContentNode:
 
 
 def _freeze_typed_content(value: dict) -> TypedItemContent:
-    if not isinstance(value, dict) or set(value) != {"children", "text"} or \
-            not isinstance(value["children"], list):
+    if not isinstance(value, Mapping) or \
+            set(value) != {"children", "text"} or \
+            not isinstance(value["children"], (list, tuple)):
         raise StructuredSourceError("PDF typed item content is malformed")
     return TypedItemContent(
         text=value["text"], children=tuple(
@@ -238,17 +246,25 @@ def _independent_markdown_regions(
     top_ids = [node.get(XML_ID) for node in top_level]
     starts = [anchor_lines[identifier][0] for identifier in top_ids]
     if starts != sorted(set(starts)) or \
-            (starts and starts[-1] >= metadata_start):
+            (starts and (anchor_lines[root_id][0] >= starts[0] or
+                         starts[-1] >= metadata_start)):
         raise StructuredSourceError(
             "PDF independently computed Markdown block order is not exact")
     ends = [*([start - 1 for start in starts[1:]]), metadata_start - 1]
     regions = {}
     for node, start, end in zip(top_level, starts, ends):
         region = (start, end)
-        for descendant in node.iter():
-            identifier = descendant.get(XML_ID)
-            if identifier:
-                regions[identifier] = region
+        descendant_ids = [
+            descendant.get(XML_ID) for descendant in node.iter()
+            if descendant.get(XML_ID)]
+        descendant_lines = [
+            anchor_lines[identifier][0] for identifier in descendant_ids]
+        if any(line < start or line > end for line in descendant_lines):
+            raise StructuredSourceError(
+                "PDF independently computed Markdown item-anchor hierarchy "
+                "is not exact")
+        for identifier in descendant_ids:
+            regions[identifier] = region
     regions[root_id] = (anchor_lines[root_id][0], metadata_start - 1)
     dependencies_start = anchor_lines["review-dependencies"][0]
     provenance_start = anchor_lines["review-provenance"][0]
@@ -327,7 +343,8 @@ def _coverage_expectations(
 def _validate_projection_coverage(
         artifact: ParsedArtifact, projection: Projection,
         document_id: str, manifest: dict, manifest_raw_digest: str) -> int:
-    if artifact.raw_bytes != readable_xml_bytes(artifact.root):
+    root = artifact._validated_root()
+    if artifact.raw_bytes != readable_xml_bytes(root):
         raise StructuredSourceError(
             "PDF independent readable serialization census is stale")
     if manifest_raw_digest != raw_digest(canonical_json(manifest)):
@@ -335,7 +352,7 @@ def _validate_projection_coverage(
     if set(artifact.fragment_digests) != set(artifact.typed_item_records):
         raise StructuredSourceError("PDF independent typed-item census is stale")
     for item_id, record in artifact.typed_item_records.items():
-        if not isinstance(record, dict) or set(record) != {
+        if not isinstance(record, Mapping) or set(record) != {
                 "authorityScheme", "digestDomain", "documentId", "itemId",
                 "itemType", "schemaProfile", "substantiveMetadata",
                 "typedContent"} or record.get("itemId") != item_id or \
@@ -349,8 +366,8 @@ def _validate_projection_coverage(
                 artifact.fragment_digests[item_id]:
             raise StructuredSourceError(
                 "PDF independent typed-item digest census is stale")
-    value = projection.coverage
-    if not isinstance(value, dict) or set(value) != {
+    value = projection._validated_coverage()
+    if not isinstance(value, Mapping) or set(value) != {
             "coverageVersion", "fields", "markdownDigest", "projectionProfile",
             "sourceProfile", "sourceRawDigest", "subjectId"} or \
             value.get("coverageVersion") != "1" or \
@@ -364,10 +381,10 @@ def _validate_projection_coverage(
             "PDF computed field/projection coverage envelope is stale")
     fields = value.get("fields")
     markdown_regions = _independent_markdown_regions(
-        artifact.root, projection.markdown)
+        root, projection.markdown)
     expected = _coverage_expectations(
-        artifact.root, document_id, markdown_regions)
-    if not isinstance(fields, list) or len(fields) != len(expected):
+        root, document_id, markdown_regions)
+    if not isinstance(fields, (list, tuple)) or len(fields) != len(expected):
         raise StructuredSourceError("PDF computed field coverage census is incomplete")
     seen = set()
     for actual, required in zip(fields, expected):
@@ -376,11 +393,11 @@ def _validate_projection_coverage(
         extra = ({"derivationId"} if classification == "mechanically-derived"
                  else {"justification"} if classification == "internal-justified"
                  else set())
-        if not isinstance(actual, dict) or set(actual) != {
+        if not isinstance(actual, Mapping) or set(actual) != {
                 "anchors", "classification", "fieldId", "origin", "regions",
                 *extra} or actual.get("fieldId") != field_id or \
                 actual.get("classification") != classification or \
-                actual.get("anchors") != anchors or \
+                tuple(actual.get("anchors", ())) != tuple(anchors) or \
                 actual.get("origin") != {
                     "subjectId": document_id, "nodeRef": node_ref,
                     "field": field_name} or field_id in seen:
@@ -388,8 +405,8 @@ def _validate_projection_coverage(
                 "PDF computed field coverage entry is stale")
         seen.add(field_id)
         regions = actual.get("regions")
-        if not isinstance(regions, list) or any(
-                not isinstance(region, dict) or set(region) != {
+        if not isinstance(regions, (list, tuple)) or any(
+                not isinstance(region, Mapping) or set(region) != {
                     "endLine", "startLine"} or
                 not isinstance(region["startLine"], int) or
                 not isinstance(region["endLine"], int) or
@@ -428,7 +445,7 @@ def build_surface(
     if artifact.kind != "content-document" or artifact.profile != AUTHORITY_SCHEME:
         raise StructuredSourceError(
             "PDF surface received a different authority/profile")
-    root = artifact.root
+    root = artifact._validated_root()
     identity = root.find(C + "documentIdentity")
     content = root.find(C + "content")
     provenance = root.find(C + "provenance")
@@ -541,7 +558,7 @@ def build_surface(
     for ordinal, node in enumerate(item_nodes, start=1):
         item_id = node.get(XML_ID)
         record = artifact.typed_item_records.get(item_id)
-        if not isinstance(record, dict) or record.get("itemId") != item_id:
+        if not isinstance(record, Mapping) or record.get("itemId") != item_id:
             raise StructuredSourceError("PDF typed item record is absent")
         metadata = tuple(sorted(record["substantiveMetadata"].items()))
         direct_assets = tuple(sorted({
@@ -563,10 +580,10 @@ def build_surface(
 
     document_record = artifact.typed_item_records.get(root.get(XML_ID))
     document_digest = artifact.fragment_digests.get(root.get(XML_ID))
-    if not isinstance(document_record, dict) or \
+    if not isinstance(document_record, Mapping) or \
             document_record.get("itemType") != "document" or \
             document_record.get("substantiveMetadata") != {} or \
-            not isinstance(document_record.get("typedContent"), list) or \
+            not isinstance(document_record.get("typedContent"), (list, tuple)) or \
             not isinstance(document_digest, str):
         raise StructuredSourceError("PDF typed document item is incomplete")
     top_level_ids = tuple(node.get(XML_ID) for node in content)

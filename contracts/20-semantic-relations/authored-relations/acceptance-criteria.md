@@ -5,30 +5,29 @@
 > This is the current acceptance contract coupled to
 > [`technical description`](technical-description.md).
 
-## Pass rule
 
-Conformance exists only when all six criteria pass in the one aggregate structured-source
-verification against the same immutable repository snapshot. A warning, unknown result, inferred
-authority, stale generated view, unresolved or role-invalid endpoint, duplicate semantic owner,
-undeclared read, or assurance claim beyond the machine evidence is a failure.
+## Domain pass rule
 
-A pass proves only the stated machine properties. It does not certify substantive or legal
-correctness, counsel approval, filing readiness, or filing authorization.
+All six executable outcomes must pass within the shared
+[aggregate validation boundary](../../README.md#aggregate-validation-boundary) on the retained
+worktree capture. Each registry row names its independent enforcer. A warning, unknown result, inference,
+self-report, stored result, detached token, prior run, stale view, invalid endpoint, duplicate
+semantic owner, or undeclared read cannot satisfy a criterion.
 
 <!-- SSM-REL-AC-TABLE:START -->
-| ID | Required outcome | Required evidence and enforcer |
+| ID | Executable technical outcome | Independent enforcer |
 |---|---|---|
-| **SSM-REL-AC-01 — Authority, package, and ownership closure** | Each `authored-relations-v1` package has one authoritative relation XML and one generated Markdown review view. XML alone owns each profiled assertion and field. Existing package/file/router/consumer declarations close exactly; endpoints do not authorize reads and dependencies do not create semantics. | Exact registry, package/file, router, consumer-edge, dependency, relation-owner, and endpoint censuses; missing, duplicate, mixed-owner, undeclared, and endpoint/dependency-confusion fixtures. |
-| **SSM-REL-AC-02 — Relation grammar and readable-storage closure** | Each package has one `relationSetId` envelope and assertions with distinct semantic `relationId` and anchor-only `xml:id`, profiled type/direction, owner, authored order, endpoints, and enumerated text fields. The relation XSD and exclusive profiles agree exactly on the complete grammar, and stored XML obeys readable serialization. No typed relation surface, self digest, extension, alias, or consumer semantic field exists. | Exact envelope/assertion/XSD/profile/identity/element/attribute/order/cardinality/scalar/digest census; parse-serialize equality; whole-profile, XSD-mutation, readable-spelling, ownership, unknown-field, and resource-limit fixtures. |
-| **SSM-REL-AC-03 — Endpoint role and content-sensitive reference closure** | Each endpoint resolves exact registered `(documentId, fragmentId, fragmentContentDigest)` through a validated content interface and permitted role. Relation validation state includes every endpoint package and its transitive validation paths without granting consumer access. Missing, stale, omitted, inferred, retargeted, or authority-promoting endpoints fail. | Relation/profile and endpoint-package/read censuses, typed-target-digest computation, and endpoint resolver; omission, substantive-change, formatting-invariance, missing, duplicate, role-swap, stale, ambiguity, retarget, relation-target, and authority-promotion fixtures. |
-| **SSM-REL-AC-04 — Generated Markdown and coverage closure** | Fresh XML-to-Markdown rendering is byte-identical to the review view. Coverage independently recomputes readable serialization, every assertion/field/order, endpoint and target-item digest, anchor, excerpt, and forward/reverse link; self-report and stored evidence have no authority. | Cross-process rendering and independent ordered XML/interface/Markdown census; missing, extra, duplicate, reordered, stale-target, stale-excerpt, stale-link, self-report, and stored-evidence fixtures. |
-| **SSM-REL-AC-05 — Snapshot-bound handoff, commands, and writes** | The current authored-relation consumer-edge and constructed-handoff censuses are both zero. The shared resolver's relation XML handoff is retained bytes, role, declared dependencies, and exact validation reads, paired with same-context retained controls and carrying no surface or assets. Handoffs are immutable; direct reads, reopen, detached tokens, fallback, repair, promotion, and pre-write-state reuse fail. | Live relation-edge census and bytes-only relation-handoff fixture; exact edge/handoff/read census, retained-control, immutability, representation-isolation, direct-read/reopen, conflicting-handoff, snapshot-mutation, fallback, atomic-rollback/readback, and external-mutation fixtures. |
-| **SSM-REL-AC-06 — Field evolution, audit, and implementation closure** | A relation field, endpoint, storage law, or typed-digest change coherently updates its XML owner, schema/profile agreement, parser/serializer, validated package state, resolver, projection, coverage, affected content contract, and tests. Exact live closure has no alternate owner/reader, parser-control bypass, parallel registry, mutable handoff, unused digest mechanism, compatibility path, generic extension, or stored record. | Exact contract/registry/schema/profile/agreement-checker/parser/serializer/validated-state/resolver/renderer/handoff/package/test census; storage-law, field, whole-profile, partial-update, control-bypass, alternate-path, generic-extension, compatibility, mutable-handoff, and stored-record fixtures. |
+| **SSM-REL-AC-01 — Authority, package, and ownership closure** | Each `authored-relations-v1` package has one authoritative relation XML and one generated Markdown review view. XML alone owns each profiled assertion and field. Package/file/router declarations close exactly; endpoints do not authorize reads, dependencies do not create semantics, and current navigator products use separate relation XML. | structured_source.verify.VerificationContext._control_closure; structured_source.tests.test_registry |
+| **SSM-REL-AC-02 — Relation grammar and readable-storage closure** | Each package has one `relationSetId` envelope and assertions with distinct semantic `relationId` and anchor-only `xml:id`, profiled type/direction, owner, order, endpoints, and enumerated fields. The relation XSD and exclusive profiles agree on the complete readable grammar; typed relation surfaces, self digests, extensions, aliases, and consumer fields fail. | structured_source.parser.parse_artifact; structured_source.tests.test_xml_contract |
+| **SSM-REL-AC-03 — Endpoint role and content-sensitive reference closure** | Each permitted role resolves one exact registered `(documentId, fragmentId, fragmentContentDigest)` through a validated content interface. Validation includes every endpoint package's transitive paths without granting access; missing, duplicate, stale, swapped, inferred, retargeted, relation-to-relation, or authority-promoting endpoints fail. | structured_source.verify.VerificationContext._render_relation; structured_source.tests.test_conversion |
+| **SSM-REL-AC-04 — Generated Markdown and coverage closure** | Fresh rendering is byte-identical to the review view. Independent coverage recomputes every assertion, field, endpoint, digest, excerpt/link, and exact anchor inventory, order, and region from XML and Markdown; renderer self-report and stored evidence have no authority. | structured_source.relation_projection.validate_relation_projection; structured_source.tests.test_conversion |
+| **SSM-REL-AC-05 — Worktree-capture-bound handoff and writes** | Current authored-relation consumer-edge and handoff censuses are exactly zero. Review regeneration prevalidates the complete candidate, preserves relation authority and endpoint bytes, atomically publishes, exact-reads the replacement, rebuilds fresh state, and fully rolls back on failure. Invalid candidates, reopen, inference, fallback, repair, promotion, detached state, and prior-state reuse fail. | structured_source.verify.VerificationContext.regenerate; structured_source.tests.test_conversion |
+| **SSM-REL-AC-06 — Field evolution and implementation closure** | Every relation field, endpoint, storage law, or digest change coherently updates all affected owners, the contract pair, registries, controls, resolver, projection, coverage, consumers, tests, and generated state. Controls publish only as a closed prevalidated map with fresh readback and rollback. Capture-wide closure exactly matches domain/shared code, contracts, schemas, launchers, registered tests, and vectors; missing, extra, alternate, inactive, bypass, compatibility, stored-record, or orphaned states fail. | structured_source.verify.VerificationContext._control_closure; structured_source.tests.test_acceptance |
 <!-- SSM-REL-AC-TABLE:END -->
 
-## Acceptance evidence boundary
+## Registry and execution boundary
 
 The domain's data-only registry is the machine-readable source for the six criterion rows. The
-marked table is its deterministic projection. The shared verifier checks this domain within one
-corpus pass and emits ephemeral domain statuses bound to the supplied snapshot. No callback layer,
-stored evidence file, approval record, or detached result substitutes for current execution.
+marked table is its deterministic projection. The shared validator checks this domain within the
+current retained capture and emits only ephemeral technical status. No callback, self-report,
+stored result, approval record, detached token, or prior run substitutes for current execution.

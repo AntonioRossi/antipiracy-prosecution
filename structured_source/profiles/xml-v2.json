@@ -1,0 +1,2373 @@
+{
+  "contentDocuments": {
+    "pdf-evidence-transcription-v1": {
+      "contentGrammar": {
+        "namespaces": {
+          "c": "urn:aa11393:ssp:content:1",
+          "vc": "http://www.w3.org/2007/XMLSchema-versioning",
+          "xml": "http://www.w3.org/XML/1998/namespace",
+          "xs": "http://www.w3.org/2001/XMLSchema"
+        },
+        "root": {
+          "attributes": {
+            "attributeFormDefault": "unqualified",
+            "elementFormDefault": "qualified",
+            "targetNamespace": "urn:aa11393:ssp:content:1",
+            "vc:minVersion": "1.1",
+            "version": "1"
+          },
+          "children": [
+            {
+              "attributes": {
+                "namespace": "http://www.w3.org/XML/1998/namespace",
+                "schemaLocation": "xml.xsd"
+              },
+              "children": [],
+              "tag": "import"
+            },
+            {
+              "attributes": {
+                "name": "stableId"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "base": "xs:NCName"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "value": "1"
+                      },
+                      "children": [],
+                      "tag": "minLength"
+                    },
+                    {
+                      "attributes": {
+                        "value": "160"
+                      },
+                      "children": [],
+                      "tag": "maxLength"
+                    }
+                  ],
+                  "tag": "restriction"
+                }
+              ],
+              "tag": "simpleType"
+            },
+            {
+              "attributes": {
+                "name": "nonBlank"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "base": "xs:string"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "value": "1"
+                      },
+                      "children": [],
+                      "tag": "minLength"
+                    },
+                    {
+                      "attributes": {
+                        "value": "1000000"
+                      },
+                      "children": [],
+                      "tag": "maxLength"
+                    },
+                    {
+                      "attributes": {
+                        "value": ".*\\S.*"
+                      },
+                      "children": [],
+                      "tag": "pattern"
+                    }
+                  ],
+                  "tag": "restriction"
+                }
+              ],
+              "tag": "simpleType"
+            },
+            {
+              "attributes": {
+                "name": "repoPath"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "base": "xs:string"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "value": "1"
+                      },
+                      "children": [],
+                      "tag": "minLength"
+                    },
+                    {
+                      "attributes": {
+                        "value": "512"
+                      },
+                      "children": [],
+                      "tag": "maxLength"
+                    },
+                    {
+                      "attributes": {
+                        "value": "[^\\\\]*"
+                      },
+                      "children": [],
+                      "tag": "pattern"
+                    }
+                  ],
+                  "tag": "restriction"
+                }
+              ],
+              "tag": "simpleType"
+            },
+            {
+              "attributes": {
+                "name": "rawDigest"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "base": "xs:string"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "value": "sha256/raw:[0-9a-f]{64}"
+                      },
+                      "children": [],
+                      "tag": "pattern"
+                    }
+                  ],
+                  "tag": "restriction"
+                }
+              ],
+              "tag": "simpleType"
+            },
+            {
+              "attributes": {
+                "name": "typedItemDigest"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "base": "xs:string"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "value": "sha256/typed-item-v1:[0-9a-f]{64}"
+                      },
+                      "children": [],
+                      "tag": "pattern"
+                    }
+                  ],
+                  "tag": "restriction"
+                }
+              ],
+              "tag": "simpleType"
+            },
+            {
+              "attributes": {
+                "name": "dependencyDigest"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "memberTypes": "c:rawDigest c:typedItemDigest"
+                  },
+                  "children": [],
+                  "tag": "union"
+                }
+              ],
+              "tag": "simpleType"
+            },
+            {
+              "attributes": {
+                "name": "inlineContainer"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "0",
+                        "ref": "c:inline"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "styledInline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "codeInline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "xs:string"
+                      },
+                      "children": [],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "simpleContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "reviewMarkInline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "name": "style",
+                            "use": "required"
+                          },
+                          "children": [
+                            {
+                              "attributes": {},
+                              "children": [
+                                {
+                                  "attributes": {
+                                    "base": "xs:string"
+                                  },
+                                  "children": [
+                                    {
+                                      "attributes": {
+                                        "value": "red"
+                                      },
+                                      "children": [],
+                                      "tag": "enumeration"
+                                    }
+                                  ],
+                                  "tag": "restriction"
+                                }
+                              ],
+                              "tag": "simpleType"
+                            }
+                          ],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "linkInline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "name": "target",
+                            "type": "xs:string",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        },
+                        {
+                          "attributes": {
+                            "name": "title",
+                            "type": "xs:string"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "imageInline"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "name": "assetId",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "alt",
+                    "type": "xs:string",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "title",
+                    "type": "xs:string"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "citationInline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "name": "citationId",
+                            "type": "c:stableId",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "noteInline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "1",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "inline"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "name": "text",
+                        "type": "xs:string"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "emphasis",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "strong",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "strikeout",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "superscript",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "subscript",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "definedTerm",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "quotation",
+                        "type": "c:styledInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "reviewMark",
+                        "type": "c:reviewMarkInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "code",
+                        "type": "c:codeInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "math",
+                        "type": "c:codeInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "link",
+                        "type": "c:linkInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "image",
+                        "type": "c:imageInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "citation",
+                        "type": "c:citationInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "note",
+                        "type": "c:noteInline"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "space"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "softBreak"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "lineBreak"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              ],
+              "tag": "group"
+            },
+            {
+              "attributes": {
+                "name": "fragmentInlineBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "ref": "xml:id",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "headingBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "ref": "xml:id",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        },
+                        {
+                          "attributes": {
+                            "name": "level",
+                            "use": "required"
+                          },
+                          "children": [
+                            {
+                              "attributes": {},
+                              "children": [
+                                {
+                                  "attributes": {
+                                    "base": "xs:positiveInteger"
+                                  },
+                                  "children": [
+                                    {
+                                      "attributes": {
+                                        "value": "1"
+                                      },
+                                      "children": [],
+                                      "tag": "minInclusive"
+                                    },
+                                    {
+                                      "attributes": {
+                                        "value": "6"
+                                      },
+                                      "children": [],
+                                      "tag": "maxInclusive"
+                                    }
+                                  ],
+                                  "tag": "restriction"
+                                }
+                              ],
+                              "tag": "simpleType"
+                            }
+                          ],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "codeBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "xs:string"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "ref": "xml:id",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        },
+                        {
+                          "attributes": {
+                            "name": "language",
+                            "type": "xs:NCName"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "simpleContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "quotationBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "1",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "listItem"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "1",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "listBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "10000",
+                        "minOccurs": "1",
+                        "name": "item",
+                        "type": "c:listItem"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "ordered",
+                    "type": "xs:boolean",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "start",
+                    "type": "xs:positiveInteger"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "delimiter"
+                  },
+                  "children": [
+                    {
+                      "attributes": {},
+                      "children": [
+                        {
+                          "attributes": {
+                            "base": "xs:string"
+                          },
+                          "children": [
+                            {
+                              "attributes": {
+                                "value": "period"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "one-paren"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            }
+                          ],
+                          "tag": "restriction"
+                        }
+                      ],
+                      "tag": "simpleType"
+                    }
+                  ],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "tableCell"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "0",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "name": "alignment",
+                    "use": "required"
+                  },
+                  "children": [
+                    {
+                      "attributes": {},
+                      "children": [
+                        {
+                          "attributes": {
+                            "base": "xs:string"
+                          },
+                          "children": [
+                            {
+                              "attributes": {
+                                "value": "default"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "left"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "center"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "right"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            }
+                          ],
+                          "tag": "restriction"
+                        }
+                      ],
+                      "tag": "simpleType"
+                    }
+                  ],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "tableRow"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "256",
+                        "minOccurs": "1",
+                        "name": "cell",
+                        "type": "c:tableCell"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "tableSection"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "10000",
+                        "minOccurs": "1",
+                        "name": "row",
+                        "type": "c:tableRow"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "tableBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "minOccurs": "0",
+                        "name": "caption",
+                        "type": "c:inlineContainer"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "head",
+                        "type": "c:tableSection"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "minOccurs": "0",
+                        "name": "body",
+                        "type": "c:tableSection"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "limitation"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "base": "c:inlineContainer"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "ref": "xml:id",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        },
+                        {
+                          "attributes": {
+                            "name": "limitationId",
+                            "type": "c:stableId",
+                            "use": "required"
+                          },
+                          "children": [],
+                          "tag": "attribute"
+                        }
+                      ],
+                      "tag": "extension"
+                    }
+                  ],
+                  "tag": "complexContent"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "claimBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "32",
+                        "minOccurs": "0",
+                        "name": "dependency",
+                        "type": "c:stableId"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "preamble",
+                        "type": "c:inlineContainer"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "maxOccurs": "256",
+                        "minOccurs": "1",
+                        "name": "limitation",
+                        "type": "c:limitation"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "claimId",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "number",
+                    "type": "xs:positiveInteger",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "type",
+                    "use": "required"
+                  },
+                  "children": [
+                    {
+                      "attributes": {},
+                      "children": [
+                        {
+                          "attributes": {
+                            "base": "xs:string"
+                          },
+                          "children": [
+                            {
+                              "attributes": {
+                                "value": "independent"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "dependent"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            }
+                          ],
+                          "tag": "restriction"
+                        }
+                      ],
+                      "tag": "simpleType"
+                    }
+                  ],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "advisoryBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "1",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "status",
+                    "type": "c:stableId"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "owner",
+                    "type": "c:nonBlank"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "figureBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "minOccurs": "0",
+                        "name": "caption",
+                        "type": "c:inlineContainer"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "assetId",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "alt",
+                    "type": "xs:string",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "divisionBlock"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "unbounded",
+                        "minOccurs": "1",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "role",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "separatorBlock"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "block"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "name": "heading",
+                        "type": "c:headingBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "paragraph",
+                        "type": "c:fragmentInlineBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "plain",
+                        "type": "c:fragmentInlineBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "codeBlock",
+                        "type": "c:codeBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "blockQuotation",
+                        "type": "c:quotationBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "list",
+                        "type": "c:listBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "table",
+                        "type": "c:tableBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "claim",
+                        "type": "c:claimBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "noteBlock",
+                        "type": "c:advisoryBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "caution",
+                        "type": "c:advisoryBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "action",
+                        "type": "c:advisoryBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "figure",
+                        "type": "c:figureBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "division",
+                        "type": "c:divisionBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "separator",
+                        "type": "c:separatorBlock"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              ],
+              "tag": "group"
+            },
+            {
+              "attributes": {
+                "name": "documentIdentity"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "name": "title",
+                        "type": "c:nonBlank"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "name": "documentId",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "artifactFamily",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "jurisdiction",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "scope",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "status",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "language",
+                    "type": "xs:language",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "pdfOrigin"
+              },
+              "children": [],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "origin"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "name": "pdfDerivative",
+                        "type": "c:pdfOrigin"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "dependency"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "name": "kind",
+                    "use": "required"
+                  },
+                  "children": [
+                    {
+                      "attributes": {},
+                      "children": [
+                        {
+                          "attributes": {
+                            "base": "xs:string"
+                          },
+                          "children": [
+                            {
+                              "attributes": {
+                                "value": "document"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "relation-set"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            },
+                            {
+                              "attributes": {
+                                "value": "asset"
+                              },
+                              "children": [],
+                              "tag": "enumeration"
+                            }
+                          ],
+                          "tag": "restriction"
+                        }
+                      ],
+                      "tag": "simpleType"
+                    }
+                  ],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "subjectId",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "itemId",
+                    "type": "c:stableId"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "digest",
+                    "type": "c:dependencyDigest"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "test": "if (@kind = 'asset') then (exists(@digest) and starts-with(string(@digest), 'sha256/raw:') and not(exists(@itemId))) else if (@kind = 'document') then (exists(@itemId) = exists(@digest) and (not(exists(@digest)) or starts-with(string(@digest), 'sha256/typed-item-v1:'))) else (not(exists(@itemId)) and not(exists(@digest)))"
+                  },
+                  "children": [],
+                  "tag": "assert"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "dependencies"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "256",
+                        "minOccurs": "0",
+                        "name": "dependency",
+                        "type": "c:dependency"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "fragmentEvidence"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "name": "fragmentId",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "sourcePath",
+                    "type": "c:repoPath",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "page",
+                    "type": "xs:positiveInteger",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "region",
+                    "type": "xs:string"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "uncertainty",
+                    "type": "xs:string"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "provenance"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "100000",
+                        "minOccurs": "0",
+                        "name": "fragmentEvidence",
+                        "type": "c:fragmentEvidence"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "content"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "maxOccurs": "100000",
+                        "minOccurs": "1",
+                        "ref": "c:block"
+                      },
+                      "children": [],
+                      "tag": "group"
+                    }
+                  ],
+                  "tag": "sequence"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "projectionPolicy"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "name": "profile",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "noticeVersion",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "sourceDocument"
+              },
+              "children": [
+                {
+                  "attributes": {},
+                  "children": [
+                    {
+                      "attributes": {
+                        "name": "documentIdentity",
+                        "type": "c:documentIdentity"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "origin",
+                        "type": "c:origin"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "dependencies",
+                        "type": "c:dependencies"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "provenance",
+                        "type": "c:provenance"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "content",
+                        "type": "c:content"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    },
+                    {
+                      "attributes": {
+                        "name": "projectionPolicy",
+                        "type": "c:projectionPolicy"
+                      },
+                      "children": [],
+                      "tag": "element"
+                    }
+                  ],
+                  "tag": "sequence"
+                },
+                {
+                  "attributes": {
+                    "ref": "xml:id",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "name": "schemaProfile",
+                    "type": "c:stableId",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                },
+                {
+                  "attributes": {
+                    "fixed": "1",
+                    "name": "schemaVersion",
+                    "type": "xs:string",
+                    "use": "required"
+                  },
+                  "children": [],
+                  "tag": "attribute"
+                }
+              ],
+              "tag": "complexType"
+            },
+            {
+              "attributes": {
+                "name": "source",
+                "type": "c:sourceDocument"
+              },
+              "children": [],
+              "tag": "element"
+            }
+          ],
+          "tag": "schema"
+        }
+      },
+      "dependencyKinds": {
+        "asset": {
+          "digest": "required-raw",
+          "itemId": "prohibited",
+          "target": "manifest-asset"
+        },
+        "document": {
+          "digest": "optional-with-item-id-typed",
+          "itemId": "optional-with-digest",
+          "target": "content-package"
+        },
+        "relation-set": {
+          "digest": "prohibited",
+          "itemId": "prohibited",
+          "target": "relation-package"
+        }
+      },
+      "documentItem": {
+        "identityAttribute": "xml:id",
+        "itemType": "document",
+        "sourceBinding": "manifest-stored-source",
+        "substantiveMetadata": [],
+        "typedContent": "ordered-content-children"
+      },
+      "documentMetadataFields": {
+        "artifactFamily": "string",
+        "documentId": "string",
+        "jurisdiction": "string",
+        "language": "string",
+        "scope": "string",
+        "status": "string",
+        "title": "string"
+      },
+      "itemIdentityAttribute": "xml:id",
+      "itemMetadataFields": {
+        "action": {
+          "owner": "string",
+          "status": "string"
+        },
+        "blockQuotation": {},
+        "caution": {
+          "owner": "string",
+          "status": "string"
+        },
+        "claim": {
+          "claimId": "string",
+          "number": "positive-integer",
+          "type": "string"
+        },
+        "codeBlock": {
+          "language": "string"
+        },
+        "division": {
+          "role": "string"
+        },
+        "figure": {
+          "alt": "string",
+          "assetId": "string"
+        },
+        "heading": {
+          "level": "positive-integer"
+        },
+        "item": {},
+        "limitation": {
+          "limitationId": "string"
+        },
+        "list": {
+          "delimiter": "string",
+          "ordered": "boolean",
+          "start": "positive-integer"
+        },
+        "noteBlock": {
+          "owner": "string",
+          "status": "string"
+        },
+        "paragraph": {},
+        "plain": {},
+        "row": {},
+        "separator": {},
+        "table": {}
+      },
+      "itemOrder": "xml-document-order",
+      "noticeVersion": "generated-v1",
+      "originElement": "pdfDerivative",
+      "projectionProfile": "gfm-v1",
+      "provenanceFields": {
+        "fragmentId": "string",
+        "page": "positive-integer",
+        "region": "string",
+        "sourcePath": "string",
+        "uncertainty": "string"
+      },
+      "readableStorage": {
+        "attributeOrder": "expanded-name",
+        "byteOrderMark": "prohibited",
+        "containerLayout": "one-child-per-structural-line",
+        "declaration": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+        "emptyElement": "space-before-solidus",
+        "encoding": "UTF-8",
+        "finalNewline": true,
+        "indent": "two-spaces",
+        "lineEndings": "LF",
+        "namespaceDeclarations": "root-default-then-lexicographic-prefix",
+        "structuralBlankLines": false,
+        "tabs": "prohibited",
+        "textLeafControls": "numeric-character-references",
+        "textLeafLayout": "one-unwrapped-line",
+        "unicodeNormalization": "NFC"
+      },
+      "sourceNumberPolicy": "content-or-typed-metadata-not-identity",
+      "typedContentChildElements": [
+        "action",
+        "blockQuotation",
+        "body",
+        "caption",
+        "caution",
+        "cell",
+        "citation",
+        "claim",
+        "definedTerm",
+        "division",
+        "emphasis",
+        "figure",
+        "head",
+        "heading",
+        "item",
+        "limitation",
+        "link",
+        "list",
+        "note",
+        "noteBlock",
+        "paragraph",
+        "plain",
+        "preamble",
+        "quotation",
+        "reviewMark",
+        "row",
+        "strikeout",
+        "strong",
+        "subscript",
+        "superscript",
+        "table"
+      ],
+      "typedContentNodeFields": {
+        "action": {
+          "owner": "string",
+          "status": "string"
+        },
+        "blockQuotation": {},
+        "body": {},
+        "caption": {},
+        "caution": {
+          "owner": "string",
+          "status": "string"
+        },
+        "cell": {
+          "alignment": "string"
+        },
+        "citation": {
+          "citationId": "string"
+        },
+        "claim": {
+          "claimId": "string",
+          "number": "positive-integer",
+          "type": "string"
+        },
+        "code": {},
+        "codeBlock": {
+          "language": "string"
+        },
+        "definedTerm": {},
+        "dependency": {},
+        "division": {
+          "role": "string"
+        },
+        "emphasis": {},
+        "figure": {
+          "alt": "string",
+          "assetId": "string"
+        },
+        "head": {},
+        "heading": {
+          "level": "positive-integer"
+        },
+        "image": {
+          "alt": "string",
+          "assetId": "string",
+          "title": "string"
+        },
+        "item": {},
+        "limitation": {
+          "limitationId": "string"
+        },
+        "lineBreak": {},
+        "link": {
+          "target": "string",
+          "title": "string"
+        },
+        "list": {
+          "delimiter": "string",
+          "ordered": "boolean",
+          "start": "positive-integer"
+        },
+        "math": {},
+        "note": {},
+        "noteBlock": {
+          "owner": "string",
+          "status": "string"
+        },
+        "paragraph": {},
+        "plain": {},
+        "preamble": {},
+        "quotation": {},
+        "reviewMark": {
+          "style": "string"
+        },
+        "row": {},
+        "separator": {},
+        "softBreak": {},
+        "space": {},
+        "strikeout": {},
+        "strong": {},
+        "subscript": {},
+        "superscript": {},
+        "table": {},
+        "text": {}
+      },
+      "typedContentTextElements": [
+        "code",
+        "codeBlock",
+        "dependency",
+        "math",
+        "text"
+      ],
+      "typedItemDigest": {
+        "canonicalization": "c1",
+        "digestDomain": "aa11393:ssp:typed-item:v1",
+        "fields": [
+          "digestDomain",
+          "authorityScheme",
+          "schemaProfile",
+          "documentId",
+          "itemId",
+          "itemType",
+          "typedContent",
+          "substantiveMetadata"
+        ],
+        "prefix": "sha256/typed-item-v1:",
+        "wholeXmlDigest": "prohibited"
+      }
+    }
+  },
+  "profileVersion": "2",
+  "relationSets": {
+    "claim-crosswalk-v1": {
+      "assertionFields": [
+        "af-claim",
+        "af-consequence",
+        "af-cont-posture",
+        "af-limitation",
+        "closest-na-coverage",
+        "commercial-value",
+        "coverage",
+        "difference-that-matters",
+        "formulation-boundary",
+        "na-location",
+        "na-posture",
+        "operative-control"
+      ],
+      "directions": [
+        "forward"
+      ],
+      "endpointRoles": [
+        "evidence",
+        "subject"
+      ],
+      "relationType": "claim-crosswalk",
+      "requiredEndpointRoles": [
+        "subject"
+      ]
+    },
+    "claim-document-map-v1": {
+      "assertionFields": [
+        "af-10",
+        "af-11",
+        "af-12",
+        "af-13",
+        "af-14",
+        "af-15",
+        "af-16",
+        "af-17",
+        "af-18",
+        "af-2",
+        "af-20",
+        "af-21",
+        "af-22",
+        "af-3",
+        "af-4",
+        "af-5",
+        "af-6",
+        "af-7",
+        "af-8",
+        "af-9",
+        "af-claim-1-whole",
+        "af-claim-23-whole",
+        "basis",
+        "document",
+        "id-1-whole",
+        "id-10-delta",
+        "id-11-delta",
+        "id-12-delta",
+        "id-13-delta",
+        "id-14-delta",
+        "id-15-delta",
+        "id-16-whole",
+        "id-17-delta",
+        "id-18-delta",
+        "id-19-delta",
+        "id-2-delta",
+        "id-20-delta",
+        "id-21-delta",
+        "id-22-whole",
+        "id-23",
+        "id-24",
+        "id-25",
+        "id-26",
+        "id-27",
+        "id-28",
+        "id-29",
+        "id-3-delta",
+        "id-30",
+        "id-4-delta",
+        "id-5-delta",
+        "id-6-delta",
+        "id-7-delta",
+        "id-8-delta",
+        "id-9-whole",
+        "meaning",
+        "score",
+        "symbol"
+      ],
+      "directions": [
+        "forward"
+      ],
+      "endpointRoles": [
+        "evidence",
+        "subject"
+      ],
+      "relationType": "claim-document-map",
+      "requiredEndpointRoles": [
+        "subject"
+      ]
+    },
+    "prior-art-map-v1": {
+      "assertionFields": [
+        "added-causal-nexus-limitation",
+        "added-limitation",
+        "added-subject-matter",
+        "af-claims",
+        "assessment",
+        "carrying-limitation-or-relationship-not-found-in-one-document",
+        "claim",
+        "claimed-operation",
+        "claimed-relationship",
+        "claims",
+        "closest-verified-teaching",
+        "consequence",
+        "delivery-association",
+        "document",
+        "effect-on-af-claims-1-and-19",
+        "id-document",
+        "independent",
+        "independent-subject",
+        "method-specific-basis",
+        "monitor-method-basis",
+        "na-1-production",
+        "na-16-detector",
+        "na-22-method",
+        "na-9-distribution",
+        "na-claim",
+        "na-claims",
+        "p-sources",
+        "pressure-and-consequence",
+        "principal-present-distinction",
+        "production-individualized-variation",
+        "relationship-not-identified-in-one-reviewed-document",
+        "score",
+        "sources",
+        "stored-art-posture",
+        "suspect-recovery",
+        "y-sources"
+      ],
+      "directions": [
+        "forward"
+      ],
+      "endpointRoles": [
+        "evidence",
+        "subject"
+      ],
+      "relationType": "claim-prior-art-comparison",
+      "requiredEndpointRoles": [
+        "subject"
+      ]
+    },
+    "support-map-v1": {
+      "assertionFields": [
+        "added-limitation",
+        "added-limitation-posture",
+        "added-method-limitation",
+        "af-claim",
+        "af-claim-1-limitation",
+        "af-claim-19-operation",
+        "af-claim-23-operation-or-relationship",
+        "af-claims",
+        "af-cont-claim",
+        "af-cont-claims",
+        "classification-and-action",
+        "code",
+        "consequence",
+        "current-mode-gate",
+        "current-posture",
+        "date",
+        "date-status",
+        "filing-treatment",
+        "function",
+        "grade",
+        "grade-action",
+        "grade-and-action",
+        "limitation",
+        "meaning",
+        "mode",
+        "na-claim",
+        "na-claims",
+        "operation",
+        "operative-consequence",
+        "pct-basis",
+        "posture",
+        "present-support-posture",
+        "provisional-basis",
+        "relationship",
+        "repository-copy",
+        "required-conclusion",
+        "required-counsel-conclusion",
+        "required-determination",
+        "source",
+        "support-posture",
+        "treatment"
+      ],
+      "directions": [
+        "forward"
+      ],
+      "endpointRoles": [
+        "evidence",
+        "subject"
+      ],
+      "relationType": "claim-support",
+      "requiredEndpointRoles": [
+        "subject"
+      ]
+    }
+  }
+}

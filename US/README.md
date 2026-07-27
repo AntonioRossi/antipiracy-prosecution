@@ -8,7 +8,7 @@ This directory separates two alternative US claiming strategies for PCT/IB2025/0
 
 **Initial-contact status.** The strategy branches and shared controls contain the applicant's present claims, support maps, art analysis, fallback directions, and execution register and are ready for applicant-controlled initial transmission to prospective or retained US counsel under DW-12. Open counsel opinions, claim-topology selection, filing execution, and professional-search tasks remain pending; no branch is counsel-approved or filing-ready.
 
-**US route and continuation control.** The current filing direction is ordinary national-stage entry under 35 U.S.C. § 371 for PCT/IB2025/051755. Track One is outside the current parent and continuation plan. The shared [`continuation-preservation memo`](common/AA11393US-continuation-preservation_MEMO.md) applies whether the parent uses `NA`, `AF`, or an approved hybrid. No successor is filed or preserved.
+**US route and continuation control.** The current filing direction is ordinary national-stage entry under 35 U.S.C. § 371 for PCT/IB2025/051755. Track One is outside the current parent and continuation plan. The shared [`continuation-preservation memo`](common/continuation-controls/AA11393US-continuation-preservation_MEMO.md) applies whether the parent uses `NA`, `AF`, or an approved hybrid. No successor is filed or preserved.
 
 ## Strategy routing
 
@@ -52,7 +52,7 @@ Shared materials must not be copied into a strategy directory. Strategy document
 ## Recommended counsel reading order
 
 1. This router and [`common/README.md`](common/README.md).
-2. The shared [`continuation-preservation memo`](common/AA11393US-continuation-preservation_MEMO.md).
+2. The shared [`continuation-preservation memo`](common/continuation-controls/AA11393US-continuation-preservation_MEMO.md).
 3. The README and counsel briefing for the strategy being evaluated.
 4. That strategy's exact claim set, priority/support map, and applicable matrices.
 5. When AF-CONT scope is evaluated, the AF claim crosswalk and AF-CONT v2 claim set, support map, and art matrix.

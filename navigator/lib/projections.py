@@ -110,10 +110,9 @@ def origin_inventory(model):
         path = model._wording_owner_paths[wording_id]
         add("wording:" + wording_id, "controlled-wording", path, wording_id)
         for slot in entry.slots:
-            if slot.origin_ref.startswith((
-                    "edition.na.", "edition.af.")):
-                # The paired bundle resolver proves these two origins once
-                # both independently sealed models are available.
+            if slot.origin_ref.startswith("bundle."):
+                # The bundle resolver proves this multi-edition origin once
+                # all independently sealed configured models are available.
                 continue
             if slot.origin_ref in {
                     "edition.claimSetVersion",
@@ -145,31 +144,22 @@ def origin_inventory(model):
     return tuple(sorted(values, key=lambda item: item.value_id))
 
 
-def bundle_origin_inventory(na_model, af_model, config, config_digest,
-                            config_path):
-    """Compute paired wording-slot and bundle-control origins."""
-    if na_model.edition_id != "na" or af_model.edition_id != "af":
-        raise ValueError("bundle origin models are not the exact edition pair")
-    reads = {
-        "na": dict(na_model.read_inventory),
-        "af": dict(af_model.read_inventory),
-    }
-    values = [
-        OriginRecord(
-            value_id="wording:bundle-manifest-neutral:slot:naEditionVersion",
-            kind="wording-slot-registered-control",
-            owner_path=na_model._edition_path,
-            owner_ref="edition.na.claimSetVersion",
-            owner_digest=reads["na"][na_model._edition_path],
-        ),
-        OriginRecord(
-            value_id="wording:bundle-manifest-neutral:slot:afEditionVersion",
-            kind="wording-slot-registered-control",
-            owner_path=af_model._edition_path,
-            owner_ref="edition.af.claimSetVersion",
-            owner_digest=reads["af"][af_model._edition_path],
-        ),
-    ]
+def bundle_origin_inventory(models, config, config_digest, config_path):
+    """Compute configured-edition wording and bundle-control origins."""
+    models = tuple(models)
+    if not models or len({item.edition_id for item in models}) != len(models):
+        raise ValueError("bundle origin models are not one exact edition set")
+    values = []
+    for item in models:
+        reads = dict(item.read_inventory)
+        values.append(OriginRecord(
+            value_id=("wording:bundle-manifest-neutral:slot:"
+                      "editionSchedule:edition:%s" % item.edition_id),
+            kind="wording-slot-closed-derivation",
+            owner_path=item._edition_path,
+            owner_ref="edition.%s.claimSetVersion" % item.edition_id,
+            owner_digest=reads[item._edition_path],
+        ))
     controls = (
         ("bundle:bundleVersion", "bundleVersion"),
         ("bundle:name", "name"),

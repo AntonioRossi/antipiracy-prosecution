@@ -95,10 +95,9 @@
   </entry>
   <entry wordingId="bundle-manifest-neutral" category="bundle-manifest">
     <usage context="bundle-manifest" />
-    <text>This bundle contains two alternative counsel-review editions of the AA11393US claims-to-specification navigator: the NA edition (claim set {naEditionVersion}) and the AF edition (claim set {afEditionVersion}). Each edition presents one candidate claim strategy for counsel review. Inclusion of both editions expresses no comparison, preference, or filing recommendation.</text>
+    <text>This bundle contains the configured alternative counsel-review editions of the AA11393US claims-to-specification navigator: {editionSchedule}. Each edition presents one candidate claim strategy for counsel review. Inclusion in the bundle expresses no comparison, preference, or filing recommendation.</text>
     <slots>
-      <slot name="naEditionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.na.claimSetVersion" />
-      <slot name="afEditionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.af.claimSetVersion" />
+      <slot name="editionSchedule" scalarType="text" originKind="closed-derivation" originRef="bundle.editionSchedule" />
     </slots>
   </entry>
 </wording>

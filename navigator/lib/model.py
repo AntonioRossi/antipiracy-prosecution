@@ -62,10 +62,8 @@ _SLOT_CONTRACT = {
         ("blocks", "integer", "closed-derivation", "pct.blockCount"),
     ),
     "bundle-manifest-neutral": (
-        ("naEditionVersion", "stable-id", "registered-control",
-         "edition.na.claimSetVersion"),
-        ("afEditionVersion", "stable-id", "registered-control",
-         "edition.af.claimSetVersion"),
+        ("editionSchedule", "text", "closed-derivation",
+         "bundle.editionSchedule"),
     ),
 }
 
@@ -561,7 +559,7 @@ def _parse_wording(root, expected_scope):
         scope_is_current = (
             (expected_scope == "shared" and
              not identifier.startswith("gate-label-")) or
-            (expected_scope in {"na", "af"} and
+            (expected_scope != "shared" and
              identifier.startswith("gate-label-%s-" % expected_scope))
         )
         if not scope_is_current or contract is None or \
@@ -637,13 +635,13 @@ class EditionModel:
             item.document_id: item for item in self.source_documents})
 
         claim_set = claims_mod.parse_claims(
-            claim_artifact.root, claim_artifact.fragment_digests)
+            claim_artifact._validated_root(), claim_artifact.fragment_digests)
         self.claims = claim_set.claims
         self.claims_by_number = claim_set.by_number
         self.units_by_fragment = claim_set.units_by_fragment
         self.claim_groups = claim_set.groups
         self._source_items = _source_items(
-            claim_artifact.root, claim_artifact.fragment_digests)
+            claim_artifact._validated_root(), claim_artifact.fragment_digests)
         graph = depgraph.build(self.claims, self.independent_claims)
         self.parents = graph.parents
         self.children = graph.children
@@ -974,18 +972,19 @@ class EditionModel:
         return "n-" + canon.bytes_digest(framed).rsplit(":", 1)[1]
 
 
-def bundle_manifest_text(na_model, af_model):
-    """Resolve shared bundle wording from the two typed edition origins."""
-    if not isinstance(na_model, EditionModel) or \
-            not isinstance(af_model, EditionModel) or \
-            na_model.edition_id != "na" or af_model.edition_id != "af" or \
-            na_model.shared_wording_digest != af_model.shared_wording_digest:
-        raise ModelError("bundle wording models are not the exact edition pair")
-    na_entry = na_model._wording.get("bundle-manifest-neutral")
-    af_entry = af_model._wording.get("bundle-manifest-neutral")
-    if na_entry is None or na_entry != af_entry:
+def bundle_manifest_text(models):
+    """Resolve shared bundle wording from every configured edition origin."""
+    models = tuple(models)
+    if not models or any(not isinstance(item, EditionModel) for item in models) or \
+            len({item.edition_id for item in models}) != len(models) or \
+            len({item.shared_wording_digest for item in models}) != 1:
+        raise ModelError("bundle wording models are not one exact edition set")
+    entries = tuple(item._wording.get("bundle-manifest-neutral")
+                    for item in models)
+    if entries[0] is None or any(item != entries[0] for item in entries[1:]):
         raise ModelError("bundle wording differs between edition models")
-    return _render_wording_entry(na_entry, {
-        "naEditionVersion": na_model.claim_set_version,
-        "afEditionVersion": af_model.claim_set_version,
-    })
+    schedule = "; ".join(
+        "%s edition (claim set %s)" %
+        (item.strategy_prefix, item.claim_set_version)
+        for item in models)
+    return _render_wording_entry(entries[0], {"editionSchedule": schedule})

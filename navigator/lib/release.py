@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import os
 import re
-import subprocess
-import sys
 import tempfile
 
 from . import canon
@@ -131,41 +129,13 @@ def write_outputs_atomic(root, outputs):
                 pass
 
 
-def fresh_candidate(root, edition_id, timeout=600):
-    """Derive candidate bytes in a fresh interpreter without a CLI alias."""
-    if edition_id not in {"na", "af"}:
-        raise ReleaseError("edition is not current")
-    root = os.path.abspath(root)
-    environment = dict(os.environ)
-    environment["PYTHONDONTWRITEBYTECODE"] = "1"
-    script = (
-        "import sys\n"
-        "from navigator.lib import currentstate,snapshot\n"
-        "r=snapshot.RepositorySnapshot.capture(currentstate.ROOT,retain_bytes=True)\n"
-        "unused_model,data,unused_lock=currentstate.derive(sys.argv[1],"
-        "'candidate',r)\n"
-        "sys.stdout.buffer.write(data)\n"
-    )
-    try:
-        result = subprocess.run(
-            [sys.executable, "-B", "-c", script, edition_id],
-            cwd=root, capture_output=True, timeout=timeout, env=environment)
-        if result.returncode:
-            detail = result.stderr.decode("utf-8", "replace").strip()
-            raise ReleaseError(
-                "fresh candidate derivation failed: %s" %
-                (detail[-4000:] or "no diagnostic"))
-        return result.stdout
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise ReleaseError("fresh candidate derivation could not complete") from exc
-
-
-def prove_candidate(derived, stored, reproduced):
+def prove_candidate(derived, stored, reproduced_digest):
     if not all(isinstance(value, bytes)
-               for value in (derived, stored, reproduced)):
-        raise ReleaseError("candidate proof inputs are not bytes")
+               for value in (derived, stored)) or \
+            not isinstance(reproduced_digest, str):
+        raise ReleaseError("candidate proof inputs are malformed")
     if stored != derived:
         raise ReleaseError("stored candidate is stale")
-    if reproduced != derived:
+    if reproduced_digest != canon.bytes_digest(derived):
         raise ReleaseError("candidate is not reproducible across interpreters")
     return canon.bytes_digest(derived)

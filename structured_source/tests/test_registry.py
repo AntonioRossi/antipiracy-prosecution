@@ -219,7 +219,7 @@ class RegistryContract(unittest.TestCase):
                     context, "_derive",
                     side_effect=derive):
                 result = context.regenerate("authored-doc")
-            self.assertEqual(result["status"], "conformant")
+            self.assertEqual(result["status"], "passed")
             with open(output, "rb") as handle:
                 self.assertEqual(handle.read(), b"new")
 

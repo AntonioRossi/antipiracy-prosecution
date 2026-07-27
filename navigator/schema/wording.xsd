@@ -64,6 +64,7 @@
       <xs:enumeration value="stable-id" />
       <xs:enumeration value="integer" />
       <xs:enumeration value="timestamp" />
+      <xs:enumeration value="text" />
     </xs:restriction>
   </xs:simpleType>
 

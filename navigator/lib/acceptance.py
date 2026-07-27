@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 
 from . import canon
@@ -40,10 +41,35 @@ class AcceptanceError(ValueError):
     """The current executable acceptance contract is malformed or failed."""
 
 
+def _resolve_enforcer(path):
+    """Resolve one exact dotted implementation symbol without aliases."""
+    if not isinstance(path, str) or not path or any(
+            not part or not part.replace("_", "a").isalnum()
+            for part in path.split(".")):
+        raise AcceptanceError("acceptance enforcer path is malformed")
+    parts = path.split(".")
+    for boundary in range(len(parts), 0, -1):
+        try:
+            value = importlib.import_module(".".join(parts[:boundary]))
+        except ImportError:
+            continue
+        try:
+            for part in parts[boundary:]:
+                value = getattr(value, part)
+        except AttributeError as exc:
+            raise AcceptanceError(
+                "acceptance enforcer symbol is absent: %s" % path) from exc
+        if not callable(value):
+            raise AcceptanceError(
+                "acceptance enforcer is not executable: %s" % path)
+        return value
+    raise AcceptanceError("acceptance enforcer module is absent: %s" % path)
+
+
 def validate_registry(value):
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
-            value.get("acceptanceVersion") != "4":
+            value.get("acceptanceVersion") != "6":
         raise AcceptanceError(
             "acceptance registry shape/version is not current")
     criteria = value.get("criteria")
@@ -53,15 +79,25 @@ def validate_registry(value):
         raise AcceptanceError("acceptance criterion census/order is not exact")
     for criterion in criteria:
         if not isinstance(criterion, dict) or set(criterion) != {
-                "id", "scope", "text"}:
+                "enforcer", "id", "outcome", "scope"}:
             raise AcceptanceError("acceptance criterion shape is malformed")
         identifier = criterion["id"]
-        text = criterion["text"]
+        outcome = criterion["outcome"]
+        enforcer = criterion["enforcer"]
+        covering_modules = {
+            module for module, identifiers in TEST_COVERAGE.items()
+            if identifier in identifiers
+        }
+        enforcer_parts = enforcer.split("; ") if isinstance(enforcer, str) else []
         if criterion["scope"] != _SCOPES[identifier] or \
-                not isinstance(text, str) or not text.strip() or \
-                text != text.strip():
+                not isinstance(outcome, str) or not outcome.strip() or \
+                outcome != outcome.strip() or \
+                not isinstance(enforcer, str) or not enforcer.strip() or \
+                enforcer != enforcer.strip() or len(enforcer_parts) != 2 or \
+                enforcer_parts[1] not in covering_modules:
             raise AcceptanceError(
                 "acceptance criterion %s is malformed" % identifier)
+        _resolve_enforcer(enforcer_parts[0])
     return value
 
 
@@ -105,18 +141,19 @@ def load_registry(root, byte_source=None):
 def render_table(registry):
     validate_registry(registry)
     lines = [
-        "| ID | Scope | Required outcome |",
-        "|---|---|---|",
+        "| ID | Scope | Executable technical outcome | Independent enforcer |",
+        "|---|---|---|---|",
     ]
     for criterion in registry["criteria"]:
-        text = criterion["text"].replace("|", "\\|").replace("\n", " ")
-        lines.append("| **%s** | %s | %s |" % (
-            criterion["id"], criterion["scope"], text))
+        outcome = criterion["outcome"].replace("|", "\\|").replace("\n", " ")
+        enforcer = criterion["enforcer"].replace("|", "\\|").replace("\n", " ")
+        lines.append("| **%s** | %s | %s | %s |" % (
+            criterion["id"], criterion["scope"], outcome, enforcer))
     return "\n".join(lines) + "\n"
 
 
 def passed_result(registry, test_modules):
-    """Create non-persistent evidence after the named current checks pass.
+    """Create ephemeral technical status after the named current checks pass.
 
     The result deliberately carries no identity, timestamp, signature, source
     digest, or authorization semantics.  Its only lifetime is the invoking
@@ -135,7 +172,7 @@ def passed_result(registry, test_modules):
             "registered test coverage does not cover the exact criterion set")
     return {
         "acceptanceResultVersion": "1",
-        "status": "conformant",
+        "status": "passed",
         "results": [
             {"id": identifier, "status": "passed"}
             for identifier in CRITERIA

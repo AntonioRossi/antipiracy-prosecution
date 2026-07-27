@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+from types import MappingProxyType
 import unicodedata
 
 from .errors import StructuredSourceError
@@ -21,11 +22,11 @@ def _validate(value, path="$" ):
         return
     if isinstance(value, float):
         raise StructuredSourceError("control JSON floats are prohibited at %s" % path)
-    if isinstance(value, list):
+    if isinstance(value, (list, tuple)):
         for index, item in enumerate(value):
             _validate(item, "%s[%d]" % (path, index))
         return
-    if isinstance(value, dict):
+    if isinstance(value, (dict, MappingProxyType)):
         for key, item in value.items():
             if not isinstance(key, str):
                 raise StructuredSourceError("control object key is not a string at %s" % path)
@@ -35,9 +36,18 @@ def _validate(value, path="$" ):
     raise StructuredSourceError("unsupported control value at %s" % path)
 
 
+def _json_value(value):
+    """Return the plain JSON containers for a validated immutable value."""
+    if isinstance(value, (dict, MappingProxyType)):
+        return {key: _json_value(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_value(item) for item in value]
+    return value
+
+
 def canonical_json(value) -> bytes:
     _validate(value)
-    return (json.dumps(value, ensure_ascii=False, sort_keys=True,
+    return (json.dumps(_json_value(value), ensure_ascii=False, sort_keys=True,
                        separators=(",", ":")) + "\n").encode("utf-8")
 
 

@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
-           xmlns:c="urn:aa11393:ssp:content:1"
-           xmlns:xml="http://www.w3.org/XML/1998/namespace"
-           targetNamespace="urn:aa11393:ssp:content:1"
-           elementFormDefault="qualified"
-           attributeFormDefault="unqualified"
-           version="1"
-           vc:minVersion="1.1">
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
-             schemaLocation="xml.xsd"/>
-
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:c="urn:aa11393:ssp:content:1" xmlns:xml="http://www.w3.org/XML/1998/namespace" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:aa11393:ssp:content:1" vc:minVersion="1.1" version="1">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:simpleType name="stableId">
     <xs:restriction base="xs:NCName">
       <xs:minLength value="1"/>
@@ -44,10 +34,9 @@
   <xs:simpleType name="dependencyDigest">
     <xs:union memberTypes="c:rawDigest c:typedItemDigest"/>
   </xs:simpleType>
-
   <xs:complexType name="inlineContainer">
     <xs:sequence>
-      <xs:group ref="c:inline" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="0" ref="c:inline"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="styledInline">
@@ -95,7 +84,7 @@
   </xs:complexType>
   <xs:complexType name="noteInline">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="1" ref="c:block"/>
     </xs:sequence>
   </xs:complexType>
   <xs:group name="inline">
@@ -120,7 +109,6 @@
       <xs:element name="lineBreak"/>
     </xs:choice>
   </xs:group>
-
   <xs:complexType name="fragmentInlineBlock">
     <xs:complexContent>
       <xs:extension base="c:inlineContainer">
@@ -153,19 +141,19 @@
   </xs:complexType>
   <xs:complexType name="quotationBlock">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="1" ref="c:block"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
   </xs:complexType>
   <xs:complexType name="listItem">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="1" ref="c:block"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
   </xs:complexType>
   <xs:complexType name="listBlock">
     <xs:sequence>
-      <xs:element name="item" type="c:listItem" minOccurs="1" maxOccurs="10000"/>
+      <xs:element maxOccurs="10000" minOccurs="1" name="item" type="c:listItem"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
     <xs:attribute name="ordered" type="xs:boolean" use="required"/>
@@ -181,7 +169,7 @@
   </xs:complexType>
   <xs:complexType name="tableCell">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="0" ref="c:block"/>
     </xs:sequence>
     <xs:attribute name="alignment" use="required">
       <xs:simpleType>
@@ -196,20 +184,20 @@
   </xs:complexType>
   <xs:complexType name="tableRow">
     <xs:sequence>
-      <xs:element name="cell" type="c:tableCell" minOccurs="1" maxOccurs="256"/>
+      <xs:element maxOccurs="256" minOccurs="1" name="cell" type="c:tableCell"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
   </xs:complexType>
   <xs:complexType name="tableSection">
     <xs:sequence>
-      <xs:element name="row" type="c:tableRow" minOccurs="1" maxOccurs="10000"/>
+      <xs:element maxOccurs="10000" minOccurs="1" name="row" type="c:tableRow"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="tableBlock">
     <xs:sequence>
-      <xs:element name="caption" type="c:inlineContainer" minOccurs="0"/>
+      <xs:element minOccurs="0" name="caption" type="c:inlineContainer"/>
       <xs:element name="head" type="c:tableSection"/>
-      <xs:element name="body" type="c:tableSection" minOccurs="0"/>
+      <xs:element minOccurs="0" name="body" type="c:tableSection"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
   </xs:complexType>
@@ -223,9 +211,9 @@
   </xs:complexType>
   <xs:complexType name="claimBlock">
     <xs:sequence>
-      <xs:element name="dependency" type="c:stableId" minOccurs="0" maxOccurs="32"/>
+      <xs:element maxOccurs="32" minOccurs="0" name="dependency" type="c:stableId"/>
       <xs:element name="preamble" type="c:inlineContainer"/>
-      <xs:element name="limitation" type="c:limitation" minOccurs="1" maxOccurs="256"/>
+      <xs:element maxOccurs="256" minOccurs="1" name="limitation" type="c:limitation"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
     <xs:attribute name="claimId" type="c:stableId" use="required"/>
@@ -241,7 +229,7 @@
   </xs:complexType>
   <xs:complexType name="advisoryBlock">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="1" ref="c:block"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
     <xs:attribute name="status" type="c:stableId"/>
@@ -249,7 +237,7 @@
   </xs:complexType>
   <xs:complexType name="figureBlock">
     <xs:sequence>
-      <xs:element name="caption" type="c:inlineContainer" minOccurs="0"/>
+      <xs:element minOccurs="0" name="caption" type="c:inlineContainer"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
     <xs:attribute name="assetId" type="c:stableId" use="required"/>
@@ -257,7 +245,7 @@
   </xs:complexType>
   <xs:complexType name="divisionBlock">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:group maxOccurs="unbounded" minOccurs="1" ref="c:block"/>
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
     <xs:attribute name="role" type="c:stableId" use="required"/>
@@ -283,7 +271,6 @@
       <xs:element name="separator" type="c:separatorBlock"/>
     </xs:choice>
   </xs:group>
-
   <xs:complexType name="documentIdentity">
     <xs:sequence>
       <xs:element name="title" type="c:nonBlank"/>
@@ -318,7 +305,7 @@
   </xs:complexType>
   <xs:complexType name="dependencies">
     <xs:sequence>
-      <xs:element name="dependency" type="c:dependency" minOccurs="0" maxOccurs="256"/>
+      <xs:element maxOccurs="256" minOccurs="0" name="dependency" type="c:dependency"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="fragmentEvidence">
@@ -330,13 +317,12 @@
   </xs:complexType>
   <xs:complexType name="provenance">
     <xs:sequence>
-      <xs:element name="fragmentEvidence" type="c:fragmentEvidence"
-                  minOccurs="0" maxOccurs="100000"/>
+      <xs:element maxOccurs="100000" minOccurs="0" name="fragmentEvidence" type="c:fragmentEvidence"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="content">
     <xs:sequence>
-      <xs:group ref="c:block" minOccurs="1" maxOccurs="100000"/>
+      <xs:group maxOccurs="100000" minOccurs="1" ref="c:block"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="projectionPolicy">
@@ -354,7 +340,7 @@
     </xs:sequence>
     <xs:attribute ref="xml:id" use="required"/>
     <xs:attribute name="schemaProfile" type="c:stableId" use="required"/>
-    <xs:attribute name="schemaVersion" type="xs:string" use="required" fixed="1"/>
+    <xs:attribute fixed="1" name="schemaVersion" type="xs:string" use="required"/>
   </xs:complexType>
   <xs:element name="source" type="c:sourceDocument"/>
 </xs:schema>

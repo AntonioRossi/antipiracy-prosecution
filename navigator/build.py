@@ -62,8 +62,10 @@ def _assert_only_outputs_changed(before, outputs, label):
     changed = set(left) ^ set(right)
     changed.update(
         path for path in set(left) & set(right)
-        if (left[path].digest, left[path].mode, left[path].size) !=
-        (right[path].digest, right[path].mode, right[path].size))
+        if (left[path].digest, left[path].mode, left[path].size,
+            left[path].fingerprint) !=
+        (right[path].digest, right[path].mode, right[path].size,
+         right[path].fingerprint))
     unexpected = sorted(changed - allowed)
     if unexpected:
         raise CommandError(
@@ -80,22 +82,26 @@ def _assert_only_outputs_changed(before, outputs, label):
 
 def cmd_preview(edition_id):
     frozen = _snapshot()
-    inputs = currentstate.verify_structured_source(
-        frozen, ("navigator-" + edition_id,))
+    currentstate.validate_product_contract(frozen)
+    plan = currentstate.load_product_plan(frozen)
+    edition = plan.edition(edition_id)
+    sources = currentstate.validate_structured_corpus(frozen)
+    currentstate.bind_sources_to_plan(plan, sources)
     unused_model, html_bytes, unused_lock = currentstate.derive(
-        edition_id, "preview", frozen,
-        inputs["navigator-" + edition_id])
+        edition, "preview", frozen, sources.input_for(edition.consumer_id))
     _assert_unchanged(frozen, "preview")
     return html_bytes
 
 
 def cmd_candidate(edition_id):
     frozen = _snapshot()
-    inputs = currentstate.verify_structured_source(
-        frozen, ("navigator-" + edition_id,))
+    currentstate.validate_product_contract(frozen)
+    plan = currentstate.load_product_plan(frozen)
+    edition = plan.edition(edition_id)
+    sources = currentstate.validate_structured_corpus(frozen)
+    currentstate.bind_sources_to_plan(plan, sources)
     edition_model, html_bytes, content_lock = currentstate.derive(
-        edition_id, "candidate", frozen,
-        inputs["navigator-" + edition_id])
+        edition, "candidate", frozen, sources.input_for(edition.consumer_id))
     name = release.candidate_name(edition_model.artifact_name)
     _assert_unchanged(frozen, "candidate derivation")
     outputs = {name: html_bytes}
@@ -113,19 +119,23 @@ def cmd_candidate(edition_id):
 
 def cmd_release(edition_id):
     frozen = _snapshot()
-    inputs = currentstate.verify_structured_source(
-        frozen, ("navigator-" + edition_id,))
+    currentstate.validate_product_contract(frozen)
+    plan = currentstate.load_product_plan(frozen)
+    edition = plan.edition(edition_id)
+    sources = currentstate.validate_structured_corpus(frozen)
+    currentstate.bind_sources_to_plan(plan, sources)
     edition_model, html_bytes, content_lock = currentstate.derive(
-        edition_id, "release", frozen,
-        inputs["navigator-" + edition_id])
+        edition, "release", frozen, sources.input_for(edition.consumer_id))
     candidate = release.candidate_name(edition_model.artifact_name)
     try:
         stored_candidate = frozen.read_bytes("navigator/dist/" + candidate)
     except snapshot.SnapshotError as exc:
         raise CommandError("current candidate is unavailable") from exc
-    reproduced = release.fresh_candidate(ROOT, edition_id)
+    reproduced = currentstate.fresh_product_projection(
+        ROOT, currentstate.ReproductionRequest((edition_id,), False))
     candidate_digest = release.prove_candidate(
-        html_bytes, stored_candidate, reproduced)
+        html_bytes, stored_candidate,
+        reproduced["editions"][edition_id]["htmlDigest"])
     checksum_name = edition_model.artifact_name + ".sha256"
     checksum = release.checksum_text(edition_model.artifact_name, html_bytes)
     _assert_unchanged(frozen, "release proof")
@@ -148,10 +158,13 @@ def cmd_release(edition_id):
 
 def cmd_bundle():
     frozen = _snapshot()
-    inputs = currentstate.verify_structured_source(
-        frozen, ("navigator-na", "navigator-af"))
-    states = currentstate._derive_editions(frozen, inputs)
-    bundle_state = currentstate.build_bundle_state(frozen, states)
+    currentstate.validate_product_contract(frozen)
+    plan = currentstate.load_product_plan(frozen)
+    sources = currentstate.validate_structured_corpus(frozen)
+    currentstate.bind_sources_to_plan(plan, sources)
+    states = currentstate.derive_editions(frozen, plan.editions, sources)
+    bundle_state = currentstate.build_bundle_state(frozen, plan, states)
+    currentstate.verify_stored_artifact_members(frozen, bundle_state)
     name = bundle_state["config"]["name"]
     checksum_name = name + ".sha256"
     checksum = release.checksum_text(name, bundle_state["zip"])
@@ -172,7 +185,7 @@ def cmd_bundle():
 
 
 def cmd_validate_current():
-    return currentstate.validate_current_state(run_tests=True)
+    return currentstate.validate_current_state()
 
 
 def _usage():
@@ -208,6 +221,20 @@ def main(argv=None):
             OSError, release.ReleaseError,
             snapshot.SnapshotError) as exc:
         command = argv[0] if argv else "navigator"
+        if command == "validate-current":
+            failure = {
+                "humanReviewBoundary": currentstate.HUMAN_REVIEW_BOUNDARY,
+                "nonProofBoundary": list(currentstate.NON_PROOF_BOUNDARY),
+                "purpose": currentstate.VALIDATION_PURPOSE,
+                "status": "failed",
+                "validationResultVersion": "4",
+            }
+            if isinstance(exc, currentstate.CurrentStateError):
+                failure.update(currentstate.failure_diagnostic(exc))
+            else:
+                failure["error"] = str(exc)
+            sys.stderr.buffer.write(canon.canonical_json(failure) + b"\n")
+            return 1
         raise SystemExit("%s refused: %s" % (command, exc)) from exc
     if isinstance(result, bytes):
         sys.stdout.buffer.write(result)

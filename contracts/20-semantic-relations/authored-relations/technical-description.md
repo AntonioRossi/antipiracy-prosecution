@@ -14,7 +14,7 @@ The current direction is:
 applicant-authored relation XML authority ──deterministic projection──▶ generated Markdown review view
                   │
                   ├──exact endpoint resolution──▶ registered validated content items
-                  └──validated, read-only────────▶ shared declared-edge resolver
+                  └──aggregate acceptance prerequisite; current consumer-edge census = 0
 ```
 
 Relation XML is the sole owner of each applicant-authored cross-document assertion. It owns the
@@ -22,6 +22,12 @@ stable relation identity, semantic owner, type, direction, ordered fields, and e
 endpoint supplies the assertion's evidence basis or subject but never adopts, authorizes, or owns
 the assertion. Only relation categories enumerated by the current schema and profile may use this
 authority scheme. Generated Markdown is a review representation and never becomes another owner.
+
+These packages do not supply the current navigator's relation semantics. The navigator-owned files
+under `navigator/relations/` use the distinct `navigator-claim-pct-relations-v1` profile and own only
+the current product's claim-to-PCT candidate associations. No navigator edge, runtime handoff,
+upstream-relation reference, copy, restatement, or inheritance connects those product relations to an
+`authored-relations-v1` package.
 
 Machine validation proves schema and profile validity, identity, semantic ownership, role and
 direction constraints, exact digest-bound endpoint resolution, coverage, and deterministic
@@ -108,17 +114,20 @@ typed content; text-leaf whitespace remains exact. Minified structural XML, alte
 line wrapping, attribute order, namespace placement, or empty-element spelling fails. `check`
 enforces this law but never rewrites the authoritative relation XML.
 
-The parser policy, GFM projection profile, XML profile registry, shared XML schema, and relation XSD
-are loaded exactly once through the validation context's retained-byte reader. Control loading
-proves the complete relation XSD/profile agreement before package parsing. The retained policy,
-profiles, and schema mapping are transitively immutable; a package parser or consumer cannot use a
-default, later-opened, substituted, partial, or consumer-local control.
+The complete parser-control set is the parser policy, GFM projection profile, XML profile registry,
+shared XML schema, and every artifact XSD, including `authored.xsd`, `content.xsd`, and
+`relations.xsd`. It is loaded exactly once through the validation context's retained-byte reader.
+Control loading proves complete relation XSD/profile agreement before package parsing. The retained
+policy, profiles, and schema mapping are transitively immutable; a package parser or consumer cannot
+use a default, later-opened, substituted, partial, or consumer-local control.
 
-Each endpoint binds the exact `(documentId, fragmentId, fragmentContentDigest)` of a registered
-validated content item. Each relation profile declares its permitted roles and required-role set.
-Repeated endpoint targets inside one assertion, missing required roles, unknown or swapped roles,
-stale digests, ambiguous targets, undeclared documents, relation-to-relation endpoints, inferred
-retargeting, and endpoint-driven authority promotion fail.
+Each endpoint supplies one nonempty `(documentId, fragmentId, fragmentContentDigest)` and resolves
+that exact tuple once through a registered validated content item. Each relation profile declares
+its permitted roles and required-role set. An omitted, null, empty, malformed, ambiguous, or
+unresolved identity cannot become an inferred target, default result, empty excerpt, or fallback
+link. Repeated endpoint targets inside one assertion, missing required roles, unknown or swapped
+roles, stale digests, undeclared documents, relation-to-relation endpoints, inferred retargeting,
+and endpoint-driven authority promotion fail.
 
 Integrity is deliberately narrow. `fragmentContentDigest` is the target content item's
 `sha256/typed-item-v1:<64-lowercase-hex>`, computed over one `c1` JSON record containing exactly
@@ -135,24 +144,30 @@ rather than a stored digest.
 ## 5. Projection and computed coverage
 
 The current renderer deterministically projects validated relation XML to Markdown. The registered
-Markdown bytes must equal fresh rendering. The view exposes the authority scheme and role,
-assertion identity and ownership, ordered fields, stable anchors, current endpoint excerpts,
-evidence basis, and forward and reverse links. It does not become a second assertion owner.
+Markdown bytes must equal fresh rendering. The view exposes assertion identity and ownership,
+ordered fields, stable anchors, current endpoint excerpts, evidence basis, and exact endpoint
+links. It does not become a second assertion owner. The authored `direction` field is assertion
+semantics; it does not imply that the review projection contains a second reverse-link index.
 
 Coverage is independently recomputed from the current authoritative XML, resolved validated
 content interfaces, and freshly rendered Markdown. Its ordered census includes every assertion,
-field, exact endpoint and target-item digest, generated anchor, excerpt, and forward and reverse link;
-missing, extra, duplicate, reordered, or stale members fail. Renderer or resolver self-report is
-not evidence, and coverage is never stored as a package companion, receipt, or digest ledger.
+field, exact endpoint and target-item digest, generated anchor and anchor region, excerpt, and
+endpoint link. The generated anchor inventory must equal the metadata anchor, schedule anchor, and
+all assertion `xml:id` carriers in exact order. Missing, extra, displaced, duplicate, reordered, or
+stale members fail. The verifier derives the census directly from XML, endpoint views, and Markdown;
+renderer or resolver coverage self-report is not evidence, and coverage is never stored as a package
+companion, receipt, or digest ledger.
 
-## 6. Snapshot-bound consumer-neutral handoff
+## 6. Retained-worktree consumer-neutral handoff
 
 The current registry declares no authored-relation consumer edge; the current authored-relation
-edge and constructed-handoff censuses are therefore both zero. The shared declared-edge resolver
-nevertheless has one closed relation-package shape: an XML edge hands the authoritative retained
-bytes, authority scheme, relation-XML role, declared dependency bytes, and exact validation-read
-census; a Markdown edge hands review bytes only. Neither shape carries a prebuilt relation surface
-or assets, and neither may read the other representation through an undeclared dependency.
+edge and constructed-handoff censuses are therefore both exactly zero. The shared declared-edge
+resolver acts only on a declared edge and consequently constructs no current relation handoff. Its
+closed relation-package behavior remains representation-exact: an XML edge hands authoritative
+retained bytes, authority scheme, relation-XML role, declared dependency bytes, and the exact
+validation-read census; a Markdown edge hands review bytes only. Neither behavior carries a
+prebuilt relation surface or assets or reads the other representation through an undeclared
+dependency.
 
 Trust attaches only to the validated relation graph over one identified repository root, complete
 snapshot path inventory, and exact retained bytes for every validation and handoff path. Before a
@@ -168,28 +183,57 @@ validation-read tuples, and retained controls are transitively immutable. The co
 a default control, reopen a path, accept a detached pass token, infer a relation, repair a target,
 or expose a mutable parse tree as a trusted final model.
 
+Each parsed relation artifact, resolved endpoint view, projection, coverage result, package result,
+and handoff mapping belongs to one retained capture and one generated-view output state.
+Immutability prevents mutation but never permits reuse after generated-view replacement.
+Replacement ends every affected object's lifetime; subsequent validation constructs new endpoint
+views, projections, results, and mappings even when the replacement bytes equal the prior bytes.
+Retained parser-control and relation-authority bytes remain capture-bound inputs, while candidate
+controls, output-derived objects, cached semantics, and detached pass tokens cannot cross a
+replacement boundary.
+
 A consumer may not copy or rewrite an assertion, infer or retarget an endpoint, change a role or
 direction, add source-domain fields, silently fall back, or promote endpoint content into assertion
 authority. The XML contains no consumer-specific layout, styling, interaction, control-flow, or
 release fields. Product behavior, presentation, interaction, security, release, and delivery are
 outside this contract.
 
-## 7. Commands, writes, and aggregate verification
+## 7. Component commands, writes, and aggregate validation
 
-The shared structured-source command surface remains exactly `check <subject-id>`, `regenerate
-<subject-id>`, `regenerate-controls`, and `verify-current`.
+The structured-source component command surface is exactly `check <subject-id>`, `regenerate
+<subject-id>`, and `regenerate-controls`. It exposes no aggregate command or alias.
 
 For this scheme, `check` validates one relation package and its exact endpoint dependencies without
-writing or repeating a whole-corpus pass. `regenerate` validates the proposed Markdown before
-atomically replacing only that package's generated view, discards pre-write derived state, rereads
-the output, and revalidates the target and dependencies. `regenerate-controls` replaces only
-derived routers and the three acceptance table regions; `verify-current` rebuilds fresh shared
-indexes and participates in one whole-corpus pass over one unchanged snapshot. No pre-test index
-crosses the test boundary. Relation authority, endpoint documents, and externally changed bytes
-are never overwritten; coverage is computed and never persisted.
+writing or repeating a whole-corpus pass. `regenerate` strict-parses the authoritative relation XML,
+resolves every exact endpoint, constructs the complete candidate Markdown, and independently proves
+its assertion, field, endpoint, digest, anchor, excerpt, link, and order coverage before the first
+write. Only then may it atomically replace that package's generated view. Before success, the same
+transaction discards all candidate and pre-replacement derived state, exact-reads the replacement
+Markdown, and repeats complete package, endpoint, projection, coverage, and dependency validation
+from the replacement bytes. A readback mismatch or fresh-validation failure restores the exact
+prestate; partial or unvalidated replacement is never current.
 
-The repository-global gate owns immutable snapshot bracketing, registered isolated tests, final
-snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
+`regenerate-controls` first assembles one closed map of every candidate output path and byte
+sequence, overlays it on unchanged retained controls, and freshly loads and strictly compiles the
+complete candidate parser-control set, including relation XSD/profile agreement. Candidate failure
+makes publication unreachable; the candidate control object is then discarded. A post-write check
+or rollback cannot substitute for this pre-write proof. `relations.xsd` remains an unchanged
+agreement input rather than a generated output.
+
+One atomic transaction may replace only that passing map: the profile-generated content XSD,
+derived routers, and the three acceptance table regions. Before success, the transaction reopens
+every output path, compares every byte with the candidate map, and freshly loads the complete control
+set using only replacement-path reads. A byte mismatch or fresh-load failure restores the complete
+exact prestate; partial replacement is never current. Relation authority, endpoint documents, and
+externally changed guard bytes are preserved and cause refusal. No candidate control, pre-write
+validator, parsed artifact, endpoint view, projection, coverage result, package result, handoff,
+cached semantics, or detached pass token can satisfy replacement validation. No rollback receipt,
+recovery record, or alternate retained state is produced. Coverage remains computed and is never
+persisted.
+
+The shared [aggregate validation boundary](../../README.md#aggregate-validation-boundary) owns
+retained-worktree bracketing, registered isolated tests, final
+recapture comparison, and the aggregate result. This domain contributes its own acceptance
 statuses without defining any consumer product outcome.
 
 ## 8. Live implementation closure
@@ -201,7 +245,38 @@ and registered packages are the exact live implementation census. No authored-re
 registered. Closure uses these existing controls and contains no parallel registry, generic
 ownership framework, or generic reachability subsystem.
 
+The contract pair, data-only acceptance registry, registry slice, controls, implementation,
+focused tests and vectors, generated review state, and zero-edge handoff census are accepted only
+as one retained current state. A contract-only, registry-only, implementation-only, test-only,
+generated-only, or edge-only state fails. Any operative relation field, endpoint, storage law,
+command, or projection change must update every affected member of that state coherently.
+
+Required shared implementation closure is transitive and executable. It includes every module
+required by endpoint validation, projection, aggregate acceptance, or the declared-edge resolver;
+every schema and profile those modules use; the shared aggregate launcher; and every registered test
+and required vector. Over the complete retained capture, the closure enforcer recomputes all
+implementation-code, contract, schema, and required-vector paths wherever they occur and compares
+those censuses exactly with the live implementation inventory. The exact `structured_source/`
+subtree census is an additional check, never a substitute for capture-wide closure. Every captured
+domain test module has exactly one current registration, and every registered test executes without
+skip, expected failure, or inactive registration. A directly named subset, path convention, import
+success, or runtime reachability alone cannot establish closure; a missing, additional, alternate,
+inactive, or contradictory implementation, contract, registry, schema, launcher, test, vector,
+projection, edge census, class, or policy fails.
+
 No alternate assertion owner or reader, compatibility or migration reader, approval or reviewer
 record, stored receipt, digest ledger, coverage store, mutable handoff, parser-control bypass,
 consumer reconstructor, export path, or inactive domain artifact remains operative. Git alone
 retains implementation history.
+
+The focused negative suite rejects at least: a duplicate assertion identity or semantic owner; a
+missing, swapped, duplicated, or unprofiled endpoint role; an absent fragment or stale target digest;
+an unresolved endpoint represented as an empty or default target;
+an omitted, additional, reordered, or displaced generated field, endpoint, link, excerpt, or anchor;
+renderer self-report offered for defective Markdown; attempted publication of invalid candidate
+Markdown or parser controls; replacement-byte mismatch or fresh replacement validation failure
+without complete rollback; any current authored-relation consumer edge or handoff; a missing or
+extra shared module, contract, registry, schema, launcher, registered test, or vector anywhere in the
+retained capture; and reuse of a pre-replacement parsed artifact, endpoint view, projection, coverage
+result, package result, handoff mapping, semantic object, or validation state even when replacement
+bytes are unchanged.

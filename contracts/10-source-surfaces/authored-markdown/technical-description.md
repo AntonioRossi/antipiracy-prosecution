@@ -17,9 +17,15 @@ authored Markdown authority ──deterministic conversion──▶ generated XM
                                                               └──validated, read-only──▶ declared consumer interface
 ```
 
-Markdown is the sole owner of adopted content-bearing material, stable item identities, and
-substantive item metadata. XML is the generated typed machine representation. The semantic
-back-render is ephemeral comparison evidence and is never stored as a second Markdown owner.
+Markdown is the sole authority for adopted content-bearing material, stable anchors and item
+identities, authored order, and substantive item metadata. XML is the deterministic generated typed
+machine representation, not another authority. A declared consumer receives only the representation
+selected by its registry edge. The current navigator edges select generated XML exclusively; the
+navigator never receives or reconverts Markdown when constructing its semantic model. Markdown may
+occur in the inherited validation-read census because package validation proves XML against its
+authority, but that evidence neither hands Markdown to the consumer nor authorizes a later read. The
+semantic back-render is ephemeral comparison evidence and is never stored as a second Markdown
+owner.
 
 Machine validation proves supported-profile parsing, identity and metadata preservation,
 conversion completeness, semantic round-trip equivalence, coverage, and deterministic XML. It does
@@ -77,6 +83,21 @@ Pandoc block tree as typed content, and empty substantive metadata. Its typed-it
 the item-digest law; it is not an XML-wide digest and excludes the Markdown path and raw binding,
 generated envelope, formatting, parser controls, and presentation-only anchor placement.
 
+Every stable anchor is one exact adjacent open/close pair inside a supported Pandoc block. The root
+anchor binds the complete ordered semantic document. A non-claim anchor binds semantic content
+following it in the current block or, when its carrier has no semantic content, the next supported
+semantic block. A claim anchor binds its claim block and every immediately consecutive limitation
+anchor whose ID has that claim's exact prefix. A non-root anchor without a target, a claim without
+claim content, or a duplicate or ambiguous binding fails.
+
+The generated fragment index records each anchor's exact fragment ID, presentation ID, binding kind,
+semantic path, binding digest, and excerpt in authored order. Parsing generated XML independently
+reconstructs those bindings from the preserved Pandoc tree and requires exact index equality.
+Every semantic endpoint supplies one nonempty `documentId`, `fragmentId`, and typed-item digest and
+resolves that exact tuple once or fails. An omitted, null, empty, malformed, ambiguous, or unresolved
+identity cannot become an inferred target, default result, empty leaf, or empty collection. This
+source contract defines no prebuilt hierarchy-traversal surface.
+
 The current GFM profile is the exclusive executable inventory of Pandoc version and API, reader and
 writer, supported and top-level constructors, stable-anchor syntax and XML identity policy, link
 schemes, line endings and final newline, list and table style, and permitted presentational
@@ -113,10 +134,13 @@ links, lossy structures, ambiguous claims, and constructs outside the profile fa
 generation.
 
 Generated XML uses the exact current namespace, XSD, profile, secure parser, and readable storage
-law. The parser policy, GFM and XML profiles, shared XML schema, and artifact XSDs are loaded through
-the retained-snapshot reader as one transitively immutable control set. Every production
+law. The complete parser-control set is the parser policy, GFM profile, XML profile, shared XML
+schema, and every artifact XSD, including `authored.xsd`, `content.xsd`, and `relations.xsd`. It is
+loaded through the retained-snapshot reader as one transitively immutable control set. The authored
+XSD is a current agreement peer of the profile and converter; it is not the profile-generated
+`content.xsd` and `regenerate-controls` does not generate it. Every production
 conversion, generated-XML parse, and back-render uses the retained profile and validators from that
-set; live or default controls and ambient validator caches cannot satisfy snapshot-bound
+set; live or default controls and ambient validator caches cannot satisfy retained-capture
 validation.
 
 Every registered XML file must equal deterministic serialization of its validated typed tree with:
@@ -167,12 +191,17 @@ a package-level coverage artifact is stored.
 
 The verifier independently recomputes the complete ordered coverage census from the authoritative
 Markdown AST and validated XML rather than accepting converter-reported identities or digests as
-self-attestation. The census checks each stable anchor, semantic path, authority binding, readable
+validation input. The census checks each stable anchor, semantic path, authority binding, readable
 XML item and field, typed-item digest, back-render node, dependency, generated-byte identity,
 hierarchy, and order. A missing, extra, duplicate, reordered, lossy, stale, or non-readable item,
 field, or representation fails.
 
-## 6. Snapshot-bound consumer-neutral handoff
+Moving an authoritative anchor changes its semantic binding. The generated fragment index, binding
+and typed-item digests, generated XML, and every affected exact endpoint must then agree with that
+current binding. Authored-anchor validation is based on the preserved Pandoc tree and binding rules,
+not on PDF-review projection regions.
+
+## 6. Retained-worktree consumer-neutral handoff
 
 A declared consumer edge selects exactly one registered representation, `xml` or `markdown`, and
 cannot read the other representation through an undeclared dependency. An XML handoff supplies the
@@ -182,20 +211,21 @@ receives the retained parser controls from the same validation context and secur
 handed XML bytes. A Markdown handoff supplies the authority bytes directly and receives no generated
 XML state.
 
-An acceptable immutable snapshot supplies a nonempty digest, the checkout root, a closed path
+An acceptable retained worktree capture supplies a nonempty internal digest, the worktree root, a closed path
 inventory, and retained bytes addressable through that inventory. A digest string, pass result, or
 other detached token is not a snapshot. Every package-validation and declared-dependency path in a
 handoff must occur in the snapshot inventory, and its validated bytes must equal the retained
 snapshot bytes exactly.
 
-Trust attaches only to the validated item graph over the exact immutable snapshot bytes. Before a
+Technical status attaches only to the validated item graph over the exact retained capture bytes. Before a
 consumer constructs a semantic model or writes an output, Markdown profile, conversion,
 item/field census, hierarchy, order, authority raw binding, typed-item digests, generated XML,
 semantic back-render, dependencies, and coverage must all pass. The consumer receives those same
 validated bytes and, for XML, uses the supplied retained controls to construct one immutable typed
-model before mechanically looking up items, traversing declared hierarchy and order, selecting
-declared fields, or resolving dependencies. It may not reopen a path, accept a detached pass token,
-rerun Markdown conversion, or infer missing semantics.
+model before mechanically looking up an explicitly identified item, following its preserved
+hierarchy and order, selecting declared fields, or resolving an exact dependency endpoint. An
+unresolved lookup fails. The consumer may not reopen a path, accept a detached pass token, rerun
+Markdown conversion, or infer missing semantics.
 
 Package validation constructs and transitively freezes the authority and generated representation
 bytes, dependency and handoff mappings, and retained control profiles. It validates the complete
@@ -203,32 +233,60 @@ typed-item record and digest census without handing over a prebuilt source surfa
 that validated state without reopening even the same live path or reconstructing semantics from a
 later read, and exposes the exact validation-read census for the edge.
 
+Each conversion result, parsed generated artifact, fragment index, coverage result, package result,
+and handoff belongs to one retained capture and one generated-XML output state. Immutability prevents
+mutation but never permits reuse after generated-XML replacement. Replacement ends every affected
+object's lifetime; subsequent validation constructs new derived state and handoffs even when the
+replacement bytes equal the prior bytes. Retained parser-control bytes remain capture-bound inputs,
+while candidate controls, output-derived objects, cached semantics, and detached pass tokens cannot
+cross a replacement boundary.
+
 Selection of XML never promotes it above Markdown authority. A consumer may not repair generated
 XML, infer missing authored content, add source-domain fields, reparse an undeclared representation,
 or silently fall back. The XML contains no consumer-specific layout, styling, interaction,
 control-flow, or release fields. Product behavior, presentation, interaction, security, release,
 and delivery are outside this contract.
 
-## 7. Commands, writes, and aggregate verification
+## 7. Component commands, writes, and aggregate validation
 
-The shared structured-source command surface remains exactly `check <subject-id>`, `regenerate
-<subject-id>`, `regenerate-controls`, and `verify-current`.
+The structured-source component command surface is exactly `check <subject-id>`, `regenerate
+<subject-id>`, and `regenerate-controls`. It exposes no aggregate command or alias.
 
-For this scheme, `check` validates one package and its declared dependencies without writing;
-`regenerate` validates Markdown and the complete proposed XML before atomically replacing only that
-package's generated XML; `regenerate-controls` replaces only derived routers and the three
-acceptance table regions; and `verify-current` participates in one memoized whole-corpus pass.
-Markdown authority and externally changed bytes are never overwritten. Coverage and back-render
-evidence are computed and never persisted. After an atomic generated-XML replacement, every
-pre-replacement representation and surface state is discarded and the replacement is read back and
-validated anew.
+For this scheme, `check` validates one package and its declared dependencies without writing.
+`regenerate` parses the authority Markdown, constructs the complete candidate XML, strict-parses it
+under the retained control set, independently recomputes its fragment index and typed records, and
+proves semantic back-render equality before the first write. Only then may it atomically replace that
+package's generated XML. Before success, the same transaction discards all candidate and
+pre-replacement derived state, exact-reads the replacement XML, and repeats complete package,
+fragment, typed-record, back-render, coverage, and dependency validation from the replacement bytes.
+A readback mismatch or fresh-validation failure restores the exact prestate; partial or unvalidated
+replacement is never current.
 
-The repository-global gate owns immutable snapshot bracketing, registered isolated tests, final
-snapshot revalidation, and the aggregate result. This domain contributes its own acceptance
+`regenerate-controls` first assembles one closed map of every candidate output path and byte
+sequence, overlays it on unchanged retained controls, and freshly loads and strictly compiles the
+complete candidate parser-control set. Candidate profiles, every artifact XSD, shared schema, and
+independent agreement checks must pass before the first write; `authored.xsd` remains an unchanged
+agreement input rather than a generated output. The candidate control object is then discarded. A
+post-write check or rollback cannot substitute for this pre-write proof.
+
+One atomic transaction may replace only that passing map: the profile-generated content XSD,
+derived routers, and the three acceptance table regions. Before success, the transaction reopens
+every output path, compares every byte with the candidate map, and freshly loads the complete control
+set using only replacement-path reads. A byte mismatch or fresh-load failure restores the complete
+exact prestate; partial replacement is never current. Markdown authority and externally changed
+guard bytes are preserved and cause refusal. No candidate control, pre-write validator, parsed
+artifact, conversion result, fragment index, coverage result, package result, handoff, cached
+semantics, or detached pass token can satisfy replacement validation. No rollback receipt, recovery
+record, or alternate retained state is produced. Coverage and back-render evidence remain computed
+and are never persisted.
+
+The shared [aggregate validation boundary](../../README.md#aggregate-validation-boundary) owns
+retained-worktree bracketing, registered isolated tests, final
+recapture comparison, and the aggregate result. This domain contributes its own acceptance
 statuses without defining any consumer product outcome.
 
-Aggregate verification constructs exactly one conformant handoff for every declared consumer edge;
-resolving or counting an edge does not prove it. The declared-edge and constructed-handoff censuses
+Aggregate validation constructs exactly one passing handoff for every declared consumer edge;
+resolving or counting an edge is insufficient. The declared-edge and constructed-handoff censuses
 must agree exactly. At the consumption boundary, the handoff census is bound before ordinary reads;
 an ordinary read of a handed path or conflicting bytes for the same path fails.
 
@@ -238,11 +296,39 @@ This technical description, its acceptance criteria, its data-only acceptance re
 content registry's authored-Markdown slice, current schemas and profiles, converter, focused tests,
 typed-item record and digest builder, generated-XML validator, semantic back-render, immutable
 snapshot handoff, registered consumers, and registered packages are the complete live implementation.
-The immutable repository snapshot must contain the exact named domain artifacts and every required
+The retained worktree capture must contain the exact named domain artifacts and every required
 shared implementation path.
+
+The contract pair, data-only acceptance registry, registry slice, controls, implementation,
+focused tests and vectors, generated XML, back-render proof, and declared handoffs are accepted only
+as one retained current state. A contract-only, registry-only, implementation-only, test-only,
+generated-only, or handoff-only state fails. Any operative field, storage law, binding, command, or
+handoff change must update every affected member of that state coherently.
+
+Required shared implementation closure is transitive and executable. It includes every module
+required by this domain or a declared consumer boundary, every schema and profile those modules use,
+the shared aggregate launcher, and every registered test and required vector. Over the complete
+retained capture, the closure enforcer recomputes all implementation-code, contract, schema, and
+required-vector paths wherever they occur and compares those censuses exactly with the live
+implementation inventory. The exact `structured_source/` subtree census is an additional check,
+never a substitute for capture-wide closure. Every captured domain test module has exactly one
+current registration, and every registered test executes without skip, expected failure, or inactive
+registration. A directly named subset, path convention, import success, or runtime reachability
+alone cannot establish closure; a missing, additional, alternate, inactive, or contradictory
+implementation, contract, registry, schema, launcher, test, vector, generated representation,
+handoff, class, or policy fails.
 
 No alternate converter, editable generated owner, production parser-control bypass, consumer-side
 Markdown reconverter, alternate generated-XML reader, mutable handoff, compatibility or migration
 reader, approval or reviewer record, stored receipt, digest ledger, persisted back-render, coverage
 store, export path, or inactive domain artifact remains operative. Git alone retains implementation
 history.
+
+The focused negative suite rejects at least: a malformed, duplicate, or targetless anchor; a
+fragment index or digest inconsistent with the preserved Pandoc tree; an omitted, malformed,
+unresolved, or stale exact endpoint and representation of absence as an empty or default result;
+publication of invalid candidate XML or parser controls; replacement-byte mismatch or fresh
+replacement validation failure without complete rollback; a missing or extra shared module,
+contract, registry, schema, launcher, registered test, or vector anywhere in the retained capture;
+and reuse of a pre-replacement conversion, parsed artifact, fragment index, coverage result, package
+result, handoff, semantic object, or validation state.

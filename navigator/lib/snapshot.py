@@ -38,6 +38,7 @@ class SnapshotEntry:
     digest: str
     mode: int
     size: int
+    fingerprint: tuple = field(compare=False, repr=False)
 
     def as_record(self):
         return {
@@ -107,7 +108,7 @@ class RepositorySnapshot:
                         "repository file changed during snapshot capture %s" % rel)
                 entries.append(SnapshotEntry(
                     rel, canon.bytes_digest(data), after_read.st_mode & 0o777,
-                    len(data)))
+                    len(data), _file_fingerprint(after_read)))
                 if retained is not None:
                     retained[rel] = data
         entries.sort(key=lambda entry: entry.path)
@@ -207,16 +208,16 @@ class RepositorySnapshot:
         missing = sorted(set(left) - set(right))
         extra = sorted(set(right) - set(left))
         if missing:
-            problems.append("repository paths removed during verification: %s" % missing)
+            problems.append("repository paths removed during validation: %s" % missing)
         if extra:
-            problems.append("repository paths added during verification: %s" % extra)
+            problems.append("repository paths added during validation: %s" % extra)
         for path in sorted(set(left) & set(right)):
             before = left[path]
             after = right[path]
-            if (before.digest, before.mode, before.size) != (
-                    after.digest, after.mode, after.size):
+            if (before.digest, before.mode, before.size, before.fingerprint) != (
+                    after.digest, after.mode, after.size, after.fingerprint):
                 problems.append(
-                    "repository path changed during verification: %s" % path)
+                    "repository path changed during validation: %s" % path)
         if not problems and self.digest != other.digest:
             problems.append("repository snapshot digest changed without a path delta")
         return problems

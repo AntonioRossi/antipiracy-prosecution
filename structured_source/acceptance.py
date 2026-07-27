@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 import re
 
@@ -47,7 +48,27 @@ CRITERIA = tuple(
 _REGISTRY_FIELDS = {
     "acceptanceVersion", "authorityScheme", "criteria", "domain",
 }
-_CRITERION_FIELDS = {"id", "code", "outcome", "evidence"}
+_CRITERION_FIELDS = {"id", "code", "outcome", "enforcer"}
+_DOMAIN_TEST_MODULES = {
+    "authored-markdown": frozenset({
+        "structured_source.tests.test_acceptance",
+        "structured_source.tests.test_conversion",
+        "structured_source.tests.test_registry",
+        "structured_source.tests.test_xml_contract",
+    }),
+    "authored-relations": frozenset({
+        "structured_source.tests.test_acceptance",
+        "structured_source.tests.test_conversion",
+        "structured_source.tests.test_registry",
+        "structured_source.tests.test_xml_contract",
+    }),
+    "pdf-transcription": frozenset({
+        "structured_source.tests.test_acceptance",
+        "structured_source.tests.test_pdf_transcription",
+        "structured_source.tests.test_registry",
+        "structured_source.tests.test_xml_contract",
+    }),
+}
 
 
 def _contract(domain):
@@ -57,10 +78,34 @@ def _contract(domain):
     return matches[0]
 
 
+def _resolve_enforcer(path):
+    if not isinstance(path, str) or not path or any(
+            not part or not part.replace("_", "a").isalnum()
+            for part in path.split(".")):
+        raise StructuredSourceError("acceptance enforcer path is malformed")
+    parts = path.split(".")
+    for boundary in range(len(parts), 0, -1):
+        try:
+            value = importlib.import_module(".".join(parts[:boundary]))
+        except ImportError:
+            continue
+        try:
+            for part in parts[boundary:]:
+                value = getattr(value, part)
+        except AttributeError as exc:
+            raise StructuredSourceError(
+                "acceptance enforcer symbol is absent: %s" % path) from exc
+        if not callable(value):
+            raise StructuredSourceError(
+                "acceptance enforcer is not executable: %s" % path)
+        return value
+    raise StructuredSourceError("acceptance enforcer module is absent: %s" % path)
+
+
 def validate_registry(value, domain):
     contract = _contract(domain)
     if not isinstance(value, dict) or set(value) != _REGISTRY_FIELDS or \
-            value.get("acceptanceVersion") != "1" or \
+            value.get("acceptanceVersion") != "2" or \
             value.get("domain") != domain or \
             value.get("authorityScheme") != contract["authorityScheme"]:
         raise StructuredSourceError(
@@ -75,16 +120,23 @@ def validate_registry(value, domain):
         re.escape(contract["criteria"][0].rsplit("-", 1)[0]) +
         r"-(0[1-6])\Z")
     for criterion in criteria:
-        if not isinstance(criterion, dict) or \
-                set(criterion) != _CRITERION_FIELDS or \
+        if not isinstance(criterion, dict):
+            raise StructuredSourceError(
+                "%s acceptance criterion is malformed" % domain)
+        enforcer = criterion.get("enforcer")
+        enforcer_parts = enforcer.split("; ") if isinstance(enforcer, str) else []
+        if set(criterion) != _CRITERION_FIELDS or \
                 identifier.fullmatch(criterion.get("code", "")) is None or \
                 not criterion.get("id", "").startswith(
                     criterion["code"] + " — ") or \
                 not all(isinstance(criterion.get(field), str) and
                         criterion[field].strip()
-                        for field in ("outcome", "evidence")):
+                        for field in ("outcome", "enforcer")) or \
+                len(enforcer_parts) != 2 or \
+                enforcer_parts[1] not in _DOMAIN_TEST_MODULES[domain]:
             raise StructuredSourceError(
                 "%s acceptance criterion is malformed" % domain)
+        _resolve_enforcer(enforcer_parts[0])
     return value
 
 
@@ -115,12 +167,12 @@ def render_table(registry):
     validate_registry(registry, registry.get("domain") if isinstance(
         registry, dict) else None)
     rows = [
-        "| ID | Required outcome | Required evidence and enforcer |",
+        "| ID | Executable technical outcome | Independent enforcer |",
         "|---|---|---|",
     ]
     for criterion in registry["criteria"]:
         outcome = criterion["outcome"].replace("|", "\\|").replace("\n", " ")
-        evidence = criterion["evidence"].replace("|", "\\|").replace("\n", " ")
+        enforcer = criterion["enforcer"].replace("|", "\\|").replace("\n", " ")
         rows.append("| **%s** | %s | %s |" %
-                    (criterion["id"], outcome, evidence))
+                    (criterion["id"], outcome, enforcer))
     return "\n".join(rows) + "\n"

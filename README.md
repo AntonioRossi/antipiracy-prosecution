@@ -20,7 +20,7 @@ This corpus supports the prosecution of the invention with one organizing discip
 | [`ITA/`](ITA/ITA%20depositi%20ufficiali/AA11393US-IT_Domanda%20di%20brevetto%20n.%20102025000003210.pdf) | Related Italian filing record |
 | [`office action response/`](office%20action%20response/PF-MA-AA11393US-PCT%20prepared%20response%20tightened.md) | Prepared PCT office-action response drafts |
 | [`structured_source/`](structured_source/) | Closed authority-scheme registry, XML schemas and profiles, converters, reference resolution, and recurring validation |
-| [`navigator/`](navigator/RUNBOOK-content-sync-and-regeneration.md) | Edition-blind HTML5 navigator source, secure XML gateway, authoritative NA/AF relations and wording, tests, runbook, and committed current products |
+| [`navigator/`](navigator/RUNBOOK-content-sync-and-regeneration.md) | Edition-blind HTML5 navigator source, secure XML gateway, authoritative NA/AF relations and wording, tests, runbook, and stored current products |
 | [`STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md`](STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md) | High-level authority and uniform XML-interface rules |
 | [`contracts/`](contracts/README.md) | Dependency-phased normative contracts: source surfaces, semantic relations, and navigator product generation |
 
@@ -63,14 +63,29 @@ The host must provide the exact `uv` version required by [`pyproject.toml`](pypr
 uv --no-cache sync --locked --all-groups
 ```
 
-This explicit bootstrap may obtain locked dependencies; recurring verification never installs or updates them. After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. The canonical current-state and document-integrity gate is:
+This explicit bootstrap may obtain locked dependencies; recurring validation never installs or updates them. After changing claims, verify claim count, dependency, antecedent basis, support mappings, and every affected matrix row; re-score art when claim wording changes. Follow [`navigator/RUNBOOK-content-sync-and-regeneration.md`](navigator/RUNBOOK-content-sync-and-regeneration.md) whenever a navigator input changes. From the repository root, run the sole aggregate current-state and document-integrity gate with the argument-free convenience launcher:
+
+```sh
+./validate.sh
+```
+
+The launcher executes this exact command:
 
 ```sh
 uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
-One command proves the complete structured-source and navigator closure inside immutable repository snapshots: declared authority direction, XML identities, deterministic representations, computed coverage and substantive-origin tracing, reference and consumer closure, the secure XML gateway, the immutable navigator model, candidate and sealed bytes, the exact five-member delivery bundle, and `git diff --check` whitespace. It runs both registered test families in a materialized sandbox, renders every tracked Markdown file through pandoc, verifies all co-located `US/prior-art` source manifests, and certifies only the final unchanged snapshot. The audit unit is the exact clean Git commit, its checkout and supplied history, the current documentation pairs and executable registries, and this gate result. Human self-approval, a stored verification record, or an audit export adds no authority. The runbook's [final audit gate](navigator/RUNBOOK-content-sync-and-regeneration.md#6-final-audit-gate) places the gate in the content-update workflow.
+The command captures governed current bytes, including relevant untracked files, validates declared authority direction, XML identity, deterministic representations, computed coverage and substantive-origin tracing, references, handoffs, the secure XML gateway, immutable models, current products, captured-file whitespace, Markdown rendering, source manifests, and every registered test in an isolated materialization. It then recaptures the worktree and fails on any path, mode, or byte change. Repository status, index state, commit identity, and history are outside the result.
+
+Each operative contract pair, its machine-readable acceptance registry, applicable configuration,
+implementation, controls, registered tests and vectors, generated representations, declared
+handoffs, and stored products form one indivisible current state. A documentation-only,
+registry-only, implementation-only, workflow-only, test-only, control-only, or product-only state
+is invalid. The applicable contract pair controls detailed behavior; this README creates no
+alternate implementation or release path.
+
+A pass means only that the current package is technically coherent and reproducible for independent inventor and counsel review. It does not establish source authenticity, transcription fidelity, factual or legal correctness, completeness of prior-art or support analysis, inventor confirmation, counsel approval, filing readiness or authorization, or entitlement to rely without reviewing the evidence. The result is ephemeral; human review remains authoritative. The runbook's [final worktree validation](navigator/RUNBOOK-content-sync-and-regeneration.md#6-final-worktree-validation) places the gate in the content-update workflow.
 
 ## Status discipline
 
-Package documents, live configuration, structured-source registries, navigator controls, and current build products contain only the current operative version, status, conclusion, supporting evidence, action, owner, deadline, trigger, schema, content binding, and product. Git is the sole drafting and implementation history; do not retain revision logs, wording-evolution narratives, non-current controls or artifacts, compatibility aliases, or implicit upgrades in the live checkout. The repository has no approval or reviewer system, self-attestation, implementation register, verification-record or receipt store, auxiliary release plan, stored lineage or coverage artifact, audit export, migration reader, or compatibility path. Computed coverage and substantive-origin tracing remain mandatory validation results. Retain legally operative filing, publication, priority, and prosecution facts and source provenance as current evidence. Every strategy document states its strategy ID, version, status, and review date.
+Package documents, live configuration, structured-source registries, navigator controls, and current build products contain only the current operative version, status, conclusion, supporting evidence, action, owner, deadline, trigger, schema, content binding, and product. Git is drafting history only; do not retain revision logs, wording-evolution narratives, non-current controls or artifacts, compatibility aliases, or implicit upgrades in the live checkout. The repository has no approval or reviewer system, implementation register, validation-result or receipt store, auxiliary release plan, stored lineage or coverage artifact, exported validation record, migration reader, or compatibility path. Computed coverage and substantive-origin tracing remain mandatory ephemeral checks. Retain legally operative filing, publication, priority, and prosecution facts and source provenance as current evidence. Every strategy document states its strategy ID, version, status, and review date.

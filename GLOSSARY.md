@@ -77,9 +77,11 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 |---|---|---|
 | **Authority scheme** | The package declaration that identifies whether source fidelity is governed by a stored PDF, authored content by Markdown, or authored assertions by relation XML; file type and consumer choice cannot change it | [`PDF transcription`](contracts/10-source-surfaces/pdf-transcription/technical-description.md) §1; [`authored Markdown`](contracts/10-source-surfaces/authored-markdown/technical-description.md) §1; [`authored relations`](contracts/20-semantic-relations/authored-relations/technical-description.md) §1 |
 | **Uniform XML machine interface** | The one registered, typed, item-addressable XML representation exposed by every package; interface uniformity does not make XML universally authoritative | same, §§1–3 |
-| **Computed coverage** | Validation derived from the current immutable snapshot that proves the applicable authority-to-representation, item, provenance, and endpoint mappings; it is not a stored package artifact | same, §§2 and 5 |
+| **Aggregate prerequisite** | A domain that must pass the shared current-state gate but supplies no consumer edge, handoff, or runtime semantic input; authored relations currently have this relationship to the navigator | [`contract router`](contracts/README.md); [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §2.1 |
+| **Semantic handoff** | Exact retained representation bytes, controls, role, authority scheme, dependencies, assets, and validation-read census supplied through one declared consumer edge; inherited validation reads grant no access | [`PDF transcription`](contracts/10-source-surfaces/pdf-transcription/technical-description.md) §6; [`authored Markdown`](contracts/10-source-surfaces/authored-markdown/technical-description.md) §6 |
+| **Computed coverage** | Validation derived from the retained current worktree capture that checks the applicable authority-to-representation, item, provenance, and endpoint mappings; it is not a stored package artifact | same, §§2 and 5 |
 | **Substantive-origin tracing** | A validation-time derivation that resolves substantive and security-relevant navigator values to their declared XML item, registered control, typed state, or closed mechanical derivation; it is not a stored lineage inventory | [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §2.4 |
-| **Repository audit unit** | Exact clean Git commit and checkout with supplied history, the current documentation pairs and executable registries, and the unchanged-snapshot `validate-current` result | same, §10 |
+| **Worktree validation capture** | Closed governed path inventory, modes, and retained current bytes used for every aggregate-validation read and compared with a final recapture; repository status, index state, identity, and history are excluded | same, §10 |
 
 ## Filing and record terms
 
@@ -115,7 +117,9 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 |---|---|---|
 | **Repository snapshot** | Immutable capture of the complete repository tree with retained bytes; validation reads the captured bytes and rejects a changed final tree | [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §10 |
 | **Secure XML gateway** | The sole read-only production entry point for registered semantic content; it validates each package according to its authority scheme and rejects undeclared, unsafe, stale, or ambiguous input | same, §2.2 |
+| **Navigator control** | A configured navigator-owned edition, relation, wording, or schema input read by the secure gateway after structured-source acceptance; it is not an upstream package handoff | same, §§2.2–2.3 |
 | **Immutable edition model** | The sealed typed representation produced by the gateway and consumed by the edition-blind renderer; it cannot repair, infer, retarget, or persist semantic content | same, §§2.2 and 4 |
+| **Live implementation closure** | The indivisible agreement among the applicable contract pair, acceptance registry, configuration, implementation, controls, registered tests and vectors, generated representations, handoffs, and stored products; a split or alternate state fails | same, §10 |
 | **Technical-preview product** | The sole current navigator product class, carrying the exact technical-preview label and making no claim of observed browser, operating-system, print-engine, or assistive-technology behavior | same, §§1 and 3 |
 | **Executable acceptance registry** | The current machine-readable projection of the ordered `AC-01` through `AC-20` IDs, scopes, and criterion text; every criterion must pass in the invoking validation process | [`claims navigator acceptance criteria`](contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md) |
 | **Delivery bundle** | The deterministic five-member STORE ZIP containing both sealed HTML products, their detached checksums, and `MANIFEST.txt`; its own detached checksum remains beside the ZIP | [`claims navigator technical description`](contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md) §9 |
@@ -124,7 +128,7 @@ Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are m
 
 | Label | Current meaning |
 |---|---|
-| `_DRAFT` | Internal counsel-review draft; not filed; not a legal opinion |
+| `_DRAFT` | Internal counsel-review status; not filed and not a legal opinion. In an operative technical contract, the suffix does not make current technical requirements optional |
 | `_MEMO` | Controlling instrument governing execution decisions |
 | `NOT YET PRESERVED` | No qualifying successor and verified benefit relationship complete the current generation |
 | `CONTINUATION PRESERVED` | CONT-06 outcome: a verified successor with recognized benefit preserves the generation's identified families |

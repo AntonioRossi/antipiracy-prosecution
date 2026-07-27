@@ -846,7 +846,7 @@ def _validate_authored_root(root: ET.Element) -> None:
 def _document_from_xml(xml: bytes) -> tuple[object, str, dict, _Analysis]:
     artifact = parse_artifact(
         xml, "authored-document", controls=_ACTIVE_PARSER_CONTROLS.get())
-    document_id, ast = _decode_authored_root(artifact.root)
+    document_id, ast = _decode_authored_root(artifact._validated_root())
     return artifact, document_id, ast, _analyse_ast(ast, document_id)
 
 

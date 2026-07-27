@@ -35,7 +35,7 @@ _BASE_WORDING = frozenset({
 
 
 def _metadata(model, error):
-    if model.edition_id not in {"na", "af"}:
+    if re.fullmatch(r"[a-z][a-z0-9-]{0,31}", model.edition_id or "") is None:
         error("metadata", "edition identity is not current")
     if model.strategy_prefix.casefold() != model.edition_id:
         error("metadata", "strategy prefix and edition identity differ")

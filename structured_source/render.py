@@ -7,6 +7,7 @@ from contextvars import ContextVar
 from dataclasses import dataclass
 import posixpath
 import re
+from types import MappingProxyType
 from urllib.parse import quote, urlsplit, urlunsplit
 from xml.etree import ElementTree as ET
 
@@ -23,11 +24,46 @@ _SAFE_ANCHOR = re.compile(r"[A-Za-z][A-Za-z0-9_.:-]*\Z")
 _ACTIVE_PROFILE = ContextVar("structured_source_render_profile", default=None)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True, init=False)
 class Projection:
+    """One projection whose computed coverage cannot be mutated in place."""
+
     markdown: bytes
     markdown_digest: str
-    coverage: dict
+    _coverage: Mapping
+
+    def __init__(self, *, markdown, markdown_digest, coverage):
+        object.__setattr__(self, "markdown", markdown)
+        object.__setattr__(self, "markdown_digest", markdown_digest)
+        object.__setattr__(self, "_coverage", _freeze_coverage(coverage))
+
+    @property
+    def coverage(self) -> dict:
+        """Return detached coverage data, preserving the validated result."""
+        return _copy_coverage(self._coverage)
+
+    def _validated_coverage(self) -> Mapping:
+        """Return frozen coverage to trusted validation implementation only."""
+        return self._coverage
+
+
+def _freeze_coverage(value):
+    if isinstance(value, dict):
+        return MappingProxyType({
+            key: _freeze_coverage(item) for key, item in value.items()})
+    if isinstance(value, list):
+        return tuple(_freeze_coverage(item) for item in value)
+    if isinstance(value, tuple):
+        return tuple(_freeze_coverage(item) for item in value)
+    return value
+
+
+def _copy_coverage(value):
+    if isinstance(value, Mapping):
+        return {key: _copy_coverage(item) for key, item in value.items()}
+    if isinstance(value, tuple):
+        return [_copy_coverage(item) for item in value]
+    return value
 
 
 def _profile() -> dict:
@@ -438,7 +474,7 @@ class _Renderer:
         self.emit("")
 
     def render_content(self) -> bytes:
-        root = self.artifact.root
+        root = self.artifact._validated_root()
         identity = root.find(C + "documentIdentity")
         subject = identity.get("documentId")
         notice = (
@@ -594,7 +630,8 @@ def _render_content(artifact: ParsedArtifact, output_path: str,
         "review-provenance": (
             review_lines["review-provenance"], len(markdown_lines)),
     }
-    content = artifact.root.find(C + "content")
+    root = artifact._validated_root()
+    content = root.find(C + "content")
     top_level = list(content)
     top_ids = [node.get(XML_ID) for node in top_level]
     try:
@@ -614,13 +651,13 @@ def _render_content(artifact: ParsedArtifact, output_path: str,
             item_id = descendant.get(XML_ID)
             if item_id:
                 coverage_regions[item_id] = region
-    root_id = artifact.root.get(XML_ID)
+    root_id = root.get(XML_ID)
     if root_id not in anchor_lines:
         raise StructuredSourceError(
             "projection coverage document-item anchor is absent")
     coverage_regions[root_id] = (
         anchor_lines[root_id], review_lines["review-metadata"] - 1)
-    identity = artifact.root.find(C + "documentIdentity")
+    identity = root.find(C + "documentIdentity")
     subject = identity.get("documentId")
     coverage_value = {
         "coverageVersion": "1",
@@ -630,7 +667,7 @@ def _render_content(artifact: ParsedArtifact, output_path: str,
         "projectionProfile": _profile()["profileId"],
         "markdownDigest": raw_digest(markdown),
         "fields": _typed_field_census(
-            artifact.root, coverage_regions, subject),
+            root, coverage_regions, subject),
     }
     return Projection(
         markdown=markdown,
@@ -645,7 +682,7 @@ def _render_relations(artifact: ParsedArtifact, output_path: str,
     if artifact.kind != "relation-set":
         raise StructuredSourceError("relation renderer received a non-relation artifact")
     renderer = _Renderer(artifact, output_path, {})
-    root = artifact.root
+    root = artifact._validated_root()
     identity = root.find(R + "identity")
     subject = identity.get("relationSetId")
     renderer.emit(

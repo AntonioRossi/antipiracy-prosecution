@@ -11,17 +11,15 @@ import os
 from types import MappingProxyType, SimpleNamespace
 import unittest
 
-from navigator.lib.gateway import ContentGateway
 from navigator.lib.claims import Claim, ClaimUnit
-from navigator.lib import currentstate
 from navigator.lib.model import (
-    ContentNode, EditionModel, Endpoint, Mapping, RelationSet, Target,
+    ContentNode, Endpoint, Mapping, RelationSet, Target,
 )
 from navigator.lib.projections import RelationRef
 from navigator.lib.render import (
     EXACT_CSP, FORBIDDEN_SCRIPT_TOKENS, JS, UI, RenderError, render,
 )
-from navigator.lib.snapshot import RepositorySnapshot
+from navigator.tests import validation_session
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -186,16 +184,7 @@ class FakeModel:
 class CurrentRenderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        frozen = RepositorySnapshot.capture(ROOT, retain_bytes=True)
-        inputs = currentstate.verify_structured_source(
-            frozen, ("navigator-na", "navigator-af"))
-        cls.models = {
-            edition: EditionModel(
-                ContentGateway(ROOT, byte_source=frozen.byte_source()),
-                "navigator/editions/%s.json" % edition,
-                inputs["navigator-" + edition])
-            for edition in ("na", "af")
-        }
+        cls.models = validation_session()["models"]
         cls.artifacts = {
             edition: render(model)
             for edition, model in cls.models.items()

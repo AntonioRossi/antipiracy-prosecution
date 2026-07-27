@@ -9,21 +9,32 @@ and its
 Those documents control any conflict. This runbook supplies the shortest supported update path;
 it creates no exception or alternative release path.
 
+The product contract pair, `navigator/schema/acceptance.json`, structured-source contracts and
+registries, navigator implementation and workflow, controls, tests and vectors, generated
+representations, handoffs, and stored products are one current state. No documentation-only,
+registry-only, implementation-only, workflow-only, control-only, test-only, or product-only state
+is releasable.
+
 ## 1. Current contract
 
-- Work from one repository checkout and one exact Git commit. Do not read semantic content from
-  another worktree, an external directory, a symlink, a cache, or the network.
+- Work from the current worktree. Aggregate validation captures its governed inventory and bytes;
+  repository status, index state, commit identity, and history do not affect the result. Do not
+  read semantic content from another worktree, an external directory, a symlink, a cache, or the
+  network.
 - Preserve each package's declared authority direction. XML is the uniform machine interface, not
   a universal replacement authority.
 - Navigator production receives registered packages only through the frozen structured-source
   handoff. Its read-only gateway binds that validation census without reopening handed paths and
   reads only navigator-owned controls. The renderer consumes only the resulting immutable model.
 - Keep only current schemas, current content, current relations, current wording, tests, and
-  generated products. Git retains history.
-- Coverage and substantive-origin tracing are computed during validation and are not committed as
+  generated products.
+- Coverage and substantive-origin tracing are computed during validation and are not stored as
   separate inventories.
-- Do not create author approvals, self-review evidence, receipts, attestations, handoff archives,
-  or other proof that the sole contributor reviewed their own work.
+- Do not create author approvals, reviewer records, validation receipts, handoff archives, or
+  stored claims that a contributor reviewed the evidence.
+- Before changing an operative field, behavior, command, input, workflow, control, or product,
+  identify its controlling contract and registry row. The retained candidate must update every
+  affected owner, enforcer, test, vector, generated representation, handoff, and product coherently.
 
 The navigator exposes exactly these five commands:
 
@@ -32,10 +43,17 @@ The navigator exposes exactly these five commands:
 | `preview <edition>` | Writes one non-persistent HTML preview to standard output |
 | `candidate <edition>` | Regenerates the edition's current candidate HTML |
 | `release <edition>` | Reproduces the candidate and atomically writes the sealed HTML and detached checksum |
-| `bundle` | Regenerates the deterministic five-member delivery ZIP and its detached checksum |
-| `validate-current` | Read-only validation of the exact unchanged current repository snapshot |
+| `bundle` | Regenerates the configured-edition delivery ZIP and its detached checksum |
+| `validate-current` | Sole aggregate, read-only validation of one unchanged retained worktree capture |
 
-`<edition>` is exactly `na` or `af`. There are no command aliases or upgrade paths.
+`<edition>` must be an exact member of `navigator/bundles/current.json`; the current members are
+`na` and `af`. Adding an edition changes that one inventory and adds its exact edition-owned
+controls; it requires no aggregate-code branch. There are no command aliases or upgrade paths.
+
+Every command validates the product contract pair, acceptance registry, exact implementation
+census, product plan, structured-source closure, and applicable retained inputs before model
+construction or publication. Stop if those inputs describe different behavior; no later check or
+rollback repairs a split state.
 
 ## 2. Change content according to its authority
 
@@ -55,8 +73,8 @@ provenance is incomplete, a relation endpoint is unresolved, or a consumer would
 
 ## 3. Update navigator-owned XML
 
-Edit only the edition relation file or controlled-wording file that owns the changed semantic
-value:
+Edit only the configured edition relation file or controlled-wording file that owns the changed
+semantic value. The current paths are:
 
 ```text
 navigator/relations/na__pct.relations.xml
@@ -76,7 +94,7 @@ edition's mapping into the other, reuse a stale digest, or use visible text, ord
 heading slug as identity. A fragment with no recorded candidate remains explicitly
 `counsel-review-required`.
 
-## 4. Inspect and generate both editions
+## 4. Inspect and generate the configured editions
 
 A preview is read-only and writes HTML to standard output:
 
@@ -89,7 +107,8 @@ Inspect the changed edition visually, including forward and reverse navigation, 
 states, cautions and gates, disclosure figures, keyboard focus, the no-JavaScript document order,
 and print content. Visual inspection is useful product review, not a stored authorization step.
 
-Regenerate both current candidates so shared-input drift cannot remain hidden:
+Regenerate every edition in the current bundle inventory so shared-input drift cannot remain
+hidden. The current inventory contains `na` and `af`:
 
 ```sh
 uv --no-cache --offline run --locked --no-sync python -m navigator candidate na
@@ -101,8 +120,8 @@ gateway, a relation or wording entry is unused or unresolved, or regeneration is
 
 ## 5. Seal and bundle
 
-Release reproduces each candidate in a fresh process before replacing only its generated product
-and detached checksum:
+Release reproduces the requested edition through one fresh product-set worker before replacing
+only its generated product and detached checksum:
 
 ```sh
 uv --no-cache --offline run --locked --no-sync python -m navigator release na
@@ -110,42 +129,41 @@ uv --no-cache --offline run --locked --no-sync python -m navigator release af
 uv --no-cache --offline run --locked --no-sync python -m navigator bundle
 ```
 
-The bundle must contain exactly both sealed HTML files, both corresponding detached checksums, and
-`MANIFEST.txt`. Its own detached checksum stays beside the ZIP. The ZIP is a delivery product, not
-an audit package. Remove any superseded generated product before the final commit.
+The bundle must contain one sealed HTML and corresponding detached-checksum pair for every current
+configured edition, in configured order, followed by `MANIFEST.txt`. Its own detached checksum
+stays beside the ZIP. The ZIP is only a delivery product. `navigator/dist/` contains exactly the
+configured candidates, sealed HTML/checksum pairs, bundle, and bundle checksum; a missing or
+additional product fails aggregate validation.
 
-## 6. Final audit gate
+## 6. Final worktree validation
 
-Inspect the complete current diff, run `git diff --check`, and commit the coherent current state.
-From that clean exact commit run:
+Inspect the complete current package, regenerate every affected product, and run:
 
 ```sh
 uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
 ```
 
+The command evaluates governed files solely from their current retained bytes, including relevant
+untracked files. Repository status, index state, commit identity, and history remain outside the
+result. It uses one closed exclusion policy, fails an unknown or unclassified artifact, performs
+every validation read from retained bytes or their isolated materialization, and fails if the final
+recapture adds, removes, replaces, renames, mode-changes, or byte-changes a governed file.
+
 Stop on every skip, unknown criterion, validation failure, stale product, undeclared read or
-write, failed test, source-manifest mismatch, tracked-Markdown render failure, or repository
-mutation. The gate certifies only the unchanged snapshot it actually read.
-
-The audit unit is:
-
-```text
-exact clean Git commit
-→ repository checkout and supplied Git history
-→ current documentation pairs and executable acceptance registry
-→ validate-current result
-```
-
-No separately packaged audit artifact or contributor self-attestation adds authority to that unit.
+write, failed test, source-manifest mismatch, retained-Markdown render failure, or worktree
+mutation. A pass is ephemeral technical status for independent inventor and counsel review. Human
+review of the source evidence and substantive analysis remains authoritative.
 
 ## 7. Failure handling
 
 - Treat a failed command as a stop condition. Correct the declared source and rerun the affected
   generation steps; do not weaken a validator.
+- Treat contract-pair, acceptance-registry, implementation-census, workflow, test, control, or
+  stored-product disagreement as a pre-publication stop condition.
 - Never repair generated HTML, checksums, the manifest, or ZIP by hand.
 - Never repair semantic content in the typed model or renderer. Correct its owning XML or the
   package authority and regenerate.
 - If source content changes after candidate generation, regenerate candidates, releases, and the
-  bundle before committing.
-- If the clean commit changes after validation, rerun `validate-current`; the earlier result does
-  not apply to the new commit.
+  bundle before aggregate validation.
+- If any governed path, mode, or byte changes after validation, rerun `validate-current`; the
+  earlier ephemeral result does not apply to the changed worktree.

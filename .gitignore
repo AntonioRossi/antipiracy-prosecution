@@ -238,6 +238,9 @@ pyrightconfig.json
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+# Generated navigator delivery archive
+/navigator/dist/AA11393US-claims-navigators_NA-2026-07-22-v4_AF-2026-07-22-v6_TECHNICAL-PREVIEW.zip
 .ionide
 
 ### Windows ###
