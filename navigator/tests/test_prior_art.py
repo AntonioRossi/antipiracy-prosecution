@@ -15,9 +15,9 @@ from structured_source.control import parse_json
 
 ROOT = Path(__file__).resolve().parents[2]
 TARGET_PACKAGES = {
-    "us-prior-art-a13", "us-prior-art-a20", "us-prior-art-a21",
-    "us-prior-art-a4", "us-prior-art-a5", "us-prior-art-a6",
-    "us-prior-art-b9",
+    *("us-prior-art-a%d" % number for number in range(1, 22)),
+    *("us-prior-art-b%d" % number for number in range(1, 11)),
+    "us-prior-art-c3", "us-prior-art-c8",
 }
 
 
@@ -52,12 +52,12 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 self.assertIsInstance(model, PriorArtModel)
                 self.assertEqual(validate_prior_art(model), ())
                 self.assertEqual(model.product_id, product_id)
-                self.assertEqual(len(model.source_documents), 10)
+                self.assertEqual(len(model.source_documents), 36)
                 self.assertEqual(
                     [item.authority_scheme for item in model.source_documents],
                     ["authored-markdown-v1", "authored-relations-v1",
                      "authored-relations-v1"] +
-                    ["pdf-evidence-transcription-v1"] * 7)
+                    ["pdf-evidence-transcription-v1"] * 33)
                 self.assertEqual(
                     {item.document_id for item in model.source_documents[3:]},
                     TARGET_PACKAGES)
@@ -70,21 +70,19 @@ class PriorArtNavigatorTests(unittest.TestCase):
                     value["inputRepresentation"] == "xml" and
                     not value["dependencies"] for value in handoffs.values()))
 
-    def test_matrix_scope_and_map_state_are_exact(self):
+    def test_matrix_scope_obligations_and_candidates_are_exact(self):
         expected_units = {"na-prior-art": 77, "af-prior-art": 61}
-        expected_mapped = {"na-prior-art": 70, "af-prior-art": 54}
-        expected_review = {
+        expected_mapped = {"na-prior-art": 58, "af-prior-art": 47}
+        expected_obligations = {
             "na-prior-art": {
-                "claim-3-limitation-1", "claim-5-limitation-1",
-                "claim-8-limitation-1", "claim-16-limitation-2",
-                "claim-16-limitation-3", "claim-22-limitation-10",
-                "claim-30-limitation-1",
+                "passage-mapped": 33,
+                "counsel-review-required": 152,
+                "reviewed-no-material-passage": 33,
             },
             "af-prior-art": {
-                "claim-1-limitation-10", "claim-5-limitation-1",
-                "claim-12-limitation-1", "claim-15-limitation-1",
-                "claim-18-limitation-1", "claim-19-limitation-10",
-                "claim-23-limitation-1",
+                "passage-mapped": 29,
+                "counsel-review-required": 199,
+                "reviewed-no-material-passage": 36,
             },
         }
         for product_id, model in self.models.items():
@@ -103,16 +101,25 @@ class PriorArtNavigatorTests(unittest.TestCase):
                     item for item in model.relations.mappings
                     if item.status == "counsel-review-required")
                 self.assertEqual(len(mapped), expected_mapped[product_id])
-                self.assertEqual(
-                    {item.subject.fragment_id for item in review},
-                    expected_review[product_id])
+                self.assertEqual(len(review),
+                                 expected_units[product_id] -
+                                 expected_mapped[product_id])
                 self.assertTrue(all(item.targets for item in mapped))
                 self.assertTrue(all(not item.targets for item in review))
                 self.assertEqual(model.relations.phrase_mappings, ())
                 self.assertEqual(len(model.candidate_relations),
                                  expected_mapped[product_id])
-                self.assertEqual(len(model.prior_art_passages), 16)
-                self.assertEqual(len(model.reverse_index), 16)
+                counts = {
+                    status: sum(item.status == status
+                                for item in model.prior_art_obligations)
+                    for status in expected_obligations[product_id]}
+                self.assertEqual(counts, expected_obligations[product_id])
+                self.assertEqual(
+                    len(model.prior_art_obligations),
+                    sum(expected_obligations[product_id].values()))
+                self.assertEqual(len(model.prior_art_readers), 33)
+                self.assertEqual(len(model.prior_art_passages), 15)
+                self.assertEqual(len(model.reverse_index), 15)
                 self.assertEqual(
                     {(item.document_id, item.fragment_id)
                      for item in model.prior_art_passages},
@@ -126,9 +133,16 @@ class PriorArtNavigatorTests(unittest.TestCase):
                             self.assertIn(endpoint.document_id, TARGET_PACKAGES)
                             self.assertNotEqual(
                                 endpoint.fragment_id, endpoint.document_id)
-                            self.assertTrue(model.get_item(
-                                endpoint.document_id,
-                                endpoint.fragment_id).text)
+                            item = model.get_item(
+                                endpoint.document_id, endpoint.fragment_id)
+                            self.assertEqual(item.item_id, endpoint.fragment_id)
+                            self.assertEqual(item.content_digest,
+                                             endpoint.content_digest)
+                    self.assertTrue(candidate.obligation_ids)
+                    self.assertTrue(all(
+                        model.resolve_relation(identifier).status ==
+                        "passage-mapped"
+                        for identifier in candidate.obligation_ids))
                 with self.assertRaises(AttributeError):
                     model.prior_art_scope = ()
 
@@ -145,18 +159,38 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 self.assertIn("canonical source PDFs remain fidelity authority", text)
                 self.assertIn("not a novelty, obviousness, disclosure", text)
                 self.assertEqual(text.count(
-                    "No mapped passage from this document is present"), 26)
+                    '<p class="state-note">No exact candidate passage '
+                    'from this document'), 26)
                 self.assertEqual(text.count(
-                    'class="dblock prior-art-passage"'), 16)
+                    'class="dblock prior-art-passage"'), 15)
                 self.assertEqual(text.count(
-                    'class="reverse-badge"'), 16)
+                    'class="full-reader"'), 33)
+                self.assertEqual(text.count(
+                    'class="reader-jump"'), 15)
+                self.assertEqual(text.count(
+                    'class="obligation obligation-'),
+                    len(model.prior_art_obligations))
                 self.assertEqual(text.count('class="unit state-'),
                                  len(model.units_by_fragment))
                 self.assertEqual(text.count('class="mapping-row"'),
                                  len(model.units_by_fragment))
                 self.assertIn("scrollToNode(selected.primary);", text)
+                self.assertIn("details.open = true;", text)
+                self.assertIn("readerTarget.focus();", text)
                 self.assertIn(
                     "activateReverse(control.dataset.block, control.id);", text)
+                for reader in model.prior_art_readers:
+                    document_dom_id = model.dom_id(
+                        model.relation_set_id, reader.document_id)
+                    self.assertIn(
+                        'class="full-reader" id="full-reader-%s"' %
+                        document_dom_id, text)
+                for passage in model.prior_art_passages:
+                    reader_target = "reader-" + model.dom_id(
+                        passage.document_id, passage.fragment_id)
+                    self.assertIn('id="%s" tabindex="-1"' % reader_target,
+                                  text)
+                    self.assertIn('data-reader="%s"' % reader_target, text)
                 for mapping in model.relations.mappings:
                     relation = navigation["relations"][mapping.relation_id]
                     self.assertIn(
@@ -188,6 +222,11 @@ class PriorArtNavigatorTests(unittest.TestCase):
         self.assertEqual(passage["requiredEndpointRoles"], ["subject"])
         self.assertEqual(passage["relationType"],
                          "claim-prior-art-passage-map")
+        self.assertEqual(passage["assertionFields"], [
+            "candidate-role", "matrix-field", "matrix-relation-id",
+            "obligation-ids", "obligation-status", "proposition",
+            "record-kind", "subject-exact-text",
+        ])
         config = json.loads((ROOT / bundlezip.BUNDLE_CONFIG_PATH).read_text())
         self.assertEqual(bundlezip.validate_bundle_config(config), config)
         self.assertEqual(len(config["products"]), 4)

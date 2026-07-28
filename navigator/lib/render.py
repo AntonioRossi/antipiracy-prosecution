@@ -76,6 +76,16 @@ UI = MappingProxyType({
     "phraseContext": "{claim}, phrase “{text}”",
 })
 
+PRIOR_UI = MappingProxyType({
+    "fullReader": "Full asserted XML transcription",
+    "matrixObligations": "Matrix claim/document obligations",
+    "matrixObligationCount": "Matrix obligations for this claim: {count}",
+    "noExactPassage": (
+        "No exact candidate passage from this document is recorded for a "
+        "passage-mapped obligation."),
+    "openFullReader": "Open full transcription at this passage",
+})
+
 _ROLE_RANK = {"specific": 0, "combination": 1, "context": 2}
 _CELL_ALIGNMENT = {
     "default": "cell-align-default",
@@ -617,20 +627,135 @@ def _block_html(model, node, target_document_id: str, reverse: dict,
         editorial_class, id_attr, chrome, badge, nested)
 
 
+def _reader_dom_id(model, document_id: str, fragment_id: str) -> str:
+    return "reader-" + model.dom_id(document_id, fragment_id)
+
+
+def _reader_node_html(model, node, document_id: str, reverse: dict) -> str:
+    attributes = dict(node.attributes)
+    item_id = node.item_id
+    id_attr = (' id="%s" tabindex="-1"' % _esc(
+        _reader_dom_id(model, document_id, item_id))) if item_id else ""
+    chrome = ""
+    if item_id:
+        chrome = '<span class="anchor-label" aria-hidden="true">%s</span>' % \
+            _esc(_anchor_label(item_id))
+        excerpt_dom_id = model.dom_id(document_id, item_id)
+        references = reverse.get(excerpt_dom_id, ())
+        if references:
+            chrome += (
+                '<button type="button" class="reverse-badge" '
+                'data-block="%s" aria-label="%s">◂ %d</button>' % (
+                    _esc(excerpt_dom_id),
+                    _esc(_fmt(UI["reverseBadge"], count=len(references),
+                              label=_anchor_label(item_id))),
+                    len(references)))
+    children = "".join(
+        _reader_node_html(model, child, document_id, reverse)
+        for child in node.children)
+    content = children if node.children else _esc(node.text or "")
+    kind = node.element
+    if kind == "text":
+        return _esc(node.text or "")
+    if kind == "space":
+        return " "
+    if kind in {"softBreak", "lineBreak"}:
+        return "<br>"
+    if kind in {"strong", "emphasis", "code"}:
+        tag = {"strong": "strong", "emphasis": "em", "code": "code"}[kind]
+        return "<%s>%s</%s>" % (tag, content, tag)
+    if kind == "math":
+        return '<code class="math">%s</code>' % content
+    if kind == "link":
+        return '<span class="transcribed-link">%s</span>' % content
+    if kind == "heading":
+        level = attributes.get("level")
+        if not isinstance(level, int) or not 1 <= level <= 6:
+            raise RenderError("prior-art reader heading level is invalid")
+        return '<h%d class="reader-block"%s>%s%s</h%d>' % (
+            level, id_attr, chrome, content, level)
+    if kind == "paragraph":
+        return '<p class="reader-block"%s>%s%s</p>' % (
+            id_attr, chrome, content)
+    if kind == "codeBlock":
+        return '<pre class="reader-block"%s>%s<code>%s</code></pre>' % (
+            id_attr, chrome, _esc(node.text or ""))
+    if kind == "blockQuotation":
+        return '<blockquote class="reader-block"%s>%s%s</blockquote>' % (
+            id_attr, chrome, content)
+    if kind == "list":
+        ordered = attributes.get("ordered")
+        if not isinstance(ordered, bool):
+            raise RenderError("prior-art reader list ordering is invalid")
+        tag = "ol" if ordered else "ul"
+        return '<div class="reader-block"%s>%s<%s>%s</%s></div>' % (
+            id_attr, chrome, tag, content, tag)
+    if kind == "item":
+        return '<li class="reader-block"%s>%s%s</li>' % (
+            id_attr, chrome, content)
+    if kind == "separator":
+        return '<div class="reader-block"%s>%s<hr></div>' % (
+            id_attr, chrome)
+    if kind == "plain":
+        return '<span%s>%s%s</span>' % (id_attr, chrome, content)
+    raise RenderError("prior-art reader node kind is unsupported")
+
+
+def _obligation_label(model, status: str) -> str:
+    return _wording(model, "obligation-status-" + status)
+
+
+def _obligation_data(model):
+    by_claim = {}
+    for item in model.prior_art_obligations:
+        by_claim.setdefault(_claim_key(item.claim_number), []).append(
+            model.dom_id(model.relation_set_id, item.relation_id))
+    return {key: value for key, value in sorted(by_claim.items())}
+
+
 def _disclosure_html(model, reverse: dict) -> str:
     if model.product_kind == "prior-art":
         by_document = {}
         for passage in model.prior_art_passages:
             by_document.setdefault(passage.document_id, []).append(passage)
+        obligations_by_document = {}
+        for obligation in model.prior_art_obligations:
+            obligations_by_document.setdefault(
+                obligation.evidence.document_id, []).append(obligation)
+        readers = {item.document_id: item for item in model.prior_art_readers}
         output = []
         for document in model.prior_art_scope:
             passages = by_document.get(document.document_id, ())
+            reader = readers.get(document.document_id)
+            if reader is None:
+                raise RenderError("matrix document has no full XML reader")
+            document_dom_id = model.dom_id(
+                model.relation_set_id, document.document_id)
             output.append(
-                '<section class="prior-art-document"><h2>%s · %s</h2>' % (
-                    _esc(document.label), _esc(document.document_id)))
+                '<section class="prior-art-document" id="%s"><h2>%s · %s</h2>' % (
+                    _esc(document_dom_id), _esc(document.label),
+                    _esc(document.document_id)))
+            output.append('<h3>%s</h3><ul class="obligation-list">' %
+                          _esc(PRIOR_UI["matrixObligations"]))
+            for obligation in obligations_by_document.get(
+                    document.document_id, ()):
+                obligation_dom_id = model.dom_id(
+                    model.relation_set_id, obligation.relation_id)
+                output.append(
+                    '<li class="obligation obligation-%s" id="%s">'
+                    '<strong>%s · %s</strong><br>'
+                    '<span>%s · %s</span><br><span>%s</span></li>' % (
+                        _esc(obligation.status), _esc(obligation_dom_id),
+                        _esc(_claim_label(model, obligation.claim_number)),
+                        _esc(_obligation_label(model, obligation.status)),
+                        _esc(obligation.matrix_relation_id),
+                        _esc(obligation.matrix_field),
+                        _esc(obligation.matrix_value)))
+            output.append("</ul>")
             if not passages:
                 output.append(
-                    '<p class="state-note">No mapped passage from this document is present in the current passage map.</p>')
+                    '<p class="state-note">%s</p>' %
+                    _esc(PRIOR_UI["noExactPassage"]))
             for passage in passages:
                 dom_id = model.dom_id(
                     passage.document_id, passage.fragment_id)
@@ -655,10 +780,27 @@ def _disclosure_html(model, reverse: dict) -> str:
                 output.append(
                     '<article class="dblock prior-art-passage" id="%s">'
                     '<span class="anchor-label" aria-hidden="true">%s</span>%s'
-                    '<p class="passage-meta">%s</p><p>%s</p></article>' % (
+                    '<p class="passage-meta">%s</p><p>%s</p>'
+                    '<button type="button" class="reader-jump" data-reader="%s" '
+                    'data-reader-details="%s">%s</button></article>' % (
                         _esc(dom_id),
                         _esc(_anchor_label(passage.fragment_id)), badge,
-                        _esc(metadata), _esc(passage.text)))
+                        _esc(metadata), _esc(passage.text),
+                        _esc(_reader_dom_id(
+                            model, passage.document_id, passage.fragment_id)),
+                        _esc("full-reader-" + document_dom_id),
+                        _esc(PRIOR_UI["openFullReader"])))
+            reader_body = "".join(
+                _reader_node_html(model, node, document.document_id, reverse)
+                for node in reader.content)
+            output.append(
+                '<details class="full-reader" id="full-reader-%s"><summary>%s — %s</summary>'
+                '<p class="reader-authority">%s</p><div class="reader-content">%s</div>'
+                '</details>' % (
+                    _esc(document_dom_id), _esc(PRIOR_UI["fullReader"]),
+                    _esc(reader.title),
+                    _esc(_wording(model, "authority-target-sources")),
+                    reader_body))
             output.append("</section>")
         return "".join(output)
     target_document_id = model.source_documents[1].document_id
@@ -818,6 +960,8 @@ def render(model, mode="candidate") -> bytes:
             "application script uses forbidden browser capabilities: %s" %
             ", ".join(forbidden))
     ui = dict(UI)
+    if model.product_kind == "prior-art":
+        ui.update(PRIOR_UI)
     ui["forwardMode"] = model.forward_mode_label
     ui["reverseMode"] = model.reverse_mode_label
     navigation = {
@@ -833,6 +977,8 @@ def render(model, mode="candidate") -> bytes:
         "reverse": reverse,
         "claimGates": claim_gates,
     }
+    if model.product_kind == "prior-art":
+        navigation["obligationsByClaim"] = _obligation_data(model)
     title = "%s — %s" % (model.display_name, model.claim_set_version)
     html_text = HTML_TEMPLATE.format(
         csp=EXACT_CSP,
@@ -996,6 +1142,36 @@ body {
 .state-note {
   margin:2px 0; color:var(--state); font:11px Arial,sans-serif;
 }
+.obligation-list {
+  margin:4px 0 10px; padding:0; list-style:none; font:10.5px Arial,sans-serif;
+}
+.obligation {
+  margin:3px 0; padding:5px 7px; border-left:4px solid var(--line);
+  background:#f8f7f3;
+}
+.obligation-passage-mapped { border-left-color:#287448; }
+.obligation-counsel-review-required { border-left-color:#b16a00; }
+.obligation-reviewed-no-material-passage { border-left-color:#777; }
+.highlight-obligation { outline:2px dotted var(--accent); outline-offset:1px; }
+.reader-jump {
+  min-height:24px; border:1px solid var(--accent); border-radius:4px;
+  color:var(--accent); background:#fff; cursor:pointer; font-size:11px;
+}
+.full-reader {
+  margin:10px 0 18px; padding:6px 8px; border:1px solid var(--line);
+  background:#fcfbf7;
+}
+.full-reader > summary {
+  color:var(--accent); cursor:pointer; font:600 12px Arial,sans-serif;
+}
+.reader-authority { color:#555; font:10px Arial,sans-serif; }
+.reader-content {
+  position:relative; margin:8px 0 0; padding:6px 0 6px 50px;
+  border-top:1px solid var(--line);
+}
+.reader-block { position:relative; }
+.reader-block:focus { outline:3px solid #d98c00; outline-offset:2px; }
+.transcribed-link { text-decoration:underline dotted; }
 .phrase-btn {
   min-height:24px; padding:0 1px; border:0;
   border-bottom:2px dotted var(--accent); color:var(--accent);
@@ -1124,6 +1300,8 @@ footer { display:none; }
     border-top:1px solid var(--line); border-bottom:0; background:#fff;
   }
   table,figure,pre { break-inside:avoid; }
+  details > :not(summary) { display:block !important; }
+  details > summary { list-style:none; }
 }
 noscript .navigation-bar { display:none; }
 """
@@ -1167,7 +1345,8 @@ function relation(relationId){ return DATA.relations[relationId] || null; }
 function claimGates(current){ return DATA.claimGates[current.claimKey] || []; }
 
 function clearHighlights(){
-  ['highlight-strong','highlight-soft','highlight-subject','highlight-related']
+  ['highlight-strong','highlight-soft','highlight-subject','highlight-related',
+   'highlight-obligation']
     .forEach(function(className){
       Array.prototype.slice.call(document.querySelectorAll('.' + className))
         .forEach(function(node){ node.classList.remove(className); });
@@ -1247,6 +1426,11 @@ function renderForwardBar(){
   forwardBar.textContent = '';
   forwardBar.appendChild(element('div', 'mode', ui('forwardMode')));
   forwardBar.appendChild(element('div', 'context', current.subjectLabel));
+  if (DATA.obligationsByClaim)
+    forwardBar.appendChild(element('div', null, format(
+      ui('matrixObligationCount'), {
+        count:(DATA.obligationsByClaim[current.claimKey] || []).length
+      })));
   if (current.status === 'counsel-review-required'){
     forwardBar.appendChild(element('div', null, current.statusLabel));
   } else {
@@ -1276,7 +1460,16 @@ function applyForwardHighlights(){
   var current = relation(state.key);
   var subject = document.getElementById(current.subjectDomId);
   if (subject) subject.classList.add('highlight-subject');
-  if (current.status !== 'mapped') return;
+  var obligationIds = DATA.obligationsByClaim ?
+    (DATA.obligationsByClaim[current.claimKey] || []) : [];
+  obligationIds.forEach(function(id){
+    var obligation = document.getElementById(id);
+    if (obligation) obligation.classList.add('highlight-obligation');
+  });
+  if (current.status !== 'mapped'){
+    if (obligationIds.length) scrollToNode(obligationIds[0]);
+    return;
+  }
   current.targets.slice(0, 5).forEach(function(target, index){
     target.blocks.forEach(function(blockId){
       var block = document.getElementById(blockId);
@@ -1413,6 +1606,18 @@ function activateGate(claimKey, gateId, fromId){
 document.addEventListener('click', function(event){
   var control = event.target.closest ? event.target.closest('button') : null;
   if (control){
+    if (control.dataset.reader){
+      var details = document.getElementById(control.dataset.readerDetails);
+      var readerTarget = document.getElementById(control.dataset.reader);
+      if (details) details.open = true;
+      if (readerTarget){
+        readerTarget.scrollIntoView({
+          behavior:reducedMotion ? 'auto' : 'smooth', block:'center'
+        });
+        readerTarget.focus();
+      }
+      return;
+    }
     if (control.dataset.relation){
       activateForward(control.dataset.relation, control.id);
       return;

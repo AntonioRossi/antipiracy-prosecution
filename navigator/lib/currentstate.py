@@ -76,6 +76,7 @@ NAVIGATOR_INPUT_ROOTS = (
 NAVIGATOR_FIXED_INPUT_PATHS = frozenset({
     bundlezip.BUNDLE_CONFIG_PATH,
     "navigator/schema/acceptance.json",
+    "navigator/schema/prior-art-map-acceptance.json",
     "navigator/schema/prior-art-acceptance.json",
     "navigator/schema/edition.schema.json",
     "navigator/schema/navigator-relations.xsd",
@@ -1195,6 +1196,8 @@ _LOWER_CONTRACT_DOCUMENTS = (
     "contracts/10-source-surfaces/authored-markdown/technical-description.md",
     "contracts/20-semantic-relations/authored-relations/acceptance-criteria.md",
     "contracts/20-semantic-relations/authored-relations/technical-description.md",
+    "contracts/20-semantic-relations/claim-prior-art-passage-map/acceptance-criteria_DRAFT.md",
+    "contracts/20-semantic-relations/claim-prior-art-passage-map/technical-description_DRAFT.md",
 )
 _SHARED_AGGREGATE_LINK = "](../../README.md#aggregate-validation-boundary)"
 _PRODUCT_CONTRACT_DOCUMENTS = (

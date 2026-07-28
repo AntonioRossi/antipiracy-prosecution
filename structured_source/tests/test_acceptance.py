@@ -638,6 +638,8 @@ class AcceptanceContract(unittest.TestCase):
             "contracts/10-source-surfaces/pdf-transcription/technical-description.md",
             "contracts/20-semantic-relations/authored-relations/acceptance-criteria.md",
             "contracts/20-semantic-relations/authored-relations/technical-description.md",
+            "contracts/20-semantic-relations/claim-prior-art-passage-map/acceptance-criteria_DRAFT.md",
+            "contracts/20-semantic-relations/claim-prior-art-passage-map/technical-description_DRAFT.md",
             "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
             "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
             "contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md",
@@ -648,6 +650,7 @@ class AcceptanceContract(unittest.TestCase):
             "structured_source/registry/acceptance-authored-markdown.json",
             "structured_source/registry/acceptance-authored-relations.json",
             "structured_source/registry/acceptance-pdf-transcription.json",
+            "navigator/schema/prior-art-map-acceptance.json",
             "structured_source/relation_projection.py",
         }
         for relative in ("navigator/lib", "navigator/schema",

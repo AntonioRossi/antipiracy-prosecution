@@ -25,7 +25,7 @@ authority scheme. Generated Markdown is a review representation and never become
 
 The claims-to-specification products use navigator-owned `navigator-claim-pct-relations-v1` files.
 The claims-to-prior-art products instead consume the exact declared comparison-matrix and
-claim-unit-to-passage-map relation XML handoffs. They do not copy, restate, infer, retarget, or take
+claim/prior-art-obligation passage-map relation XML handoffs. They do not copy, restate, infer, retarget, or take
 ownership of those authored assertions.
 
 Machine validation proves schema and profile validity, identity, semantic ownership, role and

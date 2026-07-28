@@ -37,7 +37,7 @@ def _bytes(relative):
 class CurrentPipelineTests(unittest.TestCase):
     def _lightweight_validation(self, root, during_closure=None):
         closure = {
-            "acceptanceRegistries": (object(), object()),
+            "acceptanceRegistries": (object(), object(), object()),
             "bundle": {"name": "bundle.zip"},
             "products": {},
             "structuredSource": {

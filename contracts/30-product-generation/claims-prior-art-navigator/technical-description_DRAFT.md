@@ -9,15 +9,15 @@
 
 The current product inventory contains one claims-to-prior-art navigator for the normal-allowance
 claim set and one for the allowance-first claim set. Each product lets inventor and US counsel move
-from an exact claim unit or exact selected phrase to applicant-recorded candidate passages in the
-registered prior-art transcriptions, and from each displayed passage back to the related claim
-fragments.
+from an exact claim unit or exact selected phrase to applicant-recorded candidate passages, inspect
+every matrix claim/document obligation and current state, open the complete asserted transcription
+at a mapped passage, and move from each displayed passage back to the related claim fragments.
 
 The navigator is a review aid. A recorded association is not a conclusion that a document discloses
 a limitation, anticipates a claim, renders a claim obvious, establishes a legal combination, or has
-any other legal effect. “No candidate prior-art passage recorded — counsel review required” states
-only the current passage-map state. It does not state that the feature is absent from that document,
-from another document, or from the prior art. Human review of the source PDF, transcription
+any other legal effect. “Counsel review required” states that a material matrix relationship lacks
+an exact bound passage candidate; it does not state that the feature is present or absent.
+“Reviewed — no material passage required” is limited to its exact matrix field. Human review of the source PDF, transcription
 uncertainty, the claim as a whole, and the applicable law remains authoritative.
 
 ## 2. Exact authority direction
@@ -32,8 +32,8 @@ strategy prior-art comparison-matrix relation XML──────────�
   └─owns the exact current document scope                   │
                                                             │
 strategy claim/prior-art-passage-map relation XML──────────┤
-  ├─owns one state assertion for every claim unit           │
-  └─owns every exact candidate association                  │
+  ├─owns every normalized matrix obligation and state       │
+  └─owns every obligation-bound exact candidate             │
                                                             │
 registered prior-art transcription XML─────────────────────┘
   └─supplies exact digest-bound passage content and provenance
@@ -42,10 +42,11 @@ immutable product model ─▶ self-contained HTML5 ─▶ checksum ─▶ four-
 ```
 
 The comparison matrix remains the sole owner of the strategic document-level comparison and the
-current 33-document scope. The dedicated passage map is the sole owner of claim-unit or exact-phrase
-to prior-art-passage candidate associations. The product does not derive passage mappings from
-matrix prose, scores, whole-document endpoints, claim wording, text similarity, search results, or
-the rendered Markdown review views.
+current 33-document scope. The dedicated passage map is the sole owner of normalized
+matrix-relation/field/claim/document obligation states and exact claim-fragment candidate
+associations. The product independently computes the complete obligation census from matrix XML,
+but never derives a candidate from matrix prose, scores, whole-document endpoints, claim wording,
+text similarity, search results, or rendered Markdown review views.
 
 Each prior-art package's canonical source PDF remains the fidelity authority. Its asserted
 `pdf-evidence-transcription-v1` XML is the sole machine-readable passage surface. The product never
@@ -63,17 +64,19 @@ They use `claim-prior-art-passage-map-v1`. Every relation has one semantic `rela
 anchor-only `xml:id`, the applicant as semantic owner, forward direction, the exact relation type,
 and only profile-enumerated fields and endpoint roles.
 
-### 3.1 State assertions
+### 3.1 Matrix obligations
 
-Every typed claim unit has exactly one `record-kind=state` assertion. It has exactly one `subject`
-endpoint and one current `mapping-status`:
+Every obligation computed under the dedicated phase-20 semantic contract occurs exactly once as a
+`record-kind=obligation` assertion. It binds one exact claim root and one exact matrix-named
+prior-art document root to the controlling matrix relation and field. Its state is
+`passage-mapped`, `counsel-review-required`, or `reviewed-no-material-passage`; the last state is
+valid only when the exact matrix field is `—`.
 
-- `mapped`, when at least one candidate assertion exists for that unit or an exact phrase in it;
-- `counsel-review-required`, when no candidate assertion exists.
-
-The subject endpoint is the exact claim-unit `(documentId, fragmentId, fragmentContentDigest)` from
-the generated claim XML surface. State assertions never carry an evidence endpoint. Missing,
-duplicated, stale, or contradictory unit state fails before rendering.
+The NA map contains 218 obligations: 33 passage-mapped, 152 counsel-review-required, and 33
+reviewed-no-material-passage. The AF map contains 264 obligations: 29 passage-mapped, 199
+counsel-review-required, and 36 reviewed-no-material-passage. These states expose the current
+review gap instead of treating one passage for a claim unit as coverage of every matrix-named
+document.
 
 ### 3.2 Candidate assertions
 
@@ -82,27 +85,27 @@ A `record-kind=candidate` assertion has:
 - one exact claim-unit `subject` endpoint;
 - one or more exact prior-art `evidence` endpoints;
 - one `candidate-role` of `specific`, `combination`, or `context`;
+- one sorted `obligation-ids` list covering the same claim and evidence-document set;
 - one nonblank `proposition` describing why those passages were recorded together;
 - optionally one `subject-exact-text` that must occur exactly once as a contiguous substring of the
   subject claim unit.
 
 Each evidence endpoint resolves through the retained structured-source interface to one prior-art
-transcription item and its typed-item digest. The target document must be in the strategy comparison
-matrix and must have its own declared XML consumer edge. A document-root endpoint is not a passage
-candidate. A stale digest, undeclared package, non-unique phrase, target outside matrix scope,
-relation-to-relation target, or missing transcription handoff fails closed.
+transcription item and its typed-item digest. Every matrix-scope document has its own declared XML
+consumer edge. A document-root endpoint is not a passage candidate. A stale digest, undeclared
+package, non-unique phrase, target outside matrix scope, unbound obligation, relation-to-relation
+target, or missing transcription handoff fails closed.
 
-The NA map contains 77 unit states: 70 mapped and seven counsel-review-required. The AF map contains
-61 unit states: 54 mapped and seven counsel-review-required. The 124 mapped states each have one
-candidate assertion and resolve to a current inventory of 16 non-root passages across the declared
-A4, A5, A6, A13, A20, A21, and B9 transcription packages. The 14 review-required states have no
-candidate assertion or evidence endpoint.
+The current grounded candidate inventory contains 58 NA and 47 AF relations, resolving to 15
+non-root passages across A4, A5, A6, A13, A20, A21, and B9. A claim unit's displayed mapped or
+review-required state is computed from these candidates; it is not another authored state plane.
+Candidate relations that cannot close against a matrix obligation do not remain in the map.
 
 ## 4. Current immutable model
 
 One retained worktree capture supplies the product control, parser controls, content registry,
-claim handoff, comparison-matrix handoff, passage-map handoff, any referenced prior-art transcription
-handoffs, controlled wording, and schemas. All structured-source domains validate once before model
+claim handoff, comparison-matrix handoff, passage-map handoff, all 33 matrix-scope prior-art
+transcription handoffs, controlled wording, and schemas. All structured-source domains validate once before model
 construction.
 
 The immutable model preserves:
@@ -110,8 +113,8 @@ The immutable model preserves:
 - product, strategy, claim-set, artifact, consumer, and relation-set identities;
 - claim hierarchy, claim units, dependencies, group order, text, and typed digests;
 - the exact 33-document matrix scope;
-- one map state per claim unit and every exact phrase selector and candidate group;
-- target passage text, page, region, transcription uncertainty, and typed digest;
+- every exact matrix obligation and current state, plus every exact phrase selector and candidate group;
+- target passage text, page, region, transcription uncertainty, typed digest, and complete XML reader tree;
 - forward and reverse relation indexes;
 - controlled legal/status wording and its computed slot origins;
 - every source XML role, registered path, XML byte digest, and complete read lock.
@@ -125,14 +128,20 @@ render and release stages receive only the sealed model.
 Each product is a self-contained UTF-8 HTML5 file with two coordinated panes:
 
 - the left pane displays the exact strategy claim hierarchy and makes every claim unit selectable;
-- the right pane displays all 33 in-scope prior-art documents and every currently mapped passage,
-  grouped by document.
+- the right pane displays all 33 in-scope prior-art documents, every matrix obligation and state,
+  every currently mapped passage, and one complete asserted-XML transcription reader per document.
 
 For a mapped unit or phrase, candidate controls identify the role and proposition, navigate to all
 passage endpoints in deterministic order, and cycle without changing the relation semantics. A
 passage card shows its document ID, stable passage anchor, page, region, uncertainty when present,
-and transcription text. Its reverse badge selects the related claim fragments. Clearing selection
-removes transient state and returns focus predictably.
+and transcription text. Its reverse badge selects the related claim fragments. Its contextual-reader
+control opens the complete transcription, scrolls to the same exact fragment, and places keyboard
+focus there without changing browser history. Clearing selection removes transient state and
+returns focus predictably.
+
+The full readers are generated directly from every declared matrix-scope transcription handoff.
+They are not activated by a document allowlist. Adding a matrix-scope document makes its reader
+mandatory in the same current state, whatever its obligation states.
 
 The ordinary document, complete mapping schedule, and print view contain every substantive claim,
 status, candidate proposition, passage, provenance item, and disclaimer outside script data. With
@@ -185,8 +194,8 @@ stored products, and declared handoffs form one indivisible current implementati
 
 A passage-map content change is complete only when all affected current owners agree:
 
-1. author or remove exact candidate relation assertions and their state values in the strategy map;
-2. declare every newly referenced prior-art XML package edge;
+1. reconcile every computed matrix obligation and author or remove its exact candidate relation;
+2. declare every matrix-scope prior-art XML package edge;
 3. regenerate the map's Markdown review projection;
 4. run focused map, model, render, security, release, and bundle tests;
 5. regenerate candidate and sealed prior-art HTML, checksums, and the four-product bundle;
@@ -214,9 +223,9 @@ of source evidence and substantive analysis remains authoritative.
 
 ## 9. Failure conditions
 
-Acceptance fails for any missing or extra product, consumer, map package, claim-unit state, scope
-document, target handoff, generated view, stored product, checksum, bundle member, implementation
-path, contract, registry, schema, test, or vector. It also fails for stale or whole-document passage
-targets, inconsistent state/candidates, inferred or copied semantics, hostile unescaped content,
+Acceptance fails for any missing or extra product, consumer, map package, matrix obligation, scope
+document, full reader, target handoff, generated view, stored product, checksum, bundle member,
+implementation path, contract, registry, schema, test, or vector. It also fails for stale or
+whole-document passage targets, inconsistent obligation/candidate closure, inferred or copied semantics, hostile unescaped content,
 forbidden browser capability, nondeterministic bytes, partial publication, alternate command path,
 or any retained obsolete or orphaned implementation.

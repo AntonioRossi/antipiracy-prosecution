@@ -6,7 +6,9 @@ from dataclasses import dataclass
 import re
 from types import MappingProxyType
 
-from structured_source.pdf_transcription import PDFTranscriptionSurface
+from structured_source.pdf_transcription import (
+    PDFTranscriptionSurface, TypedContentNode,
+)
 
 from . import bundlezip, canon, claims as claims_mod, depgraph, projections
 from . import registry as registry_mod, schema_validate
@@ -39,10 +41,31 @@ class PriorArtPassage:
 
 
 @dataclass(frozen=True, slots=True)
+class PriorArtReaderDocument:
+    document_id: str
+    label: str
+    title: str
+    content: tuple[TypedContentNode, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class PriorArtObligation:
+    relation_id: str
+    matrix_relation_id: str
+    matrix_field: str
+    matrix_value: str
+    status: str
+    subject: Endpoint
+    evidence: Endpoint
+    claim_number: int
+
+
+@dataclass(frozen=True, slots=True)
 class PriorArtCandidate:
     relation_id: str
     subject: Endpoint
     exact_text: str | None
+    obligation_ids: tuple[str, ...]
     targets: tuple[Target, ...]
 
 
@@ -78,6 +101,102 @@ def _typed_text(value):
     for child in value.children:
         visit(child)
     return canon.canon_prose(" ".join(parts))
+
+
+def _claim_number(fragment_id):
+    match = re.fullmatch(r"claim-([1-9][0-9]*)", fragment_id or "")
+    if match is None:
+        raise ModelError("prior-art obligation subject is not an exact claim")
+    return int(match.group(1))
+
+
+def _claim_numbers(value):
+    normalized = value.replace("–", "-")
+    numbers = []
+    for start, end in re.findall(
+            r"(?<![A-Za-z0-9])([1-9][0-9]*)(?:\s*-\s*([1-9][0-9]*))?",
+            normalized):
+        first = int(start)
+        last = int(end or start)
+        if last < first:
+            raise ModelError("matrix claim range is reversed")
+        numbers.extend(range(first, last + 1))
+    return tuple(sorted(set(numbers)))
+
+
+def _primary_document(fields, name):
+    value = fields.get(name)
+    match = re.match(r"([ABC][1-9][0-9]*)\b", value or "")
+    if match is None:
+        raise ModelError("matrix inventory document identity is not exact")
+    return "us-prior-art-" + match.group(1).casefold()
+
+
+def _matrix_obligations(matrix_relations):
+    """Compute the exact claim/document obligation census from matrix XML."""
+    expected = {}
+    for relation_id, relation in matrix_relations.items():
+        fields = relation["fields"]
+        subject_claims = tuple(
+            _claim_number(endpoint.fragment_id)
+            for endpoint in relation["subjects"])
+        evidence_by_document = {
+            endpoint.document_id: endpoint
+            for endpoint in relation["evidence"]
+            if endpoint.document_id.startswith("us-prior-art-")
+        }
+
+        axes = []
+        na_axes = tuple(
+            (name, int(match.group(1)))
+            for name in fields
+            if (match := re.fullmatch(r"na-([1-9][0-9]*)-[a-z0-9-]+", name)))
+        if na_axes:
+            document_id = _primary_document(fields, "document")
+            axes.extend((field, claim_number, (document_id,))
+                        for field, claim_number in na_axes)
+        integrated_fields = tuple(
+            name for name in (
+                "production-individualized-variation",
+                "delivery-association", "suspect-recovery")
+            if name in fields)
+        if integrated_fields:
+            if subject_claims != (1,):
+                raise ModelError("integrated matrix inventory subject is not exact")
+            document_id = _primary_document(fields, "id-document")
+            axes.extend((field, 1, (document_id,))
+                        for field in integrated_fields)
+        if "score" in fields:
+            if len(subject_claims) != 1:
+                raise ModelError("scored matrix inventory subject is not exact")
+            document_id = _primary_document(fields, "document")
+            axes.append(("score", subject_claims[0], (document_id,)))
+        for field in ("claimed-relationship", "claimed-operation"):
+            if field in fields:
+                if len(subject_claims) != 1 or not evidence_by_document:
+                    raise ModelError("matrix relationship obligation is not exact")
+                axes.append((field, subject_claims[0],
+                             tuple(sorted(evidence_by_document))))
+        for field in ("na-claims", "af-claims"):
+            if field in fields and evidence_by_document:
+                claim_numbers = _claim_numbers(fields[field])
+                if not claim_numbers:
+                    raise ModelError("dependent matrix claim census is not exact")
+                axes.extend((field, claim_number,
+                             tuple(sorted(evidence_by_document)))
+                            for claim_number in claim_numbers)
+
+        for field, claim_number, document_ids in axes:
+            value = fields[field]
+            for document_id in document_ids:
+                endpoint = evidence_by_document.get(document_id)
+                if endpoint is None:
+                    raise ModelError("matrix obligation document endpoint is absent")
+                key = (relation_id, field, claim_number, document_id)
+                if key in expected:
+                    raise ModelError("matrix obligation is duplicated")
+                expected[key] = (value, endpoint)
+    return expected
 
 
 class PriorArtModel:
@@ -188,24 +307,46 @@ class PriorArtModel:
         self.chain_hashes = graph.chain_hashes
 
         comparison_root = comparison_artifact._validated_root()
-        scope_ids = []
+        matrix_relations = {}
+        scope_ids = set()
         for relation in comparison_root.findall(SR + "relation"):
-            for item in relation.findall(SR + "endpoint"):
-                document_id = item.get("documentId", "")
-                if item.get("role") == "evidence" and \
-                        document_id.startswith("us-prior-art-") and \
-                        document_id not in scope_ids:
-                    scope_ids.append(document_id)
+            relation_id = relation.get("relationId")
+            if not relation_id or relation_id in matrix_relations:
+                raise ModelError("comparison-matrix relation identity is not exact")
+            endpoint_elements = tuple(relation.findall(SR + "endpoint"))
+            subjects = tuple(_endpoint(item) for item in endpoint_elements
+                             if item.get("role") == "subject")
+            evidence = tuple(_endpoint(item) for item in endpoint_elements
+                             if item.get("role") == "evidence")
+            fields = _fields(relation)
+            if not subjects or not fields:
+                raise ModelError("comparison-matrix relation is incomplete")
+            matrix_relations[relation_id] = {
+                "subjects": subjects, "evidence": evidence, "fields": fields}
+            scope_ids.update(
+                endpoint.document_id for endpoint in evidence
+                if endpoint.document_id.startswith("us-prior-art-"))
         scope_ids = sorted(scope_ids)
         if len(scope_ids) != self._expected_document_census:
             raise ModelError("prior-art comparison document census is stale")
+        if set(target_surfaces) != set(scope_ids):
+            raise ModelError(
+                "prior-art XML handoffs do not close the complete matrix scope")
         self.prior_art_scope = tuple(PriorArtScopeDocument(
             document_id=item, label=item.removeprefix("us-prior-art-").upper())
             for item in scope_ids)
+        self.prior_art_readers = tuple(PriorArtReaderDocument(
+            document_id=document_id,
+            label=document_id.removeprefix("us-prior-art-").upper(),
+            title=target_surfaces[document_id].document.title,
+            content=target_surfaces[document_id].document_item.typed_content,
+        ) for document_id in scope_ids)
+        self._target_surfaces = MappingProxyType(dict(target_surfaces))
 
-        states = {}
         candidates = {}
+        obligations = {}
         raw_candidates = []
+        expected_obligations = _matrix_obligations(matrix_relations)
         map_root = map_artifact._validated_root()
         for relation in map_root.findall(SR + "relation"):
             relation_id = relation.get("relationId")
@@ -218,38 +359,97 @@ class PriorArtModel:
             if len(subjects) != 1:
                 raise ModelError("prior-art map relation has no exact subject")
             subject = subjects[0]
-            unit = self.units_by_fragment.get(subject.fragment_id)
-            if subject.document_id != claim_document.document_id or unit is None or \
-                    unit.content_digest != subject.content_digest:
-                raise ModelError("prior-art map subject does not resolve exactly")
+            if subject.document_id != claim_document.document_id:
+                raise ModelError("prior-art map subject document is not exact")
             kind = fields.get("record-kind")
-            if kind == "state":
-                if set(fields) != {"mapping-status", "record-kind"} or evidence or \
-                        fields["mapping-status"] not in {
-                            "mapped", "counsel-review-required"} or \
-                        subject.fragment_id in states:
-                    raise ModelError("prior-art state relation is malformed")
-                states[subject.fragment_id] = (relation_id, fields["mapping-status"], subject)
+            if kind == "obligation":
+                if set(fields) != {
+                        "matrix-field", "matrix-relation-id",
+                        "obligation-status", "record-kind"} or len(evidence) != 1:
+                    raise ModelError("prior-art obligation relation is malformed")
+                claim_number = _claim_number(subject.fragment_id)
+                claim = self.claims_by_number.get(claim_number)
+                if claim is None or claim.content_digest != subject.content_digest:
+                    raise ModelError("prior-art obligation claim does not resolve exactly")
+                matrix_relation_id = fields["matrix-relation-id"]
+                matrix_field = fields["matrix-field"]
+                matrix_relation = matrix_relations.get(matrix_relation_id)
+                if matrix_relation is None or matrix_field not in matrix_relation["fields"]:
+                    raise ModelError("prior-art obligation matrix owner does not resolve")
+                evidence_endpoint = evidence[0]
+                key = (matrix_relation_id, matrix_field, claim_number,
+                       evidence_endpoint.document_id)
+                expected = expected_obligations.get(key)
+                if expected is None or expected[1] != evidence_endpoint:
+                    raise ModelError("prior-art obligation is not matrix-exact")
+                status = fields["obligation-status"]
+                expected_status = ("reviewed-no-material-passage"
+                                   if expected[0].strip() == "—" else None)
+                if status not in {
+                        "passage-mapped", "counsel-review-required",
+                        "reviewed-no-material-passage"} or \
+                        (expected_status is not None) != \
+                        (status == "reviewed-no-material-passage") or \
+                        relation_id in obligations:
+                    raise ModelError("prior-art obligation status is not exact")
+                obligations[relation_id] = PriorArtObligation(
+                    relation_id=relation_id,
+                    matrix_relation_id=matrix_relation_id,
+                    matrix_field=matrix_field,
+                    matrix_value=expected[0], status=status,
+                    subject=subject, evidence=evidence_endpoint,
+                    claim_number=claim_number)
             elif kind == "candidate":
                 allowed = {"candidate-role", "proposition", "record-kind",
-                           "subject-exact-text"}
+                           "subject-exact-text", "obligation-ids"}
                 if not set(fields).issubset(allowed) or \
-                        not {"candidate-role", "proposition", "record-kind"}.issubset(fields) or \
+                        not {"candidate-role", "obligation-ids", "proposition",
+                             "record-kind"}.issubset(fields) or \
                         fields["candidate-role"] not in {"specific", "context", "combination"} or \
                         not evidence:
                     raise ModelError("prior-art candidate relation is malformed")
-                raw_candidates.append((relation_id, subject, unit, fields, evidence))
+                unit = self.units_by_fragment.get(subject.fragment_id)
+                if unit is None or unit.content_digest != subject.content_digest:
+                    raise ModelError("prior-art candidate subject does not resolve exactly")
+                obligation_ids = tuple(fields["obligation-ids"].split(" "))
+                if not obligation_ids or obligation_ids != tuple(
+                        sorted(set(obligation_ids))):
+                    raise ModelError("candidate obligation identities are not exact")
+                raw_candidates.append((
+                    relation_id, subject, unit, fields, evidence, obligation_ids))
                 candidates.setdefault(subject.fragment_id, []).append(relation_id)
             else:
                 raise ModelError("prior-art relation record kind is unsupported")
-        if set(states) != set(self.units_by_fragment):
-            raise ModelError("prior-art map state coverage is not exactly one per claim unit")
+
+        actual_obligations = {
+            (item.matrix_relation_id, item.matrix_field, item.claim_number,
+             item.evidence.document_id): item
+            for item in obligations.values()}
+        if set(actual_obligations) != set(expected_obligations) or \
+                len(actual_obligations) != len(obligations):
+            raise ModelError("matrix claim/document obligation coverage is incomplete")
 
         target_values = {}
         passage_values = {}
         phrase_values = []
         candidate_values = []
-        for relation_id, subject, unit, fields, evidence in raw_candidates:
+        referenced_obligations = set()
+        for (relation_id, subject, unit, fields, evidence,
+             obligation_ids) in raw_candidates:
+            selected_obligations = tuple(
+                obligations.get(identifier) for identifier in obligation_ids)
+            if any(item is None for item in selected_obligations):
+                raise ModelError("candidate obligation identity does not resolve")
+            claim_number = unit.claim_number
+            obligation_documents = {
+                item.evidence.document_id for item in selected_obligations}
+            evidence_documents = {endpoint.document_id for endpoint in evidence}
+            if obligation_documents != evidence_documents or any(
+                    item.claim_number != claim_number or
+                    item.status != "passage-mapped"
+                    for item in selected_obligations):
+                raise ModelError("candidate does not close its exact obligations")
+            referenced_obligations.update(obligation_ids)
             for endpoint in evidence:
                 if endpoint.document_id not in scope_ids:
                     raise ModelError("mapped passage is outside comparison scope")
@@ -277,7 +477,8 @@ class PriorArtModel:
                 target_values.setdefault(subject.fragment_id, []).append(target)
                 candidate_values.append(PriorArtCandidate(
                     relation_id=relation_id, subject=subject,
-                    exact_text=None, targets=(target,)))
+                    exact_text=None, obligation_ids=obligation_ids,
+                    targets=(target,)))
             else:
                 start, end = _unique_span(unit.text, exact)
                 candidate = PhraseMapping(
@@ -286,16 +487,29 @@ class PriorArtModel:
                     exact_text=exact, start=start, end=end,
                     targets=(target,))
                 phrase_values.append(candidate)
-                candidate_values.append(candidate)
+                candidate_values.append(PriorArtCandidate(
+                    relation_id=relation_id, subject=subject,
+                    exact_text=exact, obligation_ids=obligation_ids,
+                    targets=(target,)))
+
+        mapped_obligations = {
+            item.relation_id for item in obligations.values()
+            if item.status == "passage-mapped"}
+        if referenced_obligations != mapped_obligations:
+            raise ModelError("mapped obligation and candidate coverage disagree")
 
         mappings = []
         for unit_id, unit in self.units_by_fragment.items():
-            relation_id, status, subject = states[unit_id]
             has_candidates = bool(candidates.get(unit_id))
-            if (status == "mapped") != has_candidates:
-                raise ModelError("prior-art state and candidate inventory disagree")
             mappings.append(Mapping(
-                relation_id=relation_id, status=status, subject=subject,
+                relation_id=(config["passageMapPackageId"] +
+                             "-computed-unit-" + unit_id),
+                status=("mapped" if has_candidates else
+                        "counsel-review-required"),
+                subject=Endpoint(
+                    document_id=claim_document.document_id,
+                    fragment_id=unit.fragment_id,
+                    content_digest=unit.content_digest),
                 unit_kind=unit.unit_kind, unit_index=unit.unit_index,
                 caution=None, targets=tuple(target_values.get(unit_id, ()))))
         self.relations = RelationSet(
@@ -309,10 +523,18 @@ class PriorArtModel:
             self.relations.phrase_mappings, parent=True)
         self.gates_by_id = MappingProxyType({})
         self.dispositions_by_subject = MappingProxyType({})
+        self.prior_art_obligations = tuple(
+            obligations[key] for key in sorted(obligations))
+        obligation_values = {}
+        for item in self.prior_art_obligations:
+            obligation_values.setdefault(item.claim_number, []).append(item)
+        self.obligations_by_claim = MappingProxyType({
+            key: tuple(value) for key, value in sorted(obligation_values.items())})
         self.candidate_relations = tuple(candidate_values)
         self._relations_by_id = MappingProxyType({
             item.relation_id: item for item in
-            (*self.relations.mappings, *self.candidate_relations)})
+            (*self.relations.mappings, *self.prior_art_obligations,
+             *self.candidate_relations)})
         self.reverse_index = projections.reverse_index(
             self.relations, self.units_by_fragment)
         self.prior_art_passages = tuple(
@@ -364,9 +586,15 @@ class PriorArtModel:
         for relation in self.relations.mappings:
             subject = relation.subject
             values.setdefault((subject.document_id, subject.fragment_id), []).append(relation)
+        for relation in self.prior_art_obligations:
+            values.setdefault(
+                (relation.subject.document_id, relation.subject.fragment_id),
+                []).append(relation)
+            values.setdefault(
+                (relation.evidence.document_id, relation.evidence.fragment_id),
+                []).append(relation)
         for relation in self.candidate_relations:
-            subject = (relation.parent if isinstance(relation, PhraseMapping)
-                       else relation.subject)
+            subject = relation.subject
             values.setdefault((subject.document_id, subject.fragment_id), []).append(relation)
             for target in relation.targets:
                 for endpoint in target.endpoints:
@@ -427,9 +655,11 @@ class PriorArtModel:
             if value is None and match:
                 value = self.claims_by_number.get(int(match.group(1)))
         else:
-            value = next((item for item in self.prior_art_passages
-                          if item.document_id == document_id and
-                          item.fragment_id == fragment_id), None)
+            surface = self._target_surfaces.get(document_id)
+            try:
+                value = surface.item(fragment_id) if surface is not None else None
+            except Exception as exc:
+                raise ModelError("source item does not resolve") from exc
         if value is None:
             raise ModelError("source item does not resolve")
         return value

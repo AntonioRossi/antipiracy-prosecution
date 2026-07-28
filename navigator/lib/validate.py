@@ -425,7 +425,7 @@ def validate_prior_art(model):
         if not model.artifact_name.endswith(
                 "_%s.html" % model.claim_set_version):
             error("metadata", "artifact name is not claim-version bound")
-        if len(model.source_documents) < 3 or \
+        if len(model.source_documents) != 3 + model._expected_document_census or \
                 [item.authority_scheme for item in model.source_documents[:3]] != [
                     "authored-markdown-v1", "authored-relations-v1",
                     "authored-relations-v1"]:
@@ -437,6 +437,10 @@ def validate_prior_art(model):
                 len({item.document_id for item in model.prior_art_scope}) != \
                 len(model.prior_art_scope):
             error("scope", "comparison-matrix document scope is not exact")
+        scope_ids = {item.document_id for item in model.prior_art_scope}
+        if {item.document_id for item in model.source_documents[3:]} != scope_ids or \
+                {item.document_id for item in model.prior_art_readers} != scope_ids:
+            error("scope", "full XML reader and matrix handoff scope differ")
         _claims(model, error)
         if set(model.mappings_by_unit) != set(model.units_by_fragment) or any(
                 len(value) != 1 for value in model.mappings_by_unit.values()):
@@ -450,13 +454,33 @@ def validate_prior_art(model):
                     mapping.targets or model.phrases_by_unit.get(
                         mapping.subject.fragment_id)):
                 error("relations", "review-required state has candidate passages")
+        obligation_ids = {item.relation_id
+                          for item in model.prior_art_obligations}
+        if len(obligation_ids) != len(model.prior_art_obligations) or not obligation_ids:
+            error("obligations", "matrix obligation identities are not exact")
+        mapped_obligations = {
+            item.relation_id for item in model.prior_art_obligations
+            if item.status == "passage-mapped"}
+        referenced_obligations = {
+            identifier for candidate in model.candidate_relations
+            for identifier in candidate.obligation_ids}
+        if mapped_obligations != referenced_obligations:
+            error("obligations", "candidate and mapped-obligation coverage differ")
+        if any(item.status not in {
+                "passage-mapped", "counsel-review-required",
+                "reviewed-no-material-passage"}
+               for item in model.prior_art_obligations):
+            error("obligations", "obligation status vocabulary is not closed")
         expected_relation_ids = {
             item.relation_id for item in
-            (*model.relations.mappings, *model.candidate_relations)}
+            (*model.relations.mappings, *model.prior_art_obligations,
+             *model.candidate_relations)}
         if set(model._relations_by_id) != expected_relation_ids or \
                 len(expected_relation_ids) != \
-                len(model.relations.mappings) + len(model.candidate_relations):
-            error("relations", "state and candidate relation identities are not exact")
+                (len(model.relations.mappings) +
+                 len(model.prior_art_obligations) +
+                 len(model.candidate_relations)):
+            error("relations", "computed state and authored relation identities are not exact")
         expected_wording = {
             "artifact-label-technical-preview",
             "artifact-watermark-technical-preview",
@@ -465,6 +489,9 @@ def validate_prior_art(model):
             "mapping-role-context", "mapping-role-specific",
             "mapping-status-counsel-review-required",
             "mapping-status-mapped", "provenance-summary",
+            "obligation-status-counsel-review-required",
+            "obligation-status-passage-mapped",
+            "obligation-status-reviewed-no-material-passage",
             "source-input-provenance", "standing-disclaimer",
         }
         if set(model._wording) != expected_wording:

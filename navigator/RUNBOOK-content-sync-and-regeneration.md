@@ -94,12 +94,14 @@ scalar type and one exact origin; every slot is rendered as escaped plain text.
 
 Review each affected relation against the current source item. Do not infer a target, copy one
 edition's mapping into the other, reuse a stale digest, or use visible text, order, line number, or
-heading slug as identity. A fragment with no recorded candidate remains explicitly
-`counsel-review-required`.
+heading slug as identity. A fragment with no recorded candidate displays the computed
+`counsel-review-required` unit state; every matrix obligation retains its authored exact state.
 
-For a claims-to-prior-art change, edit the strategy-owned passage-map relation XML, declare every
-referenced prior-art transcription XML consumer edge, regenerate the map Markdown review view, and
-leave every unit without an exact candidate in `counsel-review-required` state.
+For a claims-to-prior-art change, reconcile the complete matrix relation/field/claim/document
+obligation census in the strategy-owned passage-map relation XML, declare every matrix-scope
+prior-art transcription XML consumer edge, bind each candidate to exact mapped obligations, and
+regenerate the map Markdown review view. Do not retain a unit-state assertion or a candidate that
+cannot close against an obligation.
 
 ## 4. Inspect and generate the configured products
 
@@ -112,9 +114,10 @@ uv --no-cache --offline run --locked --no-sync python -m navigator preview na-pr
 uv --no-cache --offline run --locked --no-sync python -m navigator preview af-prior-art
 ```
 
-Inspect each changed product visually, including forward and reverse navigation, no-candidate
-states, cautions and gates, disclosure figures, keyboard focus, the no-JavaScript document order,
-and print content. Visual inspection is useful product review, not a stored authorization step.
+Inspect each changed product visually, including forward and reverse navigation, obligation and
+no-candidate states, contextual-reader opening and exact-fragment focus, cautions and gates,
+disclosure figures, keyboard focus, the no-JavaScript document order, and print content. Visual
+inspection is useful product review, not a stored authorization step.
 
 Regenerate every product in the current bundle inventory so shared-input drift cannot remain
 hidden:

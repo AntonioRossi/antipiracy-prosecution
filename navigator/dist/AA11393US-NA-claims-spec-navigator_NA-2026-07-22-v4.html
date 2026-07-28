@@ -89,6 +89,36 @@ body {
 .state-note {
   margin:2px 0; color:var(--state); font:11px Arial,sans-serif;
 }
+.obligation-list {
+  margin:4px 0 10px; padding:0; list-style:none; font:10.5px Arial,sans-serif;
+}
+.obligation {
+  margin:3px 0; padding:5px 7px; border-left:4px solid var(--line);
+  background:#f8f7f3;
+}
+.obligation-passage-mapped { border-left-color:#287448; }
+.obligation-counsel-review-required { border-left-color:#b16a00; }
+.obligation-reviewed-no-material-passage { border-left-color:#777; }
+.highlight-obligation { outline:2px dotted var(--accent); outline-offset:1px; }
+.reader-jump {
+  min-height:24px; border:1px solid var(--accent); border-radius:4px;
+  color:var(--accent); background:#fff; cursor:pointer; font-size:11px;
+}
+.full-reader {
+  margin:10px 0 18px; padding:6px 8px; border:1px solid var(--line);
+  background:#fcfbf7;
+}
+.full-reader > summary {
+  color:var(--accent); cursor:pointer; font:600 12px Arial,sans-serif;
+}
+.reader-authority { color:#555; font:10px Arial,sans-serif; }
+.reader-content {
+  position:relative; margin:8px 0 0; padding:6px 0 6px 50px;
+  border-top:1px solid var(--line);
+}
+.reader-block { position:relative; }
+.reader-block:focus { outline:3px solid #d98c00; outline-offset:2px; }
+.transcribed-link { text-decoration:underline dotted; }
 .phrase-btn {
   min-height:24px; padding:0 1px; border:0;
   border-bottom:2px dotted var(--accent); color:var(--accent);
@@ -217,6 +247,8 @@ footer { display:none; }
     border-top:1px solid var(--line); border-bottom:0; background:#fff;
   }
   table,figure,pre { break-inside:avoid; }
+  details > :not(summary) { display:block !important; }
+  details > summary { list-style:none; }
 }
 noscript .navigation-bar { display:none; }
 </style>
@@ -385,7 +417,8 @@ function relation(relationId){ return DATA.relations[relationId] || null; }
 function claimGates(current){ return DATA.claimGates[current.claimKey] || []; }
 
 function clearHighlights(){
-  ['highlight-strong','highlight-soft','highlight-subject','highlight-related']
+  ['highlight-strong','highlight-soft','highlight-subject','highlight-related',
+   'highlight-obligation']
     .forEach(function(className){
       Array.prototype.slice.call(document.querySelectorAll('.' + className))
         .forEach(function(node){ node.classList.remove(className); });
@@ -465,6 +498,11 @@ function renderForwardBar(){
   forwardBar.textContent = '';
   forwardBar.appendChild(element('div', 'mode', ui('forwardMode')));
   forwardBar.appendChild(element('div', 'context', current.subjectLabel));
+  if (DATA.obligationsByClaim)
+    forwardBar.appendChild(element('div', null, format(
+      ui('matrixObligationCount'), {
+        count:(DATA.obligationsByClaim[current.claimKey] || []).length
+      })));
   if (current.status === 'counsel-review-required'){
     forwardBar.appendChild(element('div', null, current.statusLabel));
   } else {
@@ -494,7 +532,16 @@ function applyForwardHighlights(){
   var current = relation(state.key);
   var subject = document.getElementById(current.subjectDomId);
   if (subject) subject.classList.add('highlight-subject');
-  if (current.status !== 'mapped') return;
+  var obligationIds = DATA.obligationsByClaim ?
+    (DATA.obligationsByClaim[current.claimKey] || []) : [];
+  obligationIds.forEach(function(id){
+    var obligation = document.getElementById(id);
+    if (obligation) obligation.classList.add('highlight-obligation');
+  });
+  if (current.status !== 'mapped'){
+    if (obligationIds.length) scrollToNode(obligationIds[0]);
+    return;
+  }
   current.targets.slice(0, 5).forEach(function(target, index){
     target.blocks.forEach(function(blockId){
       var block = document.getElementById(blockId);
@@ -631,6 +678,18 @@ function activateGate(claimKey, gateId, fromId){
 document.addEventListener('click', function(event){
   var control = event.target.closest ? event.target.closest('button') : null;
   if (control){
+    if (control.dataset.reader){
+      var details = document.getElementById(control.dataset.readerDetails);
+      var readerTarget = document.getElementById(control.dataset.reader);
+      if (details) details.open = true;
+      if (readerTarget){
+        readerTarget.scrollIntoView({
+          behavior:reducedMotion ? 'auto' : 'smooth', block:'center'
+        });
+        readerTarget.focus();
+      }
+      return;
+    }
     if (control.dataset.relation){
       activateForward(control.dataset.relation, control.id);
       return;

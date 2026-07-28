@@ -422,7 +422,7 @@ class AuthoredMarkdownConversion(unittest.TestCase):
                     self.assertNotIn("ssp-", fragment_id)
                     self.assertIn(fragment_id, inventories[document_id])
                     referenced.add((document_id, fragment_id))
-        self.assertEqual(len(referenced), 197)
+        self.assertEqual(len(referenced), 166)
 
     def test_current_pdf_content_and_relation_parsers_are_closed(self):
         self.assertEqual(

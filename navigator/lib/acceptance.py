@@ -18,9 +18,15 @@ PRIOR_CONTRACT_PATH = (
     "contracts/30-product-generation/claims-prior-art-navigator/"
     "acceptance-criteria_DRAFT.md"
 )
+MAP_ACCEPTANCE_PATH = "navigator/schema/prior-art-map-acceptance.json"
+MAP_CONTRACT_PATH = (
+    "contracts/20-semantic-relations/claim-prior-art-passage-map/"
+    "acceptance-criteria_DRAFT.md"
+)
 SPEC_CRITERIA = tuple("AC-%02d" % number for number in range(1, 21))
+MAP_CRITERIA = tuple("PAM-AC-%02d" % number for number in range(1, 9))
 PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 13))
-CRITERIA = SPEC_CRITERIA + PRIOR_CRITERIA
+CRITERIA = SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA
 TEST_COVERAGE = {
     "navigator.tests.test_canon": frozenset({"AC-15", "AC-16"}),
     "navigator.tests.test_current_pipeline": frozenset({
@@ -35,13 +41,16 @@ TEST_COVERAGE = {
         "AC-01", "AC-02", "AC-03", "AC-04", "AC-05", "AC-06", "AC-07",
         "AC-08", "AC-18",
     }),
-    "navigator.tests.test_prior_art": frozenset(PRIOR_CRITERIA),
+    "navigator.tests.test_prior_art": frozenset(
+        MAP_CRITERIA + PRIOR_CRITERIA),
 }
 
 _SCOPES = {
     **{"AC-%02d" % number: "edition" for number in range(1, 19)},
     "AC-19": "shared",
     "AC-20": "bundle",
+    **{"PAM-AC-%02d" % number: "semantic"
+       for number in range(1, 9)},
     **{"PA-AC-%02d" % number: "product"
        for number in range(1, 9)},
     "PA-AC-09": "shared",
@@ -84,9 +93,15 @@ def validate_registry(value):
     identifiers = ([entry.get("id") for entry in value.get("criteria", [])]
                    if isinstance(value, dict) and
                    isinstance(value.get("criteria"), list) else [])
-    expected_criteria = (SPEC_CRITERIA if identifiers[:1] == ["AC-01"]
-                         else PRIOR_CRITERIA)
-    expected_version = "6" if expected_criteria is SPEC_CRITERIA else "1"
+    if identifiers[:1] == ["AC-01"]:
+        expected_criteria = SPEC_CRITERIA
+        expected_version = "6"
+    elif identifiers[:1] == ["PAM-AC-01"]:
+        expected_criteria = MAP_CRITERIA
+        expected_version = "1"
+    else:
+        expected_criteria = PRIOR_CRITERIA
+        expected_version = "1"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
             value.get("acceptanceVersion") != expected_version:
@@ -170,6 +185,10 @@ def load_registries(root, byte_source=None):
     return (
         load_registry(root, byte_source),
         _load_one(
+            root, MAP_ACCEPTANCE_PATH, MAP_CONTRACT_PATH,
+            "<!-- PA-MAP-AC-TABLE:START -->",
+            "<!-- PA-MAP-AC-TABLE:END -->", byte_source),
+        _load_one(
             root, PRIOR_ACCEPTANCE_PATH, PRIOR_CONTRACT_PATH,
             "<!-- PA-NAV-AC-TABLE:START -->",
             "<!-- PA-NAV-AC-TABLE:END -->", byte_source),
@@ -198,8 +217,9 @@ def passed_result(registries, test_modules):
     validation process.
     """
     registries = tuple(registries)
-    if len(registries) != 2:
-        raise AcceptanceError("ephemeral acceptance requires both registries")
+    if len(registries) != 3:
+        raise AcceptanceError(
+            "ephemeral acceptance requires all current registries")
     for registry in registries:
         validate_registry(registry)
     modules = tuple(test_modules)

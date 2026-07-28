@@ -170,22 +170,28 @@ def _prior_art_origin_inventory(model):
         add("source-item:%s#%s" % (claim_document.document_id, fragment_id),
             "source-item", claim_document.registered_path, fragment_id,
             item.content_digest)
-    for passage in model.prior_art_passages:
-        document = model.get_document(passage.document_id)
-        add("source-item:%s#%s" % (
-            passage.document_id, passage.fragment_id), "source-item",
-            document.registered_path, passage.fragment_id,
-            passage.content_digest)
+    for document_id, surface in sorted(model._target_surfaces.items()):
+        document = model.get_document(document_id)
+        for item in surface.items:
+            add("source-item:%s#%s" % (
+                document_id, item.item_id), "source-item",
+                document.registered_path, item.item_id,
+                item.content_digest)
     add("relation-set:" + model.relation_set_id, "relation-set",
         map_document.registered_path, model.relation_set_id)
-    for relation in (*model.relations.mappings,
+    for relation in (*model.prior_art_obligations,
                      *model.candidate_relations):
         add("relation:" + relation.relation_id, "relation",
             map_document.registered_path, relation.relation_id)
-        for index, unused_target in enumerate(relation.targets, 1):
+        for index, unused_target in enumerate(
+                getattr(relation, "targets", ()), 1):
             add("relation:%s:target:%d" % (relation.relation_id, index),
                 "relation-target", map_document.registered_path,
                 "%s/target/%d" % (relation.relation_id, index))
+    for mapping in model.relations.mappings:
+        add("computed-unit-state:" + mapping.subject.fragment_id,
+            "closed-derivation", map_document.registered_path,
+            mapping.subject.fragment_id)
     for wording_id, entry in sorted(model._wording.items()):
         path = model._wording_owner_paths[wording_id]
         add("wording:" + wording_id, "controlled-wording", path, wording_id)

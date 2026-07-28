@@ -2408,7 +2408,10 @@
     "claim-prior-art-passage-map-v1": {
       "assertionFields": [
         "candidate-role",
-        "mapping-status",
+        "matrix-field",
+        "matrix-relation-id",
+        "obligation-ids",
+        "obligation-status",
         "proposition",
         "record-kind",
         "subject-exact-text"

@@ -39,6 +39,7 @@ _WORDING_CONTRACT = {
 }
 _WORDING_PREFIX_CONTRACT = (
     ("mapping-status-", "mapping-status", "mapping-status"),
+    ("obligation-status-", "mapping-status", "mapping-status"),
     ("mapping-role-", "mapping-role", "mapping-role"),
     ("caution-type-", "caution", "caution-type"),
     ("caution-scope-", "caution", "caution-scope"),

@@ -6,7 +6,7 @@
   </entry>
   <entry wordingId="standing-disclaimer" category="disclaimer">
     <usage context="standing-disclaimer" />
-    <text>Draft navigation aid generated from claim-set {editionVersion}, the current prior-art comparison scope, and exact asserted XML transcription passages. Mappings are applicant-recorded candidates for counsel review — not a novelty, obviousness, disclosure, claim-construction, validity, patentability, or legal opinion. “No candidate passage recorded” states only that this passage map contains no association; it does not state that the limitation is absent from the document or the prior art. PDF source evidence remains the fidelity authority, and transcription uncertainty remains visible. This product presents one claim strategy and does not recommend a filing choice.</text>
+    <text>Draft navigation aid generated from claim-set {editionVersion}, the current prior-art comparison matrix, its exact claim/document obligation states, and asserted XML transcription passages. Mappings are applicant-recorded candidates for counsel review — not a novelty, obviousness, disclosure, claim-construction, validity, patentability, or legal opinion. “Counsel review required” states that the matrix records a material relationship for which this passage map has no exact candidate; it does not state that the feature is present or absent. “Reviewed — no material passage required” applies only to the identified matrix field and does not state that the document is irrelevant to another claim or relationship. PDF source evidence remains the fidelity authority, and transcription uncertainty remains visible. This product presents one claim strategy and does not recommend a filing choice.</text>
     <slots>
       <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
     </slots>
@@ -18,6 +18,18 @@
   <entry wordingId="mapping-status-counsel-review-required" category="mapping-status">
     <usage context="mapping-status" />
     <text>No candidate prior-art passage recorded — counsel review required</text>
+  </entry>
+  <entry wordingId="obligation-status-passage-mapped" category="mapping-status">
+    <usage context="mapping-status" />
+    <text>Exact candidate passage recorded</text>
+  </entry>
+  <entry wordingId="obligation-status-counsel-review-required" category="mapping-status">
+    <usage context="mapping-status" />
+    <text>Material matrix relationship — exact passage counsel review required</text>
+  </entry>
+  <entry wordingId="obligation-status-reviewed-no-material-passage" category="mapping-status">
+    <usage context="mapping-status" />
+    <text>Reviewed — no material passage required for this matrix field</text>
   </entry>
   <entry wordingId="mapping-role-specific" category="mapping-role">
     <usage context="mapping-role" />
