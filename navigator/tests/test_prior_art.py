@@ -1,5 +1,8 @@
 """Focused executable contract for the current claims-to-prior-art products."""
 
+from collections import Counter
+from dataclasses import replace
+import html
 import json
 from pathlib import Path
 import re
@@ -7,10 +10,19 @@ from types import MappingProxyType
 import unittest
 
 from navigator.lib import bundlezip, render
-from navigator.lib.priorart import PriorArtModel
+from navigator.lib.model import Endpoint, ModelError
+from navigator.lib.priorart import (
+    PriorArtModel, PriorArtReviewAllocation,
+    _allocation_semantic_signature, _candidate_semantic_signature,
+    _record_unique_signature, _validate_candidate_obligation_coverage,
+    _validate_preamble_candidate,
+    _validate_review_allocation,
+)
 from navigator.lib.validate import validate_prior_art
 from navigator.tests import validation_session
+from structured_source import parser
 from structured_source.control import parse_json
+from structured_source.errors import ParseError
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -28,6 +40,20 @@ def _navigation(text):
     if match is None:
         raise AssertionError("rendered prior-art product has no navigation data")
     return json.loads(match.group(1))
+
+
+class _ModelVector:
+    """Expose exact test-only derived indexes over one sealed current model."""
+
+    def __init__(self, model, **overrides):
+        self._model = model
+        self._overrides = overrides
+
+    def __getattr__(self, name):
+        try:
+            return self._overrides[name]
+        except KeyError:
+            return getattr(self._model, name)
 
 
 class PriorArtNavigatorTests(unittest.TestCase):
@@ -72,11 +98,12 @@ class PriorArtNavigatorTests(unittest.TestCase):
 
     def test_matrix_scope_obligations_and_candidates_are_exact(self):
         expected_units = {"na-prior-art": 77, "af-prior-art": 61}
-        expected_mapped = {"na-prior-art": 58, "af-prior-art": 47}
+        expected_mapped = {"na-prior-art": 51, "af-prior-art": 44}
+        expected_candidates = {"na-prior-art": 51, "af-prior-art": 44}
         expected_obligations = {
             "na-prior-art": {
-                "passage-mapped": 33,
-                "counsel-review-required": 152,
+                "passage-mapped": 26,
+                "counsel-review-required": 159,
                 "reviewed-no-material-passage": 33,
             },
             "af-prior-art": {
@@ -104,11 +131,17 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 self.assertEqual(len(review),
                                  expected_units[product_id] -
                                  expected_mapped[product_id])
-                self.assertTrue(all(item.targets for item in mapped))
-                self.assertTrue(all(not item.targets for item in review))
+                self.assertTrue(all(not item.targets
+                                    for item in model.relations.mappings))
+                self.assertTrue(all(
+                    model.candidates_by_unit.get(item.subject.fragment_id)
+                    for item in mapped))
+                self.assertTrue(all(
+                    not model.candidates_by_unit.get(item.subject.fragment_id)
+                    for item in review))
                 self.assertEqual(model.relations.phrase_mappings, ())
                 self.assertEqual(len(model.candidate_relations),
-                                 expected_mapped[product_id])
+                                 expected_candidates[product_id])
                 counts = {
                     status: sum(item.status == status
                                 for item in model.prior_art_obligations)
@@ -124,7 +157,30 @@ class PriorArtNavigatorTests(unittest.TestCase):
                     {(item.document_id, item.fragment_id)
                      for item in model.prior_art_passages},
                     set(model.reverse_index))
+                self.assertEqual(
+                    set(model.candidates_by_unit),
+                    {item.subject.fragment_id
+                     for item in model.candidate_relations
+                     if item.exact_text is None})
+                self.assertEqual(
+                    set(model.phrase_candidates_by_unit),
+                    {item.subject.fragment_id
+                     for item in model.candidate_relations
+                     if item.exact_text is not None})
+                self.assertEqual(
+                    {item.relation_id for values in model.reverse_index.values()
+                     for item in values},
+                    {item.relation_id for item in model.candidate_relations})
                 for candidate in model.candidate_relations:
+                    unit = model.units_by_fragment[
+                        candidate.subject.fragment_id]
+                    if unit.unit_kind == "preamble":
+                        self.assertNotEqual(
+                            candidate.targets[0].role, "combination")
+                        self.assertEqual(len(candidate.obligation_ids), 1)
+                        self.assertEqual(len({
+                            endpoint.document_id
+                            for endpoint in candidate.targets[0].endpoints}), 1)
                     for target in candidate.targets:
                         self.assertIn(
                             target.role, {"specific", "combination", "context"})
@@ -174,9 +230,27 @@ class PriorArtNavigatorTests(unittest.TestCase):
                                  len(model.units_by_fragment))
                 self.assertEqual(text.count('class="mapping-row"'),
                                  len(model.units_by_fragment))
-                self.assertIn("scrollToNode(selected.primary);", text)
+                self.assertIn("candidateIndex:0, passageIndex:0", text)
+                self.assertIn("function moveCandidate(delta)", text)
+                self.assertIn("function movePassage(delta)", text)
+                self.assertNotIn("state.position", text)
+                self.assertNotIn("obligationsByClaim", text)
+                self.assertIn(
+                    "state.passageIndex = 0;", text)
+                self.assertIn(
+                    "scrollDisclosureToNode(selectedPassageId(current));", text)
+                self.assertIn(
+                    "owner.scrollTop = owner.scrollTop + nodeBox.top - "
+                    "ownerBox.top - offset;", text)
+                self.assertNotIn("behavior:reducedMotion", text)
+                self.assertIn(
+                    "focusWithoutScroll(forwardBar);\n  applyForwardHighlights();",
+                    text)
                 self.assertIn("details.open = true;", text)
-                self.assertIn("readerTarget.focus();", text)
+                self.assertIn(
+                    "readerTarget.focus({preventScroll:true});", text)
+                self.assertIn(
+                    "scrollDisclosureToNode(control.dataset.reader);", text)
                 self.assertIn(
                     "activateReverse(control.dataset.block, control.id);", text)
                 for reader in model.prior_art_readers:
@@ -200,24 +274,233 @@ class PriorArtNavigatorTests(unittest.TestCase):
                         continue
                     self.assertTrue(relation["targets"])
                     for target in relation["targets"]:
-                        self.assertIn(target["primary"], target["blocks"])
+                        self.assertFalse({
+                            "primary", "currentPassage", "currentTarget",
+                            "selectedPassage", "selectedTarget",
+                        } & set(target))
                         for block_id in target["blocks"]:
                             self.assertIn('id="%s"' % block_id, text)
-                            self.assertIn(
-                                mapping.relation_id,
-                                navigation["reverse"][block_id])
+                            self.assertTrue(any(
+                                item["relationId"] == mapping.relation_id and
+                                item["candidateId"] == target["candidateId"]
+                                for item in navigation["reverse"][block_id]))
+                self.assertEqual(
+                    set(navigation["obligations"]), {"byClaim", "domById"})
+                for claim in navigation["obligations"]["byClaim"].values():
+                    self.assertEqual(set(claim), {"ids", "counts"})
+                    self.assertEqual(sum(claim["counts"].values()),
+                                     len(claim["ids"]))
                 self.assertIn("<noscript>", text)
                 self.assertIn("@media print", text)
                 self.assertIn("prefers-reduced-motion: reduce", text)
+                static_surface = text.split(
+                    '<script type="application/json" id="nav-data"', 1)[0]
+                for candidate in model.candidate_relations:
+                    self.assertIn(candidate.relation_id, static_surface)
+                    self.assertIn(
+                        html.escape(candidate.targets[0].note, quote=True),
+                        static_surface)
                 for token in (
                         "fetch(", "XMLHttpRequest", "WebSocket",
                         "localStorage", "sessionStorage", "document.cookie"):
                     self.assertNotIn(token, text)
 
+    def test_positive_and_adverse_multiplicity_vectors_use_model_enforcers(self):
+        for product_id, model in self.models.items():
+            with self.subTest(product=product_id):
+                self.assertTrue(any(
+                    len(candidate.targets[0].endpoints) > 1
+                    for candidate in model.candidate_relations))
+                obligation_use = Counter(
+                    identifier for candidate in model.candidate_relations
+                    for identifier in candidate.obligation_ids)
+                self.assertTrue(any(count > 1
+                                    for count in obligation_use.values()))
+
+                base = next(
+                    item for item in model.candidate_relations
+                    if item.exact_text is None and
+                    len(item.targets[0].endpoints) > 1)
+                alternate_role = (
+                    "context" if base.targets[0].role != "context"
+                    else "specific")
+                alternate = replace(
+                    base, relation_id=base.relation_id + "-vector",
+                    targets=(replace(
+                        base.targets[0], role=alternate_role),))
+                grouped = PriorArtModel._index_candidates(
+                    (base, alternate), exact_text=False)
+                self.assertEqual(
+                    grouped[base.subject.fragment_id], (base, alternate))
+                signatures = {
+                    _candidate_semantic_signature(
+                        item.subject, item.exact_text,
+                        item.targets[0].role, item.obligation_ids,
+                        item.targets[0].endpoints)
+                    for item in (base, alternate)}
+                self.assertEqual(len(signatures), 2)
+
+                reversed_signature = _candidate_semantic_signature(
+                    base.subject, base.exact_text,
+                    base.targets[0].role, base.obligation_ids,
+                    tuple(reversed(base.targets[0].endpoints)))
+                self.assertEqual(
+                    _candidate_semantic_signature(
+                        base.subject, base.exact_text,
+                        base.targets[0].role, base.obligation_ids,
+                        base.targets[0].endpoints),
+                    reversed_signature)
+
+                inventory = set()
+                signature = _candidate_semantic_signature(
+                    base.subject, base.exact_text, base.targets[0].role,
+                    base.obligation_ids, base.targets[0].endpoints)
+                _record_unique_signature(inventory, signature, "candidate")
+                with self.assertRaisesRegex(
+                        ModelError, "candidate semantic signature is duplicated"):
+                    _record_unique_signature(
+                        inventory, signature, "candidate")
+
+                mapped_ids = {
+                    item.relation_id for item in model.prior_art_obligations
+                    if item.status == "passage-mapped"}
+                _validate_candidate_obligation_coverage(
+                    model.prior_art_obligations, mapped_ids)
+                with self.assertRaisesRegex(
+                        ModelError,
+                        "mapped obligation and candidate coverage disagree"):
+                    _validate_candidate_obligation_coverage(
+                        model.prior_art_obligations,
+                        mapped_ids - {next(iter(mapped_ids))})
+
+                preamble = next(
+                    unit for unit in model.units_by_fragment.values()
+                    if unit.unit_kind == "preamble")
+                _validate_preamble_candidate(
+                    preamble, "specific", ("one-obligation",), {"one-document"})
+                for role, obligations, documents in (
+                        ("combination", ("one-obligation",), {"one-document"}),
+                        ("specific", ("one", "two"), {"one-document"}),
+                        ("specific", ("one",), {"one", "two"})):
+                    with self.assertRaisesRegex(
+                            ModelError, "synthetic claim roll-up"):
+                        _validate_preamble_candidate(
+                            preamble, role, obligations, documents)
+
+                review_obligation = next(
+                    item for item in model.prior_art_obligations
+                    if item.status == "counsel-review-required")
+                review_unit = next(
+                    unit for unit in model.units_by_fragment.values()
+                    if unit.claim_number == review_obligation.claim_number)
+                _validate_review_allocation(
+                    review_unit, (review_obligation,))
+                mapped_obligation = next(
+                    item for item in model.prior_art_obligations
+                    if item.status == "passage-mapped")
+                with self.assertRaisesRegex(
+                        ModelError, "does not close exact review obligations"):
+                    _validate_review_allocation(
+                        review_unit, (mapped_obligation,))
+                allocation_subject = Endpoint(
+                    model.source_documents[0].document_id,
+                    review_unit.fragment_id, review_unit.content_digest)
+                allocation = PriorArtReviewAllocation(
+                    relation_id="allocation-vector",
+                    subject=allocation_subject,
+                    obligation_ids=(review_obligation.relation_id,),
+                    relevance_note="Neutral fragment review allocation.")
+                self.assertEqual(
+                    PriorArtModel._index_by_unit((allocation,)),
+                    {review_unit.fragment_id: (allocation,)})
+                allocation_inventory = set()
+                allocation_signature = _allocation_semantic_signature(
+                    allocation.subject, allocation.obligation_ids)
+                _record_unique_signature(
+                    allocation_inventory, allocation_signature,
+                    "fragment-review allocation")
+                with self.assertRaisesRegex(
+                        ModelError,
+                        "fragment-review allocation semantic signature is duplicated"):
+                    _record_unique_signature(
+                        allocation_inventory, allocation_signature,
+                        "fragment-review allocation")
+
+                multi_passage = next(
+                    item for item in model.candidate_relations
+                    if item.exact_text is None and
+                    len(item.targets[0].endpoints) > 1)
+                vector_role = (
+                    "context" if multi_passage.targets[0].role != "context"
+                    else "specific")
+                vector_candidate = replace(
+                    multi_passage,
+                    relation_id=multi_passage.relation_id + "-render-vector",
+                    targets=(replace(
+                        multi_passage.targets[0], role=vector_role),))
+                candidate_index = dict(model.candidates_by_unit)
+                candidate_index[multi_passage.subject.fragment_id] = (
+                    multi_passage, vector_candidate)
+                allocation_index = dict(model.review_allocations_by_unit)
+                allocation_index[review_unit.fragment_id] = (allocation,)
+                vector_model = _ModelVector(
+                    model,
+                    candidates_by_unit=MappingProxyType(candidate_index),
+                    review_allocations_by_unit=MappingProxyType(
+                        allocation_index))
+                rendered = render.render(vector_model).decode("utf-8")
+                navigation = _navigation(rendered)
+                relation_id = next(
+                    item.relation_id for item in model.relations.mappings
+                    if item.subject.fragment_id ==
+                    multi_passage.subject.fragment_id)
+                targets = navigation["relations"][relation_id]["targets"]
+                self.assertEqual(
+                    {item["candidateId"] for item in targets},
+                    {multi_passage.relation_id,
+                     vector_candidate.relation_id})
+                self.assertEqual(len(targets), 2)
+                self.assertTrue(any(len(item["blocks"]) > 1
+                                    for item in targets))
+                allocation_relation_id = next(
+                    item.relation_id for item in model.relations.mappings
+                    if item.subject.fragment_id == review_unit.fragment_id)
+                self.assertEqual(
+                    navigation["relations"][allocation_relation_id]
+                    ["reviewAllocations"], [{
+                        "allocationId": allocation.relation_id,
+                        "obligationIds": list(allocation.obligation_ids),
+                        "note": allocation.relevance_note,
+                    }])
+                for block_id in targets[0]["blocks"]:
+                    occurrences = navigation["reverse"][block_id]
+                    self.assertEqual(
+                        {item["candidateId"] for item in occurrences
+                         if item["relationId"] == relation_id},
+                        {multi_passage.relation_id,
+                         vector_candidate.relation_id})
+                    self.assertEqual(
+                        {item["candidateIndex"] for item in occurrences
+                         if item["relationId"] == relation_id}, {0, 1})
+                self.assertIn(vector_candidate.relation_id, rendered)
+                self.assertIn(allocation.relevance_note, rendered)
+
+    def test_noncurrent_passage_map_profile_fails_closed(self):
+        path = ROOT / (
+            "US/allowance-first/parent/prior-art-analysis/"
+            "AA11393US-AF-claim-prior-art-passage-map_DRAFT.relations.xml")
+        payload = path.read_bytes()
+        active = b"claim-prior-art-passage-map-v2"
+        noncurrent = b"claim-prior-art-passage-map-v" + str(1).encode("ascii")
+        self.assertEqual(payload.count(active), 2)
+        with self.assertRaises(ParseError):
+            parser.parse_artifact(
+                payload.replace(active, noncurrent), "relation-set")
+
     def test_closed_profile_and_bundle_controls_are_current(self):
         profiles = parse_json((ROOT / "structured_source/profiles/xml-v3.json").read_bytes())
         passage = profiles["relationSets"][
-            "claim-prior-art-passage-map-v1"]
+            "claim-prior-art-passage-map-v2"]
         self.assertEqual(passage["minimumEndpoints"], 1)
         self.assertEqual(passage["requiredEndpointRoles"], ["subject"])
         self.assertEqual(passage["relationType"],
@@ -225,8 +508,12 @@ class PriorArtNavigatorTests(unittest.TestCase):
         self.assertEqual(passage["assertionFields"], [
             "candidate-role", "matrix-field", "matrix-relation-id",
             "obligation-ids", "obligation-status", "proposition",
-            "record-kind", "subject-exact-text",
+            "record-kind", "relevance-note", "subject-exact-text",
         ])
+        self.assertEqual(
+            [key for key in profiles["relationSets"]
+             if key.startswith("claim-prior-art-passage-map-")],
+            ["claim-prior-art-passage-map-v2"])
         config = json.loads((ROOT / bundlezip.BUNDLE_CONFIG_PATH).read_text())
         self.assertEqual(bundlezip.validate_bundle_config(config), config)
         self.assertEqual(len(config["products"]), 4)

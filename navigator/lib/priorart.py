@@ -69,6 +69,14 @@ class PriorArtCandidate:
     targets: tuple[Target, ...]
 
 
+@dataclass(frozen=True, slots=True)
+class PriorArtReviewAllocation:
+    relation_id: str
+    subject: Endpoint
+    obligation_ids: tuple[str, ...]
+    relevance_note: str
+
+
 def _fields(relation):
     pairs = tuple((item.get("name"), item.text or "")
                   for item in relation.findall(SR + "assertionField"))
@@ -122,6 +130,56 @@ def _claim_numbers(value):
             raise ModelError("matrix claim range is reversed")
         numbers.extend(range(first, last + 1))
     return tuple(sorted(set(numbers)))
+
+
+def _candidate_semantic_signature(
+        subject, exact_text, role, obligation_ids, evidence):
+    evidence_identity = tuple(sorted(
+        (endpoint.document_id, endpoint.fragment_id,
+         endpoint.content_digest) for endpoint in evidence))
+    return (
+        subject.document_id, subject.fragment_id, subject.content_digest,
+        exact_text, role, obligation_ids,
+        evidence_identity,
+    )
+
+
+def _allocation_semantic_signature(subject, obligation_ids):
+    return (
+        subject.document_id, subject.fragment_id, subject.content_digest,
+        obligation_ids,
+    )
+
+
+def _record_unique_signature(inventory, signature, label):
+    if signature in inventory:
+        raise ModelError("%s semantic signature is duplicated" % label)
+    inventory.add(signature)
+
+
+def _validate_preamble_candidate(unit, role, obligation_ids,
+                                 evidence_documents):
+    if unit.unit_kind == "preamble" and (
+            role == "combination" or len(obligation_ids) != 1 or
+            len(evidence_documents) != 1):
+        raise ModelError("preamble candidate is a synthetic claim roll-up")
+
+
+def _validate_review_allocation(unit, selected_obligations):
+    if any(item is None for item in selected_obligations) or any(
+            item.claim_number != unit.claim_number or
+            item.status != "counsel-review-required"
+            for item in selected_obligations):
+        raise ModelError(
+            "fragment-review allocation does not close exact review obligations")
+
+
+def _validate_candidate_obligation_coverage(obligations, referenced):
+    mapped = {
+        item.relation_id for item in obligations
+        if item.status == "passage-mapped"}
+    if set(referenced) != mapped:
+        raise ModelError("mapped obligation and candidate coverage disagree")
 
 
 def _primary_document(fields, name):
@@ -343,9 +401,9 @@ class PriorArtModel:
         ) for document_id in scope_ids)
         self._target_surfaces = MappingProxyType(dict(target_surfaces))
 
-        candidates = {}
         obligations = {}
         raw_candidates = []
+        raw_allocations = []
         expected_obligations = _matrix_obligations(matrix_relations)
         map_root = map_artifact._validated_root()
         for relation in map_root.findall(SR + "relation"):
@@ -417,7 +475,23 @@ class PriorArtModel:
                     raise ModelError("candidate obligation identities are not exact")
                 raw_candidates.append((
                     relation_id, subject, unit, fields, evidence, obligation_ids))
-                candidates.setdefault(subject.fragment_id, []).append(relation_id)
+            elif kind == "fragment-review-allocation":
+                if set(fields) != {
+                        "obligation-ids", "record-kind", "relevance-note"} or \
+                        evidence:
+                    raise ModelError(
+                        "prior-art fragment-review allocation is malformed")
+                unit = self.units_by_fragment.get(subject.fragment_id)
+                if unit is None or unit.content_digest != subject.content_digest:
+                    raise ModelError(
+                        "fragment-review allocation subject does not resolve exactly")
+                obligation_ids = tuple(fields["obligation-ids"].split(" "))
+                if not obligation_ids or obligation_ids != tuple(
+                        sorted(set(obligation_ids))):
+                    raise ModelError(
+                        "fragment-review allocation identities are not exact")
+                raw_allocations.append((
+                    relation_id, subject, unit, fields, obligation_ids))
             else:
                 raise ModelError("prior-art relation record kind is unsupported")
 
@@ -429,11 +503,12 @@ class PriorArtModel:
                 len(actual_obligations) != len(obligations):
             raise ModelError("matrix claim/document obligation coverage is incomplete")
 
-        target_values = {}
         passage_values = {}
         phrase_values = []
         candidate_values = []
+        allocation_values = []
         referenced_obligations = set()
+        candidate_signatures = set()
         for (relation_id, subject, unit, fields, evidence,
              obligation_ids) in raw_candidates:
             selected_obligations = tuple(
@@ -449,7 +524,20 @@ class PriorArtModel:
                     item.status != "passage-mapped"
                     for item in selected_obligations):
                 raise ModelError("candidate does not close its exact obligations")
-            referenced_obligations.update(obligation_ids)
+            evidence_signature = tuple(
+                (endpoint.document_id, endpoint.fragment_id,
+                 endpoint.content_digest) for endpoint in evidence)
+            if len(evidence_signature) != len(set(evidence_signature)):
+                raise ModelError("candidate repeats an exact passage endpoint")
+            exact = fields.get("subject-exact-text")
+            signature = _candidate_semantic_signature(
+                subject, exact, fields["candidate-role"], obligation_ids,
+                evidence)
+            _record_unique_signature(
+                candidate_signatures, signature, "candidate")
+            _validate_preamble_candidate(
+                unit, fields["candidate-role"], obligation_ids,
+                evidence_documents)
             for endpoint in evidence:
                 if endpoint.document_id not in scope_ids:
                     raise ModelError("mapped passage is outside comparison scope")
@@ -469,12 +557,11 @@ class PriorArtModel:
                     region=item.provenance.region,
                     uncertainty=item.provenance.uncertainty,
                 )
+            referenced_obligations.update(obligation_ids)
             target = Target(
                 role=fields["candidate-role"], endpoints=evidence,
                 note=fields["proposition"], caution=None)
-            exact = fields.get("subject-exact-text")
             if exact is None:
-                target_values.setdefault(subject.fragment_id, []).append(target)
                 candidate_values.append(PriorArtCandidate(
                     relation_id=relation_id, subject=subject,
                     exact_text=None, obligation_ids=obligation_ids,
@@ -492,15 +579,31 @@ class PriorArtModel:
                     exact_text=exact, obligation_ids=obligation_ids,
                     targets=(target,)))
 
-        mapped_obligations = {
-            item.relation_id for item in obligations.values()
-            if item.status == "passage-mapped"}
-        if referenced_obligations != mapped_obligations:
-            raise ModelError("mapped obligation and candidate coverage disagree")
+        allocation_signatures = set()
+        for (relation_id, subject, unit, fields,
+             obligation_ids) in raw_allocations:
+            selected_obligations = tuple(
+                obligations.get(identifier) for identifier in obligation_ids)
+            _validate_review_allocation(unit, selected_obligations)
+            signature = _allocation_semantic_signature(
+                subject, obligation_ids)
+            _record_unique_signature(
+                allocation_signatures, signature,
+                "fragment-review allocation")
+            allocation_values.append(PriorArtReviewAllocation(
+                relation_id=relation_id, subject=subject,
+                obligation_ids=obligation_ids,
+                relevance_note=fields["relevance-note"]))
 
+        _validate_candidate_obligation_coverage(
+            obligations.values(), referenced_obligations)
+
+        exact_candidate_units = {
+            item.subject.fragment_id for item in candidate_values
+            if item.exact_text is None}
         mappings = []
         for unit_id, unit in self.units_by_fragment.items():
-            has_candidates = bool(candidates.get(unit_id))
+            has_candidates = unit_id in exact_candidate_units
             mappings.append(Mapping(
                 relation_id=(config["passageMapPackageId"] +
                              "-computed-unit-" + unit_id),
@@ -511,7 +614,7 @@ class PriorArtModel:
                     fragment_id=unit.fragment_id,
                     content_digest=unit.content_digest),
                 unit_kind=unit.unit_kind, unit_index=unit.unit_index,
-                caution=None, targets=tuple(target_values.get(unit_id, ()))))
+                caution=None, targets=()))
         self.relations = RelationSet(
             relation_set_id=config["passageMapPackageId"],
             edition=self.edition_id, documents=(), gate_definitions=(),
@@ -531,12 +634,21 @@ class PriorArtModel:
         self.obligations_by_claim = MappingProxyType({
             key: tuple(value) for key, value in sorted(obligation_values.items())})
         self.candidate_relations = tuple(candidate_values)
+        self.review_allocations = tuple(allocation_values)
+        self.candidates_by_unit = self._index_candidates(
+            self.candidate_relations, exact_text=False)
+        self.phrase_candidates_by_unit = self._index_candidates(
+            self.candidate_relations, exact_text=True)
+        self.candidates_by_id = MappingProxyType({
+            item.relation_id: item for item in self.candidate_relations})
+        self.review_allocations_by_unit = self._index_by_unit(
+            self.review_allocations)
         self._relations_by_id = MappingProxyType({
             item.relation_id: item for item in
             (*self.relations.mappings, *self.prior_art_obligations,
-             *self.candidate_relations)})
-        self.reverse_index = projections.reverse_index(
-            self.relations, self.units_by_fragment)
+             *self.review_allocations, *self.candidate_relations)})
+        self.reverse_index = self._candidate_reverse_index(
+            self.candidate_relations)
         self.prior_art_passages = tuple(
             passage_values[key] for key in sorted(passage_values))
         self.disclosure_blocks = ()
@@ -581,6 +693,28 @@ class PriorArtModel:
         return MappingProxyType({key: tuple(value)
                                  for key, value in sorted(values.items())})
 
+    @staticmethod
+    def _index_candidates(items, *, exact_text):
+        values = {}
+        for item in items:
+            if (item.exact_text is not None) != exact_text:
+                continue
+            values.setdefault(item.subject.fragment_id, []).append(item)
+        return MappingProxyType({
+            key: tuple(value) for key, value in sorted(values.items())})
+
+    @staticmethod
+    def _candidate_reverse_index(items):
+        values = {}
+        for candidate in items:
+            for target in candidate.targets:
+                for endpoint in target.endpoints:
+                    values.setdefault(
+                        (endpoint.document_id, endpoint.fragment_id), []).append(
+                            candidate)
+        return MappingProxyType({
+            key: tuple(value) for key, value in sorted(values.items())})
+
     def _endpoint_relation_index(self):
         values = {}
         for relation in self.relations.mappings:
@@ -599,6 +733,10 @@ class PriorArtModel:
             for target in relation.targets:
                 for endpoint in target.endpoints:
                     values.setdefault((endpoint.document_id, endpoint.fragment_id), []).append(relation)
+        for relation in self.review_allocations:
+            subject = relation.subject
+            values.setdefault(
+                (subject.document_id, subject.fragment_id), []).append(relation)
         return MappingProxyType({key: tuple(value)
                                  for key, value in sorted(values.items())})
 

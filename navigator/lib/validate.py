@@ -446,14 +446,10 @@ def validate_prior_art(model):
                 len(value) != 1 for value in model.mappings_by_unit.values()):
             error("relations", "passage-map state coverage is not one per unit")
         for mapping in model.relations.mappings:
-            if mapping.status == "mapped" and not (
-                    mapping.targets or model.phrases_by_unit.get(
-                        mapping.subject.fragment_id)):
-                error("relations", "mapped state has no candidate passage")
-            if mapping.status == "counsel-review-required" and (
-                    mapping.targets or model.phrases_by_unit.get(
-                        mapping.subject.fragment_id)):
-                error("relations", "review-required state has candidate passages")
+            has_candidates = bool(model.candidates_by_unit.get(
+                mapping.subject.fragment_id))
+            if (mapping.status == "mapped") != has_candidates or mapping.targets:
+                error("relations", "computed unit state duplicates or disagrees with candidates")
         obligation_ids = {item.relation_id
                           for item in model.prior_art_obligations}
         if len(obligation_ids) != len(model.prior_art_obligations) or not obligation_ids:
@@ -471,14 +467,24 @@ def validate_prior_art(model):
                 "reviewed-no-material-passage"}
                for item in model.prior_art_obligations):
             error("obligations", "obligation status vocabulary is not closed")
+        review_obligations = {
+            item.relation_id for item in model.prior_art_obligations
+            if item.status == "counsel-review-required"}
+        if any(
+                not set(allocation.obligation_ids).issubset(review_obligations)
+                for allocation in model.review_allocations):
+            error("allocations", "fragment-review allocation status closure is not exact")
+        if set(model.review_allocations_by_unit) - set(model.units_by_fragment):
+            error("allocations", "fragment-review allocation subject is not exact")
         expected_relation_ids = {
             item.relation_id for item in
             (*model.relations.mappings, *model.prior_art_obligations,
-             *model.candidate_relations)}
+             *model.review_allocations, *model.candidate_relations)}
         if set(model._relations_by_id) != expected_relation_ids or \
                 len(expected_relation_ids) != \
                 (len(model.relations.mappings) +
                  len(model.prior_art_obligations) +
+                 len(model.review_allocations) +
                  len(model.candidate_relations)):
             error("relations", "computed state and authored relation identities are not exact")
         expected_wording = {

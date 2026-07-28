@@ -294,22 +294,24 @@ class CurrentRenderTests(unittest.TestCase):
                     if len(target["blocks"]) > 1]
                 self.assertTrue(composites)
                 for relation_id, target in composites:
-                    self.assertEqual(target["primary"], target["blocks"][0])
                     for block_id in target["blocks"]:
                         self.assertIn(block_id, parser.ids)
-                        self.assertIn(relation_id, data["reverse"][block_id])
+                        self.assertTrue(any(
+                            item["relationId"] == relation_id
+                            for item in data["reverse"][block_id]))
                 schedule_rows = self.artifacts[edition].count(
                     b'class="mapping-row"')
                 self.assertEqual(schedule_rows,
                     len(model.relations.mappings) +
                     len(model.relations.phrase_mappings))
 
-                # Reverse announcements must resolve the target containing the
-                # activated block so target-level cautions are not discarded.
+                # Reverse entries bind the exact candidate index, so a shared
+                # endpoint never requires a first-match target search.
                 text = self.artifacts[edition].decode("utf-8")
+                self.assertIn("function reverseCandidate()", text)
                 self.assertIn(
-                    "candidate.blocks.indexOf(blockId) !== -1", text)
-                self.assertIn("cautionPresence(current, target)", text)
+                    "current.targets[entry.candidateIndex]", text)
+                self.assertIn("cautionPresence(current, candidate)", text)
 
     def test_rendered_relations_preserve_typed_substantive_values(self):
         role_rank = {"specific": 0, "combination": 1, "context": 2}
@@ -449,9 +451,10 @@ class CurrentRenderTests(unittest.TestCase):
         self.assertIn("&lt;/script&gt;&lt;svg onload=boom&gt;", text)
         target = data["relations"]["relation-one"]["targets"][0]
         self.assertEqual(len(target["blocks"]), 2)
-        self.assertEqual(target["primary"], target["blocks"][0])
-        self.assertTrue(all("relation-one" in data["reverse"][block]
-                            for block in target["blocks"]))
+        self.assertTrue(all(any(
+            item["relationId"] == "relation-one"
+            for item in data["reverse"][block])
+            for block in target["blocks"]))
         called = set(model.calls)
         self.assertTrue({
             "mapping-status-mapped", "mapping-role-combination",

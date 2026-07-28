@@ -99,9 +99,11 @@ heading slug as identity. A fragment with no recorded candidate displays the com
 
 For a claims-to-prior-art change, reconcile the complete matrix relation/field/claim/document
 obligation census in the strategy-owned passage-map relation XML, declare every matrix-scope
-prior-art transcription XML consumer edge, bind each candidate to exact mapped obligations, and
-regenerate the map Markdown review view. Do not retain a unit-state assertion or a candidate that
-cannot close against an obligation.
+prior-art transcription XML consumer edge, bind zero or more distinct candidates to each exact unit
+or phrase and to their exact mapped obligations, author any neutral fragment-review allocation only
+for exact unresolved obligations, and regenerate the map Markdown review view. Do not retain a
+unit-state assertion, synthetic preamble roll-up, duplicate candidate/allocation signature, or
+record that cannot close against its exact obligation state.
 
 ## 4. Inspect and generate the configured products
 
@@ -114,10 +116,11 @@ uv --no-cache --offline run --locked --no-sync python -m navigator preview na-pr
 uv --no-cache --offline run --locked --no-sync python -m navigator preview af-prior-art
 ```
 
-Inspect each changed product visually, including forward and reverse navigation, obligation and
-no-candidate states, contextual-reader opening and exact-fragment focus, cautions and gates,
-disclosure figures, keyboard focus, the no-JavaScript document order, and print content. Visual
-inspection is useful product review, not a stored authorization step.
+Inspect each changed product visually, including independent candidate and passage movement,
+forward and reverse navigation, obligation/allocation/no-candidate states, right-pane passage
+scrolling, contextual-reader opening and exact-fragment focus, cautions and gates, disclosure
+figures, keyboard focus, the no-JavaScript document order, and print content. Visual inspection is
+useful product review, not a stored authorization step.
 
 Regenerate every product in the current bundle inventory so shared-input drift cannot remain
 hidden:

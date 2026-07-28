@@ -24,8 +24,8 @@ MAP_CONTRACT_PATH = (
     "acceptance-criteria_DRAFT.md"
 )
 SPEC_CRITERIA = tuple("AC-%02d" % number for number in range(1, 21))
-MAP_CRITERIA = tuple("PAM-AC-%02d" % number for number in range(1, 9))
-PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 13))
+MAP_CRITERIA = tuple("PAM-AC-%02d" % number for number in range(1, 11))
+PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 18))
 CRITERIA = SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA
 TEST_COVERAGE = {
     "navigator.tests.test_canon": frozenset({"AC-15", "AC-16"}),
@@ -50,13 +50,14 @@ _SCOPES = {
     "AC-19": "shared",
     "AC-20": "bundle",
     **{"PAM-AC-%02d" % number: "semantic"
-       for number in range(1, 9)},
+       for number in range(1, 11)},
     **{"PA-AC-%02d" % number: "product"
-       for number in range(1, 9)},
-    "PA-AC-09": "shared",
-    "PA-AC-10": "product",
-    "PA-AC-11": "bundle",
-    "PA-AC-12": "shared",
+       for number in range(1, 13)},
+    "PA-AC-13": "shared",
+    "PA-AC-14": "product",
+    "PA-AC-15": "bundle",
+    "PA-AC-16": "product",
+    "PA-AC-17": "shared",
 }
 
 
@@ -98,10 +99,10 @@ def validate_registry(value):
         expected_version = "6"
     elif identifiers[:1] == ["PAM-AC-01"]:
         expected_criteria = MAP_CRITERIA
-        expected_version = "1"
+        expected_version = "2"
     else:
         expected_criteria = PRIOR_CRITERIA
-        expected_version = "1"
+        expected_version = "2"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
             value.get("acceptanceVersion") != expected_version:

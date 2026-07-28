@@ -180,6 +180,7 @@ def _prior_art_origin_inventory(model):
     add("relation-set:" + model.relation_set_id, "relation-set",
         map_document.registered_path, model.relation_set_id)
     for relation in (*model.prior_art_obligations,
+                     *model.review_allocations,
                      *model.candidate_relations):
         add("relation:" + relation.relation_id, "relation",
             map_document.registered_path, relation.relation_id)

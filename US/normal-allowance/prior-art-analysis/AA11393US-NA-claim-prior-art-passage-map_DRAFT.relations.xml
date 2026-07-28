@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="claim-prior-art-passage-map-v1" schemaVersion="1">
-  <identity owner="Applicant — Antonio Rossi" profile="claim-prior-art-passage-map-v1" relationSetId="aa11393us-na-claim-prior-art-passage-map" scope="NA" status="draft" />
+<relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="claim-prior-art-passage-map-v2" schemaVersion="1">
+  <identity owner="Applicant — Antonio Rossi" profile="claim-prior-art-passage-map-v2" relationSetId="aa11393us-na-claim-prior-art-passage-map" scope="NA" status="draft" />
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00001">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00005</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00002">
@@ -14,7 +14,7 @@
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00005</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00003">
@@ -110,7 +110,7 @@
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00009</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00015">
@@ -118,7 +118,7 @@
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00009</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00016">
@@ -126,7 +126,7 @@
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00009</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00017">
@@ -206,7 +206,7 @@
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00011</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00027">
@@ -214,7 +214,7 @@
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <assertionField name="matrix-field">claimed-relationship</assertionField>
     <assertionField name="matrix-relation-id">aa11393us-na-prior-art-comparison-matrix-row-00011</assertionField>
-    <assertionField name="obligation-status">passage-mapped</assertionField>
+    <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-obligation-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-obligation-00028">
@@ -1745,15 +1745,6 @@
     <assertionField name="obligation-status">counsel-review-required</assertionField>
     <assertionField name="record-kind">obligation</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00001">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00001 aa11393us-na-claim-prior-art-passage-map-obligation-00002</assertionField>
-    <assertionField name="proposition">The EDL, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00002">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e211cbecd4f817ab9b3e8d36d5d6b34b2c9663ddee16c7dcf6ff32f213d03d03" fragmentId="claim-1-limitation-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
@@ -1802,17 +1793,6 @@
     <assertionField name="candidate-role">context</assertionField>
     <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00144</assertionField>
     <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00012">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4c1c41703ceeb9505396a8eccf7661e98a3a39373ecf710c6fd609609e866b9b" fragmentId="claim-9" role="subject" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:6c4f24ff8b8e0a9f835573ab51259eb6866b6995b4d083fabdfbf4a083f690dc" fragmentId="us-prior-art-b9-para-00267" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:8057cb10f9a03a22a12ca9b93b78b83372b9ea2f5696926e30defa9210002f38" fragmentId="us-prior-art-b9-para-00270" role="evidence" />
-    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00043 aa11393us-na-claim-prior-art-passage-map-obligation-00107 aa11393us-na-claim-prior-art-passage-map-obligation-00147</assertionField>
-    <assertionField name="proposition">The MANIFEST, SWITCHSEQ, TRACK passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
     <assertionField name="record-kind">candidate</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00013">
@@ -1899,15 +1879,6 @@
     <assertionField name="proposition">The MANIFEST, SWITCHSEQ passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
     <assertionField name="record-kind">candidate</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00024">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8a8c245e6f7ebdf88c436a739b9ab195965361be301332e06972c11016116462" fragmentId="claim-13" role="subject" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00184 aa11393us-na-claim-prior-art-passage-map-obligation-00185</assertionField>
-    <assertionField name="proposition">The MANIFEST, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00025">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:9dbc106a33e27e6e0fc6240bb1a78b5efed7267f34189f5f018e5ba70822672e" fragmentId="claim-13-limitation-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
@@ -1946,20 +1917,6 @@
     <assertionField name="candidate-role">specific</assertionField>
     <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00185</assertionField>
     <assertionField name="proposition">B9 paragraph 00160 is recorded for counsel comparison of exchangeable time points that define segments and stream-switch points.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00032">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:98bfee059433b3c232d8c8c54ecccb438e9159fa34f83f3182d30b052fc89622" fragmentId="us-prior-art-a21-para-00126" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:a1e4b33f05cbe5a8956a05240280edaa6fd511be2dc141bc8043b2a180fe0360" fragmentId="us-prior-art-a21-para-00127" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:aeb35af96207fc65d5bf264823c71a1a309328241975cb766e372b5f6eb8702b" fragmentId="us-prior-art-a21-para-00143" role="evidence" />
-    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:195a5ddab6d55cb2043395c1347eea040e7536de488e8dd2579dcb6e0d95d640" fragmentId="us-prior-art-a21-para-00174" role="evidence" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:10391312e42276e3f016fea96f76113bb75db129b8bafaf873ccee7674fdad19" fragmentId="us-prior-art-a4-para-00042" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00014 aa11393us-na-claim-prior-art-passage-map-obligation-00015 aa11393us-na-claim-prior-art-passage-map-obligation-00016</assertionField>
-    <assertionField name="proposition">The MANIFEST, CUT, RECON, EQUALITY, IDENTIFY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
     <assertionField name="record-kind">candidate</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00033">
@@ -2016,15 +1973,6 @@
     <assertionField name="proposition">A5 page-5 fragments 00034 and 00038 are recorded together for counsel comparison of perceptual video signatures, image hashing, shot detection, and hash-distance matching.</assertionField>
     <assertionField name="record-kind">candidate</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00039">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26bc53f7a0869fa79e2d6a0acf0eb251f5e9825a7852549b3e4e242e1a805f77" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00026 aa11393us-na-claim-prior-art-passage-map-obligation-00027</assertionField>
-    <assertionField name="proposition">The SWITCH, MANIFEST passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00040">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:aeee08c809bcc8e457d33322e658b17849ae35dd96a1694d64e5801b28a3b124" fragmentId="claim-19-limitation-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
@@ -2064,22 +2012,6 @@
     <assertionField name="candidate-role">context</assertionField>
     <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00208</assertionField>
     <assertionField name="proposition">A6 paragraph 00009 is recorded as context for a user-associated sequence of differing transmitted segments and identifying the requesting device, user, or transaction.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00046">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:99173f7e147fc5352aba383d701cc953e4a8963424b6aa0f90ca4c625d306193" fragmentId="claim-22" role="subject" />
-    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:fc548bd7300fa55ebe84a87df2796ab78bb263ae320bfa2646db497dab8247eb" fragmentId="us-prior-art-a20-para-00129" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
-    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:e3d1ae6eef6328fd437c052d759fdfd0e39e19ebd359aeee01a2e4e340ebcfe5" fragmentId="us-prior-art-a20-para-00140" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:98bfee059433b3c232d8c8c54ecccb438e9159fa34f83f3182d30b052fc89622" fragmentId="us-prior-art-a21-para-00126" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:a1e4b33f05cbe5a8956a05240280edaa6fd511be2dc141bc8043b2a180fe0360" fragmentId="us-prior-art-a21-para-00127" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:aeb35af96207fc65d5bf264823c71a1a309328241975cb766e372b5f6eb8702b" fragmentId="us-prior-art-a21-para-00143" role="evidence" />
-    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:c68ff263510ad4f86d791e7eea82a53566bfcfb8709474977be1a69dc67c7da6" fragmentId="us-prior-art-a13-para-00153" role="evidence" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:195a5ddab6d55cb2043395c1347eea040e7536de488e8dd2579dcb6e0d95d640" fragmentId="us-prior-art-a21-para-00174" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00042 aa11393us-na-claim-prior-art-passage-map-obligation-00078 aa11393us-na-claim-prior-art-passage-map-obligation-00106 aa11393us-na-claim-prior-art-passage-map-obligation-00110 aa11393us-na-claim-prior-art-passage-map-obligation-00146</assertionField>
-    <assertionField name="proposition">The EDL, SWITCH, MANIFEST, TRACK, CUT, RECON, EQUALITY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
     <assertionField name="record-kind">candidate</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00047">
@@ -2180,15 +2112,6 @@
     <assertionField name="candidate-role">combination</assertionField>
     <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00042 aa11393us-na-claim-prior-art-passage-map-obligation-00110</assertionField>
     <assertionField name="proposition">The EQUALITY, IDENTIFY passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
-    <assertionField name="record-kind">candidate</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00061">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b45c65767ebb4892d6161e1f84259ce048d3b611a4a1de74aa3ce65ff58d7d61" fragmentId="claim-25" role="subject" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:3d71c4f25ca105afe0577d2f0747ca0685eb0fa6afc9e82f98c9a3e011cd3256" fragmentId="us-prior-art-a4-para-00039" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:afd18558ab3eaf10f5ecff294664ae7b3d3794c5236f4a8d370dd493c8f920a0" fragmentId="us-prior-art-b9-para-00160" role="evidence" />
-    <assertionField name="candidate-role">combination</assertionField>
-    <assertionField name="obligation-ids">aa11393us-na-claim-prior-art-passage-map-obligation-00187 aa11393us-na-claim-prior-art-passage-map-obligation-00188</assertionField>
-    <assertionField name="proposition">The MANIFEST, SWITCH passages are recorded together for counsel comparison of the claim unit's combined features.</assertionField>
     <assertionField name="record-kind">candidate</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-prior-art-passage-map-candidate-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-passage-map" xml:id="aa11393us-na-claim-prior-art-passage-map-candidate-00062">

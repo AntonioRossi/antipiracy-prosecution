@@ -31,8 +31,6 @@ FORBIDDEN_SCRIPT_TOKENS = (
 UI = MappingProxyType({
     "about": "About and provenance",
     "aboutScheduleToggle": "Mappings and about",
-    "asFiledDisclosureLabel": "As-filed PCT disclosure",
-    "authorityHeader": "PCT as filed",
     "authoritySchemeHeader": "Authority direction",
     "candidateClaimsLabel": "Candidate claims",
     "cautionPresent": "caution present",
@@ -52,7 +50,6 @@ UI = MappingProxyType({
     "machineData": "Machine-readable navigation and provenance data",
     "mappingCautions": "Cautions and dispositions",
     "mappingStatus": "Recording state",
-    "moreCandidates": "+{number} more candidates",
     "next": "Next",
     "position": "{position} of {total} — {label}",
     "preambleLabel": "preamble",
@@ -77,13 +74,25 @@ UI = MappingProxyType({
 })
 
 PRIOR_UI = MappingProxyType({
+    "candidatePosition": "Candidate {position} of {total} — {label}",
+    "claimObligationSummary": (
+        "Claim-level matrix obligations: {mapped} mapped · {review} review required · "
+        "{noMaterial} no-material"),
+    "exactCandidateCount": "Exact candidates for this fragment: {count}",
     "fullReader": "Full asserted XML transcription",
     "matrixObligations": "Matrix claim/document obligations",
-    "matrixObligationCount": "Matrix obligations for this claim: {count}",
     "noExactPassage": (
         "No exact candidate passage from this document is recorded for a "
         "passage-mapped obligation."),
+    "nextCandidate": "Next candidate",
+    "nextPassage": "Next passage in candidate",
     "openFullReader": "Open full transcription at this passage",
+    "passagePosition": "Passage {position} of {total} — {label}",
+    "previousCandidate": "Previous candidate",
+    "previousPassage": "Previous passage in candidate",
+    "reviewAllocationCount": "Review-required allocations for this fragment: {count}",
+    "reverseCounts": "{fragments} candidates across {claims} claims",
+    "scheduleTargets": "Candidates and fragment-review allocations",
 })
 
 _ROLE_RANK = {"specific": 0, "combination": 1, "context": 2}
@@ -233,7 +242,7 @@ def _disposition_view(model, disposition) -> dict:
     }
 
 
-def _target_view(model, target) -> dict:
+def _target_view(model, target, candidate=None) -> dict:
     if target.role not in _ROLE_RANK or not isinstance(target.note, str) or \
             not target.note.strip():
         raise RenderError("target role and descriptive note are not exact")
@@ -247,16 +256,19 @@ def _target_view(model, target) -> dict:
          if model.product_kind == "prior-art" else "") +
         _anchor_label(endpoint.fragment_id)
         for endpoint in target.endpoints)
-    return {
+    value = {
         "role": target.role,
         "roleLabel": _wording(model, "mapping-role-" + target.role),
         "blocks": list(endpoint_ids),
-        "primary": endpoint_ids[0],
         "labels": list(labels),
         "label": UI["compositeJoin"].join(labels),
         "note": target.note,
         "caution": _caution_view(model, target.caution, "target"),
     }
+    if candidate is not None:
+        value["candidateId"] = candidate.relation_id
+        value["obligationIds"] = list(candidate.obligation_ids)
+    return value
 
 
 def _sorted_target_views(model, targets) -> list[dict]:
@@ -266,6 +278,24 @@ def _sorted_target_views(model, targets) -> list[dict]:
                     key=lambda pair: (_ROLE_RANK[pair[1].role], pair[0]))
     return [_target_view(model, target)
             for _, target in ranked]
+
+
+def _sorted_candidate_views(model, candidates) -> list[dict]:
+    ranked = sorted(candidates, key=lambda candidate: (
+        _ROLE_RANK[candidate.targets[0].role],
+        tuple((endpoint.document_id, endpoint.fragment_id)
+              for endpoint in candidate.targets[0].endpoints),
+        candidate.relation_id))
+    return [_target_view(model, candidate.targets[0], candidate)
+            for candidate in ranked]
+
+
+def _review_allocation_views(model, fragment_id) -> list[dict]:
+    return [{
+        "allocationId": item.relation_id,
+        "obligationIds": list(item.obligation_ids),
+        "note": item.relevance_note,
+    } for item in model.review_allocations_by_unit.get(fragment_id, ())]
 
 
 def _relation_data(model) -> tuple[dict, dict, dict]:
@@ -281,6 +311,10 @@ def _relation_data(model) -> tuple[dict, dict, dict]:
         source_dom = model.dom_id(claim_document_id, unit.fragment_id)
         dispositions = tuple(model.dispositions_by_subject.get(
             ("claim-unit", unit.fragment_id), ()))
+        targets = (_sorted_candidate_views(
+            model, model.candidates_by_unit.get(unit.fragment_id, ()))
+            if model.product_kind == "prior-art" else
+            _sorted_target_views(model, mapping.targets))
         relations[relation_id] = {
             "relationId": relation_id,
             "kind": "unit",
@@ -290,7 +324,10 @@ def _relation_data(model) -> tuple[dict, dict, dict]:
             "subjectDomId": source_dom,
             "subjectControlId": _control_id(model, relation_id),
             "subjectLabel": _unit_context(model, unit),
-            "targets": _sorted_target_views(model, mapping.targets),
+            "targets": targets,
+            "reviewAllocations": (_review_allocation_views(
+                model, unit.fragment_id)
+                if model.product_kind == "prior-art" else []),
             "caution": _caution_view(model, mapping.caution, "fragment"),
             "dispositions": [
                 _disposition_view(model, item) for item in dispositions],
@@ -301,6 +338,11 @@ def _relation_data(model) -> tuple[dict, dict, dict]:
         relation_id = phrase.relation_id
         if relation_id in relations:
             raise RenderError("duplicate relation identity")
+        candidate = (model.candidates_by_id.get(relation_id)
+                     if model.product_kind == "prior-art" else None)
+        targets = ([_target_view(model, candidate.targets[0], candidate)]
+                   if candidate is not None else
+                   _sorted_target_views(model, phrase.targets))
         relations[relation_id] = {
             "relationId": relation_id,
             "kind": "phrase",
@@ -310,24 +352,21 @@ def _relation_data(model) -> tuple[dict, dict, dict]:
             "subjectDomId": _control_id(model, relation_id),
             "subjectControlId": _control_id(model, relation_id),
             "subjectLabel": _phrase_context(model, phrase, unit),
-            "targets": _sorted_target_views(model, phrase.targets),
+            "targets": targets,
+            "reviewAllocations": [],
             "caution": None,
             "dispositions": [],
         }
 
     reverse = {}
-    for (document_id, fragment_id), references in model.reverse_index.items():
-        dom_id = model.dom_id(document_id, fragment_id)
-        ordered = []
-        seen = set()
-        for reference in references:
-            if reference.relation_id not in relations:
-                raise RenderError("reverse relation does not resolve")
-            if reference.relation_id not in seen:
-                seen.add(reference.relation_id)
-                ordered.append(reference.relation_id)
-        if ordered:
-            reverse[dom_id] = ordered
+    for relation_id, relation in relations.items():
+        for candidate_index, candidate in enumerate(relation["targets"]):
+            for block_id in candidate["blocks"]:
+                reverse.setdefault(block_id, []).append({
+                    "relationId": relation_id,
+                    "candidateIndex": candidate_index,
+                    "candidateId": candidate.get("candidateId", relation_id),
+                })
 
     claim_gates = {}
     for disposition in model.relations.dispositions:
@@ -707,10 +746,29 @@ def _obligation_label(model, status: str) -> str:
 
 def _obligation_data(model):
     by_claim = {}
+    dom_by_id = {}
     for item in model.prior_art_obligations:
-        by_claim.setdefault(_claim_key(item.claim_number), []).append(
-            model.dom_id(model.relation_set_id, item.relation_id))
-    return {key: value for key, value in sorted(by_claim.items())}
+        dom_id = model.dom_id(model.relation_set_id, item.relation_id)
+        dom_by_id[item.relation_id] = dom_id
+        claim = by_claim.setdefault(_claim_key(item.claim_number), {
+            "ids": [],
+            "counts": {
+                "passageMapped": 0,
+                "counselReviewRequired": 0,
+                "reviewedNoMaterialPassage": 0,
+            },
+        })
+        claim["ids"].append(dom_id)
+        count_key = {
+            "passage-mapped": "passageMapped",
+            "counsel-review-required": "counselReviewRequired",
+            "reviewed-no-material-passage": "reviewedNoMaterialPassage",
+        }[item.status]
+        claim["counts"][count_key] += 1
+    return {
+        "byClaim": {key: value for key, value in sorted(by_claim.items())},
+        "domById": {key: value for key, value in sorted(dom_by_id.items())},
+    }
 
 
 def _disclosure_html(model, reverse: dict) -> str:
@@ -819,11 +877,18 @@ def _caution_schedule_html(caution: dict) -> str:
 
 
 def _target_schedule_html(target: dict) -> str:
-    parts = [_esc(target["label"])]
+    parts = []
+    if target.get("candidateId"):
+        parts.append('<strong>%s</strong>' % _esc(target["candidateId"]))
     if target["roleLabel"]:
         parts.append("[%s]" % _esc(target["roleLabel"]))
     if target["note"]:
         parts.append(_esc(target["note"]))
+    parts.append("passages: %s" % " + ".join(
+        _esc(label) for label in target["labels"]))
+    if target.get("obligationIds"):
+        parts.append("obligations: %s" % _esc(
+            " ".join(target["obligationIds"])))
     if target["caution"]:
         parts.append(_caution_schedule_html(target["caution"]))
     return " · ".join(parts)
@@ -843,6 +908,14 @@ def _schedule_html(model, relations: dict, claim_gates: dict) -> str:
                 targets = "<br>".join(
                     _target_schedule_html(target)
                     for target in relation["targets"])
+                allocations = "<br>".join(
+                    '<span class="review-allocation"><strong>%s</strong> · %s · '
+                    'obligations: %s</span>' % (
+                        _esc(item["allocationId"]), _esc(item["note"]),
+                        _esc(" ".join(item["obligationIds"])))
+                    for item in relation["reviewAllocations"])
+                targets = "<br>".join(
+                    item for item in (targets, allocations) if item)
                 cautions = []
                 if relation["caution"]:
                     cautions.append(_caution_schedule_html(
@@ -978,7 +1051,7 @@ def render(model, mode="candidate") -> bytes:
         "claimGates": claim_gates,
     }
     if model.product_kind == "prior-art":
-        navigation["obligationsByClaim"] = _obligation_data(model)
+        navigation["obligations"] = _obligation_data(model)
     title = "%s — %s" % (model.display_name, model.claim_set_version)
     html_text = HTML_TEMPLATE.format(
         csp=EXACT_CSP,
@@ -1153,6 +1226,10 @@ body {
 .obligation-counsel-review-required { border-left-color:#b16a00; }
 .obligation-reviewed-no-material-passage { border-left-color:#777; }
 .highlight-obligation { outline:2px dotted var(--accent); outline-offset:1px; }
+.allocation-detail {
+  margin:3px 0; padding:4px 6px; border-left:3px solid #b16a00;
+  background:#fbf6e8; font-size:11px;
+}
 .reader-jump {
   min-height:24px; border:1px solid var(--accent); border-radius:4px;
   color:var(--accent); background:#fff; cursor:pointer; font-size:11px;
@@ -1272,7 +1349,7 @@ footer { display:none; }
   }
   #disclosure-scroll { overflow:visible; }
 }
-@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
 @page { margin:12mm 10mm; }
 @media print {
   body { display:block; overflow:visible; }
@@ -1310,12 +1387,15 @@ noscript .navigation-bar { display:none; }
 JS = r"""
 'use strict';
 var DATA = JSON.parse(document.getElementById('nav-data').textContent);
-var state = {mode:null, key:null, position:0, list:[], returnFocus:null};
+var state = {
+  mode:null, key:null, candidateIndex:0, passageIndex:0,
+  reverseIndex:0, reverseList:[], returnFocus:null
+};
 var forwardBar = document.getElementById('forward-bar');
 var reverseBar = document.getElementById('reverse-bar');
+var disclosureScroll = document.getElementById('disclosure-scroll');
+var claimsPane = document.getElementById('claims-pane');
 var live = document.getElementById('live');
-var reducedMotion = window.matchMedia &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function ui(key){ return DATA.ui[key]; }
 function format(template, values){
@@ -1343,6 +1423,31 @@ function positionText(position, total, label){
 }
 function relation(relationId){ return DATA.relations[relationId] || null; }
 function claimGates(current){ return DATA.claimGates[current.claimKey] || []; }
+function selectedCandidate(current){
+  return current.targets[state.candidateIndex] || null;
+}
+function selectedPassageId(current){
+  var candidate = selectedCandidate(current);
+  return candidate ? candidate.blocks[state.passageIndex] : null;
+}
+function focusWithoutScroll(node){
+  node.setAttribute('tabindex', '-1');
+  node.focus({preventScroll:true});
+}
+function scrollWithin(owner, node, alignment){
+  if (!owner || !node) return;
+  var ownerBox = owner.getBoundingClientRect();
+  var nodeBox = node.getBoundingClientRect();
+  var offset = alignment === 'start' ? 10 :
+    Math.max(10, (owner.clientHeight - nodeBox.height) / 2);
+  owner.scrollTop = owner.scrollTop + nodeBox.top - ownerBox.top - offset;
+}
+function scrollDisclosureToNode(id){
+  scrollWithin(disclosureScroll, document.getElementById(id), 'center');
+}
+function scrollClaimsToNode(id, alignment){
+  scrollWithin(claimsPane, document.getElementById(id), alignment || 'center');
+}
 
 function clearHighlights(){
   ['highlight-strong','highlight-soft','highlight-subject','highlight-related',
@@ -1352,9 +1457,15 @@ function clearHighlights(){
         .forEach(function(node){ node.classList.remove(className); });
     });
 }
+function emptyState(){
+  return {
+    mode:null, key:null, candidateIndex:0, passageIndex:0,
+    reverseIndex:0, reverseList:[], returnFocus:null
+  };
+}
 function clearSelection(returnFocus){
   var focusId = state.returnFocus;
-  state = {mode:null, key:null, position:0, list:[], returnFocus:null};
+  state = emptyState();
   forwardBar.hidden = true;
   reverseBar.hidden = true;
   forwardBar.textContent = '';
@@ -1362,21 +1473,44 @@ function clearSelection(returnFocus){
   clearHighlights();
   if (returnFocus && focusId){
     var focusNode = document.getElementById(focusId);
-    if (focusNode) focusNode.focus();
+    if (focusNode) focusNode.focus({preventScroll:true});
   }
   announce(ui('selectionCleared'));
 }
-function scrollToNode(id){
-  var node = document.getElementById(id);
-  if (node) node.scrollIntoView({
-    behavior:reducedMotion ? 'auto' : 'smooth', block:'center'
-  });
-}
-function controls(canCycle){
+function clearControl(){
   var wrap = element('div', 'selection-controls');
-  if (canCycle){
-    wrap.appendChild(button(null, ui('previous'), '◀', function(){ move(-1); }));
-    wrap.appendChild(button(null, ui('next'), '▶', function(){ move(1); }));
+  wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
+    clearSelection(true);
+  }));
+  return wrap;
+}
+function forwardControls(current){
+  var wrap = element('div', 'selection-controls');
+  var candidate = selectedCandidate(current);
+  if (current.targets.length > 1){
+    wrap.appendChild(button(null, ui('previousCandidate') || ui('previous'),
+      '◀C', function(){ moveCandidate(-1); }));
+    wrap.appendChild(button(null, ui('nextCandidate') || ui('next'),
+      'C▶', function(){ moveCandidate(1); }));
+  }
+  if (candidate && candidate.blocks.length > 1){
+    wrap.appendChild(button(null, ui('previousPassage') || ui('previous'),
+      '◀P', function(){ movePassage(-1); }));
+    wrap.appendChild(button(null, ui('nextPassage') || ui('next'),
+      'P▶', function(){ movePassage(1); }));
+  }
+  wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
+    clearSelection(true);
+  }));
+  return wrap;
+}
+function reverseControls(){
+  var wrap = element('div', 'selection-controls');
+  if (state.reverseList.length > 1){
+    wrap.appendChild(button(null, ui('previousCandidate') || ui('previous'),
+      '◀', function(){ moveCandidate(-1); }));
+    wrap.appendChild(button(null, ui('nextCandidate') || ui('next'),
+      '▶', function(){ moveCandidate(1); }));
   }
   wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
     clearSelection(true);
@@ -1409,42 +1543,79 @@ function cautionPresence(current, target){
   if (claimGates(current).length) values.push(ui('gatePresent'));
   return values.length ? ' — ' + values.join(', ') : '';
 }
+function candidatePositionText(current, candidate){
+  var label = candidate.candidateId ?
+    candidate.candidateId + ' · ' + candidate.label : candidate.label;
+  if (ui('candidatePosition')) return format(ui('candidatePosition'), {
+    position:state.candidateIndex + 1, total:current.targets.length, label:label
+  });
+  return positionText(state.candidateIndex + 1, current.targets.length, label);
+}
+function passagePositionText(candidate){
+  if (!ui('passagePosition')) return '';
+  return format(ui('passagePosition'), {
+    position:state.passageIndex + 1,
+    total:candidate.blocks.length,
+    label:candidate.labels[state.passageIndex]
+  });
+}
+function claimObligationData(current){
+  if (!DATA.obligations) return null;
+  return DATA.obligations.byClaim[current.claimKey] || {
+    ids:[], counts:{
+      passageMapped:0, counselReviewRequired:0, reviewedNoMaterialPassage:0
+    }
+  };
+}
 function forwardAnnouncement(current){
   var parts = [ui('forwardMode'), current.subjectLabel];
-  var target = null;
-  if (current.status === 'counsel-review-required')
+  var candidate = selectedCandidate(current);
+  if (!candidate){
     parts.push(current.statusLabel);
-  else {
-    target = current.targets[state.position];
-    parts.push(positionText(
-      state.position + 1, current.targets.length, target.label));
+  } else {
+    parts.push(candidatePositionText(current, candidate));
+    if (ui('passagePosition')) parts.push(passagePositionText(candidate));
   }
-  return parts.join(' — ') + cautionPresence(current, target);
+  return parts.join(' — ') + cautionPresence(current, candidate);
 }
 function renderForwardBar(){
   var current = relation(state.key);
+  var candidate = selectedCandidate(current);
   forwardBar.textContent = '';
   forwardBar.appendChild(element('div', 'mode', ui('forwardMode')));
   forwardBar.appendChild(element('div', 'context', current.subjectLabel));
-  if (DATA.obligationsByClaim)
+  if (DATA.obligations){
+    var claimData = claimObligationData(current);
     forwardBar.appendChild(element('div', null, format(
-      ui('matrixObligationCount'), {
-        count:(DATA.obligationsByClaim[current.claimKey] || []).length
+      ui('claimObligationSummary'), {
+        mapped:claimData.counts.passageMapped,
+        review:claimData.counts.counselReviewRequired,
+        noMaterial:claimData.counts.reviewedNoMaterialPassage
       })));
-  if (current.status === 'counsel-review-required'){
+    forwardBar.appendChild(element('div', null, format(
+      ui('exactCandidateCount'), {count:current.targets.length})));
+    forwardBar.appendChild(element('div', null, format(
+      ui('reviewAllocationCount'), {count:current.reviewAllocations.length})));
+  }
+  if (!candidate){
     forwardBar.appendChild(element('div', null, current.statusLabel));
   } else {
-    var target = current.targets[state.position];
-    var targetLine = positionText(
-      state.position + 1, current.targets.length, target.label);
-    if (target.roleLabel) targetLine += ' [' + target.roleLabel + ']';
+    var targetLine = candidatePositionText(current, candidate);
+    if (candidate.roleLabel) targetLine += ' [' + candidate.roleLabel + ']';
     forwardBar.appendChild(element('div', null, targetLine));
-    if (target.note) forwardBar.appendChild(element('div', null, target.note));
-    if (current.targets.length > 5)
-      forwardBar.appendChild(element('div', null,
-        format(ui('moreCandidates'), {number:current.targets.length - 5})));
-    if (target.caution) forwardBar.appendChild(cautionControl(target.caution));
+    if (ui('passagePosition'))
+      forwardBar.appendChild(element('div', null, passagePositionText(candidate)));
+    if (candidate.note) forwardBar.appendChild(element('div', null, candidate.note));
+    if (candidate.obligationIds && candidate.obligationIds.length)
+      forwardBar.appendChild(element(
+        'div', null, 'Obligations: ' + candidate.obligationIds.join(' ')));
+    if (candidate.caution) forwardBar.appendChild(cautionControl(candidate.caution));
   }
+  current.reviewAllocations.forEach(function(item){
+    forwardBar.appendChild(element(
+      'div', 'allocation-detail', item.allocationId + ' — ' + item.note +
+      ' — obligations: ' + item.obligationIds.join(' ')));
+  });
   if (current.caution) forwardBar.appendChild(cautionControl(current.caution));
   current.dispositions.forEach(function(item){
     forwardBar.appendChild(element('div', 'disposition', item.text));
@@ -1452,137 +1623,178 @@ function renderForwardBar(){
   claimGates(current).forEach(function(item){
     forwardBar.appendChild(cautionControl(item.gate));
   });
-  forwardBar.appendChild(controls(current.status === 'mapped'));
+  forwardBar.appendChild(forwardControls(current));
   forwardBar.hidden = false;
+}
+function exactObligationDomIds(current, candidate){
+  if (!DATA.obligations) return [];
+  var identifiers = candidate ? candidate.obligationIds : [];
+  if (!candidate){
+    current.reviewAllocations.forEach(function(item){
+      identifiers = identifiers.concat(item.obligationIds);
+    });
+  }
+  return identifiers.map(function(identifier){
+    return DATA.obligations.domById[identifier];
+  }).filter(function(identifier){ return !!identifier; });
 }
 function applyForwardHighlights(){
   clearHighlights();
   var current = relation(state.key);
+  var candidate = selectedCandidate(current);
   var subject = document.getElementById(current.subjectDomId);
   if (subject) subject.classList.add('highlight-subject');
-  var obligationIds = DATA.obligationsByClaim ?
-    (DATA.obligationsByClaim[current.claimKey] || []) : [];
-  obligationIds.forEach(function(id){
+  var obligationDomIds = exactObligationDomIds(current, candidate);
+  obligationDomIds.forEach(function(id){
     var obligation = document.getElementById(id);
     if (obligation) obligation.classList.add('highlight-obligation');
   });
-  if (current.status !== 'mapped'){
-    if (obligationIds.length) scrollToNode(obligationIds[0]);
+  if (!candidate){
+    if (obligationDomIds.length) scrollDisclosureToNode(obligationDomIds[0]);
     return;
   }
-  current.targets.slice(0, 5).forEach(function(target, index){
-    target.blocks.forEach(function(blockId){
-      var block = document.getElementById(blockId);
-      if (!block) return;
-      block.classList.add(index === state.position ?
-        'highlight-strong' : 'highlight-soft');
-    });
-  });
-  var selected = current.targets[state.position];
-  selected.blocks.forEach(function(blockId){
+  candidate.blocks.forEach(function(blockId, index){
     var block = document.getElementById(blockId);
-    if (block){
-      block.classList.remove('highlight-soft');
-      block.classList.add('highlight-strong');
-    }
+    if (!block) return;
+    block.classList.add(index === state.passageIndex ?
+      'highlight-strong' : 'highlight-soft');
   });
-  scrollToNode(selected.primary);
+  scrollDisclosureToNode(selectedPassageId(current));
 }
 function activateForward(relationId, fromId){
   var current = relation(relationId);
   if (!current) return;
   clearSelection(false);
-  state = {mode:'forward', key:relationId, position:0, list:[],
-    returnFocus:fromId};
+  state = emptyState();
+  state.mode = 'forward';
+  state.key = relationId;
+  state.returnFocus = fromId;
   renderForwardBar();
+  focusWithoutScroll(forwardBar);
   applyForwardHighlights();
   announce(forwardAnnouncement(current));
-  forwardBar.setAttribute('tabindex', '-1');
-  forwardBar.focus();
 }
 
-function reverseAnnouncement(blockId, list, position){
-  var current = relation(list[position]);
-  var target = current.targets.find(function(candidate){
-    return candidate.blocks.indexOf(blockId) !== -1;
-  }) || null;
+function reverseEntry(){
+  return state.reverseList[state.reverseIndex];
+}
+function reverseCandidate(){
+  var entry = reverseEntry();
+  var current = entry ? relation(entry.relationId) : null;
+  return current ? current.targets[entry.candidateIndex] : null;
+}
+function reverseAnnouncement(){
+  var entry = reverseEntry();
+  var current = relation(entry.relationId);
+  var candidate = reverseCandidate();
   var claims = {};
-  list.forEach(function(id){ claims[relation(id).claimKey] = true; });
+  state.reverseList.forEach(function(item){
+    claims[relation(item.relationId).claimKey] = true;
+  });
   return [
     ui('reverseMode'),
-    positionText(position + 1, list.length, current.subjectLabel),
+    positionText(state.reverseIndex + 1, state.reverseList.length,
+      current.subjectLabel + ' · ' + entry.candidateId),
     format(ui('reverseCounts'), {
-      fragments:list.length, claims:Object.keys(claims).length
+      fragments:state.reverseList.length, claims:Object.keys(claims).length
     })
-  ].join(' — ') + cautionPresence(current, target);
+  ].join(' — ') + cautionPresence(current, candidate);
 }
 function renderReverseBar(){
-  var list = state.list;
-  var current = relation(list[state.position]);
+  var entry = reverseEntry();
+  var current = relation(entry.relationId);
+  var candidate = reverseCandidate();
   var claims = {};
-  list.forEach(function(id){ claims[relation(id).claimKey] = true; });
+  state.reverseList.forEach(function(item){
+    claims[relation(item.relationId).claimKey] = true;
+  });
   reverseBar.textContent = '';
   reverseBar.appendChild(element('div', 'mode', ui('reverseMode')));
   reverseBar.appendChild(element('div', 'context', current.subjectLabel));
   reverseBar.appendChild(element('div', null, format(ui('reverseCounts'), {
-    fragments:list.length, claims:Object.keys(claims).length
+    fragments:state.reverseList.length, claims:Object.keys(claims).length
   })));
   reverseBar.appendChild(element('div', null,
-    positionText(state.position + 1, list.length, current.subjectLabel)));
-  reverseBar.appendChild(controls(true));
+    positionText(state.reverseIndex + 1, state.reverseList.length,
+      entry.candidateId + ' · ' + candidate.label)));
+  reverseBar.appendChild(reverseControls());
   reverseBar.hidden = false;
 }
 function applyReverseHighlights(){
   clearHighlights();
   var disclosure = document.getElementById(state.key);
   if (disclosure) disclosure.classList.add('highlight-subject');
-  state.list.forEach(function(relationId, index){
-    var current = relation(relationId);
+  state.reverseList.forEach(function(entry){
+    var current = relation(entry.relationId);
     var subject = document.getElementById(current.subjectDomId);
-    if (!subject) return;
-    subject.classList.add(index === state.position ?
-      'highlight-strong' : 'highlight-related');
-    if (index === state.position) scrollToNode(current.subjectDomId);
+    if (subject) subject.classList.add('highlight-related');
   });
+  var current = relation(reverseEntry().relationId);
+  var selected = document.getElementById(current.subjectDomId);
+  if (selected){
+    selected.classList.remove('highlight-related');
+    selected.classList.add('highlight-strong');
+    scrollClaimsToNode(current.subjectDomId, 'center');
+  }
 }
 function activateReverse(blockId, fromId){
   var list = DATA.reverse[blockId] || [];
   if (!list.length) return;
   clearSelection(false);
-  state = {mode:'reverse', key:blockId, position:0, list:list,
-    returnFocus:fromId};
+  state = emptyState();
+  state.mode = 'reverse';
+  state.key = blockId;
+  state.reverseList = list;
+  state.returnFocus = fromId;
   renderReverseBar();
+  focusWithoutScroll(reverseBar);
   applyReverseHighlights();
-  announce(reverseAnnouncement(blockId, list, 0));
-  reverseBar.setAttribute('tabindex', '-1');
-  reverseBar.focus();
+  announce(reverseAnnouncement());
 }
-function move(delta){
+function moveCandidate(delta){
   if (state.mode === 'forward'){
     var current = relation(state.key);
-    if (current.status !== 'mapped' || !current.targets.length) return;
-    state.position = (state.position + delta + current.targets.length) %
+    if (!current.targets.length) return;
+    state.candidateIndex =
+      (state.candidateIndex + delta + current.targets.length) %
       current.targets.length;
+    state.passageIndex = 0;
     renderForwardBar();
+    focusWithoutScroll(forwardBar);
     applyForwardHighlights();
     announce(forwardAnnouncement(current));
-    forwardBar.focus();
   } else if (state.mode === 'reverse'){
-    state.position = (state.position + delta + state.list.length) %
-      state.list.length;
+    state.reverseIndex =
+      (state.reverseIndex + delta + state.reverseList.length) %
+      state.reverseList.length;
     renderReverseBar();
+    focusWithoutScroll(reverseBar);
     applyReverseHighlights();
-    announce(reverseAnnouncement(state.key, state.list, state.position));
-    reverseBar.focus();
+    announce(reverseAnnouncement());
   }
+}
+function movePassage(delta){
+  if (state.mode !== 'forward') return;
+  var current = relation(state.key);
+  var candidate = selectedCandidate(current);
+  if (!candidate || !candidate.blocks.length) return;
+  state.passageIndex =
+    (state.passageIndex + delta + candidate.blocks.length) %
+    candidate.blocks.length;
+  renderForwardBar();
+  focusWithoutScroll(forwardBar);
+  applyForwardHighlights();
+  announce(forwardAnnouncement(current));
 }
 function activateGate(claimKey, gateId, fromId){
   var entries = DATA.claimGates[claimKey] || [];
   for (var index = 0; index < entries.length; index += 1){
     if (entries[index].gate.gateId !== gateId) continue;
     clearSelection(false);
-    state = {mode:'claim-gate', key:claimKey, position:0, list:[],
-      returnFocus:fromId};
+    state = emptyState();
+    state.mode = 'claim-gate';
+    state.key = claimKey;
+    state.returnFocus = fromId;
     forwardBar.textContent = '';
     forwardBar.appendChild(element('div', 'mode', ui('forwardMode')));
     forwardBar.appendChild(element('div', 'context',
@@ -1592,10 +1804,9 @@ function activateGate(claimKey, gateId, fromId){
     forwardBar.appendChild(cautionControl(entries[index].gate));
     forwardBar.appendChild(element(
       'div', 'disposition', entries[index].disposition.text));
-    forwardBar.appendChild(controls(false));
+    forwardBar.appendChild(clearControl());
     forwardBar.hidden = false;
-    forwardBar.setAttribute('tabindex', '-1');
-    forwardBar.focus();
+    focusWithoutScroll(forwardBar);
     announce(format(ui('claimGateAnnouncement'), {
       prefix:DATA.edition.prefix, number:claimKey.split('-')[1]
     }) + ' — ' + ui('gatePresent'));
@@ -1611,10 +1822,8 @@ document.addEventListener('click', function(event){
       var readerTarget = document.getElementById(control.dataset.reader);
       if (details) details.open = true;
       if (readerTarget){
-        readerTarget.scrollIntoView({
-          behavior:reducedMotion ? 'auto' : 'smooth', block:'center'
-        });
-        readerTarget.focus();
+        readerTarget.focus({preventScroll:true});
+        scrollDisclosureToNode(control.dataset.reader);
       }
       return;
     }
@@ -1627,10 +1836,7 @@ document.addEventListener('click', function(event){
       return;
     }
     if (control.dataset.goto){
-      var destination = document.getElementById(control.dataset.goto);
-      if (destination) destination.scrollIntoView({
-        behavior:reducedMotion ? 'auto' : 'smooth', block:'start'
-      });
+      scrollClaimsToNode(control.dataset.goto, 'start');
       return;
     }
     if (control.dataset.gate){
@@ -1663,8 +1869,13 @@ document.addEventListener('keydown', function(event){
     var bar = state.mode === 'forward' ? forwardBar : reverseBar;
     if (bar.contains(document.activeElement)){
       event.preventDefault();
-      move(event.key === 'ArrowLeft' ? -1 : 1);
+      moveCandidate(event.key === 'ArrowLeft' ? -1 : 1);
     }
+  }
+  if ((event.key === 'ArrowUp' || event.key === 'ArrowDown') &&
+      state.mode === 'forward' && forwardBar.contains(document.activeElement)){
+    event.preventDefault();
+    movePassage(event.key === 'ArrowUp' ? -1 : 1);
   }
 });
 """
