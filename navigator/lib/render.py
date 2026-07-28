@@ -32,6 +32,7 @@ UI = MappingProxyType({
     "about": "About and provenance",
     "aboutScheduleToggle": "Mappings and about",
     "authoritySchemeHeader": "Authority direction",
+    "candidatePosition": "Candidate {position} of {total} — {label}",
     "candidateClaimsLabel": "Candidate claims",
     "cautionPresent": "caution present",
     "claimGateAnnouncement": "{prefix} claim {number} claim-level gate",
@@ -51,9 +52,14 @@ UI = MappingProxyType({
     "mappingCautions": "Cautions and dispositions",
     "mappingStatus": "Recording state",
     "next": "Next",
+    "nextCandidate": "Next candidate",
+    "nextPassage": "Next passage in candidate",
+    "passagePosition": "Passage {position} of {total} — {label}",
     "position": "{position} of {total} — {label}",
     "preambleLabel": "preamble",
     "previous": "Previous",
+    "previousCandidate": "Previous candidate",
+    "previousPassage": "Previous passage in candidate",
     "provenanceDocument": "Source document",
     "provenanceDigest": "XML byte digest",
     "provenanceRelationSet": "Relation set",
@@ -74,7 +80,6 @@ UI = MappingProxyType({
 })
 
 PRIOR_UI = MappingProxyType({
-    "candidatePosition": "Candidate {position} of {total} — {label}",
     "claimObligationSummary": (
         "Claim-level matrix obligations: {mapped} mapped · {review} review required · "
         "{noMaterial} no-material"),
@@ -84,12 +89,7 @@ PRIOR_UI = MappingProxyType({
     "noExactPassage": (
         "No exact candidate passage from this document is recorded for a "
         "passage-mapped obligation."),
-    "nextCandidate": "Next candidate",
-    "nextPassage": "Next passage in candidate",
     "openFullReader": "Open full transcription at this passage",
-    "passagePosition": "Passage {position} of {total} — {label}",
-    "previousCandidate": "Previous candidate",
-    "previousPassage": "Previous passage in candidate",
     "reviewAllocationCount": "Review-required allocations for this fragment: {count}",
     "reverseCounts": "{fragments} candidates across {claims} claims",
     "scheduleTargets": "Candidates and fragment-review allocations",
@@ -1164,15 +1164,17 @@ body {
 }
 .disclaimer { margin:2px 0; color:#444; font-size:10.5px; }
 #content-root { flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
-#panes { flex:1 1 auto; display:flex; min-height:0; }
+#panes { flex:1 1 auto; display:flex; min-height:0; scroll-padding:10px; }
 #claims-pane {
   width:45%; overflow-y:auto; padding:10px 14px; position:relative;
-  border-right:2px solid var(--line);
+  border-right:2px solid var(--line); scroll-padding:10px;
 }
 #disclosure-pane {
   width:55%; display:flex; flex-direction:column; min-height:0; position:relative;
 }
-#disclosure-scroll { flex:1; overflow-y:auto; padding:10px 40px 10px 58px; }
+#disclosure-scroll {
+  flex:1; overflow-y:auto; padding:10px 40px 10px 58px; scroll-padding:10px;
+}
 .claim-strip {
   position:sticky; top:-10px; z-index:5; display:block;
   padding:6px 0; background:#fff; border-bottom:1px solid var(--line);
@@ -1395,6 +1397,7 @@ var forwardBar = document.getElementById('forward-bar');
 var reverseBar = document.getElementById('reverse-bar');
 var disclosureScroll = document.getElementById('disclosure-scroll');
 var claimsPane = document.getElementById('claims-pane');
+var panes = document.getElementById('panes');
 var live = document.getElementById('live');
 
 function ui(key){ return DATA.ui[key]; }
@@ -1434,19 +1437,72 @@ function focusWithoutScroll(node){
   node.setAttribute('tabindex', '-1');
   node.focus({preventScroll:true});
 }
+function capableScrollOwner(node){
+  if (!node) return false;
+  var overflow = window.getComputedStyle(node).overflowY;
+  return (overflow === 'auto' || overflow === 'scroll') &&
+    node.scrollHeight > node.clientHeight;
+}
+function paneScrollOwner(primary){
+  if (capableScrollOwner(primary)) return primary;
+  if (capableScrollOwner(panes)) return panes;
+  return null;
+}
+function activeNavigationBar(){
+  if (state.mode === 'reverse') return reverseBar;
+  if (state.mode === 'forward' || state.mode === 'claim-gate') return forwardBar;
+  return null;
+}
+function visibleBounds(owner){
+  var box = owner ? owner.getBoundingClientRect() : {
+    top:0, bottom:window.innerHeight
+  };
+  var top = Math.max(0, box.top);
+  var bottom = Math.min(window.innerHeight, box.bottom);
+  var bar = activeNavigationBar();
+  if (owner && bar && !bar.hidden && owner.contains(bar)){
+    top = Math.max(top, box.top + bar.getBoundingClientRect().height);
+  }
+  return {top:top + 10, bottom:bottom - 10};
+}
+function unobscured(owner, node){
+  var bounds = visibleBounds(owner);
+  var box = node.getBoundingClientRect();
+  if (box.height > bounds.bottom - bounds.top){
+    return box.top >= bounds.top - 1 && box.top < bounds.bottom;
+  }
+  return box.top >= bounds.top - 1 && box.bottom <= bounds.bottom + 1;
+}
 function scrollWithin(owner, node, alignment){
-  if (!owner || !node) return;
-  var ownerBox = owner.getBoundingClientRect();
-  var nodeBox = node.getBoundingClientRect();
-  var offset = alignment === 'start' ? 10 :
-    Math.max(10, (owner.clientHeight - nodeBox.height) / 2);
-  owner.scrollTop = owner.scrollTop + nodeBox.top - ownerBox.top - offset;
+  if (!node) throw new Error('navigation target is absent');
+  if (!owner){
+    if (!unobscured(null, node)){
+      throw new Error('off-screen navigation target has no scroll owner');
+    }
+    return;
+  }
+  if (!capableScrollOwner(owner)){
+    throw new Error('navigation owner cannot scroll');
+  }
+  if (!unobscured(owner, node)){
+    var bounds = visibleBounds(owner);
+    var nodeBox = node.getBoundingClientRect();
+    var available = bounds.bottom - bounds.top;
+    var desiredTop = alignment === 'start' || nodeBox.height > available ?
+      bounds.top : bounds.top + Math.max(0, (available - nodeBox.height) / 2);
+    owner.scrollTop = owner.scrollTop + nodeBox.top - desiredTop;
+  }
+  if (!unobscured(owner, node)){
+    throw new Error('navigation target is outside unobscured owner geometry');
+  }
 }
 function scrollDisclosureToNode(id){
-  scrollWithin(disclosureScroll, document.getElementById(id), 'center');
+  scrollWithin(paneScrollOwner(disclosureScroll),
+    document.getElementById(id), 'center');
 }
 function scrollClaimsToNode(id, alignment){
-  scrollWithin(claimsPane, document.getElementById(id), alignment || 'center');
+  scrollWithin(paneScrollOwner(claimsPane),
+    document.getElementById(id), alignment || 'center');
 }
 
 function clearHighlights(){
@@ -1473,7 +1529,14 @@ function clearSelection(returnFocus){
   clearHighlights();
   if (returnFocus && focusId){
     var focusNode = document.getElementById(focusId);
-    if (focusNode) focusNode.focus({preventScroll:true});
+    if (focusNode){
+      focusNode.focus({preventScroll:true});
+      if (claimsPane.contains(focusNode)){
+        scrollClaimsToNode(focusId, 'center');
+      } else if (disclosureScroll.contains(focusNode)){
+        scrollDisclosureToNode(focusId);
+      }
+    }
   }
   announce(ui('selectionCleared'));
 }

@@ -28,22 +28,113 @@ MAP_CRITERIA = tuple("PAM-AC-%02d" % number for number in range(1, 11))
 PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 18))
 CRITERIA = SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA
 TEST_COVERAGE = {
-    "navigator.tests.test_canon": frozenset({"AC-15", "AC-16"}),
-    "navigator.tests.test_current_pipeline": frozenset({
-        "AC-01", "AC-05", "AC-15", "AC-16", "AC-18", "AC-19", "AC-20",
-    }),
-    "navigator.tests.test_render_current": frozenset({
-        "AC-02", "AC-03", "AC-04", "AC-06", "AC-07", "AC-08", "AC-09",
-        "AC-10", "AC-11", "AC-12", "AC-13", "AC-14", "AC-15", "AC-17",
-        "AC-18",
-    }),
-    "navigator.tests.test_xml_model": frozenset({
-        "AC-01", "AC-02", "AC-03", "AC-04", "AC-05", "AC-06", "AC-07",
-        "AC-08", "AC-18",
-    }),
-    "navigator.tests.test_prior_art": frozenset(
-        MAP_CRITERIA + PRIOR_CRITERIA),
+    ("navigator.tests.test_canon.TestVectors."
+     "test_json_parser_rejects_information_losing_inputs"):
+        frozenset({"AC-15"}),
+    ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
+     "test_one_source_pass_returns_same_context_frozen_handoffs"):
+        frozenset({"AC-01"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_live_editions_have_exact_claim_and_mapping_census"):
+        frozenset({"AC-02"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_stale_relation_digest_fails_during_construction"):
+        frozenset({"AC-03", "AC-18"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_navigator_relations_reject_upstream_relation_references"):
+        frozenset({"AC-03", "AC-18"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_validator_rejects_overlapping_phrases_and_cross_target_repeats"):
+        frozenset({"AC-03", "AC-18"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_wording_origins_and_editorial_targeting_fail_closed"):
+        frozenset({"AC-03", "AC-18"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_controlled_wording_has_exact_slots"):
+        frozenset({"AC-04"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_authored_handoff_uses_handed_xml_and_retained_controls_only"):
+        frozenset({"AC-05"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_model_lookups_require_explicit_nonempty_identities"):
+        frozenset({"AC-06"}),
+    ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
+     "test_product_plan_is_derived_from_an_arbitrary_edition_inventory"):
+        frozenset({"AC-07"}),
+    ("navigator.tests.test_render_current.CurrentRenderTests."
+     "test_composites_are_one_candidate_and_reverse_index_every_endpoint"):
+        frozenset({"AC-08"}),
+    ("navigator.tests.test_render_current.CurrentRenderTests."
+     "test_hostile_typed_values_are_inert_and_composite_data_is_exact"):
+        frozenset({"AC-09", "AC-15"}),
+    ("navigator.tests.test_render_current.CurrentRenderTests."
+     "test_live_products_are_complete_self_contained_and_accessible"):
+        frozenset({"AC-12", "AC-14", "AC-17"}),
+    ("navigator.tests.test_render_current.CurrentRenderTests."
+     "test_current_profile_specification_vectors_reach_renderer"):
+        frozenset({"AC-18"}),
+    ("navigator.tests.test_render_current.CurrentRenderTests."
+     "test_pinned_browser_matrix_proves_specification_runtime"):
+        frozenset({"AC-10", "AC-11", "AC-13", "AC-18"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_candidate_proof_binds_the_complete_fresh_projection"):
+        frozenset({"AC-16"}),
+    ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
+     "test_materialized_reproduction_constructs_each_boundary_once"):
+        frozenset({"AC-18"}),
+    ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
+     "test_live_navigator_input_inventory_is_exact"):
+        frozenset({"AC-19", "PA-AC-17"}),
+    ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
+     "test_configured_member_bundle_and_checksums_are_deterministic"):
+        frozenset({"AC-20", "PA-AC-15"}),
+    ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
+     "test_generated_writes_are_atomic_generated_only_and_safe"):
+        frozenset({"PA-AC-14"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_exact_product_and_handoff_inventory"):
+        frozenset({"PAM-AC-08", "PA-AC-01", "PA-AC-05", "PA-AC-13"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_matrix_scope_obligations_and_candidates_are_exact"):
+        frozenset({
+            "PAM-AC-01", "PAM-AC-02", "PAM-AC-03", "PAM-AC-04",
+            "PA-AC-02", "PA-AC-03", "PA-AC-04",
+        }),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_static_html_has_exact_forward_and_reverse_passage_navigation"):
+        frozenset({"PA-AC-06", "PA-AC-11"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_positive_and_adverse_multiplicity_vectors_use_model_enforcers"):
+        frozenset({
+            "PAM-AC-05", "PAM-AC-06", "PAM-AC-07",
+        }),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_current_profile_adverse_vectors_fail_before_render"):
+        frozenset({"PA-AC-12"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_current_profile_xml_vector_reaches_the_immutable_renderer"):
+        frozenset({"PAM-AC-10", "PA-AC-16"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_pinned_browser_matrix_proves_runtime_layout_and_navigation"):
+        frozenset({
+            "PA-AC-07", "PA-AC-08", "PA-AC-09", "PA-AC-10",
+        }),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_pinned_browser_vector_proves_independent_candidate_movement"):
+        frozenset({"PA-AC-16"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_noncurrent_passage_map_profile_fails_closed"):
+        frozenset({"PAM-AC-09"}),
+    ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
+     "test_closed_profile_and_bundle_controls_are_current"):
+        frozenset({"PA-AC-17"}),
 }
+
+
+def test_modules():
+    """Return the exact modules owning registered criterion verifier methods."""
+    return tuple(sorted({".".join(identifier.split(".")[:-2])
+                         for identifier in TEST_COVERAGE}))
 
 _SCOPES = {
     **{"AC-%02d" % number: "edition" for number in range(1, 19)},
@@ -96,13 +187,13 @@ def validate_registry(value):
                    isinstance(value.get("criteria"), list) else [])
     if identifiers[:1] == ["AC-01"]:
         expected_criteria = SPEC_CRITERIA
-        expected_version = "6"
+        expected_version = "7"
     elif identifiers[:1] == ["PAM-AC-01"]:
         expected_criteria = MAP_CRITERIA
         expected_version = "2"
     else:
         expected_criteria = PRIOR_CRITERIA
-        expected_version = "2"
+        expected_version = "3"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
             value.get("acceptanceVersion") != expected_version:
@@ -120,8 +211,8 @@ def validate_registry(value):
         identifier = criterion["id"]
         outcome = criterion["outcome"]
         enforcer = criterion["enforcer"]
-        covering_modules = {
-            module for module, identifiers in TEST_COVERAGE.items()
+        covering_tests = {
+            test_id for test_id, identifiers in TEST_COVERAGE.items()
             if identifier in identifiers
         }
         enforcer_parts = enforcer.split("; ") if isinstance(enforcer, str) else []
@@ -130,10 +221,11 @@ def validate_registry(value):
                 outcome != outcome.strip() or \
                 not isinstance(enforcer, str) or not enforcer.strip() or \
                 enforcer != enforcer.strip() or len(enforcer_parts) != 2 or \
-                enforcer_parts[1] not in covering_modules:
+                enforcer_parts[1] not in covering_tests:
             raise AcceptanceError(
                 "acceptance criterion %s is malformed" % identifier)
         _resolve_enforcer(enforcer_parts[0])
+        _resolve_enforcer(enforcer_parts[1])
     return value
 
 
@@ -210,7 +302,7 @@ def render_table(registry):
     return "\n".join(lines) + "\n"
 
 
-def passed_result(registries, test_modules):
+def passed_result(registries, passed_test_ids):
     """Create ephemeral technical status after the named current checks pass.
 
     The result deliberately carries no identity, timestamp, signature, source
@@ -223,12 +315,12 @@ def passed_result(registries, test_modules):
             "ephemeral acceptance requires all current registries")
     for registry in registries:
         validate_registry(registry)
-    modules = tuple(test_modules)
-    if len(modules) != len(set(modules)) or \
-            set(modules) != set(TEST_COVERAGE):
+    test_ids = tuple(passed_test_ids)
+    if len(test_ids) != len(set(test_ids)) or \
+            not set(TEST_COVERAGE).issubset(test_ids):
         raise AcceptanceError(
-            "ephemeral acceptance result lacks an exact test-module census")
-    passed = set().union(*(TEST_COVERAGE[module] for module in modules))
+            "ephemeral acceptance result lacks an exact verifier census")
+    passed = set().union(*TEST_COVERAGE.values())
     if passed != set(CRITERIA) or \
             any(not coverage for coverage in TEST_COVERAGE.values()):
         raise AcceptanceError(

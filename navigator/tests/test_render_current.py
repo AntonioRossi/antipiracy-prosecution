@@ -11,6 +11,7 @@ import os
 from types import MappingProxyType, SimpleNamespace
 import unittest
 
+from navigator.lib import browserqa
 from navigator.lib.claims import Claim, ClaimUnit
 from navigator.lib.model import (
     ContentNode, Endpoint, Mapping, RelationSet, Target,
@@ -191,9 +192,10 @@ class FakeModel:
 class CurrentRenderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.session = validation_session()
         cls.models = MappingProxyType({
             key: value for key, value in
-            validation_session()["models"].items()
+            cls.session["models"].items()
             if value.product_kind == "specification"})
         cls.artifacts = {
             edition: render(model)
@@ -204,6 +206,292 @@ class CurrentRenderTests(unittest.TestCase):
         parser = ArtifactParser()
         parser.feed(self.artifacts[edition].decode("utf-8"))
         return parser
+
+    def _exercise_runtime_navigation(self, page, navigation, expected_mode):
+        relation_id, current = next(
+            (identifier, item)
+            for identifier, item in navigation["relations"].items()
+            if len(item["targets"]) > 1 and any(
+                len(target["blocks"]) > 1 for target in item["targets"]))
+        composite_index = next(
+            index for index, target in enumerate(current["targets"])
+            if len(target["blocks"]) > 1)
+        disclosure_owner = (
+            "disclosure-scroll" if expected_mode == "side-by-side" else "panes")
+        claims_owner = (
+            "claims-pane" if expected_mode == "side-by-side" else "panes")
+        owners = page.evaluate("""() => ({
+          disclosure:paneScrollOwner(disclosureScroll).id,
+          claims:paneScrollOwner(claimsPane).id
+        })""")
+        self.assertEqual(owners, {
+            "claims": claims_owner, "disclosure": disclosure_owner})
+
+        forward = page.locator(
+            'button[data-relation="%s"]' % relation_id).first
+        forward_id = forward.get_attribute("id")
+        forward.focus()
+        page.keyboard.press("Enter")
+        first = current["targets"][0]
+        activation = page.evaluate("""() => ({
+          mode:state.mode, candidateIndex:state.candidateIndex,
+          passageIndex:state.passageIndex, focus:document.activeElement.id,
+          selected:selectedPassageId(relation(state.key)),
+          strong:Array.from(document.querySelectorAll('.highlight-strong'))
+            .map(node => node.id),
+          soft:Array.from(document.querySelectorAll('.highlight-soft'))
+            .map(node => node.id),
+          owner:paneScrollOwner(disclosureScroll).id,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(selectedPassageId(relation(state.key))))
+        })""")
+        self.assertEqual(activation, {
+            "candidateIndex": 0,
+            "focus": "forward-bar",
+            "mode": "forward",
+            "owner": disclosure_owner,
+            "passageIndex": 0,
+            "selected": first["blocks"][0],
+            "soft": first["blocks"][1:],
+            "strong": [first["blocks"][0]],
+            "visible": True,
+        })
+
+        page.keyboard.press("ArrowLeft")
+        wrapped = page.evaluate("""() => ({
+          candidateIndex:state.candidateIndex,
+          passageIndex:state.passageIndex,
+          focus:document.activeElement.id,
+          selected:selectedPassageId(relation(state.key))
+        })""")
+        self.assertEqual(wrapped, {
+            "candidateIndex": len(current["targets"]) - 1,
+            "focus": "forward-bar",
+            "passageIndex": 0,
+            "selected": current["targets"][-1]["blocks"][0],
+        })
+
+        page.evaluate(
+            "index => moveCandidate(index - state.candidateIndex)",
+            composite_index)
+        page.keyboard.press("ArrowDown")
+        composite = current["targets"][composite_index]
+        passage = page.evaluate("""() => ({
+          candidateIndex:state.candidateIndex,
+          passageIndex:state.passageIndex,
+          focus:document.activeElement.id,
+          selected:selectedPassageId(relation(state.key)),
+          strong:Array.from(document.querySelectorAll('.highlight-strong'))
+            .map(node => node.id),
+          soft:Array.from(document.querySelectorAll('.highlight-soft'))
+            .map(node => node.id),
+          owner:paneScrollOwner(disclosureScroll).id,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(selectedPassageId(relation(state.key))))
+        })""")
+        self.assertEqual(passage, {
+            "candidateIndex": composite_index,
+            "focus": "forward-bar",
+            "owner": disclosure_owner,
+            "passageIndex": 1,
+            "selected": composite["blocks"][1],
+            "soft": [composite["blocks"][0], *composite["blocks"][2:]],
+            "strong": [composite["blocks"][1]],
+            "visible": True,
+        })
+
+        page.keyboard.press("Escape")
+        forward_clear = page.evaluate("""() => ({
+          mode:state.mode, focus:document.activeElement.id,
+          bars:[forwardBar.hidden, reverseBar.hidden],
+          highlights:document.querySelectorAll(
+            '.highlight-strong,.highlight-soft,.highlight-subject,' +
+            '.highlight-related,.highlight-obligation').length,
+          owner:paneScrollOwner(claimsPane).id,
+          visible:unobscured(paneScrollOwner(claimsPane),
+            document.getElementById(document.activeElement.id))
+        })""")
+        self.assertEqual(forward_clear, {
+            "bars": [True, True], "focus": forward_id, "highlights": 0,
+            "mode": None, "owner": claims_owner, "visible": True})
+
+        phrase_control = page.locator(
+            "button.phrase-btn[data-relation]").first
+        phrase_relation = phrase_control.get_attribute("data-relation")
+        phrase_control.focus()
+        page.keyboard.press("Enter")
+        phrase = page.evaluate("""() => ({
+          mode:state.mode, key:state.key, focus:document.activeElement.id,
+          owner:paneScrollOwner(disclosureScroll).id,
+          selected:selectedPassageId(relation(state.key)),
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(selectedPassageId(relation(state.key))))
+        })""")
+        self.assertEqual(phrase, {
+            "focus": "forward-bar", "key": phrase_relation,
+            "mode": "forward", "owner": disclosure_owner,
+            "selected": navigation["relations"][
+                phrase_relation]["targets"][0]["blocks"][0],
+            "visible": True})
+        page.keyboard.press("Escape")
+
+        caution_id, caution_relation, caution_index = next(
+            (identifier, item, index)
+            for identifier, item in navigation["relations"].items()
+            for index, target in enumerate(item["targets"])
+            if item["caution"] or target["caution"])
+        caution_control = page.locator(
+            'button[data-relation="%s"]' % caution_id).first
+        caution_control.focus()
+        page.keyboard.press("Enter")
+        if caution_index:
+            page.evaluate(
+                "index => moveCandidate(index - state.candidateIndex)",
+                caution_index)
+        caution_chip = page.locator(
+            "#forward-bar button.caution-chip").first
+        caution_chip.click()
+        caution = page.evaluate("""() => ({
+          mode:state.mode, candidateIndex:state.candidateIndex,
+          focus:document.activeElement.className,
+          expanded:document.querySelector(
+            '#forward-bar button.caution-chip').getAttribute('aria-expanded'),
+          details:document.querySelectorAll(
+            '#forward-bar .caution-detail').length,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(selectedPassageId(relation(state.key))))
+        })""")
+        self.assertEqual(caution, {
+            "candidateIndex": caution_index, "details": 1,
+            "expanded": "true", "focus": "caution-chip",
+            "mode": "forward", "visible": True})
+        expected_caution = (
+            caution_relation["targets"][caution_index]["caution"] or
+            caution_relation["caution"])
+        self.assertIn(expected_caution["name"],
+                      caution_chip.get_attribute("aria-label"))
+        page.keyboard.press("Escape")
+
+        disposition_id, disposition_relation = next(
+            (identifier, item)
+            for identifier, item in navigation["relations"].items()
+            if item["dispositions"])
+        disposition_control = page.locator(
+            'button[data-relation="%s"]' % disposition_id).first
+        disposition_control.focus()
+        page.keyboard.press("Enter")
+        disposition = page.evaluate("""() => ({
+          mode:state.mode, count:document.querySelectorAll(
+            '#forward-bar .disposition').length,
+          text:forwardBar.textContent
+        })""")
+        self.assertEqual(disposition["mode"], "forward")
+        self.assertEqual(
+            disposition["count"], len(disposition_relation["dispositions"]))
+        for item in disposition_relation["dispositions"]:
+            self.assertIn(item["text"], disposition["text"])
+        page.keyboard.press("Escape")
+
+        no_id, no_candidate = next(
+            (identifier, item)
+            for identifier, item in navigation["relations"].items()
+            if not item["targets"])
+        no_control = page.locator(
+            'button[data-relation="%s"]' % no_id).first
+        no_control.focus()
+        page.keyboard.press("Space")
+        no_state = page.evaluate("""() => ({
+          mode:state.mode, candidateIndex:state.candidateIndex,
+          passageIndex:state.passageIndex, focus:document.activeElement.id,
+          status:forwardBar.textContent.includes(
+            relation(state.key).statusLabel),
+          disclosureHighlights:disclosureScroll.querySelectorAll(
+            '.highlight-strong,.highlight-soft').length
+        })""")
+        self.assertEqual(no_state, {
+            "candidateIndex": 0, "disclosureHighlights": 0,
+            "focus": "forward-bar", "mode": "forward", "passageIndex": 0,
+            "status": bool(no_candidate["statusLabel"])})
+        page.keyboard.press("Escape")
+
+        block_id, reverse_list = next(
+            (identifier, items)
+            for identifier, items in navigation["reverse"].items()
+            if len(items) > 1)
+        reverse_control = page.locator(
+            'button[data-block="%s"]' % block_id).first
+        reverse_id = reverse_control.get_attribute("id")
+        reverse_control.focus()
+        page.keyboard.press("Enter")
+        reverse = page.evaluate("""() => {
+          const entry = reverseEntry();
+          const subject = relation(entry.relationId).subjectDomId;
+          return {
+            mode:state.mode, reverseIndex:state.reverseIndex,
+            focus:document.activeElement.id, passage:state.key,
+            occurrenceCount:state.reverseList.length,
+            selected:subject,
+            strong:Array.from(document.querySelectorAll('.highlight-strong'))
+              .map(node => node.id),
+            owner:paneScrollOwner(claimsPane).id,
+            visible:unobscured(paneScrollOwner(claimsPane),
+              document.getElementById(subject))
+          };
+        }""")
+        expected_subject = navigation["relations"][
+            reverse_list[0]["relationId"]]["subjectDomId"]
+        self.assertEqual(reverse, {
+            "focus": "reverse-bar", "mode": "reverse",
+            "occurrenceCount": len(reverse_list), "owner": claims_owner,
+            "passage": block_id, "reverseIndex": 0,
+            "selected": expected_subject, "strong": [expected_subject],
+            "visible": True})
+        page.keyboard.press("ArrowRight")
+        self.assertEqual(page.evaluate("state.reverseIndex"), 1)
+        page.keyboard.press("Escape")
+        reverse_clear = page.evaluate("""() => ({
+          mode:state.mode, focus:document.activeElement.id,
+          bars:[forwardBar.hidden, reverseBar.hidden],
+          highlights:document.querySelectorAll(
+            '.highlight-strong,.highlight-soft,.highlight-subject,' +
+            '.highlight-related,.highlight-obligation').length,
+          owner:paneScrollOwner(disclosureScroll).id,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(document.activeElement.id))
+        })""")
+        self.assertEqual(reverse_clear, {
+            "bars": [True, True], "focus": reverse_id, "highlights": 0,
+            "mode": None, "owner": disclosure_owner, "visible": True})
+
+        claim_key = next(iter(navigation["claimGates"]))
+        gate_id = navigation["claimGates"][claim_key][0]["gate"]["gateId"]
+        gate_control = page.locator(
+            'button[data-gate="%s"][data-claim="%s"]' %
+            (gate_id, claim_key)).first
+        gate_id_control = gate_control.get_attribute("id")
+        gate_control.focus()
+        page.keyboard.press("Space")
+        gate = page.evaluate("""() => ({
+          mode:state.mode, key:state.key, focus:document.activeElement.id,
+          forwardHidden:forwardBar.hidden, reverseHidden:reverseBar.hidden,
+          highlights:document.querySelectorAll(
+            '.highlight-strong,.highlight-soft,.highlight-subject,' +
+            '.highlight-related,.highlight-obligation').length
+        })""")
+        self.assertEqual(gate, {
+            "focus": "forward-bar", "forwardHidden": False,
+            "highlights": 0, "key": claim_key, "mode": "claim-gate",
+            "reverseHidden": True})
+        page.keyboard.press("Escape")
+        self.assertEqual(page.evaluate("document.activeElement.id"),
+                         gate_id_control)
+        return {
+            "activation": activation, "caution": caution,
+            "disposition": disposition, "forwardClear": forward_clear,
+            "gate": gate, "noCandidate": no_state, "passage": passage,
+            "phrase": phrase, "reverse": reverse,
+            "reverseClear": reverse_clear, "wrapped": wrapped,
+        }
 
     def test_live_products_are_complete_self_contained_and_accessible(self):
         expected = {"na-specification": (30, 77),
@@ -422,6 +710,90 @@ class CurrentRenderTests(unittest.TestCase):
                         })
                 self.assertEqual(
                     navigation["claimGates"], expected_claim_gates)
+
+    def test_current_profile_specification_vectors_reach_renderer(self):
+        self.assertEqual(tuple(self.models), (
+            "na-specification", "af-specification"))
+        expected_ui = {
+            "candidatePosition": "Candidate {position} of {total} — {label}",
+            "nextCandidate": "Next candidate",
+            "nextPassage": "Next passage in candidate",
+            "passagePosition": "Passage {position} of {total} — {label}",
+            "previousCandidate": "Previous candidate",
+            "previousPassage": "Previous passage in candidate",
+        }
+        for product_id, model in self.models.items():
+            with self.subTest(product=product_id):
+                parser = self._parsed(product_id)
+                navigation = json.loads(parser.scripts["nav-data"])
+                relations = navigation["relations"]
+                self.assertEqual(
+                    {key: navigation["ui"][key] for key in expected_ui},
+                    expected_ui)
+                self.assertTrue(any(
+                    len(item["targets"]) > 1 for item in relations.values()))
+                self.assertTrue(any(
+                    len(target["blocks"]) > 1
+                    for item in relations.values()
+                    for target in item["targets"]))
+                self.assertTrue(any(
+                    len(items) > 1
+                    for items in navigation["reverse"].values()))
+                self.assertTrue(model.relations.phrase_mappings)
+                self.assertTrue(any(
+                    not item["targets"] for item in relations.values()))
+                self.assertTrue(any(
+                    item["caution"] or any(
+                        target["caution"] for target in item["targets"])
+                    for item in relations.values()))
+                self.assertTrue(navigation["claimGates"])
+                self.assertTrue(any(
+                    item["dispositions"] for item in relations.values()))
+                text = self.artifacts[product_id].decode("utf-8")
+                for parallel in (
+                        "selectedCandidate:null", "selectedPassage:null",
+                        "currentCandidate:null", "currentPassage:null",
+                        "currentTarget:null"):
+                    self.assertNotIn(parallel, text)
+
+    def test_pinned_browser_matrix_proves_specification_runtime(self):
+        with browserqa.browser_runtime(ROOT) as (control, browser):
+            self.assertEqual(len(browserqa.runtime_matrix(control)), 8)
+            for product_id, artifact in self.artifacts.items():
+                parser = self._parsed(product_id)
+                navigation = json.loads(parser.scripts["nav-data"])
+                ordinary = {}
+                for width, height, mode, reduced in \
+                        browserqa.runtime_matrix(control):
+                    label = (product_id, width, height, mode, reduced)
+                    with self.subTest(vector=label):
+                        context = browser.new_context(
+                            viewport={"width": width, "height": height},
+                            reduced_motion=(
+                                "reduce" if reduced else "no-preference"))
+                        page = context.new_page()
+                        errors = []
+                        requests = []
+                        page.on("pageerror", lambda error:
+                                errors.append(str(error)))
+                        page.on("request", lambda request:
+                                requests.append(request.url))
+                        page.set_content(
+                            artifact.decode("utf-8"), wait_until="load")
+                        self.assertEqual(page.evaluate("""() =>
+                          matchMedia(
+                            '(prefers-reduced-motion: reduce)').matches
+                        """), reduced)
+                        result = self._exercise_runtime_navigation(
+                            page, navigation, mode)
+                        self.assertEqual(errors, [])
+                        self.assertEqual(requests, [])
+                        key = (width, height, mode)
+                        if reduced:
+                            self.assertEqual(result, ordinary[key])
+                        else:
+                            ordinary[key] = result
+                        context.close()
 
     def test_preview_is_candidate_plus_only_the_controlled_watermark(self):
         model = self.models["na-specification"]

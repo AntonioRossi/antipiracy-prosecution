@@ -130,6 +130,13 @@ Each product is one self-contained UTF-8 HTML5 file with two coordinated panes:
 - the right pane displays all in-scope documents, every matrix obligation and state, every mapped
   passage, and one complete asserted-XML transcription reader per document.
 
+The layout has exactly two interactive modes. At viewport width at least `1280px` and height at
+least `720px`, claims scroll only in `#claims-pane` and disclosure scrolls only in
+`#disclosure-scroll`. If either threshold is not met, the panes stack and `#panes` is the common
+scroll owner for both directions. The declared minimum interactive viewport is `1000×700`.
+No-script and print are complete non-interactive document surfaces and have no scroll-owner
+postcondition.
+
 For a selected fragment the navigation bar displays separately:
 
 - exact candidate count for that fragment;
@@ -148,18 +155,31 @@ derived only from that fragment's candidate list and `candidateIndex`; the selec
 derived only from that candidate's ordered passage list and `passageIndex`. No cached selected
 candidate, selected passage, first-member alias, or generic position value is authoritative.
 
-Focus is applied with scroll prevention before right-pane navigation. The renderer then positions
-the exact selected passage inside the visible right-pane viewport by assigning the explicit pane
-owner's scroll offset directly. Movement is immediate under ordinary and reduced-motion settings,
-so browser animation policy cannot leave the target off-screen. The contextual-reader control opens
-the full reader at that selected passage and places keyboard focus on the same exact fragment
-without browser history or location mutation.
+Focus is applied with scroll prevention before navigation. A scroll owner is valid only when its
+computed vertical overflow is `auto` or `scroll` and `scrollHeight > clientHeight`; the renderer
+uses the mode-specific owner above and has no body, window, or overflow-visible fallback. An
+already-visible target requires no scroll. An off-screen target without a capable owner is a
+runtime failure.
 
-Navigation success is the resulting state, focus, highlighting, and viewport position, not the
-invocation of a scrolling API. After activation or movement, the navigation bar has keyboard focus,
-the selected passage anchor is inside the unobscured right-pane viewport, only that passage has
-strong emphasis, and the other members of the selected candidate have secondary emphasis. The same
-postconditions apply under ordinary and reduced-motion settings.
+For owner rectangle `O`, active navigation-bar rectangle `N`, and `10px` clearance, a normal target
+rectangle `T` succeeds only when `T.top ≥ max(O.top, N.bottom) + 10` and
+`T.bottom ≤ O.bottom - 10`, intersected with the browser viewport. If a target is taller than the
+available interval, its focused anchor or leading content must satisfy the top bound and remain
+inside the interval. The contextual-reader control opens the full reader and applies this rule to
+the exact focused asserted-XML fragment without history or location mutation.
+
+| Action | Required postcondition |
+|---|---|
+| Activate fragment | Forward mode; candidate `0`; passage `0`; forward bar focused; exact passage strong and unobscured. |
+| Move candidate | Candidate wraps; passage resets to `0`; forward bar focused; identity, counts, highlights, owner, and geometry agree. |
+| Move passage | Passage wraps inside the candidate; candidate identity and semantics remain fixed; focus, highlights, owner, and geometry agree. |
+| Open reader | Full reader open; exact asserted-XML fragment focused and unobscured under the disclosure owner. |
+| Activate or move reverse | Every exact occurrence retained; reverse index wraps; reverse bar focused; exact claim fragment strong and unobscured under the claims owner. |
+| Clear | Selection state and all transient emphasis removed; both bars hidden; focus returned to the invoking control and its containing pane made visible. |
+
+Ordinary and reduced-motion execution must produce equal selected IDs, indices, focus owner,
+highlight sets, reverse occurrences, scroll-owner identity, and geometric containment. Exact pixel
+offsets are not an equality requirement.
 
 Reverse navigation from a passage cycles every exact candidate occurrence using it. Each occurrence
 retains the exact relation identity, candidate identity and position, claim fragment, and selected
@@ -199,6 +219,12 @@ candidate's exact bytes and a fresh isolated reproduction, then publishes the se
 detached checksum. The deterministic bundle contains four ordered HTML/checksum pairs followed by
 the neutral manifest and has one detached checksum.
 
+`navigator/policy/browser.json` is the sole browser-execution control. It pins Playwright `1.50.0`,
+Playwright-managed Chromium revision `1155` / Chromium `133.0.6943.16`, the clearance and layout
+thresholds above, and the exact viewport census `1280×720`, `1279×720`, `1280×719`, and `1000×700`.
+Every viewport runs under ordinary and reduced motion for both NA and AF. Missing or different
+automation, browser binary, revision, version, viewport, motion vector, or fallback browser fails.
+
 No alternate renderer, non-current profile, two-product bundle, migration utility, stored validation
 result, release receipt, approval record, review log, suggestion store, or auxiliary
 lineage/coverage product belongs to the live state.
@@ -211,13 +237,18 @@ A passage-map change is complete only when all affected current owners agree:
 2. author or remove exact fragment-review allocations and candidates in current profile XML;
 3. reject preamble roll-ups, duplicate signatures, inferred semantics, and wrong-document closure;
 4. regenerate both relation Markdown projections;
-5. run positive and adverse model, rendering, security, interaction, release, and bundle vectors,
-   including a current-profile rendered vector with two candidates for one fragment, a multi-passage
-   candidate, a shared passage, an exact review allocation, and an unresolved fragment;
-6. regenerate all four candidates and sealed products, checksums, and the bundle;
-7. inspect candidate and passage movement, right-pane scrolling, reverse navigation, and exact
-   full-reader focus in a browser;
-8. pass the aggregate gate with an unchanged final recapture.
+5. run the current-profile positive vector through secure XML parsing, one retained handoff, the
+   immutable model, production renderer, and pinned browser; it contains two candidates for one
+   fragment, a multi-passage candidate, a shared passage, an exact allocation, and a distinct
+   unresolved fragment;
+6. reject endpoint-permuted duplicate candidates, duplicate allocations, stale digests, root
+   passages, wrong-document closure, preamble roll-ups, inferred children, and parallel selection
+   state before any write;
+7. regenerate all four candidates and sealed products, checksums, and the bundle for every shared
+   renderer, browser control, interaction, wording, or acceptance change;
+8. inspect the products for substantive and visual review in addition to the executable browser
+   vectors; and
+9. pass the aggregate gate with an unchanged final recapture.
 
 The contract pair, data registry, active profile and maps, declared handoffs, model, renderer,
 tests and vectors, generated views, four products, checksums, and bundle form one indivisible current implementation.

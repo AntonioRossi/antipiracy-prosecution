@@ -9,7 +9,7 @@ import re
 from types import MappingProxyType
 import unittest
 
-from navigator.lib import bundlezip, render
+from navigator.lib import browserqa, bundlezip, canon, currentstate, render, snapshot
 from navigator.lib.model import Endpoint, ModelError
 from navigator.lib.priorart import (
     PriorArtModel, PriorArtReviewAllocation,
@@ -19,8 +19,10 @@ from navigator.lib.priorart import (
     _validate_review_allocation,
 )
 from navigator.lib.validate import validate_prior_art
+from navigator.lib.registry import ConsumerInput
 from navigator.tests import validation_session
 from structured_source import parser
+from structured_source.canonical import raw_digest
 from structured_source.control import parse_json
 from structured_source.errors import ParseError
 
@@ -40,6 +42,147 @@ def _navigation(text):
     if match is None:
         raise AssertionError("rendered prior-art product has no navigation data")
     return json.loads(match.group(1))
+
+
+def _relation_chunk(payload, relation_id):
+    pattern = (
+        rb"  <relation [^\n]*relationId=\"" +
+        re.escape(relation_id.encode("utf-8")) +
+        rb"\".*?  </relation>\n")
+    match = re.search(pattern, payload, re.DOTALL)
+    if match is None:
+        raise AssertionError("current-profile relation vector owner is absent")
+    return match.group(0)
+
+
+def _snapshot_with_bytes(base, path, payload):
+    retained = dict(base.retained_bytes)
+    retained[path] = payload
+    entries = []
+    for entry in base.entries:
+        if entry.path == path:
+            entry = snapshot.SnapshotEntry(
+                path, canon.bytes_digest(payload), entry.mode, len(payload),
+                entry.fingerprint)
+        entries.append(entry)
+    digest = canon.composite_digest(
+        "aa11393:lock:c1",
+        {"repositorySnapshot": [entry.as_record() for entry in entries]})
+    return snapshot.RepositorySnapshot(
+        base.root, tuple(entries), digest, MappingProxyType(retained))
+
+
+def _model_from_map_payload(session, payload):
+    edition = session["plan"].by_id["na-prior-art"]
+    consumer = session["sources"].consumer_inputs[edition.consumer_id]
+    package_id = edition.passage_map_package_id
+    handoff = consumer.handoffs[package_id]
+    path = handoff["path"]
+    parser.parse_artifact(
+        payload, "relation-set", controls=consumer.parser_controls)
+    vector_snapshot = _snapshot_with_bytes(session["snapshot"], path, payload)
+    handoffs = dict(consumer.handoffs)
+    vector_handoff = dict(handoff)
+    vector_handoff["bytes"] = payload
+    vector_handoff["validationReads"] = tuple(
+        (read_path, raw_digest(payload) if read_path == path else digest)
+        for read_path, digest in handoff["validationReads"])
+    handoffs[package_id] = MappingProxyType(vector_handoff)
+    vector_consumer = ConsumerInput(
+        consumer_id=consumer.consumer_id,
+        snapshot_digest=vector_snapshot.digest,
+        capture_token=vector_snapshot.capture_token,
+        handoffs=MappingProxyType(handoffs),
+        parser_controls=consumer.parser_controls)
+    vector_edition = replace(
+        edition, capture_token=vector_snapshot.capture_token,
+        plan_token=object())
+    return currentstate.build_model(
+        vector_edition, vector_snapshot, vector_consumer, object())
+
+
+def _current_profile_vector(session):
+    """Build the multiplicity vector through XML, parser, handoff, and model."""
+    base_model = session["models"]["na-prior-art"]
+    edition = session["plan"].by_id["na-prior-art"]
+    consumer = session["sources"].consumer_inputs[edition.consumer_id]
+    package_id = edition.passage_map_package_id
+    handoff = consumer.handoffs[package_id]
+    path = handoff["path"]
+    payload = handoff["bytes"]
+
+    base_candidate = next(
+        item for item in base_model.candidate_relations
+        if item.exact_text is None and len(item.targets[0].endpoints) > 1)
+    alternate_role = (
+        "context" if base_candidate.targets[0].role != "context" else "specific")
+    candidate_id = package_id + "-candidate-browser-vector"
+    candidate = _relation_chunk(payload, base_candidate.relation_id)
+    candidate = candidate.replace(
+        base_candidate.relation_id.encode("utf-8"),
+        candidate_id.encode("utf-8"))
+    old_role = (
+        '<assertionField name="candidate-role">%s</assertionField>' %
+        base_candidate.targets[0].role).encode("utf-8")
+    new_role = (
+        '<assertionField name="candidate-role">%s</assertionField>' %
+        alternate_role).encode("utf-8")
+    if candidate.count(old_role) != 1:
+        raise AssertionError("candidate-role vector owner is not exact")
+    candidate = candidate.replace(old_role, new_role)
+
+    review = next(
+        item for item in base_model.prior_art_obligations
+        if item.status == "counsel-review-required")
+    allocation_unit = next(
+        unit for unit in base_model.units_by_fragment.values()
+        if unit.claim_number == review.claim_number and
+        unit.fragment_id not in base_model.candidates_by_unit)
+    allocation_id = package_id + "-allocation-browser-vector"
+    allocation_note = "Exact current-profile browser-vector allocation."
+    allocation = (
+        '  <relation direction="forward" relationId="{identifier}" '
+        'semanticOwner="Applicant — Antonio Rossi" '
+        'type="claim-prior-art-passage-map" xml:id="{identifier}">\n'
+        '    <endpoint documentId="{document}" '
+        'fragmentContentDigest="{digest}" fragmentId="{fragment}" '
+        'role="subject" />\n'
+        '    <assertionField name="obligation-ids">{obligation}</assertionField>\n'
+        '    <assertionField name="record-kind">fragment-review-allocation</assertionField>\n'
+        '    <assertionField name="relevance-note">{note}</assertionField>\n'
+        '  </relation>\n'
+    ).format(
+        identifier=allocation_id,
+        document=base_model._claim_package_id,
+        digest=allocation_unit.content_digest,
+        fragment=allocation_unit.fragment_id,
+        obligation=review.relation_id,
+        note=allocation_note,
+    ).encode("utf-8")
+    closing = b"</relations>\n"
+    if payload.count(closing) != 1:
+        raise AssertionError("current-profile relation closure is not exact")
+    vector_payload = payload.replace(
+        closing, candidate + allocation + closing)
+
+    vector_model = _model_from_map_payload(session, vector_payload)
+    if validate_prior_art(vector_model):
+        raise AssertionError("current-profile browser vector is not model-valid")
+    unresolved = next(
+        unit.fragment_id for unit in vector_model.units_by_fragment.values()
+        if unit.fragment_id not in vector_model.candidates_by_unit and
+        unit.fragment_id not in vector_model.review_allocations_by_unit)
+    return MappingProxyType({
+        "allocationId": allocation_id,
+        "allocationUnit": allocation_unit.fragment_id,
+        "baseCandidateId": base_candidate.relation_id,
+        "baseCandidateRole": base_candidate.targets[0].role,
+        "candidateId": candidate_id,
+        "candidateUnit": base_candidate.subject.fragment_id,
+        "model": vector_model,
+        "unresolvedUnit": unresolved,
+        "xml": vector_payload,
+    })
 
 
 class _ModelVector:
@@ -66,6 +209,126 @@ class PriorArtNavigatorTests(unittest.TestCase):
             if value.product_kind == "prior-art"})
         cls.artifacts = MappingProxyType({
             key: render.render(value) for key, value in cls.models.items()})
+        cls.authority_vector = _current_profile_vector(cls.session)
+        cls.authority_vector_artifact = render.render(
+            cls.authority_vector["model"])
+
+    def _exercise_runtime_navigation(self, page, navigation, expected_mode):
+        relation_id, current = next(
+            (identifier, item)
+            for identifier, item in navigation["relations"].items()
+            if item["targets"] and any(
+                len(target["blocks"]) > 1 for target in item["targets"]))
+        expected_owner = (
+            "disclosure-scroll" if expected_mode == "side-by-side" else "panes")
+        expected_claims_owner = (
+            "claims-pane" if expected_mode == "side-by-side" else "panes")
+        owners = page.evaluate("""() => ({
+          disclosure:paneScrollOwner(disclosureScroll).id,
+          claims:paneScrollOwner(claimsPane).id
+        })""")
+        self.assertEqual(owners, {
+            "claims": expected_claims_owner,
+            "disclosure": expected_owner,
+        })
+        page.locator('button[data-relation="%s"]' % relation_id).first.click()
+        selected = current["targets"][0]["blocks"][0]
+        activation = page.evaluate("""() => ({
+          mode:state.mode, candidateIndex:state.candidateIndex,
+          passageIndex:state.passageIndex, focus:document.activeElement.id,
+          selected:selectedPassageId(relation(state.key)),
+          strong:Array.from(document.querySelectorAll('.highlight-strong'))
+            .map(node => node.id),
+          related:Array.from(document.querySelectorAll('.highlight-soft'))
+            .map(node => node.id),
+          owner:paneScrollOwner(disclosureScroll).id,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(selectedPassageId(relation(state.key))))
+        })""")
+        self.assertEqual(activation["mode"], "forward")
+        self.assertEqual(activation["candidateIndex"], 0)
+        self.assertEqual(activation["passageIndex"], 0)
+        self.assertEqual(activation["focus"], "forward-bar")
+        self.assertEqual(activation["selected"], selected)
+        self.assertEqual(activation["strong"], [selected])
+        self.assertTrue(activation["related"])
+        self.assertEqual(activation["owner"], expected_owner)
+        self.assertTrue(activation["visible"])
+
+        page.evaluate("movePassage(1)")
+        moved = page.evaluate("""() => ({
+          mode:state.mode, candidateIndex:state.candidateIndex,
+          passageIndex:state.passageIndex, focus:document.activeElement.id,
+          selected:selectedPassageId(relation(state.key)),
+          owner:paneScrollOwner(disclosureScroll).id,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(selectedPassageId(relation(state.key))))
+        })""")
+        self.assertEqual(moved["mode"], "forward")
+        self.assertEqual(moved["candidateIndex"], 0)
+        self.assertEqual(moved["passageIndex"], 1)
+        self.assertEqual(moved["focus"], "forward-bar")
+        self.assertEqual(moved["owner"], expected_owner)
+        self.assertTrue(moved["visible"])
+
+        reader = page.locator(
+            '#%s button.reader-jump' % moved["selected"]).first
+        reader_target = reader.get_attribute("data-reader")
+        reader.click()
+        reader_state = page.evaluate("""target => ({
+          focus:document.activeElement.id,
+          owner:paneScrollOwner(disclosureScroll).id,
+          visible:unobscured(paneScrollOwner(disclosureScroll),
+            document.getElementById(target)),
+          details:document.getElementById(target)
+            .closest('details.full-reader').open
+        })""", reader_target)
+        self.assertEqual(reader_state["focus"], reader_target)
+        self.assertEqual(reader_state["owner"], expected_owner)
+        self.assertTrue(reader_state["visible"])
+        self.assertTrue(reader_state["details"])
+
+        reverse = page.locator(
+            '#%s button[data-block]' % moved["selected"]).first
+        reverse_id = reverse.get_attribute("id")
+        reverse.click()
+        reverse_state = page.evaluate("""() => {
+          const entry = reverseEntry();
+          const subject = relation(entry.relationId).subjectDomId;
+          return {
+            mode:state.mode, reverseIndex:state.reverseIndex,
+            passage:state.key, focus:document.activeElement.id,
+            subject:subject, owner:paneScrollOwner(claimsPane).id,
+            visible:unobscured(paneScrollOwner(claimsPane),
+              document.getElementById(subject)),
+            occurrenceCount:state.reverseList.length
+          };
+        }""")
+        self.assertEqual(reverse_state["mode"], "reverse")
+        self.assertEqual(reverse_state["reverseIndex"], 0)
+        self.assertEqual(reverse_state["passage"], moved["selected"])
+        self.assertEqual(reverse_state["focus"], "reverse-bar")
+        self.assertEqual(reverse_state["owner"], expected_claims_owner)
+        self.assertTrue(reverse_state["visible"])
+        self.assertGreater(reverse_state["occurrenceCount"], 1)
+        page.evaluate("moveCandidate(1)")
+        self.assertEqual(page.evaluate("state.reverseIndex"), 1)
+        page.keyboard.press("Escape")
+        cleared = page.evaluate("""returnFocus => ({
+          mode:state.mode, focus:document.activeElement.id,
+          forwardHidden:forwardBar.hidden, reverseHidden:reverseBar.hidden,
+          highlights:document.querySelectorAll(
+            '.highlight-strong,.highlight-soft,.highlight-subject,' +
+            '.highlight-related,.highlight-obligation').length
+        })""", reverse_id)
+        self.assertEqual(cleared, {
+            "focus": reverse_id,
+            "forwardHidden": True,
+            "highlights": 0,
+            "mode": None,
+            "reverseHidden": True,
+        })
+        return activation, moved, reader_state, reverse_state, cleared
 
     def test_exact_product_and_handoff_inventory(self):
         self.assertEqual(self.plan.product_ids, (
@@ -241,7 +504,19 @@ class PriorArtNavigatorTests(unittest.TestCase):
                     "scrollDisclosureToNode(selectedPassageId(current));", text)
                 self.assertIn(
                     "owner.scrollTop = owner.scrollTop + nodeBox.top - "
-                    "ownerBox.top - offset;", text)
+                    "desiredTop;", text)
+                self.assertIn("function capableScrollOwner(node)", text)
+                self.assertIn("function paneScrollOwner(primary)", text)
+                self.assertIn("function unobscured(owner, node)", text)
+                self.assertIn(
+                    "off-screen navigation target has no scroll owner", text)
+                self.assertIn(
+                    "navigation target is outside unobscured owner geometry",
+                    text)
+                self.assertIn(
+                    "scrollWithin(paneScrollOwner(disclosureScroll),", text)
+                self.assertIn(
+                    "scrollWithin(paneScrollOwner(claimsPane),", text)
                 self.assertNotIn("behavior:reducedMotion", text)
                 self.assertIn(
                     "focusWithoutScroll(forwardBar);\n  applyForwardHighlights();",
@@ -484,6 +759,249 @@ class PriorArtNavigatorTests(unittest.TestCase):
                          if item["relationId"] == relation_id}, {0, 1})
                 self.assertIn(vector_candidate.relation_id, rendered)
                 self.assertIn(allocation.relevance_note, rendered)
+
+    def test_current_profile_xml_vector_reaches_the_immutable_renderer(self):
+        vector = self.authority_vector
+        model = vector["model"]
+        self.assertIsInstance(model, PriorArtModel)
+        self.assertEqual(validate_prior_art(model), ())
+        self.assertIn(b"claim-prior-art-passage-map-v2", vector["xml"])
+        candidates = model.candidates_by_unit[vector["candidateUnit"]]
+        self.assertEqual(len(candidates), 2)
+        self.assertIn(vector["candidateId"], {
+            item.relation_id for item in candidates})
+        self.assertTrue(any(
+            len(item.targets[0].endpoints) > 1 for item in candidates))
+        self.assertTrue(any(
+            len(model.reverse_index[(endpoint.document_id,
+                                     endpoint.fragment_id)]) > 1
+            for item in candidates for endpoint in item.targets[0].endpoints))
+        self.assertEqual(
+            model.review_allocations_by_unit[vector["allocationUnit"]][0]
+            .relation_id,
+            vector["allocationId"])
+        self.assertNotIn(vector["unresolvedUnit"], model.candidates_by_unit)
+        self.assertNotIn(
+            vector["unresolvedUnit"], model.review_allocations_by_unit)
+        rendered = self.authority_vector_artifact.decode("utf-8")
+        navigation = _navigation(rendered)
+        relation_id = next(
+            item.relation_id for item in model.relations.mappings
+            if item.subject.fragment_id == vector["candidateUnit"])
+        self.assertEqual(
+            len(navigation["relations"][relation_id]["targets"]), 2)
+        allocation_relation_id = next(
+            item.relation_id for item in model.relations.mappings
+            if item.subject.fragment_id == vector["allocationUnit"])
+        self.assertEqual(
+            navigation["relations"][allocation_relation_id]
+            ["reviewAllocations"][0]["allocationId"],
+            vector["allocationId"])
+
+    def test_current_profile_adverse_vectors_fail_before_render(self):
+        vector = self.authority_vector
+        payload = vector["xml"]
+        model = vector["model"]
+        candidate = _relation_chunk(payload, vector["candidateId"])
+        role = next(
+            item.targets[0].role for item in model.candidate_relations
+            if item.relation_id == vector["candidateId"])
+        current_role = (
+            '<assertionField name="candidate-role">%s</assertionField>' %
+            role).encode("utf-8")
+        base_role = (
+            '<assertionField name="candidate-role">%s</assertionField>' %
+            vector["baseCandidateRole"]).encode("utf-8")
+        endpoint_pattern = rb"    <endpoint [^\n]+ role=\"evidence\" />\n"
+        endpoints = re.findall(endpoint_pattern, candidate)
+        self.assertGreater(len(endpoints), 1)
+
+        permuted = candidate.replace(current_role, base_role)
+        permuted = permuted.replace(
+            b"".join(endpoints), b"".join(reversed(endpoints)), 1)
+        with self.subTest(vector="endpoint-permuted duplicate"), \
+                self.assertRaises(currentstate.CurrentStateError):
+            _model_from_map_payload(
+                self.session, payload.replace(candidate, permuted))
+
+        first = endpoints[0]
+        stale_endpoint = re.sub(
+            rb'fragmentContentDigest="[^"]+"',
+            b'fragmentContentDigest="sha256/typed-item-v1:' +
+            b'0' * 64 + b'"', first, count=1)
+        stale = candidate.replace(first, stale_endpoint, 1)
+        with self.subTest(vector="stale digest"), \
+                self.assertRaises(currentstate.CurrentStateError):
+            _model_from_map_payload(
+                self.session, payload.replace(candidate, stale))
+
+        selected = next(
+            item for item in model.candidate_relations
+            if item.relation_id == vector["candidateId"])
+        endpoint = selected.targets[0].endpoints[0]
+        root_item = model.get_item(
+            endpoint.document_id, endpoint.document_id + "-root")
+        root_endpoint = (
+            '    <endpoint documentId="{document}" '
+            'fragmentContentDigest="{digest}" fragmentId="{fragment}" '
+            'role="evidence" />\n').format(
+                document=endpoint.document_id,
+                digest=root_item.content_digest,
+                fragment=root_item.item_id).encode("utf-8")
+        root_target = candidate.replace(first, root_endpoint, 1)
+        with self.subTest(vector="root passage"), \
+                self.assertRaises(currentstate.CurrentStateError):
+            _model_from_map_payload(
+                self.session, payload.replace(candidate, root_target))
+
+        obligation_documents = {
+            item.evidence.document_id for item in model.prior_art_obligations
+            if item.relation_id in selected.obligation_ids}
+        outside = next(
+            endpoint for item in model.candidate_relations
+            for endpoint in item.targets[0].endpoints
+            if endpoint.document_id not in obligation_documents)
+        wrong_endpoint = (
+            '    <endpoint documentId="{document}" '
+            'fragmentContentDigest="{digest}" fragmentId="{fragment}" '
+            'role="evidence" />\n').format(
+                document=outside.document_id,
+                digest=outside.content_digest,
+                fragment=outside.fragment_id).encode("utf-8")
+        wrong_document = candidate.replace(first, wrong_endpoint, 1)
+        with self.subTest(vector="wrong-document closure"), \
+                self.assertRaises(currentstate.CurrentStateError):
+            _model_from_map_payload(
+                self.session, payload.replace(candidate, wrong_document))
+
+        allocation = _relation_chunk(payload, vector["allocationId"])
+        duplicate_id = vector["allocationId"] + "-duplicate"
+        duplicate = allocation.replace(
+            vector["allocationId"].encode("utf-8"),
+            duplicate_id.encode("utf-8"))
+        duplicate_allocation = payload.replace(
+            b"</relations>\n", duplicate + b"</relations>\n")
+        with self.subTest(vector="duplicate allocation"), \
+                self.assertRaises(currentstate.CurrentStateError):
+            _model_from_map_payload(self.session, duplicate_allocation)
+
+        subject_line = re.search(
+            rb"    <endpoint [^\n]+ role=\"subject\" />\n", candidate)
+        self.assertIsNotNone(subject_line)
+        selected_claim = model.units_by_fragment[
+            selected.subject.fragment_id].claim_number
+        inferred_unit = next(
+            unit for unit in model.units_by_fragment.values()
+            if unit.claim_number != selected_claim and
+            unit.fragment_id not in model.candidates_by_unit)
+        inferred_subject = (
+            '    <endpoint documentId="{document}" '
+            'fragmentContentDigest="{digest}" fragmentId="{fragment}" '
+            'role="subject" />\n').format(
+                document=model._claim_package_id,
+                digest=inferred_unit.content_digest,
+                fragment=inferred_unit.fragment_id).encode("utf-8")
+        inferred = candidate.replace(
+            subject_line.group(0), inferred_subject, 1)
+        with self.subTest(vector="inferred child"), \
+                self.assertRaises(currentstate.CurrentStateError):
+            _model_from_map_payload(
+                self.session, payload.replace(candidate, inferred))
+
+        rendered = self.authority_vector_artifact.decode("utf-8")
+        for parallel in (
+                "selectedCandidate:null", "selectedPassage:null",
+                "currentCandidate:null", "currentPassage:null"):
+            self.assertNotIn(parallel, rendered)
+
+    def test_pinned_browser_matrix_proves_runtime_layout_and_navigation(self):
+        with browserqa.browser_runtime(str(ROOT)) as (control, browser):
+            self.assertEqual(len(browserqa.runtime_matrix(control)), 8)
+            for product_id, artifact in self.artifacts.items():
+                navigation = _navigation(artifact.decode("utf-8"))
+                ordinary = {}
+                for width, height, mode, reduced in \
+                        browserqa.runtime_matrix(control):
+                    label = (product_id, width, height, mode, reduced)
+                    with self.subTest(vector=label):
+                        context = browser.new_context(
+                            viewport={"width": width, "height": height},
+                            reduced_motion=("reduce" if reduced else
+                                            "no-preference"))
+                        page = context.new_page()
+                        errors = []
+                        requests = []
+                        page.on("pageerror", lambda error: errors.append(str(error)))
+                        page.on("request", lambda request:
+                                requests.append(request.url))
+                        page.set_content(artifact.decode("utf-8"),
+                                         wait_until="load")
+                        self.assertEqual(
+                            page.evaluate("""() =>
+                              matchMedia('(prefers-reduced-motion: reduce)').matches
+                            """), reduced)
+                        result = self._exercise_runtime_navigation(
+                            page, navigation, mode)
+                        self.assertEqual(errors, [])
+                        self.assertEqual(requests, [])
+                        semantic = tuple(
+                            tuple(sorted(item.items())) for item in result)
+                        key = (width, height, mode)
+                        if reduced:
+                            self.assertEqual(semantic, ordinary[key])
+                        else:
+                            ordinary[key] = semantic
+                        context.close()
+
+    def test_pinned_browser_vector_proves_independent_candidate_movement(self):
+        artifact = self.authority_vector_artifact
+        navigation = _navigation(artifact.decode("utf-8"))
+        relation_id, current = next(
+            (identifier, item)
+            for identifier, item in navigation["relations"].items()
+            if len(item["targets"]) == 2 and any(
+                len(target["blocks"]) > 1 for target in item["targets"]))
+        with browserqa.browser_runtime(str(ROOT)) as (control, browser):
+            minimum = control["layout"]["minimumViewport"]
+            outcomes = []
+            for reduced in (False, True):
+                context = browser.new_context(
+                    viewport={"width": minimum["width"],
+                              "height": minimum["height"]},
+                    reduced_motion=("reduce" if reduced else "no-preference"))
+                page = context.new_page()
+                errors = []
+                page.on("pageerror", lambda error: errors.append(str(error)))
+                page.set_content(artifact.decode("utf-8"), wait_until="load")
+                page.locator(
+                    'button[data-relation="%s"]' % relation_id).first.click()
+                page.evaluate("movePassage(1)")
+                page.evaluate("moveCandidate(1)")
+                state_value = page.evaluate("""() => ({
+                  mode:state.mode, candidateIndex:state.candidateIndex,
+                  passageIndex:state.passageIndex,
+                  candidate:selectedCandidate(relation(state.key)).candidateId,
+                  passage:selectedPassageId(relation(state.key)),
+                  focus:document.activeElement.id,
+                  owner:paneScrollOwner(disclosureScroll).id,
+                  visible:unobscured(paneScrollOwner(disclosureScroll),
+                    document.getElementById(
+                      selectedPassageId(relation(state.key))))
+                })""")
+                self.assertEqual(state_value, {
+                    "candidate": current["targets"][1]["candidateId"],
+                    "candidateIndex": 1,
+                    "focus": "forward-bar",
+                    "mode": "forward",
+                    "owner": "panes",
+                    "passage": current["targets"][1]["blocks"][0],
+                    "passageIndex": 0,
+                    "visible": True,
+                })
+                self.assertEqual(errors, [])
+                outcomes.append(state_value)
+                context.close()
+            self.assertEqual(outcomes[0], outcomes[1])
 
     def test_noncurrent_passage_map_profile_fails_closed(self):
         path = ROOT / (

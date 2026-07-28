@@ -596,7 +596,10 @@ class LockedEnvironment(unittest.TestCase):
         self.assertEqual(
             [(item["name"], item["version"])
              for item in receipt["distributions"]],
-            [("elementpath", "5.1.3"), ("xmlschema", "4.3.2")])
+            [("elementpath", "5.1.3"), ("greenlet", "3.5.4"),
+             ("playwright", "1.50.0"), ("pyee", "12.1.1"),
+             ("typing-extensions", "4.16.0"),
+             ("xmlschema", "4.3.2")])
 
     def test_ambient_pythonpath_is_rejected(self):
         with mock.patch.dict(os.environ, {"PYTHONPATH": "/tmp/ambient"}):

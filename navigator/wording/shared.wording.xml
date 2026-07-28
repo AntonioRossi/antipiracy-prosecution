@@ -87,7 +87,7 @@
   </entry>
   <entry wordingId="artifact-label-technical-preview" category="release-profile">
     <usage context="artifact-label" />
-    <text>TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA is deferred; browser and assistive-technology compatibility is not validated.</text>
+    <text>TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass; cross-platform and assistive-technology compatibility is not validated.</text>
   </entry>
   <entry wordingId="artifact-watermark-technical-preview" category="security">
     <usage context="artifact-watermark" />

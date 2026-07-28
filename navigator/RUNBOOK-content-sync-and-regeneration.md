@@ -17,6 +17,19 @@ representations, handoffs, and stored products are one current state. No documen
 registry-only, implementation-only, workflow-only, control-only, test-only, or product-only state
 is releasable.
 
+Provision the exact locked project environment and the policy-bound browser before using any
+navigator command:
+
+```sh
+uv --no-cache sync --locked
+uv --no-cache run --locked python -m playwright install chromium
+```
+
+The installed Playwright distribution, Playwright-managed Chromium revision and browser version
+must equal `navigator/policy/browser.json`. An absent or different runtime is a stop condition;
+there is no system-browser or alternate-engine fallback. Subsequent navigator commands use
+`--offline --no-sync` and validate the exact environment before accepting work.
+
 ## 1. Current contract
 
 - Work from the current worktree. Aggregate validation captures its governed inventory and bytes;
@@ -117,10 +130,12 @@ uv --no-cache --offline run --locked --no-sync python -m navigator preview af-pr
 ```
 
 Inspect each changed product visually, including independent candidate and passage movement,
-forward and reverse navigation, obligation/allocation/no-candidate states, right-pane passage
-scrolling, contextual-reader opening and exact-fragment focus, cautions and gates, disclosure
-figures, keyboard focus, the no-JavaScript document order, and print content. Visual inspection is
-useful product review, not a stored authorization step.
+forward and reverse navigation, obligation/allocation/no-candidate states, mode-specific scroll
+owners, contextual-reader opening and exact-fragment focus, cautions and gates, disclosure figures,
+keyboard focus, the no-JavaScript document order, and print content. Registered browser tests
+execute all four products at `1280×720`, `1279×720`, `1280×719`, and `1000×700` under ordinary and
+reduced motion. Visual inspection remains useful substantive and product review, not a stored
+authorization step.
 
 Regenerate every product in the current bundle inventory so shared-input drift cannot remain
 hidden:
@@ -134,6 +149,8 @@ uv --no-cache --offline run --locked --no-sync python -m navigator candidate af-
 
 Stop if any product reads another product's private input, any semantic source bypasses the XML
 gateway, a relation or wording entry is unused or unresolved, or regeneration is not byte-stable.
+Every shared renderer, browser-control, interaction, wording, or acceptance change requires all
+four candidates, all four sealed products and checksums, and the bundle to be regenerated.
 
 ## 5. Seal and bundle
 

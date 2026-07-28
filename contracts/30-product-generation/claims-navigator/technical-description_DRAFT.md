@@ -38,12 +38,13 @@ management function.
 The current product profile is `technical-preview`. Every screen, no-JavaScript view, printed
 page, and bundle manifest carries this exact label:
 
-> **TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA is deferred;
-> browser and assistive-technology compatibility is not validated.**
+> **TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass;
+> cross-platform and assistive-technology compatibility is not validated.**
 
-Automated content, transformation, interaction-model, accessibility-structure, security,
-offline, deterministic-output, and bundle-integrity checks remain mandatory. The profile makes
-no browser, operating-system, print-engine, or assistive-technology compatibility claim.
+Automated content, transformation, pinned-Chromium interaction, accessibility-structure, security,
+offline, deterministic-output, and bundle-integrity checks remain mandatory. The profile makes no
+cross-platform, alternate-browser, operating-system, print-engine, or assistive-technology
+compatibility claim.
 
 ## 2. Authority and XML architecture
 
@@ -282,8 +283,10 @@ typed candidate roles and notes, scoped cautions, and gate dispositions. Mapping
 disposition identities are stable within that package. Every endpoint binds exact
 `(documentId, fragmentId, fragmentContentDigest)` values, where the digest is a typed-item digest.
 Forward navigation, mechanically derived reverse navigation, and displayed excerpts resolve from
-the same package. Upstream relation references, copied assertions, duplicate ownership, stale or
-ambiguous targets, inferred links, silent retargeting, and endpoint-driven authority promotion fail.
+the same package. Root or editorial targets, wrong-document or stale digests, repeated endpoints
+across candidates, overlapping phrases, upstream relation references, copied assertions, duplicate
+or permuted semantic ownership, inferred links, reversal, silent retargeting, and endpoint-driven
+authority promotion fail before a product write.
 
 Claims preserve exact visible text, number, order, dependency, grouping, and fragment identity.
 Each claim is divided into selectable preamble and limitation units; selected exact, contiguous,
@@ -337,8 +340,11 @@ captions, and the filing-data footer are visibly marked “editorial (not filed 
 relation targets. PCT claim items are targetable. Each addressable source item carries its
 mechanically derived navigation label and, where useful, section context and opening words.
 
-The current target receives a strong highlight; the other targets for the active fragment receive
-soft highlights. Under reduced-motion preference, scrolling is immediate rather than smooth.
+The current passage of the selected candidate receives the strong highlight. Other passages of
+that same composite candidate receive soft highlights; passages belonging only to other
+candidates remain unhighlighted until that candidate is selected. Under reduced-motion
+preference, scrolling is immediate rather than smooth, with the same resulting state, focus,
+highlights, owner, and geometry as ordinary motion.
 
 ### 5.3 Forward navigation
 
@@ -346,16 +352,17 @@ While a claim fragment is active, a navigation bar above the disclosure pane sho
 
 - mode `Claims → Specification`;
 - the edition-prefixed claim, unit, or phrase context;
-- current position and disclosure target label;
-- previous, next, and clear controls;
+- separate candidate position and, for a composite, passage position with exact disclosure labels;
+- separate candidate (`C`) and passage (`P`) previous/next controls plus clear;
 - the target's required short descriptive note and required declared role; and
 - applicable fragment-, target-, or claim-scope caution indicators.
 
 Targets are ordered by role: `specific`, then `combination`, then `context`; authored order is
-stable within each role. The relation stores all candidates. If more than five exist, only the
-first five are soft-highlighted together and the bar shows
-“+N more”; previous/next still cycles through every candidate and the printable schedule lists
-all of them.
+stable within each role. The relation stores and the printable schedule lists all candidates.
+Mapped activation selects candidate 0 and passage 0. Candidate movement wraps across candidates
+and resets passage 0. Passage movement wraps only within the selected composite candidate and
+does not change the candidate. A no-candidate activation retains candidate 0 and passage 0, shows
+the exact recording state, and creates no disclosure highlight.
 
 ### 5.4 Reverse navigation
 
@@ -373,13 +380,16 @@ authored or stored.
 
 ### 5.5 Focus and selection
 
-Forward and reverse selections are mutually exclusive. Activation moves focus to the applicable
-navigation bar. Previous and next wrap through the current result set. Clear or `Esc` removes the
-selection and returns focus to its originating control.
+Forward, reverse, and claim-gate selections are mutually exclusive. Activation moves focus to the
+applicable navigation bar. Reverse movement wraps through the mechanically derived occurrences.
+Clear or `Esc` removes every selection highlight, hides both bars, and returns focus to the exact
+originating control, which is scrolled into unobscured view in its capable pane owner.
 
-`Enter` and `Space` activate focused controls. Left and right arrows cycle only while the
-navigation bar has focus; there is no global arrow-key capture. Live-region announcements state
-mode, position, target, and caution/gate presence without repeating the full source text.
+`Enter` and `Space` activate focused controls. While a forward or reverse bar has focus, left and
+right arrows move candidates or reverse occurrences. While the forward bar has focus, up and down
+arrows move passages inside the selected composite candidate. There is no global arrow-key
+capture. Live-region announcements state mode, candidate and passage position, target, and
+caution/gate presence without repeating the full source text.
 
 ## 6. Controlled product wording and provenance
 
@@ -410,8 +420,13 @@ Markdown authority.
 
 - The visual design uses a professional light theme, serif claim/disclosure text, sans-serif
   application chrome, distinct strong/soft highlights, and non-color state indicators.
-- At or above 1280 × 720, panes are approximately 45/55 and scroll independently; below that
-  minimum they stack in one dedicated scrolling container. The page body does not own scrolling.
+- At or above both 1280 px width and 720 px height, panes are approximately 45/55 and the exact
+  capable owners are `claims-pane` and `disclosure-scroll`. At either lower boundary, the panes
+  stack and `panes` is the sole capable owner for both directions. Body, window, and arbitrary
+  overflow ancestors are never fallback owners.
+- Every navigation target and returned focus control is within its owner and at least 10 px from
+  the unobscured top and bottom bounds. An absent owner, absent target, incapable owner, or target
+  outside that geometry is an interaction failure.
 - Controls are semantic buttons with logical focus order, visible focus, browser-native accessible
   names and states, no nested interaction, and a minimum 24 px target.
 - Pane headings, landmarks, lists, tables, figures, captions, relationships, and announcements use
@@ -424,8 +439,14 @@ Markdown authority.
   provenance, and the complete schedule, with clipping and overflow safeguards. The profile label
   and disclaimer repeat through the print-page mechanism.
 
-These structural and byte-level requirements are automated. The technical-preview profile still
-defers actual browser, operating-system, print-engine, and assistive-technology observation.
+The exact Playwright 1.50.0 managed Chromium 133.0.6943.16 revision 1155 is controlled by
+`navigator/policy/browser.json`; absence or mismatch fails without a system-browser or engine
+fallback. Both live specification products run at `1280×720`, `1279×720`, `1280×719`, and
+`1000×700` under ordinary and reduced motion. The matrix exercises mapped multi-candidate and
+composite passage movement, shared reverse endpoints, phrases, no-candidate state, cautions,
+claim gates, dispositions, clear, focus return, owner selection, geometry, and zero page errors or
+network requests. Cross-platform, alternate-browser, print-engine, and assistive-technology
+observation remains outside the technical pass.
 
 ## 8. Offline and security contract
 
@@ -605,8 +626,8 @@ The exact live navigator implementation census is:
 | Product contracts | Both phase-30 contract pairs and `navigator/schema/{acceptance.json,prior-art-acceptance.json}` |
 | Authority and workflow guidance | `AGENTS.md`, `README.md`, `GLOSSARY.md`, `STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md`, `contracts/README.md`, and `navigator/RUNBOOK-content-sync-and-regeneration.md` |
 | Package and commands | `navigator/__init__.py`, `navigator/__main__.py`, `navigator/build.py` |
-| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `priorart.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
-| Closed navigator controls | `navigator/bundles/current.json`; the product, relation, and wording files selected by that bundle control; `navigator/schema/{acceptance.json,prior-art-acceptance.json,edition.schema.json,navigator-relations.xsd,wording.xsd}`; and current shared/prior-art wording XML |
+| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `browserqa.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `priorart.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
+| Closed navigator controls | `navigator/bundles/current.json`, `navigator/policy/browser.json`; the product, relation, and wording files selected by the bundle control; `navigator/schema/{acceptance.json,prior-art-acceptance.json,edition.schema.json,navigator-relations.xsd,wording.xsd}`; and current shared/prior-art wording XML |
 | Registered navigator tests | `navigator.tests.{test_canon,test_current_pipeline,test_prior_art,test_render_current,test_xml_model}` |
 | Registered structured-source tests | `structured_source.tests.{test_acceptance,test_atomic,test_conversion,test_pdf_transcription,test_registry,test_xml_contract}` |
 
@@ -615,7 +636,7 @@ an extra, missing, renamed, or alternate navigator control fails before derivati
 
 The executable acceptance registries contain only the ordered current IDs, scopes, outcomes, and
 independent enforcers. The aggregate gate and registered tests check user-visible content, semantic DOM, identity,
-relations, static navigation and interaction instructions, accessibility markup, no-script and
-print structure, security, deterministic output, products, and bundle requirements from current
-inputs. Browser, print-engine, and assistive-technology behavior remains subject to direct human
-testing and is outside a technical pass.
+relations, pinned-Chromium runtime navigation and layout, accessibility markup, no-script and print
+structure, security, deterministic output, products, and bundle requirements from current inputs.
+Cross-platform, alternate-browser, print-engine, and assistive-technology behavior remains subject
+to direct human testing and is outside a technical pass.

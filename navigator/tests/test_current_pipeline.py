@@ -49,8 +49,9 @@ class CurrentPipelineTests(unittest.TestCase):
             "testSession": MappingProxyType({}),
         }
         modules = [
-            {"count": 1, "module": module}
-            for module in sorted(acceptance.TEST_COVERAGE)
+            {"count": 1, "module": module,
+             "tests": [module + ".ExactTests.test_exact"]}
+            for module in acceptance.test_modules()
         ]
 
         def validate(frozen, reproduction_root):
@@ -80,8 +81,14 @@ class CurrentPipelineTests(unittest.TestCase):
                         {"count": 1, "modules": [{
                             "count": 1,
                             "module": currentstate.PREFLIGHT_TEST_MODULES[0],
-                        }], "status": "passed"},
+                            "tests": [currentstate.PREFLIGHT_TEST_MODULES[0] +
+                                      ".ExactTests.test_exact"],
+                        }], "tests": [
+                            currentstate.PREFLIGHT_TEST_MODULES[0] +
+                            ".ExactTests.test_exact"], "status": "passed"},
                         {"count": len(modules), "modules": modules,
+                         "tests": [identifier for item in modules
+                                   for identifier in item["tests"]],
                          "status": "passed"},
                     )), \
                 mock.patch.object(

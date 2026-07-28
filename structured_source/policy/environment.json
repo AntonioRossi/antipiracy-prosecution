@@ -10,6 +10,10 @@
   "environmentPath": ".venv",
   "distributions": [
     {"name": "elementpath", "version": "5.1.3"},
+    {"name": "greenlet", "version": "3.5.4"},
+    {"name": "playwright", "version": "1.50.0"},
+    {"name": "pyee", "version": "12.1.1"},
+    {"name": "typing-extensions", "version": "4.16.0"},
     {"name": "xmlschema", "version": "4.3.2"}
   ]
 }

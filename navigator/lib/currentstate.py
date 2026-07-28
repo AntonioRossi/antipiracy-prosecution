@@ -16,7 +16,7 @@ from html.parser import HTMLParser
 from types import MappingProxyType
 from urllib.parse import unquote, urlsplit
 
-from . import acceptance, bundlezip, canon, gateway, model, priorart
+from . import acceptance, browserqa, bundlezip, canon, gateway, model, priorart
 from . import projections, registry as registry_mod, release, render, snapshot, validate
 from . import schema_validate
 
@@ -24,9 +24,8 @@ from . import schema_validate
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROFILE_WORDING_ID = "artifact-label-technical-preview"
 TECHNICAL_PREVIEW_LABEL = (
-    "TECHNICAL PREVIEW — Manual cross-platform and assistive-technology QA "
-    "is deferred; browser and assistive-technology compatibility is not "
-    "validated."
+    "TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass; "
+    "cross-platform and assistive-technology compatibility is not validated."
 )
 VALIDATION_PURPOSE = (
     "Technical coherence and deterministic reproducibility of the current "
@@ -69,12 +68,14 @@ PREFLIGHT_TEST_MODULES = (
 NAVIGATOR_INPUT_ROOTS = (
     "navigator/bundles/",
     "navigator/editions/",
+    "navigator/policy/",
     "navigator/relations/",
     "navigator/schema/",
     "navigator/wording/",
 )
 NAVIGATOR_FIXED_INPUT_PATHS = frozenset({
     bundlezip.BUNDLE_CONFIG_PATH,
+    browserqa.BROWSER_CONTROL_PATH,
     "navigator/schema/acceptance.json",
     "navigator/schema/prior-art-map-acceptance.json",
     "navigator/schema/prior-art-acceptance.json",
@@ -1097,7 +1098,7 @@ def verify_current_closure(repository_snapshot, reproduction_root):
 
 
 def _registered_test_modules():
-    return STRUCTURED_TEST_MODULES + tuple(sorted(acceptance.TEST_COVERAGE))
+    return STRUCTURED_TEST_MODULES + acceptance.test_modules()
 
 
 def _verify_test_module_census(root):
@@ -1146,6 +1147,18 @@ def _run_discovered_tests(root, modules=None, verify_census=True,
         if count < 1:
             raise CurrentStateError(
                 "registered test census is unavailable for %s" % module)
+        def test_ids(value):
+            if isinstance(value, unittest.TestSuite):
+                return tuple(identifier for item in value
+                             for identifier in test_ids(item))
+            return (value.id(),)
+
+        exact_tests = test_ids(suite)
+        if len(exact_tests) != count or len(set(exact_tests)) != count or \
+                any(not identifier.startswith(module + ".")
+                    for identifier in exact_tests):
+            raise CurrentStateError(
+                "registered exact test census is malformed for %s" % module)
         try:
             result = unittest.TextTestRunner(
                 stream=output, verbosity=1, failfast=False).run(suite)
@@ -1167,8 +1180,14 @@ def _run_discovered_tests(root, modules=None, verify_census=True,
             raise CurrentStateError(
                 "registered test execution count differs for %s" % module)
         total += count
-        reports.append({"count": count, "module": module})
-    return {"count": total, "modules": reports, "status": "passed"}
+        reports.append({
+            "count": count, "module": module, "tests": list(exact_tests)})
+    return {
+        "count": total, "modules": reports,
+        "tests": [identifier for report in reports
+                  for identifier in report["tests"]],
+        "status": "passed",
+    }
 
 
 def _combine_test_results(*results):
@@ -1178,6 +1197,8 @@ def _combine_test_results(*results):
     return {
         "count": sum(result["count"] for result in results),
         "modules": modules,
+        "tests": [identifier for result in results
+                  for identifier in result["tests"]],
         "status": "passed",
     }
 
@@ -1613,12 +1634,12 @@ def _validate_captured_worktree(initial, reproduction_root):
             actual="; ".join(live_changes),
             remediation="stop concurrent writes and validate the resulting current state")
 
-    navigator_modules = tuple(
-        item["module"] for item in test_result["modules"]
-        if item["module"].startswith("navigator.tests."))
+    navigator_tests = tuple(
+        identifier for identifier in test_result["tests"]
+        if identifier.startswith("navigator.tests."))
     return {
         "acceptance": acceptance.passed_result(
-            final_closure["acceptanceRegistries"], navigator_modules),
+            final_closure["acceptanceRegistries"], navigator_tests),
         "bundle": final_closure["bundle"],
         "checks": {
             "capturedMarkdownLinks": "passed",
