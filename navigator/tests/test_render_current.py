@@ -190,6 +190,23 @@ class FakeModel:
             "artifact-label-technical-preview": self.profile_label,
             "source-input-provenance": "Source inputs",
             "authority-target-sources": "PCT as filed",
+            "guide-control-open": "Guide",
+            "guide-control-close": "Close guide",
+            "guide-dialog-title": "Navigator guide <title>",
+            "guide-glyph-candidate-previous": "◀C",
+            "guide-glyph-candidate-next": "C▶",
+            "guide-glyph-passage-previous": "◀P",
+            "guide-glyph-passage-next": "P▶",
+            "guide-glyph-move-previous": "◀",
+            "guide-glyph-move-next": "▶",
+            "guide-glyph-clear": "×",
+            "guide-profile-s-item-1": "Guide item <one>",
+            "guide-profile-s-item-2": "Guide item two",
+            "guide-profile-s-item-3": "Guide item three",
+            "guide-profile-s-item-4": "Guide item four",
+            "guide-profile-s-item-5": "Guide item five",
+            "guide-profile-s-item-6": "Guide item six",
+            "guide-profile-s-item-7": "Guide item seven",
         }
         if wording_id == "standing-disclaimer":
             return "Disclaimer " + self.claim_set_version
@@ -1284,6 +1301,11 @@ class CurrentRenderTests(unittest.TestCase):
                           matchMedia(
                             '(prefers-reduced-motion: reduce)').matches
                         """), reduced)
+                        # The guide overlay auto-opens on every load; the
+                        # navigation vectors below exercise the surfaces
+                        # beneath it, so dismiss it after chrome measurement.
+                        page.evaluate(
+                            "document.getElementById('guide-overlay').close()")
                         result = self._exercise_runtime_navigation(
                             page, navigation, mode,
                             control["layout"]["clearancePixels"])

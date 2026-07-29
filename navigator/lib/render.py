@@ -1017,6 +1017,76 @@ def _provenance(model, profile_label: str) -> tuple[dict, str]:
     return provenance, markup
 
 
+GUIDE_PROFILE_ITEMS = MappingProxyType({
+    "prior-art": tuple(
+        "guide-profile-p-item-%d" % number for number in range(1, 8)),
+    "specification": tuple(
+        "guide-profile-s-item-%d" % number for number in range(1, 8)),
+})
+GUIDE_GLYPHS = MappingProxyType({
+    "glyphCandidatePrevious": "guide-glyph-candidate-previous",
+    "glyphCandidateNext": "guide-glyph-candidate-next",
+    "glyphPassagePrevious": "guide-glyph-passage-previous",
+    "glyphPassageNext": "guide-glyph-passage-next",
+    "glyphMovePrevious": "guide-glyph-move-previous",
+    "glyphMoveNext": "guide-glyph-move-next",
+    "glyphClear": "guide-glyph-clear",
+})
+
+
+def guide_glyphs(model) -> MappingProxyType:
+    """Resolve every navigation control glyph from its one wording origin."""
+    return MappingProxyType({
+        ui_key: _wording(model, wording_id)
+        for ui_key, wording_id in GUIDE_GLYPHS.items()})
+
+
+def _guide_item_html(text, glyphs):
+    """Escape one guide item, wrapping each wording glyph in an inert chip."""
+    ordered = sorted(set(glyphs.values()), key=lambda value: (-len(value), value))
+    parts = []
+    index = 0
+    while index < len(text):
+        glyph = next(
+            (candidate for candidate in ordered
+             if text.startswith(candidate, index)), None)
+        if glyph is None:
+            parts.append(_esc(text[index]))
+            index += 1
+        else:
+            parts.append('<span class="guide-glyph">%s</span>' % _esc(glyph))
+            index += len(glyph)
+    return "".join(parts)
+
+
+def render_guide(model) -> MappingProxyType:
+    """Emit both guide carriers from the closed controlled guide wording."""
+    open_label = _wording(model, "guide-control-open")
+    close_label = _wording(model, "guide-control-close")
+    title = _wording(model, "guide-dialog-title")
+    glyphs = guide_glyphs(model)
+    items = tuple(
+        _guide_item_html(_wording(model, wording_id), glyphs)
+        for wording_id in GUIDE_PROFILE_ITEMS[model.product_kind])
+    body = '<ol class="guide-items">%s</ol>' % "".join(
+        "<li>%s</li>" % item for item in items)
+    return MappingProxyType({
+        "button": '<button type="button" id="guide-open">%s</button>' %
+                  _esc(open_label),
+        "carrier": (
+            '<details class="guide" id="guide-details"><summary>%s</summary>'
+            '<div class="guide-body reading-measure">%s</div></details>' %
+            (_esc(title), body)),
+        "dialog": (
+            '<dialog id="guide-overlay" aria-labelledby="guide-overlay-title">'
+            '<div class="guide-chrome"><h2 id="guide-overlay-title">%s</h2>'
+            '<form method="dialog"><button type="submit" class="guide-close" '
+            'aria-label="%s">×</button></form></div>'
+            '<div class="guide-body reading-measure">%s</div></dialog>' %
+            (_esc(title), _esc(close_label), body)),
+    })
+
+
 def render(model, mode="candidate") -> bytes:
     """Render one candidate or preview from the sealed typed model."""
     if mode not in {"candidate", "preview"}:
@@ -1038,6 +1108,7 @@ def render(model, mode="candidate") -> bytes:
     watermark = ('<div class="watermark" aria-hidden="true"><span>%s</span></div>'
                  % _esc(watermark_text)) if watermark_text else ""
     provenance, provenance_html = _provenance(model, profile_label)
+    guide = render_guide(model)
     forbidden = [token for token in FORBIDDEN_SCRIPT_TOKENS if token in JS]
     if forbidden:
         raise RenderError(
@@ -1050,6 +1121,7 @@ def render(model, mode="candidate") -> bytes:
         ui.update(SPEC_UI)
     ui["forwardMode"] = model.forward_mode_label
     ui["reverseMode"] = model.reverse_mode_label
+    ui.update(guide_glyphs(model))
     navigation = {
         "productKind": model.product_kind,
         "ui": ui,
@@ -1093,6 +1165,9 @@ def render(model, mode="candidate") -> bytes:
         disclosure=_disclosure_html(model, reverse),
         schedule=_schedule_html(model, relations, claim_gates),
         provenance=provenance_html,
+        guide_button=guide["button"],
+        guide_carrier=guide["carrier"],
+        guide_dialog=guide["dialog"],
         machine_data_label=_esc(UI["machineData"]),
         nav_data=_script_json(navigation),
         provenance_data=_script_json(provenance),
@@ -1117,10 +1192,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <main id="panes">
 <header id="masthead">
 <p class="legend">{legend}</p>
+{guide_carrier}
 <p class="release-profile">{profile}</p>
 <h1>{display_name} <span class="strategy">{strategy}</span></h1>
 <p class="meta">{claim_set_label} <strong>{version}</strong> · {authority}
-<button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">{aux_label}</button></p>
+<button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">{aux_label}</button>{guide_button}</p>
 <p class="disclaimer">{disclaimer}</p>
 </header>
 <section id="claims-pane" aria-label="{claims_label}">
@@ -1135,13 +1211,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </main>
 <div id="live" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
 </div>
+{guide_dialog}
 <footer><p class="legend">{legend}</p><p class="release-profile">{profile}</p>
 <p class="disclaimer">{disclaimer}</p></footer>
 <noscript><style>
 html,body{{height:auto;overflow:visible}}
 #content-root{{display:block;overflow:visible;height:auto;min-height:0}}
 #panes,#masthead,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{display:block;height:auto;min-height:0;max-block-size:none;overflow:visible}}
-#aux{{display:block}} #aux-toggle{{display:none}} .pointer-surface{{cursor:auto}}
+#aux{{display:block}} #aux-toggle{{display:none}} #guide-open{{display:none}} .pointer-surface{{cursor:auto}}
 @media print {{#content-root,#panes,#masthead,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{display:block;overflow:visible;height:auto}}}}
 </style></noscript>
 <script type="application/json" id="nav-data" aria-label="{machine_data_label}">{nav_data}</script>
@@ -1446,6 +1523,55 @@ body.aux-open #claims-pane,body.aux-open #disclosure-pane { display:none; }
   border-radius:4px; background:#fff; cursor:pointer;
   font-size:var(--type-interface); line-height:var(--leading-interface);
 }
+#guide-open {
+  min-width:24px; min-height:24px; margin-left:12px;
+  border:1px solid var(--line); border-radius:4px;
+  background:#fff; cursor:pointer;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
+details.guide {
+  max-inline-size:var(--measure); margin:4px 0; padding:5px 7px;
+  border:1px solid var(--line); background:#f8f7f3;
+}
+details.guide > summary {
+  color:var(--accent); cursor:pointer; font-weight:600;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
+details.guide > .guide-body { margin-top:6px; }
+.guide-body {
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:var(--type-reading); line-height:var(--leading-reading);
+}
+.guide-items { margin:0; padding-inline-start:1.5em; }
+.guide-items > li { margin:0 0 6px; }
+.guide-glyph {
+  display:inline-block; min-width:1.5em; padding:0 .3em;
+  border:1px solid var(--line); border-radius:4px;
+  background:#fff; color:#1c1c1c; text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
+#guide-overlay {
+  inline-size:min(var(--measure), calc(100vw - 2rem));
+  max-block-size:calc(100vh - 2rem);
+  overflow:auto; overscroll-behavior:contain;
+  padding:14px 18px; border:1px solid var(--line); border-radius:4px;
+  background:var(--paper); color:#1c1c1c;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:var(--type-reading); line-height:var(--leading-reading);
+}
+#guide-overlay::backdrop { background:rgba(28,28,28,.45); }
+.guide-chrome { display:flex; align-items:flex-start; gap:12px; margin:0 0 8px; }
+#guide-overlay-title {
+  flex:1 1 auto; margin:0; font-family:Arial,sans-serif;
+  font-size:var(--type-reading); line-height:var(--leading-reading);
+}
+.guide-close {
+  flex:none; min-width:24px; min-height:24px;
+  border:1px solid var(--line); border-radius:4px;
+  background:#fff; cursor:pointer; font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
 #schedule,#about {
   display:block; padding:10px 16px; font-family:Arial,sans-serif;
   font-size:var(--type-interface); line-height:var(--leading-interface);
@@ -1495,6 +1621,7 @@ footer { display:none; }
   button:not(.phrase-btn),.navigation-bar,.claim-strip,.watermark {
     display:none !important;
   }
+  #guide-overlay,.guide { display:none !important; }
   .phrase-btn {
     min-height:0; padding:0; border:0; color:inherit; background:transparent;
     cursor:default;
@@ -1528,6 +1655,13 @@ var disclosureScroll = document.getElementById('disclosure-scroll');
 var claimsPane = document.getElementById('claims-pane');
 var panes = document.getElementById('panes');
 var live = document.getElementById('live');
+var guideOverlay = document.getElementById('guide-overlay');
+var guideCarrier = document.getElementById('guide-details');
+var guideOpenControl = document.getElementById('guide-open');
+
+function openGuideOverlay(){
+  if (guideOverlay && !guideOverlay.open) guideOverlay.showModal();
+}
 
 function ui(key){ return DATA.ui[key]; }
 function format(template, values){
@@ -1670,7 +1804,7 @@ function clearSelection(returnFocus){
 }
 function clearControl(){
   var wrap = element('div', 'selection-controls');
-  wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
+  wrap.appendChild(button(null, ui('clearSelection'), ui('glyphClear'), function(){
     clearSelection(true);
   }));
   return wrap;
@@ -1680,17 +1814,17 @@ function forwardControls(current){
   var candidate = selectedCandidate(current);
   if (current.targets.length > 1){
     wrap.appendChild(button(null, ui('previousCandidate') || ui('previous'),
-      '◀C', function(){ moveCandidate(-1); }));
+      ui('glyphCandidatePrevious'), function(){ moveCandidate(-1); }));
     wrap.appendChild(button(null, ui('nextCandidate') || ui('next'),
-      'C▶', function(){ moveCandidate(1); }));
+      ui('glyphCandidateNext'), function(){ moveCandidate(1); }));
   }
   if (candidate && candidate.blocks.length > 1){
     wrap.appendChild(button(null, ui('previousPassage') || ui('previous'),
-      '◀P', function(){ movePassage(-1); }));
+      ui('glyphPassagePrevious'), function(){ movePassage(-1); }));
     wrap.appendChild(button(null, ui('nextPassage') || ui('next'),
-      'P▶', function(){ movePassage(1); }));
+      ui('glyphPassageNext'), function(){ movePassage(1); }));
   }
-  wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
+  wrap.appendChild(button(null, ui('clearSelection'), ui('glyphClear'), function(){
     clearSelection(true);
   }));
   return wrap;
@@ -1699,11 +1833,11 @@ function reverseControls(){
   var wrap = element('div', 'selection-controls');
   if (state.reverseList.length > 1){
     wrap.appendChild(button(null, ui('previous'),
-      '◀', function(){ moveCandidate(-1); }));
+      ui('glyphMovePrevious'), function(){ moveCandidate(-1); }));
     wrap.appendChild(button(null, ui('next'),
-      '▶', function(){ moveCandidate(1); }));
+      ui('glyphMoveNext'), function(){ moveCandidate(1); }));
   }
-  wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
+  wrap.appendChild(button(null, ui('clearSelection'), ui('glyphClear'), function(){
     clearSelection(true);
   }));
   return wrap;
@@ -2065,6 +2199,7 @@ document.addEventListener('click', function(event){
 });
 
 document.addEventListener('keydown', function(event){
+  if (guideOverlay && guideOverlay.open) return;
   if (event.key === 'Escape' && state.mode){
     clearSelection(true);
     return;
@@ -2083,4 +2218,20 @@ document.addEventListener('keydown', function(event){
     movePassage(event.key === 'ArrowUp' ? -1 : 1);
   }
 });
+
+if (guideCarrier) guideCarrier.hidden = true;
+if (guideOpenControl){
+  guideOpenControl.addEventListener('click', openGuideOverlay);
+}
+if (guideOverlay){
+  guideOverlay.addEventListener('click', function(event){
+    if (event.target !== guideOverlay) return;
+    var box = guideOverlay.getBoundingClientRect();
+    if (event.clientX < box.left || event.clientX > box.right ||
+        event.clientY < box.top || event.clientY > box.bottom){
+      guideOverlay.close();
+    }
+  });
+  openGuideOverlay();
+}
 """

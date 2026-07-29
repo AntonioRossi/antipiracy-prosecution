@@ -77,6 +77,7 @@ NAVIGATOR_FIXED_INPUT_PATHS = frozenset({
     bundlezip.BUNDLE_CONFIG_PATH,
     browserqa.BROWSER_CONTROL_PATH,
     "navigator/schema/acceptance.json",
+    "navigator/schema/guide-acceptance.json",
     "navigator/schema/prior-art-map-acceptance.json",
     "navigator/schema/prior-art-acceptance.json",
     "navigator/schema/presentation-acceptance.json",
@@ -1229,6 +1230,8 @@ _PRODUCT_CONTRACT_DOCUMENTS = (
     "contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md",
     "contracts/30-product-generation/navigator-presentation/technical-description_DRAFT.md",
     "contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md",
+    "contracts/30-product-generation/navigator-guide/technical-description_DRAFT.md",
+    "contracts/30-product-generation/navigator-guide/acceptance-criteria_DRAFT.md",
 )
 
 

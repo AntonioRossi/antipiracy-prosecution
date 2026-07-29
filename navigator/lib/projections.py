@@ -120,13 +120,19 @@ def origin_inventory(model):
                 continue
             if slot.origin_ref in {
                     "edition.claimSetVersion",
-                    "edition.declaredReleaseTimestamp"}:
+                    "edition.declaredReleaseTimestamp",
+                    "edition.strategyName"}:
                 owner_path = model._edition_path
             elif slot.origin_ref in {
                     "edition.claimCount", "edition.unitCount"}:
                 owner_path = claim_document.registered_path
             elif slot.origin_ref == "target.blockCount":
                 owner_path = pct_document.registered_path
+            elif slot.origin_ref.startswith("wording."):
+                owner_path = model._wording_owner_paths.get(
+                    slot.origin_ref.split(".", 1)[1])
+                if owner_path is None:
+                    raise ValueError("controlled wording slot origin is unowned")
             else:
                 raise ValueError("controlled wording slot origin is unowned")
             add("wording:%s:slot:%s" % (wording_id, slot.name),
@@ -201,13 +207,19 @@ def _prior_art_origin_inventory(model):
                 continue
             if slot.origin_ref in {
                     "edition.claimSetVersion",
-                    "edition.declaredReleaseTimestamp"}:
+                    "edition.declaredReleaseTimestamp",
+                    "edition.strategyName"}:
                 owner_path = model._edition_path
             elif slot.origin_ref in {
                     "edition.claimCount", "edition.unitCount"}:
                 owner_path = claim_document.registered_path
             elif slot.origin_ref == "target.blockCount":
                 owner_path = comparison_document.registered_path
+            elif slot.origin_ref.startswith("wording."):
+                owner_path = model._wording_owner_paths.get(
+                    slot.origin_ref.split(".", 1)[1])
+                if owner_path is None:
+                    raise ValueError("controlled wording slot origin is unowned")
             else:
                 raise ValueError("controlled wording slot origin is unowned")
             add("wording:%s:slot:%s" % (wording_id, slot.name),

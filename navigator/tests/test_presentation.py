@@ -57,6 +57,9 @@ class PresentationTests(unittest.TestCase):
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.on("request", lambda request: requests.append(request.url))
         page.set_content(artifact, wait_until="load")
+        # The guide overlay auto-opens on every load; existing vectors exercise
+        # the surfaces beneath it, so each harness page dismisses it first.
+        page.evaluate("document.getElementById('guide-overlay').close()")
         try:
             yield page, errors, requests
         finally:

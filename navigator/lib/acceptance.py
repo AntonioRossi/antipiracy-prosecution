@@ -23,6 +23,11 @@ PRESENTATION_CONTRACT_PATH = (
     "contracts/30-product-generation/navigator-presentation/"
     "acceptance-criteria_DRAFT.md"
 )
+GUIDE_ACCEPTANCE_PATH = "navigator/schema/guide-acceptance.json"
+GUIDE_CONTRACT_PATH = (
+    "contracts/30-product-generation/navigator-guide/"
+    "acceptance-criteria_DRAFT.md"
+)
 MAP_ACCEPTANCE_PATH = "navigator/schema/prior-art-map-acceptance.json"
 MAP_CONTRACT_PATH = (
     "contracts/20-semantic-relations/claim-prior-art-passage-map/"
@@ -33,8 +38,10 @@ MAP_CRITERIA = tuple("PAM-AC-%02d" % number for number in range(1, 11))
 PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 18))
 PRESENTATION_CRITERIA = tuple(
     "PRES-AC-%02d" % number for number in range(1, 11))
+GUIDE_CRITERIA = tuple("GUIDE-AC-%02d" % number for number in range(1, 11))
 CRITERIA = (
-    SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA + PRESENTATION_CRITERIA)
+    SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA + PRESENTATION_CRITERIA +
+    GUIDE_CRITERIA)
 TEST_COVERAGE = {
     ("navigator.tests.test_canon.TestVectors."
      "test_json_parser_rejects_information_losing_inputs"):
@@ -95,7 +102,7 @@ TEST_COVERAGE = {
         frozenset({"AC-18"}),
     ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
      "test_live_navigator_input_inventory_is_exact"):
-        frozenset({"AC-19", "PA-AC-17", "PRES-AC-10"}),
+        frozenset({"AC-19", "PA-AC-17", "PRES-AC-10", "GUIDE-AC-10"}),
     ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
      "test_configured_member_bundle_and_checksums_are_deterministic"):
         frozenset({"AC-20", "PA-AC-15"}),
@@ -166,6 +173,33 @@ TEST_COVERAGE = {
     ("navigator.tests.test_presentation.PresentationTests."
      "test_no_script_and_print_surfaces_are_readable"):
         frozenset({"PRES-AC-09"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_shared_mechanism_is_product_isolated"):
+        frozenset({"GUIDE-AC-01"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_auto_open_presents_product_kind_profile"):
+        frozenset({"GUIDE-AC-02"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_reopen_control_and_focus_cycle"):
+        frozenset({"GUIDE-AC-03"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_dismissal_routes_preserve_state"):
+        frozenset({"GUIDE-AC-04"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_no_script_guide_is_readable_in_document_order"):
+        frozenset({"GUIDE-AC-05"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_print_excludes_guide_furniture"):
+        frozenset({"GUIDE-AC-06"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_guide_surfaces_survive_enlargement_and_reflow"):
+        frozenset({"GUIDE-AC-07"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_guide_wording_slots_close"):
+        frozenset({"GUIDE-AC-08"}),
+    ("navigator.tests.test_guide.GuideTests."
+     "test_guide_is_stateless_and_byte_stable"):
+        frozenset({"GUIDE-AC-09"}),
 }
 
 
@@ -190,6 +224,11 @@ _SCOPES = {
     "PRES-AC-01": "shared",
     **{"PRES-AC-%02d" % number: "product" for number in range(2, 10)},
     "PRES-AC-10": "shared",
+    "GUIDE-AC-01": "shared",
+    **{"GUIDE-AC-%02d" % number: "product" for number in range(2, 8)},
+    "GUIDE-AC-08": "shared",
+    "GUIDE-AC-09": "shared",
+    "GUIDE-AC-10": "shared",
 }
 
 
@@ -228,16 +267,19 @@ def validate_registry(value):
                    isinstance(value.get("criteria"), list) else [])
     if identifiers[:1] == ["AC-01"]:
         expected_criteria = SPEC_CRITERIA
-        expected_version = "10"
+        expected_version = "11"
     elif identifiers[:1] == ["PAM-AC-01"]:
         expected_criteria = MAP_CRITERIA
         expected_version = "2"
     elif identifiers[:1] == ["PRES-AC-01"]:
         expected_criteria = PRESENTATION_CRITERIA
         expected_version = "1"
+    elif identifiers[:1] == ["GUIDE-AC-01"]:
+        expected_criteria = GUIDE_CRITERIA
+        expected_version = "1"
     else:
         expected_criteria = PRIOR_CRITERIA
-        expected_version = "5"
+        expected_version = "6"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
             value.get("acceptanceVersion") != expected_version:
@@ -333,6 +375,10 @@ def load_registries(root, byte_source=None):
             root, PRESENTATION_ACCEPTANCE_PATH, PRESENTATION_CONTRACT_PATH,
             "<!-- PRES-AC-TABLE:START -->",
             "<!-- PRES-AC-TABLE:END -->", byte_source),
+        _load_one(
+            root, GUIDE_ACCEPTANCE_PATH, GUIDE_CONTRACT_PATH,
+            "<!-- GUIDE-AC-TABLE:START -->",
+            "<!-- GUIDE-AC-TABLE:END -->", byte_source),
     )
 
 
@@ -358,7 +404,7 @@ def passed_result(registries, passed_test_ids):
     validation process.
     """
     registries = tuple(registries)
-    if len(registries) != 4:
+    if len(registries) != 5:
         raise AcceptanceError(
             "ephemeral acceptance requires all current registries")
     for registry in registries:

@@ -724,7 +724,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
 
     def test_acceptance_registry_names_outcomes_and_independent_enforcers(self):
         registries = acceptance.load_registries(ROOT)
-        self.assertEqual(len(registries), 4)
+        self.assertEqual(len(registries), 5)
         registry = registries[0]
         self.assertEqual(
             [item["id"] for item in registry["criteria"]],
@@ -742,6 +742,13 @@ exec uv --no-cache --offline run --locked --no-sync \\
         self.assertEqual(
             [item["scope"] for item in presentation["criteria"]],
             ["shared"] + ["product"] * 8 + ["shared"])
+        guide = registries[4]
+        self.assertEqual(
+            [item["id"] for item in guide["criteria"]],
+            ["GUIDE-AC-%02d" % number for number in range(1, 11)])
+        self.assertEqual(
+            [item["scope"] for item in guide["criteria"]],
+            ["shared"] + ["product"] * 6 + ["shared"] * 3)
 
         for field in ("approval", "check", "evidence", "owner", "receipt"):
             changed = {

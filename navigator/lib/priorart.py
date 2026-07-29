@@ -17,6 +17,7 @@ from .model import (
     EDITION_SCHEMA, WORDING_NAMESPACE, WORDING_SCHEMA, Endpoint, Mapping,
     ModelError, PhraseMapping, RelationSet, Target, WordingEntry,
     _parse_wording, _render_wording_entry, _source_items, _unique_span,
+    _wording_origin_value,
 )
 
 SR = "{urn:aa11393:ssp:relations:1}"
@@ -749,11 +750,14 @@ class PriorArtModel:
         return self._content_lock
 
     def _origin_value(self, origin_ref):
+        if origin_ref.startswith("wording."):
+            return _wording_origin_value(self._wording, origin_ref)
         values = {
             "edition.claimSetVersion": self.claim_set_version,
             "edition.declaredReleaseTimestamp": self.declared_release_timestamp,
             "edition.claimCount": len(self.claims),
             "edition.unitCount": len(self.units_by_fragment),
+            "edition.strategyName": self.strategy_name,
             "target.blockCount": len(self.prior_art_scope),
         }
         try:

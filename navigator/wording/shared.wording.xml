@@ -100,4 +100,89 @@
       <slot name="editionSchedule" scalarType="text" originKind="closed-derivation" originRef="bundle.editionSchedule" />
     </slots>
   </entry>
+  <entry wordingId="guide-control-open" category="guide">
+    <usage context="guide-chrome" />
+    <text>Guide</text>
+  </entry>
+  <entry wordingId="guide-control-close" category="guide">
+    <usage context="guide-chrome" />
+    <text>Close guide</text>
+  </entry>
+  <entry wordingId="guide-dialog-title" category="guide">
+    <usage context="guide-chrome" />
+    <text>Navigator guide — {strategy} · claim set {editionVersion}</text>
+    <slots>
+      <slot name="strategy" scalarType="text" originKind="registered-control" originRef="edition.strategyName" />
+      <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
+    </slots>
+  </entry>
+  <entry wordingId="guide-glyph-candidate-previous" category="guide">
+    <usage context="guide-chrome" />
+    <text>◀C</text>
+  </entry>
+  <entry wordingId="guide-glyph-candidate-next" category="guide">
+    <usage context="guide-chrome" />
+    <text>C▶</text>
+  </entry>
+  <entry wordingId="guide-glyph-passage-previous" category="guide">
+    <usage context="guide-chrome" />
+    <text>◀P</text>
+  </entry>
+  <entry wordingId="guide-glyph-passage-next" category="guide">
+    <usage context="guide-chrome" />
+    <text>P▶</text>
+  </entry>
+  <entry wordingId="guide-glyph-move-previous" category="guide">
+    <usage context="guide-chrome" />
+    <text>◀</text>
+  </entry>
+  <entry wordingId="guide-glyph-move-next" category="guide">
+    <usage context="guide-chrome" />
+    <text>▶</text>
+  </entry>
+  <entry wordingId="guide-glyph-clear" category="guide">
+    <usage context="guide-chrome" />
+    <text>×</text>
+  </entry>
+  <entry wordingId="guide-profile-s-item-1" category="guide">
+    <usage context="guide-profile" />
+    <text>What this page binds: the {strategy} at claim-set version {editionVersion}. This page is a counsel-review aid, not filing material.</text>
+    <slots>
+      <slot name="strategy" scalarType="text" originKind="registered-control" originRef="edition.strategyName" />
+      <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
+    </slots>
+  </entry>
+  <entry wordingId="guide-profile-s-item-2" category="guide">
+    <usage context="guide-profile" />
+    <text>The two panes: the claims pane lists every claim limitation; the disclosure pane shows the PCT as-filed specification. Each pane keeps its own scroll position.</text>
+  </entry>
+  <entry wordingId="guide-profile-s-item-3" category="guide">
+    <usage context="guide-profile" />
+    <text>Candidate indication: the selected passage is marked solid, every other passage of the selected candidate is marked double, and passages of other recorded candidates are dashed. Every recorded candidate endpoint stays concurrently indicated.</text>
+  </entry>
+  <entry wordingId="guide-profile-s-item-4" category="guide">
+    <usage context="guide-profile" />
+    <text>Movement: activate a limitation or a dotted phrase to move from the claim to its evidence. In the forward bar, {candidatePrevious} and {candidateNext} wrap candidate movement across the recorded candidates and reset the passage position; {passagePrevious} and {passageNext} wrap passage movement within the selected candidate. Reverse badges return from a passage to its related claim fragments, where {movePrevious} and {moveNext} wrap reverse movement. {clear} clears the selection from either bar.</text>
+    <slots>
+      <slot name="candidatePrevious" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-candidate-previous" />
+      <slot name="candidateNext" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-candidate-next" />
+      <slot name="passagePrevious" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-passage-previous" />
+      <slot name="passageNext" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-passage-next" />
+      <slot name="movePrevious" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-move-previous" />
+      <slot name="moveNext" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-move-next" />
+      <slot name="clear" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-clear" />
+    </slots>
+  </entry>
+  <entry wordingId="guide-profile-s-item-5" category="guide">
+    <usage context="guide-profile" />
+    <text>Gates and cautions: flag markers open claim-level gates quoted from the claim-set document and author observations, each at its recorded scope.</text>
+  </entry>
+  <entry wordingId="guide-profile-s-item-6" category="guide">
+    <usage context="guide-profile" />
+    <text>The legend: solid, double, and dashed emphasis states are summarized above the disclosure pane. A diamond note marks a limitation with no recorded candidate passage.</text>
+  </entry>
+  <entry wordingId="guide-profile-s-item-7" category="guide">
+    <usage context="guide-profile" />
+    <text>Review posture: this navigator is an ephemeral technical preview. Human review of the source evidence and substantive analysis remains authoritative.</text>
+  </entry>
 </wording>

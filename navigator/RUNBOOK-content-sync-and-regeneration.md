@@ -10,11 +10,14 @@ and the claims-to-prior-art
 and [`acceptance criteria`](../contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md),
 and the shared navigator-presentation
 [`technical description`](../contracts/30-product-generation/navigator-presentation/technical-description_DRAFT.md)
-and [`acceptance criteria`](../contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md).
+and [`acceptance criteria`](../contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md),
+and the shared navigator-guide
+[`technical description`](../contracts/30-product-generation/navigator-guide/technical-description_DRAFT.md)
+and [`acceptance criteria`](../contracts/30-product-generation/navigator-guide/acceptance-criteria_DRAFT.md).
 Those pairs control any conflict. This runbook supplies the shortest supported update path; it
 creates no exception or alternative release path.
 
-All three phase-30 contract pairs and navigator acceptance registries, structured-source contracts and
+All four phase-30 contract pairs and navigator acceptance registries, structured-source contracts and
 registries, navigator implementation and workflow, controls, tests and vectors, generated
 representations, handoffs, and stored products are one current state. No documentation-only,
 registry-only, implementation-only, workflow-only, control-only, test-only, or product-only state
@@ -68,7 +71,7 @@ The navigator exposes exactly these five commands:
 `af-specification`, `na-prior-art`, or `af-prior-art`. There are no shorter command identities or
 implicit product choices.
 
-Every command validates all three phase-30 contract pairs and acceptance registries, the exact implementation
+Every command validates all four phase-30 contract pairs and acceptance registries, the exact implementation
 census, product plan, structured-source closure, and applicable retained inputs before model
 construction or publication. Stop if those inputs describe different behavior; no later check or
 rollback repairs a split state.
@@ -104,8 +107,8 @@ navigator/wording/prior-art.wording.xml
 ```
 
 Keep ordinary interface labels and layout instructions in the renderer. Put only substantive,
-provenance, caution, disposition, disclaimer, product-label, artifact, manifest, or security
-wording in wording XML. Add only slots that are actually consumed and give each slot one typed
+provenance, caution, disposition, disclaimer, product-label, artifact, manifest, security, or
+guide wording in wording XML. Add only slots that are actually consumed and give each slot one typed
 scalar type and one exact origin; every slot is rendered as escaped plain text.
 
 Review each affected relation against the current source item. Do not infer a target, copy one
@@ -137,7 +140,8 @@ forward and reverse navigation, obligation/allocation/no-candidate states, mode-
 owners, contextual-reader opening and exact-fragment focus, cautions and gates, disclosure figures,
 keyboard focus, readable typography at 100%, 200% text resize, 200% page zoom, 320 CSS-pixel
 reflow, the controlled text-spacing override, the no-JavaScript document order, and unclipped print
-content. Ordinary prose must wrap within the controlled measure without page-level horizontal
+content. Confirm the on-load guide overlay, each dismissal route, and the persistent masthead
+Guide reopen control; with JavaScript removed, confirm the in-document guide section. Ordinary prose must wrap within the controlled measure without page-level horizontal
 scrolling; only tables, code, and intrinsically two-dimensional figures may own scoped horizontal
 overflow. In each specification product,
 confirm that every recorded candidate endpoint remains concurrently indicated as selected,

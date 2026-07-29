@@ -953,6 +953,10 @@ class PriorArtNavigatorTests(unittest.TestCase):
                             page.evaluate("""() =>
                               matchMedia('(prefers-reduced-motion: reduce)').matches
                             """), reduced)
+                        # The guide overlay auto-opens on every load; dismiss
+                        # it before exercising the surfaces beneath it.
+                        page.evaluate(
+                            "document.getElementById('guide-overlay').close()")
                         result = self._exercise_runtime_navigation(
                             page, navigation, mode)
                         self.assertEqual(errors, [])
@@ -986,6 +990,8 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 errors = []
                 page.on("pageerror", lambda error: errors.append(str(error)))
                 page.set_content(artifact.decode("utf-8"), wait_until="load")
+                page.evaluate(
+                    "document.getElementById('guide-overlay').close()")
                 page.locator(
                     'button[data-relation="%s"]' % relation_id).first.click()
                 page.evaluate("movePassage(1)")

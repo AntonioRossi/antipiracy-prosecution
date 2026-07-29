@@ -644,6 +644,8 @@ class AcceptanceContract(unittest.TestCase):
             "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
             "contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md",
             "contracts/30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md",
+            "contracts/30-product-generation/navigator-guide/acceptance-criteria_DRAFT.md",
+            "contracts/30-product-generation/navigator-guide/technical-description_DRAFT.md",
             "contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md",
             "contracts/30-product-generation/navigator-presentation/technical-description_DRAFT.md",
             "navigator/__init__.py", "navigator/__main__.py",

@@ -36,6 +36,16 @@ _WORDING_CONTRACT = {
     "artifact-label-technical-preview": ("release-profile", "artifact-label"),
     "artifact-watermark-technical-preview": ("security", "artifact-watermark"),
     "bundle-manifest-neutral": ("bundle-manifest", "bundle-manifest"),
+    "guide-control-open": ("guide", "guide-chrome"),
+    "guide-control-close": ("guide", "guide-chrome"),
+    "guide-dialog-title": ("guide", "guide-chrome"),
+    "guide-glyph-candidate-previous": ("guide", "guide-chrome"),
+    "guide-glyph-candidate-next": ("guide", "guide-chrome"),
+    "guide-glyph-passage-previous": ("guide", "guide-chrome"),
+    "guide-glyph-passage-next": ("guide", "guide-chrome"),
+    "guide-glyph-move-previous": ("guide", "guide-chrome"),
+    "guide-glyph-move-next": ("guide", "guide-chrome"),
+    "guide-glyph-clear": ("guide", "guide-chrome"),
 }
 _WORDING_PREFIX_CONTRACT = (
     ("mapping-status-", "mapping-status", "mapping-status"),
@@ -46,6 +56,28 @@ _WORDING_PREFIX_CONTRACT = (
     ("gate-disposition-", "disposition", "gate-disposition"),
     ("generalization-", "caution", "generalization-caution"),
     ("gate-label-", "gate-label", "gate-label"),
+    ("guide-profile-s-", "guide", "guide-profile"),
+    ("guide-profile-p-", "guide", "guide-profile"),
+)
+_GUIDE_TITLE_SLOTS = (
+    ("strategy", "text", "registered-control", "edition.strategyName"),
+    ("editionVersion", "stable-id", "registered-control",
+     "edition.claimSetVersion"),
+)
+_GUIDE_MOVEMENT_SLOTS = (
+    ("candidatePrevious", "text", "registered-control",
+     "wording.guide-glyph-candidate-previous"),
+    ("candidateNext", "text", "registered-control",
+     "wording.guide-glyph-candidate-next"),
+    ("passagePrevious", "text", "registered-control",
+     "wording.guide-glyph-passage-previous"),
+    ("passageNext", "text", "registered-control",
+     "wording.guide-glyph-passage-next"),
+    ("movePrevious", "text", "registered-control",
+     "wording.guide-glyph-move-previous"),
+    ("moveNext", "text", "registered-control",
+     "wording.guide-glyph-move-next"),
+    ("clear", "text", "registered-control", "wording.guide-glyph-clear"),
 )
 _SLOT_CONTRACT = {
     "standing-disclaimer": (
@@ -63,6 +95,11 @@ _SLOT_CONTRACT = {
         ("editionSchedule", "text", "closed-derivation",
          "bundle.editionSchedule"),
     ),
+    "guide-dialog-title": _GUIDE_TITLE_SLOTS,
+    "guide-profile-s-item-1": _GUIDE_TITLE_SLOTS,
+    "guide-profile-p-item-1": _GUIDE_TITLE_SLOTS,
+    "guide-profile-s-item-4": _GUIDE_MOVEMENT_SLOTS,
+    "guide-profile-p-item-6": _GUIDE_MOVEMENT_SLOTS,
 }
 
 
@@ -243,6 +280,15 @@ def _render_wording_entry(entry, values):
     if re.search(r"\{[A-Za-z][A-Za-z0-9._:-]*\}", text):
         raise ModelError("controlled wording retains an unresolved slot")
     return text
+
+
+def _wording_origin_value(wording, origin_ref):
+    """Resolve one slot origin from another slotless controlled wording entry."""
+    entry = wording.get(origin_ref.split(".", 1)[1]
+                        if origin_ref.startswith("wording.") else "")
+    if entry is None or entry.slots:
+        raise ModelError("controlled wording origin is not slotless wording")
+    return entry.text
 
 
 def _typed_plain_text(node: TypedContentNode) -> str:
@@ -919,11 +965,14 @@ class EditionModel:
         return value
 
     def _origin_value(self, origin_ref):
+        if origin_ref.startswith("wording."):
+            return _wording_origin_value(self._wording, origin_ref)
         values = {
             "edition.claimSetVersion": self.claim_set_version,
             "edition.declaredReleaseTimestamp": self.declared_release_timestamp,
             "edition.claimCount": len(self.claims),
             "edition.unitCount": len(self.units_by_fragment),
+            "edition.strategyName": self.strategy_name,
             "target.blockCount": len(self.disclosure_blocks),
         }
         try:

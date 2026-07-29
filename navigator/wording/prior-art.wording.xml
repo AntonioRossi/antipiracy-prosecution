@@ -76,4 +76,89 @@
       <slot name="editionSchedule" scalarType="text" originKind="closed-derivation" originRef="bundle.editionSchedule" />
     </slots>
   </entry>
+  <entry wordingId="guide-control-open" category="guide">
+    <usage context="guide-chrome" />
+    <text>Guide</text>
+  </entry>
+  <entry wordingId="guide-control-close" category="guide">
+    <usage context="guide-chrome" />
+    <text>Close guide</text>
+  </entry>
+  <entry wordingId="guide-dialog-title" category="guide">
+    <usage context="guide-chrome" />
+    <text>Navigator guide — {strategy} · claim set {editionVersion}</text>
+    <slots>
+      <slot name="strategy" scalarType="text" originKind="registered-control" originRef="edition.strategyName" />
+      <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
+    </slots>
+  </entry>
+  <entry wordingId="guide-glyph-candidate-previous" category="guide">
+    <usage context="guide-chrome" />
+    <text>◀C</text>
+  </entry>
+  <entry wordingId="guide-glyph-candidate-next" category="guide">
+    <usage context="guide-chrome" />
+    <text>C▶</text>
+  </entry>
+  <entry wordingId="guide-glyph-passage-previous" category="guide">
+    <usage context="guide-chrome" />
+    <text>◀P</text>
+  </entry>
+  <entry wordingId="guide-glyph-passage-next" category="guide">
+    <usage context="guide-chrome" />
+    <text>P▶</text>
+  </entry>
+  <entry wordingId="guide-glyph-move-previous" category="guide">
+    <usage context="guide-chrome" />
+    <text>◀</text>
+  </entry>
+  <entry wordingId="guide-glyph-move-next" category="guide">
+    <usage context="guide-chrome" />
+    <text>▶</text>
+  </entry>
+  <entry wordingId="guide-glyph-clear" category="guide">
+    <usage context="guide-chrome" />
+    <text>×</text>
+  </entry>
+  <entry wordingId="guide-profile-p-item-1" category="guide">
+    <usage context="guide-profile" />
+    <text>What this page binds: the {strategy} at claim-set version {editionVersion}, the current prior-art comparison matrix, and its passage map. Matrix scores are issue-spotting aids, not conclusions, and this page is not an admission.</text>
+    <slots>
+      <slot name="strategy" scalarType="text" originKind="registered-control" originRef="edition.strategyName" />
+      <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
+    </slots>
+  </entry>
+  <entry wordingId="guide-profile-p-item-2" category="guide">
+    <usage context="guide-profile" />
+    <text>The two panes: the claims pane lists every claim limitation with its matrix obligations; the disclosure pane shows prior-art obligation cards, candidate passages, and full transcriptions.</text>
+  </entry>
+  <entry wordingId="guide-profile-p-item-3" category="guide">
+    <usage context="guide-profile" />
+    <text>Obligation states: every matrix obligation keeps its authored exact state. Counsel review required records a material relationship with no exact candidate passage; neutral review allocations identify fragments for counsel review.</text>
+  </entry>
+  <entry wordingId="guide-profile-p-item-4" category="guide">
+    <usage context="guide-profile" />
+    <text>Emphasis: only the passages of the selected candidate receive forward emphasis, the opposite convention from the specification navigator. Passages of every other candidate stay unmarked.</text>
+  </entry>
+  <entry wordingId="guide-profile-p-item-5" category="guide">
+    <usage context="guide-profile" />
+    <text>The scoring legend: P marks a concrete partial or analogous mapping; an em dash marks no concrete whole-claim mapping. Neither score is an obviousness conclusion or a clearance.</text>
+  </entry>
+  <entry wordingId="guide-profile-p-item-6" category="guide">
+    <usage context="guide-profile" />
+    <text>Movement: activate a limitation to reach its candidate passages and matrix obligations. In the forward bar, {candidatePrevious} and {candidateNext} wrap candidate movement and reset the passage index; {passagePrevious} and {passageNext} wrap passage movement within the selected candidate. Reverse badges return to the related claims, where {movePrevious} and {moveNext} wrap reverse movement. {clear} clears the selection from either bar. The reader button opens the full transcription at the exact passage.</text>
+    <slots>
+      <slot name="candidatePrevious" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-candidate-previous" />
+      <slot name="candidateNext" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-candidate-next" />
+      <slot name="passagePrevious" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-passage-previous" />
+      <slot name="passageNext" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-passage-next" />
+      <slot name="movePrevious" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-move-previous" />
+      <slot name="moveNext" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-move-next" />
+      <slot name="clear" scalarType="text" originKind="registered-control" originRef="wording.guide-glyph-clear" />
+    </slots>
+  </entry>
+  <entry wordingId="guide-profile-p-item-7" category="guide">
+    <usage context="guide-profile" />
+    <text>Review posture and version binding: a comparison matrix is valid only for the claim-set version named in its header. Human review of the source PDF evidence remains authoritative.</text>
+  </entry>
 </wording>

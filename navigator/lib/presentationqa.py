@@ -14,6 +14,7 @@ TYPOGRAPHY_SELECTORS = MappingProxyType({
     "reading": (
         ".unit-body", ".dblock:not(.table-wrap)", ".reader-content",
         ".reader-block", "#about p", "#about li",
+        ".guide-body", "#guide-overlay-title",
     ),
     "interface": (
         "#masthead h1", ".legend", ".release-profile", ".disclaimer",
@@ -23,7 +24,8 @@ TYPOGRAPHY_SELECTORS = MappingProxyType({
         ".reverse-badge", ".editorial-tag", "table", "figcaption",
         ".highlight-key", ".navigation-bar", ".caution-chip",
         ".caution-detail", ".disposition", "#aux-toggle",
-        ".passage-meta",
+        ".passage-meta", "#guide-open", ".guide > summary", ".guide-close",
+        ".guide-glyph",
     ),
     "auxiliary": (
         ".chip-group-name", ".unit-label", ".anchor-label",
