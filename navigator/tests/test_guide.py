@@ -370,23 +370,20 @@ class GuideTests(unittest.TestCase):
                         footerDisplay:getComputedStyle(footer).display,
                         footerLegend:footer.querySelector('.legend')
                           .textContent,
-                        footerProfile:footer.querySelector('.release-profile')
-                          .textContent,
-                        footerDisclaimer:footer.querySelector('.disclaimer')
-                          .textContent
+                        footerChildren:footer.children.length,
+                        removedBlocks:document.querySelectorAll(
+                          '.release-profile,.disclaimer').length
                       };
                     }""")
                     self.assertEqual(state["dialogDisplay"], "none")
                     self.assertEqual(state["carrierDisplay"], "none")
                     self.assertEqual(state["guideOpenDisplay"], "none")
                     self.assertEqual(state["footerDisplay"], "block")
+                    self.assertEqual(state["footerChildren"], 1)
+                    self.assertEqual(state["removedBlocks"], 0)
                     self.assertEqual(
                         state["footerLegend"],
                         model.controlled_text("counsel-legend"))
-                    self.assertEqual(state["footerProfile"], model.profile_label)
-                    self.assertEqual(
-                        state["footerDisclaimer"],
-                        model.controlled_text("standing-disclaimer"))
                     presentationqa.validate_noninteractive_surfaces(
                         page, self.control)
                     pdf = page.pdf(format="A4", print_background=True)

@@ -107,7 +107,7 @@ navigator/wording/prior-art.wording.xml
 ```
 
 Keep ordinary interface labels and layout instructions in the renderer. Put only substantive,
-provenance, caution, disposition, disclaimer, product-label, artifact, manifest, security, or
+provenance, caution, disposition, editorial, gate, security, artifact, manifest, or
 guide wording in wording XML. Add only slots that are actually consumed and give each slot one typed
 scalar type and one exact origin; every slot is rendered as escaped plain text.
 

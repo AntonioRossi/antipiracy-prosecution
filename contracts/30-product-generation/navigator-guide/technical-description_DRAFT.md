@@ -51,7 +51,7 @@ dismissal persistence; the sealed single-file products have no storage model.
 |---|---|---|---|
 | JavaScript enabled | The overlay opens on every load | The persistent masthead Guide control reopens it | Modal `<dialog>` overlay |
 | JavaScript removed | Nothing opens; reading is unaffected | The in-document guide section is directly operable | `<details class="guide">` in document order |
-| Print | — | — | Overlay and guide content are excluded; the masthead legend and disclaimer continue to print |
+| Print | — | — | Overlay and guide content are excluded; the counsel-review legend continues to print |
 | Reduced motion | No entry animation | No animation | Same carriers |
 
 ## 4. Overlay mechanics
@@ -70,7 +70,7 @@ With JavaScript removed, the same guide content remains in readable document ord
 natively keyboard-operable. The no-script carrier does not hide, shrink, truncate, or reorder
 semantic content; the navigator-presentation pair owns the general no-JavaScript reading rule
 and this pair adds no exception to it. Print excludes the overlay and the guide section as
-interface furniture; required legal, cautionary, and profile wording owned by the product
+interface furniture; the counsel-review legend owned by the product
 contracts continues to print under the owning pairs' rules.
 
 ## 6. Content profiles
@@ -91,7 +91,9 @@ and an owning pair fails.
    movement in the forward bar, reverse movement (`◀`/`▶`), and clear (`×`).
 5. Gates and cautions displayed with claims.
 6. The color and state legend.
-7. Review posture: an ephemeral aid; human review of the source evidence remains authoritative.
+7. Review posture: draft counsel-review aid and ephemeral technical preview, no legal opinion of
+   any kind, one-strategy presentation, anchor references not citable; human review of the source
+   evidence remains authoritative.
 
 **Profile P — claims ↔ prior art** (`na-prior-art`, `af-prior-art`):
 
@@ -108,7 +110,9 @@ and an owning pair fails.
    clear controls shown as inert glyph tokens — candidate (`◀C`/`C▶`) and passage (`◀P`/`P▶`)
    movement in the forward bar, reverse movement (`◀`/`▶`), and clear (`×`).
 7. Review posture and version binding: a matrix is valid only for the claim-set version named
-   in its header.
+   in its header; draft counsel-review aid and ephemeral technical preview, no legal opinion of
+   any kind and no admission, PDF fidelity authority, anchor references not citable; human review
+   of the source evidence remains authoritative.
 
 ## 7. Wording governance
 

@@ -669,8 +669,6 @@ class PriorArtModel:
         self._wording_owner_paths = MappingProxyType({
             identifier: PRIOR_ART_WORDING for identifier in wording})
         self.shared_wording_digest = canon.bytes_digest(wording_bytes)
-        self.profile_label = self.controlled_text(
-            "artifact-label-technical-preview")
 
         expected_reads = {
             self._edition_path, EDITION_SCHEMA, registry_mod.REGISTRY_PATH,

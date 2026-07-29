@@ -17,7 +17,6 @@ from .model import ModelError
 _C1_DIGEST = re.compile(r"sha256/c1:[0-9a-f]{64}\Z")
 _XML_RAW_DIGEST = re.compile(r"sha256/raw:[0-9a-f]{64}\Z")
 _BASE_WORDING = frozenset({
-    "artifact-label-technical-preview",
     "artifact-watermark-technical-preview",
     "authority-target-sources",
     "bundle-manifest-neutral",
@@ -44,7 +43,6 @@ _BASE_WORDING = frozenset({
     "guide-profile-s-item-7",
     "source-input-provenance",
     "provenance-summary",
-    "standing-disclaimer",
     "caution-scope-claim",
     "caution-scope-fragment",
     "caution-scope-target",
@@ -64,9 +62,6 @@ def _metadata(model, error):
         error("metadata", "artifact name is not bound to the claim-set version")
     if model.relation_set_id != model.edition_id + "-pct":
         error("metadata", "relation-set identity is not bound to the edition")
-    if model.profile_label != model.controlled_text(
-            "artifact-label-technical-preview"):
-        error("metadata", "product profile does not resolve from controlled wording")
     if _C1_DIGEST.fullmatch(model.shared_wording_digest) is None:
         error("metadata", "shared wording digest is malformed")
 
@@ -367,7 +362,6 @@ def _wording(model, error):
             if not value or value != value.strip():
                 error("wording", "%s does not resolve to exact nonblank text" %
                       wording_id)
-    model.controlled_text("standing-disclaimer")
     model.controlled_text("provenance-summary")
 
 
@@ -505,7 +499,6 @@ def validate_prior_art(model):
                  len(model.candidate_relations)):
             error("relations", "computed state and authored relation identities are not exact")
         expected_wording = {
-            "artifact-label-technical-preview",
             "artifact-watermark-technical-preview",
             "authority-target-sources", "bundle-manifest-neutral",
             "counsel-legend", "mapping-role-combination",
@@ -525,11 +518,10 @@ def validate_prior_art(model):
             "obligation-status-counsel-review-required",
             "obligation-status-passage-mapped",
             "obligation-status-reviewed-no-material-passage",
-            "source-input-provenance", "standing-disclaimer",
+            "source-input-provenance",
         }
         if set(model._wording) != expected_wording:
             error("wording", "prior-art controlled wording inventory is not exact")
-        model.controlled_text("standing-disclaimer")
         model.controlled_text("provenance-summary")
         reads = dict(model.read_inventory)
         expected_reads = {

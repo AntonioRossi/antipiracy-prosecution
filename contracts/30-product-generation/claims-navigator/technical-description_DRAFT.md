@@ -40,16 +40,14 @@ disclosed passages may legally be combined. It does not infer mappings or transf
 strategies. It provides no editing, collaboration, access-control, encryption, or secure-document-
 management function.
 
-The current product profile is `technical-preview`. Every screen, no-JavaScript view, printed
-page, and bundle manifest carries this exact label:
+The current product profile is `technical-preview`. Automated content, transformation,
+pinned-Chromium interaction, accessibility-structure, security, offline, deterministic-output, and
+bundle-integrity checks remain mandatory. The profile makes no cross-platform, alternate-browser,
+operating-system, print-engine, or assistive-technology compatibility claim.
 
-> **TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass;
-> cross-platform and assistive-technology compatibility is not validated.**
-
-Automated content, transformation, pinned-Chromium interaction, accessibility-structure, security,
-offline, deterministic-output, and bundle-integrity checks remain mandatory. The profile makes no
-cross-platform, alternate-browser, operating-system, print-engine, or assistive-technology
-compatibility claim.
+No screen, no-JavaScript view, or printed page renders a release-profile label block or a product
+disclaimer block. The confidentiality legend remains on every surface; the navigator-guide pair
+carries the ephemeral-preview and review-posture boundary in its guide profile items.
 
 ## 2. Authority and XML architecture
 
@@ -197,7 +195,7 @@ navigator/wording/af.wording.xml
 
 These packages use `schemaProfile="navigator-controlled-wording-v1"`; each file's `wordingSetId`
 and `scope` declare shared or edition ownership. They contain only exact wording with substantive,
-provenance, caution, disposition, disclaimer, profile, artifact, manifest, or security meaning.
+provenance, caution, disposition, editorial, gate, security, artifact, manifest, or guide meaning.
 Ordinary navigation labels, buttons, headings, help, and layout instructions remain owned by
 tracked templates or code.
 
@@ -418,26 +416,20 @@ candidate exposure, target, and caution/gate presence without repeating the full
 
 ## 6. Controlled product wording and provenance
 
-The exact profile label in Section 1 precedes this standing disclaimer everywhere it appears:
+The products render no standing disclaimer block on any surface. The boundary substance formerly
+shown as a masthead disclaimer — draft counsel-review aid, no legal opinion of any kind, anchor
+references not citable, one-strategy presentation, ephemeral technical preview — is carried by the
+navigator-guide review-posture profile items described in the navigator-guide pair.
 
-> Draft navigation aid generated from claim-set {edition version} and PCT/IB2025/051755 as
-> filed (WO 2025/181623 A1). Mappings are author-recorded candidate associations for counsel
-> review — not a written-description, priority, or any other legal opinion. Fragments marked
-> "counsel review required" carry no recorded candidate passage. Claim-level gates concern
-> the complete claim and are quoted from the claim-set document. Anchor references are
-> internal navigation labels, not official numbering, and must not be cited. This edition
-> presents one candidate strategy; it does not compare strategies or recommend a filing
-> choice.
-
-The disclaimer, confidentiality legend, provenance wording, caution/disposition wording, profile
-label, artifact wording, and neutral bundle wording resolve from their current controlled wording
-entries. Slots may insert only declared typed values such as the edition version. Ordinary UI
-copy remains in templates or code and is tested there for clarity, neutrality, accessibility,
+The confidentiality legend, provenance wording, caution/disposition wording, artifact wording,
+guide chrome and profile wording, and neutral bundle wording resolve from their current controlled
+wording entries. Slots may insert only declared typed values such as the edition version. Ordinary
+UI copy remains in templates or code and is tested there for clarity, neutrality, accessibility,
 escaping, and determinism.
 
 Each artifact exposes a provenance panel identifying its edition, claim-set version, source
-packages, governing authority direction, XML byte bindings, typed-item endpoint digests, relation
-set, and generation profile.
+packages, governing authority direction, XML byte bindings, typed-item endpoint digests, and
+relation set.
 It does not expose internal QA-only paths or claim that generated XML supersedes its PDF or
 Markdown authority.
 
@@ -466,11 +458,11 @@ three-state endpoint partition.
   appropriate HTML and ARIA semantics. `prefers-reduced-motion` disables smooth scrolling.
 - The About/provenance surface and complete flat mapping schedule are available in the interactive
   artifact and remain in the document source.
-- With JavaScript removed, claims, disclosure, profile label, disclaimer, confidentiality legend,
-  provenance, and the complete mapping schedule remain readable in document order.
-- Print output includes claims, disclosure, profile label, disclaimer, confidentiality legend,
-  provenance, and the complete schedule, with clipping and overflow safeguards. The profile label
-  and disclaimer repeat through the print-page mechanism.
+- With JavaScript removed, claims, disclosure, confidentiality legend, provenance, and the
+  complete mapping schedule remain readable in document order.
+- Print output includes claims, disclosure, confidentiality legend, provenance, and the complete
+  schedule, with clipping and overflow safeguards. The confidentiality legend repeats through the
+  print-page mechanism; no release-profile or disclaimer block appears.
 
 The exact Playwright 1.50.0 managed Chromium 133.0.6943.16 revision 1155 is controlled by
 `navigator/policy/browser.json`; absence or mismatch fails without a system-browser or engine

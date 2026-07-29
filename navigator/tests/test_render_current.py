@@ -105,7 +105,6 @@ class FakeModel:
         self.reverse_mode_label = "Specification → Claims"
         self.independent_claims = (1,)
         self.relation_set_id = "na-pct"
-        self.profile_label = "TECHNICAL PREVIEW <profile>"
         self.calls = []
         self.source_documents = (
             SimpleNamespace(
@@ -187,7 +186,6 @@ class FakeModel:
                 "No candidate passage recorded — counsel review required",
             "mapping-role-combination": "combination",
             "counsel-legend": "CONFIDENTIAL <legend>",
-            "artifact-label-technical-preview": self.profile_label,
             "source-input-provenance": "Source inputs",
             "authority-target-sources": "PCT as filed",
             "guide-control-open": "Guide",
@@ -208,8 +206,6 @@ class FakeModel:
             "guide-profile-s-item-6": "Guide item six",
             "guide-profile-s-item-7": "Guide item seven",
         }
-        if wording_id == "standing-disclaimer":
-            return "Disclaimer " + self.claim_set_version
         if wording_id == "provenance-summary":
             return "Summary %d/%d/%d" % (
                 len(self.claims), len(self.units_by_fragment),
@@ -958,11 +954,14 @@ class CurrentRenderTests(unittest.TestCase):
                     self.assertNotIn(forbidden, text)
                 self.assertFalse(any(
                     token in JS for token in FORBIDDEN_SCRIPT_TOKENS))
-                self.assertGreaterEqual(outside_text.count(model.profile_label), 2)
                 self.assertGreaterEqual(outside_text.count(
                     model.controlled_text("counsel-legend")), 2)
-                self.assertGreaterEqual(outside_text.count(
-                    model.controlled_text("standing-disclaimer")), 2)
+                # The confidentiality legend remains (masthead and print
+                # footer); the retired release-profile and disclaimer blocks
+                # are absent from every surface.
+                self.assertNotIn('class="release-profile"', text)
+                self.assertNotIn('class="disclaimer"', text)
+                self.assertNotIn("TECHNICAL PREVIEW", text)
                 self.assertIn(
                     '#aux,#panes,#masthead {\n'
                     '    display:block !important; max-block-size:none; '
@@ -1353,8 +1352,7 @@ class CurrentRenderTests(unittest.TestCase):
         called = set(model.calls)
         self.assertTrue({
             "mapping-status-mapped", "mapping-role-combination",
-            "counsel-legend", "standing-disclaimer",
-            "artifact-label-technical-preview",
+            "counsel-legend",
             "source-input-provenance", "authority-target-sources",
             "provenance-summary",
         }.issubset(called))

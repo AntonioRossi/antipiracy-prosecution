@@ -962,7 +962,7 @@ def _schedule_html(model, relations: dict, claim_gates: dict) -> str:
            "".join(gate_rows)))
 
 
-def _provenance(model, profile_label: str) -> tuple[dict, str]:
+def _provenance(model) -> tuple[dict, str]:
     documents = []
     rows = []
     for source in model.source_documents:
@@ -991,7 +991,6 @@ def _provenance(model, profile_label: str) -> tuple[dict, str]:
         "editionId": model.edition_id,
         "claimSetVersion": model.claim_set_version,
         "relationSetId": model.relation_set_id,
-        "profileLabel": profile_label,
         "documents": documents,
         "assets": assets,
         "summary": summary,
@@ -1099,15 +1098,11 @@ def render(model, mode="candidate") -> bytes:
         for status in ("mapped", "counsel-review-required")
     }
     legend = _wording(model, "counsel-legend")
-    profile_label = _wording(model, "artifact-label-technical-preview")
-    if profile_label != model.profile_label:
-        raise RenderError("typed profile label and controlled wording differ")
-    disclaimer = _wording(model, "standing-disclaimer")
     watermark_text = _wording(
         model, "artifact-watermark-technical-preview") if mode == "preview" else ""
     watermark = ('<div class="watermark" aria-hidden="true"><span>%s</span></div>'
                  % _esc(watermark_text)) if watermark_text else ""
-    provenance, provenance_html = _provenance(model, profile_label)
+    provenance, provenance_html = _provenance(model)
     guide = render_guide(model)
     forbidden = [token for token in FORBIDDEN_SCRIPT_TOKENS if token in JS]
     if forbidden:
@@ -1149,7 +1144,6 @@ def render(model, mode="candidate") -> bytes:
         title=_esc(title),
         watermark=watermark,
         legend=_esc(legend),
-        profile=_esc(profile_label),
         display_name=_esc(model.display_name),
         strategy=_esc("%s — %s" % (
             model.strategy_prefix, model.strategy_name)),
@@ -1157,7 +1151,6 @@ def render(model, mode="candidate") -> bytes:
         version=_esc(model.claim_set_version),
         authority=_esc(model.authority_header),
         aux_label=_esc(UI["aboutScheduleToggle"]),
-        disclaimer=_esc(disclaimer),
         claims_label=_esc(UI["candidateClaimsLabel"]),
         disclosure_label=_esc(model.target_pane_label),
         claims=_claims_html(model, relations, claim_gates),
@@ -1193,11 +1186,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <header id="masthead">
 <p class="legend">{legend}</p>
 {guide_carrier}
-<p class="release-profile">{profile}</p>
 <h1>{display_name} <span class="strategy">{strategy}</span></h1>
 <p class="meta">{claim_set_label} <strong>{version}</strong> · {authority}
 <button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">{aux_label}</button>{guide_button}</p>
-<p class="disclaimer">{disclaimer}</p>
 </header>
 <section id="claims-pane" aria-label="{claims_label}">
 <div id="reverse-bar" class="navigation-bar" hidden></div>
@@ -1212,8 +1203,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <div id="live" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
 </div>
 {guide_dialog}
-<footer><p class="legend">{legend}</p><p class="release-profile">{profile}</p>
-<p class="disclaimer">{disclaimer}</p></footer>
+<footer><p class="legend">{legend}</p></footer>
 <noscript><style>
 html,body{{height:auto;overflow:visible}}
 #content-root{{display:block;overflow:visible;height:auto;min-height:0}}
@@ -1275,14 +1265,6 @@ p,li,th,td,summary,button,figcaption { overflow-wrap:anywhere; }
   max-inline-size:var(--measure); margin:4px 0; color:#7a1f1f;
   font-size:var(--type-interface); line-height:var(--leading-interface); font-weight:bold;
   letter-spacing:.4px;
-}
-.release-profile {
-  max-inline-size:var(--measure); margin:4px 0; color:#704d00;
-  font-size:var(--type-interface); line-height:var(--leading-interface); font-weight:bold;
-}
-.disclaimer {
-  max-inline-size:var(--measure); margin:4px 0; color:#444;
-  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 #claims-pane {
   grid-column:1; grid-row:2; min-width:0; min-height:0;
@@ -1609,7 +1591,7 @@ footer { display:none; }
 @media print {
   html,body { display:block; height:auto; overflow:visible; }
   #content-root {
-    display:block; overflow:visible; padding-bottom:107mm;
+    display:block; overflow:visible; padding-bottom:26mm;
     -webkit-box-decoration-break:clone; box-decoration-break:clone;
   }
   #aux,#panes,#masthead {
@@ -1626,12 +1608,10 @@ footer { display:none; }
     min-height:0; padding:0; border:0; color:inherit; background:transparent;
     cursor:default;
   }
-  #masthead > .legend,#masthead > .release-profile,#masthead > .disclaimer {
-    display:none;
-  }
+  #masthead > .legend { display:none; }
   footer {
     position:fixed; right:0; bottom:0; left:0; display:block;
-    height:105mm; overflow:hidden; padding:2mm 0 0;
+    height:24mm; overflow:hidden; padding:2mm 0 0;
     border-top:1px solid var(--line); border-bottom:0; background:#fff;
   }
   table,figure,pre { break-inside:avoid; }
@@ -1856,6 +1836,11 @@ function cautionControl(caution){
       caution.typeLabel + ' — ' + caution.scope + ' — ' + caution.quote);
     wrap.appendChild(detail);
     chip.setAttribute('aria-expanded', 'true');
+    if (state.mode === 'forward'){
+      var current = relation(state.key);
+      var selected = current ? selectedPassageId(current) : null;
+      if (selected) scrollDisclosureToNode(selected);
+    }
   });
   chip.setAttribute('aria-expanded', 'false');
   wrap.appendChild(chip);

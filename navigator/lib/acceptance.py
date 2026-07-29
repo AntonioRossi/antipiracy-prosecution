@@ -267,16 +267,16 @@ def validate_registry(value):
                    isinstance(value.get("criteria"), list) else [])
     if identifiers[:1] == ["AC-01"]:
         expected_criteria = SPEC_CRITERIA
-        expected_version = "11"
+        expected_version = "12"
     elif identifiers[:1] == ["PAM-AC-01"]:
         expected_criteria = MAP_CRITERIA
         expected_version = "2"
     elif identifiers[:1] == ["PRES-AC-01"]:
         expected_criteria = PRESENTATION_CRITERIA
-        expected_version = "1"
+        expected_version = "2"
     elif identifiers[:1] == ["GUIDE-AC-01"]:
         expected_criteria = GUIDE_CRITERIA
-        expected_version = "1"
+        expected_version = "2"
     else:
         expected_criteria = PRIOR_CRITERIA
         expected_version = "6"

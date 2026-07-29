@@ -22,11 +22,6 @@ from . import schema_validate
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-PROFILE_WORDING_ID = "artifact-label-technical-preview"
-TECHNICAL_PREVIEW_LABEL = (
-    "TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass; "
-    "cross-platform and assistive-technology compatibility is not validated."
-)
 VALIDATION_PURPOSE = (
     "Technical coherence and deterministic reproducibility of the current "
     "package for independent inventor and counsel review."
@@ -557,7 +552,7 @@ def build_model(edition, repository_snapshot, consumer_input,
 def _validate_model_metadata(edition_model):
     for name in (
             "artifact_name", "claim_set_version", "declared_release_timestamp",
-            "edition_id", "profile_label", "shared_wording_digest"):
+            "edition_id", "shared_wording_digest"):
         value = getattr(edition_model, name, None)
         if not isinstance(value, str) or not value:
             raise CurrentStateError("typed model metadata %s is unavailable" % name)
@@ -566,12 +561,8 @@ def _validate_model_metadata(edition_model):
         raise CurrentStateError("typed model artifact name is not HTML")
     try:
         bundlezip.parse_utc_second(edition_model.declared_release_timestamp)
-        label = edition_model.controlled_text(PROFILE_WORDING_ID)
-    except (bundlezip.BundleError, KeyError, model.ModelError,
-            TypeError, ValueError) as exc:
+    except (bundlezip.BundleError, TypeError, ValueError) as exc:
         raise CurrentStateError("typed model product metadata is invalid: %s" % exc) from exc
-    if label != TECHNICAL_PREVIEW_LABEL or edition_model.profile_label != label:
-        raise CurrentStateError("typed model product label is not the exact current label")
 
 
 def derive(edition, mode, repository_snapshot, consumer_input,
@@ -655,8 +646,6 @@ def _manifest_bytes(product_plan, states, artifact_members):
     config = product_plan.bundle_config
     models = [states[product_id].model
               for product_id in product_plan.product_ids]
-    if any(item.profile_label != TECHNICAL_PREVIEW_LABEL for item in models):
-        raise CurrentStateError("products do not share the current product profile")
     if config["manifestWordingId"] != "bundle-manifest-neutral":
         raise CurrentStateError("bundle manifest wording identity is not current")
     try:
@@ -667,7 +656,7 @@ def _manifest_bytes(product_plan, states, artifact_members):
     if not manifest_text.strip() or manifest_text != manifest_text.strip():
         raise CurrentStateError("neutral bundle wording is malformed")
 
-    lines = [models[0].profile_label, "", manifest_text, "", "Member checksums:"]
+    lines = [manifest_text, "", "Member checksums:"]
     for name, data in artifact_members:
         lines.append("%s  %s" % (canon.bytes_digest(data), name))
     return ("\n".join(lines) + "\n").encode("utf-8")

@@ -196,7 +196,8 @@ reference. Clearing a selection removes transient state and returns focus predic
 
 The ordinary document, complete schedule, no-script view, and print view contain every substantive
 claim, obligation state, allocation note, candidate identity, role, proposition, passage member,
-provenance item, uncertainty, and disclaimer outside script data. Static HTML uses semantic
+provenance item, and uncertainty outside script data. They render no release-profile or disclaimer
+block on any surface; the confidentiality legend remains on every surface. Static HTML uses semantic
 controls, logical order, visible focus, non-color indicators, a live region, reduced-motion rules,
 bounded independent pane scrolling, minimum usable dimensions, and deterministic stacking.
 
@@ -207,10 +208,10 @@ mutation, external asset, form submission, or dynamic code loading capability. I
 security policy denies all capabilities except inline product CSS/JavaScript and embedded data
 images. All dynamic text is context-escaped before insertion into HTML or inert JSON.
 
-The prior-art wording XML owns confidentiality, standing disclaimer, mapping statuses,
-candidate-role labels, evidence authority, provenance, product label, preview watermark, and neutral
-bundle wording. Ordinary candidate/passage controls and count labels remain renderer-owned interface
-copy.
+The prior-art wording XML owns confidentiality, mapping statuses,
+candidate-role labels, evidence authority, provenance, guide chrome and profile wording, preview
+watermark, and neutral bundle wording. Ordinary candidate/passage controls and count labels remain
+renderer-owned interface copy.
 
 ## 7. Product controls and publication
 

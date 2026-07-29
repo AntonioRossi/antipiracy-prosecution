@@ -4,13 +4,6 @@
     <usage context="counsel-legend" />
     <text>CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED FOR US COUNSEL REVIEW. This navigator presents unfiled draft claim-strategy material relating to PCT/IB2025/051755 (published as WO 2025/181623 A1). Do not distribute outside the engagement.</text>
   </entry>
-  <entry wordingId="standing-disclaimer" category="disclaimer">
-    <usage context="standing-disclaimer" />
-    <text>Draft navigation aid generated from claim-set {editionVersion} and PCT/IB2025/051755 as filed (WO 2025/181623 A1). Mappings are author-recorded candidate associations for counsel review — not a written-description, priority, or any other legal opinion. Fragments marked "counsel review required" carry no recorded candidate passage. Claim-level gates concern the complete claim and are quoted from the claim-set document. Anchor references are internal navigation labels, not official numbering, and must not be cited. This edition presents one candidate strategy; it does not compare strategies or recommend a filing choice.</text>
-    <slots>
-      <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
-    </slots>
-  </entry>
   <entry wordingId="mapping-status-mapped" category="mapping-status">
     <usage context="mapping-status" />
     <text>Candidate passages recorded</text>
@@ -84,10 +77,6 @@
   <entry wordingId="claim-set-guidance" category="editorial">
     <usage context="guidance-label" />
     <text>Guidance note from the claim-set document (not claim text)</text>
-  </entry>
-  <entry wordingId="artifact-label-technical-preview" category="release-profile">
-    <usage context="artifact-label" />
-    <text>TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass; cross-platform and assistive-technology compatibility is not validated.</text>
   </entry>
   <entry wordingId="artifact-watermark-technical-preview" category="security">
     <usage context="artifact-watermark" />
@@ -183,6 +172,6 @@
   </entry>
   <entry wordingId="guide-profile-s-item-7" category="guide">
     <usage context="guide-profile" />
-    <text>Review posture: this navigator is an ephemeral technical preview. Human review of the source evidence and substantive analysis remains authoritative.</text>
+    <text>Review posture: this page is a draft counsel-review aid and an ephemeral technical preview, not filing material and not a legal opinion of any kind. It presents one candidate strategy; it does not compare strategies or recommend a filing choice. Anchor references are internal navigation labels, not official numbering, and must not be cited. Human review of the source evidence and substantive analysis remains authoritative.</text>
   </entry>
 </wording>

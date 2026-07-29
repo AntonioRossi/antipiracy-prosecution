@@ -180,11 +180,9 @@ class XMLModelTests(unittest.TestCase):
 
     def test_controlled_wording_has_exact_slots(self):
         model = self.models["na-specification"]
-        self.assertEqual(
-            model.profile_label,
-            model.controlled_text("artifact-label-technical-preview"))
-        text = model.controlled_text("standing-disclaimer")
+        text = model.controlled_text("guide-dialog-title")
         self.assertIn(model.claim_set_version, text)
+        self.assertIn(model.strategy_name, text)
         with self.assertRaises(ModelError):
             model.controlled_text("bundle-manifest-neutral")
         bundle = bundle_manifest_text(
@@ -216,7 +214,7 @@ class XMLModelTests(unittest.TestCase):
                                     for item in model.origin_inventory))
                 standing = next(
                     item for item in model.origin_inventory
-                    if item.value_id == "wording:standing-disclaimer")
+                    if item.value_id == "wording:guide-dialog-title")
                 self.assertEqual(
                     standing.owner_path,
                     "navigator/wording/shared.wording.xml")
@@ -550,7 +548,7 @@ class XMLModelTests(unittest.TestCase):
         with open(os.path.join(ROOT, shared_suffix), "rb") as handle:
             shared_bytes = handle.read()
         match = re.search(
-            rb'  <entry wordingId="standing-disclaimer".*?  </entry>\n',
+            rb'  <entry wordingId="counsel-legend".*?  </entry>\n',
             shared_bytes, re.DOTALL)
         self.assertIsNotNone(match)
         moved_entry = match.group(0)

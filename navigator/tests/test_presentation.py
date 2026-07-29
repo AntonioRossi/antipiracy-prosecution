@@ -473,12 +473,17 @@ class PresentationTests(unittest.TestCase):
                   panesOverflow:getComputedStyle(panes).overflowY,
                   pageOverflow:document.documentElement.scrollWidth >
                     document.documentElement.clientWidth + 1,
-                  auxDisplay:getComputedStyle(document.getElementById('aux')).display
+                  auxDisplay:getComputedStyle(document.getElementById('aux')).display,
+                  removedBlocks:document.querySelectorAll(
+                    '.release-profile,.disclaimer').length,
+                  legends:document.querySelectorAll('.legend').length
                 })""")
                 self.assertIn(result["bodyOverflow"], {"auto", "visible"})
                 self.assertEqual(result["panesOverflow"], "visible")
                 self.assertFalse(result["pageOverflow"])
                 self.assertEqual(result["auxDisplay"], "block")
+                self.assertEqual(result["removedBlocks"], 0)
+                self.assertGreaterEqual(result["legends"], 1)
                 self.assertEqual(errors, [])
                 self.assertEqual(requests, [])
 
@@ -496,13 +501,20 @@ class PresentationTests(unittest.TestCase):
                     footerClient:[footer.clientWidth,footer.clientHeight],
                     footerScroll:[footer.scrollWidth,footer.scrollHeight],
                     auxDisplay:getComputedStyle(document.getElementById('aux')).display,
-                    bodyOverflow:getComputedStyle(document.body).overflowY
+                    bodyOverflow:getComputedStyle(document.body).overflowY,
+                    removedBlocks:document.querySelectorAll(
+                      '.release-profile,.disclaimer').length,
+                    footerLegendVisible:getComputedStyle(
+                      footer.querySelector('.legend')).display !== 'none' &&
+                      footer.querySelector('.legend').textContent.length > 0
                   };
                 }""")
                 self.assertEqual(print_state["footerDisplay"], "block")
                 self.assertFalse(print_state["footerClipped"], print_state)
                 self.assertEqual(print_state["auxDisplay"], "block")
                 self.assertEqual(print_state["bodyOverflow"], "visible")
+                self.assertEqual(print_state["removedBlocks"], 0)
+                self.assertTrue(print_state["footerLegendVisible"], print_state)
                 pdf = page.pdf(format="A4", print_background=True)
                 self.assertTrue(pdf.startswith(b"%PDF-"))
                 self.assertEqual(errors, [])

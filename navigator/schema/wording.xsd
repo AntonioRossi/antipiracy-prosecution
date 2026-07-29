@@ -24,7 +24,6 @@
   <xs:simpleType name="categoryType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="legend" />
-      <xs:enumeration value="disclaimer" />
       <xs:enumeration value="mapping-status" />
       <xs:enumeration value="mapping-role" />
       <xs:enumeration value="caution" />
@@ -32,7 +31,6 @@
       <xs:enumeration value="provenance" />
       <xs:enumeration value="editorial" />
       <xs:enumeration value="security" />
-      <xs:enumeration value="release-profile" />
       <xs:enumeration value="bundle-manifest" />
       <xs:enumeration value="gate-label" />
       <xs:enumeration value="guide" />
@@ -42,7 +40,6 @@
   <xs:simpleType name="usageContextType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="counsel-legend" />
-      <xs:enumeration value="standing-disclaimer" />
       <xs:enumeration value="mapping-status" />
       <xs:enumeration value="mapping-role" />
       <xs:enumeration value="caution-type" />
@@ -54,7 +51,6 @@
       <xs:enumeration value="provenance-summary" />
       <xs:enumeration value="editorial-label" />
       <xs:enumeration value="guidance-label" />
-      <xs:enumeration value="artifact-label" />
       <xs:enumeration value="artifact-watermark" />
       <xs:enumeration value="bundle-manifest" />
       <xs:enumeration value="gate-label" />

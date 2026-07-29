@@ -27,13 +27,11 @@ EDITION_SCHEMA = "navigator/schema/edition.schema.json"
 _STABLE_ID = re.compile(r"[A-Za-z][A-Za-z0-9._:-]*\Z")
 _WORDING_CONTRACT = {
     "counsel-legend": ("legend", "counsel-legend"),
-    "standing-disclaimer": ("disclaimer", "standing-disclaimer"),
     "authority-target-sources": ("provenance", "authority-provenance"),
     "source-input-provenance": ("provenance", "source-input-provenance"),
     "provenance-summary": ("provenance", "provenance-summary"),
     "editorial-not-filed": ("editorial", "editorial-label"),
     "claim-set-guidance": ("editorial", "guidance-label"),
-    "artifact-label-technical-preview": ("release-profile", "artifact-label"),
     "artifact-watermark-technical-preview": ("security", "artifact-watermark"),
     "bundle-manifest-neutral": ("bundle-manifest", "bundle-manifest"),
     "guide-control-open": ("guide", "guide-chrome"),
@@ -80,10 +78,6 @@ _GUIDE_MOVEMENT_SLOTS = (
     ("clear", "text", "registered-control", "wording.guide-glyph-clear"),
 )
 _SLOT_CONTRACT = {
-    "standing-disclaimer": (
-        ("editionVersion", "stable-id", "registered-control",
-         "edition.claimSetVersion"),
-    ),
     "provenance-summary": (
         ("timestamp", "timestamp", "registered-control",
          "edition.declaredReleaseTimestamp"),
@@ -751,8 +745,6 @@ class EditionModel:
         self._wording = MappingProxyType(wording)
         self._wording_owner_paths = MappingProxyType(wording_owners)
         self.shared_wording_digest = canon.bytes_digest(shared_bytes)
-        self.profile_label = self.controlled_text(
-            "artifact-label-technical-preview")
 
         self.mappings_by_unit = self._index_by_unit(self.relations.mappings)
         self.phrases_by_unit = self._index_by_unit(

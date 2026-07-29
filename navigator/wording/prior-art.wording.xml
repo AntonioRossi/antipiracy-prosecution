@@ -4,13 +4,6 @@
     <usage context="counsel-legend" />
     <text>CONFIDENTIAL — ATTORNEY WORK PRODUCT — PREPARED FOR US COUNSEL REVIEW. This navigator presents unfiled draft claim-strategy and prior-art passage associations. Do not distribute outside the engagement.</text>
   </entry>
-  <entry wordingId="standing-disclaimer" category="disclaimer">
-    <usage context="standing-disclaimer" />
-    <text>Draft navigation aid generated from claim-set {editionVersion}, the current prior-art comparison matrix, its exact claim/document obligation states, and asserted XML transcription passages. Mappings are applicant-recorded candidates for counsel review — not a novelty, obviousness, disclosure, claim-construction, validity, patentability, or legal opinion. “Counsel review required” states that the matrix records a material relationship for which this passage map has no exact candidate; it does not state that the feature is present or absent. “Reviewed — no material passage required” applies only to the identified matrix field and does not state that the document is irrelevant to another claim or relationship. PDF source evidence remains the fidelity authority, and transcription uncertainty remains visible. This product presents one claim strategy and does not recommend a filing choice.</text>
-    <slots>
-      <slot name="editionVersion" scalarType="stable-id" originKind="registered-control" originRef="edition.claimSetVersion" />
-    </slots>
-  </entry>
   <entry wordingId="mapping-status-mapped" category="mapping-status">
     <usage context="mapping-status" />
     <text>Candidate prior-art passages recorded</text>
@@ -60,10 +53,6 @@
       <slot name="units" scalarType="integer" originKind="closed-derivation" originRef="edition.unitCount" />
       <slot name="targets" scalarType="integer" originKind="closed-derivation" originRef="target.blockCount" />
     </slots>
-  </entry>
-  <entry wordingId="artifact-label-technical-preview" category="release-profile">
-    <usage context="artifact-label" />
-    <text>TECHNICAL PREVIEW — Pinned Chromium navigator interaction vectors pass; cross-platform and assistive-technology compatibility is not validated.</text>
   </entry>
   <entry wordingId="artifact-watermark-technical-preview" category="security">
     <usage context="artifact-watermark" />
@@ -159,6 +148,6 @@
   </entry>
   <entry wordingId="guide-profile-p-item-7" category="guide">
     <usage context="guide-profile" />
-    <text>Review posture and version binding: a comparison matrix is valid only for the claim-set version named in its header. Human review of the source PDF evidence remains authoritative.</text>
+    <text>Review posture and version binding: a comparison matrix is valid only for the claim-set version named in its header. This page is a draft counsel-review aid and an ephemeral technical preview, not a legal opinion of any kind, and not an admission; it presents one claim strategy. PDF source evidence remains the fidelity authority, and transcription uncertainty remains visible. Anchor references are internal navigation labels, not official numbering, and must not be cited. Human review of the source PDF evidence remains authoritative.</text>
   </entry>
 </wording>

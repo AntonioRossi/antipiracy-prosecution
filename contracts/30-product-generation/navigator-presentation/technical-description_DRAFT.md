@@ -25,6 +25,10 @@ text, mappings, scores, cautions, dispositions, provenance, product identity, or
 direction. It does not establish formal accessibility, alternate-browser, operating-system,
 assistive-technology, or print-engine conformance.
 
+The products render no masthead release-profile or product disclaimer block on any screen,
+no-JavaScript, or print surface. The counsel-review legend remains on every surface, and the
+navigator-guide contract carries the boundary posture in its review-posture profile items.
+
 The current product profile remains `technical-preview`. The pinned browser supplies executable
 technical acceptance; browser-neutral HTML and CSS remain mandatory, but observation in Brave or
 another unpinned browser creates no compatibility claim.
@@ -73,7 +77,7 @@ At a `16px` browser root, the exact minimum tiers are:
 | Tier | Included surfaces | Minimum size | Minimum unitless line-height |
 |---|---|---:|---:|
 | Reading | Claim text, specification disclosure, selected prior-art passages, full transcription readers, and narrative provenance substance | `1.125rem` (`18px`) | `1.5` |
-| Interface | Product title, group and claim headings, controls, navigation state, candidate and passage context, obligations, cautions, dispositions, required legends, profile label, disclaimer, table and figure text | `0.875rem` (`14px`) | `1.35` |
+| Interface | Product title, group and claim headings, controls, navigation state, candidate and passage context, obligations, cautions, dispositions, required legends, table and figure text | `0.875rem` (`14px`) | `1.35` |
 | Auxiliary | Internal anchor labels and genuinely secondary location metadata | `0.75rem` (`12px`) | `1.35` |
 
 A prose heading uses the tier of the prose it heads; a heading that also acts as compact application
@@ -90,9 +94,9 @@ consequences of readable text.
 ## 4. Reading measure, wrapping, and overflow
 
 Every ordinary block of prose has an available inline measure no greater than `80ch`. This bound
-applies to claims, specification passages, prior-art excerpts, full transcription readers,
-disclaimers, caution details, provenance prose, and schedule prose. A narrower containing pane may
-reduce the measure but cannot reduce its typography tier.
+applies to claims, specification passages, prior-art excerpts, full transcription readers, the
+counsel-review legend, caution details, provenance prose, and schedule prose. A narrower
+containing pane may reduce the measure but cannot reduce its typography tier.
 
 Words, candidate identities, relation identities, source labels, controlled wording, and accessible
 control text wrap without clipping, collision, or page-level horizontal scrolling. Presentation
@@ -117,7 +121,7 @@ For every baseline vector:
 - ordinary prose respects the maximum measure;
 - required text and controls are neither clipped nor overlapped;
 - the application and each required scroll owner have a positive usable area;
-- the masthead, profile label, legends, disclaimer, navigation bars, panes, auxiliary surface, and
+- the masthead, counsel-review legend, navigation bars, panes, auxiliary surface, and
   controls remain reachable;
 - focus indicators remain fully visible; and
 - no page error, unintended horizontal page overflow, network request, or semantic-state change
@@ -191,11 +195,12 @@ at its applicable typography tier. The no-script surface may discard interaction
 cannot hide, shrink, truncate, or reorder semantic content.
 
 Print contains the complete product-owned inventory required by the two navigator contracts. Fixed
-headers or footers, repeated profile wording, disclaimers, legends, tables, code, figures, and page
+headers or footers, repeated legends, tables, code, figures, and page
 break controls cannot clip or conceal content. Print rules may adapt measure and page flow but may
 not reduce required legal or substantive wording below the applicable tier. Executable print
 inspection proves overflow and clipping outcomes; the presence of an `@media print` rule alone is
-insufficient.
+insufficient. No release-profile or disclaimer block appears in print; the counsel-review legend
+continues to print through the print-page mechanism.
 
 ## 10. Browser control and executable enforcement
 

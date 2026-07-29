@@ -17,8 +17,8 @@ TYPOGRAPHY_SELECTORS = MappingProxyType({
         ".guide-body", "#guide-overlay-title",
     ),
     "interface": (
-        "#masthead h1", ".legend", ".release-profile", ".disclaimer",
-        ".chip", ".claim-group h2", ".claim-header", ".gate-chip",
+        "#masthead h1", ".legend", ".chip", ".claim-group h2", ".claim-header",
+        ".gate-chip",
         ".state-note", ".obligation-list", ".allocation-detail",
         ".reader-jump", ".full-reader > summary", ".reader-authority",
         ".reverse-badge", ".editorial-tag", "table", "figcaption",
@@ -114,8 +114,8 @@ def validate_reading_surfaces(page, control):
     expected_measure = policy["maximumMeasureCh"]
     result = page.evaluate("""maximum => {
       const ordinarySelector = [
-        '.reading-measure:not(.scoped-overflow)', '.disclaimer', '.legend',
-        '.release-profile', '#masthead h1', '#masthead .meta', '.state-note',
+        '.reading-measure:not(.scoped-overflow)', '.legend',
+        '#masthead h1', '#masthead .meta', '.state-note',
         '.allocation-detail', '.caution-detail', '.passage-meta',
         '.reader-authority', '.highlight-key', '.prior-art-document > h2'
       ].join(',');

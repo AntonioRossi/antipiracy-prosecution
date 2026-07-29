@@ -485,7 +485,9 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 self.assertIn("Claims → Prior art", text)
                 self.assertIn("Prior art → Claims", text)
                 self.assertIn("canonical source PDFs remain fidelity authority", text)
-                self.assertIn("not a novelty, obviousness, disclosure", text)
+                self.assertNotIn('class="release-profile"', text)
+                self.assertNotIn('class="disclaimer"', text)
+                self.assertNotIn("TECHNICAL PREVIEW", text)
                 self.assertEqual(text.count(
                     '<p class="state-note">No exact candidate passage '
                     'from this document'), 26)
