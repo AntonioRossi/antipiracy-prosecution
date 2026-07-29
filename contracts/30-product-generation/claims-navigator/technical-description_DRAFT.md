@@ -340,11 +340,22 @@ captions, and the filing-data footer are visibly marked “editorial (not filed 
 relation targets. PCT claim items are targetable. Each addressable source item carries its
 mechanically derived navigation label and, where useful, section context and opening words.
 
-The current passage of the selected candidate receives the strong highlight. Other passages of
-that same composite candidate receive soft highlights; passages belonging only to other
-candidates remain unhighlighted until that candidate is selected. Under reduced-motion
-preference, scrolling is immediate rather than smooth, with the same resulting state, focus,
-highlights, owner, and geometry as ordinary motion.
+For an active mapped fragment, the disclosure endpoints form exactly three disjoint sets derived
+from its complete recorded candidate list:
+
+- `selected passage`: exactly the current passage of the selected candidate, with a solid strong
+  indicator;
+- `selected-candidate context`: every other passage of that candidate, with a double secondary
+  indicator; and
+- `alternate-candidate passage`: every passage of every other recorded candidate, with a dashed
+  concurrent indicator.
+
+Their union is exactly every disclosure endpoint in every recorded candidate for the fragment.
+No candidate or endpoint is truncated, sampled, paginated, collapsed, capped, or withheld until
+selection. The indicators remain present when off-screen; only the selected passage is scrolled
+into unobscured view. The visible highlight key and live forward state explain all three roles
+without relying on color. Under reduced-motion preference, scrolling is immediate rather than
+smooth, with the same state, focus, exact endpoint sets, owner, and geometry as ordinary motion.
 
 ### 5.3 Forward navigation
 
@@ -353,6 +364,8 @@ While a claim fragment is active, a navigation bar above the disclosure pane sho
 - mode `Claims → Specification`;
 - the edition-prefixed claim, unit, or phrase context;
 - separate candidate position and, for a composite, passage position with exact disclosure labels;
+- the exact candidate total and confirmation that every recorded candidate is concurrently
+  indicated;
 - separate candidate (`C`) and passage (`P`) previous/next controls plus clear;
 - the target's required short descriptive note and required declared role; and
 - applicable fragment-, target-, or claim-scope caution indicators.
@@ -360,9 +373,16 @@ While a claim fragment is active, a navigation bar above the disclosure pane sho
 Targets are ordered by role: `specific`, then `combination`, then `context`; authored order is
 stable within each role. The relation stores and the printable schedule lists all candidates.
 Mapped activation selects candidate 0 and passage 0. Candidate movement wraps across candidates
-and resets passage 0. Passage movement wraps only within the selected composite candidate and
-does not change the candidate. A no-candidate activation retains candidate 0 and passage 0, shows
-the exact recording state, and creates no disclosure highlight.
+and resets passage 0; the former selected candidate moves into the alternate-candidate set and the
+new selected candidate leaves it. Passage movement wraps only within the selected composite
+candidate, exchanging the strong passage within that candidate while leaving the complete
+alternate-candidate set unchanged. A no-candidate activation retains candidate 0 and passage 0,
+shows the exact recording state, and creates no disclosure highlight.
+
+This visibility policy is owned only by the specification-product contract. Prior-art candidate
+selection semantics cannot narrow it merely because the products share a rendering kernel, and a
+specification-product change cannot alter prior-art behavior without that product's own current
+contract and acceptance evidence.
 
 ### 5.4 Reverse navigation
 
@@ -388,8 +408,8 @@ originating control, which is scrolled into unobscured view in its capable pane 
 `Enter` and `Space` activate focused controls. While a forward or reverse bar has focus, left and
 right arrows move candidates or reverse occurrences. While the forward bar has focus, up and down
 arrows move passages inside the selected composite candidate. There is no global arrow-key
-capture. Live-region announcements state mode, candidate and passage position, target, and
-caution/gate presence without repeating the full source text.
+capture. Live-region announcements state mode, candidate and passage position, complete concurrent
+candidate exposure, target, and caution/gate presence without repeating the full source text.
 
 ## 6. Controlled product wording and provenance
 
@@ -419,14 +439,17 @@ Markdown authority.
 ## 7. Visual, accessibility, no-JavaScript, and print contract
 
 - The visual design uses a professional light theme, serif claim/disclosure text, sans-serif
-  application chrome, distinct strong/soft highlights, and non-color state indicators.
+  application chrome, and solid, double, and dashed non-color indicators that distinguish the
+  selected passage, selected-candidate context, and alternate-candidate passages.
 - At or above both 1280 px width and 720 px height, panes are approximately 45/55 and the exact
   capable owners are `claims-pane` and `disclosure-scroll`. At either lower boundary, the panes
   stack and `panes` is the sole capable owner for both directions. Body, window, and arbitrary
   overflow ancestors are never fallback owners.
-- Every navigation target and returned focus control is within its owner and at least 10 px from
-  the unobscured top and bottom bounds. An absent owner, absent target, incapable owner, or target
-  outside that geometry is an interaction failure.
+- Every navigation target and returned focus control is within its owner. A target that fits the
+  available interval remains at least 10 px from its unobscured top and bottom bounds. If a target
+  is taller than that interval, its leading edge satisfies the 10 px top bound and the remaining
+  content stays traversable in that same exact owner. An absent target, absent or incapable owner,
+  owner fallback, or target outside this fit-or-oversized geometry is an interaction failure.
 - Controls are semantic buttons with logical focus order, visible focus, browser-native accessible
   names and states, no nested interaction, and a minimum 24 px target.
 - Pane headings, landmarks, lists, tables, figures, captions, relationships, and announcements use

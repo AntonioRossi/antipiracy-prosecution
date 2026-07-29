@@ -425,6 +425,71 @@ class XMLModelTests(unittest.TestCase):
         with self.assertRaisesRegex(GatewayError, "closed XSD"):
             self.build_model("na-specification", tampered_source)
 
+    def test_relation_endpoint_and_semantic_ownership_fail_closed(self):
+        relation_suffix = os.path.join(
+            "navigator", "relations", "na__pct.relations.xml")
+        live = self.models["na-specification"]
+        claim_id, pct_id = (
+            item.document_id for item in live.source_documents)
+        pct_surface = self.inputs["navigator-na"].handoffs[
+            "pct-as-filed-dossier"]["surface"]
+        root_item = pct_surface.document_item
+        target_pattern = re.compile(
+            rb'(<targets>.*?<endpoint )documentId="' +
+            re.escape(pct_id.encode("utf-8")) +
+            rb'" fragmentId="[^"]+" fragmentContentDigest="[^"]+"',
+            re.DOTALL)
+
+        def build_with(transform):
+            def tampered_source(absolute):
+                with open(absolute, "rb") as handle:
+                    data = handle.read()
+                return transform(data) if absolute.endswith(
+                    relation_suffix) else data
+            return self.build_model("na-specification", tampered_source)
+
+        def root_target(data):
+            replacement = (
+                rb'\1documentId="' + pct_id.encode("utf-8") +
+                b'" fragmentId="' + root_item.item_id.encode("utf-8") +
+                b'" fragmentContentDigest="' +
+                root_item.content_digest.encode("ascii") + b'"')
+            changed, count = target_pattern.subn(replacement, data, count=1)
+            self.assertEqual(count, 1)
+            return changed
+
+        with self.subTest(vector="document-root-target"), \
+                self.assertRaisesRegex(ModelError, "outside the PCT"):
+            build_with(root_target)
+
+        def wrong_document(data):
+            changed, count = target_pattern.subn(
+                rb'\1documentId="' + claim_id.encode("utf-8") +
+                rb'" fragmentId="absent" fragmentContentDigest="sha256/'
+                rb'typed-item-v1:' + b"0" * 64 + rb'"',
+                data, count=1)
+            self.assertEqual(count, 1)
+            return changed
+
+        with self.subTest(vector="reversed-document-role"), \
+                self.assertRaisesRegex(GatewayError, "closed XSD"):
+            build_with(wrong_document)
+
+        def duplicate_mapping(data):
+            match = re.search(
+                rb'    <mapping relationId="([^"]+)".*?'
+                rb'    </mapping>\n', data, re.DOTALL)
+            self.assertIsNotNone(match)
+            duplicate = match.group(0).replace(
+                b'relationId="' + match.group(1) + b'"',
+                b'relationId="' + match.group(1) + b'-duplicate"', 1)
+            return data.replace(b"  </mappings>\n",
+                                duplicate + b"  </mappings>\n", 1)
+
+        with self.subTest(vector="duplicate-semantic-owner"), \
+                self.assertRaisesRegex(ModelError, "exactly one"):
+            build_with(duplicate_mapping)
+
     def test_validator_recomputes_dependency_projection(self):
         model = self.build_model("na-specification")
         object.__setattr__(model, "parents", {})

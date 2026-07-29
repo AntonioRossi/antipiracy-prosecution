@@ -241,6 +241,8 @@ class PriorArtNavigatorTests(unittest.TestCase):
             .map(node => node.id),
           related:Array.from(document.querySelectorAll('.highlight-soft'))
             .map(node => node.id),
+          alternate:Array.from(document.querySelectorAll(
+            '.highlight-alternate-candidate')).map(node => node.id),
           owner:paneScrollOwner(disclosureScroll).id,
           visible:unobscured(paneScrollOwner(disclosureScroll),
             document.getElementById(selectedPassageId(relation(state.key))))
@@ -252,6 +254,7 @@ class PriorArtNavigatorTests(unittest.TestCase):
         self.assertEqual(activation["selected"], selected)
         self.assertEqual(activation["strong"], [selected])
         self.assertTrue(activation["related"])
+        self.assertEqual(activation["alternate"], [])
         self.assertEqual(activation["owner"], expected_owner)
         self.assertTrue(activation["visible"])
 
@@ -319,7 +322,8 @@ class PriorArtNavigatorTests(unittest.TestCase):
           forwardHidden:forwardBar.hidden, reverseHidden:reverseBar.hidden,
           highlights:document.querySelectorAll(
             '.highlight-strong,.highlight-soft,.highlight-subject,' +
-            '.highlight-related,.highlight-obligation').length
+            '.highlight-related,.highlight-alternate-candidate,' +
+            '.highlight-obligation').length
         })""", reverse_id)
         self.assertEqual(cleared, {
             "focus": reverse_id,
@@ -471,6 +475,11 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 model = self.models[product_id]
                 text = artifact.decode("utf-8")
                 navigation = _navigation(text)
+                self.assertEqual(navigation["productKind"], "prior-art")
+                self.assertNotIn("allCandidatesExposed", navigation["ui"])
+                self.assertNotIn(
+                    "specificationHighlightKey", navigation["ui"])
+                self.assertNotIn('<p class="highlight-key">', text)
                 self.assertTrue(text.startswith("<!DOCTYPE html>"))
                 self.assertIn("Prior-art passages", text)
                 self.assertIn("Claims → Prior art", text)
@@ -509,7 +518,11 @@ class PriorArtNavigatorTests(unittest.TestCase):
                 self.assertIn("function paneScrollOwner(primary)", text)
                 self.assertIn("function unobscured(owner, node)", text)
                 self.assertIn(
-                    "off-screen navigation target has no scroll owner", text)
+                    "navigation owner is absent", text)
+                self.assertIn(
+                    "var owner = sideBySide ? primary : panes;", text)
+                self.assertIn(
+                    "navigation target is outside its scroll owner", text)
                 self.assertIn(
                     "navigation target is outside unobscured owner geometry",
                     text)
@@ -982,6 +995,8 @@ class PriorArtNavigatorTests(unittest.TestCase):
                   passageIndex:state.passageIndex,
                   candidate:selectedCandidate(relation(state.key)).candidateId,
                   passage:selectedPassageId(relation(state.key)),
+                  alternate:document.querySelectorAll(
+                    '.highlight-alternate-candidate').length,
                   focus:document.activeElement.id,
                   owner:paneScrollOwner(disclosureScroll).id,
                   visible:unobscured(paneScrollOwner(disclosureScroll),
@@ -989,6 +1004,7 @@ class PriorArtNavigatorTests(unittest.TestCase):
                       selectedPassageId(relation(state.key))))
                 })""")
                 self.assertEqual(state_value, {
+                    "alternate": 0,
                     "candidate": current["targets"][1]["candidateId"],
                     "candidateIndex": 1,
                     "focus": "forward-bar",

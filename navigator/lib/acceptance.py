@@ -44,6 +44,9 @@ TEST_COVERAGE = {
      "test_navigator_relations_reject_upstream_relation_references"):
         frozenset({"AC-03", "AC-18"}),
     ("navigator.tests.test_xml_model.XMLModelTests."
+     "test_relation_endpoint_and_semantic_ownership_fail_closed"):
+        frozenset({"AC-03", "AC-18"}),
+    ("navigator.tests.test_xml_model.XMLModelTests."
      "test_validator_rejects_overlapping_phrases_and_cross_target_repeats"):
         frozenset({"AC-03", "AC-18"}),
     ("navigator.tests.test_xml_model.XMLModelTests."
@@ -187,13 +190,13 @@ def validate_registry(value):
                    isinstance(value.get("criteria"), list) else [])
     if identifiers[:1] == ["AC-01"]:
         expected_criteria = SPEC_CRITERIA
-        expected_version = "7"
+        expected_version = "9"
     elif identifiers[:1] == ["PAM-AC-01"]:
         expected_criteria = MAP_CRITERIA
         expected_version = "2"
     else:
         expected_criteria = PRIOR_CRITERIA
-        expected_version = "3"
+        expected_version = "4"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
             value.get("acceptanceVersion") != expected_version:

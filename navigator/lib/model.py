@@ -254,6 +254,9 @@ def _typed_plain_text(node: TypedContentNode) -> str:
         if item.element == "text":
             parts.append(item.text or "")
             return
+        if item.element in {"code", "math"}:
+            parts.append(item.text or "")
+            return
         if item.element == "space":
             parts.append(" ")
             return

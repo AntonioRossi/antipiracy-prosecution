@@ -79,6 +79,15 @@ UI = MappingProxyType({
     "phraseContext": "{claim}, phrase “{text}”",
 })
 
+SPEC_UI = MappingProxyType({
+    "allCandidatesExposed": (
+        "All {count} recorded candidates are concurrently indicated."),
+    "specificationHighlightKey": (
+        "Highlight key: solid marks the selected passage; double marks "
+        "another passage in the selected candidate; dashed marks a passage "
+        "in another recorded candidate."),
+})
+
 PRIOR_UI = MappingProxyType({
     "claimObligationSummary": (
         "Claim-level matrix obligations: {mapped} mapped · {review} review required · "
@@ -1012,6 +1021,8 @@ def render(model, mode="candidate") -> bytes:
     """Render one candidate or preview from the sealed typed model."""
     if mode not in {"candidate", "preview"}:
         raise RenderError("render mode must be candidate or preview")
+    if model.product_kind not in {"specification", "prior-art"}:
+        raise RenderError("render product kind is outside the closed contract")
     relations, reverse, claim_gates = _relation_data(model)
     statuses = {
         status: _wording(model, "mapping-status-" + status)
@@ -1035,9 +1046,12 @@ def render(model, mode="candidate") -> bytes:
     ui = dict(UI)
     if model.product_kind == "prior-art":
         ui.update(PRIOR_UI)
+    else:
+        ui.update(SPEC_UI)
     ui["forwardMode"] = model.forward_mode_label
     ui["reverseMode"] = model.reverse_mode_label
     navigation = {
+        "productKind": model.product_kind,
         "ui": ui,
         "edition": {
             "id": model.edition_id,
@@ -1052,6 +1066,10 @@ def render(model, mode="candidate") -> bytes:
     }
     if model.product_kind == "prior-art":
         navigation["obligations"] = _obligation_data(model)
+    highlight_key = (
+        '<p class="highlight-key">%s</p>' %
+        _esc(ui["specificationHighlightKey"])
+        if model.product_kind == "specification" else "")
     title = "%s — %s" % (model.display_name, model.claim_set_version)
     html_text = HTML_TEMPLATE.format(
         csp=EXACT_CSP,
@@ -1071,6 +1089,7 @@ def render(model, mode="candidate") -> bytes:
         claims_label=_esc(UI["candidateClaimsLabel"]),
         disclosure_label=_esc(model.target_pane_label),
         claims=_claims_html(model, relations, claim_gates),
+        highlight_key=highlight_key,
         disclosure=_disclosure_html(model, reverse),
         schedule=_schedule_html(model, relations, claim_gates),
         provenance=provenance_html,
@@ -1110,7 +1129,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </section>
 <section id="disclosure-pane" aria-label="{disclosure_label}">
 <div id="forward-bar" class="navigation-bar" hidden></div>
-<div id="disclosure-scroll">{disclosure}</div>
+<div id="disclosure-scroll">{highlight_key}{disclosure}</div>
 </section>
 </main>
 <div id="live" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
@@ -1297,8 +1316,15 @@ pre {
   box-shadow:0 0 0 2px var(--strong);
 }
 .highlight-soft { background:var(--soft); border-left:4px double var(--accent); }
+.highlight-alternate-candidate {
+  outline:2px dashed var(--accent); outline-offset:1px;
+}
 .highlight-subject { outline:2px solid var(--accent); outline-offset:1px; }
 .highlight-related { background:var(--soft); outline:2px dotted var(--accent); }
+.highlight-key {
+  margin:0 0 10px; padding:5px 7px; border:1px solid var(--line);
+  background:#f8f7f3; font:10.5px Arial,sans-serif;
+}
 .navigation-bar {
   position:sticky; top:0; z-index:10; padding:6px 10px;
   border:2px solid var(--accent); border-radius:0 0 6px 6px;
@@ -1444,9 +1470,10 @@ function capableScrollOwner(node){
     node.scrollHeight > node.clientHeight;
 }
 function paneScrollOwner(primary){
-  if (capableScrollOwner(primary)) return primary;
-  if (capableScrollOwner(panes)) return panes;
-  return null;
+  var sideBySide = window.matchMedia(
+    '(min-width:1280px) and (min-height:720px)').matches;
+  var owner = sideBySide ? primary : panes;
+  return capableScrollOwner(owner) ? owner : null;
 }
 function activeNavigationBar(){
   if (state.mode === 'reverse') return reverseBar;
@@ -1454,9 +1481,8 @@ function activeNavigationBar(){
   return null;
 }
 function visibleBounds(owner){
-  var box = owner ? owner.getBoundingClientRect() : {
-    top:0, bottom:window.innerHeight
-  };
+  if (!owner) return null;
+  var box = owner.getBoundingClientRect();
   var top = Math.max(0, box.top);
   var bottom = Math.min(window.innerHeight, box.bottom);
   var bar = activeNavigationBar();
@@ -1466,6 +1492,7 @@ function visibleBounds(owner){
   return {top:top + 10, bottom:bottom - 10};
 }
 function unobscured(owner, node){
+  if (!owner || !node || !owner.contains(node)) return false;
   var bounds = visibleBounds(owner);
   var box = node.getBoundingClientRect();
   if (box.height > bounds.bottom - bounds.top){
@@ -1475,14 +1502,12 @@ function unobscured(owner, node){
 }
 function scrollWithin(owner, node, alignment){
   if (!node) throw new Error('navigation target is absent');
-  if (!owner){
-    if (!unobscured(null, node)){
-      throw new Error('off-screen navigation target has no scroll owner');
-    }
-    return;
-  }
+  if (!owner) throw new Error('navigation owner is absent');
   if (!capableScrollOwner(owner)){
     throw new Error('navigation owner cannot scroll');
+  }
+  if (!owner.contains(node)){
+    throw new Error('navigation target is outside its scroll owner');
   }
   if (!unobscured(owner, node)){
     var bounds = visibleBounds(owner);
@@ -1506,8 +1531,8 @@ function scrollClaimsToNode(id, alignment){
 }
 
 function clearHighlights(){
-  ['highlight-strong','highlight-soft','highlight-subject','highlight-related',
-   'highlight-obligation']
+  ['highlight-strong','highlight-soft','highlight-alternate-candidate',
+   'highlight-subject','highlight-related','highlight-obligation']
     .forEach(function(className){
       Array.prototype.slice.call(document.querySelectorAll('.' + className))
         .forEach(function(node){ node.classList.remove(className); });
@@ -1570,9 +1595,9 @@ function forwardControls(current){
 function reverseControls(){
   var wrap = element('div', 'selection-controls');
   if (state.reverseList.length > 1){
-    wrap.appendChild(button(null, ui('previousCandidate') || ui('previous'),
+    wrap.appendChild(button(null, ui('previous'),
       '◀', function(){ moveCandidate(-1); }));
-    wrap.appendChild(button(null, ui('nextCandidate') || ui('next'),
+    wrap.appendChild(button(null, ui('next'),
       '▶', function(){ moveCandidate(1); }));
   }
   wrap.appendChild(button(null, ui('clearSelection'), '×', function(){
@@ -1638,6 +1663,8 @@ function forwardAnnouncement(current){
   } else {
     parts.push(candidatePositionText(current, candidate));
     if (ui('passagePosition')) parts.push(passagePositionText(candidate));
+    if (DATA.productKind === 'specification') parts.push(format(
+      ui('allCandidatesExposed'), {count:current.targets.length}));
   }
   return parts.join(' — ') + cautionPresence(current, candidate);
 }
@@ -1669,6 +1696,9 @@ function renderForwardBar(){
     if (ui('passagePosition'))
       forwardBar.appendChild(element('div', null, passagePositionText(candidate)));
     if (candidate.note) forwardBar.appendChild(element('div', null, candidate.note));
+    if (DATA.productKind === 'specification')
+      forwardBar.appendChild(element('div', 'candidate-exposure', format(
+        ui('allCandidatesExposed'), {count:current.targets.length})));
     if (candidate.obligationIds && candidate.obligationIds.length)
       forwardBar.appendChild(element(
         'div', null, 'Obligations: ' + candidate.obligationIds.join(' ')));
@@ -1715,6 +1745,15 @@ function applyForwardHighlights(){
   if (!candidate){
     if (obligationDomIds.length) scrollDisclosureToNode(obligationDomIds[0]);
     return;
+  }
+  if (DATA.productKind === 'specification'){
+    current.targets.forEach(function(otherCandidate, candidateIndex){
+      if (candidateIndex === state.candidateIndex) return;
+      otherCandidate.blocks.forEach(function(blockId){
+        var block = document.getElementById(blockId);
+        if (block) block.classList.add('highlight-alternate-candidate');
+      });
+    });
   }
   candidate.blocks.forEach(function(blockId, index){
     var block = document.getElementById(blockId);

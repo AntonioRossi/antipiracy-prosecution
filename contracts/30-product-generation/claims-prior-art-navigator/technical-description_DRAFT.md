@@ -148,7 +148,10 @@ For a selected fragment the navigation bar displays separately:
 The interaction state has independent `candidateIndex` and `passageIndex` values. Candidate movement
 wraps deterministically and resets the passage index. Passage movement wraps within the selected
 candidate without changing its role, proposition, or obligation semantics. Selection highlights
-the current passage strongly and other members of the same candidate as related context.
+the current passage strongly and other members of the same candidate as related context. Those
+states exhaust prior-art forward emphasis: passages in nonselected candidates receive no
+specification-product alternate-candidate indicator. Sharing the rendering kernel cannot transfer
+either product's visibility policy into the other.
 
 Activating an exact fragment selects candidate zero and passage zero. The selected candidate is
 derived only from that fragment's candidate list and `candidateIndex`; the selected passage is

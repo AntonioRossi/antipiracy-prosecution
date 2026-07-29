@@ -132,7 +132,11 @@ uv --no-cache --offline run --locked --no-sync python -m navigator preview af-pr
 Inspect each changed product visually, including independent candidate and passage movement,
 forward and reverse navigation, obligation/allocation/no-candidate states, mode-specific scroll
 owners, contextual-reader opening and exact-fragment focus, cautions and gates, disclosure figures,
-keyboard focus, the no-JavaScript document order, and print content. Registered browser tests
+keyboard focus, the no-JavaScript document order, and print content. In each specification product,
+confirm that every recorded candidate endpoint remains concurrently indicated as selected,
+selected-candidate context, or alternate-candidate passage; in each prior-art product, confirm that
+only the selected candidate's passages receive forward emphasis. Treat visibility-policy leakage
+between product kinds as a stop condition. Registered browser tests
 execute all four products at `1280×720`, `1279×720`, `1280×719`, and `1000×700` under ordinary and
 reduced motion. Visual inspection remains useful substantive and product review, not a stored
 authorization step.
