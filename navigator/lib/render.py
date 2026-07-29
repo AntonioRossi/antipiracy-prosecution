@@ -481,7 +481,7 @@ def _claims_html(model, relations, claim_gates) -> str:
                     '<div class="unit state-%s" id="%s" data-fragment="%s">'
                     '<button type="button" class="unit-btn" id="%s" '
                     'data-relation="%s" aria-label="%s"></button>'
-                    '<div class="unit-body"><span class="unit-label">%s</span>'
+                    '<div class="unit-body reading-measure"><span class="unit-label">%s</span>'
                     '<span class="pointer-surface" data-relation="%s">%s</span>%s'
                     '</div></div>' % (
                         _esc(relation["status"]),
@@ -564,7 +564,7 @@ def _node_chrome(model, node, target_document_id: str, reverse: dict,
 def _table_html(model, node, target_document_id: str, reverse: dict) -> str:
     dom_id, chrome, badge = _node_chrome(
         model, node, target_document_id, reverse)
-    output = ['<div class="table-wrap dblock%s"%s>%s%s<table>' % (
+    output = ['<div class="table-wrap dblock scoped-overflow%s"%s>%s%s<table>' % (
         " editorial" if node.editorial else "",
         ' id="%s"' % _esc(dom_id) if dom_id else "", chrome, badge)]
     for section in node.children:
@@ -622,29 +622,29 @@ def _block_html(model, node, target_document_id: str, reverse: dict,
         level = node.level
         if not isinstance(level, int) or not 1 <= level <= 6:
             raise RenderError("typed heading level is invalid")
-        return '<h%d class="dblock%s"%s>%s%s%s</h%d>' % (
+        return '<h%d class="dblock reading-measure%s"%s>%s%s%s</h%d>' % (
             level, editorial_class, id_attr, chrome, content, badge, level)
     if node.kind == "paragraph":
         images = [child for child in node.children if child.kind == "image"]
         if images:
             if len(images) != 1:
                 raise RenderError("figure paragraph has a non-exact image inventory")
-            return '<figure class="dblock%s"%s>%s%s%s<figcaption>%s</figcaption></figure>' % (
+            return '<figure class="dblock reading-measure%s"%s>%s%s%s<figcaption>%s</figcaption></figure>' % (
                 editorial_class, id_attr, chrome, badge,
                 _inline_html(model, images[0], target_document_id),
                 _esc(images[0].text))
-        return '<p class="dblock%s"%s>%s%s%s</p>' % (
+        return '<p class="dblock reading-measure%s"%s>%s%s%s</p>' % (
             editorial_class, id_attr, chrome, content, badge)
     if node.kind == "codeBlock":
         language = _attributes(node).get("language", "")
         class_attr = ' class="language-%s"' % _esc(language) if language else ""
-        return '<pre class="dblock%s"%s>%s%s<code%s>%s</code></pre>' % (
+        return '<pre class="dblock reading-measure scoped-overflow%s"%s>%s%s<code%s>%s</code></pre>' % (
             editorial_class, id_attr, chrome, badge, class_attr, _esc(node.text))
     if node.kind == "blockQuotation":
         nested = "".join(_block_html(
             model, child, target_document_id, reverse,
             parent_editorial=node.editorial) for child in node.children)
-        return '<blockquote class="dblock%s"%s>%s%s%s</blockquote>' % (
+        return '<blockquote class="dblock reading-measure%s"%s>%s%s%s</blockquote>' % (
             editorial_class, id_attr, chrome, badge, nested)
     if node.kind == "list":
         ordered = _attributes(node).get("ordered")
@@ -654,16 +654,16 @@ def _block_html(model, node, target_document_id: str, reverse: dict,
         nested = "".join(_block_html(
             model, child, target_document_id, reverse,
             parent_editorial=node.editorial) for child in node.children)
-        return '<div class="dblock%s"%s>%s%s<%s>%s</%s></div>' % (
+        return '<div class="dblock reading-measure%s"%s>%s%s<%s>%s</%s></div>' % (
             editorial_class, id_attr, chrome, badge, tag, nested, tag)
     if node.kind == "item":
         nested = "".join(_block_html(
             model, child, target_document_id, reverse,
             parent_editorial=node.editorial) for child in node.children)
-        return '<li class="dblock%s"%s>%s%s%s</li>' % (
+        return '<li class="dblock reading-measure%s"%s>%s%s%s</li>' % (
             editorial_class, id_attr, chrome, badge, nested)
     if node.kind == "separator":
-        return '<div class="dblock%s"%s>%s%s<hr></div>' % (
+        return '<div class="dblock reading-measure%s"%s>%s%s<hr></div>' % (
             editorial_class, id_attr, chrome, badge)
     if node.kind == "plain":
         return '<span%s>%s%s%s</span>' % (id_attr, chrome, content, badge)
@@ -671,7 +671,7 @@ def _block_html(model, node, target_document_id: str, reverse: dict,
         model, child, target_document_id, reverse,
         parent_editorial=node.editorial) for child in node.children)
               if node.children else content)
-    return '<div class="dblock%s"%s>%s%s%s</div>' % (
+    return '<div class="dblock reading-measure%s"%s>%s%s%s</div>' % (
         editorial_class, id_attr, chrome, badge, nested)
 
 
@@ -726,7 +726,7 @@ def _reader_node_html(model, node, document_id: str, reverse: dict) -> str:
         return '<p class="reader-block"%s>%s%s</p>' % (
             id_attr, chrome, content)
     if kind == "codeBlock":
-        return '<pre class="reader-block"%s>%s<code>%s</code></pre>' % (
+        return '<pre class="reader-block scoped-overflow"%s>%s<code>%s</code></pre>' % (
             id_attr, chrome, _esc(node.text or ""))
     if kind == "blockQuotation":
         return '<blockquote class="reader-block"%s>%s%s</blockquote>' % (
@@ -802,7 +802,7 @@ def _disclosure_html(model, reverse: dict) -> str:
                 '<section class="prior-art-document" id="%s"><h2>%s · %s</h2>' % (
                     _esc(document_dom_id), _esc(document.label),
                     _esc(document.document_id)))
-            output.append('<h3>%s</h3><ul class="obligation-list">' %
+            output.append('<h3 class="reading-measure">%s</h3><ul class="obligation-list reading-measure">' %
                           _esc(PRIOR_UI["matrixObligations"]))
             for obligation in obligations_by_document.get(
                     document.document_id, ()):
@@ -845,7 +845,7 @@ def _disclosure_html(model, reverse: dict) -> str:
                 if passage.uncertainty:
                     metadata += " · transcription uncertainty: " + passage.uncertainty
                 output.append(
-                    '<article class="dblock prior-art-passage" id="%s">'
+                    '<article class="dblock reading-measure prior-art-passage" id="%s">'
                     '<span class="anchor-label" aria-hidden="true">%s</span>%s'
                     '<p class="passage-meta">%s</p><p>%s</p>'
                     '<button type="button" class="reader-jump" data-reader="%s" '
@@ -862,7 +862,7 @@ def _disclosure_html(model, reverse: dict) -> str:
                 for node in reader.content)
             output.append(
                 '<details class="full-reader" id="full-reader-%s"><summary>%s — %s</summary>'
-                '<p class="reader-authority">%s</p><div class="reader-content">%s</div>'
+                '<p class="reader-authority reading-measure">%s</p><div class="reader-content reading-measure">%s</div>'
                 '</details>' % (
                     _esc(document_dom_id), _esc(PRIOR_UI["fullReader"]),
                     _esc(reader.title),
@@ -946,14 +946,14 @@ def _schedule_html(model, relations: dict, claim_gates: dict) -> str:
                     _esc(item["disposition"]["text"])))
     return (
         '<section id="schedule"><h2 id="schedule-title">%s</h2>'
-        '<table class="schedule" aria-labelledby="schedule-title"><thead><tr>'
+        '<div class="table-wrap scoped-overflow"><table class="schedule" aria-labelledby="schedule-title"><thead><tr>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
-        '</tr></thead><tbody>%s</tbody></table>'
+        '</tr></thead><tbody>%s</tbody></table></div>'
         '<h3 id="claim-gates-title">%s</h3>'
-        '<table class="schedule" aria-labelledby="claim-gates-title"><thead><tr>'
+        '<div class="table-wrap scoped-overflow"><table class="schedule" aria-labelledby="claim-gates-title"><thead><tr>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
-        '<th scope="col">%s</th></tr></thead><tbody>%s</tbody></table></section>'
+        '<th scope="col">%s</th></tr></thead><tbody>%s</tbody></table></div></section>'
         % (_esc(UI["completeSchedule"]), _esc(UI["scheduleFragment"]),
            _esc(UI["mappingStatus"]), _esc(UI["scheduleTargets"]),
            _esc(UI["mappingCautions"]), "".join(rows),
@@ -999,13 +999,13 @@ def _provenance(model, profile_label: str) -> tuple[dict, str]:
     source_label = _wording(model, "source-input-provenance")
     authority = _wording(model, "authority-target-sources")
     markup = (
-        '<section id="about"><h2>%s</h2><p><strong>%s</strong></p>'
-        '<p>%s</p><p>%s</p>'
-        '<table class="schedule" aria-label="%s"><thead><tr>'
+        '<section id="about"><h2>%s</h2><p class="reading-measure"><strong>%s</strong></p>'
+        '<p class="reading-measure">%s</p><p class="reading-measure">%s</p>'
+        '<div class="table-wrap scoped-overflow"><table class="schedule" aria-label="%s"><thead><tr>'
         '<th scope="col">%s</th><th scope="col">%s</th>'
         '<th scope="col">%s</th><th scope="col">%s</th><th scope="col">%s</th>'
-        '</tr></thead><tbody>%s</tbody></table>'
-        '<p>%s: <code>%s</code></p></section>' % (
+        '</tr></thead><tbody>%s</tbody></table></div>'
+        '<p class="reading-measure">%s: <code>%s</code></p></section>' % (
             _esc(UI["about"]), _esc(authority), _esc(source_label),
             _esc(summary), _esc(source_label),
             _esc(UI["provenanceDocument"]),
@@ -1113,6 +1113,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 {watermark}
+<div id="content-root">
+<main id="panes">
 <header id="masthead">
 <p class="legend">{legend}</p>
 <p class="release-profile">{profile}</p>
@@ -1121,8 +1123,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <button type="button" id="aux-toggle" data-aux="1" aria-pressed="false">{aux_label}</button></p>
 <p class="disclaimer">{disclaimer}</p>
 </header>
-<div id="content-root">
-<main id="panes">
 <section id="claims-pane" aria-label="{claims_label}">
 <div id="reverse-bar" class="navigation-bar" hidden></div>
 {claims}
@@ -1131,17 +1131,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <div id="forward-bar" class="navigation-bar" hidden></div>
 <div id="disclosure-scroll">{highlight_key}{disclosure}</div>
 </section>
+<div id="aux">{schedule}{provenance}</div>
 </main>
 <div id="live" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
-<div id="aux">{schedule}{provenance}</div>
 </div>
 <footer><p class="legend">{legend}</p><p class="release-profile">{profile}</p>
 <p class="disclaimer">{disclaimer}</p></footer>
 <noscript><style>
-#content-root{{display:block;overflow-y:auto;min-height:0;flex:1 1 auto}}
-#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{height:auto;min-height:0;overflow:visible}}
+html,body{{height:auto;overflow:visible}}
+#content-root{{display:block;overflow:visible;height:auto;min-height:0}}
+#panes,#masthead,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{display:block;height:auto;min-height:0;max-block-size:none;overflow:visible}}
 #aux{{display:block}} #aux-toggle{{display:none}} .pointer-surface{{cursor:auto}}
-@media print {{#content-root,#panes,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{display:block;overflow:visible;height:auto}}}}
+@media print {{#content-root,#panes,#masthead,#claims-pane,#disclosure-pane,#disclosure-scroll,#aux{{display:block;overflow:visible;height:auto}}}}
 </style></noscript>
 <script type="application/json" id="nav-data" aria-label="{machine_data_label}">{nav_data}</script>
 <script type="application/json" id="provenance-data">{provenance_data}</script>
@@ -1155,6 +1156,8 @@ CSS = r"""
 :root {
   --accent:#1a4f8b; --strong:#ffe08a; --soft:#fff3c9; --gate:#8b2c1a;
   --state:#6a4a00; --chrome:#f4f2ec; --line:#c9c4b8; --paper:#fff;
+  --type-reading:1.125rem; --type-interface:.875rem; --type-auxiliary:.75rem;
+  --leading-reading:1.5; --leading-interface:1.35; --measure:80ch;
 }
 * { box-sizing:border-box; }
 html,body { height:100%; margin:0; padding:0; }
@@ -1162,63 +1165,97 @@ body {
   color:#1c1c1c; background:var(--paper);
   display:flex; flex-direction:column; overflow:hidden;
   font-family:Georgia,'Times New Roman',serif;
+  font-size:var(--type-reading); line-height:var(--leading-reading);
 }
+h1,h2,h3,h4,h5,h6 { line-height:var(--leading-reading); overflow-wrap:anywhere; }
+p,li,th,td,summary,button,figcaption { overflow-wrap:anywhere; }
 .visually-hidden {
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
 }
-#masthead,footer {
-  flex:none; padding:6px 14px; background:var(--chrome);
-  border-bottom:1px solid var(--line); font-family:Arial,sans-serif;
+#content-root { flex:1 1 auto; display:flex; min-height:0; }
+#panes {
+  flex:1 1 auto; display:grid; min-width:0; min-height:0; overflow:hidden;
+  grid-template-columns:minmax(0,45%) minmax(0,55%);
+  grid-template-rows:auto minmax(0,1fr); scroll-padding:10px;
 }
-#masthead h1 { margin:2px 0; font-size:15px; }
-#masthead .meta { margin:2px 0; font-size:12px; }
+#masthead,footer {
+  padding:8px 16px; background:var(--chrome);
+  border-bottom:1px solid var(--line); font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
+#masthead { grid-column:1 / -1; grid-row:1; min-width:0; }
+#masthead h1 {
+  max-inline-size:var(--measure); margin:4px 0;
+  font-size:var(--type-reading); line-height:var(--leading-interface);
+}
+#masthead .meta {
+  max-inline-size:var(--measure); margin:4px 0;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
 .strategy { color:var(--accent); font-weight:normal; }
 .legend {
-  margin:2px 0; color:#7a1f1f; font-size:10px; font-weight:bold;
+  max-inline-size:var(--measure); margin:4px 0; color:#7a1f1f;
+  font-size:var(--type-interface); line-height:var(--leading-interface); font-weight:bold;
   letter-spacing:.4px;
 }
 .release-profile {
-  margin:2px 0; color:#704d00; font-size:10.5px; font-weight:bold;
+  max-inline-size:var(--measure); margin:4px 0; color:#704d00;
+  font-size:var(--type-interface); line-height:var(--leading-interface); font-weight:bold;
 }
-.disclaimer { margin:2px 0; color:#444; font-size:10.5px; }
-#content-root { flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
-#panes { flex:1 1 auto; display:flex; min-height:0; scroll-padding:10px; }
+.disclaimer {
+  max-inline-size:var(--measure); margin:4px 0; color:#444;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
 #claims-pane {
-  width:45%; overflow-y:auto; padding:10px 14px; position:relative;
+  grid-column:1; grid-row:2; min-width:0; min-height:0;
+  overflow-y:auto; padding:10px 14px; position:relative;
   border-right:2px solid var(--line); scroll-padding:10px;
 }
 #disclosure-pane {
-  width:55%; display:flex; flex-direction:column; min-height:0; position:relative;
+  grid-column:2; grid-row:2; display:flex; flex-direction:column;
+  min-width:0; min-height:0; position:relative;
 }
 #disclosure-scroll {
-  flex:1; overflow-y:auto; padding:10px 40px 10px 58px; scroll-padding:10px;
+  flex:1; min-width:0; overflow-y:auto;
+  padding:10px 2.5rem 10px 3.625rem; scroll-padding:10px;
 }
 .claim-strip {
   position:sticky; top:-10px; z-index:5; display:block;
   padding:6px 0; background:#fff; border-bottom:1px solid var(--line);
-  font-family:Arial,sans-serif;
+  font-family:Arial,sans-serif; font-size:var(--type-interface);
+  line-height:var(--leading-interface);
 }
-.chip-group { display:inline-block; margin-right:8px; white-space:nowrap; }
+.chip-group {
+  display:inline-flex; max-inline-size:100%; flex-wrap:wrap;
+  align-items:baseline; margin-right:8px; white-space:normal;
+}
 .chip-group-name {
-  margin-right:2px; color:#666; font-size:9px; text-transform:uppercase;
+  margin-right:2px; color:#666; font-size:var(--type-auxiliary);
+  line-height:var(--leading-interface); text-transform:uppercase;
 }
 .chip {
   min-width:24px; min-height:24px; border:1px solid var(--line);
-  border-radius:4px; background:#fff; cursor:pointer; font-size:12px;
+  border-radius:4px; background:#fff; cursor:pointer;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .chip-independent { border:2px solid var(--accent); font-weight:bold; }
 .claim-group h2 {
   color:var(--accent); border-bottom:1px solid var(--line);
-  font:600 13px Arial,sans-serif;
+  font-family:Arial,sans-serif; font-size:1rem;
+  line-height:var(--leading-interface); font-weight:600;
 }
 .claim { margin:0 0 14px; }
-.claim-header { margin:8px 0 4px; font:bold 13px Arial,sans-serif; }
+.claim-header {
+  margin:8px 0 4px; font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface); font-weight:bold;
+}
 .claim-independent > .claim-header .claim-no { color:var(--accent); }
 .gate-chip {
   min-height:24px; margin-left:8px; padding:1px 5px;
   border:2px dashed var(--gate); border-radius:4px;
-  color:var(--gate); background:#fdf3f0; cursor:pointer; font-size:11px;
+  color:var(--gate); background:#fdf3f0; cursor:pointer;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .unit { display:flex; margin:2px 0; }
 .unit-btn {
@@ -1228,16 +1265,20 @@ body {
 .unit:hover .unit-btn,.unit-btn:focus {
   border-left-color:var(--accent); background:#eef3fa;
 }
-.unit-body { padding:2px 4px; }
+.unit-body { min-width:0; padding:2px 4px; }
 .unit-label {
-  display:block; color:#777; font:9px Arial,sans-serif; text-transform:uppercase;
+  display:block; color:#777; font-family:Arial,sans-serif;
+  font-size:var(--type-auxiliary); line-height:var(--leading-interface); text-transform:uppercase;
 }
 .state-counsel-review-required > .unit-body { background:#fbf6e8; }
 .state-note {
-  margin:2px 0; color:var(--state); font:11px Arial,sans-serif;
+  margin:2px 0; color:var(--state); font-family:Arial,sans-serif;
+  max-inline-size:var(--measure);
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .obligation-list {
-  margin:4px 0 10px; padding:0; list-style:none; font:10.5px Arial,sans-serif;
+  margin:4px 0 10px; padding:0; list-style:none; font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .obligation {
   margin:3px 0; padding:5px 7px; border-left:4px solid var(--line);
@@ -1249,31 +1290,46 @@ body {
 .highlight-obligation { outline:2px dotted var(--accent); outline-offset:1px; }
 .allocation-detail {
   margin:3px 0; padding:4px 6px; border-left:3px solid #b16a00;
-  background:#fbf6e8; font-size:11px;
+  max-inline-size:var(--measure);
+  background:#fbf6e8; font-size:var(--type-interface);
+  line-height:var(--leading-interface);
 }
 .reader-jump {
   min-height:24px; border:1px solid var(--accent); border-radius:4px;
-  color:var(--accent); background:#fff; cursor:pointer; font-size:11px;
+  color:var(--accent); background:#fff; cursor:pointer;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .full-reader {
-  margin:10px 0 18px; padding:6px 8px; border:1px solid var(--line);
+  max-inline-size:var(--measure); margin:10px 0 18px; padding:6px 8px;
+  border:1px solid var(--line);
   background:#fcfbf7;
 }
 .full-reader > summary {
-  color:var(--accent); cursor:pointer; font:600 12px Arial,sans-serif;
+  color:var(--accent); cursor:pointer; font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface); font-weight:600;
 }
-.reader-authority { color:#555; font:10px Arial,sans-serif; }
+.reader-authority {
+  color:#555; font-family:Arial,sans-serif;
+  max-inline-size:var(--measure);
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
 .reader-content {
   position:relative; margin:8px 0 0; padding:6px 0 6px 50px;
   border-top:1px solid var(--line);
 }
 .reader-block { position:relative; }
 .reader-block:focus { outline:3px solid #d98c00; outline-offset:2px; }
+.passage-meta {
+  font-family:Arial,sans-serif; font-size:var(--type-interface);
+  max-inline-size:var(--measure);
+  line-height:var(--leading-interface); color:#555;
+}
 .transcribed-link { text-decoration:underline dotted; }
 .phrase-btn {
   min-height:24px; padding:0 1px; border:0;
   border-bottom:2px dotted var(--accent); color:var(--accent);
-  background:transparent; cursor:pointer; font:inherit;
+  background:transparent; cursor:pointer; font-family:inherit;
+  font-size:inherit; line-height:inherit; font-weight:inherit;
 }
 .pointer-surface { cursor:pointer; }
 button:focus-visible,.navigation-bar:focus-visible {
@@ -1281,8 +1337,10 @@ button:focus-visible,.navigation-bar:focus-visible {
 }
 .dblock { position:relative; }
 .anchor-label {
-  position:absolute; left:-48px; top:2px; width:42px;
-  color:#777; text-align:right; font:9px Menlo,monospace;
+  position:absolute; left:-3.25rem; top:2px; width:3rem;
+  color:#777; text-align:right; font-family:Menlo,monospace;
+  overflow-wrap:anywhere; white-space:normal;
+  font-size:var(--type-auxiliary); line-height:var(--leading-interface);
 }
 .table-wrap .anchor-label,td .anchor-label,th .anchor-label {
   position:static; display:inline-block; width:auto; margin-right:5px; text-align:left;
@@ -1290,26 +1348,41 @@ button:focus-visible,.navigation-bar:focus-visible {
 .reverse-badge {
   min-width:24px; min-height:24px; margin-left:6px;
   border:1px solid var(--accent); border-radius:12px;
-  color:var(--accent); background:#fff; cursor:pointer; font:10px Arial,sans-serif;
+  color:var(--accent); background:#fff; cursor:pointer; font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .editorial-tag {
   display:inline-block; margin-right:6px; padding:1px 4px; border-radius:3px;
   color:#555; background:#e8e4da; vertical-align:middle;
-  font:9px Arial,sans-serif; text-transform:uppercase;
+  font-family:Arial,sans-serif; font-size:var(--type-interface);
+  line-height:var(--leading-interface); text-transform:uppercase;
 }
 .editorial { color:#3d3d3d; }
+.reading-measure { max-inline-size:var(--measure); }
+#about .reading-measure {
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:var(--type-reading); line-height:var(--leading-reading);
+}
 .table-wrap { max-width:100%; overflow-x:auto; }
-table { border-collapse:collapse; font-size:12.5px; }
+table {
+  border-collapse:collapse; font-size:var(--type-interface);
+  line-height:var(--leading-interface);
+}
 th,td { padding:3px 7px; border:1px solid var(--line); text-align:left; }
 .cell-align-default,.cell-align-left { text-align:left; }
 .cell-align-center { text-align:center; }
 .cell-align-right { text-align:right; }
 figure { margin:12px 0; }
 figure img { display:block; max-width:100%; border:1px solid var(--line); }
-figcaption { margin-top:3px; color:#555; font:11px Arial,sans-serif; }
+figcaption {
+  max-inline-size:var(--measure); margin-top:3px; color:#555;
+  font-family:Arial,sans-serif; font-size:var(--type-interface);
+  line-height:var(--leading-interface);
+}
 pre {
   max-width:100%; overflow-x:auto; padding:8px;
-  border:1px solid var(--line); background:#f7f6f2; font-size:11.5px;
+  border:1px solid var(--line); background:#f7f6f2;
+  font-size:var(--type-reading); line-height:var(--leading-reading);
 }
 .highlight-strong {
   background:var(--strong); border-left:4px solid var(--accent);
@@ -1322,43 +1395,64 @@ pre {
 .highlight-subject { outline:2px solid var(--accent); outline-offset:1px; }
 .highlight-related { background:var(--soft); outline:2px dotted var(--accent); }
 .highlight-key {
-  margin:0 0 10px; padding:5px 7px; border:1px solid var(--line);
-  background:#f8f7f3; font:10.5px Arial,sans-serif;
+  max-inline-size:var(--measure); margin:0 0 10px; padding:5px 7px;
+  border:1px solid var(--line); background:#f8f7f3;
+  font-family:Arial,sans-serif; font-size:var(--type-interface);
+  line-height:var(--leading-interface);
 }
 .navigation-bar {
-  position:sticky; top:0; z-index:10; padding:6px 10px;
+  position:sticky; top:0; z-index:10; max-block-size:45vh; overflow:auto;
+  padding:6px 10px;
   border:2px solid var(--accent); border-radius:0 0 6px 6px;
   background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.15);
-  font:12px Arial,sans-serif;
+  font-family:Arial,sans-serif; font-size:var(--type-interface);
+  line-height:var(--leading-interface); overflow-wrap:anywhere;
 }
 .navigation-bar .mode {
-  color:var(--accent); font-size:10px; letter-spacing:.5px; text-transform:uppercase;
+  color:var(--accent); font-size:var(--type-interface);
+  line-height:var(--leading-interface); letter-spacing:.5px; text-transform:uppercase;
 }
 .navigation-bar .context { font-weight:bold; }
 .navigation-bar button {
   min-width:28px; min-height:24px; border:1px solid var(--line);
   border-radius:4px; background:#fff; cursor:pointer;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .selection-controls { display:inline-flex; gap:3px; margin:4px 0; }
 .caution-chip {
   display:inline-block; margin:2px 4px 2px 0; padding:1px 5px;
   border:1px solid var(--gate); border-radius:4px;
-  color:var(--gate); background:#fdf3f0; font-size:11px;
+  color:var(--gate); background:#fdf3f0;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
 .caution-detail {
   display:block; margin:4px 0; padding:4px 6px;
-  border-left:3px solid var(--gate); background:#faf7f2; font-size:11px;
+  max-inline-size:var(--measure);
+  border-left:3px solid var(--gate); background:#faf7f2;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
-.disposition { color:var(--gate); font-size:11px; }
-#aux { display:none; flex:1; min-height:0; overflow-y:auto; }
+.disposition {
+  color:var(--gate); font-size:var(--type-interface);
+  line-height:var(--leading-interface);
+}
+#aux {
+  display:none; grid-column:1 / -1; grid-row:2;
+  min-width:0; min-height:0; overflow-y:auto;
+}
 body.aux-open #aux { display:block; }
-body.aux-open #panes { display:none; }
+body.aux-open #claims-pane,body.aux-open #disclosure-pane { display:none; }
 #aux-toggle {
   min-height:24px; margin-left:12px; border:1px solid var(--line);
-  border-radius:4px; background:#fff; cursor:pointer; font-size:11px;
+  border-radius:4px; background:#fff; cursor:pointer;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
 }
-#schedule,#about { display:block; padding:10px 16px; font-family:Arial,sans-serif; }
-.schedule { width:100%; font-size:11px; }
+#schedule,#about {
+  display:block; padding:10px 16px; font-family:Arial,sans-serif;
+  font-size:var(--type-interface); line-height:var(--leading-interface);
+}
+#schedule > h2,#schedule > h3,#about > h2 { max-inline-size:var(--measure); }
+.prior-art-document > h2 { max-inline-size:var(--measure); }
+.schedule { width:100%; font-size:var(--type-interface); }
 .schedule-caution { color:var(--gate); }
 .caution-quote { display:block; margin:3px 0; color:#333; }
 .watermark {
@@ -1367,25 +1461,34 @@ body.aux-open #panes { display:none; }
 }
 .watermark span {
   color:rgba(180,30,30,.18); white-space:nowrap;
-  transform:rotate(-28deg); font:bold 42px Arial,sans-serif;
+  transform:rotate(-28deg); font-family:Arial,sans-serif;
+  font-size:2.625rem; line-height:var(--leading-interface); font-weight:bold;
 }
 footer { display:none; }
+@media (min-width:1280px) and (min-height:720px) {
+  #masthead { max-block-size:45vh; overflow:auto; }
+}
 @media (max-width:1279px),(max-height:719px) {
-  #panes { display:block; overflow-y:auto; }
+  #panes { display:block; overflow-y:auto; overflow-x:hidden; }
+  #masthead { display:block; }
+  .chip-group-name { flex:0 0 100%; }
   #claims-pane,#disclosure-pane {
     display:block; width:100%; height:auto; overflow:visible; border-right:0;
   }
   #disclosure-scroll { overflow:visible; }
+  #aux { overflow:visible; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
 @page { margin:12mm 10mm; }
 @media print {
-  body { display:block; overflow:visible; }
+  html,body { display:block; height:auto; overflow:visible; }
   #content-root {
-    display:block; overflow:visible; padding-bottom:37mm;
+    display:block; overflow:visible; padding-bottom:107mm;
     -webkit-box-decoration-break:clone; box-decoration-break:clone;
   }
-  #aux,#panes { display:block !important; overflow:visible; }
+  #aux,#panes,#masthead {
+    display:block !important; max-block-size:none; overflow:visible; height:auto;
+  }
   #claims-pane,#disclosure-pane,#disclosure-scroll {
     display:block; width:100%; overflow:visible; border:0;
   }
@@ -1401,7 +1504,7 @@ footer { display:none; }
   }
   footer {
     position:fixed; right:0; bottom:0; left:0; display:block;
-    height:35mm; overflow:hidden; padding:2mm 0 0;
+    height:105mm; overflow:hidden; padding:2mm 0 0;
     border-top:1px solid var(--line); border-bottom:0; background:#fff;
   }
   table,figure,pre { break-inside:avoid; }

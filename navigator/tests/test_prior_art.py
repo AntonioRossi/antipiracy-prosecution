@@ -490,7 +490,7 @@ class PriorArtNavigatorTests(unittest.TestCase):
                     '<p class="state-note">No exact candidate passage '
                     'from this document'), 26)
                 self.assertEqual(text.count(
-                    'class="dblock prior-art-passage"'), 15)
+                    'class="dblock reading-measure prior-art-passage"'), 15)
                 self.assertEqual(text.count(
                     'class="full-reader"'), 33)
                 self.assertEqual(text.count(

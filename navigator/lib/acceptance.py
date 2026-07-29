@@ -18,6 +18,11 @@ PRIOR_CONTRACT_PATH = (
     "contracts/30-product-generation/claims-prior-art-navigator/"
     "acceptance-criteria_DRAFT.md"
 )
+PRESENTATION_ACCEPTANCE_PATH = "navigator/schema/presentation-acceptance.json"
+PRESENTATION_CONTRACT_PATH = (
+    "contracts/30-product-generation/navigator-presentation/"
+    "acceptance-criteria_DRAFT.md"
+)
 MAP_ACCEPTANCE_PATH = "navigator/schema/prior-art-map-acceptance.json"
 MAP_CONTRACT_PATH = (
     "contracts/20-semantic-relations/claim-prior-art-passage-map/"
@@ -26,7 +31,10 @@ MAP_CONTRACT_PATH = (
 SPEC_CRITERIA = tuple("AC-%02d" % number for number in range(1, 21))
 MAP_CRITERIA = tuple("PAM-AC-%02d" % number for number in range(1, 11))
 PRIOR_CRITERIA = tuple("PA-AC-%02d" % number for number in range(1, 18))
-CRITERIA = SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA
+PRESENTATION_CRITERIA = tuple(
+    "PRES-AC-%02d" % number for number in range(1, 11))
+CRITERIA = (
+    SPEC_CRITERIA + MAP_CRITERIA + PRIOR_CRITERIA + PRESENTATION_CRITERIA)
 TEST_COVERAGE = {
     ("navigator.tests.test_canon.TestVectors."
      "test_json_parser_rejects_information_losing_inputs"):
@@ -87,7 +95,7 @@ TEST_COVERAGE = {
         frozenset({"AC-18"}),
     ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
      "test_live_navigator_input_inventory_is_exact"):
-        frozenset({"AC-19", "PA-AC-17"}),
+        frozenset({"AC-19", "PA-AC-17", "PRES-AC-10"}),
     ("navigator.tests.test_current_pipeline.CurrentPipelineTests."
      "test_configured_member_bundle_and_checksums_are_deterministic"):
         frozenset({"AC-20", "PA-AC-15"}),
@@ -131,6 +139,33 @@ TEST_COVERAGE = {
     ("navigator.tests.test_prior_art.PriorArtNavigatorTests."
      "test_closed_profile_and_bundle_controls_are_current"):
         frozenset({"PA-AC-17"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_shared_contract_is_product_isolated"):
+        frozenset({"PRES-AC-01"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_all_products_meet_exact_typography_tiers"):
+        frozenset({"PRES-AC-02"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_readable_measure_wrapping_and_scoped_overflow"):
+        frozenset({"PRES-AC-03"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_baseline_viewport_matrix_is_readable"):
+        frozenset({"PRES-AC-04"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_text_resize_and_page_zoom_preserve_functionality"):
+        frozenset({"PRES-AC-05"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_reflow_preserves_content_and_positive_geometry"):
+        frozenset({"PRES-AC-06"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_text_spacing_override_preserves_content_and_controls"):
+        frozenset({"PRES-AC-07"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_scaled_navigation_preserves_state_focus_owner_and_geometry"):
+        frozenset({"PRES-AC-08"}),
+    ("navigator.tests.test_presentation.PresentationTests."
+     "test_no_script_and_print_surfaces_are_readable"):
+        frozenset({"PRES-AC-09"}),
 }
 
 
@@ -152,6 +187,9 @@ _SCOPES = {
     "PA-AC-15": "bundle",
     "PA-AC-16": "product",
     "PA-AC-17": "shared",
+    "PRES-AC-01": "shared",
+    **{"PRES-AC-%02d" % number: "product" for number in range(2, 10)},
+    "PRES-AC-10": "shared",
 }
 
 
@@ -190,13 +228,16 @@ def validate_registry(value):
                    isinstance(value.get("criteria"), list) else [])
     if identifiers[:1] == ["AC-01"]:
         expected_criteria = SPEC_CRITERIA
-        expected_version = "9"
+        expected_version = "10"
     elif identifiers[:1] == ["PAM-AC-01"]:
         expected_criteria = MAP_CRITERIA
         expected_version = "2"
+    elif identifiers[:1] == ["PRES-AC-01"]:
+        expected_criteria = PRESENTATION_CRITERIA
+        expected_version = "1"
     else:
         expected_criteria = PRIOR_CRITERIA
-        expected_version = "4"
+        expected_version = "5"
     if not isinstance(value, dict) or set(value) != {
             "acceptanceVersion", "criteria"} or \
             value.get("acceptanceVersion") != expected_version:
@@ -288,6 +329,10 @@ def load_registries(root, byte_source=None):
             root, PRIOR_ACCEPTANCE_PATH, PRIOR_CONTRACT_PATH,
             "<!-- PA-NAV-AC-TABLE:START -->",
             "<!-- PA-NAV-AC-TABLE:END -->", byte_source),
+        _load_one(
+            root, PRESENTATION_ACCEPTANCE_PATH, PRESENTATION_CONTRACT_PATH,
+            "<!-- PRES-AC-TABLE:START -->",
+            "<!-- PRES-AC-TABLE:END -->", byte_source),
     )
 
 
@@ -313,7 +358,7 @@ def passed_result(registries, passed_test_ids):
     validation process.
     """
     registries = tuple(registries)
-    if len(registries) != 3:
+    if len(registries) != 4:
         raise AcceptanceError(
             "ephemeral acceptance requires all current registries")
     for registry in registries:

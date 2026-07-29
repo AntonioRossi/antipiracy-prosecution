@@ -37,7 +37,7 @@ def _bytes(relative):
 class CurrentPipelineTests(unittest.TestCase):
     def _lightweight_validation(self, root, during_closure=None):
         closure = {
-            "acceptanceRegistries": (object(), object(), object()),
+            "acceptanceRegistries": (object(), object(), object(), object()),
             "bundle": {"name": "bundle.zip"},
             "products": {},
             "structuredSource": {
@@ -527,10 +527,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
         self.assertNotIn("gitCommit", result["checks"])
 
     def test_contracts_resolve_one_shared_current_validation_boundary(self):
-        product_paths = (
-            "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
-            "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
-        )
+        product_paths = currentstate._PRODUCT_CONTRACT_DOCUMENTS
         start = "<!-- CURRENT-VALIDATION-BOUNDARY:START -->"
         end = "<!-- CURRENT-VALIDATION-BOUNDARY:END -->"
         regions = []
@@ -589,6 +586,9 @@ exec uv --no-cache --offline run --locked --no-sync \\
         self.assertIn("exactly four authored-relation XML handoffs", router)
         self.assertIn(
             "exactly two structured-source XML handoffs per specification product", router)
+        self.assertIn(
+            "shared typography, readable measure, resize, reflow, spacing adaptation",
+            router)
         self.assertNotIn("committed artifacts", router.casefold())
 
         with open(os.path.join(
@@ -724,6 +724,7 @@ exec uv --no-cache --offline run --locked --no-sync \\
 
     def test_acceptance_registry_names_outcomes_and_independent_enforcers(self):
         registries = acceptance.load_registries(ROOT)
+        self.assertEqual(len(registries), 4)
         registry = registries[0]
         self.assertEqual(
             [item["id"] for item in registry["criteria"]],
@@ -734,6 +735,13 @@ exec uv --no-cache --offline run --locked --no-sync \\
         self.assertTrue(all(set(item) == {
             "enforcer", "id", "outcome", "scope"}
                             for item in registry["criteria"]))
+        presentation = registries[3]
+        self.assertEqual(
+            [item["id"] for item in presentation["criteria"]],
+            ["PRES-AC-%02d" % number for number in range(1, 11)])
+        self.assertEqual(
+            [item["scope"] for item in presentation["criteria"]],
+            ["shared"] + ["product"] * 8 + ["shared"])
 
         for field in ("approval", "check", "evidence", "owner", "receipt"):
             changed = {

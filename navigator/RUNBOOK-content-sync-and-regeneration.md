@@ -7,11 +7,14 @@ This runbook applies the normative claims-to-specification
 and [`acceptance criteria`](../contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md),
 and the claims-to-prior-art
 [`technical description`](../contracts/30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md)
-and [`acceptance criteria`](../contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md).
+and [`acceptance criteria`](../contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md),
+and the shared navigator-presentation
+[`technical description`](../contracts/30-product-generation/navigator-presentation/technical-description_DRAFT.md)
+and [`acceptance criteria`](../contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md).
 Those pairs control any conflict. This runbook supplies the shortest supported update path; it
 creates no exception or alternative release path.
 
-Both product contract pairs, both navigator acceptance registries, structured-source contracts and
+All three phase-30 contract pairs and navigator acceptance registries, structured-source contracts and
 registries, navigator implementation and workflow, controls, tests and vectors, generated
 representations, handoffs, and stored products are one current state. No documentation-only,
 registry-only, implementation-only, workflow-only, control-only, test-only, or product-only state
@@ -65,7 +68,7 @@ The navigator exposes exactly these five commands:
 `af-specification`, `na-prior-art`, or `af-prior-art`. There are no shorter command identities or
 implicit product choices.
 
-Every command validates both product contract pairs, both acceptance registries, the exact implementation
+Every command validates all three phase-30 contract pairs and acceptance registries, the exact implementation
 census, product plan, structured-source closure, and applicable retained inputs before model
 construction or publication. Stop if those inputs describe different behavior; no later check or
 rollback repairs a split state.
@@ -132,14 +135,18 @@ uv --no-cache --offline run --locked --no-sync python -m navigator preview af-pr
 Inspect each changed product visually, including independent candidate and passage movement,
 forward and reverse navigation, obligation/allocation/no-candidate states, mode-specific scroll
 owners, contextual-reader opening and exact-fragment focus, cautions and gates, disclosure figures,
-keyboard focus, the no-JavaScript document order, and print content. In each specification product,
+keyboard focus, readable typography at 100%, 200% text resize, 200% page zoom, 320 CSS-pixel
+reflow, the controlled text-spacing override, the no-JavaScript document order, and unclipped print
+content. Ordinary prose must wrap within the controlled measure without page-level horizontal
+scrolling; only tables, code, and intrinsically two-dimensional figures may own scoped horizontal
+overflow. In each specification product,
 confirm that every recorded candidate endpoint remains concurrently indicated as selected,
 selected-candidate context, or alternate-candidate passage; in each prior-art product, confirm that
 only the selected candidate's passages receive forward emphasis. Treat visibility-policy leakage
-between product kinds as a stop condition. Registered browser tests
-execute all four products at `1280×720`, `1279×720`, `1280×719`, and `1000×700` under ordinary and
-reduced motion. Visual inspection remains useful substantive and product review, not a stored
-authorization step.
+between product kinds as a stop condition. Registered browser tests execute all four products at
+the exact baseline, enlargement, reflow, spacing, no-JavaScript, and print vectors in
+`navigator/policy/browser.json`, including ordinary and reduced motion where applicable. Visual
+inspection remains useful substantive and product review, not a stored authorization step.
 
 Regenerate every product in the current bundle inventory so shared-input drift cannot remain
 hidden:

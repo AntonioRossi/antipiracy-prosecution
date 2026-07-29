@@ -10,6 +10,11 @@
 The `_DRAFT` suffix records internal counsel-review status. Every technical rule in this pair is
 operative for the current navigator implementation and product workflow.
 
+The shared [navigator-presentation contract](../navigator-presentation/technical-description_DRAFT.md)
+controls typography, readable measure, resize, zoom, reflow, text spacing, no-JavaScript reading,
+print flow, and presentation geometry for this product. This contract retains ownership of
+specification semantics, navigation policy, exact capable owners, clearance, and emphasis sets.
+
 The navigator uses **XML as the one uniform machine interface** to the repository content it
 consumes. XML supplies stable item identities, hierarchy, typed metadata, provenance, typed-item
 digests, declared dependencies, and exact relation endpoints. XML does not become universal source
@@ -438,6 +443,11 @@ Markdown authority.
 
 ## 7. Visual, accessibility, no-JavaScript, and print contract
 
+The shared presentation contract supplies the exact readable typography, measure, enlargement,
+reflow, spacing, no-JavaScript, and print invariants for every surface below. Those invariants may
+adapt layout but cannot change the product-owned content, state, focus, owner, clearance, or
+three-state endpoint partition.
+
 - The visual design uses a professional light theme, serif claim/disclosure text, sans-serif
   application chrome, and solid, double, and dashed non-color indicators that distinguish the
   selected passage, selected-candidate context, and alternate-candidate passages.
@@ -464,12 +474,13 @@ Markdown authority.
 
 The exact Playwright 1.50.0 managed Chromium 133.0.6943.16 revision 1155 is controlled by
 `navigator/policy/browser.json`; absence or mismatch fails without a system-browser or engine
-fallback. Both live specification products run at `1280×720`, `1279×720`, `1280×719`, and
-`1000×700` under ordinary and reduced motion. The matrix exercises mapped multi-candidate and
-composite passage movement, shared reverse endpoints, phrases, no-candidate state, cautions,
-claim gates, dispositions, clear, focus return, owner selection, geometry, and zero page errors or
-network requests. Cross-platform, alternate-browser, print-engine, and assistive-technology
-observation remains outside the technical pass.
+fallback. Both live specification products run the controlled baseline, 200% text-resize, 200%
+page-zoom, 320 CSS-pixel reflow, text-spacing, no-JavaScript, and print vectors under the applicable
+ordinary and reduced-motion settings. The vectors exercise mapped multi-candidate and composite
+passage movement, shared reverse endpoints, phrases, no-candidate state, cautions, claim gates,
+dispositions, clear, focus return, owner selection, geometry, typography, measure, overflow, and
+zero page errors or network requests. Cross-platform, alternate-browser, print-engine, and
+assistive-technology observation remains outside the technical pass.
 
 ## 8. Offline and security contract
 
@@ -531,8 +542,8 @@ checksum pair per configured product followed by the manifest; it has no product
 Each HTML artifact remains independently usable. Member names, order, bytes, checksums, ZIP
 metadata, and neutral manifest text are deterministic and validation-enforced.
 
-Input validation is read-only. Every product command validates both product contract pairs, both
-machine-readable acceptance registries, the exact live implementation census, product plan,
+Input validation is read-only. Every product command validates all three phase-30 contract pairs,
+all three machine-readable acceptance registries, the exact live implementation census, product plan,
 structured-source closure, and applicable stored inputs from the same retained bytes before model
 construction or product publication. Each command constructs one closed map of declared generated-
 product paths and bytes, validates the complete candidate map before the first write, stages every output, and
@@ -553,7 +564,7 @@ bundle command writes or aggregate validation passes.
 
 ## 10. Worktree validation and implementation closure
 
-Both phase-30 technical descriptions, their acceptance criteria and data registries, the exact
+All three phase-30 technical descriptions, their acceptance criteria and data registries, the exact
 implementation and workflow census, structured-source boundary, navigator controls, registered
 tests and vectors, and stored products form one indivisible current implementation. Navigator code,
 workflow, controls, tests, or products constitute no accepted state independently of this closure.
@@ -628,7 +639,7 @@ and obsolete formats fail closed before writes; no backward-compatibility branch
 path, optional validation fallback, or retired reproduction worker is permitted.
 
 The executable closure requires exact retained-capture agreement across all product and shared code,
-both product contract pairs, both acceptance registries, schemas, launchers, workflows, controls,
+all three phase-30 contract pairs and acceptance registries, schemas, launchers, workflows, controls,
 registered tests, required vectors, declared XML inputs, products, checksums, manifest, and bundle.
 Missing, additional, alternate, inactive, or contradictory members fail. The readable navigator
 inventory below is supplemental and cannot replace capture-wide classification and exact census
@@ -646,12 +657,12 @@ The exact live navigator implementation census is:
 
 | Layer | Current files |
 |---|---|
-| Product contracts | Both phase-30 contract pairs and `navigator/schema/{acceptance.json,prior-art-acceptance.json}` |
+| Product contracts | All three phase-30 contract pairs and `navigator/schema/{acceptance.json,prior-art-acceptance.json,presentation-acceptance.json}` |
 | Authority and workflow guidance | `AGENTS.md`, `README.md`, `GLOSSARY.md`, `STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md`, `contracts/README.md`, and `navigator/RUNBOOK-content-sync-and-regeneration.md` |
 | Package and commands | `navigator/__init__.py`, `navigator/__main__.py`, `navigator/build.py` |
-| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `browserqa.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `priorart.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
-| Closed navigator controls | `navigator/bundles/current.json`, `navigator/policy/browser.json`; the product, relation, and wording files selected by the bundle control; `navigator/schema/{acceptance.json,prior-art-acceptance.json,edition.schema.json,navigator-relations.xsd,wording.xsd}`; and current shared/prior-art wording XML |
-| Registered navigator tests | `navigator.tests.{test_canon,test_current_pipeline,test_prior_art,test_render_current,test_xml_model}` |
+| Typed pipeline | `navigator/lib/__init__.py`, `acceptance.py`, `browserqa.py`, `bundlezip.py`, `canon.py`, `claims.py`, `currentstate.py`, `depgraph.py`, `gateway.py`, `model.py`, `presentationqa.py`, `priorart.py`, `projections.py`, `registry.py`, `release.py`, `render.py`, `schema_validate.py`, `snapshot.py`, `unicode15_1.py`, and `validate.py` under `navigator/lib/` |
+| Closed navigator controls | `navigator/bundles/current.json`, `navigator/policy/browser.json`; the product, relation, and wording files selected by the bundle control; `navigator/schema/{acceptance.json,prior-art-acceptance.json,presentation-acceptance.json,edition.schema.json,navigator-relations.xsd,wording.xsd}`; and current shared/prior-art wording XML |
+| Registered navigator tests | `navigator.tests.{test_canon,test_current_pipeline,test_presentation,test_prior_art,test_render_current,test_xml_model}` |
 | Registered structured-source tests | `structured_source.tests.{test_acceptance,test_atomic,test_conversion,test_pdf_transcription,test_registry,test_xml_contract}` |
 
 The control-input census is derived path-for-path from the configuration-resolved product plan;

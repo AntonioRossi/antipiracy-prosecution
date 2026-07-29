@@ -79,6 +79,7 @@ NAVIGATOR_FIXED_INPUT_PATHS = frozenset({
     "navigator/schema/acceptance.json",
     "navigator/schema/prior-art-map-acceptance.json",
     "navigator/schema/prior-art-acceptance.json",
+    "navigator/schema/presentation-acceptance.json",
     "navigator/schema/edition.schema.json",
     "navigator/schema/navigator-relations.xsd",
     "navigator/schema/wording.xsd",
@@ -1226,6 +1227,8 @@ _PRODUCT_CONTRACT_DOCUMENTS = (
     "contracts/30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md",
     "contracts/30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md",
     "contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md",
+    "contracts/30-product-generation/navigator-presentation/technical-description_DRAFT.md",
+    "contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md",
 )
 
 
@@ -1269,6 +1272,7 @@ def _contract_preflight_problems(repository_snapshot):
         required_router_rules = (
             "exactly four authored-relation XML handoffs",
             "exactly two structured-source XML handoffs per specification product",
+            "shared typography, readable measure, resize, reflow, spacing adaptation",
             "No pair or implementation component is accepted independently.",
         )
         missing_router_rules = tuple(
@@ -1325,9 +1329,9 @@ def _contract_preflight_problems(repository_snapshot):
     if len(regions) == len(_PRODUCT_CONTRACT_DOCUMENTS) and \
             any(region != regions[0][1] for unused_path, region in regions[1:]):
         issues.append(ValidationIssue(
-            "product-validation-boundary", "phase-30 contract pair",
+            "product-validation-boundary", "phase-30 contract documents",
             "byte-identical marked regions", "regions differ",
-            "project one exact current boundary into both documents"))
+            "project one exact current boundary into every phase-30 document"))
     return issues
 
 
@@ -1351,7 +1355,7 @@ def validate_product_contract(repository_snapshot):
         raise CurrentStateError(
             "product acceptance pair and registry differ: %s" % exc,
             phase="preflight", check_id="product-acceptance-closure",
-            subject="phase-30 contract pair and acceptance registry",
+            subject="phase-30 contract documents and acceptance registries",
             expected="one exact current acceptance projection",
             actual=str(exc),
             remediation="align the registry and generated acceptance table") \

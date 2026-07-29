@@ -19,6 +19,8 @@ phase 10 validated XML item surfaces
                                                               ▼
                                              phase 30 navigator products
                                                               │
+                                           shared readable presentation contract
+                                                              │
                                                               ▼
                                                 stored deterministic products
 ```
@@ -41,6 +43,7 @@ silently retarget upstream semantics.
 | 20 | [Claim/prior-art passage-map technical description](20-semantic-relations/claim-prior-art-passage-map/technical-description_DRAFT.md) / [acceptance criteria](20-semantic-relations/claim-prior-art-passage-map/acceptance-criteria_DRAFT.md) | Governs exact matrix obligations, their current states, and candidate-to-obligation closure. |
 | 30 | [Claims navigator technical description](30-product-generation/claims-navigator/technical-description_DRAFT.md) / [acceptance criteria](30-product-generation/claims-navigator/acceptance-criteria_DRAFT.md) | Governs edition-blind model construction, rendering, verification, and stored navigator products. |
 | 30 | [Claims-to-prior-art navigator technical description](30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md) / [acceptance criteria](30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md) | Governs matrix-scoped obligations, claim-unit and phrase navigation, exact prior-art passage cards, complete contextual readers, and the two additional HTML5 products. |
+| 30 | [Navigator presentation technical description](30-product-generation/navigator-presentation/technical-description_DRAFT.md) / [acceptance criteria](30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md) | Governs shared typography, readable measure, resize, reflow, spacing adaptation, presentation geometry, no-JavaScript reading, and print across all four HTML5 products. |
 
 Each linked pair is normative for its stated domain.
 

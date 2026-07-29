@@ -72,14 +72,15 @@ At a `16px` browser root, the exact minimum tiers are:
 
 | Tier | Included surfaces | Minimum size | Minimum unitless line-height |
 |---|---|---:|---:|
-| Reading | Claim text, specification disclosure, selected prior-art passages, full transcription readers, schedule substance, provenance substance | `1.125rem` (`18px`) | `1.5` |
+| Reading | Claim text, specification disclosure, selected prior-art passages, full transcription readers, and narrative provenance substance | `1.125rem` (`18px`) | `1.5` |
 | Interface | Product title, group and claim headings, controls, navigation state, candidate and passage context, obligations, cautions, dispositions, required legends, profile label, disclaimer, table and figure text | `0.875rem` (`14px`) | `1.35` |
 | Auxiliary | Internal anchor labels and genuinely secondary location metadata | `0.75rem` (`12px`) | `1.35` |
 
-A heading cannot be smaller than the tier of the content it heads. Required legal, cautionary,
-authority, or recording-state wording is never auxiliary. Symbol-only controls retain a readable
-visible symbol and an exact accessible name. Visually hidden live-region text is exempt from visual
-size measurement but not from semantic completeness.
+A prose heading uses the tier of the prose it heads; a heading that also acts as compact application
+chrome or a control uses the interface tier. Required legal, cautionary, authority, or recording-
+state wording is never auxiliary. Symbol-only controls retain a readable visible symbol and an
+exact accessible name. Visually hidden live-region text is exempt from visual size measurement but
+not from semantic completeness.
 
 Changing the browser's default font size increases every tier proportionally. No media query,
 product kind, document kind, print rule, no-script rule, long label, or crowded viewport may reduce
@@ -144,6 +145,11 @@ enlarged presentation it participates in an exact reachable scroll flow or uses 
 structure that preserves every required masthead item and leaves positive product space. Body or
 window scrolling cannot silently replace the exact product-owned navigation scroll owner.
 
+Claim-index groups wrap from their intrinsic content size and do not depend on crossing a viewport
+breakpoint. In side-by-side enlargement, an over-height masthead owns reachable vertical overflow
+and occupies at most `45vh`; the claim and disclosure panes retain a positive row and their exact
+product-owned scroll owners. Print and no-JavaScript flow remove this interactive bound.
+
 A navigation bar remains readable and operable but cannot reserve the complete target interval. At
 a constrained scale it may use a compact, wrapping, progressively disclosed, or non-sticky
 presentation only when every state value and control remains reachable and the selected target can
@@ -197,6 +203,7 @@ The current browser control has one closed presentation section containing:
 
 - the three exact typography tiers and unitless line heights;
 - maximum ordinary-text measure `80ch`;
+- maximum bounded masthead or navigation-chrome share `45` percent of viewport block size;
 - the baseline viewport and motion matrix;
 - text-only resize factor `2`;
 - page-zoom factor `2`;

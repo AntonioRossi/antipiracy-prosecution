@@ -5,6 +5,11 @@
 > This document defines the current NA and AF claims-to-prior-art HTML5 products. The paired
 > executable outcomes are in the [acceptance criteria](acceptance-criteria_DRAFT.md).
 
+The shared [navigator-presentation contract](../navigator-presentation/technical-description_DRAFT.md)
+controls typography, readable measure, resize, zoom, reflow, text spacing, no-JavaScript reading,
+print flow, and presentation geometry. This contract retains ownership of prior-art semantics,
+navigation policy, exact capable owners, clearance, and emphasis sets.
+
 ## 1. Product outcome and legal boundary
 
 The current product inventory contains one claims-to-prior-art navigator for the normal-allowance
@@ -223,10 +228,11 @@ detached checksum. The deterministic bundle contains four ordered HTML/checksum 
 the neutral manifest and has one detached checksum.
 
 `navigator/policy/browser.json` is the sole browser-execution control. It pins Playwright `1.50.0`,
-Playwright-managed Chromium revision `1155` / Chromium `133.0.6943.16`, the clearance and layout
-thresholds above, and the exact viewport census `1280×720`, `1279×720`, `1280×719`, and `1000×700`.
-Every viewport runs under ordinary and reduced motion for both NA and AF. Missing or different
-automation, browser binary, revision, version, viewport, motion vector, or fallback browser fails.
+Playwright-managed Chromium revision `1155` / Chromium `133.0.6943.16`, the product-owned clearance
+and layout thresholds, and the shared presentation typography, baseline viewport, 200% text-resize,
+200% page-zoom, 320 CSS-pixel reflow, text-spacing, no-JavaScript, and print vectors. Every
+applicable vector runs under ordinary and reduced motion for both NA and AF. Missing or different
+automation, browser binary, revision, version, vector, motion preference, or fallback browser fails.
 
 No alternate renderer, non-current profile, two-product bundle, migration utility, stored validation
 result, release receipt, approval record, review log, suggestion store, or auxiliary
@@ -248,13 +254,15 @@ A passage-map change is complete only when all affected current owners agree:
    passages, wrong-document closure, preamble roll-ups, inferred children, and parallel selection
    state before any write;
 7. regenerate all four candidates and sealed products, checksums, and the bundle for every shared
-   renderer, browser control, interaction, wording, or acceptance change;
-8. inspect the products for substantive and visual review in addition to the executable browser
-   vectors; and
+   renderer, browser control, interaction, wording, presentation, or acceptance change;
+8. inspect the products for substantive and visual review, including ordinary typography, 200%
+   enlargement, 320 CSS-pixel reflow, text-spacing, no-JavaScript reading, and print, in addition
+   to the executable browser vectors; and
 9. pass the aggregate gate with an unchanged final recapture.
 
-The contract pair, data registry, active profile and maps, declared handoffs, model, renderer,
-tests and vectors, generated views, four products, checksums, and bundle form one indivisible current implementation.
+All three phase-30 contract pairs and data registries, the active profile and maps, declared
+handoffs, model, renderer, tests and vectors, generated views, four products, checksums, and bundle
+form one indivisible current implementation.
 No component is accepted independently.
 
 Ephemeral search may help locate XML text, but no suggestion has authority or retained state. Only

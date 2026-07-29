@@ -644,6 +644,8 @@ class AcceptanceContract(unittest.TestCase):
             "contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md",
             "contracts/30-product-generation/claims-prior-art-navigator/acceptance-criteria_DRAFT.md",
             "contracts/30-product-generation/claims-prior-art-navigator/technical-description_DRAFT.md",
+            "contracts/30-product-generation/navigator-presentation/acceptance-criteria_DRAFT.md",
+            "contracts/30-product-generation/navigator-presentation/technical-description_DRAFT.md",
             "navigator/__init__.py", "navigator/__main__.py",
             "navigator/build.py",
             "navigator/RUNBOOK-content-sync-and-regeneration.md",
@@ -651,6 +653,7 @@ class AcceptanceContract(unittest.TestCase):
             "structured_source/registry/acceptance-authored-relations.json",
             "structured_source/registry/acceptance-pdf-transcription.json",
             "navigator/schema/prior-art-map-acceptance.json",
+            "navigator/schema/presentation-acceptance.json",
             "structured_source/relation_projection.py",
         }
         for relative in ("navigator/lib", "navigator/schema",

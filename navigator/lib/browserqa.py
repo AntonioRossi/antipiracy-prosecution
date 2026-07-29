@@ -31,11 +31,13 @@ def load_browser_control(root, byte_source=None):
     if data != canon.canonical_json(value) + b"\n" or \
             not isinstance(value, dict) or set(value) != {
                 "automation", "browser", "browserControlVersion", "layout",
-                "viewports"} or value.get("browserControlVersion") != "1":
+                "presentation", "viewports"} or \
+            value.get("browserControlVersion") != "2":
         raise BrowserControlError("browser control shape/version is not current")
     automation = value["automation"]
     browser = value["browser"]
     layout = value["layout"]
+    presentation = value["presentation"]
     viewports = value["viewports"]
     if automation != {"distribution": "playwright", "version": "1.50.0"} or \
             browser != {
@@ -47,6 +49,33 @@ def load_browser_control(root, byte_source=None):
             layout["minimumViewport"] != {"height": 700, "width": 1000} or \
             layout["sideBySide"] != {
                 "minimumHeight": 720, "minimumWidth": 1280} or \
+            presentation != {
+                "maximumMeasureCh": 80,
+                "maximumChromeViewportPercent": 45,
+                "pageZoomFactor": 2,
+                "reflowViewport": {"height": 256, "width": 320},
+                "textResizeFactor": 2,
+                "textSpacing": {
+                    "letterSpacingThousandths": 120,
+                    "lineHeightThousandths": 1500,
+                    "paragraphSpacingThousandths": 2000,
+                    "wordSpacingThousandths": 160,
+                },
+                "typography": {
+                    "auxiliary": {
+                        "lineHeightThousandths": 1350,
+                        "minimumRemThousandths": 750,
+                    },
+                    "interface": {
+                        "lineHeightThousandths": 1350,
+                        "minimumRemThousandths": 875,
+                    },
+                    "reading": {
+                        "lineHeightThousandths": 1500,
+                        "minimumRemThousandths": 1125,
+                    },
+                },
+            } or \
             viewports != [
                 {"height": 720, "mode": "side-by-side", "width": 1280},
                 {"height": 720, "mode": "stacked", "width": 1279},
@@ -105,5 +134,32 @@ def runtime_matrix(control):
     return tuple(
         (item["width"], item["height"], item["mode"], reduced)
         for item in control["viewports"]
+        for reduced in (False, True)
+    )
+
+
+def zoom_matrix(control):
+    """Return exact page-zoom-equivalent layout viewports and motion vectors."""
+    if not isinstance(control, dict):
+        raise BrowserControlError("browser zoom matrix requires a validated control")
+    factor = control["presentation"]["pageZoomFactor"]
+    return tuple(
+        (
+            (item["width"] + factor - 1) // factor,
+            (item["height"] + factor - 1) // factor,
+            item["width"], item["height"], reduced,
+        )
+        for item in control["viewports"]
+        for reduced in (False, True)
+    )
+
+
+def reflow_matrix(control):
+    """Return the exact narrow reflow viewport under both motion preferences."""
+    if not isinstance(control, dict):
+        raise BrowserControlError("browser reflow matrix requires a validated control")
+    viewport = control["presentation"]["reflowViewport"]
+    return tuple(
+        (viewport["width"], viewport["height"], reduced)
         for reduced in (False, True)
     )

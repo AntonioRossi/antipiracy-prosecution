@@ -273,8 +273,11 @@ class CurrentRenderTests(unittest.TestCase):
           const primary = document.getElementById(values.primaryId);
           const expected = document.getElementById(values.expectedOwnerId);
           const target = document.getElementById(values.targetId);
-          const oldValue = expected.style.getPropertyValue('overflow-y');
-          const oldPriority = expected.style.getPropertyPriority('overflow-y');
+          const oldX = expected.style.getPropertyValue('overflow-x');
+          const oldXPriority = expected.style.getPropertyPriority('overflow-x');
+          const oldY = expected.style.getPropertyValue('overflow-y');
+          const oldYPriority = expected.style.getPropertyPriority('overflow-y');
+          expected.style.setProperty('overflow-x', 'visible', 'important');
           expected.style.setProperty('overflow-y', 'visible', 'important');
           let selected = null;
           let error = null;
@@ -286,8 +289,13 @@ class CurrentRenderTests(unittest.TestCase):
               error = caught.message;
             }
           } finally {
-            if (oldValue) {
-              expected.style.setProperty('overflow-y', oldValue, oldPriority);
+            if (oldX) {
+              expected.style.setProperty('overflow-x', oldX, oldXPriority);
+            } else {
+              expected.style.removeProperty('overflow-x');
+            }
+            if (oldY) {
+              expected.style.setProperty('overflow-y', oldY, oldYPriority);
             } else {
               expected.style.removeProperty('overflow-y');
             }
@@ -939,7 +947,9 @@ class CurrentRenderTests(unittest.TestCase):
                 self.assertGreaterEqual(outside_text.count(
                     model.controlled_text("standing-disclaimer")), 2)
                 self.assertIn(
-                    '#aux,#panes { display:block !important; overflow:visible; }',
+                    '#aux,#panes,#masthead {\n'
+                    '    display:block !important; max-block-size:none; '
+                    'overflow:visible; height:auto;',
                     text)
                 self.assertIn(
                     '#claims-pane,#disclosure-pane,#disclosure-scroll {\n'
