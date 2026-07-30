@@ -3,8 +3,6 @@
 > **STRATEGIES NA + AF · PROPOSAL STATUS 30 JULY 2026 · NOT ADOPTED**
 >
 > **INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.** This is applicant-prepared analysis, not counsel advice. It proposes complete replacement claim sets for the `AF` and `NA` branches. Nothing in this document is operative: the controlling claim-set versions remain `NA-2026-07-22-v4`, `AF-2026-07-22-v6`, and `AF-CONT-2026-07-22-v2`, with their version-locked companions, and this document modifies no claim set, map, matrix, briefing, crosswalk, navigator content, or shared control. Every conclusion, wording, gate, and adoption step below requires retained US counsel confirmation.
->
-> This plan is independent of, and does not supersede, the pending [temporally realigned collusion attribution proposal](AA11393US-NA-AF-US_claim-revision-proposal_DRAFT.md), which remains a separate un-adopted document.
 
 ## 1. Purpose and scope
 
@@ -361,24 +359,32 @@ The folds move gates that previously sat on dependent claims into the independen
 ## 8. Formal and fee consequences
 
 - **Each set: 20 total / 3 independent / 17 singly dependent / no multiple-dependent claims** — within the basic 20-total / 3-independent allocation. Ordinary excess-claim fees drop to zero (from +10 total and +1 independent in `NA-2026-07-22-v4`, and +3 total in `AF-2026-07-22-v6`).
-- Adoption of the pending realignment proposal (NA 31–33 / AF 24–26 in that document's numbering) on top of either reformulated set would exceed the 20-claim allocation; any such combination requires a fee decision or a claim-slot trade, recorded by counsel.
 - Dropping the NA end-to-end method removes the set's most distinct restriction target; consolidating the AF families narrows the examined groups. Counsel must reassess unity/restriction, election, and rejoinder for each restructured set rather than assume the operative posture carries over.
 - § 371 national-stage amendment format, status identifiers, and a final antecedent-basis pass are rechecked on adoption (§ 9).
 
 ## 9. How to apply this plan to this codebase
 
-Adoption is a version-locked bundle change, not a claim-text edit. In order, per the root `README.md` claim-set generation workflow and the [navigator runbook](navigator/RUNBOOK-content-sync-and-regeneration.md):
+Adoption is a version-locked bundle change, not a claim-text edit. The phases below follow the repository's authority order: authored sources first, their generated representations immediately after, navigator products last, the aggregate gate at the end. Each phase names its exit condition; a phase that cannot meet it is a stop condition per the [navigator runbook](navigator/RUNBOOK-content-sync-and-regeneration.md) § 7 — correct the owning source and rerun the affected generation steps, never hand-repair a representation or product. The substantive re-grading and re-scoring work (phases 2–3) requires the § 7 gate conclusions and counsel participation; everything downstream of it is mechanical regeneration.
 
-1. Record the § 7 gate conclusions and the § 8 counsel determinations; select the final claim roster for each strategy. If counsel rejects any folded nexus at independent level, the corresponding operative independent formulation (former AF 1/19/23 without the fold; former NA 9/16 without the fold) is the recorded fallback, with the fold retained as a dependent — that variant is not drafted here and would be produced before step 2.
-2. Amend [`US/allowance-first/parent/claims/AA11393US-AF-US_claim-set_DRAFT.md`](US/allowance-first/parent/claims/AA11393US-AF-US_claim-set_DRAFT.md) and [`US/normal-allowance/claims/AA11393US-NA-US_claim-set_DRAFT.md`](US/normal-allowance/claims/AA11393US-NA-US_claim-set_DRAFT.md): replace the candidate-claims sections with § 3.2 and § 4.2 of this plan, update each document's architecture, count, fallback-ladder, and gate sections to match, and bump the version headers to new dated versions succeeding `AF-2026-07-22-v6` and `NA-2026-07-22-v4`.
-3. Regenerate, never hand-edit, the registered claim-set XML representations for the new versions.
-4. Convert to the required § 371 national-stage amendment format; recheck claim counts (20/3 per set), dependency form, antecedent basis, and status identifiers.
-5. Record every dropped family of § 6 under the continuation-preservation memo (CONT-03), including the AF-CONT and crosswalk treatment decision.
-6. Run the canonical current-state and document-integrity gate to a green result before handoff to counsel:
+**Phase 0 — gating decisions (no codebase change).** Record the § 7 gate conclusions and the § 8 counsel determinations; select the final claim roster for each strategy (20 total / 3 independent per set as drafted in §§ 3–4); decide the AF-CONT disposition (reserved baseline or amended). If counsel rejects any folded nexus at independent level, the corresponding operative independent formulation (former AF 1/19/23 without the fold; former NA 9/16 without the fold) is the recorded fallback, with the fold retained as a dependent — that variant is not drafted here and would be produced before phase 1. Counsel separately converts the adopted set to the required § 371 national-stage amendment format and rechecks claim counts (20/3 per set), dependency form, antecedent basis, and status identifiers.
 
-   ```sh
-   uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
-   ```
+**Phase 1 — claim sets (authored-Markdown authority).** Amend the candidate-claims, architecture, count, fallback-ladder, gate, and caution sections of [`US/normal-allowance/claims/AA11393US-NA-US_claim-set_DRAFT.md`](US/normal-allowance/claims/AA11393US-NA-US_claim-set_DRAFT.md) and [`US/allowance-first/parent/claims/AA11393US-AF-US_claim-set_DRAFT.md`](US/allowance-first/parent/claims/AA11393US-AF-US_claim-set_DRAFT.md) to § 4.2 and § 3.2 of this plan, and bump the version headers to new dated versions succeeding `NA-2026-07-22-v4` and `AF-2026-07-22-v6`. *Exit:* each registered claim-set `.source.xml` regenerates byte-identical to its Markdown under the structured-source conversion procedure (never hand-edited).
+
+**Phase 2 — version-locked companions (authored-relation XML authority).** Per strategy, in order: priority-support map (renumber all rows; new NA 20 row; re-grade the folded nexuses; re-run the DW-05A per-filing mode analysis, including the NA 15 Mode A re-analysis); prior-art comparison matrix (full re-score against the new wording — B6, C3, A5, A21, C7, A9, A19 at minimum; complete relation/field/claim/document obligation census per runbook § 3); claim-document mapping matrix. Then the AF claim crosswalk (AF↔NA and AF↔AF-CONT remap; record the AF-CONT decision). If AF-CONT is amended, its claim set, support map, and matrix re-version as one bundle. *Exit:* every edited relation XML regenerates its Markdown review view byte-identical; no row references a superseded claim number; each companion is valid for the new claim-set version it names.
+
+**Phase 3 — shared controls and counsel briefings.** Record the § 6 dropped families (NA 22–30; AF 15; the folded NA 15/20 and AF 17/20) under the [continuation-preservation memo](US/common/continuation-controls/AA11393US-continuation-preservation_MEMO.md) (CONT-03); update the deferred-filing memo's version references; verify — expected unchanged — the IDS reference list and the PCT informal-comments draft. Update both counsel briefings (architecture, divided-infringement analysis, zero-excess fee posture, gates). *Exit:* each amended Markdown regenerates its `.source.xml` byte-identical.
+
+**Phase 4 — routers, glossary, registry.** Update `US/README.md` (versions and counts), `US/normal-allowance/README.md` and `US/allowance-first/README.md` (status headers, count/fee text, the AF-CONT decision), and the `GLOSSARY.md` claim-set-version row; verify `STRUCTURED-CONTENT-AUTHORITY-MANIFEST.md` registration for the new artifact names and the root `README.md` (expected unchanged). *Exit:* no live document names a superseded claim-set version.
+
+**Phase 5 — navigator.** Update the four `navigator/editions/*.json` (`claimSetVersion`, `artifactName`); re-map `navigator/relations/na__pct.relations.xml` and `navigator/relations/af__pct.relations.xml` to the new claim text and numbering (exact identity binding; reconcile the complete matrix-obligation census with every declared art-transcription consumer edge); audit the wording XML (expected minimal); bump `navigator/bundles/current.json` (bundleVersion, timestamp, member names); update the pinned version/artifact tables in `contracts/30-product-generation/claims-navigator/technical-description_DRAFT.md` coherently with its acceptance pair. Remove stale `navigator/dist/` products, then per runbook §§ 4–5: `preview` all four products with visual inspection, `candidate` all four, `release` all four, `bundle`. Precondition: the exact locked environment and the policy-matching Chromium per the runbook. *Exit:* every candidate reproduces byte-for-byte under release; `navigator/dist/` contains exactly the configured new-version products and checksums plus the bundle and its checksum.
+
+**Phase 6 — close-out.** Run the canonical current-state and document-integrity gate to a green result before handoff to counsel:
+
+```sh
+uv --no-cache --offline run --locked --no-sync python -m navigator validate-current
+```
+
+Then record the adoption outcome and the new operative versions in this plan's status block.
 
 ## 10. Out of scope for this draft
 
@@ -388,4 +394,3 @@ The following are mandatory consequences of adoption under the repository's vers
 - Counsel briefings, fallback-ladder tables, and the AF claim crosswalk.
 - Navigator content and stored build products.
 - The continuation-preservation memo recording of § 6.
-- The pending temporally realigned collusion attribution proposal, which remains a separate un-adopted document and would need renumbering onto these sets if ever adopted.
