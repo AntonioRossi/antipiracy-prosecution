@@ -8,10 +8,6 @@
     <usage context="mapping-status" />
     <text>Candidate passages recorded</text>
   </entry>
-  <entry wordingId="mapping-status-counsel-review-required" category="mapping-status">
-    <usage context="mapping-status" />
-    <text>No candidate passage recorded — counsel review required</text>
-  </entry>
   <entry wordingId="mapping-role-specific" category="mapping-role">
     <usage context="mapping-role" />
     <text>specific passage</text>
@@ -173,5 +169,9 @@
   <entry wordingId="guide-profile-s-item-7" category="guide">
     <usage context="guide-profile" />
     <text>Review posture: this page is a draft counsel-review aid and an ephemeral technical preview, not filing material and not a legal opinion of any kind. It presents one candidate strategy; it does not compare strategies or recommend a filing choice. Anchor references are internal navigation labels, not official numbering, and must not be cited. Human review of the source evidence and substantive analysis remains authoritative.</text>
+  </entry>
+  <entry wordingId="mapping-status-counsel-review-required" category="mapping-status">
+    <usage context="mapping-status" />
+    <text>No candidate passage recorded — counsel review required</text>
   </entry>
 </wording>

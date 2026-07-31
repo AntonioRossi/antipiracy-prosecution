@@ -11,7 +11,7 @@
 | **NA** | Normal-allowance strategy: balanced actor-split coverage; current substantive baseline | [`US/README.md`](US/README.md) |
 | **AF** | Allowance-first strategy: integrated chain plus monitor-side method, with broader scope identified for a controlled successor | [`US/README.md`](US/README.md) |
 | **AF-CONT** | AF actor-focused continuation claim candidate; unfiled and unpreserved; not the universal continuation procedure | [`US/allowance-first/continuation-candidate/claims/AA11393US-AF-CONT-US_claim-set_DRAFT.md`](US/allowance-first/continuation-candidate/claims/AA11393US-AF-CONT-US_claim-set_DRAFT.md) |
-| Claim-set version | Version header (`NA-2026-07-22-v4`, `AF-2026-07-22-v6`, `AF-CONT-2026-07-22-v2`) locking a claim set to its maps and matrices | [`US/README.md`](US/README.md) |
+| Claim-set version | Version header (`NA-2026-07-30-v5`, `AF-2026-07-30-v7`, `AF-CONT-2026-07-22-v2`) locking a claim set to its maps and matrices | [`US/README.md`](US/README.md) |
 
 ## Support-posture codes
 

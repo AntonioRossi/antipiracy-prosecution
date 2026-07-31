@@ -387,12 +387,12 @@ class AuthoredMarkdownConversion(unittest.TestCase):
         self.assertEqual(len(packages), 10)
         expected_counts = {
             "aa11393us-af-cont-us-claim-set": 170,
-            "aa11393us-af-us-claim-set": 326,
-            "aa11393us-af-us-counsel-briefing": 285,
+            "aa11393us-af-us-claim-set": 298,
+            "aa11393us-af-us-counsel-briefing": 279,
             "aa11393us-continuation-preservation": 154,
             "aa11393us-deferred-filing-disclosure-and-ep-work": 401,
-            "aa11393us-na-us-claim-set": 226,
-            "aa11393us-na-us-counsel-briefing": 207,
+            "aa11393us-na-us-claim-set": 190,
+            "aa11393us-na-us-counsel-briefing": 205,
             "aa11393us-pct-informal-comments-ib": 63,
             "aa11393us-us-ids-reference-list": 450,
             "pct-evidence-index": 19,
@@ -408,7 +408,7 @@ class AuthoredMarkdownConversion(unittest.TestCase):
             self.assertEqual(conversion.item_ids, anchors)
             self.assertEqual(len(anchors), expected_counts[package["packageId"]])
             inventories[package["packageId"]] = set(conversion.item_ids)
-        self.assertEqual(sum(map(len, inventories.values())), 2301)
+        self.assertEqual(sum(map(len, inventories.values())), 2229)
 
         referenced = set()
         for package in registry["packages"]:
@@ -422,7 +422,7 @@ class AuthoredMarkdownConversion(unittest.TestCase):
                     self.assertNotIn("ssp-", fragment_id)
                     self.assertIn(fragment_id, inventories[document_id])
                     referenced.add((document_id, fragment_id))
-        self.assertEqual(len(referenced), 166)
+        self.assertEqual(len(referenced), 128)
 
     def test_current_pdf_content_and_relation_parsers_are_closed(self):
         self.assertEqual(

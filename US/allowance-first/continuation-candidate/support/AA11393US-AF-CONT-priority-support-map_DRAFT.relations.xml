@@ -167,13 +167,13 @@
     <assertionField name="current-posture">D</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-cont-priority-support-map-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-cont-priority-support-map-row-00023">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:58d0b8c3cb53f64323075ef1046cf20c53a87f48bb276aaa26a408545892a2fd" fragmentId="claim-11" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="limitation">Claim as a whole</assertionField>
     <assertionField name="provisional-basis">Claim 1(e), (g)–(n)</assertionField>
     <assertionField name="pct-basis">Claims 10–15</assertionField>
-    <assertionField name="current-posture">Applicant-assigned Mode A by correspondence to NA claim 16; counsel confirmation required</assertionField>
+    <assertionField name="current-posture">Applicant-assigned Mode A by correspondence to NA claim 15 (formerly NA claim 16, whose Mode A assignment is under per-filing re-analysis); counsel confirmation required</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-cont-priority-support-map-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-cont-priority-support-map-row-00024">
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c8fc49c2a2dc99d0eeee4056db7e2eee2e31e55534a19e9cc721c23bb46eb7b5" fragmentId="claim-14" role="subject" />
@@ -386,10 +386,10 @@
     <assertionField name="current-mode-gate">Mode unassigned; claim 6 Examples 2→3→4 integration gate controls</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-cont-priority-support-map-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-cont-priority-support-map-row-00049">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-cont-claims">11–13</assertionField>
-    <assertionField name="current-mode-gate">Applicant-assigned Mode A by correspondence to NA claim 16; counsel must confirm separately</assertionField>
+    <assertionField name="current-mode-gate">Applicant-assigned Mode A by correspondence to NA claim 15 (formerly NA claim 16, whose Mode A assignment is under per-filing re-analysis); counsel must confirm separately</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-cont-priority-support-map-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-cont-priority-support-map-row-00050">
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c8fc49c2a2dc99d0eeee4056db7e2eee2e31e55534a19e9cc721c23bb46eb7b5" fragmentId="claim-14" role="subject" />

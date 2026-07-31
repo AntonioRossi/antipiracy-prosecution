@@ -28,7 +28,6 @@
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00005">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">A1</assertionField>
     <assertionField name="id-1-whole">P — completed-copy retiming and recipient variants; no physical-camera EDL boundary</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -37,11 +36,11 @@
     <assertionField name="id-6-delta">P — transformations at scene changes</assertionField>
     <assertionField name="id-7-delta">P — changed transformation timing without retained camera identifiers</assertionField>
     <assertionField name="id-8-delta">P — additive identifiers</assertionField>
+    <assertionField name="document">A1</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00006">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
-    <assertionField name="document">A2</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -50,11 +49,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — watermarked segment versions</assertionField>
+    <assertionField name="document">A2</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00007">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
-    <assertionField name="document">A3</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -63,11 +62,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — marked segment variants</assertionField>
+    <assertionField name="document">A3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00008">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
-    <assertionField name="document">A4</assertionField>
     <assertionField name="id-1-whole">P — alternative camera-perspective fragments; no moved recorded boundary</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -76,11 +75,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">P — camera-perspective alternatives at duration positions without the claimed varied EDL relationship</assertionField>
     <assertionField name="id-8-delta">Y — overlays/blackout alternatives</assertionField>
+    <assertionField name="document">A4</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00009">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
-    <assertionField name="document">A5</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -89,11 +88,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A5</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00010">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
-    <assertionField name="document">A6</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -102,11 +101,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — forensic segment marks</assertionField>
+    <assertionField name="document">A6</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00011">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
-    <assertionField name="document">A7</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -115,11 +114,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — pre-watermarked segment variants</assertionField>
+    <assertionField name="document">A7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00012">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
-    <assertionField name="document">A8</assertionField>
     <assertionField name="id-1-whole">P — recipient-specific temporal variants; no physical-camera EDL relationship</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -128,11 +127,11 @@
     <assertionField name="id-6-delta">P — plural segment-position temporal variants without director-cut or EDL structure</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00013">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
-    <assertionField name="document">A9</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -141,11 +140,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">Y — rendered graphic watermark layers</assertionField>
+    <assertionField name="document">A9</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00014">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
-    <assertionField name="document">A10</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -154,11 +153,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — time-varying colour modulation</assertionField>
+    <assertionField name="document">A10</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00015">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
-    <assertionField name="document">A11</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -167,11 +166,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — visible overlay watermarking</assertionField>
+    <assertionField name="document">A11</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00016">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
-    <assertionField name="document">A12</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -180,11 +179,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A12</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00017">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
-    <assertionField name="document">A13</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -193,11 +192,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A13</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00018">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
-    <assertionField name="document">A14</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -206,11 +205,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — server-side A/B watermark symbols</assertionField>
+    <assertionField name="document">A14</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00019">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
-    <assertionField name="document">A15</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -219,11 +218,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A15</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00020">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
-    <assertionField name="document">A16</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -232,11 +231,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A16</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00021">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
-    <assertionField name="document">A17</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -245,11 +244,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — per-account substituted content</assertionField>
+    <assertionField name="document">A17</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00022">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
-    <assertionField name="document">A18</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -258,11 +257,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — dynamically selected replacement segments</assertionField>
+    <assertionField name="document">A18</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00023">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
-    <assertionField name="document">A19</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -271,11 +270,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — watermark-bit variants</assertionField>
+    <assertionField name="document">A19</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00024">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
-    <assertionField name="document">A20</assertionField>
     <assertionField name="id-1-whole">P — individualized structured-edit-list versions and source/time fields; no claimed camera-boundary movement</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -284,11 +283,11 @@
     <assertionField name="id-6-delta">P — individualized changes at plural edit positions</assertionField>
     <assertionField name="id-7-delta">P — source/time fields without retained-pair boundary movement</assertionField>
     <assertionField name="id-8-delta">P — unique inserted content elements</assertionField>
+    <assertionField name="document">A20</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00025">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
-    <assertionField name="document">A21</assertionField>
     <assertionField name="id-1-whole">— — recovery-side shot-boundary fingerprinting only</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -297,11 +296,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">A21</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00026">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
-    <assertionField name="document">B1</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -310,25 +309,18 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — codec provenance marking</assertionField>
+    <assertionField name="document">B1</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00027">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">B2</assertionField>
     <assertionField name="id-1-whole">scored with A1</assertionField>
-    <assertionField name="id-2-delta" />
-    <assertionField name="id-3-delta" />
-    <assertionField name="id-4-delta" />
-    <assertionField name="id-5-delta" />
-    <assertionField name="id-6-delta" />
-    <assertionField name="id-7-delta" />
-    <assertionField name="id-8-delta" />
+    <assertionField name="document">B2</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00028">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
-    <assertionField name="document">B3</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -337,11 +329,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — embedded source watermark</assertionField>
+    <assertionField name="document">B3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00029">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
-    <assertionField name="document">B4</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -350,11 +342,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — per-playback visible marks</assertionField>
+    <assertionField name="document">B4</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00030">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
-    <assertionField name="document">B5</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -363,11 +355,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — receiver watermark</assertionField>
+    <assertionField name="document">B5</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00031">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
-    <assertionField name="document">B6</assertionField>
     <assertionField name="id-1-whole">P — recipient-specific local duration/frame-count changes; no camera boundary</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -376,11 +368,11 @@
     <assertionField name="id-6-delta">P — plural local timing variations</assertionField>
     <assertionField name="id-7-delta">P — analogous timing changes without EDL identifiers</assertionField>
     <assertionField name="id-8-delta">P — hidden fingerprinting</assertionField>
+    <assertionField name="document">B6</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00032">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
-    <assertionField name="document">B7</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -389,11 +381,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">B7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00033">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="document">B8</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -402,11 +394,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">B8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00034">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
-    <assertionField name="document">B9</assertionField>
     <assertionField name="id-1-whole">P — user-different actual stream-switch positions; no identified physical-camera EDL boundary</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -415,11 +407,11 @@
     <assertionField name="id-6-delta">P — plural key-selected switch positions</assertionField>
     <assertionField name="id-7-delta">P — origin codes and switch positions without physical-camera EDL retention</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">B9</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00035">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
-    <assertionField name="document">B10</assertionField>
     <assertionField name="id-1-whole">P — per-user object-attribute changes; no camera boundary</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -428,11 +420,11 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — altered image objects</assertionField>
+    <assertionField name="document">B10</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00036">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="document">C8</assertionField>
     <assertionField name="id-1-whole">P — aligned A/B versions; no camera-boundary production</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -441,11 +433,11 @@
     <assertionField name="id-6-delta">P — plural A/B variant positions only</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">P — watermark variants</assertionField>
+    <assertionField name="document">C8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00037">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
-    <assertionField name="document">C3</assertionField>
     <assertionField name="id-1-whole">—</assertionField>
     <assertionField name="id-2-delta">—</assertionField>
     <assertionField name="id-3-delta">—</assertionField>
@@ -454,1279 +446,742 @@
     <assertionField name="id-6-delta">—</assertionField>
     <assertionField name="id-7-delta">—</assertionField>
     <assertionField name="id-8-delta">—</assertionField>
+    <assertionField name="document">C3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00038">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="document">C7</assertionField>
     <assertionField name="id-1-whole">nr — copy outstanding</assertionField>
-    <assertionField name="id-2-delta" />
-    <assertionField name="id-3-delta" />
-    <assertionField name="id-4-delta" />
-    <assertionField name="id-5-delta" />
-    <assertionField name="id-6-delta" />
-    <assertionField name="id-7-delta" />
-    <assertionField name="id-8-delta" />
+    <assertionField name="document">C7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00039">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">A1</assertionField>
     <assertionField name="id-9-whole">P — recipient variant sequences and assignments; no physical-camera transition</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">P</assertionField>
-    <assertionField name="id-12-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-14-delta">P</assertionField>
+    <assertionField name="document">A1</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00040">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
-    <assertionField name="document">A2</assertionField>
     <assertionField name="id-9-whole">P — segment-version assignments</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">P</assertionField>
-    <assertionField name="id-12-delta">P — key/player records</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — coded version sequences</assertionField>
+    <assertionField name="id-14-delta">P — key/player records</assertionField>
+    <assertionField name="document">A2</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00041">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
-    <assertionField name="document">A3</assertionField>
     <assertionField name="id-9-whole">P — multilevel segment assignments</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">P</assertionField>
-    <assertionField name="id-12-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-14-delta">P</assertionField>
+    <assertionField name="document">A3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00042">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
-    <assertionField name="document">A4</assertionField>
     <assertionField name="id-9-whole">P — customized perspective manifests and user resolution; no moved camera boundary</assertionField>
     <assertionField name="id-10-delta">Y — CDN/ABR manifests</assertionField>
     <assertionField name="id-11-delta">P — per-request variant selection</assertionField>
-    <assertionField name="id-12-delta">Y — manifest/user association</assertionField>
-    <assertionField name="id-13-delta">P — aligned alternative fragments</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P — recovered recipient sequences without the claimed physical-camera timing choices</assertionField>
+    <assertionField name="id-12-delta">P — aligned alternative fragments</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">Y — manifest/user association</assertionField>
+    <assertionField name="document">A4</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00043">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
-    <assertionField name="document">A5</assertionField>
     <assertionField name="id-9-whole">—</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="document">A5</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00044">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
-    <assertionField name="document">A6</assertionField>
     <assertionField name="id-9-whole">P — tailored manifests and recipient temporal events; no physical-camera boundary</assertionField>
     <assertionField name="id-10-delta">Y — tailored CDN/ABR manifests</assertionField>
     <assertionField name="id-11-delta">P — unique served-sequence selection</assertionField>
-    <assertionField name="id-12-delta">P — device-linked sequence without a manifest ledger</assertionField>
-    <assertionField name="id-13-delta">P — variable-duration fragments</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P — recipient-specific temporal sequences without the claimed physical-camera timing choices</assertionField>
+    <assertionField name="id-12-delta">P — variable-duration fragments</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — device-linked sequence without a manifest ledger</assertionField>
+    <assertionField name="document">A6</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00045">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
-    <assertionField name="document">A7</assertionField>
     <assertionField name="id-9-whole">P — device-selected segment versions</assertionField>
     <assertionField name="id-10-delta">P — CDN/ABR delivery with a common manifest</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — request-device association</assertionField>
-    <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — request-device association</assertionField>
+    <assertionField name="document">A7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00046">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
-    <assertionField name="document">A8</assertionField>
     <assertionField name="id-9-whole">P — randomized recipient variants</assertionField>
     <assertionField name="id-10-delta">P — edge/CDN delivery</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — identifying variant sequences without the claimed physical-camera timing choices</assertionField>
+    <assertionField name="document">A8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00047">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
-    <assertionField name="document">A9</assertionField>
     <assertionField name="id-9-whole">P — client policies and identifiers</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — policy datastore</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — policy datastore</assertionField>
+    <assertionField name="document">A9</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00048">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
-    <assertionField name="document">A10</assertionField>
     <assertionField name="id-9-whole">P — device-identifying modulation</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — device identity</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — device identity</assertionField>
+    <assertionField name="document">A10</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00049">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
-    <assertionField name="document">A11</assertionField>
     <assertionField name="id-9-whole">—</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="document">A11</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00050">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
-    <assertionField name="document">A12</assertionField>
     <assertionField name="id-9-whole">P — subscriber/device context</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — analogous device assignment, not a manifest ledger</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="id-14-delta">P — analogous device assignment, not a manifest ledger</assertionField>
+    <assertionField name="document">A12</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00051">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
-    <assertionField name="document">A13</assertionField>
     <assertionField name="id-9-whole">P — segment and manifest generation; no recipient camera pattern</assertionField>
     <assertionField name="id-10-delta">P — DASH/HLS/CMAF and edge context</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">—</assertionField>
-    <assertionField name="id-13-delta">P — time-aligned segments</assertionField>
+    <assertionField name="id-12-delta">P — time-aligned segments</assertionField>
+    <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="document">A13</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00052">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
-    <assertionField name="document">A14</assertionField>
     <assertionField name="id-9-whole">P — per-user A/B chunks and recipient database</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">P — per-user A/B selection without progressive assignment</assertionField>
-    <assertionField name="id-12-delta">P — user database</assertionField>
-    <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — user database</assertionField>
+    <assertionField name="document">A14</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00053">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
-    <assertionField name="document">A15</assertionField>
     <assertionField name="id-9-whole">P — session-bound manifest records</assertionField>
     <assertionField name="id-10-delta">P — CDN/ABR cooperation</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — request/session association</assertionField>
-    <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — request/session association</assertionField>
+    <assertionField name="document">A15</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00054">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
-    <assertionField name="document">A16</assertionField>
     <assertionField name="id-9-whole">P — per-request manifests and recording IDs</assertionField>
     <assertionField name="id-10-delta">P — adaptive-manifest and edge mechanics</assertionField>
     <assertionField name="id-11-delta">P — per-request manifest construction without progressive variation assignment</assertionField>
-    <assertionField name="id-12-delta">P — recording-ID association</assertionField>
-    <assertionField name="id-13-delta">P — shared-timeline chunks</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-12-delta">P — shared-timeline chunks</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — recording-ID association</assertionField>
+    <assertionField name="document">A16</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00055">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
-    <assertionField name="document">A17</assertionField>
     <assertionField name="id-9-whole">P — per-account substituted segments</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — account records</assertionField>
-    <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — account records</assertionField>
+    <assertionField name="document">A17</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00056" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00056">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
-    <assertionField name="document">A18</assertionField>
     <assertionField name="id-9-whole">P — dynamic segment resolution and user metadata</assertionField>
     <assertionField name="id-10-delta">P — device-capability selection</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — user/device metadata</assertionField>
-    <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — user/device metadata</assertionField>
+    <assertionField name="document">A18</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00057" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00057">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
-    <assertionField name="document">A19</assertionField>
     <assertionField name="id-9-whole">P — assigned fingerprint bits and client records</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — client records</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — client code sequences without the claimed physical-camera timing choices</assertionField>
+    <assertionField name="id-14-delta">P — client records</assertionField>
+    <assertionField name="document">A19</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00058" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00058">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
-    <assertionField name="document">A20</assertionField>
     <assertionField name="id-9-whole">P — recipient-specific versions and registry; no manifest-preserved moved camera boundary</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — consumer registry, not received-manifest records</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — unique-version signatures</assertionField>
+    <assertionField name="id-14-delta">P — consumer registry, not received-manifest records</assertionField>
+    <assertionField name="document">A20</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00059" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00059">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
-    <assertionField name="document">A21</assertionField>
     <assertionField name="id-9-whole">— — no personalization, delivery, manifest, or recipient association</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="document">A21</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00060" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00060">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
-    <assertionField name="document">B1</assertionField>
     <assertionField name="id-9-whole">P — codec provenance</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="id-14-delta">P</assertionField>
+    <assertionField name="document">B1</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00061">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">B2</assertionField>
     <assertionField name="id-9-whole">scored with A1</assertionField>
-    <assertionField name="id-10-delta" />
-    <assertionField name="id-11-delta" />
-    <assertionField name="id-12-delta" />
-    <assertionField name="id-13-delta" />
-    <assertionField name="id-14-delta" />
-    <assertionField name="id-15-delta" />
+    <assertionField name="document">B2</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00062">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
-    <assertionField name="document">B3</assertionField>
     <assertionField name="id-9-whole">P — source watermark delivery</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="document">B3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00063" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00063">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
-    <assertionField name="document">B4</assertionField>
     <assertionField name="id-9-whole">P — per-playback marks and identity</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-14-delta">P</assertionField>
+    <assertionField name="document">B4</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00064" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00064">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
-    <assertionField name="document">B5</assertionField>
     <assertionField name="id-9-whole">P — receiver identity marks</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="id-14-delta">P</assertionField>
+    <assertionField name="document">B5</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00065" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00065">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
-    <assertionField name="document">B6</assertionField>
     <assertionField name="id-9-whole">P — buyer-specific local transformations</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — buyer/key records</assertionField>
-    <assertionField name="id-13-delta">P — local temporal regions</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — plural recipient transformations without the claimed physical-camera timing choices</assertionField>
+    <assertionField name="id-12-delta">P — local temporal regions</assertionField>
+    <assertionField name="id-13-delta">—</assertionField>
+    <assertionField name="id-14-delta">P — buyer/key records</assertionField>
+    <assertionField name="document">B6</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00066" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00066">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
-    <assertionField name="document">B7</assertionField>
     <assertionField name="id-9-whole">—</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">—</assertionField>
+    <assertionField name="document">B7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00067" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00067">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="document">B8</assertionField>
     <assertionField name="id-9-whole">—</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
     <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
     <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — relative-time event sequences</assertionField>
+    <assertionField name="document">B8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00068" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00068">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
-    <assertionField name="document">B9</assertionField>
     <assertionField name="id-9-whole">P — user-keyed stream switching and origin codes; no manifests or physical-camera boundary</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">P — user-keyed stream selection</assertionField>
-    <assertionField name="id-12-delta">P — key records without a manifest ledger</assertionField>
-    <assertionField name="id-13-delta">P — identical-segmentation switch structure</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — plural key-selected switch positions without the claimed physical-camera or manifest relationship</assertionField>
+    <assertionField name="id-12-delta">P — identical-segmentation switch structure</assertionField>
+    <assertionField name="id-13-delta">—</assertionField>
+    <assertionField name="id-14-delta">P — key records without a manifest ledger</assertionField>
+    <assertionField name="document">B9</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00069" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00069">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
-    <assertionField name="document">B10</assertionField>
     <assertionField name="id-9-whole">P — per-user object attributes and code mapping</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — user-code records</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — user-code records</assertionField>
+    <assertionField name="document">B10</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00070" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00070">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="document">C8</assertionField>
     <assertionField name="id-9-whole">P — standardized A/B manifest sequences and account/session patterns</assertionField>
     <assertionField name="id-10-delta">Y — edge manifest operations</assertionField>
     <assertionField name="id-11-delta">P — A/B chunk selection without progressive variation assignment</assertionField>
-    <assertionField name="id-12-delta">P — account/session association</assertionField>
-    <assertionField name="id-13-delta">P — aligned chunks</assertionField>
-    <assertionField name="id-14-delta">P</assertionField>
-    <assertionField name="id-15-delta">P — session sequences without the claimed physical-camera timing choices</assertionField>
+    <assertionField name="id-12-delta">P — aligned chunks</assertionField>
+    <assertionField name="id-13-delta">P</assertionField>
+    <assertionField name="id-14-delta">P — account/session association</assertionField>
+    <assertionField name="document">C8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00071" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00071">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
-    <assertionField name="document">C3</assertionField>
     <assertionField name="id-9-whole">P — user code assignments</assertionField>
     <assertionField name="id-10-delta">—</assertionField>
     <assertionField name="id-11-delta">—</assertionField>
-    <assertionField name="id-12-delta">P — analogous user assignment, not a manifest ledger</assertionField>
+    <assertionField name="id-12-delta">—</assertionField>
     <assertionField name="id-13-delta">—</assertionField>
-    <assertionField name="id-14-delta">—</assertionField>
-    <assertionField name="id-15-delta">P — codeword choices across positions without camera-switch timing or manifest relationships</assertionField>
+    <assertionField name="id-14-delta">P — analogous user assignment, not a manifest ledger</assertionField>
+    <assertionField name="document">C3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00072" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00072">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="document">C7</assertionField>
     <assertionField name="id-9-whole">nr — copy outstanding</assertionField>
-    <assertionField name="id-10-delta" />
-    <assertionField name="id-11-delta" />
-    <assertionField name="id-12-delta" />
-    <assertionField name="id-13-delta" />
-    <assertionField name="id-14-delta" />
-    <assertionField name="id-15-delta" />
+    <assertionField name="document">C7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00073" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00073">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">A1</assertionField>
-    <assertionField name="id-16-whole">P — recoverable recipient variants; no reference/mate chunk-manifest or cut-time reconstruction relationship</assertionField>
+    <assertionField name="id-15-whole">P — recoverable recipient variants; no reference/mate chunk-manifest or cut-time reconstruction relationship</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — recipient versions without matched mate-chunk camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — sequence choices without manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — tracing objective</assertionField>
+    <assertionField name="id-18-delta">P — recipient versions without matched mate-chunk camera geometry</assertionField>
+    <assertionField name="id-19-delta">P — tracing objective</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A1</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00074" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00074">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
-    <assertionField name="document">A2</assertionField>
-    <assertionField name="id-16-whole">P — assigned segment sequences and tracing; no camera-cut mate or reconstructed-manifest equality</assertionField>
+    <assertionField name="id-15-whole">P — assigned segment sequences and tracing; no camera-cut mate or reconstructed-manifest equality</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — segment versions without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — coded sequences without cut-time manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — collusion tracing without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-18-delta">P — segment versions without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">P — collusion tracing without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-20-delta">P — collusion tracing without per-segment fingerprints</assertionField>
+    <assertionField name="document">A2</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00075" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00075">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
-    <assertionField name="document">A3</assertionField>
-    <assertionField name="id-16-whole">P — coded segment assignments, recovered-copy scoring, and user tracing; no claimed manifest-reconstruction chain</assertionField>
+    <assertionField name="id-15-whole">P — coded segment assignments, recovered-copy scoring, and user tracing; no claimed manifest-reconstruction chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — segment variants without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — code sequences without cut-time manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — multilevel collusion scoring without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-18-delta">P — segment variants without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">P — multilevel collusion scoring without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00076" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00076">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
-    <assertionField name="document">A4</assertionField>
-    <assertionField name="id-16-whole">P — perspective manifests, alignment, version-sequence recovery, and user resolution; no claimed mate cut-timing/equal-manifest chain</assertionField>
+    <assertionField name="id-15-whole">P — perspective manifests, alignment, version-sequence recovery, and user resolution; no claimed mate cut-timing/equal-manifest chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — camera-perspective fragments and manifests without the same-transition mate-chunk geometry</assertionField>
-    <assertionField name="id-20-delta">P — recovered position sequences without detected timing-combination manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — probabilistic group/colluder recovery without the claimed respective-portion relationship</assertionField>
+    <assertionField name="id-18-delta">P — camera-perspective fragments and manifests without the same-transition mate-chunk geometry</assertionField>
+    <assertionField name="id-19-delta">P — probabilistic group/colluder recovery without the claimed respective-portion relationship</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A4</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00077" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00077">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
-    <assertionField name="document">A5</assertionField>
-    <assertionField name="id-16-whole">P — suspect/reference shot comparison; no manifest ledger or mate timing relationship</assertionField>
-    <assertionField name="id-17-delta">Y — perceptual hashes</assertionField>
-    <assertionField name="id-18-delta">P — hash-distance/key-frame-set comparison; express sliding-window matching not identified</assertionField>
+    <assertionField name="id-15-whole">P — suspect/reference shot comparison; no manifest ledger or mate timing relationship</assertionField>
+    <assertionField name="id-16-delta">Y — perceptual hashes</assertionField>
+    <assertionField name="id-17-delta">P — hash-distance/key-frame-set comparison; express sliding-window matching not identified</assertionField>
+    <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">A5</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00078" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00078">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
-    <assertionField name="document">A6</assertionField>
-    <assertionField name="id-16-whole">P — tailored manifests, temporal-pattern detection, and device resolution; no physical-camera mate or equal reconstructed manifest</assertionField>
+    <assertionField name="id-15-whole">P — tailored manifests, temporal-pattern detection, and device resolution; no physical-camera mate or equal reconstructed manifest</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — manifests and temporal events without matched physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — recipient temporal sequences without reconstructed-manifest representation</assertionField>
-    <assertionField name="id-21-delta">P — colluder identification without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-18-delta">P — manifests and temporal events without matched physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">P — colluder identification without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A6</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00079" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00079">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
-    <assertionField name="document">A7</assertionField>
-    <assertionField name="id-16-whole">P — device-selected segments and tracing; no camera-cut manifest reconstruction</assertionField>
+    <assertionField name="id-15-whole">P — device-selected segments and tracing; no camera-cut manifest reconstruction</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — segment-version combinations without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — version choices without cut-time reconstruction</assertionField>
-    <assertionField name="id-21-delta">P</assertionField>
+    <assertionField name="id-18-delta">P — segment-version combinations without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">P</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00080" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00080">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
-    <assertionField name="document">A8</assertionField>
-    <assertionField name="id-16-whole">P — randomized recipient variants and sequence identification; no claimed manifest-equality chain</assertionField>
+    <assertionField name="id-15-whole">P — randomized recipient variants and sequence identification; no claimed manifest-equality chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — recipient variants without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — variant sequences without cut-time manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — anti-collusion hardening</assertionField>
+    <assertionField name="id-18-delta">P — recipient variants without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">P — anti-collusion hardening</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00081" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00081">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
-    <assertionField name="document">A9</assertionField>
-    <assertionField name="id-16-whole">P — suspect watermark identification and client variants; no camera-cut manifest reconstruction</assertionField>
+    <assertionField name="id-15-whole">P — suspect watermark identification and client variants; no camera-cut manifest reconstruction</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — policy-selected versions without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — client patterns without reconstructed-manifest representation</assertionField>
-    <assertionField name="id-21-delta">P — colluding-source identification without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-18-delta">P — policy-selected versions without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">P — colluding-source identification without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-20-delta">P — colluding-source identification without per-segment fingerprint structure</assertionField>
+    <assertionField name="document">A9</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00082" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00082">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
-    <assertionField name="document">A10</assertionField>
-    <assertionField name="id-16-whole">P — capture and device-mark extraction; no chunk-manifest or camera-cut reconstruction relationship</assertionField>
+    <assertionField name="id-15-whole">P — capture and device-mark extraction; no chunk-manifest or camera-cut reconstruction relationship</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">—</assertionField>
-    <assertionField name="id-20-delta">P — temporal modulation pattern without manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — collusion robustness</assertionField>
+    <assertionField name="id-19-delta">P — collusion robustness</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A10</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00083" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00083">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
-    <assertionField name="document">A11</assertionField>
-    <assertionField name="id-16-whole">—</assertionField>
+    <assertionField name="id-15-whole">—</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">A11</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00084" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00084">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
-    <assertionField name="document">A12</assertionField>
-    <assertionField name="id-16-whole">P — piracy classification; no manifest ledger, mate timing, or equality reconstruction</assertionField>
-    <assertionField name="id-17-delta">P — trained-feature comparison, not perceptual hashes</assertionField>
+    <assertionField name="id-15-whole">P — piracy classification; no manifest ledger, mate timing, or equality reconstruction</assertionField>
+    <assertionField name="id-16-delta">P — trained-feature comparison, not perceptual hashes</assertionField>
+    <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">A12</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00085" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00085">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
-    <assertionField name="document">A13</assertionField>
-    <assertionField name="id-16-whole">P — segment-manifest generation and regeneration from segment identifiers; no scene-change-derived input, mate timing, or recipient equality loop</assertionField>
+    <assertionField name="id-15-whole">P — segment-manifest generation and regeneration from segment identifiers; no scene-change-derived input, mate timing, or recipient equality loop</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — time-aligned segments and manifests without physical-camera mate geometry</assertionField>
-    <assertionField name="id-20-delta">P — manifest generation without recipient cut-timing reconstruction</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — time-aligned segments and manifests without physical-camera mate geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A13</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00086" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00086">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
-    <assertionField name="document">A14</assertionField>
-    <assertionField name="id-16-whole">P — per-user A/B chunks, recipient database, and detection objective; no claimed cut-time equality chain</assertionField>
+    <assertionField name="id-15-whole">P — per-user A/B chunks, recipient database, and detection objective; no claimed cut-time equality chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — A/B chunks without physical-camera transition geometry</assertionField>
-    <assertionField name="id-20-delta">P — per-user selections without reconstructed timing manifest</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — A/B chunks without physical-camera transition geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A14</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00087" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00087">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
-    <assertionField name="document">A15</assertionField>
-    <assertionField name="id-16-whole">P — session-associated manifests; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-15-whole">P — session-associated manifests; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — session manifests without matched mate-chunk geometry</assertionField>
+    <assertionField name="id-18-delta">P — session manifests without matched mate-chunk geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">A15</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00088" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00088">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
-    <assertionField name="document">A16</assertionField>
-    <assertionField name="id-16-whole">P — per-request manifests and recording identifiers; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-15-whole">P — per-request manifests and recording identifiers; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — per-request manifests without matched mate-chunk geometry</assertionField>
-    <assertionField name="id-20-delta">P — manifest choices without cut-time reconstruction</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — per-request manifests without matched mate-chunk geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A16</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00089" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00089">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
-    <assertionField name="document">A17</assertionField>
-    <assertionField name="id-16-whole">P — personalized segments and account records; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-15-whole">P — personalized segments and account records; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — personalized segments without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — personalized choices without cut-time reconstruction</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — personalized segments without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A17</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00090" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00090">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
-    <assertionField name="document">A18</assertionField>
-    <assertionField name="id-16-whole">P — dynamic segments and user-keyed metadata; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-15-whole">P — dynamic segments and user-keyed metadata; no mate camera-cut structure or suspect recovery</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — dynamic segments without physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — dynamic choices without cut-time reconstruction</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — dynamic segments without physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A18</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00091" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00091">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
-    <assertionField name="document">A19</assertionField>
-    <assertionField name="id-16-whole">P — pirate acquisition, extraction, and client identification; no claimed manifest-equality chain</assertionField>
+    <assertionField name="id-15-whole">P — pirate acquisition, extraction, and client identification; no claimed manifest-equality chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — client fingerprints without matched mate-chunk geometry</assertionField>
-    <assertionField name="id-20-delta">P — client patterns without cut-time manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — per-client confidence and pirate-list output without the claimed manifest-sequence and respective-portion relationship</assertionField>
+    <assertionField name="id-18-delta">P — client fingerprints without matched mate-chunk geometry</assertionField>
+    <assertionField name="id-19-delta">P — per-client confidence and pirate-list output without the claimed manifest-sequence and respective-portion relationship</assertionField>
+    <assertionField name="id-20-delta">P — score-based contributor identification without per-segment fingerprints</assertionField>
+    <assertionField name="document">A19</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00092" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00092">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
-    <assertionField name="document">A20</assertionField>
-    <assertionField name="id-16-whole">P — unique EDL versions, source/time fields, consumer registry, and cross-reference analysis; no delivered reference/mate chunk manifests or cut-time reconstruction</assertionField>
+    <assertionField name="id-15-whole">P — unique EDL versions, source/time fields, consumer registry, and cross-reference analysis; no delivered reference/mate chunk manifests or cut-time reconstruction</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — source/time fields and unique versions without matched mate-chunk physical-camera geometry</assertionField>
-    <assertionField name="id-20-delta">P — product signatures without reconstructed timing manifest</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — source/time fields and unique versions without matched mate-chunk physical-camera geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A20</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00093" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00093">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
-    <assertionField name="document">A21</assertionField>
-    <assertionField name="id-16-whole">P — shot-boundary duration-sequence fingerprint and exact database equality; no reference/mate manifests, recipient ledger, or physical-camera production</assertionField>
-    <assertionField name="id-17-delta">P — cumulative-histogram frame comparison, not perceptual hashes</assertionField>
-    <assertionField name="id-18-delta">P — sliding-window boundary detector, not fuzzy matching of perceptual-hash groups</assertionField>
+    <assertionField name="id-15-whole">P — shot-boundary duration-sequence fingerprint and exact database equality; no reference/mate manifests, recipient ledger, or physical-camera production</assertionField>
+    <assertionField name="id-16-delta">P — cumulative-histogram frame comparison, not perceptual hashes</assertionField>
+    <assertionField name="id-17-delta">P — sliding-window boundary detector, not fuzzy matching of perceptual-hash groups</assertionField>
+    <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
-    <assertionField name="id-20-delta">P — cut-duration sequence without a recipient timing-combination manifest</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">A21</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00094" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00094">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
-    <assertionField name="document">B1</assertionField>
-    <assertionField name="id-16-whole">P — provenance metadata recovery; no reference/mate manifest or scene-change reconstruction</assertionField>
+    <assertionField name="id-15-whole">P — provenance metadata recovery; no reference/mate manifest or scene-change reconstruction</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">B1</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00095" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00095">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
+    <assertionField name="id-15-whole">scored with A1</assertionField>
     <assertionField name="document">B2</assertionField>
-    <assertionField name="id-16-whole">scored with A1</assertionField>
-    <assertionField name="id-17-delta" />
-    <assertionField name="id-18-delta" />
-    <assertionField name="id-19-delta" />
-    <assertionField name="id-20-delta" />
-    <assertionField name="id-21-delta" />
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00096" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00096">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
-    <assertionField name="document">B3</assertionField>
-    <assertionField name="id-16-whole">P — watermark capture, extraction, and comparison; no claimed manifest chain</assertionField>
+    <assertionField name="id-15-whole">P — watermark capture, extraction, and comparison; no claimed manifest chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">B3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00097" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00097">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
-    <assertionField name="document">B4</assertionField>
-    <assertionField name="id-16-whole">P — point-of-piracy identification; no reference/mate chunk-manifest reconstruction</assertionField>
+    <assertionField name="id-15-whole">P — point-of-piracy identification; no reference/mate chunk-manifest reconstruction</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">B4</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00098" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00098">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
-    <assertionField name="document">B5</assertionField>
-    <assertionField name="id-16-whole">P — watermark monitoring/alarm; no camera-cut manifest chain</assertionField>
+    <assertionField name="id-15-whole">P — watermark monitoring/alarm; no camera-cut manifest chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
     <assertionField name="id-20-delta">—</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="document">B5</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00099" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00099">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
+    <assertionField name="id-15-whole">P — recipient-local timing variation, hash reacquisition, and contributor search; no physical-camera mate manifest or manifest equality</assertionField>
+    <assertionField name="id-16-delta">P — multimedia hashes/local comparison, not express frame pHash</assertionField>
+    <assertionField name="id-17-delta">P — local tolerant comparison, not express sliding-window groups of perceptual hashes</assertionField>
+    <assertionField name="id-18-delta">P — local timing variants without matched physical-camera mate-chunk geometry</assertionField>
+    <assertionField name="id-19-delta">P — likelihood-based contributor list without the claimed manifest-sequence input and respective-portion output</assertionField>
+    <assertionField name="id-20-delta">P — likelihood-based contributor search without per-segment fingerprints</assertionField>
     <assertionField name="document">B6</assertionField>
-    <assertionField name="id-16-whole">P — recipient-local timing variation, hash reacquisition, and contributor search; no physical-camera mate manifest or manifest equality</assertionField>
-    <assertionField name="id-17-delta">P — multimedia hashes/local comparison, not express frame pHash</assertionField>
-    <assertionField name="id-18-delta">P — local tolerant comparison, not express sliding-window groups of perceptual hashes</assertionField>
-    <assertionField name="id-19-delta">P — local timing variants without matched physical-camera mate-chunk geometry</assertionField>
-    <assertionField name="id-20-delta">P — plural timing patterns without reconstructed-manifest representation</assertionField>
-    <assertionField name="id-21-delta">P — likelihood-based contributor list without the claimed manifest-sequence input and respective-portion output</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00100" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00100">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
-    <assertionField name="document">B7</assertionField>
-    <assertionField name="id-16-whole">P — shot-sequence comparison; no ledger or mate-chunk relationship</assertionField>
-    <assertionField name="id-17-delta">P — shot/reference comparison without hashes</assertionField>
-    <assertionField name="id-18-delta">P — tolerance-based shot comparison, not perceptual-hash sliding windows</assertionField>
+    <assertionField name="id-15-whole">P — shot-sequence comparison; no ledger or mate-chunk relationship</assertionField>
+    <assertionField name="id-16-delta">P — shot/reference comparison without hashes</assertionField>
+    <assertionField name="id-17-delta">P — tolerance-based shot comparison, not perceptual-hash sliding windows</assertionField>
+    <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
-    <assertionField name="id-20-delta">P — detected cut sequence without reconstructed-manifest representation</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">B7</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00101" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00101">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="document">B8</assertionField>
-    <assertionField name="id-16-whole">P — distortion-tolerant relative-time pattern matching; no manifests, recipient ledger, or mate-chunk relationship</assertionField>
-    <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">P — distortion-tolerant timing-pattern comparison, not pHash</assertionField>
+    <assertionField name="id-15-whole">P — distortion-tolerant relative-time pattern matching; no manifests, recipient ledger, or mate-chunk relationship</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
+    <assertionField name="id-17-delta">P — distortion-tolerant timing-pattern comparison, not pHash</assertionField>
+    <assertionField name="id-18-delta">—</assertionField>
     <assertionField name="id-19-delta">—</assertionField>
-    <assertionField name="id-20-delta">P — plural relative-time patterns without reconstructed-manifest representation</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">B8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00102" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00102">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
-    <assertionField name="document">B9</assertionField>
-    <assertionField name="id-16-whole">P — recipient stream combinations and user-different switch times; suspect recovery and physical-camera source relationship not disclosed</assertionField>
+    <assertionField name="id-15-whole">P — recipient stream combinations and user-different switch times; suspect recovery and physical-camera source relationship not disclosed</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — matched-user stream choices and switch timing without physical-camera mate-chunk geometry or equality lookup</assertionField>
-    <assertionField name="id-20-delta">P — plural switch-time choices without reconstructed-manifest representation</assertionField>
-    <assertionField name="id-21-delta">P — collusion-resilient design</assertionField>
+    <assertionField name="id-18-delta">P — matched-user stream choices and switch timing without physical-camera mate-chunk geometry or equality lookup</assertionField>
+    <assertionField name="id-19-delta">P — collusion-resilient design</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">B9</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00103" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00103">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
-    <assertionField name="document">B10</assertionField>
-    <assertionField name="id-16-whole">P — per-user variants, leaked-video detection, and user-code inference; no camera-cut manifest chain</assertionField>
+    <assertionField name="id-15-whole">P — per-user variants, leaked-video detection, and user-code inference; no camera-cut manifest chain</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — delivered variants without physical-camera mate-chunk geometry</assertionField>
-    <assertionField name="id-20-delta">P — user code without cut-time manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">—</assertionField>
+    <assertionField name="id-18-delta">P — delivered variants without physical-camera mate-chunk geometry</assertionField>
+    <assertionField name="id-19-delta">—</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">B10</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00104" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00104">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="document">C8</assertionField>
-    <assertionField name="id-16-whole">P — A/B manifest sequences, account/session patterns, and tracing objective; extraction and camera-cut reconstruction outside scope</assertionField>
+    <assertionField name="id-15-whole">P — A/B manifest sequences, account/session patterns, and tracing objective; extraction and camera-cut reconstruction outside scope</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
-    <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">P — aligned A/B chunks and manifests without physical-camera transition geometry</assertionField>
-    <assertionField name="id-20-delta">P — account/session patterns without detected timing-combination reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — tracing objective</assertionField>
+    <assertionField name="id-18-delta">P — aligned A/B chunks and manifests without physical-camera transition geometry</assertionField>
+    <assertionField name="id-19-delta">P — tracing objective</assertionField>
+    <assertionField name="id-20-delta">—</assertionField>
+    <assertionField name="document">C8</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00105" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00105">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
-    <assertionField name="document">C3</assertionField>
-    <assertionField name="id-16-whole">P — accusation algorithm; no suspect acquisition, reference/mate manifest, or reconstruction loop</assertionField>
+    <assertionField name="id-15-whole">P — accusation algorithm; no suspect acquisition, reference/mate manifest, or reconstruction loop</assertionField>
+    <assertionField name="id-16-delta">—</assertionField>
     <assertionField name="id-17-delta">—</assertionField>
     <assertionField name="id-18-delta">—</assertionField>
-    <assertionField name="id-19-delta">—</assertionField>
-    <assertionField name="id-20-delta">P — code sequence without cut-time manifest reconstruction</assertionField>
-    <assertionField name="id-21-delta">P — thresholded guilty-user output without the claimed manifest-sequence input or respective-portion relationship</assertionField>
+    <assertionField name="id-19-delta">P — thresholded guilty-user output without the claimed manifest-sequence input or respective-portion relationship</assertionField>
+    <assertionField name="id-20-delta">P — Tardos base algorithm; segmented per-segment fingerprint application</assertionField>
+    <assertionField name="document">C3</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00106" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00106">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
+    <assertionField name="id-15-whole">nr — copy outstanding</assertionField>
     <assertionField name="document">C7</assertionField>
-    <assertionField name="id-16-whole">nr — copy outstanding</assertionField>
-    <assertionField name="id-17-delta" />
-    <assertionField name="id-18-delta" />
-    <assertionField name="id-19-delta" />
-    <assertionField name="id-20-delta" />
-    <assertionField name="id-21-delta" />
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00107" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00107">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">A1</assertionField>
-    <assertionField name="id-22-whole">P — assign/deliver/recover loop; no physical-camera production or manifest reconstruction</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — transformed segment copies without physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00108" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00108">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
-    <assertionField name="document">A2</assertionField>
-    <assertionField name="id-22-whole">P — assign-and-trace loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00109" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00109">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
-    <assertionField name="document">A3</assertionField>
-    <assertionField name="id-22-whole">P — multilevel assign-and-trace loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00110" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00110">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
-    <assertionField name="document">A4</assertionField>
-    <assertionField name="id-22-whole">P — camera-perspective manifests, sequence recovery, and user resolution; no moved EDL boundary or equal-manifest reconstruction</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — aligned alternatives without retained physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00111" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00111">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
-    <assertionField name="document">A5</assertionField>
-    <assertionField name="id-22-whole">— — comparison technique only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">P — perceptual hashes and key-frame-set distance; no express sliding-window matching</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00112" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00112">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
-    <assertionField name="document">A6</assertionField>
-    <assertionField name="id-22-whole">P — tailored manifests, temporal detection, and device resolution; no camera-boundary production</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — variable-duration fragments without physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00113" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00113">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
-    <assertionField name="document">A7</assertionField>
-    <assertionField name="id-22-whole">P — device-driven variant delivery/tracing</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00114" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00114">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
-    <assertionField name="document">A8</assertionField>
-    <assertionField name="id-22-whole">P — variant sequence delivery/identification</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00115" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00115">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
-    <assertionField name="document">A9</assertionField>
-    <assertionField name="id-22-whole">P — client variants and collusion detector</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">Y</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00116" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00116">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
-    <assertionField name="document">A10</assertionField>
-    <assertionField name="id-22-whole">P — per-device rendering/capture loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00117" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00117">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
-    <assertionField name="document">A11</assertionField>
-    <assertionField name="id-22-whole">—</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">P — visible overlay</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00118" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00118">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
-    <assertionField name="document">A12</assertionField>
-    <assertionField name="id-22-whole">— — classification technique only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">P — trained-feature comparison, not the claimed pHash/sliding-window combination</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00119" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00119">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
-    <assertionField name="document">A13</assertionField>
-    <assertionField name="id-22-whole">P — segment/manifest generation and regeneration; no complete attribution loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — time-aligned segments without physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00120" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00120">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
-    <assertionField name="document">A14</assertionField>
-    <assertionField name="id-22-whole">P — per-user A/B distribution and record; detection unelaborated</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00121" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00121">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
-    <assertionField name="document">A15</assertionField>
-    <assertionField name="id-22-whole">— — no suspect loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00122" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00122">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
-    <assertionField name="document">A16</assertionField>
-    <assertionField name="id-22-whole">— — no suspect loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — shared-timeline chunks without physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00123" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00123">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
-    <assertionField name="document">A17</assertionField>
-    <assertionField name="id-22-whole">— — no suspect loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00124" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00124">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
-    <assertionField name="document">A18</assertionField>
-    <assertionField name="id-22-whole">— — no suspect loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00125" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00125">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
-    <assertionField name="document">A19</assertionField>
-    <assertionField name="id-22-whole">P — pirate acquisition, scoring, and recipient identification; no production chain</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00126" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00126">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
-    <assertionField name="document">A20</assertionField>
-    <assertionField name="id-22-whole">P — individualized EDL versions, registry, and cross-reference lookup; no claimed camera-boundary/reconstruction chain</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00127" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00127">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
-    <assertionField name="document">A21</assertionField>
-    <assertionField name="id-22-whole">P — shot-boundary duration-sequence fingerprint and exact database equality; no production, delivery, manifests, or recipient ledger</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">P — cumulative-histogram/sliding-window implementation, not the claimed perceptual-hash fuzzy comparison</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P — cut-duration sequence without recipient-associated camera timing choices</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00128" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00128">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
-    <assertionField name="document">B1</assertionField>
-    <assertionField name="id-22-whole">— — codec provenance only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00129" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00129">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
-    <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
-    <assertionField name="document">B2</assertionField>
-    <assertionField name="id-22-whole">scored with A1</assertionField>
-    <assertionField name="id-23" />
-    <assertionField name="id-24" />
-    <assertionField name="id-25" />
-    <assertionField name="id-26" />
-    <assertionField name="id-27" />
-    <assertionField name="id-28" />
-    <assertionField name="id-29" />
-    <assertionField name="id-30" />
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00130" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00130">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
-    <assertionField name="document">B3</assertionField>
-    <assertionField name="id-22-whole">— — watermark monitoring loop only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00131" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00131">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
-    <assertionField name="document">B4</assertionField>
-    <assertionField name="id-22-whole">P — per-playback mark and point-of-piracy loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00132" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00132">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
-    <assertionField name="document">B5</assertionField>
-    <assertionField name="id-22-whole">— — broadcast monitoring only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">—</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00133" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00133">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
-    <assertionField name="document">B6</assertionField>
-    <assertionField name="id-22-whole">P — per-buyer local timing transform, hash reacquisition, contributor search</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">P — multimedia hashes and local comparison; no express frame-pHash sliding windows</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00134" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00134">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
-    <assertionField name="document">B7</assertionField>
-    <assertionField name="id-22-whole">— — shot-comparison technique only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">P — tolerance-based shot comparison, not the claimed pHash/sliding-window combination</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00135" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00135">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="document">B8</assertionField>
-    <assertionField name="id-22-whole">— — relative-time identification only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">P — distortion-tolerant timing comparison, not the claimed pHash/sliding-window combination</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00136" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00136">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
-    <assertionField name="document">B9</assertionField>
-    <assertionField name="id-22-whole">P — key-derived user switching and origin codes; no detection/reconstruction</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — identical segmentation without physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00137" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00137">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
-    <assertionField name="document">B10</assertionField>
-    <assertionField name="id-22-whole">P — per-user modification and leaked-video inference; no claimed camera chain</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">—</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00138" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00138">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="document">C8</assertionField>
-    <assertionField name="id-22-whole">P — standardized A/B session loop</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">P</assertionField>
-    <assertionField name="id-25">P — aligned A/B chunks without physical-camera geometry</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">P</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">P</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00139" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00139">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
-    <assertionField name="document">C3</assertionField>
-    <assertionField name="id-22-whole">— — accusation algorithm only</assertionField>
-    <assertionField name="id-23">—</assertionField>
-    <assertionField name="id-24">—</assertionField>
-    <assertionField name="id-25">—</assertionField>
-    <assertionField name="id-26">—</assertionField>
-    <assertionField name="id-27">—</assertionField>
-    <assertionField name="id-28">P</assertionField>
-    <assertionField name="id-29">P</assertionField>
-    <assertionField name="id-30">—</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-claim-document-mapping-matrix-row-00140" semanticOwner="Applicant — Antonio Rossi" type="claim-document-map" xml:id="aa11393us-na-claim-document-mapping-matrix-row-00140">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="document">C7</assertionField>
-    <assertionField name="id-22-whole">nr — copy outstanding</assertionField>
-    <assertionField name="id-23" />
-    <assertionField name="id-24" />
-    <assertionField name="id-25" />
-    <assertionField name="id-26" />
-    <assertionField name="id-27" />
-    <assertionField name="id-28" />
-    <assertionField name="id-29" />
-    <assertionField name="id-30" />
   </relation>
 </relations>

@@ -1,8 +1,8 @@
 # AA11393US — NA/AF Claim-Revision Plan: Anchor-Focused Reformulation (DRAFT)
 
-> **STRATEGIES NA + AF · PROPOSAL STATUS 30 JULY 2026 · NOT ADOPTED**
+> **STRATEGIES NA + AF · ADOPTED 31 JULY 2026 · OPERATIVE AS NA-2026-07-30-v5 AND AF-2026-07-30-v7**
 >
-> **INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.** This is applicant-prepared analysis, not counsel advice. It proposes complete replacement claim sets for the `AF` and `NA` branches. Nothing in this document is operative: the controlling claim-set versions remain `NA-2026-07-22-v4`, `AF-2026-07-22-v6`, and `AF-CONT-2026-07-22-v2`, with their version-locked companions, and this document modifies no claim set, map, matrix, briefing, crosswalk, navigator content, or shared control. Every conclusion, wording, gate, and adoption step below requires retained US counsel confirmation.
+> **INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.** This is applicant-prepared analysis, not counsel advice. It proposed complete replacement claim sets for the `AF` and `NA` branches. The controlling claim-set versions are now `NA-2026-07-30-v5`, `AF-2026-07-30-v7`, and `AF-CONT-2026-07-22-v2`, with their version-locked companions, adopted per § 9 of this document. Every conclusion, wording, gate, and adopted claim below remains subject to retained US counsel confirmation.
 
 ## 1. Purpose and scope
 

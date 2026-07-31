@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <authored xmlns="urn:aa11393:ssp:content:1" schemaProfile="authored-markdown-v1" schemaVersion="1">
   <documentIdentity documentId="aa11393us-continuation-preservation" />
-  <markdownBinding path="US/common/continuation-controls/AA11393US-continuation-preservation_MEMO.md" rawDigest="sha256/raw:50674d741c3632aafe54208bb785019eec2ba3c21621c0f46c095c11a5166403" size="22113" />
+  <markdownBinding path="US/common/continuation-controls/AA11393US-continuation-preservation_MEMO.md" rawDigest="sha256/raw:6479cb1c5f8b691a308580e3f99931d9a74ec386969cc375b5dce16995ac556d" size="23043" />
   <fragments>
-    <fragment bindingDigest="sha256/raw:1f7a6562c0a2ec27fb88425fb590070562d15c94f75bd8bb818f3715217f793f" bindingKind="document" presentationId="ssp-aa11393us-continuation-preservation-root" semanticPath="$" xml:id="aa11393us-continuation-preservation-root">
-      <excerpt>AA11393US — US Continuation and Coverage Preservation MemoSHARED US CONTINUATION CONTROL · STATUS 23 JULY 2026INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION. The responsible US attorney must confirm current law, the actual benefit chain, copendency, inventorship, support, deadlines, and filing evidence.CONTINUATION STATUS: NOT YET PRESERVED. The controlled-continuation procedure applies whether the ordinary § 371 parent uses NA , AF , or an approved hybrid. No successor filing, filing receipt, or recognized successor benefit relationship is recorded.1. Current architectureThe current US filing direction is ordinary, non-prioritized national-stage entry under 35 U.S.C. § 371 for PCT/IB2025/051755. The same ordinary examination posture applies to each controlled successor.The intended benefit chain is:US provisional 63/557,868, filed 26 February 2024 → PCT/IB2025/051755, filed 19 February 2025 → ordinary § 371 US national-stage parent → ordinary § 111(a) continuation or a divisional when supported by the restriction record.The PCT priority claim and the US national-stage claim to benefit under 35 U.S.C. § 119(e) require official-record verification. Each later application requires counsel-approved relationship wording, a qualifying benefit chain, and copendency. The exact parent claims remain subject to selection of NA , AF , or an approved hybrid under ../README.md . AF-CONT-2026-07-22-v2 is one candidate successor claim set, not the universal continuation procedure. The selected parent topology controls which supported claims remain reserved.2. Pendency ruleFor each generation in which supported, commercially valuable scope remains deliberately deferred, file and verify an approved successor while a qualifying application remains pending, or record an applicant-approved chain-closure decision before that application issues or otherwise loses pendency.A notice of allowance is the ordinary execution trigger. The internal target is filing and verification before or contemporaneously with issue-fee payment. Any threatened abandonment, termination, or other loss of pendency accelerates the trigger. An RCE, continuation, divisional, or continuation-in-part is not interchangeable with another vehicle; counsel must select the vehicle supported by the live record.This control is recursive only while supported, commercially valuable scope remains deferred. A verified successor becomes the next controlled parent when counsel confirms that it qualifies. Otherwise the generation ends with the chain-closure outcome in § 7.3. Controls and completion evidence [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parentA draft ADS, an email instruction, an unpaid transaction, a docket entry, or an unchecked filing receipt does not establish preservation.4. Required live recordThe docket and reservation record must contain only these current fields. [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent5. Claim, support, and disclosure firewallBefore a reserved claim is approved, counsel must record its exact provisional, PCT, and parent support; separate written-description and enablement conclusions; DW-05A Mode A, B, or C; intervening-art consequence; actor and proof posture; and current art assessment. A continuation preserves qualifying pendency only. It does not create disclosure, cure new matter, broaden the provisional, or establish entitlement to an earlier date.Strategy-specific claim text and analysis remain in the versioned NA , AF , and AF-CONT claim sets, support maps, matrices, and crosswalk. This memo does not transfer a support, art, eligibility, infringement, or priority conclusion between strategies.The sole disclosure inventory is AA11393US-US_IDS-reference-list_DRAFT.md . Counsel must decide IDS treatment separately for the § 371 parent and every § 111(a) successor; appearance in the PCT, parent, repository, or another family member does not itself establish consideration in the successor. Public PCT positions remain controlled by AA11393US-PCT_informal-comments-IB_DRAFT.md .Restriction, divisional, § 121 consonance, double patenting, terminal disclaimers, ownership, transactions, shared term, and remaining commercial life must be assessed on the actual parent and successor claims. Reissue is not a controlled substitute for preserving copendency.6. Event workflowAt § 371 parent filing [Decimal] [Period] Record the selected NA , AF , or hybrid topology and every deferred family under CONT-03.Complete CONT-01 and CONT-02 using the filed parent record.Verify the § 119(e) benefit claim, applicant data, filed claims, fees, and shared IDS treatment.During parent prosecution [Decimal] [Period] Update CONT-03 after any amendment, cancellation, restriction/election, new art, support decision, or material business change.Preserve consistent support, priority, art, inventorship, ownership, and IDS positions across every related case.Complete CONT-04 before the ordinary execution trigger or any earlier threat to pendency.At and after successor filing [Decimal] [Period] Complete CONT-05 while qualifying pendency exists.Review the filing receipt and recognized benefit relationship immediately.Complete CONT-06 for the filed generation.Apply CONT-01 through CONT-06 to a next controlled generation only if supported, commercially valuable scope remains deferred.7. Outcome labels CONTINUATION PRESERVED Use only when a successor was filed during qualifying pendency; the submitted papers, fees, and acknowledgment are preserved; the filing receipt and benefit relationship were reviewed; the selected claims have current support and art records; IDS responsibility is assigned; and preserved, omitted, and further-deferred scope is identified. CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED Use only when the applicant and lead US counsel approve no further successor before loss of qualifying pendency and the current record identifies the controlled parent, every relinquished reservation, and the resulting coverage disposition.Until one outcome is fully evidenced, the operative status is NOT YET PRESERVED.8. Escalation conditionsEscalate immediately if the parent may lose pendency; a notice of allowance issues without CONT-04 completion; the issue-fee target approaches while CONT-05 is incomplete; a filing receipt omits or misstates a benefit relationship; desired claims appear to require new matter; inventorship or ownership differs; a restriction/divisional or § 121 position is uncertain; a terminal disclaimer or ownership transaction is proposed; or supported, commercially valuable scope remains deferred without a current parent, owner, docket, successor decision, or chain-closure disposition.9. Authorities for counsel to confirmUSPTO MPEP § 1893 — § 371 national stageUSPTO MPEP § 201.07 — continuation applicationUSPTO MPEP § 211.01(b) — copendencyUSPTO MPEP § 609 — IDS practice in continuing applications35 U.S.C. § 119(e) — provisional benefit35 U.S.C. § 120 — benefit of earlier filing date35 U.S.C. § 121 — divisional applications35 U.S.C. § 365(c) — benefit through an international applicationUSPTO MPEP § 804 — double patenting and § 121 considerationsUSPTO MPEP § 1490 — terminal disclaimers</excerpt>
+    <fragment bindingDigest="sha256/raw:0eae81f0aa09e6696dba2433968ed9ff0a5f3c30183e6eb1bf65477c1438b41f" bindingKind="document" presentationId="ssp-aa11393us-continuation-preservation-root" semanticPath="$" xml:id="aa11393us-continuation-preservation-root">
+      <excerpt>AA11393US — US Continuation and Coverage Preservation MemoSHARED US CONTINUATION CONTROL · STATUS 30 JULY 2026INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION. The responsible US attorney must confirm current law, the actual benefit chain, copendency, inventorship, support, deadlines, and filing evidence.CONTINUATION STATUS: NOT YET PRESERVED. The controlled-continuation procedure applies whether the ordinary § 371 parent uses NA , AF , or an approved hybrid. No successor filing, filing receipt, or recognized successor benefit relationship is recorded.1. Current architectureThe current US filing direction is ordinary, non-prioritized national-stage entry under 35 U.S.C. § 371 for PCT/IB2025/051755. The same ordinary examination posture applies to each controlled successor.The intended benefit chain is:US provisional 63/557,868, filed 26 February 2024 → PCT/IB2025/051755, filed 19 February 2025 → ordinary § 371 US national-stage parent → ordinary § 111(a) continuation or a divisional when supported by the restriction record.The PCT priority claim and the US national-stage claim to benefit under 35 U.S.C. § 119(e) require official-record verification. Each later application requires counsel-approved relationship wording, a qualifying benefit chain, and copendency. The exact parent claims remain subject to selection of NA , AF , or an approved hybrid under ../README.md . AF-CONT-2026-07-22-v2 is one candidate successor claim set, not the universal continuation procedure. The selected parent topology controls which supported claims remain reserved.Following the 30 July 2026 anchor-focused reformulation of the parent candidates ( NA-2026-07-30-v5 , AF-2026-07-30-v7 ), the CONT-03 reserved-scope outline records: (a) the former NA end-to-end method family (former NA claims 22–30), dropped from the amended NA set and reserved as successor subject matter; (b) the former AF blockchain-registration dependent (former AF claim 15), dropped from the amended AF set and reserved; and (c) the folded timing-choice relationships (former NA claims 15 and 20, former AF claims 17 and 20), which are no longer separate reservations because they are recited in the amended independent claims (NA claims 9 and 15; AF claims 1, 17, and 20). The AF claim crosswalk records the per-claim disposition; AF-CONT remains unchanged as the successor baseline pending its own re-baselining decision.2. Pendency ruleFor each generation in which supported, commercially valuable scope remains deliberately deferred, file and verify an approved successor while a qualifying application remains pending, or record an applicant-approved chain-closure decision before that application issues or otherwise loses pendency.A notice of allowance is the ordinary execution trigger. The internal target is filing and verification before or contemporaneously with issue-fee payment. Any threatened abandonment, termination, or other loss of pendency accelerates the trigger. An RCE, continuation, divisional, or continuation-in-part is not interchangeable with another vehicle; counsel must select the vehicle supported by the live record.This control is recursive only while supported, commercially valuable scope remains deferred. A verified successor becomes the next controlled parent when counsel confirms that it qualifies. Otherwise the generation ends with the chain-closure outcome in § 7.3. Controls and completion evidence [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parentA draft ADS, an email instruction, an unpaid transaction, a docket entry, or an unchecked filing receipt does not establish preservation.4. Required live recordThe docket and reservation record must contain only these current fields. [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent5. Claim, support, and disclosure firewallBefore a reserved claim is approved, counsel must record its exact provisional, PCT, and parent support; separate written-description and enablement conclusions; DW-05A Mode A, B, or C; intervening-art consequence; actor and proof posture; and current art assessment. A continuation preserves qualifying pendency only. It does not create disclosure, cure new matter, broaden the provisional, or establish entitlement to an earlier date.Strategy-specific claim text and analysis remain in the versioned NA , AF , and AF-CONT claim sets, support maps, matrices, and crosswalk. This memo does not transfer a support, art, eligibility, infringement, or priority conclusion between strategies.The sole disclosure inventory is AA11393US-US_IDS-reference-list_DRAFT.md . Counsel must decide IDS treatment separately for the § 371 parent and every § 111(a) successor; appearance in the PCT, parent, repository, or another family member does not itself establish consideration in the successor. Public PCT positions remain controlled by AA11393US-PCT_informal-comments-IB_DRAFT.md .Restriction, divisional, § 121 consonance, double patenting, terminal disclaimers, ownership, transactions, shared term, and remaining commercial life must be assessed on the actual parent and successor claims. Reissue is not a controlled substitute for preserving copendency.6. Event workflowAt § 371 parent filing [Decimal] [Period] Record the selected NA , AF , or hybrid topology and every deferred family under CONT-03.Complete CONT-01 and CONT-02 using the filed parent record.Verify the § 119(e) benefit claim, applicant data, filed claims, fees, and shared IDS treatment.During parent prosecution [Decimal] [Period] Update CONT-03 after any amendment, cancellation, restriction/election, new art, support decision, or material business change.Preserve consistent support, priority, art, inventorship, ownership, and IDS positions across every related case.Complete CONT-04 before the ordinary execution trigger or any earlier threat to pendency.At and after successor filing [Decimal] [Period] Complete CONT-05 while qualifying pendency exists.Review the filing receipt and recognized benefit relationship immediately.Complete CONT-06 for the filed generation.Apply CONT-01 through CONT-06 to a next controlled generation only if supported, commercially valuable scope remains deferred.7. Outcome labels CONTINUATION PRESERVED Use only when a successor was filed during qualifying pendency; the submitted papers, fees, and acknowledgment are preserved; the filing receipt and benefit relationship were reviewed; the selected claims have current support and art records; IDS responsibility is assigned; and preserved, omitted, and further-deferred scope is identified. CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED Use only when the applicant and lead US counsel approve no further successor before loss of qualifying pendency and the current record identifies the controlled parent, every relinquished reservation, and the resulting coverage disposition.Until one outcome is fully evidenced, the operative status is NOT YET PRESERVED.8. Escalation conditionsEscalate immediately if the parent may lose pendency; a notice of allowance issues without CONT-04 completion; the issue-fee target approaches while CONT-05 is incomplete; a filing receipt omits or misstates a benefit relationship; desired claims appear to require new matter; inventorship or ownership differs; a restriction/divisional or § 121 position is uncertain; a terminal disclaimer or ownership transaction is proposed; or supported, commercially valuable scope remains deferred without a current parent, owner, docket, successor decision, or chain-closure disposition.9. Authorities for counsel to confirmUSPTO MPEP § 1893 — § 371 national stageUSPTO MPEP § 201.07 — continuation applicationUSPTO MPEP § 211.01(b) — copendencyUSPTO MPEP § 609 — IDS practice in continuing applications35 U.S.C. § 119(e) — provisional benefit35 U.S.C. § 120 — benefit of earlier filing date35 U.S.C. § 121 — divisional applications35 U.S.C. § 365(c) — benefit through an international applicationUSPTO MPEP § 804 — double patenting and § 121 considerationsUSPTO MPEP § 1490 — terminal disclaimers</excerpt>
     </fragment>
     <fragment bindingDigest="sha256/raw:3a52f13ff81033a0a9a779308b3e74ad347d603ae5e6cbcccbe7bc7bd61138a2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00001" semanticPath="block:0" xml:id="aa11393us-continuation-preservation-header-00001">
       <excerpt>AA11393US — US Continuation and Coverage Preservation Memo</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d6b2c03a0dd67c7519c0bc76b1564165ef3cdea540ea23252ee128bf39fce8f3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-blockquote-00002" semanticPath="block:1" xml:id="aa11393us-continuation-preservation-blockquote-00002">
-      <excerpt>SHARED US CONTINUATION CONTROL · STATUS 23 JULY 2026INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION. The responsible US attorney must confirm current law, the actual benefit chain, copendency, inventorship, support, deadlines, and filing evidence.CONTINUATION STATUS: NOT YET PRESERVED. The controlled-continuation procedure applies whether the ordinary § 371 parent uses NA , AF , or an approved hybrid. No successor filing, filing receipt, or recognized successor benefit relationship is recorded.</excerpt>
+    <fragment bindingDigest="sha256/raw:9309c06918f78eff9cfced8b86fcc27d45cd8ea673c75cfb58a033727ee3406a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-blockquote-00002" semanticPath="block:1" xml:id="aa11393us-continuation-preservation-blockquote-00002">
+      <excerpt>SHARED US CONTINUATION CONTROL · STATUS 30 JULY 2026INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION. The responsible US attorney must confirm current law, the actual benefit chain, copendency, inventorship, support, deadlines, and filing evidence.CONTINUATION STATUS: NOT YET PRESERVED. The controlled-continuation procedure applies whether the ordinary § 371 parent uses NA , AF , or an approved hybrid. No successor filing, filing receipt, or recognized successor benefit relationship is recorded.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:4f5555ed943552f9f23099c3af5ab85faff85adf72e02b771330c8536e6846f9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00003" semanticPath="block:2" xml:id="aa11393us-continuation-preservation-para-00003">
-      <excerpt>SHARED US CONTINUATION CONTROL · STATUS 23 JULY 2026</excerpt>
+    <fragment bindingDigest="sha256/raw:7c3613f1dc0b986b6f63d69402f50e954ff3201b221450a6440b53c9c44d7caf" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00003" semanticPath="block:2" xml:id="aa11393us-continuation-preservation-para-00003">
+      <excerpt>SHARED US CONTINUATION CONTROL · STATUS 30 JULY 2026</excerpt>
     </fragment>
     <fragment bindingDigest="sha256/raw:39e0b96c3e2c1f371b10ff8f202e721a2b88223628def959912f4f237e77513e" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00004" semanticPath="block:3" xml:id="aa11393us-continuation-preservation-para-00004">
       <excerpt>INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION. The responsible US attorney must confirm current law, the actual benefit chain, copendency, inventorship, support, deadlines, and filing evidence.</excerpt>
@@ -42,427 +42,427 @@
     <fragment bindingDigest="sha256/raw:30ec8b14db8bfa8a0a71d47727fb9f5e4ba3e6eb000ac2c4005eec81edf7e4f9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00012" semanticPath="block:11" xml:id="aa11393us-continuation-preservation-para-00012">
       <excerpt>AF-CONT-2026-07-22-v2 is one candidate successor claim set, not the universal continuation procedure. The selected parent topology controls which supported claims remain reserved.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d744f91c18523e60d78ae692db3a862e269ae1f425cb6a84900c43b7319adf5a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00013" semanticPath="block:12" xml:id="aa11393us-continuation-preservation-header-00013">
+    <fragment bindingDigest="sha256/raw:d744f91c18523e60d78ae692db3a862e269ae1f425cb6a84900c43b7319adf5a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00013" semanticPath="block:13" xml:id="aa11393us-continuation-preservation-header-00013">
       <excerpt>2. Pendency rule</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:06c266c1e09fe943d9a7ceb53a4da576cf2b3c13935ac6ec1bad20b64f2f8ae0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00014" semanticPath="block:13" xml:id="aa11393us-continuation-preservation-para-00014">
+    <fragment bindingDigest="sha256/raw:06c266c1e09fe943d9a7ceb53a4da576cf2b3c13935ac6ec1bad20b64f2f8ae0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00014" semanticPath="block:14" xml:id="aa11393us-continuation-preservation-para-00014">
       <excerpt>For each generation in which supported, commercially valuable scope remains deliberately deferred, file and verify an approved successor while a qualifying application remains pending, or record an applicant-approved chain-closure decision before that application issues or otherwise loses pendency.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f2c865f6d957f2c9c0e508472093d7052e9064f38fc8f66d0f3910a42f21e3d5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00015" semanticPath="block:14" xml:id="aa11393us-continuation-preservation-para-00015">
+    <fragment bindingDigest="sha256/raw:f2c865f6d957f2c9c0e508472093d7052e9064f38fc8f66d0f3910a42f21e3d5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00015" semanticPath="block:15" xml:id="aa11393us-continuation-preservation-para-00015">
       <excerpt>A notice of allowance is the ordinary execution trigger. The internal target is filing and verification before or contemporaneously with issue-fee payment. Any threatened abandonment, termination, or other loss of pendency accelerates the trigger. An RCE, continuation, divisional, or continuation-in-part is not interchangeable with another vehicle; counsel must select the vehicle supported by the live record.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:4ce759a3af04dbf05c6b2d34b59000a52e75257b69bfeb1be1c9db31ed39c4f4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00016" semanticPath="block:15" xml:id="aa11393us-continuation-preservation-para-00016">
+    <fragment bindingDigest="sha256/raw:4ce759a3af04dbf05c6b2d34b59000a52e75257b69bfeb1be1c9db31ed39c4f4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00016" semanticPath="block:16" xml:id="aa11393us-continuation-preservation-para-00016">
       <excerpt>This control is recursive only while supported, commercially valuable scope remains deferred. A verified successor becomes the next controlled parent when counsel confirms that it qualifies. Otherwise the generation ends with the chain-closure outcome in § 7.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:8652259c3a55227df9863354140e1b8b0663a6833092259b840a3d4338eceb32" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00017" semanticPath="block:16" xml:id="aa11393us-continuation-preservation-header-00017">
+    <fragment bindingDigest="sha256/raw:8652259c3a55227df9863354140e1b8b0663a6833092259b840a3d4338eceb32" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00017" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-header-00017">
       <excerpt>3. Controls and completion evidence</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-00018" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-00018">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-00018" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-00018">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00019" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00019">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00019" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00019">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00025" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00025">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00025" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00025">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00031" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00031">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00031" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00031">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00037" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00037">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00037" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00037">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00043" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00043">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00043" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00043">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00049" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00049">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00049" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00049">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00055" semanticPath="block:17" xml:id="aa11393us-continuation-preservation-table-row-00055">
+    <fragment bindingDigest="sha256/raw:701fa3ff14cb557709cf9e9b7ec41fea78d9b183206b9d2fe1b7c00d47743fa2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00055" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-table-row-00055">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Control [AlignDefault] Current task [AlignDefault] Owner [AlignDefault] Trigger [AlignDefault] Required completion evidence [AlignDefault] CONT-01 [AlignDefault] Identify the controlled parent and verify the complete benefit chain [AlignDefault] Lead US counsel [AlignDefault] At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing [AlignDefault] Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy [AlignDefault] CONT-02 [AlignDefault] Assign the owner, backup, and live docket [AlignDefault] Applicant and lead US counsel [AlignDefault] At § 371 filing and on each later parent designation [AlignDefault] Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation [AlignDefault] CONT-03 [AlignDefault] Record the filed parent claims and every supported reservation [AlignDefault] Prosecuting attorney [AlignDefault] Before parent filing and after each material amendment, election, new reference, or support determination [AlignDefault] One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status [AlignDefault] CONT-04 [AlignDefault] Select and authorize the successor claim family and vehicle [AlignDefault] Lead US counsel with applicant [AlignDefault] Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened [AlignDefault] Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization [AlignDefault] CONT-05 [AlignDefault] Prepare, file, and verify the successor [AlignDefault] Filing attorney and docketing [AlignDefault] Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency [AlignDefault] Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction [AlignDefault] CONT-06 [AlignDefault] Record the generation outcome and next disposition [AlignDefault] Lead US counsel with applicant [AlignDefault] After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency [AlignDefault] CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:985d82d200112dfa8a5525c0d596ef4d7a3e7a3b90486cfccb13242d37f076b7" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00020" semanticPath="block:18" xml:id="aa11393us-continuation-preservation-plain-00020">
+    <fragment bindingDigest="sha256/raw:985d82d200112dfa8a5525c0d596ef4d7a3e7a3b90486cfccb13242d37f076b7" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00020" semanticPath="block:19" xml:id="aa11393us-continuation-preservation-plain-00020">
       <excerpt>Control</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:2bd825572b7411a79cc87b201c2fcb9fd404bd720925fc00b3158f2f441d04c6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00021" semanticPath="block:19" xml:id="aa11393us-continuation-preservation-plain-00021">
+    <fragment bindingDigest="sha256/raw:2bd825572b7411a79cc87b201c2fcb9fd404bd720925fc00b3158f2f441d04c6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00021" semanticPath="block:20" xml:id="aa11393us-continuation-preservation-plain-00021">
       <excerpt>Current task</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b970184da046e87e1c1c9fe7332cdacaf20a912ee7b91d4dcd9f968613d77b3c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00022" semanticPath="block:20" xml:id="aa11393us-continuation-preservation-plain-00022">
+    <fragment bindingDigest="sha256/raw:b970184da046e87e1c1c9fe7332cdacaf20a912ee7b91d4dcd9f968613d77b3c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00022" semanticPath="block:21" xml:id="aa11393us-continuation-preservation-plain-00022">
       <excerpt>Owner</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:5a72a121471803d5fe0f109d76fc3f830df9ecfc8a80b71e343225c843ccbd64" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00023" semanticPath="block:21" xml:id="aa11393us-continuation-preservation-plain-00023">
+    <fragment bindingDigest="sha256/raw:5a72a121471803d5fe0f109d76fc3f830df9ecfc8a80b71e343225c843ccbd64" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00023" semanticPath="block:22" xml:id="aa11393us-continuation-preservation-plain-00023">
       <excerpt>Trigger</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3e4069ce48699b5c498859c6d97389dd817e23e7fbadbda5045774aff8818ff4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00024" semanticPath="block:22" xml:id="aa11393us-continuation-preservation-plain-00024">
+    <fragment bindingDigest="sha256/raw:3e4069ce48699b5c498859c6d97389dd817e23e7fbadbda5045774aff8818ff4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00024" semanticPath="block:23" xml:id="aa11393us-continuation-preservation-plain-00024">
       <excerpt>Required completion evidence</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:300038776c724c693b373d14f0f04f90d08749877b7b4665eda9a8607b88f568" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00026" semanticPath="block:23" xml:id="aa11393us-continuation-preservation-plain-00026">
+    <fragment bindingDigest="sha256/raw:300038776c724c693b373d14f0f04f90d08749877b7b4665eda9a8607b88f568" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00026" semanticPath="block:24" xml:id="aa11393us-continuation-preservation-plain-00026">
       <excerpt>CONT-01</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:0a4ae4ee351abcb4345d14159e39613120439110042ea8958df12ef64c27c367" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00027" semanticPath="block:24" xml:id="aa11393us-continuation-preservation-plain-00027">
+    <fragment bindingDigest="sha256/raw:0a4ae4ee351abcb4345d14159e39613120439110042ea8958df12ef64c27c367" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00027" semanticPath="block:25" xml:id="aa11393us-continuation-preservation-plain-00027">
       <excerpt>Identify the controlled parent and verify the complete benefit chain</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a844ca68aebc17bb9b0bfdd868968d680cab0688c26b83e86608f9fc87451c4b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00028" semanticPath="block:25" xml:id="aa11393us-continuation-preservation-plain-00028">
+    <fragment bindingDigest="sha256/raw:a844ca68aebc17bb9b0bfdd868968d680cab0688c26b83e86608f9fc87451c4b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00028" semanticPath="block:26" xml:id="aa11393us-continuation-preservation-plain-00028">
       <excerpt>Lead US counsel</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f3c7c994a811f55eb6edc82da526b4383c23052b714ad5c3269a8c09d1c2f841" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00029" semanticPath="block:26" xml:id="aa11393us-continuation-preservation-plain-00029">
+    <fragment bindingDigest="sha256/raw:f3c7c994a811f55eb6edc82da526b4383c23052b714ad5c3269a8c09d1c2f841" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00029" semanticPath="block:27" xml:id="aa11393us-continuation-preservation-plain-00029">
       <excerpt>At § 371 filing; on designation of each later controlled parent; before and immediately after successor filing</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:c305b999ef4218fd523f0953a12aea4c192a7707592a2f19591ba45633801f51" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00030" semanticPath="block:27" xml:id="aa11393us-continuation-preservation-plain-00030">
+    <fragment bindingDigest="sha256/raw:c305b999ef4218fd523f0953a12aea4c192a7707592a2f19591ba45633801f51" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00030" semanticPath="block:28" xml:id="aa11393us-continuation-preservation-plain-00030">
       <excerpt>Current chain diagram; official application identifiers and dates; PCT/provisional records; counsel-approved relationship wording; parent pendency confirmation; reviewed filing receipt and correction docket for any discrepancy</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:cedabd1dbc247c976adf01acd16f4338ff1b06e414cde93fcdeb0be98bd50df0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00032" semanticPath="block:28" xml:id="aa11393us-continuation-preservation-plain-00032">
+    <fragment bindingDigest="sha256/raw:cedabd1dbc247c976adf01acd16f4338ff1b06e414cde93fcdeb0be98bd50df0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00032" semanticPath="block:29" xml:id="aa11393us-continuation-preservation-plain-00032">
       <excerpt>CONT-02</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:40b39bcbd2661e1a47ea02c9a11fe4614c1793173d59077a5a31c2309c4aafd1" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00033" semanticPath="block:29" xml:id="aa11393us-continuation-preservation-plain-00033">
+    <fragment bindingDigest="sha256/raw:40b39bcbd2661e1a47ea02c9a11fe4614c1793173d59077a5a31c2309c4aafd1" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00033" semanticPath="block:30" xml:id="aa11393us-continuation-preservation-plain-00033">
       <excerpt>Assign the owner, backup, and live docket</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ae824200663bbc2880dddf10ebabaa4a5035960950e80bf75bb3a4194ae7176a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00034" semanticPath="block:30" xml:id="aa11393us-continuation-preservation-plain-00034">
+    <fragment bindingDigest="sha256/raw:ae824200663bbc2880dddf10ebabaa4a5035960950e80bf75bb3a4194ae7176a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00034" semanticPath="block:31" xml:id="aa11393us-continuation-preservation-plain-00034">
       <excerpt>Applicant and lead US counsel</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:bb109958e172ddccb92ab0ca00b19df4acbaa1f7d9f3ebf92809864553081918" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00035" semanticPath="block:31" xml:id="aa11393us-continuation-preservation-plain-00035">
+    <fragment bindingDigest="sha256/raw:bb109958e172ddccb92ab0ca00b19df4acbaa1f7d9f3ebf92809864553081918" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00035" semanticPath="block:32" xml:id="aa11393us-continuation-preservation-plain-00035">
       <excerpt>At § 371 filing and on each later parent designation</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d8b5cd455d5c79efa1cb66938a3503d97ef9c31c11a1d94be92f9f1e591369ea" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00036" semanticPath="block:32" xml:id="aa11393us-continuation-preservation-plain-00036">
+    <fragment bindingDigest="sha256/raw:d8b5cd455d5c79efa1cb66938a3503d97ef9c31c11a1d94be92f9f1e591369ea" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00036" semanticPath="block:33" xml:id="aa11393us-continuation-preservation-plain-00036">
       <excerpt>Named primary attorney, backup, docketing contact, current parent status, substantive-action review, notice-of-allowance trigger, issue-fee target, internal successor target, and loss-of-pendency escalation</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e65fbdf14ed968b10eea8335b7fb4b7f9d0c0bcf96af206b4a0ee41d868cb4b3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00038" semanticPath="block:33" xml:id="aa11393us-continuation-preservation-plain-00038">
+    <fragment bindingDigest="sha256/raw:e65fbdf14ed968b10eea8335b7fb4b7f9d0c0bcf96af206b4a0ee41d868cb4b3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00038" semanticPath="block:34" xml:id="aa11393us-continuation-preservation-plain-00038">
       <excerpt>CONT-03</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d725fdd200815901e77100641f30703016436c101150a3f1aa9e1d49cd5c90a2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00039" semanticPath="block:34" xml:id="aa11393us-continuation-preservation-plain-00039">
+    <fragment bindingDigest="sha256/raw:d725fdd200815901e77100641f30703016436c101150a3f1aa9e1d49cd5c90a2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00039" semanticPath="block:35" xml:id="aa11393us-continuation-preservation-plain-00039">
       <excerpt>Record the filed parent claims and every supported reservation</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a953300d358de9de8cd4a4968598e29cd85e747a4940dec1584ec049c783bfcc" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00040" semanticPath="block:35" xml:id="aa11393us-continuation-preservation-plain-00040">
+    <fragment bindingDigest="sha256/raw:a953300d358de9de8cd4a4968598e29cd85e747a4940dec1584ec049c783bfcc" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00040" semanticPath="block:36" xml:id="aa11393us-continuation-preservation-plain-00040">
       <excerpt>Prosecuting attorney</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:475407f2614b217232a1fa742f51b8cb403acf5271cfa5d8ae347e6bb82fe13b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00041" semanticPath="block:36" xml:id="aa11393us-continuation-preservation-plain-00041">
+    <fragment bindingDigest="sha256/raw:475407f2614b217232a1fa742f51b8cb403acf5271cfa5d8ae347e6bb82fe13b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00041" semanticPath="block:37" xml:id="aa11393us-continuation-preservation-plain-00041">
       <excerpt>Before parent filing and after each material amendment, election, new reference, or support determination</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:91468726940c2d23498ff5278036658118df4f0b75418c76a9ac66f9616de355" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00042" semanticPath="block:37" xml:id="aa11393us-continuation-preservation-plain-00042">
+    <fragment bindingDigest="sha256/raw:91468726940c2d23498ff5278036658118df4f0b75418c76a9ac66f9616de355" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00042" semanticPath="block:38" xml:id="aa11393us-continuation-preservation-plain-00042">
       <excerpt>One current filed-versus-reserved outline naming the parent strategy/version, exact claim families, claim-as-a-whole support mode, art status, actor, counts, dependencies, and applicant authorization status</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a96f5696b0e87c9192b56697c2a72a07592d186db5dee54ae3a4c7bbec2995ce" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00044" semanticPath="block:38" xml:id="aa11393us-continuation-preservation-plain-00044">
+    <fragment bindingDigest="sha256/raw:a96f5696b0e87c9192b56697c2a72a07592d186db5dee54ae3a4c7bbec2995ce" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00044" semanticPath="block:39" xml:id="aa11393us-continuation-preservation-plain-00044">
       <excerpt>CONT-04</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:97a43e7bd769fc30fa2d6f078e87049b66d5369d803512b87f009faf8e2fee8b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00045" semanticPath="block:39" xml:id="aa11393us-continuation-preservation-plain-00045">
+    <fragment bindingDigest="sha256/raw:97a43e7bd769fc30fa2d6f078e87049b66d5369d803512b87f009faf8e2fee8b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00045" semanticPath="block:40" xml:id="aa11393us-continuation-preservation-plain-00045">
       <excerpt>Select and authorize the successor claim family and vehicle</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b71378b90f94f23edb69013d0f5267d5f8f91c4db3bedcb911535dda2176580f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00046" semanticPath="block:40" xml:id="aa11393us-continuation-preservation-plain-00046">
+    <fragment bindingDigest="sha256/raw:b71378b90f94f23edb69013d0f5267d5f8f91c4db3bedcb911535dda2176580f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00046" semanticPath="block:41" xml:id="aa11393us-continuation-preservation-plain-00046">
       <excerpt>Lead US counsel with applicant</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:1b33e7c79a3e16258d1b24cff3e793a7bafdfe230466815b1521305581e3f88d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00047" semanticPath="block:41" xml:id="aa11393us-continuation-preservation-plain-00047">
+    <fragment bindingDigest="sha256/raw:1b33e7c79a3e16258d1b24cff3e793a7bafdfe230466815b1521305581e3f88d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00047" semanticPath="block:42" xml:id="aa11393us-continuation-preservation-plain-00047">
       <excerpt>Before a support contingency affects the parent; otherwise no later than the notice-of-allowance trigger and earlier if pendency is threatened</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:4063e8551312643f287692986b22e174c5ed38906d354f287cd4eeb78b9fb671" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00048" semanticPath="block:42" xml:id="aa11393us-continuation-preservation-plain-00048">
+    <fragment bindingDigest="sha256/raw:4063e8551312643f287692986b22e174c5ed38906d354f287cd4eeb78b9fb671" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00048" semanticPath="block:43" xml:id="aa11393us-continuation-preservation-plain-00048">
       <excerpt>Written continuation/divisional/other-vehicle decision; selected claims; support and art approval; restriction and § 121 treatment; double-patenting, disclaimer, ownership, transaction, term, fee, and budget assessment; applicant authorization</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:5baaf619b5a21ef88e286654c337007cf8de88f9feabca9f933cff619446e5bb" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00050" semanticPath="block:43" xml:id="aa11393us-continuation-preservation-plain-00050">
+    <fragment bindingDigest="sha256/raw:5baaf619b5a21ef88e286654c337007cf8de88f9feabca9f933cff619446e5bb" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00050" semanticPath="block:44" xml:id="aa11393us-continuation-preservation-plain-00050">
       <excerpt>CONT-05</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3c59653fc2f9e70ebce4d422860a32f036d4f6724d60e72ed475ec3e1bdce74b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00051" semanticPath="block:44" xml:id="aa11393us-continuation-preservation-plain-00051">
+    <fragment bindingDigest="sha256/raw:3c59653fc2f9e70ebce4d422860a32f036d4f6724d60e72ed475ec3e1bdce74b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00051" semanticPath="block:45" xml:id="aa11393us-continuation-preservation-plain-00051">
       <excerpt>Prepare, file, and verify the successor</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:bdae5963acb1747dc85d2c06582ebf65ed4eee08a2baf2a2e900e3ba6ffbec99" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00052" semanticPath="block:45" xml:id="aa11393us-continuation-preservation-plain-00052">
+    <fragment bindingDigest="sha256/raw:bdae5963acb1747dc85d2c06582ebf65ed4eee08a2baf2a2e900e3ba6ffbec99" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00052" semanticPath="block:46" xml:id="aa11393us-continuation-preservation-plain-00052">
       <excerpt>Filing attorney and docketing</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a3af560417a4a8937cf3cfaebf0158bc0a7d0bd48027589ad90bd1aedcdb6c49" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00053" semanticPath="block:46" xml:id="aa11393us-continuation-preservation-plain-00053">
+    <fragment bindingDigest="sha256/raw:a3af560417a4a8937cf3cfaebf0158bc0a7d0bd48027589ad90bd1aedcdb6c49" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00053" semanticPath="block:47" xml:id="aa11393us-continuation-preservation-plain-00053">
       <excerpt>Complete before or contemporaneously with issue-fee payment and always before loss of qualifying pendency</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ec7653b12c244eefdfd0f56ae53c580f38db6567c997332fb948622fa44fe6c9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00054" semanticPath="block:47" xml:id="aa11393us-continuation-preservation-plain-00054">
+    <fragment bindingDigest="sha256/raw:ec7653b12c244eefdfd0f56ae53c580f38db6567c997332fb948622fa44fe6c9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00054" semanticPath="block:48" xml:id="aa11393us-continuation-preservation-plain-00054">
       <excerpt>Submitted specification/drawings and claims; ADS/continuity data; inventorship and assignment review; IDS decision; electronic acknowledgment; application number and filing date; paid-fee record; reviewed filing receipt; recognized benefit relationship or docketed correction</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:50d50cc173b3d14dbe572ef0f6bb2b81f1bdb262cf740abb432873bd89dcba13" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00056" semanticPath="block:48" xml:id="aa11393us-continuation-preservation-plain-00056">
+    <fragment bindingDigest="sha256/raw:50d50cc173b3d14dbe572ef0f6bb2b81f1bdb262cf740abb432873bd89dcba13" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00056" semanticPath="block:49" xml:id="aa11393us-continuation-preservation-plain-00056">
       <excerpt>CONT-06</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:4c561059f4ed1eacee541673915f280ac9d32e517de96d8ada4c7b5b9414b108" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00057" semanticPath="block:49" xml:id="aa11393us-continuation-preservation-plain-00057">
+    <fragment bindingDigest="sha256/raw:4c561059f4ed1eacee541673915f280ac9d32e517de96d8ada4c7b5b9414b108" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00057" semanticPath="block:50" xml:id="aa11393us-continuation-preservation-plain-00057">
       <excerpt>Record the generation outcome and next disposition</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b71378b90f94f23edb69013d0f5267d5f8f91c4db3bedcb911535dda2176580f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00058" semanticPath="block:50" xml:id="aa11393us-continuation-preservation-plain-00058">
+    <fragment bindingDigest="sha256/raw:b71378b90f94f23edb69013d0f5267d5f8f91c4db3bedcb911535dda2176580f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00058" semanticPath="block:51" xml:id="aa11393us-continuation-preservation-plain-00058">
       <excerpt>Lead US counsel with applicant</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:fc1a5b0ce33dbae9ef4160c8634668f326f8d96b272949228006c73732fccff6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00059" semanticPath="block:51" xml:id="aa11393us-continuation-preservation-plain-00059">
+    <fragment bindingDigest="sha256/raw:fc1a5b0ce33dbae9ef4160c8634668f326f8d96b272949228006c73732fccff6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00059" semanticPath="block:52" xml:id="aa11393us-continuation-preservation-plain-00059">
       <excerpt>After CONT-05 verification and whenever the controlled parent approaches issue or loss of pendency</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:20be1036ac6a7670d833a839cf1e94d910de4829f6908c63d575b956b2e33bf0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00060" semanticPath="block:52" xml:id="aa11393us-continuation-preservation-plain-00060">
+    <fragment bindingDigest="sha256/raw:20be1036ac6a7670d833a839cf1e94d910de4829f6908c63d575b956b2e33bf0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00060" semanticPath="block:53" xml:id="aa11393us-continuation-preservation-plain-00060">
       <excerpt>CONTINUATION PRESERVED with the live successor and preserved/omitted families; or CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED with the relinquished scope and approval; designation of any next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:fceacd98d6d76a2fb31619b1d294a3dd88483c5731894483e7cfb8b903cfd677" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00061" semanticPath="block:53" xml:id="aa11393us-continuation-preservation-para-00061">
+    <fragment bindingDigest="sha256/raw:fceacd98d6d76a2fb31619b1d294a3dd88483c5731894483e7cfb8b903cfd677" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00061" semanticPath="block:54" xml:id="aa11393us-continuation-preservation-para-00061">
       <excerpt>A draft ADS, an email instruction, an unpaid transaction, a docket entry, or an unchecked filing receipt does not establish preservation.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b0032ced9b6e40ea5df7a4f7e0cfeaf1ea2d75ad075deaaf43069fb1722b0e75" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00062" semanticPath="block:54" xml:id="aa11393us-continuation-preservation-header-00062">
+    <fragment bindingDigest="sha256/raw:b0032ced9b6e40ea5df7a4f7e0cfeaf1ea2d75ad075deaaf43069fb1722b0e75" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00062" semanticPath="block:55" xml:id="aa11393us-continuation-preservation-header-00062">
       <excerpt>4. Required live record</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f0eed5aba1abd99ce353c901f6a03d6bd89b372133ef85553afeb8c818219b10" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00063" semanticPath="block:55" xml:id="aa11393us-continuation-preservation-para-00063">
+    <fragment bindingDigest="sha256/raw:f0eed5aba1abd99ce353c901f6a03d6bd89b372133ef85553afeb8c818219b10" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00063" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-para-00063">
       <excerpt>The docket and reservation record must contain only these current fields.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-00064" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-00064">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-00064" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-00064">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00065" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00065">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00065" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00065">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00068" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00068">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00068" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00068">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00071" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00071">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00071" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00071">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00074" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00074">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00074" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00074">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00077" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00077">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00077" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00077">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00080" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00080">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00080" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00080">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00083" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00083">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00083" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00083">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00086" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00086">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00086" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00086">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00089" semanticPath="block:56" xml:id="aa11393us-continuation-preservation-table-row-00089">
+    <fragment bindingDigest="sha256/raw:d875efeb2b4e49efb5c456ff7c4dc86446445bdbb9a084339377f4e9d4baab1b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-table-row-00089" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-table-row-00089">
       <excerpt>[AlignDefault] [ColWidthDefault] [AlignDefault] [ColWidthDefault] [AlignDefault] Field [AlignDefault] Required current entry [AlignDefault] Controlled parent [AlignDefault] Application number, filing date, relationship, current pendency, and responsible-attorney confirmation [AlignDefault] Filed parent scope [AlignDefault] Strategy/version and exact current claim topology [AlignDefault] Reserved scope [AlignDefault] Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status [AlignDefault] Owner and trigger [AlignDefault] Primary attorney, backup, docketing contact, and earliest operative filing trigger [AlignDefault] Filing target [AlignDefault] Internal successor date before issue or other loss of qualifying pendency [AlignDefault] Filing evidence [AlignDefault] Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status [AlignDefault] Benefit verification [AlignDefault] Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline [AlignDefault] Outcome [AlignDefault] One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:89127c2955a1146b1dbc9afaaae50e597b8f2dcd84d8186047a05ea1aefc9c9d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00066" semanticPath="block:57" xml:id="aa11393us-continuation-preservation-plain-00066">
+    <fragment bindingDigest="sha256/raw:89127c2955a1146b1dbc9afaaae50e597b8f2dcd84d8186047a05ea1aefc9c9d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00066" semanticPath="block:58" xml:id="aa11393us-continuation-preservation-plain-00066">
       <excerpt>Field</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:fca123fa86e8de951dd5fc665481742c3008093db13dac1df39525b680c74ef3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00067" semanticPath="block:58" xml:id="aa11393us-continuation-preservation-plain-00067">
+    <fragment bindingDigest="sha256/raw:fca123fa86e8de951dd5fc665481742c3008093db13dac1df39525b680c74ef3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00067" semanticPath="block:59" xml:id="aa11393us-continuation-preservation-plain-00067">
       <excerpt>Required current entry</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:08564652eff7d68d007200ce6d3e64daa8b33c80c2314053ccbdfb3b00e9bf9a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00069" semanticPath="block:59" xml:id="aa11393us-continuation-preservation-plain-00069">
+    <fragment bindingDigest="sha256/raw:08564652eff7d68d007200ce6d3e64daa8b33c80c2314053ccbdfb3b00e9bf9a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00069" semanticPath="block:60" xml:id="aa11393us-continuation-preservation-plain-00069">
       <excerpt>Controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ee5b041c7196cefa3e3dbed1a817c6dddfc8458dd302bbddf87f543e685af70f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00070" semanticPath="block:60" xml:id="aa11393us-continuation-preservation-plain-00070">
+    <fragment bindingDigest="sha256/raw:ee5b041c7196cefa3e3dbed1a817c6dddfc8458dd302bbddf87f543e685af70f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00070" semanticPath="block:61" xml:id="aa11393us-continuation-preservation-plain-00070">
       <excerpt>Application number, filing date, relationship, current pendency, and responsible-attorney confirmation</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a46ebc292c8ab53397ef4e57162b504649f12c4596fd8764574198c7c46fd4ec" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00072" semanticPath="block:61" xml:id="aa11393us-continuation-preservation-plain-00072">
+    <fragment bindingDigest="sha256/raw:a46ebc292c8ab53397ef4e57162b504649f12c4596fd8764574198c7c46fd4ec" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00072" semanticPath="block:62" xml:id="aa11393us-continuation-preservation-plain-00072">
       <excerpt>Filed parent scope</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:7b42c8ac95db1710142003004f132adec1cdd14bfcb7d297709b6f465e3bc639" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00073" semanticPath="block:62" xml:id="aa11393us-continuation-preservation-plain-00073">
+    <fragment bindingDigest="sha256/raw:7b42c8ac95db1710142003004f132adec1cdd14bfcb7d297709b6f465e3bc639" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00073" semanticPath="block:63" xml:id="aa11393us-continuation-preservation-plain-00073">
       <excerpt>Strategy/version and exact current claim topology</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3d72c360488666386701b6a14972c8dd96cc86c3c6c1f89b2b6cb86cba4bce20" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00075" semanticPath="block:63" xml:id="aa11393us-continuation-preservation-plain-00075">
+    <fragment bindingDigest="sha256/raw:3d72c360488666386701b6a14972c8dd96cc86c3c6c1f89b2b6cb86cba4bce20" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00075" semanticPath="block:64" xml:id="aa11393us-continuation-preservation-plain-00075">
       <excerpt>Reserved scope</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:cc97af0669dbbde3151ab4c0439426cbd12a4597f050411e111e1a2e47477b1d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00076" semanticPath="block:64" xml:id="aa11393us-continuation-preservation-plain-00076">
+    <fragment bindingDigest="sha256/raw:cc97af0669dbbde3151ab4c0439426cbd12a4597f050411e111e1a2e47477b1d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00076" semanticPath="block:65" xml:id="aa11393us-continuation-preservation-plain-00076">
       <excerpt>Exact current claim outline, support mode, art status, actor, parent-versus-successor placement, and authorization status</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:da78e3959a87aff4f88ee558543529c22740b86cab9d0dd9fff59814e232316c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00078" semanticPath="block:65" xml:id="aa11393us-continuation-preservation-plain-00078">
+    <fragment bindingDigest="sha256/raw:da78e3959a87aff4f88ee558543529c22740b86cab9d0dd9fff59814e232316c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00078" semanticPath="block:66" xml:id="aa11393us-continuation-preservation-plain-00078">
       <excerpt>Owner and trigger</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:7be37726887d3e8cc066fc991d86516e34de5221cac049ed1b494d1d2b7ab615" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00079" semanticPath="block:66" xml:id="aa11393us-continuation-preservation-plain-00079">
+    <fragment bindingDigest="sha256/raw:7be37726887d3e8cc066fc991d86516e34de5221cac049ed1b494d1d2b7ab615" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00079" semanticPath="block:67" xml:id="aa11393us-continuation-preservation-plain-00079">
       <excerpt>Primary attorney, backup, docketing contact, and earliest operative filing trigger</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b4f8aa118709ed51ba2bd48e286bb819669c83a1b882be39f8fc8f8c188adff5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00081" semanticPath="block:67" xml:id="aa11393us-continuation-preservation-plain-00081">
+    <fragment bindingDigest="sha256/raw:b4f8aa118709ed51ba2bd48e286bb819669c83a1b882be39f8fc8f8c188adff5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00081" semanticPath="block:68" xml:id="aa11393us-continuation-preservation-plain-00081">
       <excerpt>Filing target</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:04cdb6d0671a24307acbb3731a10205c43cf107c5991a38003bb301739b5bcba" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00082" semanticPath="block:68" xml:id="aa11393us-continuation-preservation-plain-00082">
+    <fragment bindingDigest="sha256/raw:04cdb6d0671a24307acbb3731a10205c43cf107c5991a38003bb301739b5bcba" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00082" semanticPath="block:69" xml:id="aa11393us-continuation-preservation-plain-00082">
       <excerpt>Internal successor date before issue or other loss of qualifying pendency</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:6cffdf04911dfa90adda5da9485d233b690ee21ff0128c75899062423b68544d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00084" semanticPath="block:69" xml:id="aa11393us-continuation-preservation-plain-00084">
+    <fragment bindingDigest="sha256/raw:6cffdf04911dfa90adda5da9485d233b690ee21ff0128c75899062423b68544d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00084" semanticPath="block:70" xml:id="aa11393us-continuation-preservation-plain-00084">
       <excerpt>Filing evidence</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:8020c1a1e5a5c9a7a82d663e9fda939ce7d15982e464a9024d63d862e7af762b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00085" semanticPath="block:70" xml:id="aa11393us-continuation-preservation-plain-00085">
+    <fragment bindingDigest="sha256/raw:8020c1a1e5a5c9a7a82d663e9fda939ce7d15982e464a9024d63d862e7af762b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00085" semanticPath="block:71" xml:id="aa11393us-continuation-preservation-plain-00085">
       <excerpt>Electronic acknowledgment, application number, filing date, submitted papers, fees, and contemporaneous parent status</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:222097be77b143f3533910a3f91cde36202da6255a32ca30cc7fc6517052f658" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00087" semanticPath="block:71" xml:id="aa11393us-continuation-preservation-plain-00087">
+    <fragment bindingDigest="sha256/raw:222097be77b143f3533910a3f91cde36202da6255a32ca30cc7fc6517052f658" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00087" semanticPath="block:72" xml:id="aa11393us-continuation-preservation-plain-00087">
       <excerpt>Benefit verification</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f624b0190dc628d318b53b5cea6e9563fa54961b1f3b915384da8f3f447dc93b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00088" semanticPath="block:72" xml:id="aa11393us-continuation-preservation-plain-00088">
+    <fragment bindingDigest="sha256/raw:f624b0190dc628d318b53b5cea6e9563fa54961b1f3b915384da8f3f447dc93b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00088" semanticPath="block:73" xml:id="aa11393us-continuation-preservation-plain-00088">
       <excerpt>Filing-receipt relationship, recognized chain, discrepancy owner, correction vehicle, and correction deadline</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e606bfbf6fc94013d49f6df087036db06ce9f186f4a66e397290c6706282afa9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00090" semanticPath="block:73" xml:id="aa11393us-continuation-preservation-plain-00090">
+    <fragment bindingDigest="sha256/raw:e606bfbf6fc94013d49f6df087036db06ce9f186f4a66e397290c6706282afa9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00090" semanticPath="block:74" xml:id="aa11393us-continuation-preservation-plain-00090">
       <excerpt>Outcome</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:431a2b498609e9acbacc737a2f80888bb9e238f37385ae3c33c4de833b6a85c7" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00091" semanticPath="block:74" xml:id="aa11393us-continuation-preservation-plain-00091">
+    <fragment bindingDigest="sha256/raw:431a2b498609e9acbacc737a2f80888bb9e238f37385ae3c33c4de833b6a85c7" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00091" semanticPath="block:75" xml:id="aa11393us-continuation-preservation-plain-00091">
       <excerpt>One § 7 label and, when applicable, the next controlled parent</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:cbd98915e98ee333578fe66fa0ca24431fbefc9b3d3249ac0ab1841e992ec1f7" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00092" semanticPath="block:75" xml:id="aa11393us-continuation-preservation-header-00092">
+    <fragment bindingDigest="sha256/raw:cbd98915e98ee333578fe66fa0ca24431fbefc9b3d3249ac0ab1841e992ec1f7" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00092" semanticPath="block:76" xml:id="aa11393us-continuation-preservation-header-00092">
       <excerpt>5. Claim, support, and disclosure firewall</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ea30a5360d95e3c482b26055541b91faaf26e2c19b8592f3e983541d37b9f59a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00093" semanticPath="block:76" xml:id="aa11393us-continuation-preservation-para-00093">
+    <fragment bindingDigest="sha256/raw:ea30a5360d95e3c482b26055541b91faaf26e2c19b8592f3e983541d37b9f59a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00093" semanticPath="block:77" xml:id="aa11393us-continuation-preservation-para-00093">
       <excerpt>Before a reserved claim is approved, counsel must record its exact provisional, PCT, and parent support; separate written-description and enablement conclusions; DW-05A Mode A, B, or C; intervening-art consequence; actor and proof posture; and current art assessment. A continuation preserves qualifying pendency only. It does not create disclosure, cure new matter, broaden the provisional, or establish entitlement to an earlier date.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:74c5fc85cb240c55dc25677ff04c406d7329b8e791aeb144d30bad388e64cbf2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00094" semanticPath="block:77" xml:id="aa11393us-continuation-preservation-para-00094">
+    <fragment bindingDigest="sha256/raw:74c5fc85cb240c55dc25677ff04c406d7329b8e791aeb144d30bad388e64cbf2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00094" semanticPath="block:78" xml:id="aa11393us-continuation-preservation-para-00094">
       <excerpt>Strategy-specific claim text and analysis remain in the versioned NA , AF , and AF-CONT claim sets, support maps, matrices, and crosswalk. This memo does not transfer a support, art, eligibility, infringement, or priority conclusion between strategies.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:5a5530b3b2561817ffa357e58b303d61a5b95a1e2d6b6c8b09801fc67c252127" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00095" semanticPath="block:78" xml:id="aa11393us-continuation-preservation-para-00095">
+    <fragment bindingDigest="sha256/raw:5a5530b3b2561817ffa357e58b303d61a5b95a1e2d6b6c8b09801fc67c252127" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00095" semanticPath="block:79" xml:id="aa11393us-continuation-preservation-para-00095">
       <excerpt>The sole disclosure inventory is AA11393US-US_IDS-reference-list_DRAFT.md . Counsel must decide IDS treatment separately for the § 371 parent and every § 111(a) successor; appearance in the PCT, parent, repository, or another family member does not itself establish consideration in the successor. Public PCT positions remain controlled by AA11393US-PCT_informal-comments-IB_DRAFT.md .</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:aa5fd1e91cb010e1a2934c8df2aa19cd921721c28bb2df34e49da8d8ee423565" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00096" semanticPath="block:79" xml:id="aa11393us-continuation-preservation-para-00096">
+    <fragment bindingDigest="sha256/raw:aa5fd1e91cb010e1a2934c8df2aa19cd921721c28bb2df34e49da8d8ee423565" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00096" semanticPath="block:80" xml:id="aa11393us-continuation-preservation-para-00096">
       <excerpt>Restriction, divisional, § 121 consonance, double patenting, terminal disclaimers, ownership, transactions, shared term, and remaining commercial life must be assessed on the actual parent and successor claims. Reissue is not a controlled substitute for preserving copendency.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:c31c9d9840a7ecc6f8230a585d5bdb44021213fed21a3b5f9b62b7168096792f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00097" semanticPath="block:80" xml:id="aa11393us-continuation-preservation-header-00097">
+    <fragment bindingDigest="sha256/raw:c31c9d9840a7ecc6f8230a585d5bdb44021213fed21a3b5f9b62b7168096792f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00097" semanticPath="block:81" xml:id="aa11393us-continuation-preservation-header-00097">
       <excerpt>6. Event workflow</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b417c9fe5900758b9a08fdd87b6606f0a1614f3adeb5c8391876e7e21b96164f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00098" semanticPath="block:81" xml:id="aa11393us-continuation-preservation-header-00098">
+    <fragment bindingDigest="sha256/raw:b417c9fe5900758b9a08fdd87b6606f0a1614f3adeb5c8391876e7e21b96164f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00098" semanticPath="block:82" xml:id="aa11393us-continuation-preservation-header-00098">
       <excerpt>At § 371 parent filing</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f8f6ae9d12dfde726d20075a97253a0be0b282ea75be26262913f3f32415dd55" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-orderedlist-00099" semanticPath="block:83" xml:id="aa11393us-continuation-preservation-orderedlist-00099">
+    <fragment bindingDigest="sha256/raw:f8f6ae9d12dfde726d20075a97253a0be0b282ea75be26262913f3f32415dd55" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-orderedlist-00099" semanticPath="block:84" xml:id="aa11393us-continuation-preservation-orderedlist-00099">
       <excerpt>Record the selected NA , AF , or hybrid topology and every deferred family under CONT-03.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f8f6ae9d12dfde726d20075a97253a0be0b282ea75be26262913f3f32415dd55" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00100" semanticPath="block:83" xml:id="aa11393us-continuation-preservation-list-item-00100">
+    <fragment bindingDigest="sha256/raw:f8f6ae9d12dfde726d20075a97253a0be0b282ea75be26262913f3f32415dd55" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00100" semanticPath="block:84" xml:id="aa11393us-continuation-preservation-list-item-00100">
       <excerpt>Record the selected NA , AF , or hybrid topology and every deferred family under CONT-03.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f8f6ae9d12dfde726d20075a97253a0be0b282ea75be26262913f3f32415dd55" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00101" semanticPath="block:83" xml:id="aa11393us-continuation-preservation-plain-00101">
+    <fragment bindingDigest="sha256/raw:f8f6ae9d12dfde726d20075a97253a0be0b282ea75be26262913f3f32415dd55" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00101" semanticPath="block:84" xml:id="aa11393us-continuation-preservation-plain-00101">
       <excerpt>Record the selected NA , AF , or hybrid topology and every deferred family under CONT-03.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d85ea1f7fb6c6d1e7cc313902ad9dbfecbc21199f060eef4a6896ba122916ee6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00102" semanticPath="block:84" xml:id="aa11393us-continuation-preservation-list-item-00102">
+    <fragment bindingDigest="sha256/raw:d85ea1f7fb6c6d1e7cc313902ad9dbfecbc21199f060eef4a6896ba122916ee6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00102" semanticPath="block:85" xml:id="aa11393us-continuation-preservation-list-item-00102">
       <excerpt>Complete CONT-01 and CONT-02 using the filed parent record.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:d85ea1f7fb6c6d1e7cc313902ad9dbfecbc21199f060eef4a6896ba122916ee6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00103" semanticPath="block:84" xml:id="aa11393us-continuation-preservation-plain-00103">
+    <fragment bindingDigest="sha256/raw:d85ea1f7fb6c6d1e7cc313902ad9dbfecbc21199f060eef4a6896ba122916ee6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00103" semanticPath="block:85" xml:id="aa11393us-continuation-preservation-plain-00103">
       <excerpt>Complete CONT-01 and CONT-02 using the filed parent record.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:836448c80c72de2d627bfc61ff8205f548dd641fa6df3498379473acf5c6a628" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00104" semanticPath="block:85" xml:id="aa11393us-continuation-preservation-list-item-00104">
+    <fragment bindingDigest="sha256/raw:836448c80c72de2d627bfc61ff8205f548dd641fa6df3498379473acf5c6a628" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00104" semanticPath="block:86" xml:id="aa11393us-continuation-preservation-list-item-00104">
       <excerpt>Verify the § 119(e) benefit claim, applicant data, filed claims, fees, and shared IDS treatment.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:836448c80c72de2d627bfc61ff8205f548dd641fa6df3498379473acf5c6a628" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00105" semanticPath="block:85" xml:id="aa11393us-continuation-preservation-plain-00105">
+    <fragment bindingDigest="sha256/raw:836448c80c72de2d627bfc61ff8205f548dd641fa6df3498379473acf5c6a628" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00105" semanticPath="block:86" xml:id="aa11393us-continuation-preservation-plain-00105">
       <excerpt>Verify the § 119(e) benefit claim, applicant data, filed claims, fees, and shared IDS treatment.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e078eab7522af44c48b7d14cf5f4fc628c3b30c41e349f20eca466b12a5042e8" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00106" semanticPath="block:86" xml:id="aa11393us-continuation-preservation-header-00106">
+    <fragment bindingDigest="sha256/raw:e078eab7522af44c48b7d14cf5f4fc628c3b30c41e349f20eca466b12a5042e8" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00106" semanticPath="block:87" xml:id="aa11393us-continuation-preservation-header-00106">
       <excerpt>During parent prosecution</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3517d27dc1056ae1d359db182395e33cf17521ada0f1435a71d11626641d0d2d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-orderedlist-00107" semanticPath="block:88" xml:id="aa11393us-continuation-preservation-orderedlist-00107">
+    <fragment bindingDigest="sha256/raw:3517d27dc1056ae1d359db182395e33cf17521ada0f1435a71d11626641d0d2d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-orderedlist-00107" semanticPath="block:89" xml:id="aa11393us-continuation-preservation-orderedlist-00107">
       <excerpt>Update CONT-03 after any amendment, cancellation, restriction/election, new art, support decision, or material business change.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3517d27dc1056ae1d359db182395e33cf17521ada0f1435a71d11626641d0d2d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00108" semanticPath="block:88" xml:id="aa11393us-continuation-preservation-list-item-00108">
+    <fragment bindingDigest="sha256/raw:3517d27dc1056ae1d359db182395e33cf17521ada0f1435a71d11626641d0d2d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00108" semanticPath="block:89" xml:id="aa11393us-continuation-preservation-list-item-00108">
       <excerpt>Update CONT-03 after any amendment, cancellation, restriction/election, new art, support decision, or material business change.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3517d27dc1056ae1d359db182395e33cf17521ada0f1435a71d11626641d0d2d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00109" semanticPath="block:88" xml:id="aa11393us-continuation-preservation-plain-00109">
+    <fragment bindingDigest="sha256/raw:3517d27dc1056ae1d359db182395e33cf17521ada0f1435a71d11626641d0d2d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00109" semanticPath="block:89" xml:id="aa11393us-continuation-preservation-plain-00109">
       <excerpt>Update CONT-03 after any amendment, cancellation, restriction/election, new art, support decision, or material business change.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:57e1495d1d7ced65574fb09884aa1b0170f86fa6189cad34ca64670bd9dcb396" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00110" semanticPath="block:89" xml:id="aa11393us-continuation-preservation-list-item-00110">
+    <fragment bindingDigest="sha256/raw:57e1495d1d7ced65574fb09884aa1b0170f86fa6189cad34ca64670bd9dcb396" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00110" semanticPath="block:90" xml:id="aa11393us-continuation-preservation-list-item-00110">
       <excerpt>Preserve consistent support, priority, art, inventorship, ownership, and IDS positions across every related case.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:57e1495d1d7ced65574fb09884aa1b0170f86fa6189cad34ca64670bd9dcb396" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00111" semanticPath="block:89" xml:id="aa11393us-continuation-preservation-plain-00111">
+    <fragment bindingDigest="sha256/raw:57e1495d1d7ced65574fb09884aa1b0170f86fa6189cad34ca64670bd9dcb396" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00111" semanticPath="block:90" xml:id="aa11393us-continuation-preservation-plain-00111">
       <excerpt>Preserve consistent support, priority, art, inventorship, ownership, and IDS positions across every related case.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b4d6778a03d70e878fcb1cd9f27b7e1aaf15701bd98dbcc1a27a8d34f8f3a1d5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00112" semanticPath="block:90" xml:id="aa11393us-continuation-preservation-list-item-00112">
+    <fragment bindingDigest="sha256/raw:b4d6778a03d70e878fcb1cd9f27b7e1aaf15701bd98dbcc1a27a8d34f8f3a1d5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00112" semanticPath="block:91" xml:id="aa11393us-continuation-preservation-list-item-00112">
       <excerpt>Complete CONT-04 before the ordinary execution trigger or any earlier threat to pendency.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b4d6778a03d70e878fcb1cd9f27b7e1aaf15701bd98dbcc1a27a8d34f8f3a1d5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00113" semanticPath="block:90" xml:id="aa11393us-continuation-preservation-plain-00113">
+    <fragment bindingDigest="sha256/raw:b4d6778a03d70e878fcb1cd9f27b7e1aaf15701bd98dbcc1a27a8d34f8f3a1d5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00113" semanticPath="block:91" xml:id="aa11393us-continuation-preservation-plain-00113">
       <excerpt>Complete CONT-04 before the ordinary execution trigger or any earlier threat to pendency.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e26ca52249dff6be141bd420bb2066deedfd241b25871cd9cdd572fa21ab722b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00114" semanticPath="block:91" xml:id="aa11393us-continuation-preservation-header-00114">
+    <fragment bindingDigest="sha256/raw:e26ca52249dff6be141bd420bb2066deedfd241b25871cd9cdd572fa21ab722b" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00114" semanticPath="block:92" xml:id="aa11393us-continuation-preservation-header-00114">
       <excerpt>At and after successor filing</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ac7c1b32a287400faa729ed6598656cda75b11c692b3316ede83ed168df52518" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-orderedlist-00115" semanticPath="block:93" xml:id="aa11393us-continuation-preservation-orderedlist-00115">
+    <fragment bindingDigest="sha256/raw:ac7c1b32a287400faa729ed6598656cda75b11c692b3316ede83ed168df52518" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-orderedlist-00115" semanticPath="block:94" xml:id="aa11393us-continuation-preservation-orderedlist-00115">
       <excerpt>Complete CONT-05 while qualifying pendency exists.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ac7c1b32a287400faa729ed6598656cda75b11c692b3316ede83ed168df52518" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00116" semanticPath="block:93" xml:id="aa11393us-continuation-preservation-list-item-00116">
+    <fragment bindingDigest="sha256/raw:ac7c1b32a287400faa729ed6598656cda75b11c692b3316ede83ed168df52518" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00116" semanticPath="block:94" xml:id="aa11393us-continuation-preservation-list-item-00116">
       <excerpt>Complete CONT-05 while qualifying pendency exists.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ac7c1b32a287400faa729ed6598656cda75b11c692b3316ede83ed168df52518" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00117" semanticPath="block:93" xml:id="aa11393us-continuation-preservation-plain-00117">
+    <fragment bindingDigest="sha256/raw:ac7c1b32a287400faa729ed6598656cda75b11c692b3316ede83ed168df52518" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00117" semanticPath="block:94" xml:id="aa11393us-continuation-preservation-plain-00117">
       <excerpt>Complete CONT-05 while qualifying pendency exists.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f0f6bb6820f60f9789b1f4990714585e490a17f637836f5d8515f35c4e3688ea" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00118" semanticPath="block:94" xml:id="aa11393us-continuation-preservation-list-item-00118">
+    <fragment bindingDigest="sha256/raw:f0f6bb6820f60f9789b1f4990714585e490a17f637836f5d8515f35c4e3688ea" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00118" semanticPath="block:95" xml:id="aa11393us-continuation-preservation-list-item-00118">
       <excerpt>Review the filing receipt and recognized benefit relationship immediately.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f0f6bb6820f60f9789b1f4990714585e490a17f637836f5d8515f35c4e3688ea" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00119" semanticPath="block:94" xml:id="aa11393us-continuation-preservation-plain-00119">
+    <fragment bindingDigest="sha256/raw:f0f6bb6820f60f9789b1f4990714585e490a17f637836f5d8515f35c4e3688ea" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00119" semanticPath="block:95" xml:id="aa11393us-continuation-preservation-plain-00119">
       <excerpt>Review the filing receipt and recognized benefit relationship immediately.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e4bcec015b897855d4996931c94ae1e033e45f8f382d51f9222da0ed3dc26381" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00120" semanticPath="block:95" xml:id="aa11393us-continuation-preservation-list-item-00120">
+    <fragment bindingDigest="sha256/raw:e4bcec015b897855d4996931c94ae1e033e45f8f382d51f9222da0ed3dc26381" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00120" semanticPath="block:96" xml:id="aa11393us-continuation-preservation-list-item-00120">
       <excerpt>Complete CONT-06 for the filed generation.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e4bcec015b897855d4996931c94ae1e033e45f8f382d51f9222da0ed3dc26381" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00121" semanticPath="block:95" xml:id="aa11393us-continuation-preservation-plain-00121">
+    <fragment bindingDigest="sha256/raw:e4bcec015b897855d4996931c94ae1e033e45f8f382d51f9222da0ed3dc26381" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00121" semanticPath="block:96" xml:id="aa11393us-continuation-preservation-plain-00121">
       <excerpt>Complete CONT-06 for the filed generation.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:285bdd31f3e0030f7551efedd060c5d41ffd064254fc586c4ea94055feb83beb" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00122" semanticPath="block:96" xml:id="aa11393us-continuation-preservation-list-item-00122">
+    <fragment bindingDigest="sha256/raw:285bdd31f3e0030f7551efedd060c5d41ffd064254fc586c4ea94055feb83beb" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00122" semanticPath="block:97" xml:id="aa11393us-continuation-preservation-list-item-00122">
       <excerpt>Apply CONT-01 through CONT-06 to a next controlled generation only if supported, commercially valuable scope remains deferred.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:285bdd31f3e0030f7551efedd060c5d41ffd064254fc586c4ea94055feb83beb" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00123" semanticPath="block:96" xml:id="aa11393us-continuation-preservation-plain-00123">
+    <fragment bindingDigest="sha256/raw:285bdd31f3e0030f7551efedd060c5d41ffd064254fc586c4ea94055feb83beb" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00123" semanticPath="block:97" xml:id="aa11393us-continuation-preservation-plain-00123">
       <excerpt>Apply CONT-01 through CONT-06 to a next controlled generation only if supported, commercially valuable scope remains deferred.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:2067101aec6f34e8a09a83f07c267df38447c1562b8b09a1957d24e90e00af54" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00124" semanticPath="block:97" xml:id="aa11393us-continuation-preservation-header-00124">
+    <fragment bindingDigest="sha256/raw:2067101aec6f34e8a09a83f07c267df38447c1562b8b09a1957d24e90e00af54" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00124" semanticPath="block:98" xml:id="aa11393us-continuation-preservation-header-00124">
       <excerpt>7. Outcome labels</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:f86835d5d65eb557faf7a1bfd3d4fc3d37a3ff7c71d5db3e72ca79f0a45f64c2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00125" semanticPath="block:98" xml:id="aa11393us-continuation-preservation-header-00125">
+    <fragment bindingDigest="sha256/raw:f86835d5d65eb557faf7a1bfd3d4fc3d37a3ff7c71d5db3e72ca79f0a45f64c2" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00125" semanticPath="block:99" xml:id="aa11393us-continuation-preservation-header-00125">
       <excerpt>CONTINUATION PRESERVED</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:9027eefa4e2c54122a0606b4df4166f46aebe34e53861c5e1b8b7a6bb8f82d2a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00126" semanticPath="block:99" xml:id="aa11393us-continuation-preservation-para-00126">
+    <fragment bindingDigest="sha256/raw:9027eefa4e2c54122a0606b4df4166f46aebe34e53861c5e1b8b7a6bb8f82d2a" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00126" semanticPath="block:100" xml:id="aa11393us-continuation-preservation-para-00126">
       <excerpt>Use only when a successor was filed during qualifying pendency; the submitted papers, fees, and acknowledgment are preserved; the filing receipt and benefit relationship were reviewed; the selected claims have current support and art records; IDS responsibility is assigned; and preserved, omitted, and further-deferred scope is identified.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b189ef3ecfadb8a992d418ea36478782e3be61112765c4f6031d42aebd35794f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00127" semanticPath="block:100" xml:id="aa11393us-continuation-preservation-header-00127">
+    <fragment bindingDigest="sha256/raw:b189ef3ecfadb8a992d418ea36478782e3be61112765c4f6031d42aebd35794f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00127" semanticPath="block:101" xml:id="aa11393us-continuation-preservation-header-00127">
       <excerpt>CHAIN CLOSED — DEFERRED SCOPE NOT PRESERVED</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:569c3354573147baf9ce47b4bfe91e2eca21fb54b80fb46ec239e65434fb9af5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00128" semanticPath="block:101" xml:id="aa11393us-continuation-preservation-para-00128">
+    <fragment bindingDigest="sha256/raw:569c3354573147baf9ce47b4bfe91e2eca21fb54b80fb46ec239e65434fb9af5" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00128" semanticPath="block:102" xml:id="aa11393us-continuation-preservation-para-00128">
       <excerpt>Use only when the applicant and lead US counsel approve no further successor before loss of qualifying pendency and the current record identifies the controlled parent, every relinquished reservation, and the resulting coverage disposition.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:bae05380ef946113860cbf41dc3302743cc49cc0005df659427eb7d71d062569" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00129" semanticPath="block:102" xml:id="aa11393us-continuation-preservation-para-00129">
+    <fragment bindingDigest="sha256/raw:bae05380ef946113860cbf41dc3302743cc49cc0005df659427eb7d71d062569" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00129" semanticPath="block:103" xml:id="aa11393us-continuation-preservation-para-00129">
       <excerpt>Until one outcome is fully evidenced, the operative status is NOT YET PRESERVED.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:fc3cdab6d353eabe3b1b82043e794d5df2d4868994ecc4942b7089dc4b87016d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00130" semanticPath="block:103" xml:id="aa11393us-continuation-preservation-header-00130">
+    <fragment bindingDigest="sha256/raw:fc3cdab6d353eabe3b1b82043e794d5df2d4868994ecc4942b7089dc4b87016d" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00130" semanticPath="block:104" xml:id="aa11393us-continuation-preservation-header-00130">
       <excerpt>8. Escalation conditions</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:e2a838927e69a1c7fdd2f538daba60de7820d4b5fe113a172bb88bb7ecfd4bc9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00131" semanticPath="block:104" xml:id="aa11393us-continuation-preservation-para-00131">
+    <fragment bindingDigest="sha256/raw:e2a838927e69a1c7fdd2f538daba60de7820d4b5fe113a172bb88bb7ecfd4bc9" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-para-00131" semanticPath="block:105" xml:id="aa11393us-continuation-preservation-para-00131">
       <excerpt>Escalate immediately if the parent may lose pendency; a notice of allowance issues without CONT-04 completion; the issue-fee target approaches while CONT-05 is incomplete; a filing receipt omits or misstates a benefit relationship; desired claims appear to require new matter; inventorship or ownership differs; a restriction/divisional or § 121 position is uncertain; a terminal disclaimer or ownership transaction is proposed; or supported, commercially valuable scope remains deferred without a current parent, owner, docket, successor decision, or chain-closure disposition.</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:60c2e1d5c4d5d6208cb05f41e4323c0a82ee2f3460d069fdf0c7430f394c4cbe" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00132" semanticPath="block:105" xml:id="aa11393us-continuation-preservation-header-00132">
+    <fragment bindingDigest="sha256/raw:60c2e1d5c4d5d6208cb05f41e4323c0a82ee2f3460d069fdf0c7430f394c4cbe" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-header-00132" semanticPath="block:106" xml:id="aa11393us-continuation-preservation-header-00132">
       <excerpt>9. Authorities for counsel to confirm</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b4c04d20b9796d30a65cc5cfcb2012cb0fc45a9af4a58b9e9cc2c855089aa5b6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-bulletlist-00133" semanticPath="block:107" xml:id="aa11393us-continuation-preservation-bulletlist-00133">
+    <fragment bindingDigest="sha256/raw:b4c04d20b9796d30a65cc5cfcb2012cb0fc45a9af4a58b9e9cc2c855089aa5b6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-bulletlist-00133" semanticPath="block:108" xml:id="aa11393us-continuation-preservation-bulletlist-00133">
       <excerpt>USPTO MPEP § 1893 — § 371 national stage</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b4c04d20b9796d30a65cc5cfcb2012cb0fc45a9af4a58b9e9cc2c855089aa5b6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00134" semanticPath="block:107" xml:id="aa11393us-continuation-preservation-list-item-00134">
+    <fragment bindingDigest="sha256/raw:b4c04d20b9796d30a65cc5cfcb2012cb0fc45a9af4a58b9e9cc2c855089aa5b6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00134" semanticPath="block:108" xml:id="aa11393us-continuation-preservation-list-item-00134">
       <excerpt>USPTO MPEP § 1893 — § 371 national stage</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b4c04d20b9796d30a65cc5cfcb2012cb0fc45a9af4a58b9e9cc2c855089aa5b6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00135" semanticPath="block:107" xml:id="aa11393us-continuation-preservation-plain-00135">
+    <fragment bindingDigest="sha256/raw:b4c04d20b9796d30a65cc5cfcb2012cb0fc45a9af4a58b9e9cc2c855089aa5b6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00135" semanticPath="block:108" xml:id="aa11393us-continuation-preservation-plain-00135">
       <excerpt>USPTO MPEP § 1893 — § 371 national stage</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:fe02905be3edfbd575eec7d41a1aab3d7d75fbb5479ede24786fd6b02753e1d4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00136" semanticPath="block:108" xml:id="aa11393us-continuation-preservation-list-item-00136">
+    <fragment bindingDigest="sha256/raw:fe02905be3edfbd575eec7d41a1aab3d7d75fbb5479ede24786fd6b02753e1d4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00136" semanticPath="block:109" xml:id="aa11393us-continuation-preservation-list-item-00136">
       <excerpt>USPTO MPEP § 201.07 — continuation application</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:fe02905be3edfbd575eec7d41a1aab3d7d75fbb5479ede24786fd6b02753e1d4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00137" semanticPath="block:108" xml:id="aa11393us-continuation-preservation-plain-00137">
+    <fragment bindingDigest="sha256/raw:fe02905be3edfbd575eec7d41a1aab3d7d75fbb5479ede24786fd6b02753e1d4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00137" semanticPath="block:109" xml:id="aa11393us-continuation-preservation-plain-00137">
       <excerpt>USPTO MPEP § 201.07 — continuation application</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:152ec6738d51e5825045832c77fef33d0f3fee220b67c5ff59cf6b1c99b32ea6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00138" semanticPath="block:109" xml:id="aa11393us-continuation-preservation-list-item-00138">
+    <fragment bindingDigest="sha256/raw:152ec6738d51e5825045832c77fef33d0f3fee220b67c5ff59cf6b1c99b32ea6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00138" semanticPath="block:110" xml:id="aa11393us-continuation-preservation-list-item-00138">
       <excerpt>USPTO MPEP § 211.01(b) — copendency</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:152ec6738d51e5825045832c77fef33d0f3fee220b67c5ff59cf6b1c99b32ea6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00139" semanticPath="block:109" xml:id="aa11393us-continuation-preservation-plain-00139">
+    <fragment bindingDigest="sha256/raw:152ec6738d51e5825045832c77fef33d0f3fee220b67c5ff59cf6b1c99b32ea6" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00139" semanticPath="block:110" xml:id="aa11393us-continuation-preservation-plain-00139">
       <excerpt>USPTO MPEP § 211.01(b) — copendency</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ff59f9a4fd38adb9e063dfa782265675fdb7450d774316d937d9a26221c88b3f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00140" semanticPath="block:110" xml:id="aa11393us-continuation-preservation-list-item-00140">
+    <fragment bindingDigest="sha256/raw:ff59f9a4fd38adb9e063dfa782265675fdb7450d774316d937d9a26221c88b3f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00140" semanticPath="block:111" xml:id="aa11393us-continuation-preservation-list-item-00140">
       <excerpt>USPTO MPEP § 609 — IDS practice in continuing applications</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:ff59f9a4fd38adb9e063dfa782265675fdb7450d774316d937d9a26221c88b3f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00141" semanticPath="block:110" xml:id="aa11393us-continuation-preservation-plain-00141">
+    <fragment bindingDigest="sha256/raw:ff59f9a4fd38adb9e063dfa782265675fdb7450d774316d937d9a26221c88b3f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00141" semanticPath="block:111" xml:id="aa11393us-continuation-preservation-plain-00141">
       <excerpt>USPTO MPEP § 609 — IDS practice in continuing applications</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b56531323e2fc3e2220fc96a70159aa1746880a79acac6903a19b9fa56e8f49f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00142" semanticPath="block:111" xml:id="aa11393us-continuation-preservation-list-item-00142">
+    <fragment bindingDigest="sha256/raw:b56531323e2fc3e2220fc96a70159aa1746880a79acac6903a19b9fa56e8f49f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00142" semanticPath="block:112" xml:id="aa11393us-continuation-preservation-list-item-00142">
       <excerpt>35 U.S.C. § 119(e) — provisional benefit</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:b56531323e2fc3e2220fc96a70159aa1746880a79acac6903a19b9fa56e8f49f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00143" semanticPath="block:111" xml:id="aa11393us-continuation-preservation-plain-00143">
+    <fragment bindingDigest="sha256/raw:b56531323e2fc3e2220fc96a70159aa1746880a79acac6903a19b9fa56e8f49f" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00143" semanticPath="block:112" xml:id="aa11393us-continuation-preservation-plain-00143">
       <excerpt>35 U.S.C. § 119(e) — provisional benefit</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a411052b2989052475051767e29a9b3d34e72a49b40d7dcb4dba450f331aada3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00144" semanticPath="block:112" xml:id="aa11393us-continuation-preservation-list-item-00144">
+    <fragment bindingDigest="sha256/raw:a411052b2989052475051767e29a9b3d34e72a49b40d7dcb4dba450f331aada3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00144" semanticPath="block:113" xml:id="aa11393us-continuation-preservation-list-item-00144">
       <excerpt>35 U.S.C. § 120 — benefit of earlier filing date</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:a411052b2989052475051767e29a9b3d34e72a49b40d7dcb4dba450f331aada3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00145" semanticPath="block:112" xml:id="aa11393us-continuation-preservation-plain-00145">
+    <fragment bindingDigest="sha256/raw:a411052b2989052475051767e29a9b3d34e72a49b40d7dcb4dba450f331aada3" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00145" semanticPath="block:113" xml:id="aa11393us-continuation-preservation-plain-00145">
       <excerpt>35 U.S.C. § 120 — benefit of earlier filing date</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:331dacac3ad8bc24976db1482def5d59ee94ae681dda7ddae603645bafc70f7c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00146" semanticPath="block:113" xml:id="aa11393us-continuation-preservation-list-item-00146">
+    <fragment bindingDigest="sha256/raw:331dacac3ad8bc24976db1482def5d59ee94ae681dda7ddae603645bafc70f7c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00146" semanticPath="block:114" xml:id="aa11393us-continuation-preservation-list-item-00146">
       <excerpt>35 U.S.C. § 121 — divisional applications</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:331dacac3ad8bc24976db1482def5d59ee94ae681dda7ddae603645bafc70f7c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00147" semanticPath="block:113" xml:id="aa11393us-continuation-preservation-plain-00147">
+    <fragment bindingDigest="sha256/raw:331dacac3ad8bc24976db1482def5d59ee94ae681dda7ddae603645bafc70f7c" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00147" semanticPath="block:114" xml:id="aa11393us-continuation-preservation-plain-00147">
       <excerpt>35 U.S.C. § 121 — divisional applications</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:9ce0708cd4d986b2c943844f807c4ef661eca51a8a9ca841ff3fe22ca27adce0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00148" semanticPath="block:114" xml:id="aa11393us-continuation-preservation-list-item-00148">
+    <fragment bindingDigest="sha256/raw:9ce0708cd4d986b2c943844f807c4ef661eca51a8a9ca841ff3fe22ca27adce0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00148" semanticPath="block:115" xml:id="aa11393us-continuation-preservation-list-item-00148">
       <excerpt>35 U.S.C. § 365(c) — benefit through an international application</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:9ce0708cd4d986b2c943844f807c4ef661eca51a8a9ca841ff3fe22ca27adce0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00149" semanticPath="block:114" xml:id="aa11393us-continuation-preservation-plain-00149">
+    <fragment bindingDigest="sha256/raw:9ce0708cd4d986b2c943844f807c4ef661eca51a8a9ca841ff3fe22ca27adce0" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00149" semanticPath="block:115" xml:id="aa11393us-continuation-preservation-plain-00149">
       <excerpt>35 U.S.C. § 365(c) — benefit through an international application</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3b5907ce631a3652a74bd711e58a1590d550fc1a18822b7523cfd2efccf289e8" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00150" semanticPath="block:115" xml:id="aa11393us-continuation-preservation-list-item-00150">
+    <fragment bindingDigest="sha256/raw:3b5907ce631a3652a74bd711e58a1590d550fc1a18822b7523cfd2efccf289e8" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00150" semanticPath="block:116" xml:id="aa11393us-continuation-preservation-list-item-00150">
       <excerpt>USPTO MPEP § 804 — double patenting and § 121 considerations</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:3b5907ce631a3652a74bd711e58a1590d550fc1a18822b7523cfd2efccf289e8" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00151" semanticPath="block:115" xml:id="aa11393us-continuation-preservation-plain-00151">
+    <fragment bindingDigest="sha256/raw:3b5907ce631a3652a74bd711e58a1590d550fc1a18822b7523cfd2efccf289e8" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00151" semanticPath="block:116" xml:id="aa11393us-continuation-preservation-plain-00151">
       <excerpt>USPTO MPEP § 804 — double patenting and § 121 considerations</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:cdec40127da5add32f21c392e4f9a89279e0a682dfe494ec26187697ac0edee4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00152" semanticPath="block:116" xml:id="aa11393us-continuation-preservation-list-item-00152">
+    <fragment bindingDigest="sha256/raw:cdec40127da5add32f21c392e4f9a89279e0a682dfe494ec26187697ac0edee4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-list-item-00152" semanticPath="block:117" xml:id="aa11393us-continuation-preservation-list-item-00152">
       <excerpt>USPTO MPEP § 1490 — terminal disclaimers</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:cdec40127da5add32f21c392e4f9a89279e0a682dfe494ec26187697ac0edee4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00153" semanticPath="block:116" xml:id="aa11393us-continuation-preservation-plain-00153">
+    <fragment bindingDigest="sha256/raw:cdec40127da5add32f21c392e4f9a89279e0a682dfe494ec26187697ac0edee4" bindingKind="block" presentationId="ssp-aa11393us-continuation-preservation-plain-00153" semanticPath="block:117" xml:id="aa11393us-continuation-preservation-plain-00153">
       <excerpt>USPTO MPEP § 1490 — terminal disclaimers</excerpt>
     </fragment>
   </fragments>
@@ -602,7 +602,7 @@
                 </node>
                 <node constructor="Space" />
                 <node constructor="Str">
-                  <string>23</string>
+                  <string>30</string>
                 </node>
                 <node constructor="Space" />
                 <node constructor="Str">
@@ -1670,6 +1670,539 @@
         <node constructor="Space" />
         <node constructor="Str">
           <string>reserved.</string>
+        </node>
+      </array>
+    </block>
+    <block constructor="Para">
+      <array>
+        <node constructor="Str">
+          <string>Following</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>30</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>July</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>2026</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>anchor-focused</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>reformulation</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>of</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>parent</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>candidates</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(</string>
+        </node>
+        <node constructor="Code">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <string>NA-2026-07-30-v5</string>
+          </array>
+        </node>
+        <node constructor="Str">
+          <string>,</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Code">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <string>AF-2026-07-30-v7</string>
+          </array>
+        </node>
+        <node constructor="Str">
+          <string>),</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>CONT-03</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>reserved-scope</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>outline</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>records:</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(a)</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>former</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>NA</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>end-to-end</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>method</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>family</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(former</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>NA</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claims</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>22–30),</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>dropped</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>from</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>amended</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>NA</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>set</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>reserved</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>as</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>successor</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>subject</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>matter;</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(b)</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>former</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>AF</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>blockchain-registration</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>dependent</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(former</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>AF</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claim</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>15),</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>dropped</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>from</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>amended</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>AF</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>set</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>reserved;</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(c)</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>folded</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>timing-choice</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>relationships</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(former</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>NA</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claims</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>15</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>20,</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>former</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>AF</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claims</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>17</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>20),</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>which</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>are</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>no</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>longer</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>separate</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>reservations</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>because</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>they</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>are</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>recited</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>in</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>amended</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>independent</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claims</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>(NA</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claims</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>9</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>15;</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>AF</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>claims</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>1,</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>17,</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>and</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>20).</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>The</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Link">
+          <array>
+            <array>
+              <string />
+              <array />
+              <array />
+            </array>
+            <array>
+              <node constructor="Str">
+                <string>AF</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>claim</string>
+              </node>
+              <node constructor="Space" />
+              <node constructor="Str">
+                <string>crosswalk</string>
+              </node>
+            </array>
+            <array>
+              <string>../../allowance-first/cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md</string>
+              <string />
+            </array>
+          </array>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>records</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>per-claim</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>disposition;</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>AF-CONT</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>remains</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>unchanged</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>as</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>the</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>successor</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>baseline</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>pending</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>its</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>own</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>re-baselining</string>
+        </node>
+        <node constructor="Space" />
+        <node constructor="Str">
+          <string>decision.</string>
         </node>
       </array>
     </block>

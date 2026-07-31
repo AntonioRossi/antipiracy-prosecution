@@ -2,7 +2,7 @@
 <relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="support-map-v1" schemaVersion="1">
   <identity owner="Applicant — Antonio Rossi" profile="support-map-v1" relationSetId="aa11393us-af-priority-support-map" scope="AF" status="draft" />
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00001">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="source">US provisional 63/557,868</assertionField>
     <assertionField name="date-status">26.02.2024</assertionField>
@@ -10,7 +10,7 @@
     <assertionField name="function">Earliest claimed benefit source</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00002">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="source">PCT/IB2025/051755</assertionField>
     <assertionField name="date-status">19.02.2025</assertionField>
@@ -18,45 +18,45 @@
     <assertionField name="function">As-filed international disclosure and claims</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00003">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="source">AF candidate set AF-2026-07-22-v6</assertionField>
+    <assertionField name="source">AF candidate set AF-2026-07-30-v7</assertionField>
     <assertionField name="date-status">Internal draft; not a filing date</assertionField>
     <assertionField name="repository-copy">AA11393US-AF-US_claim-set_DRAFT.md</assertionField>
     <assertionField name="function">Proposed US wording; not a support source</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00004" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00004">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="code">D — direct</assertionField>
     <assertionField name="meaning">Express passage, claim, table, or concrete example supports the stated feature.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00005">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="code">C — contextual</assertionField>
     <assertionField name="meaning">The architecture or result is disclosed, but the precise proposed relationship is contextual.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00006">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="code">CE — combined-example</assertionField>
     <assertionField name="meaning">The limitation requires reading disclosed examples or embodiments together.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00007">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="code">W — weak/not express</assertionField>
     <assertionField name="meaning">The reviewed filing does not expressly state the operation or detail.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00008">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="code">G — gate</assertionField>
     <assertionField name="meaning">A material support, generalization, priority, or consistency issue requires counsel determination.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00009">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Processor/memory system</assertionField>
     <assertionField name="provisional-basis">Computing and server implementation, PDF pp. 24–25 and 35–36; system claim 1</assertionField>
@@ -64,7 +64,7 @@
     <assertionField name="classification-and-action">D. Review § 112(f), algorithm sufficiency, and single-system attribution.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00010">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Receive plural-camera video</assertionField>
     <assertionField name="provisional-basis">Pipeline, pp. 15–16 and 20–25; claim 1(a)–(b)</assertionField>
@@ -72,7 +72,7 @@
     <assertionField name="classification-and-action">D.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00011">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">For plural director cuts, successive edit entries identify first/second source cameras and out/in-point time codes</assertionField>
     <assertionField name="provisional-basis">EDL discussion, pp. 20–26; Example 2 tables, pp. 26–27, identify source camera, in-point, and out-point</assertionField>
@@ -80,7 +80,7 @@
     <assertionField name="classification-and-action">D for the concrete fields and camera order; CE/G for the generalized first/second-camera formulation across plural cuts.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00012">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Produce reference content according to the structured list</assertionField>
     <assertionField name="provisional-basis">Pipeline and EDL discussion, pp. 15 and 20–24; claim 1</assertionField>
@@ -88,7 +88,7 @@
     <assertionField name="classification-and-action">D/C.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00013">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Generate one or more mates by modifying out/in-point times at plural selected cuts while retaining source-camera identifiers and order</assertionField>
     <assertionField name="provisional-basis">Claim 1(e) varies the time code of any cut; method claim 10(e) varies time codes of camera cuts; Example 2 retains Camera 2→Camera 3 while moving the boundary</assertionField>
@@ -96,7 +96,7 @@
     <assertionField name="classification-and-action">D for plural cut-time variation and the concrete retained Camera 2→Camera 3 boundary; CE/G for the generalized retained-pair operation at each selected cut.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00014">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Reference transition and later mate transition; first-camera selection extended and second begins later</assertionField>
     <assertionField name="provisional-basis">Example 2 tables and explanation, pp. 26–27</assertionField>
@@ -104,7 +104,7 @@
     <assertionField name="classification-and-action">D for the illustrated ten-frame operation; CE/G for general breadth. The independent claims do not require later resynchronization.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00015">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Segment reference/mate ensemble into chunks</assertionField>
     <assertionField name="provisional-basis">Claim 1(g); method claim 10(g)</assertionField>
@@ -112,15 +112,15 @@
     <assertionField name="classification-and-action">D.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00016">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-1-limitation">Generate manifests pointing to respective reference/mate chunk combinations</assertionField>
-    <assertionField name="provisional-basis">Claim 1(h)–(j); method claim 10(g)–(h); Examples 3–4</assertionField>
+    <assertionField name="af-claim-1-limitation">Generate manifests pointing to respective reference/mate chunk combinations, each preserving a per-cut choice between the reference and later mate timings of the same ordered transition so that the combinations represent combinations of timing choices</assertionField>
+    <assertionField name="provisional-basis">Claim 1(h)–(j); method claim 10(g)–(h); Examples 3–4; geometric-progression passages</assertionField>
     <assertionField name="pct-basis">Claims 11–12; Examples 3–4, pp. 42–47</assertionField>
-    <assertionField name="classification-and-action">D for manifest combinations; CE/G for the complete relationship to the plural retained physical-camera boundaries.</assertionField>
+    <assertionField name="classification-and-action">D for manifest combinations; D/CE/G for the folded per-cut timing-choice representation (former claim 17's gate).</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00017">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Deliver according to respective manifests and store manifest-recipient associations in a ledger</assertionField>
     <assertionField name="provisional-basis">Claim 1(i)–(k); method claim 10(h)–(i)</assertionField>
@@ -128,7 +128,7 @@
     <assertionField name="classification-and-action">D.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00018">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Receive suspected unauthorized distribution</assertionField>
     <assertionField name="provisional-basis">Claim 1(l); method claim 10(j)</assertionField>
@@ -136,7 +136,7 @@
     <assertionField name="classification-and-action">D.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00019">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">Scene-change detection identifies a plurality of camera-cut time codes</assertionField>
     <assertionField name="provisional-basis">Claim 1(m): algorithm devises “the time codes of the camera cuts”; method claim 10(j): identify “camera cut time codes”</assertionField>
@@ -144,172 +144,162 @@
     <assertionField name="classification-and-action">D. No suspect-side physical-camera labeling is required.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00020">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-1-limitation">Build one or more reconstructed manifests from the plurality of identified time codes</assertionField>
-    <assertionField name="provisional-basis">Claim 1(m) and method claim 10(j) expressly connect detected cut time codes to manifest reconstruction</assertionField>
-    <assertionField name="pct-basis">Claim 15 expressly builds one or more reconstructed manifests from devised time codes; claim 17 states the same method step</assertionField>
-    <assertionField name="classification-and-action">D for the operation; D/CE/G for its relationship to the particular plural production variations in the complete claim.</assertionField>
+    <assertionField name="af-claim-1-limitation">Build one or more reconstructed manifests from the plurality of identified time codes, including one representing a detected combination of camera-switch timings across the plurality of selected camera cuts</assertionField>
+    <assertionField name="provisional-basis">Claim 1(m) and method claim 10(j) expressly connect detected cut time codes to manifest reconstruction; geometric-progression and manifest-combination passages</assertionField>
+    <assertionField name="pct-basis">Claim 15 expressly builds one or more reconstructed manifests from devised time codes; claim 17 states the same method step; Examples 3–5</assertionField>
+    <assertionField name="classification-and-action">D for the operation; D/CE/G for the folded detected-combination representation (former claim 20's gate).</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00021">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-1-limitation">Search ledger for recipient associated with an equal delivered manifest</assertionField>
+    <assertionField name="af-claim-1-limitation">Search ledger for recipient associated with an equal delivered manifest whose recipient-associated combination includes at least one later mate camera-switch timing and matches the detected combination</assertionField>
     <assertionField name="provisional-basis">Claim 1(n) expressly searches for the spectator receiving a manifest equal to the reconstructed manifest; method claim 10(k)</assertionField>
     <assertionField name="pct-basis">Claim 15 and Method 200/claim 17 expressly recite equality, ledger search, and account identification</assertionField>
-    <assertionField name="classification-and-action">D.</assertionField>
+    <assertionField name="classification-and-action">D for equality and search; D/CE/G for the affirmative-mate/match nexus (former claim 20's gate).</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00022">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim-1-limitation">AF claim 1 as a complete chain</assertionField>
     <assertionField name="provisional-basis">Provisional claim 1 recites production, manifest delivery/recording, cut-time reconstruction, equality, and recipient identification in one system claim</assertionField>
     <assertionField name="pct-basis">PCT claim 1 supplies the general integrated system; claims 10–15 supply the concrete production/distribution/recovery chain</assertionField>
-    <assertionField name="classification-and-action">D/CE/G. The overall loop is direct. Counsel must decide the plural retained-camera-boundary-to-reconstructed-manifest relationship as a whole.</assertionField>
+    <assertionField name="classification-and-action">D/CE/G. The overall loop is direct; the folded timing-choice nexus inherits former claim 20's exact-relationship gate. Counsel must decide the plural retained-camera-boundary-to-reconstructed-manifest relationship as a whole.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00023">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-19-operation">Receive plural-camera video and the structured edit list</assertionField>
+    <assertionField name="af-claim-17-operation">Receive plural-camera video and the structured edit list</assertionField>
     <assertionField name="provisional-basis">Method claim 10(a)–(d), pp. 43–44; EDL passages and Example 2</assertionField>
     <assertionField name="pct-basis">Method 200; claims 16–17; Example 2</assertionField>
     <assertionField name="classification-and-action">D for capture, cut recording, and concrete fields; CE/G for generalized successive first/second-camera entries across plural cuts.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00024">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-19-operation">Produce reference and generate mates by plural retained-camera-boundary variations</assertionField>
+    <assertionField name="af-claim-17-operation">Produce reference and generate mates by plural retained-camera-boundary variations</assertionField>
     <assertionField name="provisional-basis">Method claim 10(e), read with Example 2 and plural-cut description</assertionField>
     <assertionField name="pct-basis">Method 200 programming step; claims 16–17; Example 2</assertionField>
     <assertionField name="classification-and-action">D/CE/G on the same basis as AF claim 1.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00025">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-19-operation">Segment, generate manifests, deliver, and record manifest-recipient associations</assertionField>
-    <assertionField name="provisional-basis">Method claim 10(g)–(i); Examples 3–4</assertionField>
+    <assertionField name="af-claim-17-operation">Segment, generate manifests preserving per-cut timing choices, deliver, and record manifest-recipient associations</assertionField>
+    <assertionField name="provisional-basis">Method claim 10(g)–(i); Examples 3–4; geometric-progression passages</assertionField>
     <assertionField name="pct-basis">Method 200; claims 16–17; Examples 3–4</assertionField>
-    <assertionField name="classification-and-action">D for the operations; CE/G for their complete relationship to the plural retained boundaries.</assertionField>
+    <assertionField name="classification-and-action">D for the operations; D/CE/G for the folded per-cut timing-choice representation (former claim 17's gate).</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00026">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-19-operation">Receive suspect, identify plural cut time codes, and build reconstructed manifests</assertionField>
-    <assertionField name="provisional-basis">Method claim 10(j)</assertionField>
-    <assertionField name="pct-basis">Method 200 monitoring step; claim 17</assertionField>
-    <assertionField name="classification-and-action">D.</assertionField>
+    <assertionField name="af-claim-17-operation">Receive suspect, identify plural cut time codes, and build reconstructed manifests representing the detected combination</assertionField>
+    <assertionField name="provisional-basis">Method claim 10(j); geometric-progression and reconstruction passages</assertionField>
+    <assertionField name="pct-basis">Method 200 monitoring step; claim 17; Examples 3–5</assertionField>
+    <assertionField name="classification-and-action">D; D/CE/G for the folded detected-combination representation (former claim 20's gate).</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00027">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-19-operation">Search ledger for recipient associated with an equal delivered manifest</assertionField>
+    <assertionField name="af-claim-17-operation">Search ledger for recipient associated with an equal delivered manifest including at least one later mate timing and matching the detected combination</assertionField>
     <assertionField name="provisional-basis">Method claim 10(k)</assertionField>
     <assertionField name="pct-basis">Method 200 searching step; claims 16–17</assertionField>
-    <assertionField name="classification-and-action">D.</assertionField>
+    <assertionField name="classification-and-action">D for equality and search; D/CE/G for the affirmative-mate/match nexus (former claim 20's gate).</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00028">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-19-operation">AF claim 19 as a complete method</assertionField>
+    <assertionField name="af-claim-17-operation">AF claim 17 as a complete method</assertionField>
     <assertionField name="provisional-basis">Provisional method claim 10</assertionField>
     <assertionField name="pct-basis">Method 200 and claims 16–17</assertionField>
-    <assertionField name="classification-and-action">D/CE/G. Obtain a separate claim-as-a-whole opinion; system-format support does not itself establish method support.</assertionField>
+    <assertionField name="classification-and-action">D/CE/G; folded nexus included. Obtain a separate claim-as-a-whole opinion; system-format support does not itself establish method support.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00029">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1cfc3444d614ec9e1baf5740985c01658dfbe69e40dbf28ee43e19e570d5fd33" fragmentId="claim-18" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">20</assertionField>
-    <assertionField name="added-method-limitation">Delivered recipient timing-choice combination includes at least one mate timing; reconstructed manifest represents the same detected timing-choice combination</assertionField>
-    <assertionField name="provisional-basis">Geometric-progression, manifest-combination, ledger, and reconstruction passages; claims 1(g)–(n) and 10(g)–(k)</assertionField>
-    <assertionField name="pct-basis">Examples 3–5; claims 11–17; Method 200</assertionField>
-    <assertionField name="grade-and-action">D/CE/G. The operations and plural choice architecture are disclosed; confirm the exact delivered recipient-combination → affirmative mate choice → reconstruction of the same detected combination relationship. Inherits AF claim 19.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00030">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">21</assertionField>
+    <assertionField name="af-claim">18</assertionField>
     <assertionField name="added-method-limitation">Perceptual-hash comparison for plural cut-time identification</assertionField>
     <assertionField name="provisional-basis">Provisional claim 3; detection discussion and Example 5</assertionField>
     <assertionField name="pct-basis">Example 5; detection description</assertionField>
-    <assertionField name="grade-and-action">D. Direct implementation support; depends separately from and inherits AF claim 19, not AF claim 20.</assertionField>
+    <assertionField name="grade-and-action">D. Direct implementation support; depends from and inherits AF claim 17.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00031">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00030">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:449fb77b26e04bc00bf3e80e443052976dc87aae96dd20434ab6787777bff97e" fragmentId="claim-19" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">22</assertionField>
+    <assertionField name="af-claim">19</assertionField>
     <assertionField name="added-method-limitation">Sliding-window fuzzy matching of perceptual-hash groups</assertionField>
     <assertionField name="provisional-basis">Provisional claim 4; Example 5 discussion</assertionField>
     <assertionField name="pct-basis">Example 5</assertionField>
-    <assertionField name="grade-and-action">D. Direct implementation support; inherits AF claims 21 and 19, not AF claim 20.</assertionField>
+    <assertionField name="grade-and-action">D. Direct implementation support; inherits AF claims 18 and 17.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00032">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00031">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">Receive the suspected unauthorized distribution</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">Receive the suspected unauthorized distribution</assertionField>
     <assertionField name="provisional-basis">Method claim 10(j); system claim 1(l)</assertionField>
     <assertionField name="pct-basis">Method 200/claims 16–17; claim 15</assertionField>
     <assertionField name="classification-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00033">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00032">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">Apply scene-change detection and identify plural camera-cut time codes</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">Apply scene-change detection and identify plural camera-cut time codes</assertionField>
     <assertionField name="provisional-basis">Method claim 10(j); system claim 1(m)</assertionField>
     <assertionField name="pct-basis">Claim 15 and Method 200/claim 17</assertionField>
     <assertionField name="classification-and-action">D. No suspect-side physical-camera labeling is required.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00034">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00033">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">Build reconstructed manifests, including one representing a detected plural timing combination</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">Build reconstructed manifests, including one representing a detected plural timing combination</assertionField>
     <assertionField name="provisional-basis">Method claim 10(j), read with the geometric-progression and reconstruction passages</assertionField>
     <assertionField name="pct-basis">Claim 15 and Method 200/claim 17, read with Examples 3–5</assertionField>
     <assertionField name="classification-and-action">D for reconstruction from identified cut time codes; D/CE/G for representation of the same plural timing combination used in the mate-containing delivered-manifest relationship.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00035">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00034">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">Search a delivered-manifest/recipient ledger for an equal manifest to identify the recipient</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">Search a delivered-manifest/recipient ledger for an equal manifest to identify the recipient</assertionField>
     <assertionField name="provisional-basis">Method claim 10(k), read with method claim 10(e), (g)–(i) and system claim 1(e), (g)–(k), (n)</assertionField>
     <assertionField name="pct-basis">Claims 10–15 and Method 200/claims 16–17</assertionField>
     <assertionField name="classification-and-action">D/CE/G for the affirmative method together with the passive delivered-manifest environment. Determine who performs the search-to-identify operation and, if performers are split, whether the other conduct is legally attributable to one entity under the applicable method-claim standard.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00036">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00035">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">Delivered manifests identify reference/mate chunk combinations; each represents plural reference/mate timing choices</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">Per-cut ordered-transition searched-ledger environment: for each of the plurality of camera cuts, the reference contains an ordered transition between respective first and second source cameras and at least one mate contains the same ordered transition at a different timing; each delivered manifest represents a recipient-associated combination of timing choices</assertionField>
     <assertionField name="provisional-basis">Claims 1(e), (g)–(k) and 10(e), (g)–(i), read with Examples 2–4 and the geometric-progression passages</assertionField>
     <assertionField name="pct-basis">Claims 10–14 and 16–17, read with Examples 2–4</assertionField>
     <assertionField name="classification-and-action">D/CE/G. Confirm the complete method-environment relationship rather than treating system-format disclosure as automatically sufficient.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00037">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00036">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">Equal delivered manifest contains an affirmative mate timing and matches the detected combination represented by the reconstruction</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">Equal delivered manifest contains an affirmative mate timing and matches the detected combination represented by the reconstruction</assertionField>
     <assertionField name="provisional-basis">Claims 1(g)–(n) and 10(g)–(k), read with the geometric-progression, manifest-combination, ledger, and reconstruction passages</assertionField>
     <assertionField name="pct-basis">Examples 3–5; claims 11–17; Method 200</assertionField>
     <assertionField name="classification-and-action">D/CE/G. Confirm the delivered mate-containing combination → reconstruction of the same detected combination nexus.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00038">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00037">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim-23-operation-or-relationship">AF claim 23 as a whole</assertionField>
+    <assertionField name="af-claim-20-operation-or-relationship">AF claim 20 as a whole</assertionField>
     <assertionField name="provisional-basis">Method claim 10(j)–(k), read with claims 1(e), (g)–(n), 10(e), (g)–(i), and Examples 2–4</assertionField>
     <assertionField name="pct-basis">Method 200 and claims 15–17, read with claims 10–14 and Examples 2–5</assertionField>
-    <assertionField name="classification-and-action">D/CE/G; mode unassigned. Determine written description and enablement in each filing, effective date, limiting effect of the passive environment, equality construction, actor performance, eligibility, and art as a whole.</assertionField>
+    <assertionField name="classification-and-action">D/CE/G; mode unassigned. Determine written description and enablement in each filing, effective date, limiting effect of the passive environment, equality construction (open election), actor performance, eligibility, and art as a whole.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00039">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00038">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:64643564424fd2762dcbe8d80b1c17f4b44f67cf60e675b6d954a7caa524102f" fragmentId="claim-2" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">2</assertionField>
     <assertionField name="added-limitation">Preserve later reference cut timing and restore synchronization</assertionField>
     <assertionField name="provisional-basis">Example 2, pp. 26–27</assertionField>
     <assertionField name="pct-basis">Example 2, pp. 41–42</assertionField>
-    <assertionField name="grade-and-action">D/G. Resolve the provisional inconsistency in § 6.2.</assertionField>
+    <assertionField name="grade-and-action">D/G. Resolve the Example 2 priority gate before reliance.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00040">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:64643564424fd2762dcbe8d80b1c17f4b44f67cf60e675b6d954a7caa524102f" fragmentId="claim-2" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00039">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:37ec23f6b3d92546be6163bf0e29aec7af2ff9efaf57abf345fac0d8ac7527b8" fragmentId="claim-3" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">3</assertionField>
     <assertionField name="added-limitation">Ten-frame extension/shortening and resynchronization</assertionField>
@@ -317,7 +307,7 @@
     <assertionField name="pct-basis">Example 2, pp. 40–42</assertionField>
     <assertionField name="grade-and-action">D/G. Inherits AF claim 2's gate.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00041">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00040">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1eb0f3c507d85258f4247eb1c70d319ff59e6af9c9bc29a96e6475d583b415b7" fragmentId="claim-4" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">4</assertionField>
@@ -326,7 +316,7 @@
     <assertionField name="pct-basis">EDL discussion and Example 2</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00042">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00041">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8b2512ed7260f4ea670c3a475773b733edfb2e63b65a5b986908405d0b0be832" fragmentId="claim-5" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">5</assertionField>
@@ -335,7 +325,7 @@
     <assertionField name="pct-basis">General system; claim 10; Method 200</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00043">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00042">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:00a83e02b108a0a6f48dedcbc2726827a2056af6907590660ed7d8bf21d3d4e4" fragmentId="claim-6" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">6</assertionField>
@@ -344,7 +334,7 @@
     <assertionField name="pct-basis">Mate-generation and geometric-progression discussion; Examples 2–4</assertionField>
     <assertionField name="grade-and-action">D/C/G. Confirm the respective-mate/only-one-selected-cut relationship.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00044">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00043">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:94a92755756835531cdf085557d5ef25178d0c90b96279826c145203aa5ab3cc" fragmentId="claim-7" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">7</assertionField>
@@ -353,7 +343,7 @@
     <assertionField name="pct-basis">Example 5; detection description</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00045">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00044">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d8662d1fa20c3e08da94067df40fcfccc447860313ccb33761c6372955d0ff06" fragmentId="claim-8" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">8</assertionField>
@@ -362,7 +352,7 @@
     <assertionField name="pct-basis">Example 5</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00046">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00045">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d2179f9a84cdcea9c47f763ac24e091e6e50fcc240de3eb883799cd8425c1226" fragmentId="claim-9" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">9</assertionField>
@@ -371,7 +361,7 @@
     <assertionField name="pct-basis">PCT claim 11 and distribution description</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00047">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00046">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:9370554865ec579d0fbc43cd8e6b1c67d2f7a97f84d03f0322e025be00693111" fragmentId="claim-10" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">10</assertionField>
@@ -380,7 +370,7 @@
     <assertionField name="pct-basis">PCT claim 12; Example 4</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00048">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00047">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ea4456b384a4b5e581ca98da29a6dfd60cf4be1cfd8407d5cdeffa677604f9a1" fragmentId="claim-11" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">11</assertionField>
@@ -389,7 +379,7 @@
     <assertionField name="pct-basis">Collusion/Tardos discussion read with claims 11–15</assertionField>
     <assertionField name="grade-and-action">C/CE/G. Mixed-copy tracing is disclosed; confirm manifest chunk-selection sequences as the algorithm input and respective-portion output.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00049">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00048">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e4dbcfc94ea4dd992c6030bc6b952b57f3a4a9ff90908a2cf13e8c3d8b1b814" fragmentId="claim-12" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">12</assertionField>
@@ -398,7 +388,7 @@
     <assertionField name="pct-basis">PCT collusion discussion and claim 6</assertionField>
     <assertionField name="grade-and-action">D/C/G. Confirm the exact segment/fingerprint/portion/contributor relationship.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00050">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00049">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a434fd03a8fdb8f9e2d766266948f45428c29bc66daf12a4e43ed7367735754b" fragmentId="claim-13" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">13</assertionField>
@@ -407,7 +397,7 @@
     <assertionField name="pct-basis">Example 3, pp. 42–45</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00051">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00050">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26fdcdcfe12e502b4d2a50196f50cbbb4368a030da5f43cbdeeb4ccfc007516f" fragmentId="claim-14" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">14</assertionField>
@@ -416,163 +406,123 @@
     <assertionField name="pct-basis">Examples 2–3</assertionField>
     <assertionField name="grade-and-action">CE/G. The exact chunk-internal boundary geometry is not stated in one passage.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00052">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:02c4144a33b0ea4d24cb38299a39fbc35252901079fa260785b18b60cb30cb5a" fragmentId="claim-15" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00051">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1ad1368ea3dfa42bab35a15fb86ff9998857e41be25b27d461c28b88f5ad7c15" fragmentId="claim-15" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">15</assertionField>
-    <assertionField name="added-limitation">Blockchain registration/readout</assertionField>
-    <assertionField name="provisional-basis">Blockchain passages at PDF pp. 18 and 35</assertionField>
-    <assertionField name="pct-basis">PCT blockchain passage and claim 13</assertionField>
-    <assertionField name="grade-and-action">D.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00053">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ce47dd048cc4614ed38053264f9e7bb24f2efffa36cacdb6e347b36e064b7be9" fragmentId="claim-16" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">16</assertionField>
-    <assertionField name="added-limitation">Unicast</assertionField>
+    <assertionField name="added-limitation">Unicast delivery</assertionField>
     <assertionField name="provisional-basis">Provisional claim 7 and method claim 16</assertionField>
     <assertionField name="pct-basis">Distribution description</assertionField>
     <assertionField name="grade-and-action">D.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00054">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:06bc3a2ccbfb03fa26c54a13f664fd091290cb0d5bfd9bc05bfd398e2c7acd20" fragmentId="claim-17" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00052">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d79df9f6df14b5358637eb7f8b361339f5b4881528d6225ff188b54c7e52f287" fragmentId="claim-16" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">17</assertionField>
-    <assertionField name="added-limitation">Recipient-associated reference/mate timing choices across plural cuts</assertionField>
-    <assertionField name="provisional-basis">Geometric progression, manifest combinations, and ledger passages</assertionField>
-    <assertionField name="pct-basis">Geometric progression and Examples 3–4</assertionField>
-    <assertionField name="grade-and-action">D/CE/G. Confirm the exact combination represented by each delivered manifest.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00055">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:27fe27ee3171cc6482d77fd9e52688e59c0ca844911e5d53ecafeb282de490fe" fragmentId="claim-18" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">18</assertionField>
+    <assertionField name="af-claim">16</assertionField>
     <assertionField name="added-limitation">Additional elements overlaid before segmentation</assertionField>
     <assertionField name="provisional-basis">Provisional claim 1(f) followed by claim 1(g); method claim 10(f)–(g)</assertionField>
     <assertionField name="pct-basis">Overlay and segmentation passages; claims 5 and 17</assertionField>
     <assertionField name="grade-and-action">D in the provisional claim sequence; D/C in PCT.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00056" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00056">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00053">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="relationship">Retained physical-camera boundary → reference/mate chunks → manifest combinations</assertionField>
+    <assertionField name="relationship">Retained physical-camera boundary → reference/mate chunks → manifest combinations preserving per-cut timing choices</assertionField>
     <assertionField name="posture">D/CE/G</assertionField>
-    <assertionField name="required-determination">Whether the examples convey the claimed complete production-to-manifest relationship across plural selected cuts</assertionField>
+    <assertionField name="required-determination">Whether the examples convey the claimed complete production-to-manifest relationship across plural selected cuts, including the folded per-cut timing-choice representation</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00057" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00057">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00054">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a434fd03a8fdb8f9e2d766266948f45428c29bc66daf12a4e43ed7367735754b" fragmentId="claim-13" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="relationship">Equal-duration same-interval chunks</assertionField>
     <assertionField name="posture">D</assertionField>
     <assertionField name="required-determination">Ordinary breadth and antecedent review</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00058" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00058">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00055">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26fdcdcfe12e502b4d2a50196f50cbbb4368a030da5f43cbdeeb4ccfc007516f" fragmentId="claim-14" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="relationship">Each paired chunk straddles the retained transition at its own timing</assertionField>
     <assertionField name="posture">CE/G</assertionField>
     <assertionField name="required-determination">AF claim 14's exact chunk geometry</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00059" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00059">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:06bc3a2ccbfb03fa26c54a13f664fd091290cb0d5bfd9bc05bfd398e2c7acd20" fragmentId="claim-17" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="relationship">Recipient-associated timing choices across plural cuts</assertionField>
-    <assertionField name="posture">D/CE/G</assertionField>
-    <assertionField name="required-determination">AF claim 17's manifest representation and ledger association</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00060" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00060">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00056" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00056">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="relationship">Delivered mate-containing recipient combination → reconstructed same detected timing-choice combination</assertionField>
     <assertionField name="posture">D/CE/G</assertionField>
-    <assertionField name="required-determination">AF claim 20's inherited integrated-method fallback and AF claim 23's independent monitor-side causal nexus</assertionField>
+    <assertionField name="required-determination">Folded into AF claims 1 and 17 (former claim 20's exact-relationship gate) and recited in AF claim 20's independent monitor-side nexus; confirm the relationship in each filing</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00061">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00057" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00057">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ea4456b384a4b5e581ca98da29a6dfd60cf4be1cfd8407d5cdeffa677604f9a1" fragmentId="claim-11" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="relationship">Manifest sequence as probabilistic collusion input</assertionField>
     <assertionField name="posture">C/CE/G</assertionField>
     <assertionField name="required-determination">AF claim 11's exact input and respective-contribution output</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00062">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00058" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00058">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="mode">A</assertionField>
     <assertionField name="required-conclusion">PCT and provisional each satisfy written description and enablement for the claim as a whole</assertionField>
     <assertionField name="consequence">Subject to other requirements, the claim may rely on 26.02.2024; B10's 02.12.2024 publication is not prior art merely by that date.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00063" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00063">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00059" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00059">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="mode">B</assertionField>
     <assertionField name="required-conclusion">PCT satisfies both requirements, but the provisional fails at least one requirement for benefit entitlement</assertionField>
     <assertionField name="consequence">The effective date is no earlier than 19.02.2025 absent another valid benefit claim; B10 becomes potentially citable under § 102(a)(1), subject to complete statutory and exception analysis.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00064" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00064">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00060" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00060">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="mode">C</assertionField>
     <assertionField name="required-conclusion">PCT fails written description, enablement, or both</assertionField>
     <assertionField name="consequence">The formulation has a current-disclosure defect independent of priority; it must not be relied on as drafted.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00065" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00065">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00061">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claims">1</assertionField>
-    <assertionField name="present-support-posture">Direct closed loop; D/CE/G for plural retained-camera-boundary-to-reconstructed-manifest integration</assertionField>
+    <assertionField name="present-support-posture">Direct closed loop with folded timing-choice nexus; D/CE/G for plural retained-camera-boundary-to-reconstructed-manifest integration and the folded nexus</assertionField>
     <assertionField name="filing-treatment">Principal AF system candidate; obtain a written claim-as-a-whole PCT/provisional opinion</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00066" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00066">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00062">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claims">19</assertionField>
-    <assertionField name="present-support-posture">Direct method loop; same D/CE/G integration</assertionField>
+    <assertionField name="af-claims">17</assertionField>
+    <assertionField name="present-support-posture">Direct method loop with the same folded nexus; D/CE/G</assertionField>
     <assertionField name="filing-treatment">Complementary method candidate; obtain a separate opinion and § 101/performance review</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00067" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00067">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00063" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00063">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claims">20</assertionField>
-    <assertionField name="present-support-posture">Disclosed components; D/CE/G for the affirmative mate-containing delivered combination and reconstruction of the same detected combination</assertionField>
-    <assertionField name="filing-treatment">Principal causal-nexus method fallback; obtain a written relationship-specific support determination and inherit AF claim 19's review</assertionField>
+    <assertionField name="present-support-posture">Direct individual recovery operations; per-cut ordered-transition environment and mate-containing delivered-combination-to-reconstructed-same-combination nexus D/CE/G; mode unassigned</assertionField>
+    <assertionField name="filing-treatment">Monitor-side independent candidate; obtain a separate claim-as-a-whole PCT/provisional determination, effective-date mode, equality construction (open election), actor, eligibility, restriction, proof, and art review</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00068" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00068">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claims">21–22</assertionField>
-    <assertionField name="present-support-posture">Direct perceptual-hash and sliding-window method limitations; inherit AF claim 19 without AF claim 20</assertionField>
-    <assertionField name="filing-treatment">Support-safe detection branch; ordinary wording and antecedent review plus inherited claim-as-a-whole, eligibility, performance, and art review</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00069" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00069">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claims">23</assertionField>
-    <assertionField name="present-support-posture">Direct individual recovery operations; D/CE/G; mode unassigned for the method-form delivered-manifest environment and mate-containing delivered-combination-to-reconstructed-same-combination nexus as a whole</assertionField>
-    <assertionField name="filing-treatment">Monitor-side independent candidate; obtain a separate claim-as-a-whole PCT/provisional written-description and enablement determination, effective-date mode, equality construction, actor, eligibility, restriction, proof, and art review</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00070" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00070">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00064" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00064">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:64643564424fd2762dcbe8d80b1c17f4b44f67cf60e675b6d954a7caa524102f" fragmentId="claim-2" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claims">2–3</assertionField>
     <assertionField name="present-support-posture">Direct mechanics with provisional inconsistency</assertionField>
     <assertionField name="filing-treatment">Use only after written counsel determination</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00071" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00071">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00065" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00065">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1eb0f3c507d85258f4247eb1c70d319ff59e6af9c9bc29a96e6475d583b415b7" fragmentId="claim-4" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claims">4–5, 7–10, 13, 15–16</assertionField>
+    <assertionField name="af-claims">4–5, 7–10, 13, 15, 18–19</assertionField>
     <assertionField name="present-support-posture">Added limitations direct</assertionField>
     <assertionField name="filing-treatment">Ordinary wording, breadth, antecedent, and inherited-parent review</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00072" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00072">
+  <relation direction="forward" relationId="aa11393us-af-priority-support-map-row-00066" semanticOwner="Applicant — Antonio Rossi" type="claim-support" xml:id="aa11393us-af-priority-support-map-row-00066">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:00a83e02b108a0a6f48dedcbc2726827a2056af6907590660ed7d8bf21d3d4e4" fragmentId="claim-6" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claims">6, 11–12, 14, 17–18</assertionField>
+    <assertionField name="af-claims">6, 11–12, 14, 16</assertionField>
     <assertionField name="present-support-posture">Added relationship direct/contextual/combined-example as specified above</assertionField>
     <assertionField name="filing-treatment">Retain as expressly gated dependents; do not describe the added relationship as unqualified direct support</assertionField>
   </relation>

@@ -2,7 +2,7 @@
 
 > **MASTER INDEX — INTERNAL COUNSEL-REVIEW MATERIAL — NOT FOR FILING.**
 >
-> Repository status date: **23 July 2026**. Directory names and draft labels do not establish attorney-client privilege, work-product protection, or any other protected status. Retained US counsel must determine treatment, circulation, retention, and legal-hold requirements.
+> Repository status date: **30 July 2026**. Directory names and draft labels do not establish attorney-client privilege, work-product protection, or any other protected status. Retained US counsel must determine treatment, circulation, retention, and legal-hold requirements.
 
 This directory separates two alternative US claiming strategies for PCT/IB2025/051755 while preserving one canonical evidence and disclosure record. The alternatives are not cumulative filing instructions. Counsel should select, revise, or deliberately hybridize them and record which claim set controls.
 
@@ -33,8 +33,8 @@ Shared materials must not be copied into a strategy directory. Strategy document
 
 ## Version and status controls
 
-- **NA claim-set version:** `NA-2026-07-22-v4`; four independent / 30 total / no multiple-dependent claims. NA claim 16 requires delivered reference/mate chunk-combination manifests with a mate cut-timing difference; NA claims 19–20 provide matched-manifest physical-camera and plural-timing fallbacks.
-- **AF claim-set version:** `AF-2026-07-22-v6`; three independent / 23 total / no multiple-dependent claims. AF claim 19 is the method counterpart to the integrated system independent; AF claims 20–22 provide its causal-nexus and detection fallback branches; AF claim 23 is the monitor-side independent with the mate-containing reconstructed-same-combination nexus.
+- **NA claim-set version:** `NA-2026-07-30-v5`; three independent / 20 total / no multiple-dependent claims. NA claim 9 preserves a per-region timing choice of the ordered physical-camera transition in delivered manifests; NA claim 15 requires delivered manifests over a per-cut ordered-transition ensemble representing recipient-associated timing-choice combinations, with the reconstructed-manifest match requiring an affirmative mate timing; the former end-to-end method family is reserved.
+- **AF claim-set version:** `AF-2026-07-30-v7`; three independent / 20 total / no multiple-dependent claims. AF claim 17 is the method counterpart to the integrated system independent, each with the timing-choice nexus folded in; AF claims 18–19 provide the detection implementation branch; AF claim 20 is the monitor-side independent with a per-cut ordered-transition searched-ledger environment and the mate-containing reconstructed-same-combination nexus.
 - **AF continuation-candidate version:** `AF-CONT-2026-07-22-v2`; four independent / 19 total / no multiple-dependent claims. It is an actor-focused reservation with distribution and detector causal-nexus fallbacks; it is not filed and continuation rights are not preserved.
 - Every strategy document must state its strategy ID, version, status, and review date.
 - Every claim matrix is valid only for the claim-set version named in its header and must be rescored after claim amendment or renumbering.

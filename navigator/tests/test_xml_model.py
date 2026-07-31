@@ -49,8 +49,8 @@ class XMLModelTests(unittest.TestCase):
             derivation_token=object())
 
     def test_live_editions_have_exact_claim_and_mapping_census(self):
-        expected = {"na-specification": (30, 77),
-                    "af-specification": (23, 61)}
+        expected = {"na-specification": (20, 45),
+                    "af-specification": (20, 55)}
         for edition, model in self.models.items():
             with self.subTest(edition=edition):
                 claims, units = expected[edition]

@@ -329,7 +329,7 @@ class CurrentRenderTests(unittest.TestCase):
         wide_relation_id, wide = max(
             navigation["relations"].items(),
             key=lambda item: len(item[1]["targets"]))
-        self.assertGreater(len(wide["targets"]), 5)
+        self.assertGreater(len(wide["targets"]), 3)
         relation_id, current = next(
             (identifier, item)
             for identifier, item in navigation["relations"].items()
@@ -924,8 +924,8 @@ class CurrentRenderTests(unittest.TestCase):
         }
 
     def test_live_products_are_complete_self_contained_and_accessible(self):
-        expected = {"na-specification": (30, 77),
-                    "af-specification": (23, 61)}
+        expected = {"na-specification": (20, 45),
+                    "af-specification": (20, 55)}
         for edition, artifact in self.artifacts.items():
             with self.subTest(edition=edition):
                 model = self.models[edition]
@@ -1221,7 +1221,7 @@ class CurrentRenderTests(unittest.TestCase):
                 "marks a passage in another recorded candidate."),
         }
         expected_max_candidates = {
-            "na-specification": 7,
+            "na-specification": 4,
             "af-specification": 6,
         }
         for product_id, model in self.models.items():

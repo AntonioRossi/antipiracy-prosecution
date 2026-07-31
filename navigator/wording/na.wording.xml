@@ -16,17 +16,9 @@
     <usage context="gate-label" />
     <text>Detection Mode A gate</text>
   </entry>
-  <entry wordingId="gate-label-na-end-to-end-mode-a" category="gate-label">
-    <usage context="gate-label" />
-    <text>End-to-end Mode A gate</text>
-  </entry>
   <entry wordingId="gate-label-na-collusion-output" category="gate-label">
     <usage context="gate-label" />
     <text>Collusion-output gate</text>
-  </entry>
-  <entry wordingId="gate-label-na-overlay-sequencing" category="gate-label">
-    <usage context="gate-label" />
-    <text>Overlay-sequencing gate</text>
   </entry>
   <entry wordingId="gate-label-na-per-filing-support" category="gate-label">
     <usage context="gate-label" />

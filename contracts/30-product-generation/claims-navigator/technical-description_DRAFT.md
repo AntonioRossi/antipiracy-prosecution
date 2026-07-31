@@ -236,16 +236,16 @@ validated typed data, not conditionals embedded in shared rendering code.
 | Property | NA edition | AF edition |
 |---|---|---|
 | Strategy | Normal-allowance | Allowance-first |
-| Claim-set version | `NA-2026-07-22-v4` | `AF-2026-07-22-v6` |
-| Claims | 30 | 23 |
-| Selectable units | 77 | 61 |
-| Independent claims | 1, 9, 16, 22 | 1, 19, 23 |
-| Claim groups | 4 | 10 |
-| Largest decompositions | Claim 22: 14 units; claim 9: 9 | Claims 1 and 19: 14 units; claim 23: 8 |
+| Claim-set version | `NA-2026-07-30-v5` | `AF-2026-07-30-v7` |
+| Claims | 20 | 20 |
+| Selectable units | 45 | 55 |
+| Independent claims | 1, 9, 15 | 1, 17, 20 |
+| Claim groups | 3 | 10 |
+| Largest decompositions | Claim 9: 9 units; claims 1 and 15: 7 | Claims 1 and 17: 14 units; claim 20: 8 |
 | Display prefix | `NA claim N` | `AF claim N` |
 | Navigator relations | `navigator/relations/na__pct.relations.xml` | `navigator/relations/af__pct.relations.xml` |
 | Forbidden authored UI term | None | `camera-cut timing pattern` |
-| HTML artifact | `AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html` | `AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html` |
+| HTML artifact | `AA11393US-NA-claims-spec-navigator_NA-2026-07-30-v5.html` | `AA11393US-AF-claims-spec-navigator_AF-2026-07-30-v7.html` |
 
 Edition rules are closed:
 
@@ -509,19 +509,19 @@ variation are fixed by closed mechanical rules or excluded.
 The current shared four-product bundle is:
 
 ```text
-AA11393US-claims-evidence-navigators_na-specification-NA-2026-07-22-v4_af-specification-AF-2026-07-22-v6_na-prior-art-NA-2026-07-22-v4_af-prior-art-AF-2026-07-22-v6_TECHNICAL-PREVIEW.zip
+AA11393US-claims-evidence-navigators_na-specification-NA-2026-07-30-v5_af-specification-AF-2026-07-30-v7_na-prior-art-NA-2026-07-30-v5_af-prior-art-AF-2026-07-30-v7_TECHNICAL-PREVIEW.zip
 ```
 
 It is a deterministic STORE ZIP containing these nine members in configured-product order:
 
-1. `AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html`
-2. `AA11393US-NA-claims-spec-navigator_NA-2026-07-22-v4.html.sha256`
-3. `AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html`
-4. `AA11393US-AF-claims-spec-navigator_AF-2026-07-22-v6.html.sha256`
-5. `AA11393US-NA-claims-prior-art-navigator_NA-2026-07-22-v4.html`
-6. `AA11393US-NA-claims-prior-art-navigator_NA-2026-07-22-v4.html.sha256`
-7. `AA11393US-AF-claims-prior-art-navigator_AF-2026-07-22-v6.html`
-8. `AA11393US-AF-claims-prior-art-navigator_AF-2026-07-22-v6.html.sha256`
+1. `AA11393US-NA-claims-spec-navigator_NA-2026-07-30-v5.html`
+2. `AA11393US-NA-claims-spec-navigator_NA-2026-07-30-v5.html.sha256`
+3. `AA11393US-AF-claims-spec-navigator_AF-2026-07-30-v7.html`
+4. `AA11393US-AF-claims-spec-navigator_AF-2026-07-30-v7.html.sha256`
+5. `AA11393US-NA-claims-prior-art-navigator_NA-2026-07-30-v5.html`
+6. `AA11393US-NA-claims-prior-art-navigator_NA-2026-07-30-v5.html.sha256`
+7. `AA11393US-AF-claims-prior-art-navigator_AF-2026-07-30-v7.html`
+8. `AA11393US-AF-claims-prior-art-navigator_AF-2026-07-30-v7.html.sha256`
 9. `MANIFEST.txt`
 
 The ZIP has its own detached `.sha256` beside it, not inside it. The manifest carries the exact

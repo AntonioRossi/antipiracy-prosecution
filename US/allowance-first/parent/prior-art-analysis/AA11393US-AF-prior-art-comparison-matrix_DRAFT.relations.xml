@@ -2,7 +2,7 @@
 <relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="prior-art-map-v1" schemaVersion="1">
   <identity owner="Applicant — Antonio Rossi" profile="prior-art-map-v1" relationSetId="aa11393us-af-prior-art-comparison-matrix" scope="AF" status="draft" />
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00001">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <assertionField name="claimed-operation">Structured edit list contains successive entries identifying different physical source cameras and out/in-point time codes at plural director-commanded cuts</assertionField>
@@ -11,7 +11,7 @@
     <assertionField name="pressure-and-consequence">A20 plus direct multicamera/EDL art is the leading production-side route. Retain the camera identifiers, entry relationship, and paired out/in-point modification.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00002">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
@@ -21,7 +21,7 @@
     <assertionField name="pressure-and-consequence">“Variable timing” alone is not distinguishing. The retained physical-camera boundary and structured-list operation carry the production-side difference.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00003">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
@@ -36,7 +36,7 @@
     <assertionField name="pressure-and-consequence">These operations close the loop but are not independently sparse.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00004" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00004">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
@@ -49,7 +49,7 @@
     <assertionField name="pressure-and-consequence">This recovery route has direct filing support but reduced art-facing distinctiveness. A4/A6/A13 are material combination references.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00005">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
@@ -60,484 +60,484 @@
     <assertionField name="pressure-and-consequence">Equality and lookup are direct support features but not stand-alone novelty centers.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00006">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A1 — D1, US 2021/0352381 A1</assertionField>
     <assertionField name="production-individualized-variation">P — recipient-varying delay/frame-rate and completed-copy transforms</assertionField>
     <assertionField name="delivery-association">P/Y — device selection and segment sequences</assertionField>
     <assertionField name="suspect-recovery">P — recoverable identifiers</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">No plural physical-camera edit-boundary variation or cut-time reconstructed-manifest equality. Relevant in combination.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">No plural physical-camera edit-boundary variation or cut-time reconstructed-manifest equality. Relevant in combination.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00007">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="id-document">A2 — US 7,630,497 B2</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">Y — segment-version assignments</assertionField>
     <assertionField name="suspect-recovery">Y — traitor tracing</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Dense on assignment/collusion, not the production mechanism.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Dense on assignment/collusion, not the production mechanism.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00008">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A3 — US 2009/0320130 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">Y — coded segment assignments</assertionField>
     <assertionField name="suspect-recovery">Y — recovered-file scoring</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Pressures AF claims 11–12; no physical-camera or reconstructed-manifest chain.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Pressures AF claims 11–12; no physical-camera or reconstructed-manifest chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00009">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
     <assertionField name="id-document">A4 — US 10,834,158 B1</assertionField>
     <assertionField name="production-individualized-variation">P — camera-perspective fragment alternatives</assertionField>
     <assertionField name="delivery-association">Y — customized manifests and user patterns</assertionField>
     <assertionField name="suspect-recovery">Y — temporal alignment, recovered version sequence, user/group resolution</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Closest broad delivery/recovery reference. It lacks the claimed structured-list plural boundary changes between retained physical cameras and cut-time-built equal manifest.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Closest broad delivery/recovery reference. It lacks the claimed structured-list plural boundary changes between retained physical cameras and cut-time-built equal manifest.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00010">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A5 — US 2012/0087583 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">—</assertionField>
     <assertionField name="suspect-recovery">Y — perceptual hashes and shot comparison</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Direct pressure on AF claims 7–8 only.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Direct pressure on AF claims 7–8 only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00011">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A6 — US 2014/0325550 A1</assertionField>
     <assertionField name="production-individualized-variation">P — recipient temporal events and variable segment duration</assertionField>
     <assertionField name="delivery-association">Y — tailored manifests and served sequences</assertionField>
     <assertionField name="suspect-recovery">Y — pattern comparison and device/colluder identification</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Supplies much of the non-camera loop; lacks the claimed physical-camera edit entries and plural paired boundary modification.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Supplies much of the non-camera loop; lacks the claimed physical-camera edit entries and plural paired boundary modification.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00012">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A7 — US 2017/0118537 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">Y — device-driven segment selection</assertionField>
     <assertionField name="suspect-recovery">P — later tracing</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Generic manifest/address selection.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Generic manifest/address selection.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00013">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A8 — US 2018/0352307 A1</assertionField>
     <assertionField name="production-individualized-variation">P — randomized durations and variant obfuscation</assertionField>
     <assertionField name="delivery-association">Y — identifying variant sequences</assertionField>
     <assertionField name="suspect-recovery">P — pirate-side countermeasures</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Undercuts reliance on manifest timing or variant sequences alone.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Undercuts reliance on manifest timing or variant sequences alone.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00014">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="id-document">A9 — US 12,412,229 B2</assertionField>
     <assertionField name="production-individualized-variation">P — rendered watermark variants</assertionField>
     <assertionField name="delivery-association">P — client policies/IDs</assertionField>
     <assertionField name="suspect-recovery">P/Y — collusion detection</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Relevant to AF claims 11–12 and 18; different marking mechanism.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Relevant to AF claims 11–12 and 18; different marking mechanism.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00015">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A10 — US 2010/0100971 A1</assertionField>
     <assertionField name="production-individualized-variation">P — per-device time-domain colour modulation</assertionField>
     <assertionField name="delivery-association">P — device identity</assertionField>
     <assertionField name="suspect-recovery">Y — capture and extraction</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Complete marking loop of a different type.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Complete marking loop of a different type.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00016">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A11 — US 2023/0230193 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">—</assertionField>
     <assertionField name="suspect-recovery">—</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Overlay watermarking by request type; no material whole-chain mapping.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Overlay watermarking by request type; no material whole-chain mapping.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00017">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A12 — US 2022/0358762 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">P — subscriber/device context</assertionField>
     <assertionField name="suspect-recovery">P — ML classification</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Detection classification without the claimed recovery chain.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Detection classification without the claimed recovery chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00018">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A13 — US 2023/0103449 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">Y — segment and manifest generation</assertionField>
     <assertionField name="suspect-recovery">Y/P — manifest regeneration from segment identifiers</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Closest stored manifest-reconstruction art. It rebuilds from embedded segment identifiers, not plural scene-change-derived cut time codes or the claimed physical-camera production.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Closest stored manifest-reconstruction art. It rebuilds from embedded segment identifiers, not plural scene-change-derived cut time codes or the claimed physical-camera production.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00019">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A14 — US 2022/0207120 A1</assertionField>
     <assertionField name="production-individualized-variation">P — per-user chunk symbols</assertionField>
     <assertionField name="delivery-association">Y — user database</assertionField>
     <assertionField name="suspect-recovery">P — detection contemplated</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Conventional A/B watermarking and recipient record.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Conventional A/B watermarking and recipient record.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00020">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A15 — US 2024/0114066 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">P — session-bound manifests and address records</assertionField>
     <assertionField name="suspect-recovery">—</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Session gating without content differentiation; statutory posture requires counsel review.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Session gating without content differentiation; statutory posture requires counsel review.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00021">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A16 — US 2024/0185891 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">Y — per-request manifests and recording IDs</assertionField>
     <assertionField name="suspect-recovery">—</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Conventional unique-manifest generation on a shared timeline; statutory posture requires counsel review.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Conventional unique-manifest generation on a shared timeline; statutory posture requires counsel review.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00022">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="id-document">A17 — US 12,046,260 B2</assertionField>
     <assertionField name="production-individualized-variation">P — per-account item substitution</assertionField>
     <assertionField name="delivery-association">P — personalized-segment database</assertionField>
     <assertionField name="suspect-recovery">—</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Personalization without suspect recovery.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Personalization without suspect recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00023">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="id-document">A18 — US 12,328,488 B2</assertionField>
     <assertionField name="production-individualized-variation">P — per-user dynamic-segment substitution</assertionField>
     <assertionField name="delivery-association">P — user-keyed metadata</assertionField>
     <assertionField name="suspect-recovery">—</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Same-timing format variants; no recovery chain.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Same-timing format variants; no recovery chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00024">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A19 — US 2023/0353582 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">P — assigned-bit/client records</assertionField>
     <assertionField name="suspect-recovery">Y — per-client scoring and pirate-list identification</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Strong Tardos/scoring pressure for AF claims 11–12; no claimed manifest-sequence input or production chain.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Strong Tardos/scoring pressure for AF claims 11–12; no claimed manifest-sequence input or production chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00025">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A20 — US 2012/0114309 A1</assertionField>
     <assertionField name="production-individualized-variation">P/Y — unique EDL per consumer, time-code-defined elements, random “sizes,” and product signature</assertionField>
     <assertionField name="delivery-association">Y — recipient↔unique-version registry</assertionField>
     <assertionField name="suspect-recovery">P — distributed-copy analysis and watermark cross-reference</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Leading motivation and structured-record reference. No express plural physical-camera boundary timing variation, manifest reconstruction from detected cut times, or complete equal-manifest chain. Figure 2 on drawing Sheet 2 contains the F/C/A/C exemplar; Figure 3 separately depicts A/B/C sources; 330 is a final-product reference numeral.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Leading motivation and structured-record reference. No express plural physical-camera boundary timing variation, manifest reconstruction from detected cut times, or complete equal-manifest chain. Figure 2 on drawing Sheet 2 contains the F/C/A/C exemplar; Figure 3 separately depicts A/B/C sources; 330 is a final-product reference numeral.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00026">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">A21 — US 2021/0166036 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">—</assertionField>
     <assertionField name="suspect-recovery">Y — shot-boundary detection, shot-duration/time-slice fingerprint sequence, and exact database fingerprint equality</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Direct recovery-side pressure. It lacks production, personalization, manifests, a recipient ledger, and physical-camera teaching; its cumulative-histogram/sliding-window implementation is analogous rather than an express perceptual-hash/fuzzy-match teaching.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Direct recovery-side pressure. It lacks production, personalization, manifests, a recipient ledger, and physical-camera teaching; its cumulative-histogram/sliding-window implementation is analogous rather than an express perceptual-hash/fuzzy-match teaching.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00027">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
     <assertionField name="id-document">B1 — D2, CN 117278762 A</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">P — codec provenance</assertionField>
     <assertionField name="suspect-recovery">P — decoder/display analysis</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">No material physical-camera chain.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">No material physical-camera chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00028">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">B2 — WO 2021/224688 A1</assertionField>
     <assertionField name="production-individualized-variation">P — A1/D1 family disclosure</assertionField>
     <assertionField name="delivery-association">P/Y</assertionField>
     <assertionField name="suspect-recovery">P</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Scored substantively with A1. ISR ratings concern D1-family claims, not AF claims.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Scored substantively with A1. ISR ratings concern D1-family claims, not AF claims.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00029">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">B3 — WO 2017/017603 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">P — source watermark</assertionField>
     <assertionField name="suspect-recovery">P — capture/extract/compare</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Different watermark route.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Different watermark route.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00030">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <assertionField name="id-document">B4 — WO 2010/044102 A2</assertionField>
     <assertionField name="production-individualized-variation">P — per-playback visible marks</assertionField>
     <assertionField name="delivery-association">P — device/time identity</assertionField>
     <assertionField name="suspect-recovery">P — piracy-point identification</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Different marking architecture.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Different marking architecture.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00031">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
     <assertionField name="id-document">B5 — CN 202455480 U</assertionField>
     <assertionField name="production-individualized-variation">P — receiver watermark</assertionField>
     <assertionField name="delivery-association">P — smart-card identity</assertionField>
     <assertionField name="suspect-recovery">P — monitoring/alarm</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Different marking architecture.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Different marking architecture.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00032">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <assertionField name="id-document">B6 — CN 100583750 C / Microsoft family</assertionField>
     <assertionField name="production-individualized-variation">Y/P — per-user local frame-count/width variation</assertionField>
     <assertionField name="delivery-association">P — buyer/key relation</assertionField>
     <assertionField name="suspect-recovery">Y — hash reacquisition and contributor search</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Strong analogous timing/hash art; lacks physical-camera edit entries and manifest reconstruction/equality.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Strong analogous timing/hash art; lacks physical-camera edit entries and manifest reconstruction/equality.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00033">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">B7 — WO 2021/141686 A1</assertionField>
     <assertionField name="production-individualized-variation">P — shots/cuts</assertionField>
     <assertionField name="delivery-association">—</assertionField>
     <assertionField name="suspect-recovery">Y — shot-sequence piracy comparison</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Direct pressure on generic scene-change analysis.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Direct pressure on generic scene-change analysis.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00034">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">B8 — EP 2 811 416 A1</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">—</assertionField>
     <assertionField name="suspect-recovery">Y — distortion-tolerant relative-time patterns</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Pressures broad timing recovery; no recipient-specific production.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Pressures broad timing recovery; no recipient-specific production.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00035">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="id-document">B9 — WO 2009/156973 A1</assertionField>
     <assertionField name="production-individualized-variation">Y/P — key-derived switches at user-different points among transformed streams</assertionField>
     <assertionField name="delivery-association">P — user keys and origin codes</assertionField>
     <assertionField name="suspect-recovery">—</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Critical switch-point reference. Streams are transformed copies, not identified physical-camera feeds; no structured camera-edit list or recovery loop.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Critical switch-point reference. Streams are transformed copies, not identified physical-camera feeds; no structured camera-edit list or recovery loop.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00036">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <assertionField name="id-document">B10 — KR 2024-0168593 A</assertionField>
     <assertionField name="production-individualized-variation">P — per-user object attributes</assertionField>
     <assertionField name="delivery-association">P — user-code mapping</assertionField>
     <assertionField name="suspect-recovery">P — leak detection and code inference</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Different attribute-domain marking. Potentially citable principally in Mode B; presently low-materiality and cumulative-or-weaker.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Different attribute-domain marking. Potentially citable principally in Mode B; presently low-materiality and cumulative-or-weaker.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00037">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
     <assertionField name="id-document">C8 — ETSI TS 104 002 V1.1.1</assertionField>
     <assertionField name="production-individualized-variation">P — aligned A/B variants</assertionField>
     <assertionField name="delivery-association">Y — edge sequencing and account/session patterns</assertionField>
     <assertionField name="suspect-recovery">P — tracing objective; extraction out of scope</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Generic A/B delivery and equal-position packaging are standardized.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Generic A/B delivery and equal-position packaging are standardized.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00038">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
     <assertionField name="id-document">C3 — Tardos 2003 extended version</assertionField>
     <assertionField name="production-individualized-variation">—</assertionField>
     <assertionField name="delivery-association">P — user code assignment</assertionField>
     <assertionField name="suspect-recovery">Y — score/threshold accusation</assertionField>
-    <assertionField name="effect-on-af-claims-1-and-19">Algorithm-class pressure for AF claims 11–12 only.</assertionField>
+    <assertionField name="effect-on-af-claims-1-and-17">Algorithm-class pressure for AF claims 11–12 only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00039">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A1 / D1</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Completed-copy transforms, assignment, and identifiers; no plural physical-camera edit-boundary/manifests/reconstruction chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00040">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <assertionField name="document">A2</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Assignment and traitor tracing; no production or reconstructed-manifest steps.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00041">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
     <assertionField name="document">A3</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Segment assignment and scoring; no production chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00042">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <assertionField name="document">A4</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Camera perspectives, customized manifests, recovered sequences, and user resolution; no claimed physical-camera structured-list variation.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00043">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
     <assertionField name="document">A5</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Detection implementation only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00044">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <assertionField name="document">A6</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Temporal events, tailored manifests, and device resolution; no claimed edit-boundary generation.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00045">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
     <assertionField name="document">A7</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Device-driven delivery; no complete production/recovery chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00046">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
     <assertionField name="document">A8</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Manifest variants and obfuscation; no complete chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00047">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
     <assertionField name="document">A9</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Client variants and collusion detection; different marking route.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00048">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
     <assertionField name="document">A10</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Mark generation and extraction; different production object.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00049">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
     <assertionField name="document">A11</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Overlay operation only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00050">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
     <assertionField name="document">A12</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Candidate classification only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00051">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
     <assertionField name="document">A13</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Manifest generation/regeneration; no plural physical-camera edit-boundary chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00052">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
     <assertionField name="document">A14</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Per-user chunks and database; no complete recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00053">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
     <assertionField name="document">A15</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Session-bound manifests and address records map delivery and association; no production or suspect-recovery chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00054">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
     <assertionField name="document">A16</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Per-request manifests and recording association; no content variation or recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00055">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
     <assertionField name="document">A17</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Per-account substitution and personalized-segment records map segmentation and delivery association; no physical-camera production or suspect recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00056" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00056">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
     <assertionField name="document">A18</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">User-specific dynamic-segment substitution and metadata map segmentation and delivery association; no physical-camera production or suspect recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00057" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00057">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
     <assertionField name="document">A19</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Client records and suspect scoring; no claimed production/delivery chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00058" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00058">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <assertionField name="document">A20</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Individualized EDL versions, recipient registry, and cross-reference recovery; no plural physical-camera boundary timing variation or cut-time reconstructed-manifest equality.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00059" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00059">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <assertionField name="document">A21</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Shot-boundary duration-sequence fingerprinting and exact database equality map recovery operations; no production, personalization, manifests, or recipient ledger.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00060" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00060">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
     <assertionField name="document">B1 / D2</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Codec provenance does not map the complete method.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00061" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00061">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B2</assertionField>
@@ -545,231 +545,231 @@
     <assertionField name="method-specific-basis">Same substantive partial mapping as A1.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00062" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00062">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
     <assertionField name="document">B3</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Source-watermark comparison only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00063" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00063">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
     <assertionField name="document">B4</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Per-playback marking and recovery; different route.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00064" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00064">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
     <assertionField name="document">B5</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Receiver watermark monitoring only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00065" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00065">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <assertionField name="document">B6</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Local timing variation, hash reacquisition, and attribution; no claimed camera-edit/manifests chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00066" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00066">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
     <assertionField name="document">B7</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Shot comparison only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00067" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00067">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
     <assertionField name="document">B8</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Relative-time comparison only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00068" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00068">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <assertionField name="document">B9</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">User-different switch points; no physical-camera edit list or recovery loop.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00069" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00069">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <assertionField name="document">B10</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Per-user attribute modification and code inference; no claimed physical-camera/manifests chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00070" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00070">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
     <assertionField name="document">C8</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="method-specific-basis">Standardized variant delivery; no claimed production and recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00071" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00071">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
     <assertionField name="document">C3</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="method-specific-basis">Accusation algorithm only.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00072" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00072">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A1 / D1</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Recipient-varying versions, segment sequences, and recoverable identifiers; no claimed reconstructed delivered-manifest equality nexus.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00073" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00073">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <assertionField name="document">A2</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Segment assignments and traitor tracing; no reconstructed reference/mate manifest method.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00074" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00074">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
     <assertionField name="document">A3</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Coded segment assignments and recovered-copy scoring; no delivered-manifest reconstruction.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00075" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00075">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <assertionField name="document">A4</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Customized perspective manifests, recovered sequences, and user resolution pressure most of the chain; no claimed mate-containing equal delivered-manifest nexus.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00076" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00076">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
     <assertionField name="document">A5</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Perceptual-hash shot comparison pressures cut detection but supplies no delivered reference/mate manifest ledger.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00077" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00077">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <assertionField name="document">A6</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Recipient temporal patterns, tailored manifests, comparison, and device resolution; no claimed reconstructed-same-combination relationship.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00078" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00078">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
     <assertionField name="document">A7</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Device-driven segment selection and tracing; no complete reconstruction/equality chain.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00079" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00079">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
     <assertionField name="document">A8</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Identifying variant sequences and timing obfuscation; no recipient lookup through the claimed reconstructed manifest.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00080" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00080">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
     <assertionField name="document">A9</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Client variants, records, and collusion detection; different recovery object.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00081" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00081">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
     <assertionField name="document">A10</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Capture and extraction of a device mark; different recovery object and no delivered-manifest ledger.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00082" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00082">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
     <assertionField name="document">A11</assertionField>
     <assertionField name="score">—</assertionField>
     <assertionField name="monitor-method-basis">Overlay watermarking by request type; no material whole-method mapping.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00083" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00083">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
     <assertionField name="document">A12</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Subscriber context and detection classification; no claimed manifest reconstruction and equality.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00084" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00084">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
     <assertionField name="document">A13</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Manifest regeneration from segment identifiers; no scene-change-derived mate-containing recipient combination.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00085" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00085">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
     <assertionField name="document">A14</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Per-user chunks and user database; no complete suspect reconstruction method.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00086" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00086">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
     <assertionField name="document">A15</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Session-bound manifests and address records; no suspect detection or reconstruction.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00087" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00087">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
     <assertionField name="document">A16</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Per-request manifests and recording associations; no suspect reconstruction.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00088" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00088">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
     <assertionField name="document">A17</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Per-account segment substitution and records; no suspect recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00089" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00089">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
     <assertionField name="document">A18</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">User-specific dynamic segments and records; no suspect recovery.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00090" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00090">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
     <assertionField name="document">A19</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Suspect acquisition, client scoring, and identification; no delivered reference/mate manifest reconstruction.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00091" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00091">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <assertionField name="document">A20</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Individualized EDL versions, registry, and cross-reference analysis; no plural cut-time reconstructed delivered-manifest equality.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00092" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00092">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <assertionField name="document">A21</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Shot-boundary duration-sequence fingerprinting and exact database equality directly pressure recovery; a generic fingerprint is not the claimed delivered reference/mate manifest and A21 supplies no recipient association or mate-containing combination.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00093" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00093">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
     <assertionField name="document">B1 / D2</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Codec provenance and decoder/display analysis; no claimed manifest environment or recovery nexus.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00094" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00094">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B2</assertionField>
@@ -777,70 +777,70 @@
     <assertionField name="monitor-method-basis">Same substantive partial mapping as A1.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00095" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00095">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
     <assertionField name="document">B3</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Source-watermark extraction and comparison; different recovery object.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00096" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00096">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
     <assertionField name="document">B4</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Per-playback marking and piracy-point identification; different recovery architecture.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00097" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00097">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
     <assertionField name="document">B5</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Receiver watermark monitoring and identity; different recovery architecture.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00098" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00098">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <assertionField name="document">B6</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Local timing variation, hash reacquisition, and contributor search; no claimed delivered-manifest reconstruction.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00099" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00099">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
     <assertionField name="document">B7</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Shot-sequence piracy comparison; no recipient-associated delivered-manifest ledger.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00100" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00100">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
     <assertionField name="document">B8</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Distortion-tolerant relative-time identification; no recipient-specific manifest environment.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00101" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00101">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <assertionField name="document">B9</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">User-different stream-switch timings; no suspect recovery or delivered-manifest equality.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00102" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00102">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <assertionField name="document">B10</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">Per-user object variation and code inference; no reference/mate manifest reconstruction.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00103" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00103">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
     <assertionField name="document">C8</assertionField>
     <assertionField name="score">P</assertionField>
     <assertionField name="monitor-method-basis">A/B segment sequencing and tracing objective; extraction and the claimed reconstructed-manifest lookup are outside its scope.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00104" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00104">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
     <assertionField name="document">C3</assertionField>
     <assertionField name="score">P</assertionField>
@@ -907,42 +907,35 @@
     <assertionField name="added-subject-matter">Same-interval/equal-duration paired chunks; transition at respective timings</assertionField>
     <assertionField name="stored-art-posture">A4, B9, and C8 substantially teach packaging alignment. AF claim 14 retains value only through the inherited physical-camera boundary.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00111" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00111">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:02c4144a33b0ea4d24cb38299a39fbc35252901079fa260785b18b60cb30cb5a" fragmentId="claim-15" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00112" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00112">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1ad1368ea3dfa42bab35a15fb86ff9998857e41be25b27d461c28b88f5ad7c15" fragmentId="claim-15" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claims">15</assertionField>
-    <assertionField name="added-subject-matter">Blockchain registration</assertionField>
-    <assertionField name="stored-art-posture">No dedicated blockchain reference is in the stored corpus. Treat as implementation coverage and complete a direct search before assigning independent allowance value.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00112" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00112">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ce47dd048cc4614ed38053264f9e7bb24f2efffa36cacdb6e347b36e064b7be9" fragmentId="claim-16" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claims">16</assertionField>
     <assertionField name="added-subject-matter">Unicast</assertionField>
     <assertionField name="stored-art-posture">Conventional delivery implementation.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00113" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00113">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:06bc3a2ccbfb03fa26c54a13f664fd091290cb0d5bfd9bc05bfd398e2c7acd20" fragmentId="claim-17" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="af-claims">17</assertionField>
-    <assertionField name="added-subject-matter">Recipient-associated timing choices across plural cuts</assertionField>
+    <assertionField name="af-claims">1, 17</assertionField>
+    <assertionField name="added-subject-matter">Recipient-associated per-cut timing choices across plural cuts (folded former claim 17 relationship)</assertionField>
     <assertionField name="stored-art-posture">A2–A4, A6–A8, B9, and C8 teach multi-position recipient sequences. The inherited retained physical-camera boundary remains essential.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00114" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00114">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:27fe27ee3171cc6482d77fd9e52688e59c0ca844911e5d53ecafeb282de490fe" fragmentId="claim-18" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d79df9f6df14b5358637eb7f8b361339f5b4881528d6225ff188b54c7e52f287" fragmentId="claim-16" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
-    <assertionField name="af-claims">18</assertionField>
+    <assertionField name="af-claims">16</assertionField>
     <assertionField name="added-subject-matter">Overlay before segmentation</assertionField>
     <assertionField name="stored-art-posture">D1, A4, A9, and conventional graphics/watermark art create pressure; implementation coverage.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00115" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00115">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
@@ -952,19 +945,19 @@
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
-    <assertionField name="af-claims">20</assertionField>
-    <assertionField name="added-subject-matter">Delivered recipient timing-choice combination containing an affirmative mate choice; reconstruction of the same detected combination</assertionField>
+    <assertionField name="af-claims">1, 17</assertionField>
+    <assertionField name="added-subject-matter">Delivered recipient timing-choice combination containing an affirmative mate choice; reconstruction of the same detected combination (folded former claim 20 relationship)</assertionField>
     <assertionField name="stored-art-posture">A2–A4, A6–A8, A13, B6, B9, C8, and C3 create pressure on multi-position choices, manifests, reconstruction, or tracing. No reviewed document maps the complete inherited physical-camera chain plus the exact mate-containing delivered-combination-to-reconstructed-combination nexus.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-prior-art-comparison-matrix-row-00116" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-af-prior-art-comparison-matrix-row-00116">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1cfc3444d614ec9e1baf5740985c01658dfbe69e40dbf28ee43e19e570d5fd33" fragmentId="claim-18" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="af-claims">21–22</assertionField>
-    <assertionField name="added-subject-matter">Perceptual-hash detection; sliding-window fuzzy matching in a separate method branch from AF claim 19</assertionField>
+    <assertionField name="af-claims">18–19</assertionField>
+    <assertionField name="added-subject-matter">Perceptual-hash detection; sliding-window fuzzy matching in a separate method branch from AF claim 17</assertionField>
     <assertionField name="stored-art-posture">Crowded by A5, A21, B6, B7, and B8. A21 is partial for these specific implementations. Patentability remains in the inherited AF chain and cumulative hash/fuzzy combination.</assertionField>
   </relation>
 </relations>

@@ -2,19 +2,19 @@
 <relations xmlns="urn:aa11393:ssp:relations:1" schemaProfile="claim-crosswalk-v1" schemaVersion="1">
   <identity owner="Applicant — Antonio Rossi" profile="claim-crosswalk-v1" relationSetId="aa11393us-af-claim-crosswalk" scope="AF" status="draft" />
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00001" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00001">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">1</assertionField>
-    <assertionField name="af-limitation">Plural structured-list camera-boundary variation → manifest delivery/recipient association → plural cut-time reconstruction → equal-manifest ledger lookup</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 1 and 7 for production; 9 and 12 for delivery/ledger; 16 for delivered reference/mate chunk-combination manifests and detector recovery; 19–20 for matched-manifest physical-camera/plural-timing fallbacks; 22 for an end-to-end method</assertionField>
-    <assertionField name="difference-that-matters">No NA system claim recites the complete AF chain; the NA system independents separate the principal actors.</assertionField>
+    <assertionField name="af-limitation">Plural structured-list camera-boundary variation → per-cut timing-choice manifest delivery/recipient association → plural cut-time reconstruction of the detected combination → equal-manifest ledger lookup with an affirmative mate timing</assertionField>
+    <assertionField name="closest-na-coverage">NA claims 1 and 7 for production; 9 and 12 for delivery/ledger; 15 for delivered per-cut ensemble manifests and detector recovery; 18 for matched-manifest geometry; the end-to-end method family is reserved (former NA claims 22–30)</assertionField>
+    <assertionField name="difference-that-matters">No NA system claim recites the complete AF chain; the NA system independents separate the principal actors. The timing-choice nexus is folded into AF claim 1 rather than held as a dependent fallback.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00002">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:64643564424fd2762dcbe8d80b1c17f4b44f67cf60e675b6d954a7caa524102f" fragmentId="claim-2" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">2</assertionField>
     <assertionField name="af-limitation">Preserve a later reference cut timing and restore synchronization</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 2 and 23</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 2; the method counterpart is reserved (former NA claim 23)</assertionField>
     <assertionField name="difference-that-matters">Both strategies share the Example 2 support gate.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00003">
@@ -28,7 +28,7 @@
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00004" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00004">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:71e176669e9c3747fd53dd2d830514e9df4c75cfc1030763106aaf3db4a410e4" fragmentId="claim-4" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1eb0f3c507d85258f4247eb1c70d319ff59e6af9c9bc29a96e6475d583b415b7" fragmentId="claim-4" role="subject" />
     <assertionField name="af-claim">4</assertionField>
     <assertionField name="af-limitation">Structured list is an EDL</assertionField>
@@ -56,7 +56,7 @@
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">7</assertionField>
     <assertionField name="af-limitation">Perceptual-hash comparison for plural cut-time detection</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 17 and 26</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 16; the method counterpart is reserved (former NA claim 26)</assertionField>
     <assertionField name="difference-that-matters">The claims use the same comparison class within different inherited chains.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00008">
@@ -64,7 +64,7 @@
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">8</assertionField>
     <assertionField name="af-limitation">Sliding-window fuzzy hash matching</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 18 and 26</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 17; the method counterpart is reserved (former NA claim 26)</assertionField>
     <assertionField name="difference-that-matters">Same implementation family with different antecedents.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00009">
@@ -88,7 +88,7 @@
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">11</assertionField>
     <assertionField name="af-limitation">Mixed-version suspect and probabilistic analysis of recipient-associated manifest chunk-selection sequences</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 21 and 28</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 19; the method counterpart is reserved (former NA claim 28)</assertionField>
     <assertionField name="difference-that-matters">The exact probabilistic input, contributor output, and claim category differ.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00012">
@@ -96,15 +96,15 @@
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">12</assertionField>
     <assertionField name="af-limitation">Segmented Tardos fingerprints and contributor identification for a respective portion</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 21 and 28</assertionField>
-    <assertionField name="difference-that-matters">No NA claim recites the exact segmented-Tardos/portion relationship.</assertionField>
+    <assertionField name="closest-na-coverage">NA claims 19 and 20; NA claim 20 adds the segmented-Tardos species, and the exact segment/fingerprint/portion/contributor relationship remains gated in both strategies</assertionField>
+    <assertionField name="difference-that-matters">Both strategies now recite the segmented-Tardos species; the exact relationship gate is shared, not transferred.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00013">
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a434fd03a8fdb8f9e2d766266948f45428c29bc66daf12a4e43ed7367735754b" fragmentId="claim-13" role="subject" />
     <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26fdcdcfe12e502b4d2a50196f50cbbb4368a030da5f43cbdeeb4ccfc007516f" fragmentId="claim-14" role="subject" />
     <assertionField name="af-claim">13</assertionField>
     <assertionField name="af-limitation">Equal-duration reference/mate chunks spanning the same playback interval</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 13 and 25</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 12; the method counterpart is reserved (former NA claim 25)</assertionField>
     <assertionField name="difference-that-matters">AF claim 13 does not itself require each chunk to straddle the retained transition; AF claim 14 does.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00014">
@@ -112,127 +112,100 @@
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">14</assertionField>
     <assertionField name="af-limitation">Paired chunks contain the retained transition at respective reference and mate timings</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 13 and 25</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 12</assertionField>
     <assertionField name="difference-that-matters">Closely related geometry; exact antecedents and inherited chains differ.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00015">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:02c4144a33b0ea4d24cb38299a39fbc35252901079fa260785b18b60cb30cb5a" fragmentId="claim-15" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1ad1368ea3dfa42bab35a15fb86ff9998857e41be25b27d461c28b88f5ad7c15" fragmentId="claim-15" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">15</assertionField>
-    <assertionField name="af-limitation">Blockchain registration of manifest-recipient associations</assertionField>
-    <assertionField name="closest-na-coverage">No current NA blockchain claim; PCT claim 13 support is relevant</assertionField>
-    <assertionField name="difference-that-matters">AF preserves the disclosed implementation only inside the integrated system.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00016">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ce47dd048cc4614ed38053264f9e7bb24f2efffa36cacdb6e347b36e064b7be9" fragmentId="claim-16" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">16</assertionField>
     <assertionField name="af-limitation">Unicast delivery</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 14 and 27</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 13; the method counterpart is reserved (former NA claim 27)</assertionField>
     <assertionField name="difference-that-matters">Same delivery mode; no standalone AF distribution claim exists.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00017">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:06bc3a2ccbfb03fa26c54a13f664fd091290cb0d5bfd9bc05bfd398e2c7acd20" fragmentId="claim-17" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00016">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:d79df9f6df14b5358637eb7f8b361339f5b4881528d6225ff188b54c7e52f287" fragmentId="claim-16" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">17</assertionField>
-    <assertionField name="af-limitation">Recipient-associated timing choices across plural selected cuts</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 15, 20, and 29</assertionField>
-    <assertionField name="difference-that-matters">AF represents the plural choices through delivered manifest combinations and ledger association.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00018">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:27fe27ee3171cc6482d77fd9e52688e59c0ca844911e5d53ecafeb282de490fe" fragmentId="claim-18" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="af-claim">18</assertionField>
+    <assertionField name="af-claim">16</assertionField>
     <assertionField name="af-limitation">Additional audio/video elements overlaid before segmentation</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 8 and 30</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 8; the method counterpart is reserved (former NA claim 30)</assertionField>
     <assertionField name="difference-that-matters">AF expressly requires the pre-segmentation order.</assertionField>
   </relation>
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00017">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:3924108f44ad6260da0be69789c72377bde70fff9c4eb653af3f4122dca6a13a" fragmentId="claim-17" role="subject" />
+    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
+    <assertionField name="af-claim">17</assertionField>
+    <assertionField name="af-limitation">Method performance of AF claim 1's complete plural-cut chain with the folded per-cut timing-choice manifest representation and the affirmative mate-timing match</assertionField>
+    <assertionField name="closest-na-coverage">The end-to-end method family is reserved (former NA claim 22); the folded nexus has no separate NA dependent</assertionField>
+    <assertionField name="difference-that-matters">Both method chains use cut-time reconstruction and equal-manifest lookup; AF claim 17 requires variation at plural selected cuts with the timing-choice nexus recited in the independent method, and the former dependent nexus (former AF claim 20) is folded into AF claims 1 and 17 rather than held as a fallback.</assertionField>
+  </relation>
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00018">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1cfc3444d614ec9e1baf5740985c01658dfbe69e40dbf28ee43e19e570d5fd33" fragmentId="claim-18" role="subject" />
+    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
+    <assertionField name="af-claim">18</assertionField>
+    <assertionField name="af-limitation">AF claim 17 method with perceptual-hash cut-time detection</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 16; the method counterpart is reserved (former NA claim 26)</assertionField>
+    <assertionField name="difference-that-matters">Both add perceptual-hash comparison; AF claim 18 preserves a directly supported detection fallback inside the integrated method branch.</assertionField>
+  </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00019">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:99173f7e147fc5352aba383d701cc953e4a8963424b6aa0f90ca4c625d306193" fragmentId="claim-22" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:449fb77b26e04bc00bf3e80e443052976dc87aae96dd20434ab6787777bff97e" fragmentId="claim-19" role="subject" />
+    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="af-claim">19</assertionField>
-    <assertionField name="af-limitation">Method performance of AF claim 1's complete plural-cut reconstructed-manifest chain</assertionField>
-    <assertionField name="closest-na-coverage">NA claim 22</assertionField>
-    <assertionField name="difference-that-matters">Both methods use cut-time reconstruction and equal-manifest lookup; AF requires variation at plural selected cuts, with each selected-cut variation present in at least one mate, whereas NA claim 22 requires at least one varied cut and carries additional fallbacks in claims 23–30.</assertionField>
+    <assertionField name="af-limitation">AF claim 18 method with sliding-window fuzzy matching</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 17</assertionField>
+    <assertionField name="difference-that-matters">NA claim 17 recites sliding-window fuzzy matching in one dependent; AF separates the comparison and the window into the two-step method branch 17 → 18 → 19.</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00020">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:06bc3a2ccbfb03fa26c54a13f664fd091290cb0d5bfd9bc05bfd398e2c7acd20" fragmentId="claim-17" role="subject" />
-    <assertionField name="af-claim">20</assertionField>
-    <assertionField name="af-limitation">AF claim 19 method with a delivered recipient timing-choice combination containing an affirmative mate choice and reconstruction of the same detected combination</assertionField>
-    <assertionField name="closest-na-coverage">NA claims 20 and 29 for plural timing reconstruction and the method timing-choice combination</assertionField>
-    <assertionField name="difference-that-matters">AF claim 20 expressly connects the equal delivered manifest's mate-containing recipient combination to reconstruction of the same detected combination; that exact relationship is D/CE/G and parallels AF claim 17's system-side record.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00021">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1d08dfed9a8441de96ce4cb03570001acf7bc246c1010b9bc3add5a1368cfe43" fragmentId="claim-26" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:07b2d7e6940390d68a55ae8aa4b00d9752f416a17b4787ceb27f23eb02f49ec7" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:284ac29a7695cbe0a6940bf232115a4b4a9597869816dd1e0206379a12e9981a" fragmentId="claim-21" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0671064e96bc4745f6662223f33bf406609d86a6dee765317bfd37b0423a8a1b" fragmentId="claim-20" role="subject" />
-    <assertionField name="af-claim">21</assertionField>
-    <assertionField name="af-limitation">AF claim 19 method with perceptual-hash cut-time detection</assertionField>
-    <assertionField name="closest-na-coverage">NA claim 26</assertionField>
-    <assertionField name="difference-that-matters">Both add perceptual-hash comparison; AF claim 21 independently preserves a directly supported detection fallback without inheriting AF claim 20's relationship-specific gate.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00022">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1d08dfed9a8441de96ce4cb03570001acf7bc246c1010b9bc3add5a1368cfe43" fragmentId="claim-26" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:284ac29a7695cbe0a6940bf232115a4b4a9597869816dd1e0206379a12e9981a" fragmentId="claim-21" role="subject" />
-    <assertionField name="af-claim">22</assertionField>
-    <assertionField name="af-limitation">AF claim 21 method with sliding-window fuzzy matching</assertionField>
-    <assertionField name="closest-na-coverage">NA claim 26</assertionField>
-    <assertionField name="difference-that-matters">NA claim 26 recites perceptual hashing and fuzzy matching in one dependent; AF separates them into the two-step method branch 19 → 21 → 22.</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00023">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c8fc49c2a2dc99d0eeee4056db7e2eee2e31e55534a19e9cc721c23bb46eb7b5" fragmentId="claim-14" role="subject" />
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f6ecfbb9cc45872329514ef9d81c0f32e0b1c6de7ff9b2f41b5511657bbe4853" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
-    <assertionField name="af-claim">23</assertionField>
-    <assertionField name="af-limitation">Monitor-side suspect acquisition, plural cut-time derivation, reconstructed-manifest building, and equal delivered-manifest ledger search to identify a recipient; the equal delivered manifest contains an affirmative mate timing and matches the same detected plural timing combination</assertionField>
-    <assertionField name="closest-na-coverage">NA claim 16 supplies the closest detector-system operations; NA claims 19–20 supply related matched-manifest and plural timing fallbacks; AF-CONT claims 14 and 19 supply the broader method and overlapping causal-nexus formulations</assertionField>
-    <assertionField name="difference-that-matters">AF claim 23 is an affirmative method that omits production and delivery performance but requires one monitoring entity to perform the complete recovery chain or another performer's conduct to be legally attributable to that entity under the applicable method-claim standard. It is narrower than AF-CONT claim 14, overlaps AF-CONT claim 19's causal nexus, and does not inherit NA claim 16's system-format Mode A assignment.</assertionField>
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
+    <assertionField name="af-claim">20</assertionField>
+    <assertionField name="af-limitation">Monitor-side suspect acquisition, plural cut-time derivation, reconstructed-manifest building representing the detected combination, and equal delivered-manifest ledger search over a per-cut ordered-transition ensemble; the equal delivered manifest contains an affirmative mate timing and matches the detected combination</assertionField>
+    <assertionField name="closest-na-coverage">NA claim 15 supplies the closest detector-system operations over the same per-cut ensemble environment; NA claims 18 and 19 supply related matched-manifest and collusion fallbacks; AF-CONT claims 14 and 19 supply the broader method and overlapping causal-nexus formulations</assertionField>
+    <assertionField name="difference-that-matters">AF claim 20 is an affirmative method that omits production and delivery performance but requires one monitoring entity to perform the complete recovery chain or another performer's conduct to be legally attributable to that entity under the applicable method-claim standard. Its per-cut ordered-transition searched-ledger environment is recited in the independent claim, it is narrower than AF-CONT claim 14, it overlaps AF-CONT claim 19's causal nexus, and it does not inherit former NA claim 16's system-format Mode A assignment.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00024">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00021">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="coverage">Production/mate generation without downstream delivery or detection</assertionField>
     <assertionField name="na-location">NA claims 1–8</assertionField>
     <assertionField name="commercial-value">Broadcaster, production facility, mate-generation vendor</assertionField>
     <assertionField name="af-consequence">Every AF system dependent inherits delivery and recovery.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00025">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00022">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="coverage">Distribution/recipient association without production or detection</assertionField>
-    <assertionField name="na-location">NA claims 9–15</assertionField>
+    <assertionField name="na-location">NA claims 9–14</assertionField>
     <assertionField name="commercial-value">Streaming platform, origin service, licensee, CDN</assertionField>
     <assertionField name="af-consequence">AF delivery limitations remain inside AF claim 1.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00026">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00023">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="coverage">Standalone detection system without production and delivery by the accused system</assertionField>
-    <assertionField name="na-location">NA claims 16–21</assertionField>
+    <assertionField name="na-location">NA claims 15–20</assertionField>
     <assertionField name="commercial-value">Monitoring provider, rights owner, trust/safety operator</assertionField>
-    <assertionField name="af-consequence">AF claim 23 recites a monitor-side method, not the standalone detector-system category or NA claims 16–21's complete fallback ladder.</assertionField>
+    <assertionField name="af-consequence">AF claim 20 recites a monitor-side method, not the standalone detector-system category or NA claims 15–20's complete fallback ladder.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00027">
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00024">
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c8fc49c2a2dc99d0eeee4056db7e2eee2e31e55534a19e9cc721c23bb46eb7b5" fragmentId="claim-14" role="subject" />
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e9866e02c4783f775fc01a93fcf3602269e0501d9557bbc030d7d43b80c9515d" fragmentId="claim-23" role="subject" />
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:952e45dafd78b52996244e8c3c52bc682e954ec09847303050ac3c93469f1c3b" fragmentId="claim-20" role="subject" />
     <assertionField name="coverage">Broader end-to-end and monitor-side method fallbacks</assertionField>
-    <assertionField name="na-location">NA claims 22–30 and AF-CONT claims 14–16 and 19</assertionField>
+    <assertionField name="na-location">The reserved former NA method family (former NA claims 22–30) and AF-CONT claims 14–16 and 19</assertionField>
     <assertionField name="commercial-value">Alternative performer, implementation, and proof configurations</assertionField>
-    <assertionField name="af-consequence">AF claims 19–22 preserve the integrated plural-cut method family; AF claim 23 preserves the narrower causal-nexus monitor method. AF-CONT claim 14 remains broader and AF-CONT claims 15–16 retain monitor-side implementation fallbacks.</assertionField>
+    <assertionField name="af-consequence">AF claims 17–19 preserve the integrated plural-cut method family; AF claim 20 preserves the per-cut ordered-transition monitor method. AF-CONT claim 14 remains broader and AF-CONT claims 15–16 retain monitor-side implementation fallbacks.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00028">
-    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:364c92150b02ef159cdb42d13fc2070a85108235dc55c2a9a9003af992998b8c" fragmentId="claim-1" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00025">
+    <endpoint documentId="aa11393us-af-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:a328f4768c12aa6687de27d297e3fffa1c5db823b054d76d6f108c9b75f30d67" fragmentId="claim-1" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="coverage">Computer-readable-medium coverage</assertionField>
     <assertionField name="na-location">Not present in either current set</assertionField>
     <assertionField name="commercial-value">Potential software-distribution coverage</assertionField>
     <assertionField name="af-consequence">Requires a separately supported and art-scored claim.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00029">
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00026">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:1bb09ea067ce6d37904f50fa7c83a2d2eccfe5d887c6a4115e99bc39a0420271" fragmentId="claim-1" role="subject" />
     <assertionField name="formulation-boundary">Reference production</assertionField>
@@ -240,11 +213,11 @@
     <assertionField name="af-cont-posture">AF-CONT claim 1 requires the claimed system to produce the reference from the captured video according to the structured list.</assertionField>
     <assertionField name="operative-control">NA records the mate-generation formulation without reference production as a claimed operation; AF-CONT records the integrated-production formulation. Counsel must determine support, breadth, actor, and parent-versus-successor placement separately and must not transfer a support conclusion between them.</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00030">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:546029c7cdc9d088d7ba5fd3c58481102442f62bf7af1aec62b2e17e74f8cafc" fragmentId="claim-30" role="subject" />
+  <relation direction="forward" relationId="aa11393us-af-claim-crosswalk-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-crosswalk" xml:id="aa11393us-af-claim-crosswalk-row-00027">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e06c0a9bbc822af6f8c03aab9843d173ac18a9f7d01215708d30aaa43956dfca" fragmentId="claim-8" role="subject" />
     <endpoint documentId="aa11393us-af-cont-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:bcec2c26aa7b871c3f5c4fa94b2a2c1d4bd067af46040bdb463a4375722687ac" fragmentId="claim-5" role="subject" />
     <assertionField name="formulation-boundary">Overlay source and output</assertionField>
-    <assertionField name="na-posture">NA claims 8 and 30 require an element absent from the video received from the cameras and overlay onto at least one of the reference or mate; NA claim 30 also requires overlay before segmentation.</assertionField>
+    <assertionField name="na-posture">NA claim 8 requires an element absent from the video received from the cameras and overlay onto at least one of the reference or mate; the pre-segmentation order is reserved (former NA claim 30).</assertionField>
     <assertionField name="af-cont-posture">AF-CONT claim 5 requires an element absent from the reference and overlay onto both the reference and mate.</assertionField>
     <assertionField name="operative-control">NA records alternate-source and one-or-both-output coverage; AF-CONT records the reference-absence and both-output formulation. Counsel must determine support and strategic placement separately and must not transfer a support conclusion between them.</assertionField>
   </relation>

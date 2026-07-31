@@ -5,7 +5,7 @@
 
 <a id="ssp-aa11393us-continuation-preservation-blockquote-00002"></a>
 > <a id="ssp-aa11393us-continuation-preservation-para-00003"></a>
-> **SHARED US CONTINUATION CONTROL · STATUS 23 JULY 2026**
+> **SHARED US CONTINUATION CONTROL · STATUS 30 JULY 2026**
 >
 > <a id="ssp-aa11393us-continuation-preservation-para-00004"></a>
 > **INTERNAL EXECUTION CONTROL — NOT A FILED PAPER OR LEGAL OPINION.** The responsible US attorney must confirm current law, the actual benefit chain, copendency, inventorship, support, deadlines, and filing evidence.
@@ -31,6 +31,8 @@ The PCT priority claim and the US national-stage claim to benefit under 35 U.S.C
 
 <a id="ssp-aa11393us-continuation-preservation-para-00012"></a>
 `AF-CONT-2026-07-22-v2` is one candidate successor claim set, not the universal continuation procedure. The selected parent topology controls which supported claims remain reserved.
+
+Following the 30 July 2026 anchor-focused reformulation of the parent candidates (`NA-2026-07-30-v5`, `AF-2026-07-30-v7`), the CONT-03 reserved-scope outline records: (a) the former NA end-to-end method family (former NA claims 22–30), dropped from the amended NA set and reserved as successor subject matter; (b) the former AF blockchain-registration dependent (former AF claim 15), dropped from the amended AF set and reserved; and (c) the folded timing-choice relationships (former NA claims 15 and 20, former AF claims 17 and 20), which are no longer separate reservations because they are recited in the amended independent claims (NA claims 9 and 15; AF claims 1, 17, and 20). The [AF claim crosswalk](../../allowance-first/cross-strategy/claim-crosswalk/AA11393US-AF-claim-crosswalk_DRAFT.md) records the per-claim disposition; AF-CONT remains unchanged as the successor baseline pending its own re-baselining decision.
 
 <a id="ssp-aa11393us-continuation-preservation-header-00013"></a>
 ## 2. Pendency rule

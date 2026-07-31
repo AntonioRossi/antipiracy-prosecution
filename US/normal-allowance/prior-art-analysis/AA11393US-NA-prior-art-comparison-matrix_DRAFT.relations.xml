@@ -9,27 +9,20 @@
     <assertionField name="principal-present-distinction">Structured-list movement of the same ordered physical-camera boundary to a noncoincident timing, producing different-camera frames in the intervening interval</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00002" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00002">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4c1c41703ceeb9505396a8eccf7661e98a3a39373ecf710c6fd609609e866b9b" fragmentId="claim-9" role="subject" />
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fe309e7c097fe36911e0086bfee3227ec8f62ab489de181919f33afdc8617262" fragmentId="claim-9" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="na-claim">9</assertionField>
     <assertionField name="independent-subject">Distribution system</assertionField>
-    <assertionField name="principal-present-distinction">Manifest-selected chunks preserving one of the two timings of that physical-camera boundary and recorded by recipient</assertionField>
+    <assertionField name="principal-present-distinction">Manifest-selected chunks preserving, per defined temporal region, one of the two timings of that physical-camera boundary, encoding timing-choice sequences associated with recipients via the stored record</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00003" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00003">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claim">16</assertionField>
+    <assertionField name="na-claim">15</assertionField>
     <assertionField name="independent-subject">Detector system</assertionField>
-    <assertionField name="principal-present-distinction">Delivered reference/mate chunk combinations with a mate cut-timing difference → plural scene-change-derived cut times → reconstructed manifest → equality → ledger recipient</assertionField>
+    <assertionField name="principal-present-distinction">Delivered manifests over a per-cut ordered-transition ensemble representing recipient-associated timing-choice combinations → plural scene-change-derived cut times → reconstructed manifest representing the detected combination → equality with an affirmative mate timing → ledger recipient</assertionField>
   </relation>
   <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00004" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00004">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:99173f7e147fc5352aba383d701cc953e4a8963424b6aa0f90ca4c625d306193" fragmentId="claim-22" role="subject" />
-    <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claim">22</assertionField>
-    <assertionField name="independent-subject">End-to-end method</assertionField>
-    <assertionField name="principal-present-distinction">Production boundary + manifest delivery/association + plural cut-time reconstruction + equality lookup</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00005">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
@@ -38,7 +31,7 @@
     <assertionField name="relationship-not-identified-in-one-reviewed-document">Per-recipient movement of a physical-camera selection boundary in the claimed structured list</assertionField>
     <assertionField name="consequence">A20+B9+direct multicamera/EDL art is the principal production route</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00006">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00005" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00005">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
@@ -48,7 +41,7 @@
     <assertionField name="relationship-not-identified-in-one-reviewed-document">Retained same physical-camera order and resulting alternate-camera interval</assertionField>
     <assertionField name="consequence">Preserve the full structural relationship; variable timing alone is crowded</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00007">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00006" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00006">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
@@ -56,34 +49,34 @@
     <assertionField name="claimed-relationship">Manifest-selected chunks preserve one transition timing and are recipient-associated</assertionField>
     <assertionField name="closest-verified-teaching">A4/A6/C8 teach manifests, variants, recipient sequences, and records</assertionField>
     <assertionField name="relationship-not-identified-in-one-reviewed-document">Binding those known delivery objects to the claimed physical-camera boundary</assertionField>
-    <assertionField name="consequence">Claims 9, 13, and 15 retain the production-derived structure</assertionField>
+    <assertionField name="consequence">Claims 9 and 12 retain the production-derived structure</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00008">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00007" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00007">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
-    <assertionField name="claimed-relationship">Delivered manifests identify chunk combinations from a reference/mate ensemble having a mate cut-timing difference</assertionField>
+    <assertionField name="claimed-relationship">Delivered manifests identify chunk combinations from a per-cut ordered-transition ensemble and represent recipient-associated timing-choice combinations</assertionField>
     <assertionField name="closest-verified-teaching">A4/A6/C8 teach recipient-associated manifest combinations; B6/B9 teach recipient-specific local timing or stream-switch variation</assertionField>
-    <assertionField name="relationship-not-identified-in-one-reviewed-document">The claimed delivered-manifest universe tied to reference/mate camera-cut timing variation</assertionField>
-    <assertionField name="consequence">This relationship strengthens NA claim 16 but remains exposed to A4/A6/C8+B6/B9 combinations</assertionField>
+    <assertionField name="relationship-not-identified-in-one-reviewed-document">The claimed delivered-manifest universe tied to per-cut reference/mate camera-cut timing variation</assertionField>
+    <assertionField name="consequence">This relationship strengthens NA claim 15 but remains exposed to A4/A6/C8+B6/B9 combinations</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00009">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:4e2d08e19d5a5dbf83bdefb9cc8bd0c4617bccbfb3ecf3691806c37a99c8ab14" fragmentId="claim-16" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00008" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00008">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="claimed-relationship">Detect plural cut times and reconstruct a manifest</assertionField>
+    <assertionField name="claimed-relationship">Detect plural cut times and reconstruct a manifest representing the detected combination</assertionField>
     <assertionField name="closest-verified-teaching">A4 recovers version sequences; A6 detects temporal patterns; A13 regenerates manifests from segment identifiers; A21 detects shot boundaries and derives a duration/time-slice fingerprint sequence; B6/B8 reacquire timing</assertionField>
     <assertionField name="relationship-not-identified-in-one-reviewed-document">Reconstruction of a delivered manifest, rather than a generic video fingerprint, from scene-change-derived plural cut times</assertionField>
-    <assertionField name="consequence">NA claim 16 faces material combination pressure</assertionField>
+    <assertionField name="consequence">NA claim 15 faces material combination pressure</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00010">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00009" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00009">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
@@ -95,361 +88,328 @@
     <assertionField name="relationship-not-identified-in-one-reviewed-document">Equality to a delivered manifest linked to a recipient, rather than equality to a generic video fingerprint</assertionField>
     <assertionField name="consequence">Equality is direct filing support but not a stand-alone novelty center</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00011">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26bc53f7a0869fa79e2d6a0acf0eb251f5e9825a7852549b3e4e242e1a805f77" fragmentId="claim-19" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00010" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00010">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b379ef31cd04df8fd3c43bf15470a893a296dee660e2464a16c670394fb49ba2" fragmentId="claim-18" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
-    <assertionField name="claimed-relationship">Equal matched manifest selects a mate chunk spanning the same physical-camera transition at a noncoincident timing</assertionField>
+    <assertionField name="claimed-relationship">Equal matched manifest selects a mate chunk spanning a per-cut ordered physical-camera transition at a noncoincident timing</assertionField>
     <assertionField name="closest-verified-teaching">A4 supplies camera-perspective fragments/manifests; B9 supplies actual switch-time variation; A20 supplies EDL source/time fields and forensic motivation</assertionField>
-    <assertionField name="relationship-not-identified-in-one-reviewed-document">The matched manifest's concrete mate chunk, retained ordered physical-camera transition, noncoincident timing, and intervening different-camera frames</assertionField>
-    <assertionField name="consequence">NA claim 19 carries this combined relationship; direct multicamera/EDL art remains a material search target</assertionField>
+    <assertionField name="relationship-not-identified-in-one-reviewed-document">The matched manifest's concrete mate chunk, per-cut retained ordered physical-camera transition, noncoincident timing, and intervening different-camera frames</assertionField>
+    <assertionField name="consequence">NA claim 18 carries this combined relationship; direct multicamera/EDL art remains a material search target</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00012">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00011" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00011">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A1 / D1 — US 2021/0352381 A1</assertionField>
     <assertionField name="na-1-production">P — completed-copy delay/frame-rate transforms</assertionField>
     <assertionField name="na-9-distribution">P — recipient variant sequences</assertionField>
-    <assertionField name="na-16-detector">P — recipient variants and recoverable identifiers; no claimed mate-manifest/cut-time reconstruction chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — recipient variants and recoverable identifiers; no claimed mate-manifest/cut-time reconstruction chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00013">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00012" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00012">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="document">A2 — US 7,630,497 B2</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — segment-version assignments</assertionField>
-    <assertionField name="na-16-detector">P — segment sequences and tracing; no camera-cut mate or reconstructed-manifest equality</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — segment sequences and tracing; no camera-cut mate or reconstructed-manifest equality</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00014">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00013" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00013">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a3" fragmentContentDigest="sha256/typed-item-v1:ca158934ee51687f6461764664ee2c21d0ae4c87b159ed519ab60ba1d0def98a" fragmentId="us-prior-art-a3-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A3 — US 2009/0320130 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — coded segment assignments</assertionField>
-    <assertionField name="na-16-detector">P — coded assignments and scoring; no claimed mate-manifest reconstruction chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — coded assignments and scoring; no claimed mate-manifest reconstruction chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00015">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00014" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00014">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
     <assertionField name="document">A4 — US 10,834,158 B1</assertionField>
     <assertionField name="na-1-production">P — camera-perspective alternatives</assertionField>
     <assertionField name="na-9-distribution">P — customized manifests and user patterns</assertionField>
-    <assertionField name="na-16-detector">P — perspective manifests, sequence recovery, and user resolution; no mate cut-timing/equal-manifest chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — perspective manifests, sequence recovery, and user resolution; no mate cut-timing/equal-manifest chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00016">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00015" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00015">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A5 — US 2012/0087583 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">—</assertionField>
-    <assertionField name="na-16-detector">P — perceptual hashes and shot comparison; no manifest ledger or mate timing</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — perceptual hashes and shot comparison; no manifest ledger or mate timing</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00017">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00016" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00016">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A6 — US 2014/0325550 A1</assertionField>
     <assertionField name="na-1-production">P — recipient temporal events</assertionField>
     <assertionField name="na-9-distribution">P — tailored manifests and served sequences</assertionField>
-    <assertionField name="na-16-detector">P — tailored manifests, temporal-pattern detection, and device resolution; no physical-camera mate/equal-manifest chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — tailored manifests, temporal-pattern detection, and device resolution; no physical-camera mate/equal-manifest chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00018">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00017" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00017">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a7" fragmentContentDigest="sha256/typed-item-v1:447bb851154a3fc44acf5e8c2b7a41b3e0eadf12344c2a3a8db24b2c2dfd0a15" fragmentId="us-prior-art-a7-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A7 — US 2017/0118537 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — device-driven segment selection</assertionField>
-    <assertionField name="na-16-detector">P — selected segments and tracing; no camera-cut manifest reconstruction</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — selected segments and tracing; no camera-cut manifest reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00019">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00018" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00018">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a8" fragmentContentDigest="sha256/typed-item-v1:5e832a3da995e295ba85c60d15f4e5e1608bade030b55f701c6e5b61534332a9" fragmentId="us-prior-art-a8-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A8 — US 2018/0352307 A1</assertionField>
     <assertionField name="na-1-production">P — randomized temporal variants</assertionField>
     <assertionField name="na-9-distribution">P — identifying variant sequences</assertionField>
-    <assertionField name="na-16-detector">P — recipient variants and sequence identification; no claimed manifest-equality chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — recipient variants and sequence identification; no claimed manifest-equality chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00020">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00019" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00019">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a9" fragmentContentDigest="sha256/typed-item-v1:e95d42f1a126d7d5b51f16813ac5cc53f130c5a6d32d5d635083245a9c8caf1a" fragmentId="us-prior-art-a9-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="document">A9 — US 12,412,229 B2</assertionField>
     <assertionField name="na-1-production">P — rendered watermark variants</assertionField>
     <assertionField name="na-9-distribution">P — client policies/IDs</assertionField>
-    <assertionField name="na-16-detector">P — suspect watermark identification and collusion analysis; no camera-cut manifest reconstruction</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — suspect watermark identification and collusion analysis; no camera-cut manifest reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00021">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00020" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00020">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a10" fragmentContentDigest="sha256/typed-item-v1:50e7ca9aebc94c4ede399331871970ede8208b273ce40ad2ca6dac67ffb417e2" fragmentId="us-prior-art-a10-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A10 — US 2010/0100971 A1</assertionField>
     <assertionField name="na-1-production">P — time-domain colour modulation</assertionField>
     <assertionField name="na-9-distribution">P — device identity</assertionField>
-    <assertionField name="na-16-detector">P — device-mark capture/extraction; no chunk-manifest or camera-cut reconstruction relationship</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — device-mark capture/extraction; no chunk-manifest or camera-cut reconstruction relationship</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00022">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00021" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00021">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a11" fragmentContentDigest="sha256/typed-item-v1:d276f02f720feb256f86493b760a091d95b0c491f8a77a62a57a4e78c1568b5f" fragmentId="us-prior-art-a11-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A11 — US 2023/0230193 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">—</assertionField>
-    <assertionField name="na-16-detector">—</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">—</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00023">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00022" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00022">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a12" fragmentContentDigest="sha256/typed-item-v1:79cf9e0fba89dfd6f231221240237e29a3791fa721040b7cddc163178b8c2286" fragmentId="us-prior-art-a12-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A12 — US 2022/0358762 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — subscriber/device context</assertionField>
-    <assertionField name="na-16-detector">P — piracy classification; no manifest ledger, mate timing, or equality reconstruction</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — piracy classification; no manifest ledger, mate timing, or equality reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00024">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00023" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00023">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a13" fragmentContentDigest="sha256/typed-item-v1:2cc8d5c07712633564d6cf789f8025787f913b8f613ca5c6200a26879ef52f1b" fragmentId="us-prior-art-a13-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A13 — US 2023/0103449 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — segment and manifest generation</assertionField>
-    <assertionField name="na-16-detector">P — manifest regeneration from segment identifiers; no scene-change input, mate timing, or recipient equality loop</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — manifest regeneration from segment identifiers; no scene-change input, mate timing, or recipient equality loop</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00025">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00024" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00024">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a14" fragmentContentDigest="sha256/typed-item-v1:df3ac5aadf5e179a1687a17d46785705eb3d0e17217fe03781af8831543b8b81" fragmentId="us-prior-art-a14-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A14 — US 2022/0207120 A1</assertionField>
     <assertionField name="na-1-production">P — per-user chunk symbols</assertionField>
     <assertionField name="na-9-distribution">P — user database</assertionField>
-    <assertionField name="na-16-detector">P — A/B chunks, recipient database, and detection objective; no claimed cut-time equality chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — A/B chunks, recipient database, and detection objective; no claimed cut-time equality chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00026">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00025" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00025">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a15" fragmentContentDigest="sha256/typed-item-v1:6e2b0ac5e7c65c3610110a4263b4e5aef2dad10a9e8d7273bc7010e66b22320d" fragmentId="us-prior-art-a15-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A15 — US 2024/0114066 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — session-bound manifests and address records</assertionField>
-    <assertionField name="na-16-detector">P — session-associated manifests; no mate camera-cut structure or suspect recovery</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — session-associated manifests; no mate camera-cut structure or suspect recovery</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00027">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00026" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00026">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A16 — US 2024/0185891 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — per-request manifests and recording IDs</assertionField>
-    <assertionField name="na-16-detector">P — per-request manifests; no mate camera-cut structure or suspect recovery</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — per-request manifests; no mate camera-cut structure or suspect recovery</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00028">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00027" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00027">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a17" fragmentContentDigest="sha256/typed-item-v1:95e787699ffd86a79eccb199e684a1f1ab7d32314262276a407af712203a585f" fragmentId="us-prior-art-a17-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="document">A17 — US 12,046,260 B2</assertionField>
     <assertionField name="na-1-production">P — per-account substitution</assertionField>
     <assertionField name="na-9-distribution">P — personalized-segment records</assertionField>
-    <assertionField name="na-16-detector">P — personalized segments and account records; no mate camera-cut structure or suspect recovery</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — personalized segments and account records; no mate camera-cut structure or suspect recovery</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00029">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00028" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00028">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a18" fragmentContentDigest="sha256/typed-item-v1:b150a0d92915ced4d951dba00b880a3881a93977b48eca48941fc56db5af5576" fragmentId="us-prior-art-a18-root" role="evidence" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <assertionField name="document">A18 — US 12,328,488 B2</assertionField>
     <assertionField name="na-1-production">P — dynamic-segment substitution</assertionField>
     <assertionField name="na-9-distribution">P — user-keyed metadata</assertionField>
-    <assertionField name="na-16-detector">P — dynamic segments and user metadata; no mate camera-cut structure or suspect recovery</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — dynamic segments and user metadata; no mate camera-cut structure or suspect recovery</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00030">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00029" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00029">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A19 — US 2023/0353582 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — assigned-bit/client records</assertionField>
-    <assertionField name="na-16-detector">P — pirate acquisition and client identification; no claimed manifest-equality chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — pirate acquisition and client identification; no claimed manifest-equality chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00031">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00030" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00030">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A20 — US 2012/0114309 A1</assertionField>
     <assertionField name="na-1-production">P — individualized EDL versions and time-defined elements</assertionField>
     <assertionField name="na-9-distribution">P — recipient/version registry</assertionField>
-    <assertionField name="na-16-detector">P — unique EDL versions, source/time fields, registry, and cross-reference analysis; no delivered reference/mate chunk manifests or cut-time reconstruction</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — unique EDL versions, source/time fields, registry, and cross-reference analysis; no delivered reference/mate chunk manifests or cut-time reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00032">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00031" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00031">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">A21 — US 2021/0166036 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">—</assertionField>
-    <assertionField name="na-16-detector">P — shot-boundary duration-sequence fingerprint and exact database equality; no manifests, recipient ledger, mate timing, or physical-camera production</assertionField>
-    <assertionField name="na-22-method">P — recovery operations only</assertionField>
+    <assertionField name="na-15-detector">P — shot-boundary duration-sequence fingerprint and exact database equality; no manifests, recipient ledger, mate timing, or physical-camera production</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00033">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00032" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00032">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b1" fragmentContentDigest="sha256/typed-item-v1:9bf97967c817ad87bd68b66282bbcc23d6c501c2c5cf2ce3d9aec47e9439f698" fragmentId="us-prior-art-b1-root" role="evidence" />
     <assertionField name="document">B1 / D2 — CN 117278762 A</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — codec provenance</assertionField>
-    <assertionField name="na-16-detector">P — provenance recovery; no reference/mate manifest or scene-change reconstruction</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — provenance recovery; no reference/mate manifest or scene-change reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00034">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00033" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00033">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b2" fragmentContentDigest="sha256/typed-item-v1:aac9aae999883ea66ce7b0a1f1466f48e40969c6483746f4686fbee4129b6576" fragmentId="us-prior-art-b2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B2 — WO 2021/224688 A1</assertionField>
     <assertionField name="na-1-production">P — D1-family disclosure</assertionField>
     <assertionField name="na-9-distribution">P</assertionField>
-    <assertionField name="na-16-detector">P</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00035">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00034" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00034">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b3" fragmentContentDigest="sha256/typed-item-v1:1f10715a2326c4743f6aafe191091eea45437dd863eda7c81b93deb9c4a22213" fragmentId="us-prior-art-b3-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B3 — WO 2017/017603 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — source watermark</assertionField>
-    <assertionField name="na-16-detector">P — watermark capture/extraction/comparison; no claimed manifest chain</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — watermark capture/extraction/comparison; no claimed manifest chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00036">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00035" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00035">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b4" fragmentContentDigest="sha256/typed-item-v1:30305a7ef11dda3e3ce425024e17ef4880e23fc107e939090c48662b839ab7f1" fragmentId="us-prior-art-b4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <assertionField name="document">B4 — WO 2010/044102 A2</assertionField>
     <assertionField name="na-1-production">P — per-playback visible marks</assertionField>
     <assertionField name="na-9-distribution">P — device/time identity</assertionField>
-    <assertionField name="na-16-detector">P — piracy-point identification; no reference/mate chunk-manifest reconstruction</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — piracy-point identification; no reference/mate chunk-manifest reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00037">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00036" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00036">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b5" fragmentContentDigest="sha256/typed-item-v1:11d35d32088f363c9f8edd9e8b0e0e8e789b23c9b27b181ac0339d6de7f89ea7" fragmentId="us-prior-art-b5-root" role="evidence" />
     <assertionField name="document">B5 — CN 202455480 U</assertionField>
     <assertionField name="na-1-production">P — receiver watermark</assertionField>
     <assertionField name="na-9-distribution">P — smart-card identity</assertionField>
-    <assertionField name="na-16-detector">P — watermark monitoring/alarm; no camera-cut manifest chain</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — watermark monitoring/alarm; no camera-cut manifest chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00038">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00037" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00037">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <assertionField name="document">B6 — CN 100583750 C / Microsoft family</assertionField>
     <assertionField name="na-1-production">P — local frame-count/width variation</assertionField>
     <assertionField name="na-9-distribution">P — buyer/key relation</assertionField>
-    <assertionField name="na-16-detector">P — recipient-local timing variation, hash reacquisition, and contributor search; no physical-camera mate manifest or equality</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — recipient-local timing variation, hash reacquisition, and contributor search; no physical-camera mate manifest or equality</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00039">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00038" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00038">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b7" fragmentContentDigest="sha256/typed-item-v1:ed9b7078c12d521c79d5fabd12f1eec4e476d86988b87cc24f6bbf644e34c949" fragmentId="us-prior-art-b7-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B7 — WO 2021/141686 A1</assertionField>
     <assertionField name="na-1-production">P — shots/cuts</assertionField>
     <assertionField name="na-9-distribution">—</assertionField>
-    <assertionField name="na-16-detector">P — shot-sequence piracy comparison; no manifest ledger or mate chunk relationship</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — shot-sequence piracy comparison; no manifest ledger or mate chunk relationship</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00040">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00039" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00039">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B8 — EP 2 811 416 A1</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">—</assertionField>
-    <assertionField name="na-16-detector">P — relative-time pattern matching; no manifests, recipient ledger, or mate chunk</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — relative-time pattern matching; no manifests, recipient ledger, or mate chunk</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00041">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00040" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00040">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-a1" fragmentContentDigest="sha256/typed-item-v1:2bf40079812f16cb9bd5dbb71305e8d275a4d4a707386d78de67c07ef2d22af2" fragmentId="us-prior-art-a1-root" role="evidence" />
     <assertionField name="document">B9 — WO 2009/156973 A1</assertionField>
     <assertionField name="na-1-production">P — user-different switches among transformed streams</assertionField>
     <assertionField name="na-9-distribution">P — user keys and origin codes</assertionField>
-    <assertionField name="na-16-detector">P — recipient stream combinations and user-different switch times; no suspect recovery or physical-camera source relationship</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — recipient stream combinations and user-different switch times; no suspect recovery or physical-camera source relationship</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00042">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00041" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00041">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-b10" fragmentContentDigest="sha256/typed-item-v1:2754fe9523c2fd6b4b50f27ade4f6b1a6176f28934192b986a99432fbbbb3f12" fragmentId="us-prior-art-b10-root" role="evidence" />
     <assertionField name="document">B10 — KR 2024-0168593 A</assertionField>
     <assertionField name="na-1-production">P — per-user object attributes</assertionField>
     <assertionField name="na-9-distribution">P — user-code mapping</assertionField>
-    <assertionField name="na-16-detector">P — per-user variants, leak detection, and code inference; no camera-cut manifest chain</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — per-user variants, leak detection, and code inference; no camera-cut manifest chain</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00043">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00042" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00042">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
     <assertionField name="document">C8 — ETSI TS 104 002 V1.1.1</assertionField>
     <assertionField name="na-1-production">P — aligned A/B variants</assertionField>
     <assertionField name="na-9-distribution">P — edge sequencing and account/session patterns</assertionField>
-    <assertionField name="na-16-detector">P — A/B manifest sequences and tracing objective; no camera-cut reconstruction</assertionField>
-    <assertionField name="na-22-method">P</assertionField>
+    <assertionField name="na-15-detector">P — A/B manifest sequences and tracing objective; no camera-cut reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00044">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00043" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00043">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:b9745e7fbd6f2332047345addfa5e0736608cf0c124694d938d180e02e283879" fragmentId="claim-1" role="subject" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
     <assertionField name="document">C3 — Tardos 2003 extended version</assertionField>
     <assertionField name="na-1-production">—</assertionField>
     <assertionField name="na-9-distribution">P — user code assignment</assertionField>
-    <assertionField name="na-16-detector">P — code assignment and accusation; no suspect acquisition or manifest loop</assertionField>
-    <assertionField name="na-22-method">—</assertionField>
+    <assertionField name="na-15-detector">P — code assignment and accusation; no suspect acquisition or manifest loop</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00045">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00044" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00044">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:600f06b19c8de02c846a06a04e2fddbec18bebf0635b57b851b67e2a61b948ec" fragmentId="claim-2" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claims">2–3, 23</assertionField>
+    <assertionField name="na-claims">2–3</assertionField>
     <assertionField name="added-subject-matter">Later resynchronization and ten-frame implementation</assertionField>
     <assertionField name="stored-art-posture">Strong technical fallback in the stored corpus; support-gated by Example 2</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00046">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00045" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00045">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:71e176669e9c3747fd53dd2d830514e9df4c75cfc1030763106aaf3db4a410e4" fragmentId="claim-4" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
     <assertionField name="na-claims">4–7</assertionField>
     <assertionField name="added-subject-matter">EDL fields, live direction, plural variations, retained source IDs</assertionField>
     <assertionField name="stored-art-posture">Direct EDL/vision-mixer art remains a priority search</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00047">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00046" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00046">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:e06c0a9bbc822af6f8c03aab9843d173ac18a9f7d01215708d30aaa43956dfca" fragmentId="claim-8" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claims">8, 30</assertionField>
-    <assertionField name="added-subject-matter">Overlay, including pre-segmentation order in claim 30</assertionField>
-    <assertionField name="stored-art-posture">Conventional graphics/watermark pressure; claim 30 also has a support gate</assertionField>
+    <assertionField name="na-claims">8</assertionField>
+    <assertionField name="added-subject-matter">Overlay</assertionField>
+    <assertionField name="stored-art-posture">Conventional graphics/watermark pressure</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00048">
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00047" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00047">
     <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:85fe2d330ea4f152869631c8a10a821cd4644fe338ecfb26a66f8cadb9249087" fragmentId="claim-10" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
@@ -459,61 +419,52 @@
     <endpoint documentId="us-prior-art-a16" fragmentContentDigest="sha256/typed-item-v1:8785eaf04bf1fde378d5e65cd42b23143037dcf80fa94ea355de1ebb8f336a5e" fragmentId="us-prior-art-a16-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="na-claims">10–12</assertionField>
+    <assertionField name="na-claims">10–11, 14</assertionField>
     <assertionField name="added-subject-matter">Adaptive delivery, mixing, ledger</assertionField>
     <assertionField name="stored-art-posture">Crowded by A4, A6–A8, A13, A15–A16, B9, C8</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00049">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8a8c245e6f7ebdf88c436a739b9ab195965361be301332e06972c11016116462" fragmentId="claim-13" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00048" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00048">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:c1160a73078d3a8eaf2e62ce74df64b2d256a73147ea661f7f6c64b047f49961" fragmentId="claim-12" role="subject" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
     <endpoint documentId="us-prior-art-c8" fragmentContentDigest="sha256/typed-item-v1:a914e22f4bfc7152ed098ea5b6732ea97427a3133be6d29dce2c8b6619706f1e" fragmentId="us-prior-art-c8-root" role="evidence" />
-    <assertionField name="na-claims">13, 25</assertionField>
+    <assertionField name="na-claims">12</assertionField>
     <assertionField name="added-subject-matter">Same-interval/equal-duration paired chunks with transition geometry</assertionField>
     <assertionField name="stored-art-posture">A4/B9/C8 pressure packaging; retained physical-camera boundary remains material</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00050">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fa6a8fd88af3ffb04441b023d0286254f5388304bde25c1b5fd092e10cc4c380" fragmentId="claim-14" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00049" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00049">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:505731ffd1a7c3da229f669e0095dfbafcc3001204283d2d8dba427f4297822b" fragmentId="claim-13" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claims">14, 27</assertionField>
+    <assertionField name="na-claims">13</assertionField>
     <assertionField name="added-subject-matter">Unicast</assertionField>
     <assertionField name="stored-art-posture">Conventional implementation</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00051">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:cfef1ba3d7d7bf2d12b355719ec31ad31952c42d2bb60e51190e430e4ed592f9" fragmentId="claim-15" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00050" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00050">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:fe309e7c097fe36911e0086bfee3227ec8f62ab489de181919f33afdc8617262" fragmentId="claim-9" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claims">15, 24, 29</assertionField>
-    <assertionField name="added-subject-matter">Recipient timing combinations and manifest preservation</assertionField>
+    <assertionField name="na-claims">9</assertionField>
+    <assertionField name="added-subject-matter">Per-cut recipient timing-choice sequences encoded by manifest combinations (folded former claims 15/24/29 relationship)</assertionField>
     <assertionField name="stored-art-posture">Multi-position sequences are crowded; exact physical-camera relationship carries value</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00052">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:8566b11e6efa5d57474e13b96f9015ef37aab4639168224b062b0082f94da512" fragmentId="claim-17" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00051" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00051">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:f115391a7e1ca88e8d9ca8910984cc79938a95bf3233ac6f39678d7488eec449" fragmentId="claim-16" role="subject" />
     <endpoint documentId="us-prior-art-a5" fragmentContentDigest="sha256/typed-item-v1:86e228fdbfd89fe8200ecf74fab0f7d66145efdc9eba74784f346aae311b19a7" fragmentId="us-prior-art-a5-root" role="evidence" />
     <endpoint documentId="us-prior-art-a21" fragmentContentDigest="sha256/typed-item-v1:888da8148d049c40c04de649cb6aba56dcea6e1f15e322714aa10cd5621279bc" fragmentId="us-prior-art-a21-root" role="evidence" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <endpoint documentId="us-prior-art-b8" fragmentContentDigest="sha256/typed-item-v1:be03dcdb8b8a8ad08774588b935772ae1ba4fce1a363d396690540c2c88ab08d" fragmentId="us-prior-art-b8-root" role="evidence" />
-    <assertionField name="na-claims">17–18, 26</assertionField>
+    <assertionField name="na-claims">16–17</assertionField>
     <assertionField name="added-subject-matter">Perceptual hashes and sliding-window fuzzy comparison</assertionField>
     <assertionField name="stored-art-posture">Crowded by A5, A21, B6–B8; A21 is partial because it uses cumulative histograms and a sliding-window boundary detector, not the claimed perceptual-hash/fuzzy combination</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00053">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:26bc53f7a0869fa79e2d6a0acf0eb251f5e9825a7852549b3e4e242e1a805f77" fragmentId="claim-19" role="subject" />
-    <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
-    <endpoint documentId="us-prior-art-b9" fragmentContentDigest="sha256/typed-item-v1:65d7088a0cff567a3e4a318dfb885f0eccc98ac01c5b214b89f41b98c9ef954c" fragmentId="us-prior-art-b9-root" role="evidence" />
-    <endpoint documentId="us-prior-art-a20" fragmentContentDigest="sha256/typed-item-v1:79beb4991a0d42c1e3e1fc3cdab4eff63f930a42bd4897f49456bdd4b1d2e085" fragmentId="us-prior-art-a20-root" role="evidence" />
-    <assertionField name="na-claims">19</assertionField>
-    <assertionField name="added-subject-matter">Equal matched manifest selects a mate chunk spanning the same physical-camera transition at a noncoincident timing</assertionField>
-    <assertionField name="stored-art-posture">A4/B9/A20 and direct multicamera/EDL art create combination pressure; the full matched-manifest geometry is the material relationship</assertionField>
-  </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00054" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00054">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ecb11ac3ae006e55e6e2d763f378609222f544a4a8a4360cfdd48fefa42ca3ac" fragmentId="claim-20" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00052" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00052">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:6ff4855269a3ff2919badf824e29666c961cfe3231e4be357b9f0e094e92c958" fragmentId="claim-15" role="subject" />
     <endpoint documentId="pct-as-filed-dossier" fragmentContentDigest="sha256/typed-item-v1:7cfe39a64f8b912b8938c3d8efe06d8b71bb6dc71b641507b3d0de01e585a96f" fragmentId="pct-as-filed-dossier-root" role="evidence" />
-    <assertionField name="na-claims">20</assertionField>
-    <assertionField name="added-subject-matter">Plural recipient timing combination represented by the reconstructed manifest</assertionField>
-    <assertionField name="stored-art-posture">Timing sequences are crowded; the claim inherits claim 19 and additionally requires the detected plural combination to be represented by the reconstruction</assertionField>
+    <assertionField name="na-claims">15</assertionField>
+    <assertionField name="added-subject-matter">Detected plural timing combination represented by the reconstructed manifest (folded former claim 20 relationship)</assertionField>
+    <assertionField name="stored-art-posture">Timing sequences are crowded; the claim additionally requires the detected plural combination to be represented by the reconstruction</assertionField>
   </relation>
-  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00055" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00055">
-    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:ce1ac525929fcc872f995bd284f70039bb724753ab458307421440593e8f1b1f" fragmentId="claim-21" role="subject" />
+  <relation direction="forward" relationId="aa11393us-na-prior-art-comparison-matrix-row-00053" semanticOwner="Applicant — Antonio Rossi" type="claim-prior-art-comparison" xml:id="aa11393us-na-prior-art-comparison-matrix-row-00053">
+    <endpoint documentId="aa11393us-na-us-claim-set" fragmentContentDigest="sha256/typed-item-v1:0d5452161c5a5d45078fa9bf5708f563ee73fd460d45c5232b1f37c7a680d11a" fragmentId="claim-19" role="subject" />
     <endpoint documentId="us-prior-art-a2" fragmentContentDigest="sha256/typed-item-v1:ae81dd75b326bf555dcd8e97ab01afd2a18c1d8d836b90d05e852e98998dfc51" fragmentId="us-prior-art-a2-root" role="evidence" />
     <endpoint documentId="us-prior-art-a4" fragmentContentDigest="sha256/typed-item-v1:9c180a07549d284cefbc0074d9eba855e988f22db594606db98a48f6618cd802" fragmentId="us-prior-art-a4-root" role="evidence" />
     <endpoint documentId="us-prior-art-a6" fragmentContentDigest="sha256/typed-item-v1:3b25400024bf4347fac5fae07fad6a1d542fc5a0b469fe4cdb6cd2c12f1ef9a9" fragmentId="us-prior-art-a6-root" role="evidence" />
@@ -521,7 +472,7 @@
     <endpoint documentId="us-prior-art-a19" fragmentContentDigest="sha256/typed-item-v1:0b44edcbece1226bc330c0975eb81786a3afbd2cda3fe7835e537109b0a8925e" fragmentId="us-prior-art-a19-root" role="evidence" />
     <endpoint documentId="us-prior-art-b6" fragmentContentDigest="sha256/typed-item-v1:8858bbb2b6e924e0b5a56d134f6018143f81960c8eb8d55d736dc4bac72b244f" fragmentId="us-prior-art-b6-root" role="evidence" />
     <endpoint documentId="us-prior-art-c3" fragmentContentDigest="sha256/typed-item-v1:41976df892627aa966f45edb1a90e7a727a2571c0535118b8ed4e5dc0eea7c79" fragmentId="us-prior-art-c3-root" role="evidence" />
-    <assertionField name="na-claims">21, 28</assertionField>
+    <assertionField name="na-claims">19</assertionField>
     <assertionField name="added-subject-matter">Manifest-sequence collusion attribution</assertionField>
     <assertionField name="stored-art-posture">A2–A4, A6, A9, A19, B6, C3 provide substantial pressure</assertionField>
   </relation>

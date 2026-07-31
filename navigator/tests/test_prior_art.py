@@ -364,18 +364,18 @@ class PriorArtNavigatorTests(unittest.TestCase):
                     not value["dependencies"] for value in handoffs.values()))
 
     def test_matrix_scope_obligations_and_candidates_are_exact(self):
-        expected_units = {"na-prior-art": 77, "af-prior-art": 61}
-        expected_mapped = {"na-prior-art": 51, "af-prior-art": 44}
-        expected_candidates = {"na-prior-art": 51, "af-prior-art": 44}
+        expected_units = {"na-prior-art": 45, "af-prior-art": 55}
+        expected_mapped = {"na-prior-art": 28, "af-prior-art": 42}
+        expected_candidates = {"na-prior-art": 28, "af-prior-art": 46}
         expected_obligations = {
             "na-prior-art": {
-                "passage-mapped": 26,
-                "counsel-review-required": 159,
-                "reviewed-no-material-passage": 33,
+                "passage-mapped": 16,
+                "counsel-review-required": 131,
+                "reviewed-no-material-passage": 21,
             },
             "af-prior-art": {
-                "passage-mapped": 29,
-                "counsel-review-required": 199,
+                "passage-mapped": 32,
+                "counsel-review-required": 211,
                 "reviewed-no-material-passage": 36,
             },
         }
