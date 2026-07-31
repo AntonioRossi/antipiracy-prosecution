@@ -23,8 +23,8 @@ CONTENT = b'''<?xml version="1.0" encoding="UTF-8"?>
   </origin>
   <dependencies />
   <provenance>
-    <fragmentEvidence fragmentId="frag-heading" page="1" sourcePath="US/prior-art/A1/source.pdf" />
-    <fragmentEvidence fragmentId="frag-paragraph" page="1" sourcePath="US/prior-art/A1/source.pdf" />
+    <fragmentEvidence fragmentId="frag-heading" page="1" sourcePath="prior-art/A1/source.pdf" />
+    <fragmentEvidence fragmentId="frag-paragraph" page="1" sourcePath="prior-art/A1/source.pdf" />
   </provenance>
   <content>
     <heading level="1" xml:id="frag-heading">
@@ -86,7 +86,7 @@ class CanonicalContract(unittest.TestCase):
         relations = parser.parse_artifact(RELATIONS, "relation-set")
         self.assertEqual(
             content.raw_digest,
-            "sha256/raw:d066b26bf72ec20a639dd51938f7ba925cbbbcdf3e120fbd7c23e2013cb34cb9")
+            "sha256/raw:278be7a31753d2cce1c7ab0c3a44cda5f0c2bfa7a5936bfc9daf799eafd63c50")
         self.assertEqual(
             content.fragment_digests,
             {
@@ -384,8 +384,8 @@ class CanonicalContract(unittest.TestCase):
         self.assertEqual(record["substantiveMetadata"], {"level": 1})
         envelope_changed = parser.parse_artifact(
             CONTENT.replace(b'status="draft"', b'status="review"').replace(
-                b'page="1" sourcePath="US/prior-art/A1/source.pdf"',
-                b'page="2" sourcePath="US/prior-art/A2/source.pdf"'),
+                b'page="1" sourcePath="prior-art/A1/source.pdf"',
+                b'page="2" sourcePath="prior-art/A2/source.pdf"'),
             "content-document")
         self.assertNotEqual(first.raw_digest, envelope_changed.raw_digest)
         self.assertEqual(first.fragment_digests,

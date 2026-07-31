@@ -33,7 +33,7 @@ def fixture_xml():
     return (CONTENT
             .replace(b"doc-alpha-root", b"pdf-doc-root")
             .replace(b"doc-alpha", b"pdf-doc")
-            .replace(b"US/prior-art/A1/source.pdf", b"content/evidence.pdf")
+            .replace(b"prior-art/A1/source.pdf", b"content/evidence.pdf")
             .replace(
                 b'fragmentId="frag-heading" page="1" sourcePath="content/evidence.pdf"',
                 b'fragmentId="frag-heading" page="1" region="heading region" '
@@ -199,7 +199,7 @@ class PDFItemSurface(unittest.TestCase):
         inserted_xml = CONTENT.replace(
             b"  </provenance>",
             b'    <fragmentEvidence fragmentId="stable-new" page="1" '
-            b'sourcePath="US/prior-art/A1/source.pdf" />\n'
+            b'sourcePath="prior-art/A1/source.pdf" />\n'
             b"  </provenance>").replace(
                 paragraph, paragraph +
                 b'''\n    <paragraph xml:id="stable-new">
@@ -209,7 +209,7 @@ class PDFItemSurface(unittest.TestCase):
         deleted_xml = (CONTENT
                        .replace(
                            b'    <fragmentEvidence fragmentId="frag-heading" page="1" '
-                           b'sourcePath="US/prior-art/A1/source.pdf" />\n', b"")
+                           b'sourcePath="prior-art/A1/source.pdf" />\n', b"")
                        .replace(heading + b"\n", b""))
         deleted = parser.parse_artifact(deleted_xml, "content-document")
         numbered = parser.parse_artifact(

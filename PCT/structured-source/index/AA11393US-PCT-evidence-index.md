@@ -4,7 +4,7 @@
 # AA11393US — PCT Source and Publication Provenance
 
 <a id="ssp-pct-evidence-index-para-00002"></a>
-This directory contains the applicant's PCT filing and examination records. It is separate from the `US/prior-art/` source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.
+This directory contains the applicant's PCT filing and examination records. It is separate from the `prior-art/` source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.
 
 <a id="ssp-pct-evidence-index-header-00003"></a>
 ## Local as-filed record

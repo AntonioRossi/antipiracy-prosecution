@@ -62,14 +62,14 @@ Strategy-neutral controls applied whether the ordinary § 371 parent uses `NA`, 
 
 | Identifier family | Current meaning | Controlling document |
 |---|---|---|
-| **A1 / D1** | US 2021/0352381 A1, ISR-cited | [`US/common/ids/AA11393US-US_IDS-reference-list_DRAFT.md`](US/common/ids/AA11393US-US_IDS-reference-list_DRAFT.md); [`US/prior-art/README.md`](US/prior-art/README.md) |
+| **A1 / D1** | US 2021/0352381 A1, ISR-cited | [`US/common/ids/AA11393US-US_IDS-reference-list_DRAFT.md`](US/common/ids/AA11393US-US_IDS-reference-list_DRAFT.md); [`prior-art/README.md`](prior-art/README.md) |
 | **B1 / D2** | CN 117278762 A, ISR-cited | same |
 | **A2–A21** | US patent documents in the working inventory | same |
 | **B2–B10** | Foreign patent documents in the working inventory | same |
 | **C-series** | Nonpatent literature (C3 author-hosted Tardos extended version; C7 Lin 2008 outstanding; C8 ETSI TS 104 002 DASH-IF A/B watermarking) | same |
 | **B10** | KR 2024-0168593 A, published 02.12.2024; the intervening-art pivot for Mode B analysis | same |
 
-Canonical PDFs in each co-located [`US/prior-art/`](US/prior-art/) package are manifest-controlled and never edited. Transcription XML provides the uniform machine interface, generated Markdown is the review view, and every declared convenience derivative is nonauthoritative.
+Canonical PDFs in each co-located [`prior-art/`](prior-art/) package are manifest-controlled and never edited. Transcription XML provides the uniform machine interface, generated Markdown is the review view, and every declared convenience derivative is nonauthoritative. The structured-source package and document identifiers `us-prior-art-<id>` retain their historical `us-` prefix after the store's relocation to root `prior-art/`; the prefix is a stable identity token, not a location or jurisdiction claim.
 
 ## Structured-content terms
 

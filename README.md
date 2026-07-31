@@ -14,7 +14,8 @@ This corpus supports the prosecution of the invention with one organizing discip
 
 | Location | Function |
 |---|---|
-| [`US/`](US/) | US claiming strategies: `normal-allowance/` (NA baseline), `allowance-first/` (AF alternative plus AF-CONT continuation candidate), `common/` shared filing and continuation controls, `prior-art/` canonical art store |
+| [`US/`](US/) | US claiming strategies: `normal-allowance/` (NA baseline), `allowance-first/` (AF alternative plus AF-CONT continuation candidate), `common/` shared filing and continuation controls |
+| [`prior-art/`](prior-art/) | Canonical prior-art source store: 33 manifest-controlled packages (source PDF, transcription XML, Markdown review view, provenance) shared across jurisdictions |
 | [`PCT/`](PCT/) | PCT filing and international-search record and publication provenance |
 | [`PPA2/`](PPA2/as%20filed%2063%20557868.pdf) | Provisional 63/557,868 filing record and assignment papers |
 | [`ITA/`](ITA/ITA%20depositi%20ufficiali/AA11393US-IT_Domanda%20di%20brevetto%20n.%20102025000003210.pdf) | Related Italian filing record |
@@ -38,7 +39,7 @@ Two cross-cutting classifiers apply to every artifact: the strategy ID (`NA`, `A
 | Memo | `…_MEMO.md` | Controlling shared instrument for continuation preservation or deferred filing/disclosure/EP work |
 | Claim crosswalk | `…-claim-crosswalk_DRAFT.md` | Inter-strategy AF/NA mapping and successor-reservation support |
 | Shared record | `US/common/…_DRAFT.md` / `…_MEMO.md` | Canonical IDS, public-comments, filing, and continuation controls; referenced, never duplicated |
-| Canonical source record | Filing PDFs in `PCT/`, `PPA2/`, `ITA/`; art PDFs in `US/prior-art/<ID>/` | Authoritative evidence; never edited; registered PDFs are manifest-controlled |
+| Canonical source record | Filing PDFs in `PCT/`, `PPA2/`, `ITA/`; art PDFs in `prior-art/<ID>/` | Authoritative evidence; never edited; registered PDFs are manifest-controlled |
 | Structured-source package | One declared authority scheme and one registered XML interface, with exactly the files that scheme permits | PDF governs PDF-derived fidelity; Markdown governs authored content; relation XML governs authored assertions; generated representations never gain authority |
 | Router / README | `README.md` per directory | Live index and routing for its directory |
 | Controlled vocabulary | `GLOSSARY.md` (root) | Current operative meanings of identifiers and terms, each pointing to its controlling document |
@@ -49,7 +50,7 @@ Two cross-cutting classifiers apply to every artifact: the strategy ID (`NA`, `A
 The NA and AF-CONT claim sets (and any successor claim set) are produced and maintained by the following procedure. Each step names its canonical touchpoint; shared materials are referenced, never duplicated into strategy directories.
 
 1. **Read the canonical source record.** The disclosure base is the PCT application and search record in [`PCT/`](PCT/) and the [as-filed provisional record](PPA2/as%20filed%2063%20557868.pdf). These are the only authoritative support sources.
-2. **Use the registered art packages.** Each [`US/prior-art/`](US/prior-art/) ID package contains one manifest-bound source PDF, one asserted transcription XML, one generated Markdown review view, and any declared non-authoritative convenience derivative. Never edit canonical PDFs; verify every quotation, especially OCR-derived text, against the stored PDF.
+2. **Use the registered art packages.** Each [`prior-art/`](prior-art/) ID package contains one manifest-bound source PDF, one asserted transcription XML, one generated Markdown review view, and any declared non-authoritative convenience derivative. Never edit canonical PDFs; verify every quotation, especially OCR-derived text, against the stored PDF.
 3. **Select the claim strategy.** [`US/README.md`](US/README.md) defines the strategy IDs (NA, AF, AF-CONT), current claim-set versions, and status controls. Use `NA claim N`, `AF claim N`, and `AF-CONT claim N` outside claim text; an unqualified claim number must not transfer a conclusion between strategies.
 4. **Draft the claims.** Maintain claim content and stable item identities in authoritative Markdown; regenerate, never manually edit, its XML machine representation. Use actor-focused independent claims, singly dependent fallbacks, and no multiple-dependent claims, with current counts, dependencies, ordinary fee consequences, and the exclusions recorded in each claim set (no suspect-side physical-camera identification, no joint ordered-source-pair-plus-timing matching, without a new claim-as-a-whole support determination).
 5. **Produce the companion artifacts.** Each claim set is valid only with its versioned companions: priority-support map (separate PCT and provisional written-description/enablement conclusions, Mode A/B/C gating), prior-art comparison matrix, claim-document mapping matrix, and counsel briefing; AF-CONT is additionally mapped by the AF claim crosswalk. A matrix is valid only for the claim-set version named in its header.

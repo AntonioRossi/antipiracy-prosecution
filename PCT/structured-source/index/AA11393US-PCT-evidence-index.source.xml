@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <authored xmlns="urn:aa11393:ssp:content:1" schemaProfile="authored-markdown-v1" schemaVersion="1">
   <documentIdentity documentId="pct-evidence-index" />
-  <markdownBinding path="PCT/structured-source/index/AA11393US-PCT-evidence-index.md" rawDigest="sha256/raw:69bdd0751155581cb0cf963ac256d9444ae522416fdda048f75fcc8204dcbc73" size="2481" />
+  <markdownBinding path="PCT/structured-source/index/AA11393US-PCT-evidence-index.md" rawDigest="sha256/raw:569313ab4e6b6626c94a9c2085ecba6c77305ed90ce67bd653cc1738af75a43d" size="2478" />
   <fragments>
-    <fragment bindingDigest="sha256/raw:4a2ea713ed014b25139ca80e6914b5c1ea23a7469ca49165853cd45cd201b8f0" bindingKind="document" presentationId="ssp-pct-evidence-index-root" semanticPath="$" xml:id="pct-evidence-index-root">
-      <excerpt>AA11393US — PCT Source and Publication ProvenanceThis directory contains the applicant's PCT filing and examination records. It is separate from the US/prior-art/ source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.Local as-filed record AA11393US-PCT_RAPPORTO DEPOSITO.pdf is the locally preserved as-filed dossier for PCT/IB2025/051755. It is not the later published international application and should not be cited as local proof of the WO publication number or publication date.Official publication recordThe WIPO PATENTSCOPE permanent bibliographic record and documents record were checked on 21 July 2026. They record:international application PCT/IB2025/051755 , filed 19 February 2025;publication WO 2025/181623 , published 4 September 2025; Initial Publication with ISR (A1 36/2025) , 56 pages;applicant STEALTH COMPANY SRL START UP INNOVATIVA and inventor Antonio Rossi; andpriority claim to US 63/557,868, filed 26 February 2024.Accordingly, the publication is identified in the US-phase working package as WO 2025/181623 A1 . The official publication PDF is linked through PATENTSCOPE rather than duplicated locally. Counsel should recheck the live WIPO record before relying on bibliographic data in a filing.</excerpt>
+    <fragment bindingDigest="sha256/raw:c8a68e80b34cd36b9a06c23e4afd40b5afb03dc85586d1adcab472eb3379db04" bindingKind="document" presentationId="ssp-pct-evidence-index-root" semanticPath="$" xml:id="pct-evidence-index-root">
+      <excerpt>AA11393US — PCT Source and Publication ProvenanceThis directory contains the applicant's PCT filing and examination records. It is separate from the prior-art/ source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.Local as-filed record AA11393US-PCT_RAPPORTO DEPOSITO.pdf is the locally preserved as-filed dossier for PCT/IB2025/051755. It is not the later published international application and should not be cited as local proof of the WO publication number or publication date.Official publication recordThe WIPO PATENTSCOPE permanent bibliographic record and documents record were checked on 21 July 2026. They record:international application PCT/IB2025/051755 , filed 19 February 2025;publication WO 2025/181623 , published 4 September 2025; Initial Publication with ISR (A1 36/2025) , 56 pages;applicant STEALTH COMPANY SRL START UP INNOVATIVA and inventor Antonio Rossi; andpriority claim to US 63/557,868, filed 26 February 2024.Accordingly, the publication is identified in the US-phase working package as WO 2025/181623 A1 . The official publication PDF is linked through PATENTSCOPE rather than duplicated locally. Counsel should recheck the live WIPO record before relying on bibliographic data in a filing.</excerpt>
     </fragment>
     <fragment bindingDigest="sha256/raw:237c1510d0e83986496e158a40a52af2e5d836cfa1d1b16976a8fe5ca34d8d9b" bindingKind="block" presentationId="ssp-pct-evidence-index-header-00001" semanticPath="block:0" xml:id="pct-evidence-index-header-00001">
       <excerpt>AA11393US — PCT Source and Publication Provenance</excerpt>
     </fragment>
-    <fragment bindingDigest="sha256/raw:c0ce7990a270d826a34043b3fe2cea2e6f60afe824ea4f1155e4c9a49c4495f7" bindingKind="block" presentationId="ssp-pct-evidence-index-para-00002" semanticPath="block:1" xml:id="pct-evidence-index-para-00002">
-      <excerpt>This directory contains the applicant's PCT filing and examination records. It is separate from the US/prior-art/ source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.</excerpt>
+    <fragment bindingDigest="sha256/raw:23e0c3b64c1983284ab6f64e59d8c78609bbf8654386396ad08e0c1eccbbda49" bindingKind="block" presentationId="ssp-pct-evidence-index-para-00002" semanticPath="block:1" xml:id="pct-evidence-index-para-00002">
+      <excerpt>This directory contains the applicant's PCT filing and examination records. It is separate from the prior-art/ source store; adding or linking an applicant publication here does not change that store's 33-document checksum manifest.</excerpt>
     </fragment>
     <fragment bindingDigest="sha256/raw:f700c417838fa4cea268144c4eb15b859824704bf118b1fd959f0a6d9f63b5bf" bindingKind="block" presentationId="ssp-pct-evidence-index-header-00003" semanticPath="block:2" xml:id="pct-evidence-index-header-00003">
       <excerpt>Local as-filed record</excerpt>
@@ -215,7 +215,7 @@
               <array />
               <array />
             </array>
-            <string>US/prior-art/</string>
+            <string>prior-art/</string>
           </array>
         </node>
         <node constructor="Space" />

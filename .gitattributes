@@ -3,6 +3,6 @@
 *.pdf binary
 *.md whitespace=-blank-at-eol,-blank-at-eof
 PCT/structured-source/**/*.md whitespace=-blank-at-eol,-blank-at-eof
-US/prior-art/*/*.md whitespace=-blank-at-eol,-blank-at-eof
+prior-art/*/*.md whitespace=-blank-at-eol,-blank-at-eof
 # Stored OCR/search text preserves source extraction spacing.
 "PCT/office action pct/*.txt" whitespace=-blank-at-eol,-blank-at-eof

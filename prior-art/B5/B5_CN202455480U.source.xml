@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<source xmlns="urn:aa11393:ssp:content:1" schemaProfile="pdf-evidence-transcription-v1" schemaVersion="1" xml:id="us-prior-art-b5-root">
+  <documentIdentity artifactFamily="prior-art-transcription" documentId="us-prior-art-b5" jurisdiction="US" language="en" scope="prior-art" status="review-aid">
+    <title>B5 — CN 202455480 U — Digital Watermark System for Verifying Digital Television Copyright</title>
+  </documentIdentity>
+  <origin>
+    <pdfDerivative />
+  </origin>
+  <dependencies />
+  <provenance>
+    <fragmentEvidence fragmentId="us-prior-art-b5-blockquote-00002" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-blockquote-00006" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-blockquote-00012" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-empty-quotation-00013" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-header-00001" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-header-00009" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-header-00025" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-header-00038" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-header-00050" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-header-00059" page="5" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-horizontalrule-00008" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-horizontalrule-00024" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-horizontalrule-00037" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-horizontalrule-00049" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-horizontalrule-00058" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-list-item-00028" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-list-item-00034" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-orderedlist-00027" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-orderedlist-00033" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00003" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00004" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00005" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00007" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" uncertainty="precise PDF page requires identified-human confirmation" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00010" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00011" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00014" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00015" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00016" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00017" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00018" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00019" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00020" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00021" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00022" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00023" page="1" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00026" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00030" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00031" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00032" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00036" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00039" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00040" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00041" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00042" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00043" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00044" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00045" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00046" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00047" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00048" page="3" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00051" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00052" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00053" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00054" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00055" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00056" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00057" page="4" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-para-00060" page="5" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-plain-00029" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+    <fragmentEvidence fragmentId="us-prior-art-b5-plain-00035" page="2" region="structured-transcription fragment" sourcePath="prior-art/B5/B5_CN202455480U.pdf" />
+  </provenance>
+  <content>
+    <heading level="1" xml:id="us-prior-art-b5-header-00001">
+      <text>B5</text>
+      <space />
+      <text>—</text>
+      <space />
+      <text>CN</text>
+      <space />
+      <text>202455480</text>
+      <space />
+      <text>U</text>
+      <space />
+      <text>—</text>
+      <space />
+      <text>Digital</text>
+      <space />
+      <text>Watermark</text>
+      <space />
+      <text>System</text>
+      <space />
+      <text>for</text>
+      <space />
+      <text>Verifying</text>
+      <space />
+      <text>Digital</text>
+      <space />
+      <text>Television</text>
+      <space />
+      <text>Copyright</text>
+    </heading>
+    <blockQuotation xml:id="us-prior-art-b5-blockquote-00002">
+      <paragraph xml:id="us-prior-art-b5-para-00003">
+        <strong>
+          <text>WORKING</text>
+          <space />
+          <text>TRANSCRIPTION</text>
+          <space />
+          <text>—</text>
+          <space />
+          <text>NOT</text>
+          <space />
+          <text>AN</text>
+          <space />
+          <text>OFFICIAL</text>
+          <space />
+          <text>COPY</text>
+          <space />
+          <text>AND</text>
+          <space />
+          <text>NOT</text>
+          <space />
+          <text>FOR</text>
+          <space />
+          <text>FILING.</text>
+        </strong>
+      </paragraph>
+      <paragraph xml:id="us-prior-art-b5-para-00004">
+        <text>Source:</text>
+        <space />
+        <code>B5_CN202455480U.pdf</code>
+        <text>.</text>
+        <space />
+        <text>Working transcription produced with OCR from the stored PDF.</text>
+        <space />
+        <text>Verify every quotation, number, date, and reference numeral against the stored PDF; the co-located source manifest records its current evidence binding.</text>
+      </paragraph>
+      <paragraph xml:id="us-prior-art-b5-para-00005">
+        <strong>
+          <text>OCR</text>
+          <space />
+          <text>output</text>
+          <space />
+          <text>—</text>
+          <space />
+          <text>machine-inferred</text>
+          <space />
+          <text>characters.</text>
+        </strong>
+        <space />
+        <text>Suitable</text>
+        <space />
+        <text>for</text>
+        <space />
+        <text>review,</text>
+        <space />
+        <text>search,</text>
+        <space />
+        <text>and</text>
+        <space />
+        <text>locating</text>
+        <space />
+        <text>passages.</text>
+        <space />
+        <strong>
+          <text>Not</text>
+          <space />
+          <text>authoritative:</text>
+        </strong>
+        <space />
+        <text>verify</text>
+        <space />
+        <text>every</text>
+        <space />
+        <text>quotation</text>
+        <space />
+        <text>and</text>
+        <space />
+        <text>every</text>
+        <space />
+        <text>number/date/reference</text>
+        <space />
+        <text>numeral</text>
+        <space />
+        <text>against</text>
+        <space />
+        <text>the</text>
+        <space />
+        <text>PDF</text>
+        <space />
+        <text>before</text>
+        <space />
+        <text>relying</text>
+        <space />
+        <text>on</text>
+        <space />
+        <text>it</text>
+        <space />
+        <text>in</text>
+        <space />
+        <text>a</text>
+        <space />
+        <text>filing</text>
+        <space />
+        <text>or</text>
+        <space />
+        <text>in</text>
+        <space />
+        <text>the</text>
+        <space />
+        <text>mapping</text>
+        <space />
+        <text>matrix.</text>
+      </paragraph>
+    </blockQuotation>
+    <blockQuotation xml:id="us-prior-art-b5-blockquote-00006">
+      <paragraph xml:id="us-prior-art-b5-para-00007">
+        <strong>
+          <text>Drawing</text>
+          <space />
+          <text>sheets</text>
+          <space />
+          <text>(no</text>
+          <space />
+          <text>text):</text>
+        </strong>
+        <space />
+        <text>pages</text>
+        <space />
+        <text>5.</text>
+      </paragraph>
+    </blockQuotation>
+    <separator xml:id="us-prior-art-b5-horizontalrule-00008" />
+    <heading level="3" xml:id="us-prior-art-b5-header-00009">
+      <text>Page</text>
+      <space />
+      <text>1</text>
+    </heading>
+    <paragraph xml:id="us-prior-art-b5-para-00010">
+      <text>CN</text>
+      <space />
+      <text>202455480</text>
+      <space />
+      <text>U</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00011">
+      <text>(19)</text>
+      <space />
+      <text>中华人民共和国国家知识产权局</text>
+      <space />
+      <text>DR</text>
+      <softBreak />
+      <text>-7</text>
+      <space />
+      <text>(12)</text>
+      <space />
+      <text>实用新型专利</text>
+    </paragraph>
+    <blockQuotation xml:id="us-prior-art-b5-blockquote-00012">
+      <plain xml:id="us-prior-art-b5-empty-quotation-00013" />
+    </blockQuotation>
+    <paragraph xml:id="us-prior-art-b5-para-00014">
+      <text>(10)</text>
+      <space />
+      <text>授权公告号</text>
+      <space />
+      <text>CN</text>
+      <space />
+      <text>202455480</text>
+      <space />
+      <text>U</text>
+      <softBreak />
+      <text>(45)</text>
+      <space />
+      <text>授权公告日</text>
+      <space />
+      <text>2012.</text>
+      <space />
+      <text>09.</text>
+      <space />
+      <text>26</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00015">
+      <text>(21)</text>
+      <space />
+      <text>申请号</text>
+      <space />
+      <text>201120556629.</text>
+      <space />
+      <text>6</text>
+      <softBreak />
+      <text>(22)</text>
+      <space />
+      <text>申请日</text>
+      <space />
+      <text>2011.</text>
+      <space />
+      <text>12.</text>
+      <space />
+      <text>28</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00016">
+      <text>(73)</text>
+      <space />
+      <text>专利权人</text>
+      <space />
+      <text>成都东银信息技术股份有限公司</text>
+      <softBreak />
+      <text>地址</text>
+      <space />
+      <text>610041</text>
+      <space />
+      <text>四川省成都市高新区府城大道</text>
+      <softBreak />
+      <text>西段</text>
+      <space />
+      <text>399</text>
+      <space />
+      <text>号天府新谷</text>
+      <space />
+      <text>6</text>
+      <space />
+      <text>号楼4</text>
+      <space />
+      <text>层</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00017">
+      <text>(72)</text>
+      <space />
+      <text>发明人</text>
+      <space />
+      <text>曾泽君，许胜武”歼克宇”易启肌</text>
+      <softBreak />
+      <text>Fa</text>
+      <softBreak />
+      <text>(74)</text>
+      <space />
+      <text>专利代理机构</text>
+      <space />
+      <text>泰和泰律师事务所</text>
+      <space />
+      <text>51219</text>
+      <softBreak />
+      <text>代理人</text>
+      <space />
+      <text>Bi</text>
+      <space />
+      <text>Be</text>
+      <softBreak />
+      <text>(51)</text>
+      <space />
+      <text>Int.</text>
+      <space />
+      <text>Cl.</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00018">
+      <text>HOAN</text>
+      <space />
+      <text>21/4367(2011.</text>
+      <space />
+      <text>01)</text>
+      <softBreak />
+      <text>HOAN</text>
+      <space />
+      <text>21/8358</text>
+      <space />
+      <text>(2011.</text>
+      <space />
+      <text>01)</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00019">
+      <text>权利要求书</text>
+      <space />
+      <text>1</text>
+      <space />
+      <text>页</text>
+      <space />
+      <text>说明书2</text>
+      <space />
+      <text>页</text>
+      <space />
+      <text>附图1页</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00020">
+      <text>(54)</text>
+      <space />
+      <text>实用新型名称</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00021">
+      <text>用于数字电视版权验证的数字水印系统</text>
+      <softBreak />
+      <text>(57)</text>
+      <space />
+      <text>摘要</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00022">
+      <text>一种用于数字电视版权验证的数字水印系</text>
+      <space />
+      <text>valve</text>
+      <softBreak />
+      <text>Be,</text>
+      <space />
+      <text>LAG</text>
+      <space />
+      <text>AES</text>
+      <space />
+      <text>th</text>
+      <space />
+      <text>Les</text>
+      <space />
+      <text>Ae</text>
+      <space />
+      <text>aT</text>
+      <space />
+      <text>AE</text>
+      <softBreak />
+      <text>网络和用户端,</text>
+      <space />
+      <text>还包括数字水印卫星接收机和水</text>
+      <softBreak />
+      <text>印监测端</text>
+      <space />
+      <text>;所述数字水印卫星接收机用于接收卫</text>
+      <space />
+      <text>—</text>
+      <softBreak />
+      <text>星网络传来的卫星信和号,</text>
+      <space />
+      <text>并将该卫星信和号解密为</text>
+      <space />
+      <text>Hees</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00023">
+      <text>视频信号,</text>
+      <space />
+      <text>同时将包含该卫星接收机智能卡</text>
+      <space />
+      <text>ID</text>
+      <space />
+      <text>的</text>
+      <softBreak />
+      <text>数字水印嵌入到视频信号中,</text>
+      <space />
+      <text>最后将包含数字水</text>
+      <softBreak />
+      <text>印的视频信和号发送到有线前端</text>
+      <space />
+      <text>;所述水印监测端</text>
+      <softBreak />
+      <text>用于接收并监测来自有线网络的数字电视节目内</text>
+      <softBreak />
+      <text>容,若发现该数字节目内容中隐含的数字水印不</text>
+      <softBreak />
+      <text>合法,则进行告警。</text>
+    </paragraph>
+    <separator xml:id="us-prior-art-b5-horizontalrule-00024" />
+    <heading level="3" xml:id="us-prior-art-b5-header-00025">
+      <text>Page</text>
+      <space />
+      <text>2</text>
+    </heading>
+    <paragraph xml:id="us-prior-art-b5-para-00026">
+      <text>CN</text>
+      <space />
+      <text>202455480</text>
+      <space />
+      <text>U</text>
+      <space />
+      <text>权</text>
+      <space />
+      <text>Fl</text>
+      <space />
+      <text>Bk</text>
+      <space />
+      <text>书</text>
+      <space />
+      <text>1/1</text>
+      <space />
+      <text>页</text>
+    </paragraph>
+    <list delimiter="period" ordered="true" start="1" xml:id="us-prior-art-b5-orderedlist-00027">
+      <item xml:id="us-prior-art-b5-list-item-00028">
+        <plain xml:id="us-prior-art-b5-plain-00029">
+          <text>一种用于数字电视版权验证的数字水印系统,包括节目运营商端、卫星网络`有线前</text>
+          <softBreak />
+          <text>端,有线网络和用户端,其特征在于</text>
+          <space />
+          <text>:</text>
+        </plain>
+      </item>
+    </list>
+    <paragraph xml:id="us-prior-art-b5-para-00030">
+      <text>还包括数字水印卫星接收机和水印监测靖</text>
+      <space />
+      <text>;</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00031">
+      <text>所述数字水印卫星接收机用于接收卫星网络传来的卫星信和号,</text>
+      <space />
+      <text>并将该卫星信号解码为</text>
+      <softBreak />
+      <text>视频信和号,</text>
+      <space />
+      <text>同时将包含该卫星接收机智能卡</text>
+      <space />
+      <text>ID</text>
+      <space />
+      <text>的数字水印能入到视频信号中,</text>
+      <space />
+      <text>最后将包含</text>
+      <softBreak />
+      <text>数字水印的视频信和号发送到有线前端</text>
+      <space />
+      <text>;</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00032">
+      <text>所述水印监测端用于接收并监测来目有线网络的数字电视节目内容,若发现该数字节</text>
+      <softBreak />
+      <text>目内容中隐含的数字水印不合法,则进行告警。</text>
+    </paragraph>
+    <list delimiter="period" ordered="true" start="2" xml:id="us-prior-art-b5-orderedlist-00033">
+      <item xml:id="us-prior-art-b5-list-item-00034">
+        <plain xml:id="us-prior-art-b5-plain-00035">
+          <text>根据权利要求</text>
+          <space />
+          <text>1</text>
+          <space />
+          <text>所述用于数字电视版权验证的数字水印系统,</text>
+          <space />
+          <text>其特征在于</text>
+          <space />
+          <text>:</text>
+        </plain>
+      </item>
+    </list>
+    <paragraph xml:id="us-prior-art-b5-para-00036">
+      <text>所述数字水印为半透明状。</text>
+    </paragraph>
+    <separator xml:id="us-prior-art-b5-horizontalrule-00037" />
+    <heading level="3" xml:id="us-prior-art-b5-header-00038">
+      <text>Page</text>
+      <space />
+      <text>3</text>
+    </heading>
+    <paragraph xml:id="us-prior-art-b5-para-00039">
+      <text>CN</text>
+      <space />
+      <text>202455480</text>
+      <space />
+      <text>U</text>
+      <space />
+      <text>说</text>
+      <space />
+      <text>明</text>
+      <space />
+      <text>书</text>
+      <space />
+      <text>1/2</text>
+      <space />
+      <text>页</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00040">
+      <text>用于数字电视版权验证的数字水印系统</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00041">
+      <text>技术领域</text>
+      <softBreak />
+      <text>[0001]</text>
+      <space />
+      <text>”本实用新型属于数字电视领域,尤其涉及一种利用数字水印对数字电视节目的版</text>
+      <softBreak />
+      <text>权进行验证的系统。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00042">
+      <text>背景技术</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00043">
+      <text>[0002]</text>
+      <space />
+      <text>”数字电视因其可控特性日渐被广大用户所接受并喜爱,</text>
+      <space />
+      <text>而正是因为数字电视的可</text>
+      <softBreak />
+      <text>存储可编辑等特性,</text>
+      <space />
+      <text>使得数字电视节目盗版行为日益严重,</text>
+      <space />
+      <text>对数字电视节目内容的版权保</text>
+      <softBreak />
+      <text>护刻不容缓,如何有效管理和控制数字电视节目内容成了节目运营商关注的重点。节有目运</text>
+      <softBreak />
+      <text>营商通过卫星将加密节目传输到各个地方台的卫星接收设备处,</text>
+      <space />
+      <text>该卫星接收设备将加密节</text>
+      <softBreak />
+      <text>目解密为透明节目,</text>
+      <space />
+      <text>而后在各自的有线网络中播出。某些网络运营商为了逃避向节目运营</text>
+      <softBreak />
+      <text>商缴纳收视费,有可能从其他有线网络中基取某个节目,加入到自己的内容中进行播放。</text>
+      <space />
+      <text>为</text>
+      <softBreak />
+      <text>了缓解这个问题,现有的节目的版权控制主要采用</text>
+      <space />
+      <text>CAC</text>
+      <space />
+      <text>Conditional</text>
+      <space />
+      <text>Access)条件接收技术</text>
+      <softBreak />
+      <text>进行保护,即将加扰和加密内容进行广播,</text>
+      <space />
+      <text>而每个用户端只能对特定内容进行接收和解密。</text>
+      <softBreak />
+      <text>对版权的鉴定主要采用指纹显示技术,但是由于指纹显示技术需要节目运营商针对全国网</text>
+      <softBreak />
+      <text>络或者某一区域网络发送指纹信息,全国或区域的网络内都能会看到该指纹信息,</text>
+      <space />
+      <text>导致其</text>
+      <softBreak />
+      <text>他用户体验不佳,</text>
+      <space />
+      <text>且其很难追查到网络运营商,故实际防盗版效果不佳。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00044">
+      <text>实用新型内容</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00045">
+      <text>[0003]</text>
+      <space />
+      <text>”针对上述问题,本实用新型的目的在于提供一种利用网络运营商的数字水印对数</text>
+      <softBreak />
+      <text>字电视节目的版权进行验证的系统,</text>
+      <space />
+      <text>从而达到快速定位盗版来源的同时不影响其他网络的</text>
+      <softBreak />
+      <text>用户观看的效果。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00046">
+      <text>[0004]</text>
+      <space />
+      <text>”本实用新型的上述目的是通过以下技术方案达到的</text>
+      <space />
+      <text>:一种用于数字电视版权验证</text>
+      <softBreak />
+      <text>的数字水印系统,包括节目运营商端、.卫星网络</text>
+      <code>有线前端</code>
+      <text>有线网络和用户端,</text>
+      <space />
+      <text>还包括数字</text>
+      <softBreak />
+      <text>水印卫星接收机和水印监测问</text>
+      <space />
+      <text>;所述数字水印卫星接收机用于接收卫星网络传来的卫星信</text>
+      <softBreak />
+      <text>号,并将该卫星信号解密为视频信号,</text>
+      <space />
+      <text>同时将包含该卫星接收机智能卡</text>
+      <space />
+      <text>ID</text>
+      <space />
+      <text>的数字水印嵌入</text>
+      <softBreak />
+      <text>到视频信号中,最后将包含数字水印的视频信号发送到有线前端</text>
+      <space />
+      <text>;所述水印监测端用于接</text>
+      <softBreak />
+      <text>收并监测来目有线网络的数字电视节目内容,若发现该数字节目内容中隐仿的数字水印不</text>
+      <softBreak />
+      <text>合法,则进行告警。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00047">
+      <text>[0005]</text>
+      <space />
+      <text>”进一步的,所述数字水印为半透明状。半透明状的水印不会影响用户观看。</text>
+      <softBreak />
+      <text>[0006]</text>
+      <space />
+      <text>”本实用狐型的有益效果在于</text>
+      <space />
+      <text>:通过数字水印卫星接收机将包含该卫星接收机智能</text>
+      <softBreak />
+      <text>卡</text>
+      <space />
+      <text>ID</text>
+      <space />
+      <text>的数字水印坐入到视频信号中,</text>
+      <space />
+      <text>再由水印监测庙监测当前数字电视节目内容的数字</text>
+      <softBreak />
+      <text>水印,若发现该数字水印不合法则进行告警,</text>
+      <space />
+      <text>由此节目运营商可以根据数字水印快速定位</text>
+      <softBreak />
+      <text>盗版来源达到版权验证的目的</text>
+      <space />
+      <text>;同时一个数字水印上只在一个有线网络中传播,</text>
+      <space />
+      <text>不会影响到</text>
+      <softBreak />
+      <text>其他用户。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00048">
+      <text>附图说明</text>
+    </paragraph>
+    <separator xml:id="us-prior-art-b5-horizontalrule-00049" />
+    <heading level="3" xml:id="us-prior-art-b5-header-00050">
+      <text>Page</text>
+      <space />
+      <text>4</text>
+    </heading>
+    <paragraph xml:id="us-prior-art-b5-para-00051">
+      <text>CN</text>
+      <space />
+      <text>202455480</text>
+      <space />
+      <text>U</text>
+      <space />
+      <text>说</text>
+      <space />
+      <text>明</text>
+      <space />
+      <text>书</text>
+      <space />
+      <text>2/2</text>
+      <space />
+      <text>页</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00052">
+      <text>[0007]</text>
+      <space />
+      <text>”图</text>
+      <space />
+      <text>1</text>
+      <space />
+      <text>为本实用新型具体实施例的模块结构示意图。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00053">
+      <text>[0008]</text>
+      <space />
+      <text>”本说明书中公开的所有特征,或公开的所有方法或过程中的步骤,除了互相排斥</text>
+      <softBreak />
+      <text>的特征和</text>
+      <space />
+      <text>/</text>
+      <space />
+      <text>或步骤以外,</text>
+      <space />
+      <text>均可以以任何方式组合。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00054">
+      <text>[0009]</text>
+      <space />
+      <text>”本说明书(包括任何权利要求、摘要和附图)</text>
+      <space />
+      <text>中公开的任一特征,</text>
+      <space />
+      <text>除非特别叙述,均</text>
+      <softBreak />
+      <text>可被其他等效或具有类似目的的奉代特征加以蔡换。即,除非特别叙述,</text>
+      <space />
+      <text>每个特征只是一系</text>
+      <softBreak />
+      <text>列等效或类似特征中的一个例子而已。同时本说明书中对蔡代特征的描述是对等同技术特</text>
+      <softBreak />
+      <text>征的描述,不得视为对公众的捐献。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00055">
+      <text>[0010]</text>
+      <space />
+      <text>”本说明书(包括任何权利要求、摘要和附图</text>
+      <space />
+      <text>中用语若同时具有一般含义与本领域</text>
+      <softBreak />
+      <text>特有含义的,如无特殊说明,均定义为本领域竺有含义。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00056">
+      <text>[oo11]</text>
+      <space />
+      <text>“如图</text>
+      <space />
+      <text>1</text>
+      <space />
+      <text>所示为本实用新型具体实施例的模块结构示意图。本实用新型由节目运营</text>
+      <softBreak />
+      <text>商端、卫星网络、数字水印卫星接收机`有线前端\有线网络,用户端和水印监测端组成。</text>
+      <softBreak />
+      <text>[0012]</text>
+      <space />
+      <text>”节目运营商端提供数字电视节目内容,</text>
+      <space />
+      <text>而后通过卫星网络进行广播</text>
+      <space />
+      <text>;数字水印卫</text>
+      <softBreak />
+      <text>星接收机接收卫星网络传来的卫星信号,</text>
+      <space />
+      <text>并将该卫星信和号解密为视频信号,同时将包含该</text>
+      <softBreak />
+      <text>卫星接收机智能卡</text>
+      <space />
+      <text>ID</text>
+      <space />
+      <text>的数字水印嵌入到视频信号中,</text>
+      <space />
+      <text>最后将包含数字水印的视频信和号发</text>
+      <softBreak />
+      <text>送到有线前端</text>
+      <space />
+      <text>;有线前端将该包含数字水印的视频信和号通过有线网络发送给各个用户端</text>
+      <softBreak />
+      <text>水印监测端接收并监测来目有线网络的数字电视节目内容,若发现该数字节目内容中隐含</text>
+      <softBreak />
+      <text>的数字水印不合法,则进行告警。</text>
+    </paragraph>
+    <paragraph xml:id="us-prior-art-b5-para-00057">
+      <text>[0013]</text>
+      <space />
+      <text>”如此,水印监测端告警之后,节目运营商可以通过数字水印读取智能卡</text>
+      <space />
+      <text>ID,</text>
+      <space />
+      <text>由于一</text>
+      <softBreak />
+      <text>个智能卡</text>
+      <space />
+      <text>ID</text>
+      <space />
+      <text>有其特定的网络运营商,故节目运营商可以快速定位发生盗版行为的网络运</text>
+      <softBreak />
+      <text>营商,节目运营商可以把版权盗版情况通知该网络运营商,并要求该网络运营商断开咨厂</text>
+      <softBreak />
+      <text>有线网络的连接,</text>
+      <space />
+      <text>从而可以追究网络运营商和盗版有线网络的侵权行为达到保护版权的目</text>
+      <softBreak />
+      <text>的。</text>
+      <softBreak />
+      <text>[0014]</text>
+      <space />
+      <text>”同时由于不同的数字水印上只针对一个卫星接收机之后的网络,</text>
+      <space />
+      <text>不会影响到其他网</text>
+      <softBreak />
+      <text>络的用户。根据本实用新型的一个实施例,数字水印为半透明状,可以使用户体验到更良好</text>
+      <softBreak />
+      <text>的收视感受。</text>
+    </paragraph>
+    <separator xml:id="us-prior-art-b5-horizontalrule-00058" />
+    <heading level="3" xml:id="us-prior-art-b5-header-00059">
+      <text>Page</text>
+      <space />
+      <text>5</text>
+    </heading>
+    <paragraph xml:id="us-prior-art-b5-para-00060">
+      <emphasis>
+        <text>(Drawing</text>
+        <space />
+        <text>sheet</text>
+        <space />
+        <text>—</text>
+        <space />
+        <text>no</text>
+        <space />
+        <text>machine-readable</text>
+        <space />
+        <text>text;</text>
+        <space />
+        <text>consult</text>
+        <space />
+        <text>the</text>
+        <space />
+        <text>PDF.)</text>
+      </emphasis>
+    </paragraph>
+  </content>
+  <projectionPolicy noticeVersion="generated-v1" profile="gfm-v1" />
+</source>

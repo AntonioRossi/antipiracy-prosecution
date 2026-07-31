@@ -24,7 +24,7 @@ Use `NA claim N`, `AF claim N`, and `AF-CONT claim N` in every analysis or commu
 | Location | Controlling function |
 |---|---|
 | [`common/`](common/) | Single IDS inventory, public PCT informal-comments draft, continuation-preservation memo, and deferred filing/disclosure/formalities/EP work memo |
-| [`prior-art/`](prior-art/) | Single source store for prior-art PDFs, searchable copies, Markdown review aids, provenance, and checksums |
+| [`../prior-art/`](../prior-art/) | Single source store for prior-art PDFs, searchable copies, Markdown review aids, provenance, and checksums |
 | [`../PCT/`](../PCT/) | PCT application and international-search record |
 | [`../PPA2/`](../PPA2/) | Provisional 63/557,868 filing record |
 | [`../ITA/`](../ITA/) | Related Italian filing record |

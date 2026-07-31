@@ -51,7 +51,7 @@ Use `NA claim N`, `AF claim N`, and `PCT claim N` outside exact claim text.
 | Location | Controlling material |
 |---|---|
 | [`../common/`](../common/) | IDS inventory, PCT informal-comments draft, and filing/disclosure/formalities/EP controls |
-| [`../prior-art/`](../prior-art/) | Canonical PDFs, provenance, checksums, OCR/search copies, and Markdown review aids |
+| [`../../prior-art/`](../../prior-art/) | Canonical PDFs, provenance, checksums, OCR/search copies, and Markdown review aids |
 | [`../../PCT/`](../../PCT/) | PCT application and international-search record |
 | [`../../PPA2/`](../../PPA2/) | US provisional filing record |
 | [`../../ITA/`](../../ITA/) | Related Italian filing record |

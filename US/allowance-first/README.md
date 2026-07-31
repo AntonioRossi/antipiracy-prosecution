@@ -62,7 +62,7 @@ Do not copy shared filing or evidence records into this directory:
 | Canonical location | Controlling material |
 |---|---|
 | [`../common/`](../common/) | IDS inventory, PCT informal-comments draft, and deferred filing/disclosure/formalities/EP memo |
-| [`../prior-art/`](../prior-art/) | Prior-art PDFs, provenance, checksums, searchable copies, and Markdown review aids |
+| [`../../prior-art/`](../../prior-art/) | Prior-art PDFs, provenance, checksums, searchable copies, and Markdown review aids |
 | [`../../PCT/`](../../PCT/) | PCT application and international-search record |
 | [`../../PPA2/`](../../PPA2/) | US provisional 63/557,868 filing record |
 | [`../../ITA/`](../../ITA/) | Related Italian filing record |
