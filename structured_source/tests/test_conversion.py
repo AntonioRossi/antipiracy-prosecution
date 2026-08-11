@@ -384,13 +384,14 @@ class AuthoredMarkdownConversion(unittest.TestCase):
         files = {item["fileId"]: item["path"] for item in registry["files"]}
         packages = [item for item in registry["packages"]
                     if item["authorityScheme"] == "authored-markdown-v1"]
-        self.assertEqual(len(packages), 10)
+        self.assertEqual(len(packages), 11)
         expected_counts = {
             "aa11393us-af-cont-us-claim-set": 170,
             "aa11393us-af-us-claim-set": 298,
             "aa11393us-af-us-counsel-briefing": 279,
             "aa11393us-continuation-preservation": 154,
             "aa11393us-deferred-filing-disclosure-and-ep-work": 401,
+            "aa11393us-ids-english-handling-acquisition-and-verification-memo": 144,
             "aa11393us-na-us-claim-set": 190,
             "aa11393us-na-us-counsel-briefing": 205,
             "aa11393us-pct-informal-comments-ib": 63,
@@ -408,7 +409,7 @@ class AuthoredMarkdownConversion(unittest.TestCase):
             self.assertEqual(conversion.item_ids, anchors)
             self.assertEqual(len(anchors), expected_counts[package["packageId"]])
             inventories[package["packageId"]] = set(conversion.item_ids)
-        self.assertEqual(sum(map(len, inventories.values())), 2229)
+        self.assertEqual(sum(map(len, inventories.values())), 2373)
 
         referenced = set()
         for package in registry["packages"]:
