@@ -36,7 +36,7 @@ Two cross-cutting classifiers apply to every artifact: the strategy ID (`NA`, `A
 | Prior-art comparison matrix | `…-prior-art-comparison-matrix_DRAFT.relations.xml` plus generated `.md` | Art scoring valid only for the claim-set version named in its header |
 | Claim-document mapping matrix | `…-claim-document-mapping-matrix_DRAFT.relations.xml` plus generated `.md` | Claim-to-disclosure/source mapping for the same version |
 | Counsel briefing | `…-US_counsel-briefing_DRAFT.md` | Strategy evaluation and counsel decision package |
-| Memo | `…_MEMO.md` | Controlling shared instrument for continuation preservation or deferred filing/disclosure/EP work |
+| Memo | `…_MEMO.md` | Controlling shared instrument for continuation preservation, deferred filing/disclosure/EP work, or prior-art transmittal records |
 | Claim crosswalk | `…-claim-crosswalk_DRAFT.md` | Inter-strategy AF/NA mapping and successor-reservation support |
 | Shared record | `US/common/…_DRAFT.md` / `…_MEMO.md` | Canonical IDS, public-comments, filing, and continuation controls; referenced, never duplicated |
 | Canonical source record | Filing PDFs in `PCT/`, `PPA2/`, `ITA/`; art PDFs in `prior-art/<ID>/` | Authoritative evidence; never edited; registered PDFs are manifest-controlled |

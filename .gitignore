@@ -239,6 +239,10 @@ pyrightconfig.json
 # Ignore all local history of files
 .history
 
+### Temporary prior-art shipment preparation ###
+/_prior-art-to-steinfl/
+/_second-round-prior-art/
+
 # Generated navigator delivery archive
 /navigator/dist/AA11393US-claims-evidence-navigators_na-specification-NA-2026-07-30-v5_af-specification-AF-2026-07-30-v7_na-prior-art-NA-2026-07-30-v5_af-prior-art-AF-2026-07-30-v7_TECHNICAL-PREVIEW.zip
 .ionide
